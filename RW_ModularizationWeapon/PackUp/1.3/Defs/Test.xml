@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+    
+
+
+	<ThingDef ParentName="BaseGunWithQuality">
+		<defName>Gun_Test_Modularization</defName>
+		<label>test item(Modularization)</label>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<description>An ancient pattern double-action revolver. It's not very powerful, but has a decent range for a pistol and is quick on the draw.</description>
+		<graphicData>
+		<texPath>UI/Buttons/InfoButton</texPath>
+		<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<uiIconScale>1.4</uiIconScale>
+		<soundInteract>Interact_Revolver</soundInteract>
+		<statBases>
+			<Mass>2.5</Mass>
+		</statBases>
+		<tools>
+			<li>
+				<label>test gun smash</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+		</tools>
+		<comps>
+		<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+			<TextureSizeFactor>256</TextureSizeFactor>
+			<TextureFilterMode>Bilinear</TextureFilterMode>
+			<ExceedanceFactor>2</ExceedanceFactor>
+			<ExceedanceOffset>1</ExceedanceOffset>
+		</li>
+		<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+            <attachmentProperties>
+                <li>
+                    <filter>
+                        <thingDefs>
+                            <li>Gun_Test_A</li>
+                            <li>Gun_Test_B</li>
+                        </thingDefs>
+                    </filter>
+                </li>
+            </attachmentProperties>
+		</li>
+		</comps>
+	</ThingDef>
+	
+	
+	
+	<ThingDef ParentName="BaseGunWithQuality">
+		<defName>Gun_Test_A_Modularization</defName>
+		<label>test item A(Modularization)</label>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<description>An ancient pattern double-action revolver. It's not very powerful, but has a decent range for a pistol and is quick on the draw.</description>
+		<graphicData>
+			<texPath>Things/Item/Equipment/WeaponRanged/Revolver</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<uiIconScale>1.4</uiIconScale>
+		<soundInteract>Interact_Revolver</soundInteract>
+		<statBases>
+			<Mass>1.4</Mass>
+			<AccuracyTouch>0.80</AccuracyTouch>
+			<AccuracyShort>0.75</AccuracyShort>
+			<AccuracyMedium>0.45</AccuracyMedium>
+			<AccuracyLong>0.35</AccuracyLong>
+			<RangedWeapon_Cooldown>1.6</RangedWeapon_Cooldown>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_Revolver</defaultProjectile>
+				<warmupTime>0.3</warmupTime>
+				<range>25.9</range>
+				<soundCast>Shot_Revolver</soundCast>
+				<soundCastTail>GunTail_Light</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>grip</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+			<li>
+				<label>barrel</label>
+				<capacities>
+					<li>Blunt</li>
+					<li>Poke</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+		</tools>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+			</li>
+            <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+                <attachmentProperties>
+                    <li>
+                        <filter>
+                            <thingDefs>
+                                <li>Gun_Autopistol</li>
+                                <li>Gun_BoltActionRifle</li>
+                                <li>Gun_PumpShotgun</li>
+                                <li>Gun_SniperRifle</li>
+                            </thingDefs>
+                        </filter>
+                    </li>
+                </attachmentProperties>
+            </li>
+		</comps>
+	</ThingDef>
+	
+	
+	<ThingDef ParentName="BaseGunWithQuality">
+		<defName>Gun_Test_B_Modularization</defName>
+		<label>test item B(Modularization)</label>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<description>A micro-submachine gun. It is short-ranged, but very light in the hands. Its rate of fire tends to make up for its weakness.</description>
+		<graphicData>
+			<texPath>Things/Item/Equipment/WeaponRanged/MachinePistol</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<uiIconScale>1.4</uiIconScale>
+		<soundInteract>Interact_SMG</soundInteract>
+		<statBases>
+			<Mass>2.5</Mass>
+			<AccuracyTouch>0.90</AccuracyTouch>
+			<AccuracyShort>0.65</AccuracyShort>
+			<AccuracyMedium>0.35</AccuracyMedium>
+			<AccuracyLong>0.15</AccuracyLong>
+			<RangedWeapon_Cooldown>0.9</RangedWeapon_Cooldown>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_MachinePistol</defaultProjectile>
+				<warmupTime>0.5</warmupTime>
+				<range>19.9</range>
+				<burstShotCount>3</burstShotCount>
+				<ticksBetweenBurstShots>7</ticksBetweenBurstShots>
+				<soundCast>Shot_MachinePistol</soundCast>
+				<soundCastTail>GunTail_Light</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>grip</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+			<li>
+				<label>barrel</label>
+				<capacities>
+					<li>Blunt</li>
+					<li>Poke</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+		</tools>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+			</li>
+            <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+                <attachmentProperties>
+                    <li>
+                        <filter>
+                            <thingDefs>
+                                <li>Gun_ChainShotgun</li>
+                                <li>Gun_HeavySMG</li>
+                                <li>Gun_LMG</li>
+                                <li>Gun_AssaultRifle</li>
+                                <li>Gun_Minigun</li>
+                            </thingDefs>
+                        </filter>
+                    </li>
+                </attachmentProperties>
+            </li>
+		</comps>
+	</ThingDef>
+
+</Defs>

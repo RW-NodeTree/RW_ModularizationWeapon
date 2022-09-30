@@ -1,0 +1,1210 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using RimWorld;
+using RW_NodeTree;
+using RW_NodeTree.Rendering;
+using RW_NodeTree.Tools;
+using UnityEngine;
+using Verse;
+
+namespace RW_ModularizationWeapon
+{
+    public class CompModularizationWeapon : CompBasicNodeComp
+    {
+        public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
+
+        public bool ShowTargetStare
+        {
+            get
+            {
+                object showTargetStare;
+                CompChildNodeProccesser root = RootNode;
+                if (root?.dataset.TryGetValue("showTargetStare", out showTargetStare) ?? true)
+                {
+                    showTargetStare = false;
+                    root?.dataset.Add("showTargetStare", showTargetStare);
+                }
+                return (bool)showTargetStare;
+            }
+            set
+            {
+                CompChildNodeProccesser root = RootNode;
+                root?.dataset.SetOrAdd("showTargetStare", value);
+                NeedUpdate = true;
+                root?.UpdateNode();
+            }
+        }
+
+        public Thing GetPart(string id) => internal_GetPart(id, ChildNodes[id]);
+
+        internal Thing internal_GetPart(string id, Thing original)
+        {
+            return ShowTargetStare ? (GetTargetPart(id).Thing ?? original) : original;
+        }
+
+        public override void PostPostMake()
+        {
+            CompChildNodeProccesser nodeProccesser = NodeProccesser;
+            if(nodeProccesser != null)
+            {
+                foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
+                {
+                    ThingDef def = properties.defultThing;
+                    if(def != null)
+                    {
+                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                        nodeProccesser.AppendChild(properties.id, thing);
+                    }
+                }
+            }
+        }
+
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
+        }
+
+
+        public bool Unchangeable(string id) => internal_Unchangeable(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_Unchangeable(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if(thing != null && properties != null)
+            {
+                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.unchangeable || properties.unchangeable;
+                }
+                else
+                {
+                    return properties.unchangeable;
+                }
+            }
+            return false;
+        }
+
+
+        public bool NotDraw(string id) => internal_NotDraw(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_NotDraw(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.notDrawInParent || properties.notDraw;
+                }
+                else
+                {
+                    return properties.notDraw;
+                }
+            }
+            return false;
+        }
+
+
+        public bool NotUseTools(string id) => internal_NotUseTools(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_NotUseTools(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.notAllowParentUseTools || properties.notUseTools;
+                }
+                else
+                {
+                    return properties.notUseTools;
+                }
+            }
+            return false;
+        }
+        
+
+        public bool NotUseVerbProperties(string id) => internal_NotUseVerbProperties(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_NotUseVerbProperties(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.notAllowParentUseVerbProperties && properties.notUseVerbProperties;
+                }
+                else
+                {
+                    return properties.notUseVerbProperties;
+                }
+            }
+            return false;
+        }
+        
+
+        public bool VerbPropertiesAffectByOtherPart(string id) => internal_VerbPropertiesAffectByOtherPart(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_VerbPropertiesAffectByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.verbPropertiesAffectByOtherPart && properties.verbPropertiesAffectByOtherPart;
+                }
+                else
+                {
+                    return properties.verbPropertiesAffectByOtherPart;
+                }
+            }
+            return false;
+        }
+        
+
+        public bool ToolsAffectByOtherPart(string id) => internal_ToolsAffectByOtherPart(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_ToolsAffectByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.toolsAffectByOtherPart && properties.toolsAffectByOtherPart;
+                }
+                else
+                {
+                    return properties.toolsAffectByOtherPart;
+                }
+            }
+            return false;
+        }
+
+
+        public LocalTargetInfo GetTargetPart(string id)
+        {
+            LocalTargetInfo result;
+            targetPartsWithId.TryGetValue(id, out result);
+            return result;
+        }
+
+
+        public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
+        {
+            if (id != null && targetInfo.HasThing && targetInfo.Thing.Spawned && NodeProccesser.AllowNode(targetInfo.Thing, id) && ChildNodes[id] != targetInfo.Thing)
+            {
+                targetPartsWithId.SetOrAdd(id, targetInfo);
+                if(ShowTargetStare)
+                {
+                    NeedUpdate = true;
+                    RootNode?.UpdateNode();
+                }
+                return true;
+            }
+            return false;
+        }
+
+
+        public void ResetTargetPart()
+        {
+            targetPartsWithId.Clear();
+        }
+
+
+        #region Offset
+        public float ArmorPenetrationOffset
+        {
+            get
+            {
+                float result = Props.armorPenetrationOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.ArmorPenetrationOffset * properties.armorPenetrationOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float MeleeCooldownTimeOffset
+        {
+            get
+            {
+                float result = Props.meleeCooldownTimeOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.MeleeCooldownTimeOffset * properties.meleeCooldownTimeOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float MeleeDamageOffset
+        {
+            get
+            {
+                float result = Props.meleeDamageOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.MeleeDamageOffset * properties.meleeDamageOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float BurstShotCountOffset
+        {
+            get
+            {
+                float result = Props.burstShotCountOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.BurstShotCountOffset * properties.burstShotCountOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float TicksBetweenBurstShotsOffset
+        {
+            get
+            {
+                float result = Props.ticksBetweenBurstShotsOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.TicksBetweenBurstShotsOffset * properties.ticksBetweenBurstShotsOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float MuzzleFlashScaleOffset
+        {
+            get
+            {
+                float result = Props.muzzleFlashScaleOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.MuzzleFlashScaleOffset * properties.muzzleFlashScaleOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float RangeOffset
+        {
+            get
+            {
+                float result = Props.rangeOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.RangeOffset * properties.rangeOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float WarmupTimeOffset
+        {
+            get
+            {
+                float result = Props.warmupTimeOffset;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.WarmupTimeOffset * properties.warmupTimeOffsetAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float GetStatOffset(StatDef stateDef)
+        {
+            float result = Props.statOffset.GetStatOffsetFromList(stateDef);
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                thing = internal_GetPart(id, thing);
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    if (comp != null && comp.Validity)
+                    {
+                        result += comp.GetStatOffset(stateDef) * properties.statOffsetAffectHorizon.GetStatFactorFromList(stateDef);
+                    }
+                }
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region Multiplier
+        public float ArmorPenetrationMultiplier
+        {
+            get
+            {
+                float result = Props.armorPenetrationMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.ArmorPenetrationMultiplier - 1f) * properties.armorPenetrationMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float MeleeCooldownTimeMultiplier
+        {
+            get
+            {
+                float result = Props.meleeCooldownTimeMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.MeleeCooldownTimeMultiplier - 1f) * properties.meleeCooldownTimeMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float MeleeDamageMultiplier
+        {
+            get
+            {
+                float result = Props.meleeDamageMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.MeleeDamageMultiplier - 1f) * properties.meleeDamageMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float BurstShotCountMultiplier
+        {
+            get
+            {
+                float result = Props.burstShotCountMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.BurstShotCountMultiplier - 1f) * properties.burstShotCountMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float TicksBetweenBurstShotsMultiplier
+        {
+            get
+            {
+                float result = Props.ticksBetweenBurstShotsMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.TicksBetweenBurstShotsMultiplier - 1f) * properties.ticksBetweenBurstShotsMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float MuzzleFlashScaleMultiplier
+        {
+            get
+            {
+                float result = Props.muzzleFlashScaleMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.MuzzleFlashScaleMultiplier - 1f) * properties.muzzleFlashScaleMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float RangeMultiplier
+        {
+            get
+            {
+                float result = Props.rangeMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.RangeMultiplier - 1f) * properties.rangeMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float WarmupTimeMultiplier
+        {
+            get
+            {
+                float result = Props.warmupTimeMultiplier;
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if(thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.WarmupTimeMultiplier - 1f) * properties.warmupTimeMultiplierAffectHorizon;
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+        
+        public float GetStatMultiplier(StatDef stateDef)
+        {
+            float result = Props.statMultiplier.GetStatFactorFromList(stateDef);
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                thing = internal_GetPart(id, thing);
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    if (comp != null && comp.Validity)
+                    {
+                        result *= 1f + (comp.GetStatMultiplier(stateDef) - 1f) * properties.statMultiplierAffectHorizon.GetStatFactorFromList(stateDef);
+                    }
+                }
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region Def
+        public ThingDef ForceProjectile
+        {
+            get
+            {
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    if (thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity && comp.Props.forceProjectile != null && typeof(Projectile).IsAssignableFrom(comp.Props.forceProjectile.thingClass))
+                        {
+                            return comp.Props.forceProjectile;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+        
+
+        public SoundDef ForceSound
+        {
+            get
+            {
+                NodeContainer container = NodeProccesser.ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    if (thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity && comp.Props.forceSound != null)
+                        {
+                            return comp.Props.forceSound;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+        
+
+        public SoundDef ForceSoundCastTail
+        {
+            get
+            {
+                NodeContainer container = ChildNodes;
+                for (int i = 0; i < container.Count; i++)
+                {
+                    string id = container[(uint)i];
+                    Thing thing = container[i];
+                    thing = internal_GetPart(id, thing);
+                    if (thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        if (comp != null && comp.Validity && comp.Props.forceSoundCastTail != null)
+                        {
+                            return comp.Props.forceSoundCastTail;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+        #endregion
+
+
+        #region Verb
+
+
+        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, bool affectDef)
+        {
+            properties = (VerbProperties)properties.SimpleCopy();
+            properties.burstShotCount = (int)(BurstShotCountMultiplier * properties.burstShotCount / Props.burstShotCountMultiplier + BurstShotCountOffset - Props.burstShotCountOffset);
+            properties.ticksBetweenBurstShots = (int)(TicksBetweenBurstShotsMultiplier * properties.ticksBetweenBurstShots / Props.ticksBetweenBurstShotsMultiplier + TicksBetweenBurstShotsOffset - Props.ticksBetweenBurstShotsOffset);
+            properties.muzzleFlashScale = (int)(MuzzleFlashScaleMultiplier * properties.muzzleFlashScale / Props.muzzleFlashScaleMultiplier + MuzzleFlashScaleOffset - Props.muzzleFlashScaleOffset);
+            properties.range = (int)(RangeMultiplier * properties.range / Props.rangeOffset + RangeOffset - Props.rangeOffset);
+            properties.warmupTime = (int)(WarmupTimeMultiplier * properties.warmupTime / Props.warmupTimeMultiplier + WarmupTimeOffset - Props.warmupTimeOffset);
+            if(affectDef)
+            {
+                properties.defaultProjectile = ForceProjectile ?? properties.defaultProjectile;
+                properties.soundCast = ForceSound ?? properties.soundCast;
+                properties.soundCastTail = ForceSoundCastTail ?? properties.soundCastTail;
+            }
+            return properties;
+        }
+
+
+        internal Tool ToolAfterAffect(Tool tool)
+        {
+            tool = (Tool)tool.SimpleCopy();
+            tool.armorPenetration = (int)(ArmorPenetrationMultiplier * tool.armorPenetration / Props.armorPenetrationMultiplier + ArmorPenetrationOffset - Props.armorPenetrationOffset);
+            tool.cooldownTime = (int)(MeleeCooldownTimeMultiplier * tool.cooldownTime / Props.meleeCooldownTimeMultiplier + MeleeCooldownTimeOffset - Props.meleeCooldownTimeOffset);
+            tool.power = (int)(MeleeDamageMultiplier * tool.power / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset);
+            return tool;
+        }
+        #endregion
+        protected override List<(Thing, string, List<RenderInfo>)> AdapteDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos)
+        {
+            for (int i = 0; i < nodeRenderingInfos.Count; i++)
+            {
+                (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (id.NullOrEmpty() && part == parent)
+                {
+                    List<RenderInfo> cacheInfo = renderInfos;
+                    if (NodeProccesser.ParentProccesser != null)
+                    {
+                        for(int j =0; j < cacheInfo.Count; j++)
+                        {
+                            RenderInfo info = cacheInfo[j];
+                            info.material = Props.PartTexMaterial ?? info.material;
+                            cacheInfo[j] = info;
+                        }
+                    }
+                }
+                else if (!internal_NotDraw(part, properties))
+                {
+                    List<RenderInfo> cacheInfo = renderInfos;
+                    if (properties != null)
+                    {
+                        for (int j = 0; j < cacheInfo.Count; j++)
+                        {
+                            RenderInfo info = cacheInfo[j];
+                            Matrix4x4[] matrix = info.matrices;
+                            for (int k = 0; k < matrix.Length; k++)
+                            {
+                                matrix[k] = properties.Transfrom * matrix[k];
+                            }
+                            cacheInfo[j] = info;
+                        }
+                    }
+                }
+            }
+            return nodeRenderingInfos;
+        }
+
+
+        protected override bool AllowNode(Thing node, string id = null)
+        {
+            WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+            if (properties != null)
+            {
+                return properties.filter.Allows(node) && !Unchangeable(id);
+            }
+            return false;
+        }
+
+
+        protected override List<VerbToolRegiestInfo> PostIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> forPostRead)
+        {
+            if (Props.verbPropertiesAffectByChildPart)
+            {
+                for (int i = 0; i < result.Count; i++)
+                {
+                    VerbToolRegiestInfo prop = result[i];
+                    Tool newProp = ToolAfterAffect(prop.berforConvertTool);
+                    prop.afterCobvertTool = newProp;
+                    result[i] = prop;
+                }
+            }
+
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
+                if (!internal_NotUseTools(container[i], attachmentProperties))
+                {
+                    List<Tool> tools = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.Tools;
+                    if (tools != null)
+                    {
+                        result.Capacity += tools.Count;
+                        if (internal_ToolsAffectByOtherPart(container[i], attachmentProperties))
+                        {
+                            for (int j = 0; j < tools.Count; j++)
+                            {
+                                Tool cache = tools[j];
+                                Tool prop = ((CompChildNodeProccesser)container[i])?.GetBeforeConvertVerbCorrespondingThing(ownerType, cache, null).Item3;
+                                Tool newProp = ToolAfterAffect(prop ?? cache);
+                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 0; j < tools.Count; j++)
+                            {
+                                Tool cache = tools[j];
+                                result.Add(new VerbToolRegiestInfo(id, cache, cache));
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+
+        protected override List<VerbPropertiesRegiestInfo> PostIVerbOwner_GetVerbProperties(Type ownerType, List<VerbPropertiesRegiestInfo> result, Dictionary<string, object> forPostRead)
+        {
+            if (Props.verbPropertiesAffectByChildPart)
+            {
+                for (int i = 0; i < result.Count; i++)
+                {
+                    VerbPropertiesRegiestInfo prop = result[i];
+                    VerbProperties newProp = VerbPropertiesAfterAffect(prop.berforConvertProperties, true);
+                    prop.afterConvertProperties = newProp;
+                    result[i] = prop;
+                }
+            }
+
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
+                if (!internal_NotUseVerbProperties(container[i], attachmentProperties))
+                {
+                    List<VerbProperties> verbProperties = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.VerbProperties;
+                    if (verbProperties != null)
+                    {
+                        result.Capacity += verbProperties.Count;
+                        if (internal_VerbPropertiesAffectByOtherPart(container[i], attachmentProperties))
+                        {
+                            for (int j = 0; j < verbProperties.Count; j++)
+                            {
+                                VerbProperties cache = verbProperties[j];
+                                VerbProperties prop = ((CompChildNodeProccesser)container[i])?.GetBeforeConvertVerbCorrespondingThing(ownerType, null, cache).Item4;
+                                VerbProperties newProp = VerbPropertiesAfterAffect(prop ?? cache, false);
+                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 0; j < verbProperties.Count; j++)
+                            {
+                                VerbProperties cache = verbProperties[j];
+                                result.Add(new VerbPropertiesRegiestInfo(id, cache, cache));
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+
+        protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
+        {
+            if (statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS)
+            {
+                CompEquippable eq = parent.GetComp<CompEquippable>();
+                if (eq != null)
+                {
+                    forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
+                    forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
+                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                    List<Verb> verbs = eq.AllVerbs;
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    foreach (Verb verb in verbs)
+                    {
+                        if (verb.tool != null)
+                        {
+                            parent.def.tools.Add(verb.tool);
+                        }
+                        else
+                        {
+                            parent.def.Verbs.Add(verb.verbProps);
+                        }
+                    }
+                    //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                }
+            }
+        }
+
+
+        protected override float PostStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
+        {
+            if (statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS)
+            {
+                CompEquippable eq = parent.GetComp<CompEquippable>();
+                if (eq != null)
+                {
+                    //if (Prefs.DevMode) Log.Message(" postfix before clear: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    //if (Prefs.DevMode) Log.Message(" postfix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    parent.def.Verbs.AddRange((List<VerbProperties>)forPostRead["CompModularizationWeapon_verbs"]);
+                    parent.def.tools.AddRange((List<Tool>)forPostRead["CompModularizationWeapon_tools"]);
+                    //if (Prefs.DevMode) Log.Message(" postfix after change: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                }
+            }
+            return result;
+        }
+
+
+        protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (statWorker is StatWorker_MeleeAverageDPS || statWorker is StatWorker_MeleeAverageArmorPenetration)
+            {
+                foreach (Thing thing in NodeProccesser.ChildNodes)
+                {
+                    stringBuilder.AppendLine("  " + thing.Label + ":");
+                    string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
+                    exp = Regex.Replace(exp, "\n", "\n  ");
+                    stringBuilder.AppendLine(exp);
+                }
+            }
+            return result + "\n" + stringBuilder.ToString();
+        }
+
+
+        protected override void PostPreApplyDamageWithRef(ref DamageInfo dinfo, out bool absorbed)
+        {
+            absorbed = false;
+            int count = NodeProccesser.ChildNodes.Count + 1;
+            dinfo.SetAmount(dinfo.Amount / count);
+            foreach (Thing thing in NodeProccesser.ChildNodes)
+            {
+                thing.TakeDamage(dinfo);
+            }
+        }
+
+
+        public virtual void DisplayUI()
+        {
+
+        }
+
+
+        #region operator
+        public static implicit operator Thing(CompModularizationWeapon node)
+        {
+            return node?.parent;
+        }
+
+        public static implicit operator CompModularizationWeapon(Thing thing)
+        {
+            return thing?.TryGetComp<CompModularizationWeapon>();
+        }
+        #endregion
+
+
+        private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
+    }
+
+
+    public class CompProperties_ModularizationWeapon : CompProperties
+    {
+        public Material PartTexMaterial
+        {
+            get
+            {
+                if (materialCache == null)
+                {
+                    Texture2D texture = (PartTexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(PartTexPath) : null;
+                    if(texture != null)
+                    {
+                        materialCache = new Material(ShaderDatabase.Cutout);
+                        materialCache.mainTexture = texture;
+                    }
+                }
+                return materialCache;
+            }
+        }
+
+
+        public Texture2D PartTexture
+        {
+            get
+            {
+                return PartTexMaterial?.mainTexture as Texture2D;
+            }
+        }
+
+
+        public CompProperties_ModularizationWeapon()
+        {
+            compClass = typeof(CompModularizationWeapon);
+        }
+
+
+        public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
+        {
+            foreach(string error in base.ConfigErrors(parentDef))
+            {
+                yield return error;
+            }
+            if(forceProjectile != null && typeof(Projectile).IsAssignableFrom(forceProjectile.thingClass))
+            {
+                yield return "forceProjectile is not vaildity";
+            }
+            for (int i = 0; i < attachmentProperties.Count; i++)
+            {
+                WeaponAttachmentProperties properties = attachmentProperties[i];
+                if(properties == null)
+                {
+                    yield return $"attachmentProperties[{i}] is null";
+                }
+                else if(properties.id.NullOrEmpty())
+                {
+                    yield return $"attachmentProperties[{i}].id is null or empty";
+                }
+                for (int j = i + 1; j < attachmentProperties.Count; j++)
+                {
+                    WeaponAttachmentProperties propertiesForCompare = attachmentProperties[j];
+                    if(!(propertiesForCompare?.id).NullOrEmpty() && propertiesForCompare.id == properties.id)
+                    {
+                        yield return $"attachmentProperties[{i}].id should be unique, but now repeat by attachmentProperties[{j}].id";
+                    }
+                }
+            }
+        }
+
+
+        public WeaponAttachmentProperties WeaponAttachmentPropertiesById(string id)
+        {
+            if(!id.NullOrEmpty())
+            {
+                foreach(WeaponAttachmentProperties properties in attachmentProperties)
+                {
+                    if(properties.id == id) return properties;
+                }
+            }
+            return null;
+        }
+
+
+
+        public bool unchangeable = false;
+
+
+        public bool notDrawInParent = false;
+
+
+        public bool notAllowParentUseTools = false;
+
+
+        public bool notAllowParentUseVerbProperties = false;
+
+
+        public bool useOriginalCraftMethod = false;
+
+
+        public bool verbPropertiesAffectByOtherPart = false;
+
+
+        public bool toolsAffectByOtherPart = false;
+
+
+        public bool verbPropertiesAffectByChildPart = false;
+
+
+        public bool toolsAffectByChildPart = false;
+
+
+        #region Offset
+        public float armorPenetrationOffset = 0;
+
+
+        public float meleeCooldownTimeOffset = 0;
+
+
+        public float meleeDamageOffset = 0;
+
+
+        public float burstShotCountOffset = 0;
+
+
+        public float ticksBetweenBurstShotsOffset = 0;
+
+
+        public float muzzleFlashScaleOffset = 0;
+
+
+        public float rangeOffset = 0;
+
+
+        public float warmupTimeOffset = 0;
+
+
+        public List<StatModifier> statOffset = new List<StatModifier>();
+        #endregion
+
+
+        #region Multiplier
+        public float armorPenetrationMultiplier = 1f;
+
+
+        public float meleeCooldownTimeMultiplier = 1f;
+
+
+        public float meleeDamageMultiplier = 1f;
+
+
+        public float burstShotCountMultiplier = 1f;
+
+
+        public float ticksBetweenBurstShotsMultiplier = 1f;
+
+
+        public float muzzleFlashScaleMultiplier = 1f;
+
+
+        public float rangeMultiplier = 1f;
+
+
+        public float warmupTimeMultiplier = 1f;
+
+
+        public List<StatModifier> statMultiplier = new List<StatModifier>();
+        #endregion
+
+
+        public string PartTexPath = null;
+
+
+        public ThingDef forceProjectile = null;
+
+
+        public SoundDef forceSound = null;
+
+
+        public SoundDef forceSoundCastTail = null;
+
+
+        public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
+
+
+        private Material materialCache;
+    }
+}

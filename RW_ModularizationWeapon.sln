@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RW_ModularizationWeapon", "RW_ModularizationWeapon\RW_ModularizationWeapon.csproj", "{2B4E6250-023D-49BA-A813-E5B008AFEC11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B4E6250-023D-49BA-A813-E5B008AFEC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4E6250-023D-49BA-A813-E5B008AFEC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4E6250-023D-49BA-A813-E5B008AFEC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4E6250-023D-49BA-A813-E5B008AFEC11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5E7816C-F1C5-4D67-ADB8-528EEC0862D7}
+	EndGlobalSection
+EndGlobal
