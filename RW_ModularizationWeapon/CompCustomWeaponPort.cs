@@ -61,8 +61,10 @@ namespace RW_ModularizationWeapon
 
         public void SetTarget(CompModularizationWeapon selectedWeapon)
         {
+            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
             if (selectedWeapon == null) selestedWeapon = null;
             else if (Props.filter.Allows(selectedWeapon)) this.selestedWeapon = selectedWeapon.parent;
+            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
             privteGen = false;
         }
 
@@ -87,16 +89,12 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public IEnumerable<ThingDef> AllowsMakedDefs
+        public IEnumerable<ThingDef> AllowsMakedDefs => filter.AllowedThingDefs;
+
+
+        public override void ResolveReferences(ThingDef parentDef)
         {
-            get
-            {
-                foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs)
-                {
-                    if (filter.Allows(def)) yield return def;
-                }
-                yield break;
-            }
+            filter.ResolveReferences();
         }
 
         public ThingFilter filter = new ThingFilter();

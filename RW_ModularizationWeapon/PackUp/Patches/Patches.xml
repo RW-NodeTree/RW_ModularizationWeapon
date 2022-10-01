@@ -5,7 +5,13 @@
 		<success>Always</success>
 		<xpath>*/ThingDef[defName="TableMachining"]/comps</xpath>
 		<value>
-			<li Class="RW_ModularizationWeapon.CompProperties_CustomWeaponPort" />
+			<li Class="RW_ModularizationWeapon.CompProperties_CustomWeaponPort">
+				<filter>
+					<thingDefs>
+						<li>Gun_Test_Modularization</li>
+					</thingDefs>
+				</filter>
+			</li>
 		</value>
 		<order>Append</order>
 	</Operation>

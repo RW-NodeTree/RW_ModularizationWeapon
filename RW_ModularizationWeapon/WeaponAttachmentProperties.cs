@@ -18,7 +18,7 @@ namespace RW_ModularizationWeapon
                 if(materialCache == null)
                 {
                     materialCache = new Material(ShaderDatabase.Cutout);
-                    Texture2D texture = (UITexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(UITexPath) : null;
+                    Texture2D texture = (!UITexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(UITexPath) : null;
                     materialCache.mainTexture = texture;
                 }
                 return materialCache;
@@ -58,7 +58,6 @@ namespace RW_ModularizationWeapon
         public int drawWeight;
 
 
-
         #region Offset
         public float armorPenetrationOffsetAffectHorizon = 1;
 
@@ -80,7 +79,6 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-
         #region Multiplier
         public float armorPenetrationMultiplierAffectHorizon = 1;
 
@@ -100,7 +98,6 @@ namespace RW_ModularizationWeapon
 
         public List<StatModifier> statMultiplierAffectHorizon = new List<StatModifier>();
         #endregion
-
 
 
         private Material materialCache;

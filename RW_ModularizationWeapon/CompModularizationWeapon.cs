@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,41 +11,13 @@ using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
 using UnityEngine;
 using Verse;
+using Verse.Noise;
 
 namespace RW_ModularizationWeapon
 {
-    public class CompModularizationWeapon : CompBasicNodeComp
+    public class CompModularizationWeapon : CompBasicNodeComp, IEnumerable<(string,Thing)>
     {
         public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
-
-        public bool ShowTargetStare
-        {
-            get
-            {
-                object showTargetStare;
-                CompChildNodeProccesser root = RootNode;
-                if (root?.dataset.TryGetValue("showTargetStare", out showTargetStare) ?? true)
-                {
-                    showTargetStare = false;
-                    root?.dataset.Add("showTargetStare", showTargetStare);
-                }
-                return (bool)showTargetStare;
-            }
-            set
-            {
-                CompChildNodeProccesser root = RootNode;
-                root?.dataset.SetOrAdd("showTargetStare", value);
-                NeedUpdate = true;
-                root?.UpdateNode();
-            }
-        }
-
-        public Thing GetPart(string id) => internal_GetPart(id, ChildNodes[id]);
-
-        internal Thing internal_GetPart(string id, Thing original)
-        {
-            return ShowTargetStare ? (GetTargetPart(id).Thing ?? original) : original;
-        }
 
         public override void PostPostMake()
         {
@@ -64,7 +37,6 @@ namespace RW_ModularizationWeapon
             }
         }
 
-
         public override void PostExposeData()
         {
             base.PostExposeData();
@@ -72,11 +44,13 @@ namespace RW_ModularizationWeapon
         }
 
 
+        #region Condition
         public bool Unchangeable(string id) => internal_Unchangeable(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_Unchangeable(Thing thing, WeaponAttachmentProperties properties)
         {
             if(thing != null && properties != null)
             {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
                 CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                 if (comp != null && comp.Validity)
                 {
@@ -185,7 +159,37 @@ namespace RW_ModularizationWeapon
             return false;
         }
 
+        #endregion
 
+
+        #region TargetPart
+        public bool ShowTargetPart
+        {
+            get
+            {
+                object showTargetStare;
+                CompChildNodeProccesser root = RootNode;
+                if (!(root?.dataset.TryGetValue("ShowTargetPart", out showTargetStare) ?? false))
+                {
+                    showTargetStare = false;
+                    root?.dataset.Add("ShowTargetPart", showTargetStare);
+                }
+                return (bool)showTargetStare;
+            }
+            set
+            {
+                CompChildNodeProccesser root = RootNode;
+                root?.dataset.SetOrAdd("ShowTargetPart", value);
+                NeedUpdate = true;
+                root?.UpdateNode();
+            }
+        }
+
+
+        public Thing GetPart(string id) => internal_GetPart(id, ChildNodes[id]);
+
+
+        internal Thing internal_GetPart(string id, Thing original) => ShowTargetPart ? (GetTargetPart(id).Thing ?? original) : original;
         public LocalTargetInfo GetTargetPart(string id)
         {
             LocalTargetInfo result;
@@ -199,7 +203,7 @@ namespace RW_ModularizationWeapon
             if (id != null && targetInfo.HasThing && targetInfo.Thing.Spawned && NodeProccesser.AllowNode(targetInfo.Thing, id) && ChildNodes[id] != targetInfo.Thing)
             {
                 targetPartsWithId.SetOrAdd(id, targetInfo);
-                if(ShowTargetStare)
+                if(ShowTargetPart)
                 {
                     NeedUpdate = true;
                     RootNode?.UpdateNode();
@@ -214,6 +218,23 @@ namespace RW_ModularizationWeapon
         {
             targetPartsWithId.Clear();
         }
+
+
+        public IEnumerator<(string,Thing)> GetEnumerator()
+        {
+            foreach(string id in NodeProccesser.RegiestedNodeId)
+            {
+                yield return (id,GetPart(id));
+            }
+            yield break;
+        }
+
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        #endregion
 
 
         #region Offset
@@ -741,8 +762,6 @@ namespace RW_ModularizationWeapon
 
 
         #region Verb
-
-
         internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, bool affectDef)
         {
             properties = (VerbProperties)properties.SimpleCopy();
@@ -768,57 +787,6 @@ namespace RW_ModularizationWeapon
             tool.cooldownTime = (int)(MeleeCooldownTimeMultiplier * tool.cooldownTime / Props.meleeCooldownTimeMultiplier + MeleeCooldownTimeOffset - Props.meleeCooldownTimeOffset);
             tool.power = (int)(MeleeDamageMultiplier * tool.power / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset);
             return tool;
-        }
-        #endregion
-        protected override List<(Thing, string, List<RenderInfo>)> AdapteDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos)
-        {
-            for (int i = 0; i < nodeRenderingInfos.Count; i++)
-            {
-                (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (id.NullOrEmpty() && part == parent)
-                {
-                    List<RenderInfo> cacheInfo = renderInfos;
-                    if (NodeProccesser.ParentProccesser != null)
-                    {
-                        for(int j =0; j < cacheInfo.Count; j++)
-                        {
-                            RenderInfo info = cacheInfo[j];
-                            info.material = Props.PartTexMaterial ?? info.material;
-                            cacheInfo[j] = info;
-                        }
-                    }
-                }
-                else if (!internal_NotDraw(part, properties))
-                {
-                    List<RenderInfo> cacheInfo = renderInfos;
-                    if (properties != null)
-                    {
-                        for (int j = 0; j < cacheInfo.Count; j++)
-                        {
-                            RenderInfo info = cacheInfo[j];
-                            Matrix4x4[] matrix = info.matrices;
-                            for (int k = 0; k < matrix.Length; k++)
-                            {
-                                matrix[k] = properties.Transfrom * matrix[k];
-                            }
-                            cacheInfo[j] = info;
-                        }
-                    }
-                }
-            }
-            return nodeRenderingInfos;
-        }
-
-
-        protected override bool AllowNode(Thing node, string id = null)
-        {
-            WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-            if (properties != null)
-            {
-                return properties.filter.Allows(node) && !Unchangeable(id);
-            }
-            return false;
         }
 
 
@@ -918,8 +886,10 @@ namespace RW_ModularizationWeapon
             }
             return result;
         }
+        #endregion
 
 
+        #region Stat
         protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
         {
             if (statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS)
@@ -986,6 +956,190 @@ namespace RW_ModularizationWeapon
             }
             return result + "\n" + stringBuilder.ToString();
         }
+        #endregion
+
+
+        #region UI
+        #region TreeView
+        public bool GetChildTreeViewOpend(string id)
+        {
+            bool result;
+            if(!childTreeViewOpend.TryGetValue(id,out result))
+            {
+                result = false;
+                childTreeViewOpend.Add(id,result);
+            }
+            return result;
+        }
+
+
+        public void SetChildTreeViewOpend(string id, bool value) => childTreeViewOpend.SetOrAdd(id,value);
+
+
+        public Vector2 TreeViewDrawSize(Vector2 BlockSize)
+        {
+            Vector2 result = BlockSize;
+            foreach((string id, Thing thing) in this)
+            {
+                if(id != null && GetChildTreeViewOpend(id))
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null)
+                    {
+                        Vector2 childSize = comp.TreeViewDrawSize(BlockSize);
+                        result.y += childSize.y;
+                        result.x = Math.Max(childSize.x + BlockSize.y, result.x);
+                    }
+                    else
+                    {
+                        result.y += BlockSize.y;
+                    }
+                }
+            }
+            return result;
+        }
+
+        
+        public float DrawChildTreeView(
+            Vector2 DrawPos,
+            float BlockHeight,
+            float ContainerWidth,
+            Action<string,Thing,CompModularizationWeapon> openEvent,
+            Action<string,Thing,CompModularizationWeapon> closeEvent,
+            Action<string,Thing,CompModularizationWeapon> iconEvent,
+            HashSet<(string, CompModularizationWeapon)> Selected
+        )
+        {
+            Vector2 currentPos = DrawPos;
+            bool cacheWordWrap = Text.WordWrap;
+            GameFont cacheFont = Text.Font;
+            TextAnchor cacheAnchor = Text.Anchor;
+            Text.WordWrap = false;
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.MiddleLeft;
+            foreach ((string id, Thing thing) in this)
+            {
+                if(id != null)
+                {
+                    if (Selected?.Contains((id,this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                    else if(GetChildTreeViewOpend(id)) Widgets.DrawBoxSolid(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight), new Color(1,1,1,.2f));
+                    Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight));//hover
+
+                    if(thing != null)
+                    {
+                        Widgets.ThingIcon(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight),thing);
+                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight),$"{id} : {thing.Label}");
+
+                        if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
+                        {
+                            iconEvent?.Invoke(id, thing, this);
+                        }
+                        if ((CompModularizationWeapon)thing != null)
+                        {
+                            bool opend = GetChildTreeViewOpend(id);
+                            if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                            {
+                                opend = !opend;
+                                if (opend) openEvent?.Invoke(id, thing, this);
+                                else closeEvent?.Invoke(id, thing, this);
+                                SetChildTreeViewOpend(id, opend);
+                            }
+                            if (opend)
+                            {
+                                currentPos.y += ((CompModularizationWeapon)thing).DrawChildTreeView(
+                                    currentPos + Vector2.one * BlockHeight,
+                                    BlockHeight,
+                                    ContainerWidth - BlockHeight,
+                                    openEvent,
+                                    closeEvent,
+                                    iconEvent,
+                                    Selected
+                                );
+                            }
+                        }
+                        else if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                        {
+                            openEvent?.Invoke(id, thing, this);
+                        }
+                    }
+                    else
+                    {
+                        Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight),Props.WeaponAttachmentPropertiesById(id).UITexture,1);
+                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight),id);
+                        if(Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight))) iconEvent?.Invoke(id,thing,this);
+                    }
+                    currentPos.y += BlockHeight;
+                }
+            }
+            Text.WordWrap = cacheWordWrap;
+            Text.Font = GameFont.Small;
+            Text.Anchor = cacheAnchor;
+            return currentPos.y - DrawPos.y;
+        }
+        #endregion
+
+
+
+
+
+        #endregion
+
+
+        protected override List<(Thing, string, List<RenderInfo>)> AdapteDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
+        {
+            for (int i = 0; i < nodeRenderingInfos.Count; i++)
+            {
+                (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (id.NullOrEmpty() && part == parent)
+                {
+                    List<RenderInfo> cacheInfo = renderInfos;
+                    if (NodeProccesser.ParentProccesser != null)
+                    {
+                        for(int j = 0; j < cacheInfo.Count; j++)
+                        {
+                            RenderInfo info = cacheInfo[j];
+                            if(info.material == graphic?.MatAt(rot, this.parent))
+                            {
+                                info.material = Props.PartTexMaterial ?? info.material;
+                                cacheInfo[j] = info;
+                            }
+                        }
+                    }
+                }
+                else if (!internal_NotDraw(part, properties))
+                {
+                    List<RenderInfo> cacheInfo = renderInfos;
+                    if (properties != null)
+                    {
+                        for (int j = 0; j < cacheInfo.Count; j++)
+                        {
+                            RenderInfo info = cacheInfo[j];
+                            Matrix4x4[] matrix = info.matrices;
+                            for (int k = 0; k < matrix.Length; k++)
+                            {
+                                matrix[k] = properties.Transfrom * matrix[k];
+                            }
+                            cacheInfo[j] = info;
+                        }
+                    }
+                }
+            }
+            return nodeRenderingInfos;
+        }
+
+
+        protected override bool AllowNode(Thing node, string id = null)
+        {
+            WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+            //if (Prefs.DevMode) Log.Message($"properties : {properties}");
+            if (properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.filter.AllowedDefCount : {properties.filter.AllowedDefCount}");
+                return properties.filter.Allows(node) && !internal_Unchangeable(node, properties);
+            }
+            return false;
+        }
 
 
         protected override void PostPreApplyDamageWithRef(ref DamageInfo dinfo, out bool absorbed)
@@ -999,10 +1153,10 @@ namespace RW_ModularizationWeapon
             }
         }
 
-
-        public virtual void DisplayUI()
+        protected override HashSet<string> RegiestedNodeId(HashSet<string> regiestedNodeId)
         {
-
+            foreach(WeaponAttachmentProperties properties in Props.attachmentProperties) regiestedNodeId.Add(properties.id);
+            return regiestedNodeId;
         }
 
 
@@ -1019,6 +1173,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
+        private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
     }
 
@@ -1031,7 +1186,7 @@ namespace RW_ModularizationWeapon
             {
                 if (materialCache == null)
                 {
-                    Texture2D texture = (PartTexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(PartTexPath) : null;
+                    Texture2D texture = (!PartTexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(PartTexPath) : null;
                     if(texture != null)
                     {
                         materialCache = new Material(ShaderDatabase.Cutout);
@@ -1104,7 +1259,16 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public override void ResolveReferences(ThingDef parentDef)
+        {
+            foreach (WeaponAttachmentProperties properties in attachmentProperties)
+            {
+                properties.filter.ResolveReferences();
+            }
+        }
 
+
+        #region Condation
         public bool unchangeable = false;
 
 
@@ -1130,6 +1294,7 @@ namespace RW_ModularizationWeapon
 
 
         public bool toolsAffectByChildPart = false;
+        #endregion
 
 
         #region Offset
@@ -1190,9 +1355,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        public string PartTexPath = null;
-
-
+        #region Def
         public ThingDef forceProjectile = null;
 
 
@@ -1200,9 +1363,13 @@ namespace RW_ModularizationWeapon
 
 
         public SoundDef forceSoundCastTail = null;
+        #endregion
 
 
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
+
+
+        public string PartTexPath = null;
 
 
         private Material materialCache;
