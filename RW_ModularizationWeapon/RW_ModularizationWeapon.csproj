@@ -257,10 +257,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rmdir /s/q $(ProjectDir)\PackUp\1.3\Assemblies
-mkdir $(ProjectDir)\PackUp\1.3\Assemblies
-copy $(TargetDir)$(TargetName).* $(ProjectDir)\PackUp\1.3\Assemblies
-rmdir /s/q %25RW_HOME%25\Mods\$(ProjectName)
-mkdir %25RW_HOME%25\Mods\$(ProjectName)
-xcopy $(ProjectDir)\PackUp %25RW_HOME%25\Mods\$(ProjectName) /e/s/q</PostBuildEvent>
+  mkdir $(ProjectDir)\PackUp\1.3\Assemblies
+  copy $(TargetDir)$(TargetName).* $(ProjectDir)\PackUp\1.3\Assemblies
+  rmdir /s/q %25RW_HOME%25\Mods\$(ProjectName)
+  mkdir %25RW_HOME%25\Mods\$(ProjectName)
+  xcopy $(ProjectDir)\PackUp %25RW_HOME%25\Mods\$(ProjectName) /e/s/q</PostBuildEvent>
   </PropertyGroup>
 </Project>

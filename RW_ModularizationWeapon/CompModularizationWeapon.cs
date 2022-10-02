@@ -941,10 +941,27 @@ namespace RW_ModularizationWeapon
         }
 
 
+        protected override float PostStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
+        {
+            if(statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
+            {
+                foreach (Thing thing in NodeProccesser.ChildNodes)
+                {
+                    result += statWorker.GetValue(thing);
+                }
+            }
+            return result;
+        }
+
+
         protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            if (statWorker is StatWorker_MeleeAverageDPS || statWorker is StatWorker_MeleeAverageArmorPenetration)
+            if (statWorker is StatWorker_MeleeAverageDPS || 
+                statWorker is StatWorker_MeleeAverageArmorPenetration || 
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker
+            )
             {
                 foreach (Thing thing in NodeProccesser.ChildNodes)
                 {
@@ -1022,13 +1039,13 @@ namespace RW_ModularizationWeapon
                 if(id != null)
                 {
                     if (Selected?.Contains((id,this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
-                    else if(GetChildTreeViewOpend(id)) Widgets.DrawBoxSolid(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight), new Color(1,1,1,.2f));
+                    else if(GetChildTreeViewOpend(id)) Widgets.DrawHighlightSelected(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight));
                     Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight));//hover
 
                     if(thing != null)
                     {
-                        Widgets.ThingIcon(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight),thing);
-                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight),$"{id} : {thing.Label}");
+                        Widgets.ThingIcon(new Rect(currentPos.x+1, currentPos.y+1,BlockHeight-1,BlockHeight-2),thing);
+                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y+1,ContainerWidth-BlockHeight-1,BlockHeight-2),$"{id} : {thing.Label}");
 
                         if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
                         {
@@ -1221,25 +1238,32 @@ namespace RW_ModularizationWeapon
             }
             if(forceProjectile != null && typeof(Projectile).IsAssignableFrom(forceProjectile.thingClass))
             {
+                forceProjectile = null;
                 yield return "forceProjectile is not vaildity";
             }
-            for (int i = 0; i < attachmentProperties.Count; i++)
+            for (int i = attachmentProperties.Count - 1; i >= 0; i--)
             {
                 WeaponAttachmentProperties properties = attachmentProperties[i];
                 if(properties == null)
                 {
+                    attachmentProperties.RemoveAt(i);
                     yield return $"attachmentProperties[{i}] is null";
+                    continue;
                 }
                 else if(properties.id.NullOrEmpty())
                 {
+                    attachmentProperties.RemoveAt(i);
                     yield return $"attachmentProperties[{i}].id is null or empty";
+                    continue;
                 }
-                for (int j = i + 1; j < attachmentProperties.Count; j++)
+                for (int j = 0; j < i; j++)
                 {
                     WeaponAttachmentProperties propertiesForCompare = attachmentProperties[j];
                     if(!(propertiesForCompare?.id).NullOrEmpty() && propertiesForCompare.id == properties.id)
                     {
-                        yield return $"attachmentProperties[{i}].id should be unique, but now repeat by attachmentProperties[{j}].id";
+                        attachmentProperties.RemoveAt(i);
+                        yield return $"attachmentProperties[{i}].id should be unique, but now repeat with attachmentProperties[{j}].id";
+                        break;
                     }
                 }
             }

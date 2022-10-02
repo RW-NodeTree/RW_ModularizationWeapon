@@ -17,8 +17,9 @@ namespace RW_ModularizationWeapon
 
         public override void PostExposeData()
         {
-            Scribe_Values.Look(ref privteGen, "privteGen");
-            if(privteGen) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
+            bool byref = selestedWeapon?.ParentHolder != null;
+            Scribe_Values.Look(ref byref, "byref");
+            if(byref) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
             else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
         }
 
@@ -42,6 +43,7 @@ namespace RW_ModularizationWeapon
             {
                 Action action = delegate ()
                 {
+                    SetTarget(default(ThingDef),null);
                     CustomWeapon window = new CustomWeapon(selPawn, this);
                     Find.WindowStack.Add(window);
                 };
@@ -51,21 +53,33 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void SetTarget(ThingDef selectedDef)
+        public void SetTarget(ThingDef selectedDef, CustomWeapon customWeapon=null)
         {
-            if (selectedDef == null) selestedWeapon = null;
-            else SetTarget(ThingMaker.MakeThing(selectedDef));
-            privteGen = selestedWeapon != null;
+            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
+            if (selectedDef == null)
+            {
+                selestedWeapon = null;
+                customWeapon?.UpdateStatInfos();
+            }
+            else SetTarget(ThingMaker.MakeThing(selectedDef), customWeapon);
+            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
         }
 
 
-        public void SetTarget(CompModularizationWeapon selectedWeapon)
+        public void SetTarget(CompModularizationWeapon selectedWeapon, CustomWeapon customWeapon=null)
         {
             if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
-            if (selectedWeapon == null) selestedWeapon = null;
-            else if (Props.filter.Allows(selectedWeapon)) this.selestedWeapon = selectedWeapon.parent;
+            if (selectedWeapon == null)
+            {
+                selestedWeapon = null;
+                customWeapon?.UpdateStatInfos();
+            }
+            else if (Props.filter.Allows(selectedWeapon))
+            {
+                this.selestedWeapon = selectedWeapon.parent;
+                customWeapon?.UpdateStatInfos();
+            }
             if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
-            privteGen = false;
         }
 
 
@@ -75,7 +89,6 @@ namespace RW_ModularizationWeapon
         public CompModularizationWeapon GetTargetCompModularizationWeapon() => selestedWeapon;
 
 
-        private bool privteGen = false;
 
         private Thing selestedWeapon = null;
     }

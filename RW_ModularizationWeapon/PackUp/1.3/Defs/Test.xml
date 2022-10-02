@@ -13,7 +13,7 @@
 		<texPath>UI/Buttons/InfoButton</texPath>
 		<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
-		<uiIconScale>1.4</uiIconScale>
+		<uiIconScale>1</uiIconScale>
 		<soundInteract>Interact_Revolver</soundInteract>
 		<statBases>
 			<Mass>2.5</Mass>
@@ -29,35 +29,37 @@
 			</li>
 		</tools>
 		<comps>
-		<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-			<TextureSizeFactor>256</TextureSizeFactor>
-			<TextureFilterMode>Bilinear</TextureFilterMode>
-			<ExceedanceFactor>2</ExceedanceFactor>
-			<ExceedanceOffset>1</ExceedanceOffset>
-			<ForceNodeIdControl>true</ForceNodeIdControl>
-		</li>
-		<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-            <attachmentProperties>
-                <li>
-					<id>test a</id>
-					<defultThing>Gun_Test_A_Modularization</defultThing>
-                    <filter>
-                        <thingDefs>
-                            <li>Gun_Test_A_Modularization</li>
-                        </thingDefs>
-                    </filter>
-                </li>
-                <li>
-					<id>test b</id>
-					<defultThing>Gun_Test_B_Modularization</defultThing>
-                    <filter>
-                        <thingDefs>
-                            <li>Gun_Test_B_Modularization</li>
-                        </thingDefs>
-                    </filter>
-                </li>
-            </attachmentProperties>
-		</li>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ExceedanceFactor>2</ExceedanceFactor>
+				<ExceedanceOffset>1</ExceedanceOffset>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<attachmentProperties>
+					<li>
+						<id>test a</id>
+						<postion>(1,0,0)</postion>
+						<defultThing>Gun_Test_A_Modularization</defultThing>
+						<filter>
+							<thingDefs>
+								<li>Gun_Test_A_Modularization</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>test b</id>
+						<postion>(-1,0,0)</postion>
+						<defultThing>Gun_Test_B_Modularization</defultThing>
+						<filter>
+							<thingDefs>
+								<li>Gun_Test_B_Modularization</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
+			</li>
 		</comps>
 	</ThingDef>
 	
@@ -73,7 +75,7 @@
 			<texPath>Things/Item/Equipment/WeaponRanged/Revolver</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
-		<uiIconScale>1.4</uiIconScale>
+		<uiIconScale>1</uiIconScale>
 		<soundInteract>Interact_Revolver</soundInteract>
 		<statBases>
 			<Mass>1.4</Mass>
@@ -124,6 +126,7 @@
                 <attachmentProperties>
                     <li>
 						<id>test 1</id>
+						<!-- <postion>(1,0,0)</postion> -->
 						<defultThing>Gun_Autopistol</defultThing>
                         <filter>
                             <thingDefs>
@@ -133,6 +136,7 @@
                     </li>
                     <li>
 						<id>test 2</id>
+						<!-- <postion>(0,1,0)</postion> -->
 						<defultThing>Gun_BoltActionRifle</defultThing>
                         <filter>
                             <thingDefs>
@@ -142,6 +146,7 @@
                     </li>
                     <li>
 						<id>test 3</id>
+						<!-- <postion>(-1,-1,0)</postion> -->
 						<defultThing>Gun_PumpShotgun</defultThing>
                         <filter>
                             <thingDefs>
@@ -151,6 +156,7 @@
                     </li>
                     <li>
 						<id>test 4</id>
+						<!-- <postion>(0,1,0)</postion> -->
 						<defultThing>Gun_SniperRifle</defultThing>
                         <filter>
                             <thingDefs>
@@ -174,7 +180,7 @@
 			<texPath>Things/Item/Equipment/WeaponRanged/MachinePistol</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
-		<uiIconScale>1.4</uiIconScale>
+		<uiIconScale>1</uiIconScale>
 		<soundInteract>Interact_SMG</soundInteract>
 		<statBases>
 			<Mass>2.5</Mass>
@@ -227,6 +233,7 @@
                 <attachmentProperties>
                     <li>
 						<id>test 1</id>
+						<!-- <postion>(1,-1,0)</postion> -->
 						<defultThing>Gun_ChainShotgun</defultThing>
                         <filter>
                             <thingDefs>
@@ -236,6 +243,7 @@
                     </li>
                     <li>
 						<id>test 2</id>
+						<!-- <postion>(0,1,0)</postion> -->
 						<defultThing>Gun_HeavySMG</defultThing>
                         <filter>
                             <thingDefs>
@@ -245,6 +253,7 @@
                     </li>
                     <li>
 						<id>test 3</id>
+						<!-- <postion>(-1,0,0)</postion> -->
 						<defultThing>Gun_LMG</defultThing>
                         <filter>
                             <thingDefs>
@@ -254,6 +263,7 @@
                     </li>
                     <li>
 						<id>test 4</id>
+						<!-- <postion>(0,-1,0)</postion> -->
 						<defultThing>Gun_AssaultRifle</defultThing>
                         <filter>
                             <thingDefs>
@@ -263,6 +273,7 @@
                     </li>
                     <li>
 						<id>test 5</id>
+						<!-- <postion>(1,2,0)</postion> -->
 						<defultThing>Gun_Minigun</defultThing>
                         <filter>
                             <thingDefs>
