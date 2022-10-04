@@ -59,7 +59,7 @@ namespace RW_ModularizationWeapon
             if (selectedDef == null)
             {
                 selestedWeapon = null;
-                customWeapon?.UpdateStatInfos();
+                customWeapon?.ResetInfoTags();
             }
             else SetTarget(ThingMaker.MakeThing(selectedDef), customWeapon);
             if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
@@ -72,16 +72,15 @@ namespace RW_ModularizationWeapon
             if (selectedWeapon == null)
             {
                 selestedWeapon = null;
-                customWeapon?.UpdateStatInfos();
+                customWeapon?.ResetInfoTags();
             }
             else if (Props.filter.Allows(selectedWeapon))
             {
                 this.selestedWeapon = selectedWeapon.parent;
-                customWeapon?.UpdateStatInfos();
+                customWeapon?.ResetInfoTags();
             }
             if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
         }
-
 
         public LocalTargetInfo GetTarget() => selestedWeapon;
 

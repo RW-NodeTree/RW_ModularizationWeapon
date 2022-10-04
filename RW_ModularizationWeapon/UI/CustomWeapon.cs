@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
+using Verse.AI;
+using Verse.Noise;
+using static HarmonyLib.Code;
 
 namespace RW_ModularizationWeapon.UI
 {
@@ -32,38 +33,101 @@ namespace RW_ModularizationWeapon.UI
             }
         }
 
-        public Thing SelectedThing
+
+        public (string, CompModularizationWeapon) SelectedPartForChange
         {
             get
             {
-                if (selectedThing != null) return selectedThing;
-                if(selected.Count > 0)
+                if (selected.Count > 0) return selected.First();
+                return (null,null);
+            }
+            set
+            {
+                if (SelectedPartForChange != value)
                 {
-                    (string id, CompModularizationWeapon comp) = selected.First();
-                    if (id != null && comp != null) return comp.GetPart(id) ?? creaftingTable.GetTargetCompModularizationWeapon();
+                    selected.Clear();
+                    if(value.Item1 != null && value.Item2 != null) selected.Add(value);
+                    selectedThingForInfoCard = null;
+                    ResetInfoTags();
+                    ResetSelections();
                 }
+            }
+        }
+
+        public Thing SelectedThingForInfoCard
+        {
+            get
+            {
+                if (selectedThingForInfoCard != null) return selectedThingForInfoCard;
+                (string id, CompModularizationWeapon comp) = SelectedPartForChange;
+                if (id != null && comp != null) return comp.GetPart(id) ?? creaftingTable.GetTargetCompModularizationWeapon();
                 return creaftingTable.GetTargetCompModularizationWeapon();
             }
             set
             {
-                selectedThing = value;
-                UpdateStatInfos();
+                if(selectedThingForInfoCard != value)
+                {
+                    selectedThingForInfoCard = value;
+                    ResetInfoTags();
+                }
             }
         }
 
 
-        public void UpdateStatInfos()
+        public StateInfoTags InfoTags
         {
-            Thing selected = SelectedThing;
-            statInfos.Clear();
-            if (selected != null)
+            get
             {
-                List<StatDrawEntry> cache = new List<StatDrawEntry>();
-                cache.AddRange(from x in selected.def.SpecialDisplayStats(StatRequest.For(selected)) select x);
-                cache.AddRange(from x in (IEnumerable<StatDrawEntry>)StatsReportUtility_StatsToDraw.Invoke(null, new object[] { selected }) where x.ShouldDisplay select x);
-                cache.RemoveAll((StatDrawEntry de) => de.stat != null && !de.stat.showNonAbstract);
-                statInfos.AddRange(from sd in cache orderby sd.category.displayOrder, sd.DisplayPriorityWithinCategory descending, sd.LabelCap select (false, sd));
+                if(stateInfoTags == null && SelectedThingForInfoCard != null) stateInfoTags = new StateInfoTags(348, SelectedThingForInfoCard);
+                return stateInfoTags;
             }
+        }
+
+        public void ResetInfoTags()
+        {
+            stateInfoTags = null;
+        }
+
+        public void ResetSelections()
+        {
+            selections.Clear();
+            (string id, CompModularizationWeapon parent) = SelectedPartForChange;
+            if (parent != null && id != null)
+            {
+                selections.Add((parent.ChildNodes[id], default(ThingDef)));
+                selections.Add((default(Thing), default(ThingDef)));
+                selections.AddRange(
+                    from x
+                    in pawn.Map.listerThings.AllThings
+                    where
+                        x?.Spawned ?? false &&
+                        ((CompModularizationWeapon)x) != null &&
+                        parent.NodeProccesser.AllowNode(parent, id) &&
+                        pawn.CanReserveAndReach(parent.parent, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
+                    select (x, default(ThingDef))
+                );
+            }
+            else
+            {
+                selections.AddRange(
+                    from x
+                    in pawn.Map.listerThings.AllThings
+                    where
+                        x?.Spawned ?? false &&
+                        ((CompModularizationWeapon)x) != null &&
+                        creaftingTable.Props.filter.Allows(x) &&
+                        pawn.CanReserveAndReach(parent.parent, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
+                    select (x, default(ThingDef))
+                );
+                selections.AddRange(
+                    from x
+                    in creaftingTable.Props.AllowsMakedDefs
+                    where
+                        x?.GetCompProperties<CompProperties_ModularizationWeapon>() != null
+                    select (default(Thing), x)
+                );
+            }
+
         }
 
 
@@ -83,6 +147,18 @@ namespace RW_ModularizationWeapon.UI
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Medium;
+            Texture2D horizontalScrollbar = GUI.skin.horizontalScrollbar.normal.background;
+            Texture2D horizontalScrollbarThumb = GUI.skin.horizontalScrollbarThumb.normal.background;
+            Texture2D verticalScrollbar = GUI.skin.verticalScrollbar.normal.background;
+            Texture2D verticalScrollbarThumb = GUI.skin.verticalScrollbarThumb.normal.background;
+
+
+            GUI.skin.horizontalScrollbar.normal.background = TexUI.HighlightTex;
+            GUI.skin.horizontalScrollbarThumb.normal.background = TexUI.HighlightTex;
+            GUI.skin.verticalScrollbar.normal.background = TexUI.HighlightTex;
+            GUI.skin.verticalScrollbarThumb.normal.background = TexUI.HighlightTex;
+
+
             // Widgets.Label(new Rect(0, 0, inRect.width, 36), "AssembleWeapon".Translate());
             CompModularizationWeapon weapon = creaftingTable.GetTargetCompModularizationWeapon();
             if (weapon == null)
@@ -95,7 +171,7 @@ namespace RW_ModularizationWeapon.UI
 
 
             #region weaponPerview
-            GUI.color = new Color32(97, 108, 122, 255);
+            GUI.color = _Border;
             Widgets.DrawBox(new Rect(0, 0, 350, 350));
             GUI.color = Color.white;
             //Log.Message($"draw size : {weapon.NodeProccesser.GetAndUpdateDrawSize(weapon.parent.def.defaultPlacingRot)}");
@@ -116,46 +192,36 @@ namespace RW_ModularizationWeapon.UI
 
 
             #region treeView
-            Vector2 TreeViewSize = weapon?.TreeViewDrawSize(new Vector2(300, 48)) ?? Vector2.zero;
-            TreeViewSize.x = Math.Max(TreeViewSize.x, 348);
+            Vector2 ScrollViewSize = weapon?.TreeViewDrawSize(new Vector2(284, 48)) ?? Vector2.zero;
+            ScrollViewSize.x = Math.Max(ScrollViewSize.x, ScrollViewSize.y < inRect.height - 360 ? 348 : 332);
             //if (Prefs.DevMode) Log.Message($"creaftingTable.GetTargetCompModularizationWeapon() : {creaftingTable.GetTargetCompModularizationWeapon()}; TreeViewSize : {TreeViewSize}");
-            GUI.color = new Color32(97, 108, 122, 255);
+            GUI.color = _Border;
             Widgets.DrawBox(new Rect(0, 358, 350,inRect.height - 358));
             GUI.color = Color.white;
             Widgets.BeginScrollView(
                 new Rect(1, 359, 348, inRect.height - 360),
                 ref ScrollViews[0],
-                new Rect(Vector2.zero, TreeViewSize)
+                new Rect(Vector2.zero, ScrollViewSize)
             );
             weapon?.DrawChildTreeView(
                 Vector2.zero,
                 48,
-                TreeViewSize.x,
+                ScrollViewSize.x,
                 (string id,Thing part, CompModularizationWeapon Parent)=>
                 {
-                    if (selected.Contains((id, Parent)))
-                    {
-                        selected.Clear();
-                    }
+                    if (SelectedPartForChange == (id, Parent))
+                        SelectedPartForChange = (null, null);
                     else
-                    {
-                        selected.Clear();
-                        selected.Add((id, Parent));
-                    }
-                    SelectedThing = null;
+                        SelectedPartForChange = (id, Parent);
+                    SelectedThingForInfoCard = null;
                 },
                 (string id,Thing part, CompModularizationWeapon Parent)=>
                 {
-                    if (selected.Contains((id, Parent)))
-                    {
-                        selected.Clear();
-                    }
+                    if (SelectedPartForChange == (id, Parent))
+                        SelectedPartForChange = (null, null);
                     else
-                    {
-                        selected.Clear();
-                        selected.Add((id, Parent));
-                    }
-                    SelectedThing = null;
+                        SelectedPartForChange = (id, Parent);
+                    SelectedThingForInfoCard = null;
                 },
                 (string id,Thing part, CompModularizationWeapon Parent)=>
                 {
@@ -169,67 +235,37 @@ namespace RW_ModularizationWeapon.UI
 
 
             #region targetPicker
-            Widgets.DrawBoxSolid(new Rect(350, 0, inRect.width - 700, inRect.height), Color.black);
+            //Widgets.DrawBoxSolid(new Rect(350, 0, inRect.width - 700, inRect.height), Color.black);
+            ScrollViewSize = new Vector2(inRect.width - 700, selections.Count * 48);
+            ScrollViewSize.x = ScrollViewSize.y < inRect.height ? ScrollViewSize.x : ScrollViewSize.x - GUI.skin.verticalScrollbar.fixedWidth;
+            Widgets.BeginScrollView(
+                new Rect(350, 0, inRect.width - 700, inRect.height),
+                ref ScrollViews[1],
+                new Rect(Vector2.zero, ScrollViewSize)
+            );
+            for(int i = 0; i < selections.Count; i++)
+            {
 
+            }
 
+            Widgets.EndScrollView();
             #endregion
 
 
             #region infoCard
-            GUI.color = new Color32(97, 108, 122, 255);
+            GUI.color = _Border;
             Widgets.DrawBox(new Rect(inRect.width - 350, 0, 350, inRect.height));
             GUI.color = Color.white;
-            float infoCardWidth = inRect.height - 2 > infoCardMaxHeight ? 348 : 332;
-            Widgets.BeginScrollView(
-                new Rect(inRect.width - 349, 1, 348, inRect.height - 2),
-                ref ScrollViews[1],
-                new Rect(0,0, infoCardWidth, infoCardMaxHeight)
-            );
-            Widgets.BeginGroup(new Rect(-8, 0, infoCardWidth + 8, infoCardMaxHeight));
-            Text.Font = GameFont.Small;
-            infoCardMaxHeight = 0;
-            for(int i = 0; i < statInfos.Count; i++)
-            {
-                (bool open, StatDrawEntry stat) = statInfos[i];
-                infoCardMaxHeight += stat.Draw(
-                    0,
-                    infoCardMaxHeight,
-                    infoCardWidth,
-                    open,
-                    false,
-                    false,
-                    delegate ()
-                    {
-                        open = !open;
-                    },
-                    delegate () { },
-                    ScrollViews[1],
-                    new Rect(0,0, 0, inRect.height - 2)
-                );
-                if (open)
-                {
-                    string explanationText = stat.GetExplanationText(StatRequest.For(SelectedThing));
-                    float num3 = Text.CalcHeight(explanationText, infoCardWidth) + 10f;
-                    if (infoCardMaxHeight + 2 >= ScrollViews[1].y && infoCardMaxHeight <= ScrollViews[1].y + inRect.height - 2)
-                        Widgets.DrawBoxSolid(new Rect(8, infoCardMaxHeight, infoCardWidth, 2), new Color32(51, 153, 255, 96));
-
-                    infoCardMaxHeight += 2;
-
-                    if (infoCardMaxHeight + num3 >= ScrollViews[1].y && infoCardMaxHeight <= ScrollViews[1].y + inRect.height - 2)
-                    {
-                        GUI.color = new Color32(51, 153, 255, 255);
-                        Widgets.DrawHighlightSelected(new Rect(8, infoCardMaxHeight, infoCardWidth, num3));
-                        GUI.color = Color.white;
-                        Widgets.Label(new Rect(8, infoCardMaxHeight, infoCardWidth, num3), explanationText);
-                    }
-                    infoCardMaxHeight += num3;
-                }
-                statInfos[i] = (open, stat);
-            }
-            Widgets.EndGroup();
-            Widgets.EndScrollView();
+            InfoTags?.Draw(new Rect(inRect.width - 349, 1, 348, inRect.height - 2));
             #endregion
+
+
+            GUI.skin.horizontalScrollbar.normal.background = horizontalScrollbar;
+            GUI.skin.horizontalScrollbarThumb.normal.background = horizontalScrollbarThumb;
+            GUI.skin.verticalScrollbar.normal.background = verticalScrollbar;
+            GUI.skin.verticalScrollbarThumb.normal.background = verticalScrollbarThumb;
         }
+
 
         public override void Close(bool doCloseSound = true)
         {
@@ -238,14 +274,13 @@ namespace RW_ModularizationWeapon.UI
             base.Close(doCloseSound);
         }
 
-        private static readonly Color32 Border = new Color32(97, 108, 122, 255);
+        private static readonly Color32 _Border = new Color32(97, 108, 122, 255);
         private readonly Pawn pawn;
         private readonly CompCustomWeaponPort creaftingTable;
         private readonly HashSet<(string, CompModularizationWeapon)> selected = new HashSet<(string, CompModularizationWeapon)>();
-        private readonly List<(bool,StatDrawEntry)> statInfos = new List<(bool,StatDrawEntry)>();
-        private readonly MethodInfo StatsReportUtility_StatsToDraw = typeof(StatsReportUtility).GetMethod("StatsToDraw", BindingFlags.Static | BindingFlags.NonPublic, null, new Type[] { typeof(Thing) }, null);
+        private readonly List<(Thing,ThingDef)> selections = new List<(Thing, ThingDef)>();
         private Vector2[] ScrollViews = new Vector2[2];
-        private Thing selectedThing = null;
-        private float infoCardMaxHeight = 0;
+        private StateInfoTags stateInfoTags = null;
+        private Thing selectedThingForInfoCard = null;
     }
 }

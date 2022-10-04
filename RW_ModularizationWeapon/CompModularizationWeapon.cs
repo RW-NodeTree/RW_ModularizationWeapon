@@ -200,10 +200,11 @@ namespace RW_ModularizationWeapon
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
-            if (id != null && targetInfo.HasThing && targetInfo.Thing.Spawned && NodeProccesser.AllowNode(targetInfo.Thing, id) && ChildNodes[id] != targetInfo.Thing)
+            if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
-                targetPartsWithId.SetOrAdd(id, targetInfo);
-                if(ShowTargetPart)
+                if(targetInfo.Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
+                else if((targetInfo.Thing?.Spawned ?? true)) targetPartsWithId.SetOrAdd(id, targetInfo);
+                if (ShowTargetPart)
                 {
                     NeedUpdate = true;
                     RootNode?.UpdateNode();
@@ -972,6 +973,26 @@ namespace RW_ModularizationWeapon
                 }
             }
             return result + "\n" + stringBuilder.ToString();
+        }
+
+
+        protected override IEnumerable<Dialog_InfoCard.Hyperlink> PostStatWorker_GetInfoCardHyperlinks(StatWorker statWorker, StatRequest reqstatRequest, IEnumerable<Dialog_InfoCard.Hyperlink> result)
+        {
+            foreach(Dialog_InfoCard.Hyperlink link in result)
+            {
+                yield return link;
+            }
+            if (statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker
+            )
+            {
+                foreach (Thing thing in NodeProccesser.ChildNodes)
+                {
+                    yield return new Dialog_InfoCard.Hyperlink(thing);
+                }
+            }
         }
         #endregion
 

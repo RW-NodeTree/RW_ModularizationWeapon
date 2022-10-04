@@ -245,6 +245,7 @@
     <Compile Include="AI\JobDriver_ModifyWeapon.cs" />
     <Compile Include="CompCustomWeaponPort.cs" />
     <Compile Include="UI\CustomWeapon.cs" />
+    <Compile Include="UI\StateInfoTags.cs" />
     <Compile Include="WeaponAttachmentProperties.cs" />
     <Compile Include="CompModularizationWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
