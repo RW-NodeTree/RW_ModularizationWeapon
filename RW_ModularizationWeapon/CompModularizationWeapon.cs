@@ -40,6 +40,7 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
+            Scribe_Values.Look(ref showTargetPart, "showTargetPart");
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
         }
 
@@ -167,21 +168,24 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                object showTargetStare;
-                CompChildNodeProccesser root = RootNode;
-                if (!(root?.dataset.TryGetValue("ShowTargetPart", out showTargetStare) ?? false))
+                bool result = showTargetPart;
+                CompModularizationWeapon parent = (CompModularizationWeapon)ParentProccesser?.parent;
+                while(!result && parent != null)
                 {
-                    showTargetStare = false;
-                    root?.dataset.Add("ShowTargetPart", showTargetStare);
+                    result = parent.showTargetPart;
+                    parent = (CompModularizationWeapon)parent.ParentProccesser?.parent;
                 }
-                return (bool)showTargetStare;
+                return result;
             }
             set
             {
-                CompChildNodeProccesser root = RootNode;
-                root?.dataset.SetOrAdd("ShowTargetPart", value);
-                NeedUpdate = true;
-                root?.UpdateNode();
+
+                showTargetPart = value;
+                if (ShowTargetPart != value)
+                {
+                    NeedUpdate = true;
+                    ParentProccesser?.UpdateNode();
+                }
             }
         }
 
@@ -946,7 +950,7 @@ namespace RW_ModularizationWeapon
         {
             if(statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
             {
-                foreach (Thing thing in NodeProccesser.ChildNodes)
+                foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
                 {
                     result += statWorker.GetValue(thing);
                 }
@@ -964,7 +968,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in NodeProccesser.ChildNodes)
+                foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
                 {
                     stringBuilder.AppendLine("  " + thing.Label + ":");
                     string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
@@ -988,7 +992,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in NodeProccesser.ChildNodes)
+                foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
                 {
                     yield return new Dialog_InfoCard.Hyperlink(thing);
                 }
@@ -1185,7 +1189,7 @@ namespace RW_ModularizationWeapon
             absorbed = false;
             int count = NodeProccesser.ChildNodes.Count + 1;
             dinfo.SetAmount(dinfo.Amount / count);
-            foreach (Thing thing in NodeProccesser.ChildNodes)
+            foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
             {
                 thing.TakeDamage(dinfo);
             }
@@ -1213,6 +1217,7 @@ namespace RW_ModularizationWeapon
 
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
+        private bool showTargetPart = false;
     }
 
 
