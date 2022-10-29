@@ -252,14 +252,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PackUp\About\*" />
-    <Content Include="PackUp\1.3\Defs\*" />
+    <Content Include="PackUp\1.4\Defs\Test.xml" />
     <Content Include="PackUp\Patches\*" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rmdir /s/q $(ProjectDir)\PackUp\1.3\Assemblies
-  mkdir $(ProjectDir)\PackUp\1.3\Assemblies
-  copy $(TargetDir)$(TargetName).* $(ProjectDir)\PackUp\1.3\Assemblies
+    <PostBuildEvent>rmdir /s/q $(ProjectDir)\PackUp\1.4\Assemblies
+  mkdir $(ProjectDir)\PackUp\1.4\Assemblies
+  copy $(TargetDir)$(TargetName).* $(ProjectDir)\PackUp\1.4\Assemblies
   rmdir /s/q %25RW_HOME%25\Mods\$(ProjectName)
   mkdir %25RW_HOME%25\Mods\$(ProjectName)
   xcopy $(ProjectDir)\PackUp %25RW_HOME%25\Mods\$(ProjectName) /e/s/q</PostBuildEvent>

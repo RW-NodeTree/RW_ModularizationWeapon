@@ -19,6 +19,12 @@ namespace RW_ModularizationWeapon
     {
         public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
 
+        public new CompChildNodeProccesser ParentProccesser 
+        { 
+            get => ShowTargetPart ? targetModeParent ?? base.ParentProccesser : base.ParentProccesser;
+            set => targetModeParent = value;
+        }
+
         public override void PostPostMake()
         {
             CompChildNodeProccesser nodeProccesser = NodeProccesser;
@@ -31,7 +37,7 @@ namespace RW_ModularizationWeapon
                     {
                         Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
                         thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                        nodeProccesser.AppendChild(properties.id, thing);
+                        nodeProccesser.AppendChild(thing, properties.id);
                     }
                 }
             }
@@ -40,13 +46,12 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref showTargetPart, "showTargetPart");
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
         }
 
 
         #region Condition
-        public bool Unchangeable(string id) => internal_Unchangeable(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        public bool Unchangeable(string id) => internal_Unchangeable(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_Unchangeable(Thing thing, WeaponAttachmentProperties properties)
         {
             if(thing != null && properties != null)
@@ -66,7 +71,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool NotDraw(string id) => internal_NotDraw(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        public bool NotDraw(string id) => internal_NotDraw(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_NotDraw(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -85,7 +90,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool NotUseTools(string id) => internal_NotUseTools(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        public bool NotUseTools(string id) => internal_NotUseTools(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_NotUseTools(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -104,7 +109,7 @@ namespace RW_ModularizationWeapon
         }
         
 
-        public bool NotUseVerbProperties(string id) => internal_NotUseVerbProperties(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        public bool NotUseVerbProperties(string id) => internal_NotUseVerbProperties(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_NotUseVerbProperties(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -123,7 +128,7 @@ namespace RW_ModularizationWeapon
         }
         
 
-        public bool VerbPropertiesAffectByOtherPart(string id) => internal_VerbPropertiesAffectByOtherPart(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        public bool VerbPropertiesAffectByOtherPart(string id) => internal_VerbPropertiesAffectByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_VerbPropertiesAffectByOtherPart(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -142,7 +147,7 @@ namespace RW_ModularizationWeapon
         }
         
 
-        public bool ToolsAffectByOtherPart(string id) => internal_ToolsAffectByOtherPart(GetPart(id), Props.WeaponAttachmentPropertiesById(id));
+        public bool ToolsAffectByOtherPart(string id) => internal_ToolsAffectByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
         internal bool internal_ToolsAffectByOtherPart(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -168,50 +173,57 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                bool result = showTargetPart;
-                CompModularizationWeapon parent = (CompModularizationWeapon)ParentProccesser?.parent;
-                while(!result && parent != null)
-                {
-                    result = parent.showTargetPart;
-                    parent = (CompModularizationWeapon)parent.ParentProccesser?.parent;
-                }
-                return result;
+                return CompChildNodeProccesser.RenderingKey == "ShowTargetPart";
             }
             set
             {
-
-                showTargetPart = value;
                 if (ShowTargetPart != value)
                 {
-                    NeedUpdate = true;
+                    CompChildNodeProccesser.RenderingKey = value ? "ShowTargetPart" : "";
+                    for(int i = 0; i < ChildNodes.Count; i++)
+                    {
+                        Thing node = ChildNodes[i];
+                        string id = ChildNodes[(uint)i];
+                        if(targetPartsWithId.ContainsKey(id))
+                        {
+                            ChildNodes[id] = targetPartsWithId[id].Thing;
+                            targetPartsWithId[id] = node;
+                        }
+                    }
                     ParentProccesser?.UpdateNode();
                 }
             }
         }
 
 
-        public Thing GetPart(string id) => internal_GetPart(id, ChildNodes[id]);
-
-
-        internal Thing internal_GetPart(string id, Thing original) => ShowTargetPart ? (GetTargetPart(id).Thing ?? original) : original;
-        public LocalTargetInfo GetTargetPart(string id)
-        {
-            LocalTargetInfo result;
-            targetPartsWithId.TryGetValue(id, out result);
-            return result;
-        }
+        public LocalTargetInfo OrginalPart(string id) => ShowTargetPart ? ((targetPartsWithId.TryGetValue(id)).Thing ?? ChildNodes[id]) : ChildNodes[id];
 
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
             if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
-                if(targetInfo.Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
-                else if((targetInfo.Thing?.Spawned ?? true)) targetPartsWithId.SetOrAdd(id, targetInfo);
                 if (ShowTargetPart)
                 {
+                    if (targetInfo.Thing == OrginalPart(id).Thing)
+                    {
+                        ChildNodes[id] = targetInfo.Thing;
+                        targetPartsWithId.Remove(id);
+                    }
+                    else if ((targetInfo.Thing?.Spawned ?? true))
+                    {
+                        targetPartsWithId.SetOrAdd(id, ChildNodes[id]);
+                        ChildNodes[id] = targetInfo.Thing;
+                    }
                     NeedUpdate = true;
                     RootNode?.UpdateNode();
+                }
+                else
+                {
+                    if (targetInfo.Thing == ChildNodes[id])
+                        targetPartsWithId.Remove(id);
+                    else if ((targetInfo.Thing?.Spawned ?? true))
+                        targetPartsWithId.SetOrAdd(id, targetInfo);
                 }
                 return true;
             }
@@ -229,7 +241,7 @@ namespace RW_ModularizationWeapon
         {
             foreach(string id in NodeProccesser.RegiestedNodeId)
             {
-                yield return (id,GetPart(id));
+                yield return (id,ChildNodes[id]);
             }
             yield break;
         }
@@ -253,7 +265,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -278,7 +289,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -303,7 +313,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -328,7 +337,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -353,7 +361,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -378,7 +385,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -403,7 +409,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -428,7 +433,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -451,7 +455,6 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 Thing thing = container[i];
-                thing = internal_GetPart(id, thing);
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (thing != null)
                 {
@@ -478,7 +481,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -503,7 +505,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -528,7 +529,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -553,7 +553,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -578,7 +577,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -603,7 +601,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -628,7 +625,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -653,7 +649,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                     if(thing != null)
                     {
@@ -676,7 +671,6 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 Thing thing = container[i];
-                thing = internal_GetPart(id, thing);
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (thing != null)
                 {
@@ -702,7 +696,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
@@ -726,7 +719,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
@@ -750,7 +742,6 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
-                    thing = internal_GetPart(id, thing);
                     if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
@@ -1177,6 +1168,7 @@ namespace RW_ModularizationWeapon
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
             {
+                if(node == null) return properties.allowEmpty;
                 //if (Prefs.DevMode) Log.Message($"properties.filter.AllowedDefCount : {properties.filter.AllowedDefCount}");
                 return properties.filter.Allows(node) && !internal_Unchangeable(node, properties);
             }
@@ -1217,7 +1209,7 @@ namespace RW_ModularizationWeapon
 
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
-        private bool showTargetPart = false;
+        private CompChildNodeProccesser targetModeParent;
     }
 
 

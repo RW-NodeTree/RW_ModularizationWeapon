@@ -18,7 +18,7 @@ namespace RW_ModularizationWeapon
                 if(materialCache == null)
                 {
                     materialCache = new Material(ShaderDatabase.Cutout);
-                    Texture2D texture = (!UITexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(UITexPath) : null;
+                    Texture2D texture = (!UITexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(UITexPath) : BaseContent.BadTex;
                     materialCache.mainTexture = texture;
                 }
                 return materialCache;
@@ -42,6 +42,8 @@ namespace RW_ModularizationWeapon
         public Vector3 scale = Vector3.one;
 
         public string UITexPath;
+
+        public bool allowEmpty;
 
         public bool unchangeable;
 

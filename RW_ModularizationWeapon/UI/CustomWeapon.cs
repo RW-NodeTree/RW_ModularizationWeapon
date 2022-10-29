@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
@@ -60,7 +61,7 @@ namespace RW_ModularizationWeapon.UI
             {
                 if (selectedThingForInfoCard != null) return selectedThingForInfoCard;
                 (string id, CompModularizationWeapon comp) = SelectedPartForChange;
-                if (id != null && comp != null) return comp.GetPart(id) ?? creaftingTable.GetTargetCompModularizationWeapon();
+                if (id != null && comp != null) return comp.ChildNodes[id] ?? creaftingTable.GetTargetCompModularizationWeapon();
                 return creaftingTable.GetTargetCompModularizationWeapon();
             }
             set
@@ -94,17 +95,17 @@ namespace RW_ModularizationWeapon.UI
             (string id, CompModularizationWeapon parent) = SelectedPartForChange;
             if (parent != null && id != null)
             {
-                selections.Add((parent.ChildNodes[id], default(ThingDef)));
-                selections.Add((default(Thing), default(ThingDef)));
+                selections.Add((parent.OrginalPart(id).Thing, default(ThingDef)));
+                if(parent.NodeProccesser.AllowNode(null, id)) selections.Add((default(Thing), default(ThingDef)));
                 selections.AddRange(
                     from x
                     in pawn.Map.listerThings.AllThings
                     where
-                        x?.Spawned ?? false &&
+                        (x?.Spawned ?? false) &&
                         ((CompModularizationWeapon)x) != null &&
-                        parent.NodeProccesser.AllowNode(parent, id) &&
+                        parent.NodeProccesser.AllowNode(x, id) &&
                         pawn.CanReserveAndReach(parent.parent, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
-                    select (x, default(ThingDef))
+                    select (x, x.def)
                 );
             }
             else
@@ -113,11 +114,11 @@ namespace RW_ModularizationWeapon.UI
                     from x
                     in pawn.Map.listerThings.AllThings
                     where
-                        x?.Spawned ?? false &&
+                        (x?.Spawned ?? false) &&
                         ((CompModularizationWeapon)x) != null &&
                         creaftingTable.Props.filter.Allows(x) &&
                         pawn.CanReserveAndReach(parent.parent, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
-                    select (x, default(ThingDef))
+                    select (x, x.def)
                 );
                 selections.AddRange(
                     from x
@@ -245,6 +246,81 @@ namespace RW_ModularizationWeapon.UI
             );
             for(int i = 0; i < selections.Count; i++)
             {
+                Rect rect = new Rect(0, i * 48, ScrollViewSize.x, 48);
+                if (rect.y + 48 >= ScrollViews[1].y && rect.y <= ScrollViews[1].y + inRect.height)
+                {
+                    (Thing selThing, ThingDef selDef) = selections[i];
+                    (string id, CompModularizationWeapon part) = SelectedPartForChange;
+
+                    if (part != null && id != null)
+                    {
+                        if (part.ChildNodes[id] == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        Widgets.DrawHighlightIfMouseover(rect);//hover
+                        if (selThing != null)
+                        {
+                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selThing);
+                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
+                            if(Widgets.ButtonInvisible(rect))
+                            {
+                                part.SetTargetPart(id, selThing);
+                                SelectedThingForInfoCard = selThing;
+                            }
+                        }
+                        else if (selDef != null)
+                        {
+                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selDef);
+                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selDef.label);
+                            if (Widgets.ButtonInvisible(rect))
+                            {
+                                part.SetTargetPart(id, ThingMaker.MakeThing(selDef));
+                                SelectedThingForInfoCard = part.ChildNodes[id];
+                            }
+                        }
+                        else
+                        {
+                            Widgets.DrawTextureFitted(new Rect(1, rect.y + 1, 46, 46), part.Props.WeaponAttachmentPropertiesById(id).UITexture,1);
+                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
+                            if (Widgets.ButtonInvisible(rect))
+                            {
+                                part.SetTargetPart(id, null);
+                                SelectedThingForInfoCard = null;
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (weapon.parent == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        Widgets.DrawHighlightIfMouseover(rect);//hover
+                        if (selThing != null)
+                        {
+                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selThing);
+                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
+                            if (Widgets.ButtonInvisible(rect))
+                            {
+                                creaftingTable.SetTarget(selThing, this);
+                            }
+                        }
+                        else if (selDef != null)
+                        {
+                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selDef);
+                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selDef.label);
+                            if (Widgets.ButtonInvisible(rect))
+                            {
+                                creaftingTable.SetTarget(selDef, this);
+                            }
+                        }
+                        else
+                        {
+                            Widgets.DrawTextureFitted(new Rect(1, rect.y + 1, 46, 46), part.Props.WeaponAttachmentPropertiesById(id).UITexture, 1);
+                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
+                            if (Widgets.ButtonInvisible(rect))
+                            {
+                                creaftingTable.SetTarget(default(Thing), this);
+                            }
+                        }
+                    }
+                }
 
             }
 
