@@ -49,7 +49,6 @@ namespace RW_ModularizationWeapon.UI
                 {
                     selected.Clear();
                     if(value.Item1 != null && value.Item2 != null) selected.Add(value);
-                    selectedThingForInfoCard = null;
                     ResetInfoTags();
                     ResetSelections();
                 }
@@ -60,18 +59,9 @@ namespace RW_ModularizationWeapon.UI
         {
             get
             {
-                if (selectedThingForInfoCard != null) return selectedThingForInfoCard;
                 (string id, CompModularizationWeapon comp) = SelectedPartForChange;
                 if (id != null && comp != null) return comp.ChildNodes[id] ?? creaftingTable.GetTargetCompModularizationWeapon();
                 return creaftingTable.GetTargetCompModularizationWeapon();
-            }
-            set
-            {
-                if(selectedThingForInfoCard != value)
-                {
-                    selectedThingForInfoCard = value;
-                    ResetInfoTags();
-                }
             }
         }
 
@@ -180,7 +170,6 @@ namespace RW_ModularizationWeapon.UI
             {
                 Widgets.DrawHighlightSelected(new Rect(7, 7, 336, 336));
                 SelectedPartForChange = (null, null);
-                SelectedThingForInfoCard = null;
             }
             else Widgets.DrawHighlightIfMouseover(new Rect(7, 7, 336, 336));
             if (weapon != null) Widgets.ThingIcon(new Rect(7, 7, 336, 336), weapon);
@@ -215,7 +204,6 @@ namespace RW_ModularizationWeapon.UI
                         SelectedPartForChange = (null, null);
                     else
                         SelectedPartForChange = (id, Parent);
-                    SelectedThingForInfoCard = null;
                 },
                 (string id,Thing part, CompModularizationWeapon Parent)=>
                 {
@@ -223,7 +211,6 @@ namespace RW_ModularizationWeapon.UI
                         SelectedPartForChange = (null, null);
                     else
                         SelectedPartForChange = (id, Parent);
-                    SelectedThingForInfoCard = null;
                 },
                 (string id,Thing part, CompModularizationWeapon Parent)=>
                 {
@@ -265,7 +252,6 @@ namespace RW_ModularizationWeapon.UI
                             if(Widgets.ButtonInvisible(rect))
                             {
                                 partForChange.SetTargetPart(idForChange, selThing);
-                                SelectedThingForInfoCard = selThing;
                             }
                         }
                         else if(selDef == null)
@@ -275,8 +261,6 @@ namespace RW_ModularizationWeapon.UI
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 partForChange.SetTargetPart(idForChange, null);
-                                SelectedThingForInfoCard = null;
-
                             }
                         }
                     }
@@ -329,7 +313,10 @@ namespace RW_ModularizationWeapon.UI
         public override void Close(bool doCloseSound = true)
         {
             CompModularizationWeapon weapon = creaftingTable.GetTargetCompModularizationWeapon();
-            if (weapon != null) weapon.ShowTargetPart = false;
+            if (weapon != null)
+            {
+                weapon.ShowTargetPart = false;
+            }
             base.Close(doCloseSound);
         }
 
@@ -340,6 +327,5 @@ namespace RW_ModularizationWeapon.UI
         private readonly List<(Thing,ThingDef)> selections = new List<(Thing, ThingDef)>();
         private Vector2[] ScrollViews = new Vector2[2];
         private StateInfoTags stateInfoTags = null;
-        private Thing selectedThingForInfoCard = null;
     }
 }

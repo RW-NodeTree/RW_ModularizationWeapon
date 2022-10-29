@@ -11,7 +11,6 @@ using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
 using UnityEngine;
 using Verse;
-using Verse.Noise;
 
 namespace RW_ModularizationWeapon
 {
@@ -23,7 +22,7 @@ namespace RW_ModularizationWeapon
 
         private new CompChildNodeProccesser RootNode => ((CompBasicNodeComp)RootPart).RootNode;
 
-        public CompModularizationWeapon ParentPart => ParentProccesser.parent;
+        public CompModularizationWeapon ParentPart => ParentProccesser?.parent;
 
         public CompModularizationWeapon RootPart
         {
@@ -61,6 +60,7 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
+            Scribe_Values.Look(ref showTargetPart, "showTargetPart");
             Scribe_Values.Look(ref usingTargetPart, "usingTargetPart");
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
         }
@@ -200,6 +200,8 @@ namespace RW_ModularizationWeapon
             }
             set
             {
+                //Log.Message($"ShowTargetPart {parent} : {value}; org : {ShowTargetPart}");
+
                 showTargetPart = value;
                 UsingTargetPart = ShowTargetPart;
                 RootNode?.UpdateNode();
@@ -211,15 +213,25 @@ namespace RW_ModularizationWeapon
             get => usingTargetPart;
             set
             {
-                if(usingTargetPart != value)
+                //Log.Message($"UsingTargetPart {parent} : {value}; org : {usingTargetPart}");
+                if (usingTargetPart != value)
                 {
-                    foreach(string id in ChildNodes.InnerIdListForReading)
+                    foreach (string id in NodeProccesser.RegiestedNodeId)
                     {
-                        Thing cache = targetPartsWithId.TryGetValue(id).Thing;
-                        if(cache != null)
+                        LocalTargetInfo cache;
+                        if(targetPartsWithId.TryGetValue(id, out cache))
                         {
                             targetPartsWithId[id] = ChildNodes[id];
-                            ChildNodes[id] = cache;
+                            ChildNodes[id] = cache.Thing;
+                        }
+                        else
+                        {
+                            CompModularizationWeapon comp = ChildNodes[id];
+                            if (comp != null)
+                            {
+                                comp.targetModeParent = NodeProccesser;
+                                comp.UsingTargetPart = value;
+                            }
                         }
                     }
                     usingTargetPart = value;
@@ -235,11 +247,13 @@ namespace RW_ModularizationWeapon
         {
             if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
+
+                //Log.Message($"SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
                 if (UsingTargetPart)
                 {
                     if(!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, ChildNodes[id]);
                     ChildNodes[id] = targetInfo.Thing;
-                    if (targetPartsWithId[id] == targetInfo.Thing) targetPartsWithId.Remove(id);
+                    if (targetPartsWithId[id].Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
                     NeedUpdate = true;
                     RootNode?.UpdateNode();
                 }
@@ -1222,6 +1236,7 @@ namespace RW_ModularizationWeapon
 
         protected override void PostAdd(Thing node, string id, bool success)
         {
+            //Log.Message($"add {id} : {node} => {success}");
             if(success)
             {
                 CompModularizationWeapon comp = node;
@@ -1238,6 +1253,7 @@ namespace RW_ModularizationWeapon
         {
             if (success)
             {
+                //Log.Message($"remove {id} : {node} => {success}");
                 CompModularizationWeapon comp = node;
                 if (comp != null)
                 {
