@@ -251,6 +251,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PackUp\1.4\Defs\Jobs_Misc.xml" />
     <Content Include="PackUp\About\*" />
     <Content Include="PackUp\1.4\Defs\Test.xml" />
     <Content Include="PackUp\Patches\*" />

@@ -276,6 +276,36 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public void ApplyTargetPart(IntVec3 pos)
+        {
+            foreach((string id, LocalTargetInfo item) in targetPartsWithId)
+            {
+                if(item.HasThing)
+                {
+                    Map map = item.Thing.Map;
+                    Thing thing = ChildNodes[id];
+                    item.Thing.DeSpawn();
+                    ChildNodes[id] = item.Thing;
+                    if(thing != null && map != null)
+                    {
+                        GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
+                    }
+                }
+            }
+
+            ResetTargetPart();
+
+            foreach (Thing item in ChildNodes.InnerListForReading)
+            {
+                CompModularizationWeapon comp = item;
+                if(comp != null)
+                {
+                    comp.ApplyTargetPart(pos);
+                }
+            }
+        }
+
+
         public IEnumerator<(string,Thing)> GetEnumerator()
         {
             foreach(string id in NodeProccesser.RegiestedNodeId)

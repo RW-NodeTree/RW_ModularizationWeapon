@@ -297,11 +297,21 @@ namespace RW_ModularizationWeapon.UI
 
             #region infoCard
             GUI.color = _Border;
-            Widgets.DrawBox(new Rect(inRect.width - 350, 0, 350, inRect.height));
+            Widgets.DrawBox(new Rect(inRect.width - 350, 0, 350, inRect.height - 48));
             GUI.color = Color.white;
-            InfoTags?.Draw(new Rect(inRect.width - 349, 1, 348, inRect.height - 2));
+            InfoTags?.Draw(new Rect(inRect.width - 349, 1, 348, inRect.height - 50));
             #endregion
 
+            if(Widgets.ButtonText(new Rect(inRect.width - 350, inRect.height - 48, 350,48), "Apply"))
+            {
+                Close(false);
+                if(weapon != null)
+                {
+                    weapon.ApplyTargetPart(pawn.Position);
+                    if (!weapon.parent.Spawned) GenPlace.TryPlaceThing(weapon.parent, pawn.Position, pawn.Map, ThingPlaceMode.Near);
+
+                }
+            }
 
             GUI.skin.horizontalScrollbar.normal.background = horizontalScrollbar;
             GUI.skin.horizontalScrollbarThumb.normal.background = horizontalScrollbarThumb;
