@@ -19,10 +19,25 @@ namespace RW_ModularizationWeapon
     {
         public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
 
-        public new CompChildNodeProccesser ParentProccesser 
-        { 
-            get => ShowTargetPart ? targetModeParent ?? base.ParentProccesser : base.ParentProccesser;
-            set => targetModeParent = value;
+        private new CompChildNodeProccesser ParentProccesser => UsingTargetPart ? (targetModeParent ?? base.ParentProccesser) : base.ParentProccesser;
+
+        private new CompChildNodeProccesser RootNode => ((CompBasicNodeComp)RootPart).RootNode;
+
+        public CompModularizationWeapon ParentPart => ParentProccesser.parent;
+
+        public CompModularizationWeapon RootPart
+        {
+            get
+            {
+                CompModularizationWeapon result = null;
+                CompModularizationWeapon current = this;
+                while (current != null)
+                {
+                    result = current;
+                    current = current.ParentPart;
+                }
+                return result;
+            }
         }
 
         public override void PostPostMake()
@@ -46,6 +61,7 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
+            Scribe_Values.Look(ref usingTargetPart, "usingTargetPart");
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
         }
 
@@ -173,48 +189,57 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                return CompChildNodeProccesser.RenderingKey == "ShowTargetPart";
+                bool result = false;
+                CompModularizationWeapon current = this;
+                while(!result && current != null)
+                {
+                    result = current.showTargetPart;
+                    current = current.ParentPart;
+                }
+                return result;
             }
             set
             {
-                if (ShowTargetPart != value)
+                showTargetPart = value;
+                UsingTargetPart = ShowTargetPart;
+                RootNode?.UpdateNode();
+            }
+        }
+
+        private bool UsingTargetPart
+        {
+            get => usingTargetPart;
+            set
+            {
+                if(usingTargetPart != value)
                 {
-                    CompChildNodeProccesser.RenderingKey = value ? "ShowTargetPart" : "";
-                    for(int i = 0; i < ChildNodes.Count; i++)
+                    foreach(string id in ChildNodes.InnerIdListForReading)
                     {
-                        Thing node = ChildNodes[i];
-                        string id = ChildNodes[(uint)i];
-                        if(targetPartsWithId.ContainsKey(id))
+                        Thing cache = targetPartsWithId.TryGetValue(id).Thing;
+                        if(cache != null)
                         {
-                            ChildNodes[id] = targetPartsWithId[id].Thing;
-                            targetPartsWithId[id] = node;
+                            targetPartsWithId[id] = ChildNodes[id];
+                            ChildNodes[id] = cache;
                         }
                     }
-                    ParentProccesser?.UpdateNode();
+                    usingTargetPart = value;
                 }
             }
         }
 
 
-        public LocalTargetInfo OrginalPart(string id) => ShowTargetPart ? ((targetPartsWithId.TryGetValue(id)).Thing ?? ChildNodes[id]) : ChildNodes[id];
+        public LocalTargetInfo OrginalPart(string id) => UsingTargetPart ? ((targetPartsWithId.TryGetValue(id)).Thing ?? ChildNodes[id]) : ChildNodes[id];
 
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
             if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
-                if (ShowTargetPart)
+                if (UsingTargetPart)
                 {
-                    if (targetInfo.Thing == OrginalPart(id).Thing)
-                    {
-                        ChildNodes[id] = targetInfo.Thing;
-                        targetPartsWithId.Remove(id);
-                    }
-                    else if ((targetInfo.Thing?.Spawned ?? true))
-                    {
-                        targetPartsWithId.SetOrAdd(id, ChildNodes[id]);
-                        ChildNodes[id] = targetInfo.Thing;
-                    }
+                    if(!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, ChildNodes[id]);
+                    ChildNodes[id] = targetInfo.Thing;
+                    if (targetPartsWithId[id] == targetInfo.Thing) targetPartsWithId.Remove(id);
                     NeedUpdate = true;
                     RootNode?.UpdateNode();
                 }
@@ -714,7 +739,7 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                NodeContainer container = NodeProccesser.ChildNodes;
+                NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
                     string id = container[(uint)i];
@@ -941,7 +966,7 @@ namespace RW_ModularizationWeapon
         {
             if(statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
             {
-                foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
+                foreach (Thing thing in ChildNodes.InnerListForReading)
                 {
                     result += statWorker.GetValue(thing);
                 }
@@ -959,7 +984,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
+                foreach (Thing thing in ChildNodes.InnerListForReading)
                 {
                     stringBuilder.AppendLine("  " + thing.Label + ":");
                     string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
@@ -983,7 +1008,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
+                foreach (Thing thing in ChildNodes.InnerListForReading)
                 {
                     yield return new Dialog_InfoCard.Hyperlink(thing);
                 }
@@ -1127,7 +1152,7 @@ namespace RW_ModularizationWeapon
                 if (id.NullOrEmpty() && part == parent)
                 {
                     List<RenderInfo> cacheInfo = renderInfos;
-                    if (NodeProccesser.ParentProccesser != null)
+                    if (ParentProccesser != null)
                     {
                         for(int j = 0; j < cacheInfo.Count; j++)
                         {
@@ -1179,18 +1204,47 @@ namespace RW_ModularizationWeapon
         protected override void PostPreApplyDamageWithRef(ref DamageInfo dinfo, out bool absorbed)
         {
             absorbed = false;
-            int count = NodeProccesser.ChildNodes.Count + 1;
+            int count = ChildNodes.Count + 1;
             dinfo.SetAmount(dinfo.Amount / count);
-            foreach (Thing thing in NodeProccesser.ChildNodes.InnerListForReading)
+            foreach (Thing thing in ChildNodes.InnerListForReading)
             {
                 thing.TakeDamage(dinfo);
             }
         }
 
+
         protected override HashSet<string> RegiestedNodeId(HashSet<string> regiestedNodeId)
         {
             foreach(WeaponAttachmentProperties properties in Props.attachmentProperties) regiestedNodeId.Add(properties.id);
             return regiestedNodeId;
+        }
+
+
+        protected override void PostAdd(Thing node, string id, bool success)
+        {
+            if(success)
+            {
+                CompModularizationWeapon comp = node;
+                if(comp != null)
+                {
+                    comp.targetModeParent = NodeProccesser;
+                    comp.UsingTargetPart = comp.ShowTargetPart;
+                }
+            }
+        }
+
+
+        protected override void PostRemove(Thing node, string id, bool success)
+        {
+            if (success)
+            {
+                CompModularizationWeapon comp = node;
+                if (comp != null)
+                {
+                    comp.targetModeParent = null;
+                    comp.UsingTargetPart = comp.ShowTargetPart;
+                }
+            }
         }
 
 
@@ -1210,6 +1264,8 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
         private CompChildNodeProccesser targetModeParent;
+        private bool showTargetPart = false;
+        private bool usingTargetPart = false;
     }
 
 

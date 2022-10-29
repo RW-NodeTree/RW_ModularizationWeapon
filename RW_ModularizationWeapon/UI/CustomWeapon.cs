@@ -24,6 +24,7 @@ namespace RW_ModularizationWeapon.UI
             this.soundClose = SoundDefOf.InfoCard_Close;
             this.pawn = pawn;
             this.creaftingTable = creaftingTable;
+            ResetSelections();
         }
 
         public override Vector2 InitialSize
@@ -102,9 +103,8 @@ namespace RW_ModularizationWeapon.UI
                     in pawn.Map.listerThings.AllThings
                     where
                         (x?.Spawned ?? false) &&
-                        ((CompModularizationWeapon)x) != null &&
                         parent.NodeProccesser.AllowNode(x, id) &&
-                        pawn.CanReserveAndReach(parent.parent, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
+                        pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
                 );
             }
@@ -117,7 +117,7 @@ namespace RW_ModularizationWeapon.UI
                         (x?.Spawned ?? false) &&
                         ((CompModularizationWeapon)x) != null &&
                         creaftingTable.Props.filter.Allows(x) &&
-                        pawn.CanReserveAndReach(parent.parent, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
+                        pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
                 );
                 selections.AddRange(
@@ -162,13 +162,13 @@ namespace RW_ModularizationWeapon.UI
 
             // Widgets.Label(new Rect(0, 0, inRect.width, 36), "AssembleWeapon".Translate());
             CompModularizationWeapon weapon = creaftingTable.GetTargetCompModularizationWeapon();
-            if (weapon == null)
-            {
-                ThingDef Gun_Test_Modularization = DefDatabase<ThingDef>.GetNamed("Gun_Test_Modularization");
-                creaftingTable.SetTarget(Gun_Test_Modularization,this);
-                weapon = creaftingTable.GetTargetCompModularizationWeapon();
-                //if (Prefs.DevMode) Log.Message($"Gun_Test_Modularization : {Gun_Test_Modularization}; thing : {thing}");
-            }
+            //if (weapon == null)
+            //{
+            //    ThingDef Gun_Test_Modularization = DefDatabase<ThingDef>.GetNamed("Gun_Test_Modularization");
+            //    creaftingTable.SetTarget(Gun_Test_Modularization,this);
+            //    weapon = creaftingTable.GetTargetCompModularizationWeapon();
+            //    //if (Prefs.DevMode) Log.Message($"Gun_Test_Modularization : {Gun_Test_Modularization}; thing : {thing}");
+            //}
 
 
             #region weaponPerview
@@ -179,7 +179,8 @@ namespace RW_ModularizationWeapon.UI
             if (Widgets.ButtonInvisible(new Rect(7, 7, 336, 336)))
             {
                 Widgets.DrawHighlightSelected(new Rect(7, 7, 336, 336));
-
+                SelectedPartForChange = (null, null);
+                SelectedThingForInfoCard = null;
             }
             else Widgets.DrawHighlightIfMouseover(new Rect(7, 7, 336, 336));
             if (weapon != null) Widgets.ThingIcon(new Rect(7, 7, 336, 336), weapon);
@@ -244,17 +245,18 @@ namespace RW_ModularizationWeapon.UI
                 ref ScrollViews[1],
                 new Rect(Vector2.zero, ScrollViewSize)
             );
+
+            (string idForChange, CompModularizationWeapon partForChange) = SelectedPartForChange;
             for(int i = 0; i < selections.Count; i++)
             {
                 Rect rect = new Rect(0, i * 48, ScrollViewSize.x, 48);
                 if (rect.y + 48 >= ScrollViews[1].y && rect.y <= ScrollViews[1].y + inRect.height)
                 {
                     (Thing selThing, ThingDef selDef) = selections[i];
-                    (string id, CompModularizationWeapon part) = SelectedPartForChange;
 
-                    if (part != null && id != null)
+                    if (partForChange != null && idForChange != null)
                     {
-                        if (part.ChildNodes[id] == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        if (partForChange.ChildNodes[idForChange] == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
@@ -262,27 +264,17 @@ namespace RW_ModularizationWeapon.UI
                             Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))
                             {
-                                part.SetTargetPart(id, selThing);
+                                partForChange.SetTargetPart(idForChange, selThing);
                                 SelectedThingForInfoCard = selThing;
                             }
                         }
-                        else if (selDef != null)
+                        else if(selDef == null)
                         {
-                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selDef);
-                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selDef.label);
-                            if (Widgets.ButtonInvisible(rect))
-                            {
-                                part.SetTargetPart(id, ThingMaker.MakeThing(selDef));
-                                SelectedThingForInfoCard = part.ChildNodes[id];
-                            }
-                        }
-                        else
-                        {
-                            Widgets.DrawTextureFitted(new Rect(1, rect.y + 1, 46, 46), part.Props.WeaponAttachmentPropertiesById(id).UITexture,1);
+                            Widgets.DrawTextureFitted(new Rect(1, rect.y + 1, 46, 46), partForChange.Props.WeaponAttachmentPropertiesById(idForChange).UITexture,1);
                             Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
                             if (Widgets.ButtonInvisible(rect))
                             {
-                                part.SetTargetPart(id, null);
+                                partForChange.SetTargetPart(idForChange, null);
                                 SelectedThingForInfoCard = null;
 
                             }
@@ -290,7 +282,7 @@ namespace RW_ModularizationWeapon.UI
                     }
                     else
                     {
-                        if (weapon.parent == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        if (weapon?.parent == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
@@ -308,15 +300,6 @@ namespace RW_ModularizationWeapon.UI
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 creaftingTable.SetTarget(selDef, this);
-                            }
-                        }
-                        else
-                        {
-                            Widgets.DrawTextureFitted(new Rect(1, rect.y + 1, 46, 46), part.Props.WeaponAttachmentPropertiesById(id).UITexture, 1);
-                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
-                            if (Widgets.ButtonInvisible(rect))
-                            {
-                                creaftingTable.SetTarget(default(Thing), this);
                             }
                         }
                     }

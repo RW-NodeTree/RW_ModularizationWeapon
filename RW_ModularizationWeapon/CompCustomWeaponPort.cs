@@ -55,20 +55,20 @@ namespace RW_ModularizationWeapon
 
         public void SetTarget(ThingDef selectedDef, CustomWeapon customWeapon=null)
         {
-            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
             if (selectedDef == null)
             {
+                if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
                 selestedWeapon = null;
                 customWeapon?.ResetInfoTags();
+                if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
             }
             else SetTarget(ThingMaker.MakeThing(selectedDef), customWeapon);
-            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
         }
 
 
         public void SetTarget(CompModularizationWeapon selectedWeapon, CustomWeapon customWeapon=null)
         {
-            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
+            if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
             if (selectedWeapon == null)
             {
                 selestedWeapon = null;
@@ -79,7 +79,7 @@ namespace RW_ModularizationWeapon
                 this.selestedWeapon = selectedWeapon.parent;
                 customWeapon?.ResetInfoTags();
             }
-            if ((CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
+            if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
         }
 
         public LocalTargetInfo GetTarget() => selestedWeapon;
