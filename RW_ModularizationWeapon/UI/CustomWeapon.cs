@@ -307,9 +307,11 @@ namespace RW_ModularizationWeapon.UI
                 Close(false);
                 if(weapon != null)
                 {
-                    weapon.ApplyTargetPart(pawn.Position,pawn.Map);
-                    if (!weapon.parent.Spawned) GenPlace.TryPlaceThing(weapon.parent, pawn.Position, pawn.Map, ThingPlaceMode.Near);
-
+                    //weapon.ApplyTargetPart(pawn.Position,pawn.Map);
+                    //if (!weapon.parent.Spawned) GenPlace.TryPlaceThing(weapon.parent, pawn.Position, pawn.Map, ThingPlaceMode.Near);
+                    Job job = new Job(DefDatabase<JobDef>.GetNamed("ModularizationWeapon_Apply"), creaftingTable.parent);
+                    pawn.jobs.EndCurrentJob(JobCondition.Incompletable, false, false);
+                    pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
                 }
             }
 
