@@ -18,10 +18,6 @@ namespace RW_ModularizationWeapon
     {
         public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
 
-        private new CompChildNodeProccesser ParentProccesser => UsingTargetPart ? (targetModeParent ?? base.ParentProccesser) : base.ParentProccesser;
-
-        private new CompChildNodeProccesser RootNode => ((CompBasicNodeComp)RootPart).RootNode;
-
         public CompModularizationWeapon ParentPart => ParentProccesser?.parent;
 
         public CompModularizationWeapon RootPart
@@ -217,6 +213,7 @@ namespace RW_ModularizationWeapon
                 //Log.Message($"UsingTargetPart {parent} : {value}; org : {usingTargetPart}");
                 if (usingTargetPart != value)
                 {
+                    usingTargetPart = value;
                     foreach (string id in NodeProccesser.RegiestedNodeId)
                     {
                         LocalTargetInfo cache;
@@ -235,7 +232,6 @@ namespace RW_ModularizationWeapon
                             }
                         }
                     }
-                    usingTargetPart = value;
                 }
             }
         }
@@ -1184,7 +1180,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        protected override List<(Thing, string, List<RenderInfo>)> AdapteDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
+        protected override List<(Thing, string, List<RenderInfo>)> OverrideDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
         {
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
@@ -1288,6 +1284,12 @@ namespace RW_ModularizationWeapon
                     comp.UsingTargetPart = comp.ShowTargetPart;
                 }
             }
+        }
+
+
+        protected override CompChildNodeProccesser OverrideParentProccesser(CompChildNodeProccesser orginal)
+        {
+            return UsingTargetPart ? (targetModeParent ?? orginal) : orginal;
         }
 
 
