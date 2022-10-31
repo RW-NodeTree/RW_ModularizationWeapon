@@ -35,8 +35,7 @@ namespace RW_ModularizationWeapon.AI
             this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
             this.FailOnBurningImmobile(TargetIndex.A);
 
-            LocalTargetInfo targetA = TargetA;
-            CompCustomWeaponPort port = targetA.Thing.TryGetComp<CompCustomWeaponPort>();
+            CompCustomWeaponPort port = TargetA.Thing.TryGetComp<CompCustomWeaponPort>();
             if (port != null)
             {
                 job.targetB = port.GetTarget();
@@ -75,6 +74,7 @@ namespace RW_ModularizationWeapon.AI
                     {
                         Pawn actor = toil.actor;
                         Job job = actor.CurJob;
+                        job.count = 1;
                         if (!actor.Reserve(comp.parent, job, 1, 1))
                         {
                             this.EndJobWith(JobCondition.Incompletable);
@@ -120,6 +120,7 @@ namespace RW_ModularizationWeapon.AI
                     {
                         GenPlace.TryPlaceThing(comp.parent, TargetA.Cell, actor.Map, ThingPlaceMode.Near);
                     }
+                    comp.RootNode.UpdateNode();
                 };
                 yield return toil
                     .FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch);
@@ -127,7 +128,6 @@ namespace RW_ModularizationWeapon.AI
             else
             {
                 this.EndJobWith(JobCondition.Incompletable);
-                yield break;
             }
             yield break;
         }
