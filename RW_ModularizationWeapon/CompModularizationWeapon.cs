@@ -276,20 +276,16 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void ApplyTargetPart(IntVec3 pos)
+        public void ApplyTargetPart(IntVec3 pos, Map map)
         {
             foreach((string id, LocalTargetInfo item) in targetPartsWithId)
             {
-                if(item.HasThing)
+                Thing thing = ChildNodes[id];
+                ChildNodes[id] = item.Thing;
+                if(ChildNodes[id] == item.Thing)
+                if (thing != null && map != null)
                 {
-                    Map map = item.Thing.Map;
-                    Thing thing = ChildNodes[id];
-                    item.Thing.DeSpawn();
-                    ChildNodes[id] = item.Thing;
-                    if(thing != null && map != null)
-                    {
-                        GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
-                    }
+                    GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
                 }
             }
 
@@ -300,7 +296,7 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = item;
                 if(comp != null)
                 {
-                    comp.ApplyTargetPart(pos);
+                    comp.ApplyTargetPart(pos, map);
                 }
             }
         }

@@ -307,7 +307,7 @@ namespace RW_ModularizationWeapon.UI
                 Close(false);
                 if(weapon != null)
                 {
-                    weapon.ApplyTargetPart(pawn.Position);
+                    weapon.ApplyTargetPart(pawn.Position,pawn.Map);
                     if (!weapon.parent.Spawned) GenPlace.TryPlaceThing(weapon.parent, pawn.Position, pawn.Map, ThingPlaceMode.Near);
 
                 }
