@@ -1232,7 +1232,10 @@ namespace RW_ModularizationWeapon
             {
                 if(node == null) return properties.allowEmpty;
                 //if (Prefs.DevMode) Log.Message($"properties.filter.AllowedDefCount : {properties.filter.AllowedDefCount}");
-                return properties.filter.Allows(node) && !internal_Unchangeable(node, properties);
+                return
+                    ((CompModularizationWeapon)node)?.targetModeParent == null &&
+                    properties.filter.Allows(node) &&
+                    !internal_Unchangeable(node, properties);
             }
             return false;
         }
@@ -1257,33 +1260,17 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override void PostAdd(Thing node, string id, bool success)
+        protected override void Added(NodeContainer container, string id)
         {
-            //Log.Message($"add {id} : {node} => {success}");
-            if(success)
-            {
-                CompModularizationWeapon comp = node;
-                if(comp != null)
-                {
-                    comp.targetModeParent = NodeProccesser;
-                    comp.UsingTargetPart = comp.ShowTargetPart;
-                }
-            }
+            targetModeParent = container.Comp;
+            UsingTargetPart = ShowTargetPart;
         }
 
 
-        protected override void PostRemove(Thing node, string id, bool success)
+        protected override void Removed(NodeContainer container, string id)
         {
-            if (success)
-            {
-                //Log.Message($"remove {id} : {node} => {success}");
-                CompModularizationWeapon comp = node;
-                if (comp != null)
-                {
-                    comp.targetModeParent = null;
-                    comp.UsingTargetPart = comp.ShowTargetPart;
-                }
-            }
+            targetModeParent = null;
+            UsingTargetPart = ShowTargetPart;
         }
 
 
