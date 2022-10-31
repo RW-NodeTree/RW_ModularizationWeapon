@@ -57,6 +57,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
+
         public override void PostExposeData()
         {
             base.PostExposeData();
