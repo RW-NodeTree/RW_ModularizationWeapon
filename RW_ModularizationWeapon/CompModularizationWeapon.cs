@@ -12,6 +12,7 @@ using RW_NodeTree.Tools;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace RW_ModularizationWeapon
 {
@@ -220,7 +221,7 @@ namespace RW_ModularizationWeapon
 
                 showTargetPart = value;
                 UsingTargetPart = ShowTargetPart;
-                RootNode?.UpdateNode();
+                NodeProccesser?.UpdateNode();
             }
         }
 
@@ -271,7 +272,7 @@ namespace RW_ModularizationWeapon
                     ChildNodes[id] = targetInfo.Thing;
                     if (targetPartsWithId[id].Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
                     NeedUpdate = true;
-                    RootNode?.UpdateNode();
+                    NodeProccesser?.UpdateNode();
                 }
                 else
                 {
@@ -1223,14 +1224,14 @@ namespace RW_ModularizationWeapon
                         .FailOnBurningImmobile(hauledThingIndex);
                     yield return
                         Toils_Haul.StartCarryThing(hauledThingIndex)
-                        .FailOnCannotTouch(hauledThingIndex, PathEndMode.Touch);
+                        .FailOnCannotTouch(hauledThingIndex, PathEndMode.ClosestTouch);
                     yield return
-                        Toils_Haul.CarryHauledThingToCell(craftingTable)
+                        Toils_Haul.CarryHauledThingToCell(craftingTable, PathEndMode.InteractionCell)
                         .FailOnDestroyedNullOrForbidden(craftingTable)
                         .FailOnBurningImmobile(craftingTable);
                     yield return
                         Toils_Haul.PlaceCarriedThingInCellFacing(craftingTable)
-                        .FailOnCannotTouch(craftingTable, PathEndMode.Touch);
+                        .FailOnCannotTouch(craftingTable, PathEndMode.InteractionCell);
 
                     toil = new Toil();
                     toil.initAction = delegate ()
@@ -1311,13 +1312,32 @@ namespace RW_ModularizationWeapon
                             Matrix4x4[] matrix = info.matrices;
                             for (int k = 0; k < matrix.Length; k++)
                             {
-                                matrix[k] = properties.Transfrom * matrix[k];
+                                //Vector4 cache = matrix[k].GetRow(0);
+                                //matrix[k].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
+
+                                //cache = matrix[k].GetRow(1);
+                                //matrix[k].SetRow(1, new Vector4(0, new Vector3(cache.x, cache.y, cache.z).magnitude, 0, cache.w));
+
+                                //cache = matrix[k].GetRow(2);
+                                //matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
+
+                                //matrix[k] = properties.Transfrom * matrix[k];
+                                matrix[k] = properties.Transfrom;
                             }
                             cacheInfo[j] = info;
                         }
                     }
                 }
             }
+            nodeRenderingInfos.SortBy(x =>
+            {
+                for (int i = 0; i < Props.attachmentProperties.Count; i++)
+                {
+                    WeaponAttachmentProperties properties = Props.attachmentProperties[i];
+                    if (properties.id == x.Item2) return i;
+                }
+                return -1;
+            });
             return nodeRenderingInfos;
         }
 

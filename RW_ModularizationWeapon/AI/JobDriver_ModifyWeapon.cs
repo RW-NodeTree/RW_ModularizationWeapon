@@ -82,17 +82,27 @@ namespace RW_ModularizationWeapon.AI
                         }
                     };
                     yield return toil;
+
                     yield return
                         Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch)
                         .FailOnDestroyedNullOrForbidden(TargetIndex.B)
                         .FailOnBurningImmobile(TargetIndex.B);
                     yield return Toils_Haul.StartCarryThing(TargetIndex.B)
-                        .FailOnCannotTouch(TargetIndex.B, PathEndMode.Touch);
-                    yield return Toils_Haul.CarryHauledThingToCell(TargetIndex.A)
+                        .FailOnCannotTouch(TargetIndex.B, PathEndMode.ClosestTouch);
+                    yield return Toils_Haul.CarryHauledThingToCell(TargetIndex.A, PathEndMode.InteractionCell)
                         .FailOnDestroyedNullOrForbidden(TargetIndex.A)
                         .FailOnBurningImmobile(TargetIndex.A);
                     yield return Toils_Haul.PlaceCarriedThingInCellFacing(TargetIndex.A)
-                        .FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch);
+                        .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
+
+                    toil = new Toil();
+                    toil.initAction = delegate ()
+                    {
+                        Pawn actor = toil.actor;
+                        Job job = actor.CurJob;
+                        TargetThingB.Position = TargetThingA.Position;
+                    };
+                    yield return toil;
                 }
 
                 foreach (Toil forCarry in comp.CarryTarget(TargetIndex.A, TargetIndex.C))
@@ -101,12 +111,12 @@ namespace RW_ModularizationWeapon.AI
                 }
 
                 yield return
-                    Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
+                    Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell)
                     .FailOnDestroyedNullOrForbidden(TargetIndex.A)
                     .FailOnBurningImmobile(TargetIndex.A);
 
                 yield return Toils_General.Wait(200)
-                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch)
+                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell)
                     .FailOnDestroyedNullOrForbidden(TargetIndex.A)
                     .WithProgressBarToilDelay(TargetIndex.A);
                 
@@ -120,10 +130,11 @@ namespace RW_ModularizationWeapon.AI
                     {
                         GenPlace.TryPlaceThing(comp.parent, TargetA.Cell, actor.Map, ThingPlaceMode.Near);
                     }
-                    comp.RootNode.UpdateNode();
+                    comp.parent.Position = TargetA.Cell;
+                    comp.NodeProccesser.UpdateNode();
                 };
                 yield return toil
-                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch);
+                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             }
             else
             {

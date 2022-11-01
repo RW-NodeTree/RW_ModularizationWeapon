@@ -40,7 +40,7 @@
 				<attachmentProperties>
 					<li>
 						<id>test a</id>
-						<postion>(1,0,0)</postion>
+						<postion>(-1,0,0)</postion>
 						<defultThing>Gun_Test_A_Modularization</defultThing>
 						<allowEmpty>true</allowEmpty>
 						<filter>
@@ -51,7 +51,7 @@
 					</li>
 					<li>
 						<id>test b</id>
-						<postion>(-1,0,0)</postion>
+						<postion>(1,0,0)</postion>
 						<defultThing>Gun_Test_B_Modularization</defultThing>
 						<allowEmpty>true</allowEmpty>
 						<filter>
@@ -128,7 +128,7 @@
                 <attachmentProperties>
                     <li>
 						<id>test 1</id>
-						<!-- <postion>(1,0,0)</postion> -->
+						<postion>(-1,0,0)</postion>
 						<defultThing>Gun_Autopistol</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -139,7 +139,7 @@
                     </li>
                     <li>
 						<id>test 2</id>
-						<!-- <postion>(0,1,0)</postion> -->
+						<postion>(0,0,1)</postion>
 						<defultThing>Gun_BoltActionRifle</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -150,7 +150,7 @@
                     </li>
                     <li>
 						<id>test 3</id>
-						<!-- <postion>(-1,-1,0)</postion> -->
+						<postion>(-1,0,-1)</postion>
 						<defultThing>Gun_PumpShotgun</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -161,7 +161,7 @@
                     </li>
                     <li>
 						<id>test 4</id>
-						<!-- <postion>(0,1,0)</postion> -->
+						<postion>(0,0,-1)</postion>
 						<defultThing>Gun_SniperRifle</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -239,7 +239,7 @@
                 <attachmentProperties>
                     <li>
 						<id>test 1</id>
-						<!-- <postion>(1,-1,0)</postion> -->
+						<postion>(1,0,-1)</postion>
 						<defultThing>Gun_ChainShotgun</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -250,7 +250,7 @@
                     </li>
                     <li>
 						<id>test 2</id>
-						<!-- <postion>(0,1,0)</postion> -->
+						<postion>(0,0,1)</postion>
 						<defultThing>Gun_HeavySMG</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -261,7 +261,7 @@
                     </li>
                     <li>
 						<id>test 3</id>
-						<!-- <postion>(-1,0,0)</postion> -->
+						<postion>(1,0,0)</postion>
 						<defultThing>Gun_LMG</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -272,7 +272,7 @@
                     </li>
                     <li>
 						<id>test 4</id>
-						<!-- <postion>(0,-1,0)</postion> -->
+						<postion>(0,0,-1)</postion>
 						<defultThing>Gun_AssaultRifle</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
@@ -283,7 +283,7 @@
                     </li>
                     <li>
 						<id>test 5</id>
-						<!-- <postion>(1,2,0)</postion> -->
+						<postion>(1,0,1)</postion>
 						<defultThing>Gun_Minigun</defultThing>
 						<allowEmpty>true</allowEmpty>
                         <filter>
