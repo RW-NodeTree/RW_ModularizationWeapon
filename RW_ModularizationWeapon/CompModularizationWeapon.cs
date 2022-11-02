@@ -211,7 +211,7 @@ namespace RW_ModularizationWeapon
                 while(!result && current != null)
                 {
                     result = current.showTargetPart;
-                    current = current.ParentPart;
+                    current = current.targetModeParent?.parent;
                 }
                 return result;
             }
@@ -1205,55 +1205,62 @@ namespace RW_ModularizationWeapon
         #region AI
         internal IEnumerable<Toil> CarryTarget(TargetIndex craftingTable, TargetIndex hauledThingIndex)
         {
-            foreach((string id, LocalTargetInfo target) in targetPartsWithId)
+            foreach(string id in NodeProccesser.RegiestedNodeId)
             {
-                if (target.HasThing && target.Thing.Spawned)
+                LocalTargetInfo target = ChildNodes[id];
+                if (targetPartsWithId.ContainsKey(id))
                 {
-                    Toil toil = new Toil();
-                    toil.initAction = delegate ()
+                    target = targetPartsWithId[id];
+                    if (target.HasThing && target.Thing.Spawned)
                     {
-                        Pawn actor = toil.actor;
-                        Job job = actor.CurJob;
-                        job.SetTarget(hauledThingIndex, target);
-                        job.count = 1;
-                    };
-                    yield return toil;
-
-                    yield return 
-                        Toils_Goto.GotoThing(hauledThingIndex, PathEndMode.ClosestTouch)
-                        .FailOnDestroyedNullOrForbidden(hauledThingIndex)
-                        .FailOnBurningImmobile(hauledThingIndex);
-                    yield return
-                        Toils_Haul.StartCarryThing(hauledThingIndex)
-                        .FailOnCannotTouch(hauledThingIndex, PathEndMode.ClosestTouch);
-                    yield return
-                        Toils_Haul.CarryHauledThingToCell(craftingTable, PathEndMode.ClosestTouch)
-                        .FailOnDestroyedNullOrForbidden(craftingTable)
-                        .FailOnBurningImmobile(craftingTable);
-                    yield return
-                        Toils_Haul.PlaceCarriedThingInCellFacing(craftingTable)
-                        .FailOnCannotTouch(craftingTable, PathEndMode.ClosestTouch);
-
-                    toil = new Toil();
-                    toil.initAction = delegate ()
-                    {
-                        Pawn actor = toil.actor;
-                        Job job = actor.CurJob;
-                        targetPartsWithId[id] = job.GetTarget(hauledThingIndex);
-                        targetPartsWithId[id].Thing.Position = job.GetTarget(craftingTable).Cell;
-                        actor.Reserve(targetPartsWithId[id], job, 1, 1);
-                    };
-                    yield return toil;
-
-                    CompModularizationWeapon comp = target.Thing;
-                    if (comp != null)
-                    {
-                        foreach (Toil child in comp.CarryTarget(craftingTable,hauledThingIndex))
+                        Toil toil = new Toil();
+                        toil.initAction = delegate ()
                         {
-                            yield return child;
-                        }
+                            Pawn actor = toil.actor;
+                            Job job = actor.CurJob;
+                            job.SetTarget(hauledThingIndex, target);
+                            job.count = 1;
+                        };
+                        yield return toil;
+
+                        yield return
+                            Toils_Goto.GotoThing(hauledThingIndex, PathEndMode.ClosestTouch)
+                            .FailOnDestroyedNullOrForbidden(hauledThingIndex)
+                            .FailOnBurningImmobile(hauledThingIndex);
+                        yield return
+                            Toils_Haul.StartCarryThing(hauledThingIndex)
+                            .FailOnCannotTouch(hauledThingIndex, PathEndMode.ClosestTouch);
+                        yield return
+                            Toils_Haul.CarryHauledThingToCell(craftingTable, PathEndMode.ClosestTouch)
+                            .FailOnDestroyedNullOrForbidden(craftingTable)
+                            .FailOnBurningImmobile(craftingTable);
+                        yield return
+                            Toils_Haul.PlaceCarriedThingInCellFacing(craftingTable)
+                            .FailOnCannotTouch(craftingTable, PathEndMode.ClosestTouch);
+
+                        toil = new Toil();
+                        toil.initAction = delegate ()
+                        {
+                            Pawn actor = toil.actor;
+                            Job job = actor.CurJob;
+                            targetPartsWithId[id] = job.GetTarget(hauledThingIndex);
+                            targetPartsWithId[id].Thing.Position = job.GetTarget(craftingTable).Cell;
+                            actor.Reserve(targetPartsWithId[id], job, 1, 1);
+                        };
+                        yield return toil;
+                    }
+
+                }
+
+                CompModularizationWeapon comp = target.Thing;
+                if (comp != null)
+                {
+                    foreach (Toil child in comp.CarryTarget(craftingTable, hauledThingIndex))
+                    {
+                        yield return child;
                     }
                 }
+
             }
         }
 
@@ -1393,10 +1400,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override CompChildNodeProccesser OverrideParentProccesser(CompChildNodeProccesser orginal)
-        {
-            return UsingTargetPart ? (targetModeParent ?? orginal) : orginal;
-        }
+        protected override CompChildNodeProccesser OverrideParentProccesser(CompChildNodeProccesser orginal) => UsingTargetPart ? (targetModeParent ?? orginal) : orginal;
 
 
         #region operator
