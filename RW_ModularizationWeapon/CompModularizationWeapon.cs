@@ -16,7 +16,7 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace RW_ModularizationWeapon
 {
-    public class CompModularizationWeapon : CompBasicNodeComp, IEnumerable<(string,Thing)>
+    public class CompModularizationWeapon : CompBasicNodeComp, IEnumerable<(string,Thing,WeaponAttachmentProperties)>
     {
         public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
 
@@ -64,7 +64,7 @@ namespace RW_ModularizationWeapon
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
             if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
-                foreach(Thing thing in ChildNodes.InnerListForReading)
+                foreach(Thing thing in ChildNodes.Values)
                 {
                     CompModularizationWeapon comp = thing;
                     if(comp != null)
@@ -309,7 +309,7 @@ namespace RW_ModularizationWeapon
 
             ResetTargetPart();
 
-            foreach (Thing item in ChildNodes.InnerListForReading)
+            foreach (Thing item in ChildNodes.Values)
             {
                 CompModularizationWeapon comp = item;
                 if(comp != null)
@@ -320,11 +320,12 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public IEnumerator<(string,Thing)> GetEnumerator()
+        public IEnumerator<(string,Thing,WeaponAttachmentProperties)> GetEnumerator()
         {
             foreach(string id in NodeProccesser.RegiestedNodeId)
             {
-                yield return (id,ChildNodes[id]);
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if(properties != null) yield return (id,ChildNodes[id], properties);
             }
             yield break;
         }
@@ -1024,7 +1025,7 @@ namespace RW_ModularizationWeapon
         {
             if(statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
             {
-                foreach (Thing thing in ChildNodes.InnerListForReading)
+                foreach (Thing thing in ChildNodes.Values)
                 {
                     result += statWorker.GetValue(thing);
                 }
@@ -1042,7 +1043,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in ChildNodes.InnerListForReading)
+                foreach (Thing thing in ChildNodes.Values)
                 {
                     stringBuilder.AppendLine("  " + thing.Label + ":");
                     string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
@@ -1066,7 +1067,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in ChildNodes.InnerListForReading)
+                foreach (Thing thing in ChildNodes.Values)
                 {
                     yield return new Dialog_InfoCard.Hyperlink(thing);
                 }
@@ -1095,7 +1096,7 @@ namespace RW_ModularizationWeapon
         public Vector2 TreeViewDrawSize(Vector2 BlockSize)
         {
             Vector2 result = BlockSize;
-            foreach((string id, Thing thing) in this)
+            foreach((string id, Thing thing, WeaponAttachmentProperties properties) in this)
             {
                 if(id != null && GetChildTreeViewOpend(id))
                 {
@@ -1133,7 +1134,7 @@ namespace RW_ModularizationWeapon
             Text.WordWrap = false;
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.MiddleLeft;
-            foreach ((string id, Thing thing) in this)
+            foreach ((string id, Thing thing, WeaponAttachmentProperties properties) in this)
             {
                 if(id != null)
                 {
@@ -1180,8 +1181,8 @@ namespace RW_ModularizationWeapon
                     }
                     else
                     {
-                        Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight),Props.WeaponAttachmentPropertiesById(id).UITexture,1);
-                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight),id);
+                        Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight), properties.UITexture,1);
+                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight), properties.name ?? properties.id);
                         if(Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight))) iconEvent?.Invoke(id,thing,this);
                     }
                     currentPos.y += BlockHeight;
@@ -1206,7 +1207,7 @@ namespace RW_ModularizationWeapon
         {
             foreach((string id, LocalTargetInfo target) in targetPartsWithId)
             {
-                if (target.HasThing)
+                if (target.HasThing && target.Thing.Spawned)
                 {
                     Toil toil = new Toil();
                     toil.initAction = delegate ()
@@ -1226,12 +1227,12 @@ namespace RW_ModularizationWeapon
                         Toils_Haul.StartCarryThing(hauledThingIndex)
                         .FailOnCannotTouch(hauledThingIndex, PathEndMode.ClosestTouch);
                     yield return
-                        Toils_Haul.CarryHauledThingToCell(craftingTable, PathEndMode.InteractionCell)
+                        Toils_Haul.CarryHauledThingToCell(craftingTable, PathEndMode.ClosestTouch)
                         .FailOnDestroyedNullOrForbidden(craftingTable)
                         .FailOnBurningImmobile(craftingTable);
                     yield return
                         Toils_Haul.PlaceCarriedThingInCellFacing(craftingTable)
-                        .FailOnCannotTouch(craftingTable, PathEndMode.InteractionCell);
+                        .FailOnCannotTouch(craftingTable, PathEndMode.ClosestTouch);
 
                     toil = new Toil();
                     toil.initAction = delegate ()
@@ -1261,7 +1262,7 @@ namespace RW_ModularizationWeapon
 
             foreach (LocalTargetInfo target in targetPartsWithId.Values)
             {
-                if(target.HasThing)
+                if (target.HasThing && target.Thing.Spawned)
                 {
                     yield return target;
                     CompModularizationWeapon comp = target.Thing;
@@ -1364,7 +1365,7 @@ namespace RW_ModularizationWeapon
             absorbed = false;
             int count = ChildNodes.Count + 1;
             dinfo.SetAmount(dinfo.Amount / count);
-            foreach (Thing thing in ChildNodes.InnerListForReading)
+            foreach (Thing thing in ChildNodes.Values)
             {
                 thing.TakeDamage(dinfo);
             }
@@ -1474,10 +1475,10 @@ namespace RW_ModularizationWeapon
                     yield return $"attachmentProperties[{i}] is null";
                     continue;
                 }
-                else if(properties.id.NullOrEmpty())
+                else if(!properties.id.IsVaildityKeyFormat())
                 {
                     attachmentProperties.RemoveAt(i);
-                    yield return $"attachmentProperties[{i}].id is null or empty";
+                    yield return $"attachmentProperties[{i}].id is invaild key format";
                     continue;
                 }
                 for (int j = 0; j < i; j++)

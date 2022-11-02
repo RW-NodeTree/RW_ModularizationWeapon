@@ -9,6 +9,8 @@
 				<filter>
 					<thingDefs>
 						<li>Gun_Test_Modularization</li>
+						<li>Gun_Test_A_Modularization</li>
+						<li>Gun_Test_B_Modularization</li>
 					</thingDefs>
 				</filter>
 			</li>

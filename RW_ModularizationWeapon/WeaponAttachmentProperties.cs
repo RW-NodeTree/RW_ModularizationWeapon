@@ -31,6 +31,8 @@ namespace RW_ModularizationWeapon
 
         public string id;
 
+        public string name;
+
         public ThingFilter filter = new ThingFilter();
 
         public ThingDef defultThing = null;

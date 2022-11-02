@@ -212,9 +212,12 @@ namespace RW_ModularizationWeapon.UI
                     else
                         SelectedPartForChange = (id, Parent);
                 },
-                (string id,Thing part, CompModularizationWeapon Parent)=>
+                (string id, Thing part, CompModularizationWeapon Parent) =>
                 {
-
+                    if (SelectedPartForChange == (id, Parent))
+                        SelectedPartForChange = (null, null);
+                    else
+                        SelectedPartForChange = (id, Parent);
                 },
                 selected
             );

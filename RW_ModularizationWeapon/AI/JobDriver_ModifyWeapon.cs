@@ -89,11 +89,11 @@ namespace RW_ModularizationWeapon.AI
                         .FailOnBurningImmobile(TargetIndex.B);
                     yield return Toils_Haul.StartCarryThing(TargetIndex.B)
                         .FailOnCannotTouch(TargetIndex.B, PathEndMode.ClosestTouch);
-                    yield return Toils_Haul.CarryHauledThingToCell(TargetIndex.A, PathEndMode.InteractionCell)
+                    yield return Toils_Haul.CarryHauledThingToCell(TargetIndex.A, PathEndMode.ClosestTouch)
                         .FailOnDestroyedNullOrForbidden(TargetIndex.A)
                         .FailOnBurningImmobile(TargetIndex.A);
                     yield return Toils_Haul.PlaceCarriedThingInCellFacing(TargetIndex.A)
-                        .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
+                        .FailOnCannotTouch(TargetIndex.A, PathEndMode.ClosestTouch);
 
                     toil = new Toil();
                     toil.initAction = delegate ()
