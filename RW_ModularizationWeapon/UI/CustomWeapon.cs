@@ -185,7 +185,7 @@ namespace RW_ModularizationWeapon.UI
             #region treeView
             Vector2 ScrollViewSize = weapon?.TreeViewDrawSize(new Vector2(284, 48)) ?? Vector2.zero;
             ScrollViewSize.x = Math.Max(ScrollViewSize.x, ScrollViewSize.y < inRect.height - 360 ? 348 : 332);
-            //if (Prefs.DevMode) Log.Message($"creaftingTable.GetTargetCompModularizationWeapon() : {creaftingTable.GetTargetCompModularizationWeapon()}; TreeViewSize : {TreeViewSize}");
+            //if (Prefs.DevMode) Log.Message($"creaftingTable.GetTargetCompModularizationWeapon() : {creaftingTable.GetTargetCompModularizationWeapon()}; ScrollViewSize : {ScrollViewSize}");
             GUI.color = _Border;
             Widgets.DrawBox(new Rect(0, 358, 350,inRect.height - 358));
             GUI.color = Color.white;

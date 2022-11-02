@@ -1095,9 +1095,10 @@ namespace RW_ModularizationWeapon
 
         public Vector2 TreeViewDrawSize(Vector2 BlockSize)
         {
-            Vector2 result = BlockSize;
+            Vector2 result = new Vector2(BlockSize.x,0);
             foreach((string id, Thing thing, WeaponAttachmentProperties properties) in this)
             {
+                result.y += BlockSize.y;
                 if(id != null && GetChildTreeViewOpend(id))
                 {
                     CompModularizationWeapon comp = thing;
@@ -1106,10 +1107,6 @@ namespace RW_ModularizationWeapon
                         Vector2 childSize = comp.TreeViewDrawSize(BlockSize);
                         result.y += childSize.y;
                         result.x = Math.Max(childSize.x + BlockSize.y, result.x);
-                    }
-                    else
-                    {
-                        result.y += BlockSize.y;
                     }
                 }
             }
@@ -1266,19 +1263,20 @@ namespace RW_ModularizationWeapon
 
         internal IEnumerable<LocalTargetInfo> AllTargetPart()
         {
-
-            foreach (LocalTargetInfo target in targetPartsWithId.Values)
+            foreach (string id in NodeProccesser.RegiestedNodeId)
             {
-                if (target.HasThing && target.Thing.Spawned)
+                LocalTargetInfo target = ChildNodes[id];
+                if (targetPartsWithId.ContainsKey(id))
                 {
+                    target = targetPartsWithId[id];
                     yield return target;
-                    CompModularizationWeapon comp = target.Thing;
-                    if(comp != null)
+                }
+                CompModularizationWeapon comp = target.Thing;
+                if (comp != null)
+                {
+                    foreach (LocalTargetInfo childTarget in comp.AllTargetPart())
                     {
-                        foreach (LocalTargetInfo childTarget in comp.AllTargetPart())
-                        {
-                            yield return childTarget;
-                        }
+                        yield return childTarget;
                     }
                 }
             }
