@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HarmonyLib;
 using RimWorld;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
@@ -339,11 +340,11 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public float ArmorPenetrationOffset
+        public float MeleeArmorPenetrationOffset
         {
             get
             {
-                float result = Props.armorPenetrationOffset;
+                float result = Props.meleeArmorPenetrationOffset;
                 NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
@@ -355,7 +356,7 @@ namespace RW_ModularizationWeapon
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                         if (comp != null && comp.Validity)
                         {
-                            result += comp.ArmorPenetrationOffset * properties.armorPenetrationOffsetAffectHorizon;
+                            result += comp.MeleeArmorPenetrationOffset * properties.armorPenetrationOffsetAffectHorizon;
                         }
                     }
                 }
@@ -555,11 +556,11 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public float ArmorPenetrationMultiplier
+        public float MeleeArmorPenetrationMultiplier
         {
             get
             {
-                float result = Props.armorPenetrationMultiplier;
+                float result = Props.meleeArmorPenetrationMultiplier;
                 NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
@@ -571,7 +572,7 @@ namespace RW_ModularizationWeapon
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                         if (comp != null && comp.Validity)
                         {
-                            result *= 1f + (comp.ArmorPenetrationMultiplier - 1f) * properties.armorPenetrationMultiplierAffectHorizon;
+                            result *= 1f + (comp.MeleeArmorPenetrationMultiplier - 1f) * properties.armorPenetrationMultiplierAffectHorizon;
                         }
                     }
                 }
@@ -847,10 +848,15 @@ namespace RW_ModularizationWeapon
             properties = (VerbProperties)properties.SimpleCopy();
             properties.burstShotCount = (int)(BurstShotCountMultiplier * properties.burstShotCount / Props.burstShotCountMultiplier + BurstShotCountOffset - Props.burstShotCountOffset);
             properties.ticksBetweenBurstShots = (int)(TicksBetweenBurstShotsMultiplier * properties.ticksBetweenBurstShots / Props.ticksBetweenBurstShotsMultiplier + TicksBetweenBurstShotsOffset - Props.ticksBetweenBurstShotsOffset);
-            properties.muzzleFlashScale = (int)(MuzzleFlashScaleMultiplier * properties.muzzleFlashScale / Props.muzzleFlashScaleMultiplier + MuzzleFlashScaleOffset - Props.muzzleFlashScaleOffset);
-            properties.range = (int)(RangeMultiplier * properties.range / Props.rangeOffset + RangeOffset - Props.rangeOffset);
-            properties.warmupTime = (int)(WarmupTimeMultiplier * properties.warmupTime / Props.warmupTimeMultiplier + WarmupTimeOffset - Props.warmupTimeOffset);
-            if(affectDef)
+            properties.muzzleFlashScale = MuzzleFlashScaleMultiplier * properties.muzzleFlashScale / Props.muzzleFlashScaleMultiplier + MuzzleFlashScaleOffset - Props.muzzleFlashScaleOffset;
+            properties.range = RangeMultiplier * properties.range / Props.rangeOffset + RangeOffset - Props.rangeOffset;
+            properties.warmupTime = WarmupTimeMultiplier * properties.warmupTime / Props.warmupTimeMultiplier + WarmupTimeOffset - Props.warmupTimeOffset;
+            if(properties.IsMeleeAttack)
+            {
+                properties.meleeArmorPenetrationBase = MeleeArmorPenetrationMultiplier * properties.meleeArmorPenetrationBase / Props.meleeArmorPenetrationMultiplier + MeleeArmorPenetrationOffset - Props.meleeArmorPenetrationOffset;
+                properties.meleeDamageBaseAmount = (int)(MeleeDamageMultiplier * properties.meleeDamageBaseAmount / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset);
+            }
+            if (affectDef)
             {
                 properties.defaultProjectile = ForceProjectile ?? properties.defaultProjectile;
                 properties.soundCast = ForceSound ?? properties.soundCast;
@@ -863,9 +869,9 @@ namespace RW_ModularizationWeapon
         internal Tool ToolAfterAffect(Tool tool)
         {
             tool = (Tool)tool.SimpleCopy();
-            tool.armorPenetration = (int)(ArmorPenetrationMultiplier * tool.armorPenetration / Props.armorPenetrationMultiplier + ArmorPenetrationOffset - Props.armorPenetrationOffset);
-            tool.cooldownTime = (int)(MeleeCooldownTimeMultiplier * tool.cooldownTime / Props.meleeCooldownTimeMultiplier + MeleeCooldownTimeOffset - Props.meleeCooldownTimeOffset);
-            tool.power = (int)(MeleeDamageMultiplier * tool.power / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset);
+            tool.armorPenetration = MeleeArmorPenetrationMultiplier * tool.armorPenetration / Props.meleeArmorPenetrationMultiplier + MeleeArmorPenetrationOffset - Props.meleeArmorPenetrationOffset;
+            tool.cooldownTime = MeleeCooldownTimeMultiplier * tool.cooldownTime / Props.meleeCooldownTimeMultiplier + MeleeCooldownTimeOffset - Props.meleeCooldownTimeOffset;
+            tool.power = MeleeDamageMultiplier * tool.power / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset;
             return tool;
         }
 
@@ -1029,6 +1035,12 @@ namespace RW_ModularizationWeapon
                 {
                     result += statWorker.GetValue(thing);
                 }
+            }
+            else if(!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
+            {
+                StatDef statDef = StatWorker_stat(statWorker);
+                result *= GetStatMultiplier(statDef);
+                result += GetStatOffset(statDef);
             }
             return result;
         }
@@ -1419,6 +1431,8 @@ namespace RW_ModularizationWeapon
         private CompChildNodeProccesser targetModeParent;
         private bool showTargetPart = false;
         private bool usingTargetPart = false;
+
+        private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
     }
 
 
@@ -1520,6 +1534,12 @@ namespace RW_ModularizationWeapon
         }
 
 
+        //public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
+        //{
+        //    yield return new StatDrawEntry(StatCategoryDefOf.Weapon,)
+        //}
+
+
         #region Condation
         public bool unchangeable = false;
 
@@ -1550,7 +1570,7 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public float armorPenetrationOffset = 0;
+        public float meleeArmorPenetrationOffset = 0;
 
 
         public float meleeCooldownTimeOffset = 0;
@@ -1579,7 +1599,7 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public float armorPenetrationMultiplier = 1f;
+        public float meleeArmorPenetrationMultiplier = 1f;
 
 
         public float meleeCooldownTimeMultiplier = 1f;
