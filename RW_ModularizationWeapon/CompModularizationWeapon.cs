@@ -13,7 +13,6 @@ using RW_NodeTree.Tools;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace RW_ModularizationWeapon
 {
@@ -340,11 +339,11 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public float MeleeArmorPenetrationOffset
+        public FieldReaderDgit<VerbProperties> VerbPropertiesOffseter
         {
             get
             {
-                float result = Props.meleeArmorPenetrationOffset;
+                FieldReaderDgit<VerbProperties> result = new FieldReaderDgit<VerbProperties>(Props.verbPropertiesOffseter);
                 NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
@@ -356,182 +355,39 @@ namespace RW_ModularizationWeapon
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                         if (comp != null && comp.Validity)
                         {
-                            result += comp.MeleeArmorPenetrationOffset * properties.armorPenetrationOffsetAffectHorizon;
+                            result += comp.VerbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon;
                         }
                     }
                 }
                 return result;
             }
         }
-        
-        public float MeleeCooldownTimeOffset
+
+
+        public FieldReaderDgit<Tool> ToolsOffseter
         {
             get
             {
-                float result = Props.meleeCooldownTimeOffset;
+                FieldReaderDgit<Tool> result = new FieldReaderDgit<Tool>(Props.toolsOffseter);
                 NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
+                    if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                         if (comp != null && comp.Validity)
                         {
-                            result += comp.MeleeCooldownTimeOffset * properties.meleeCooldownTimeOffsetAffectHorizon;
+                            result += comp.ToolsOffseter * properties.toolsOffseterAffectHorizon;
                         }
                     }
                 }
                 return result;
             }
         }
-        
-        public float MeleeDamageOffset
-        {
-            get
-            {
-                float result = Props.meleeDamageOffset;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.MeleeDamageOffset * properties.meleeDamageOffsetAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float BurstShotCountOffset
-        {
-            get
-            {
-                float result = Props.burstShotCountOffset;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.BurstShotCountOffset * properties.burstShotCountOffsetAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float TicksBetweenBurstShotsOffset
-        {
-            get
-            {
-                float result = Props.ticksBetweenBurstShotsOffset;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.TicksBetweenBurstShotsOffset * properties.ticksBetweenBurstShotsOffsetAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float MuzzleFlashScaleOffset
-        {
-            get
-            {
-                float result = Props.muzzleFlashScaleOffset;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.MuzzleFlashScaleOffset * properties.muzzleFlashScaleOffsetAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float RangeOffset
-        {
-            get
-            {
-                float result = Props.rangeOffset;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.RangeOffset * properties.rangeOffsetAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float WarmupTimeOffset
-        {
-            get
-            {
-                float result = Props.warmupTimeOffset;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.WarmupTimeOffset * properties.warmupTimeOffsetAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
+
         public float GetStatOffset(StatDef stateDef)
         {
             float result = Props.statOffset.GetStatOffsetFromList(stateDef);
@@ -556,198 +412,55 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public float MeleeArmorPenetrationMultiplier
+        public FieldReaderDgit<VerbProperties> VerbPropertiesMultiplier
         {
             get
             {
-                float result = Props.meleeArmorPenetrationMultiplier;
+                FieldReaderDgit<VerbProperties> result = new FieldReaderDgit<VerbProperties>(Props.verbPropertiesMultiplier);
                 NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
+                    if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                         if (comp != null && comp.Validity)
                         {
-                            result *= 1f + (comp.MeleeArmorPenetrationMultiplier - 1f) * properties.armorPenetrationMultiplierAffectHorizon;
+                            result *= (comp.VerbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                         }
                     }
                 }
                 return result;
             }
         }
-        
-        public float MeleeCooldownTimeMultiplier
+
+
+        public FieldReaderDgit<Tool> ToolsMultiplier
         {
             get
             {
-                float result = Props.meleeCooldownTimeMultiplier;
+                FieldReaderDgit<Tool> result = new FieldReaderDgit<Tool>(Props.toolsMultiplier);
                 NodeContainer container = ChildNodes;
                 for (int i = 0; i < container.Count; i++)
                 {
                     string id = container[(uint)i];
                     Thing thing = container[i];
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
+                    if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                         if (comp != null && comp.Validity)
                         {
-                            result *= 1f + (comp.MeleeCooldownTimeMultiplier - 1f) * properties.meleeCooldownTimeMultiplierAffectHorizon;
+                            result *= (comp.ToolsMultiplier - 1f) * properties.toolsMultiplierAffectHorizon + 1f;
                         }
                     }
                 }
                 return result;
             }
         }
-        
-        public float MeleeDamageMultiplier
-        {
-            get
-            {
-                float result = Props.meleeDamageMultiplier;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= 1f + (comp.MeleeDamageMultiplier - 1f) * properties.meleeDamageMultiplierAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float BurstShotCountMultiplier
-        {
-            get
-            {
-                float result = Props.burstShotCountMultiplier;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= 1f + (comp.BurstShotCountMultiplier - 1f) * properties.burstShotCountMultiplierAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float TicksBetweenBurstShotsMultiplier
-        {
-            get
-            {
-                float result = Props.ticksBetweenBurstShotsMultiplier;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= 1f + (comp.TicksBetweenBurstShotsMultiplier - 1f) * properties.ticksBetweenBurstShotsMultiplierAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float MuzzleFlashScaleMultiplier
-        {
-            get
-            {
-                float result = Props.muzzleFlashScaleMultiplier;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= 1f + (comp.MuzzleFlashScaleMultiplier - 1f) * properties.muzzleFlashScaleMultiplierAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float RangeMultiplier
-        {
-            get
-            {
-                float result = Props.rangeMultiplier;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= 1f + (comp.RangeMultiplier - 1f) * properties.rangeMultiplierAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
-        public float WarmupTimeMultiplier
-        {
-            get
-            {
-                float result = Props.warmupTimeMultiplier;
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= 1f + (comp.WarmupTimeMultiplier - 1f) * properties.warmupTimeMultiplierAffectHorizon;
-                        }
-                    }
-                }
-                return result;
-            }
-        }
-        
+
         public float GetStatMultiplier(StatDef stateDef)
         {
             float result = Props.statMultiplier.GetStatFactorFromList(stateDef);
@@ -846,16 +559,10 @@ namespace RW_ModularizationWeapon
         internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, bool affectDef)
         {
             properties = (VerbProperties)properties.SimpleCopy();
-            properties.burstShotCount = (int)(BurstShotCountMultiplier * properties.burstShotCount / Props.burstShotCountMultiplier + BurstShotCountOffset - Props.burstShotCountOffset);
-            properties.ticksBetweenBurstShots = (int)(TicksBetweenBurstShotsMultiplier * properties.ticksBetweenBurstShots / Props.ticksBetweenBurstShotsMultiplier + TicksBetweenBurstShotsOffset - Props.ticksBetweenBurstShotsOffset);
-            properties.muzzleFlashScale = MuzzleFlashScaleMultiplier * properties.muzzleFlashScale / Props.muzzleFlashScaleMultiplier + MuzzleFlashScaleOffset - Props.muzzleFlashScaleOffset;
-            properties.range = RangeMultiplier * properties.range / Props.rangeOffset + RangeOffset - Props.rangeOffset;
-            properties.warmupTime = WarmupTimeMultiplier * properties.warmupTime / Props.warmupTimeMultiplier + WarmupTimeOffset - Props.warmupTimeOffset;
-            if(properties.IsMeleeAttack)
-            {
-                properties.meleeArmorPenetrationBase = MeleeArmorPenetrationMultiplier * properties.meleeArmorPenetrationBase / Props.meleeArmorPenetrationMultiplier + MeleeArmorPenetrationOffset - Props.meleeArmorPenetrationOffset;
-                properties.meleeDamageBaseAmount = (int)(MeleeDamageMultiplier * properties.meleeDamageBaseAmount / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset);
-            }
+            FieldReaderDgit<VerbProperties> mul = VerbPropertiesMultiplier / Props.verbPropertiesMultiplier;
+            FieldReaderDgit<VerbProperties> fac = VerbPropertiesOffseter - Props.verbPropertiesOffseter;
+            Log.Message($"mul : {mul}; fac : {fac}");
+            properties = properties * mul + fac;
             if (affectDef)
             {
                 properties.defaultProjectile = ForceProjectile ?? properties.defaultProjectile;
@@ -869,9 +576,7 @@ namespace RW_ModularizationWeapon
         internal Tool ToolAfterAffect(Tool tool)
         {
             tool = (Tool)tool.SimpleCopy();
-            tool.armorPenetration = MeleeArmorPenetrationMultiplier * tool.armorPenetration / Props.meleeArmorPenetrationMultiplier + MeleeArmorPenetrationOffset - Props.meleeArmorPenetrationOffset;
-            tool.cooldownTime = MeleeCooldownTimeMultiplier * tool.cooldownTime / Props.meleeCooldownTimeMultiplier + MeleeCooldownTimeOffset - Props.meleeCooldownTimeOffset;
-            tool.power = MeleeDamageMultiplier * tool.power / Props.meleeDamageMultiplier + MeleeDamageOffset - Props.meleeDamageOffset;
+            tool = tool * ToolsMultiplier / Props.toolsMultiplier + ToolsOffseter - Props.toolsOffseter;
             return tool;
         }
 
@@ -1570,28 +1275,10 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public float meleeArmorPenetrationOffset = 0;
+        public FieldReaderDgit<VerbProperties> verbPropertiesOffseter = new FieldReaderDgit<VerbProperties>();
 
 
-        public float meleeCooldownTimeOffset = 0;
-
-
-        public float meleeDamageOffset = 0;
-
-
-        public float burstShotCountOffset = 0;
-
-
-        public float ticksBetweenBurstShotsOffset = 0;
-
-
-        public float muzzleFlashScaleOffset = 0;
-
-
-        public float rangeOffset = 0;
-
-
-        public float warmupTimeOffset = 0;
+        public FieldReaderDgit<Tool> toolsOffseter = new FieldReaderDgit<Tool>();
 
 
         public List<StatModifier> statOffset = new List<StatModifier>();
@@ -1599,28 +1286,10 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public float meleeArmorPenetrationMultiplier = 1f;
+        public FieldReaderDgit<VerbProperties> verbPropertiesMultiplier = new FieldReaderDgit<VerbProperties>();
 
 
-        public float meleeCooldownTimeMultiplier = 1f;
-
-
-        public float meleeDamageMultiplier = 1f;
-
-
-        public float burstShotCountMultiplier = 1f;
-
-
-        public float ticksBetweenBurstShotsMultiplier = 1f;
-
-
-        public float muzzleFlashScaleMultiplier = 1f;
-
-
-        public float rangeMultiplier = 1f;
-
-
-        public float warmupTimeMultiplier = 1f;
+        public FieldReaderDgit<Tool> toolsMultiplier = new FieldReaderDgit<Tool>();
 
 
         public List<StatModifier> statMultiplier = new List<StatModifier>();

@@ -63,42 +63,18 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public float armorPenetrationOffsetAffectHorizon = 1;
+        public FieldReaderDgit<VerbProperties> verbPropertiesOffseterAffectHorizon = new FieldReaderDgit<VerbProperties>();
 
-        public float meleeCooldownTimeOffsetAffectHorizon = 1;
-
-        public float meleeDamageOffsetAffectHorizon = 1;
-
-        public float burstShotCountOffsetAffectHorizon = 1;
-
-        public float ticksBetweenBurstShotsOffsetAffectHorizon = 1;
-
-        public float muzzleFlashScaleOffsetAffectHorizon = 1;
-
-        public float rangeOffsetAffectHorizon = 1;
-
-        public float warmupTimeOffsetAffectHorizon = 1;
+        public FieldReaderDgit<Tool> toolsOffseterAffectHorizon = new FieldReaderDgit<Tool>();
 
         public List<StatModifier> statOffsetAffectHorizon = new List<StatModifier>();
         #endregion
 
 
         #region Multiplier
-        public float armorPenetrationMultiplierAffectHorizon = 1;
+        public FieldReaderDgit<VerbProperties> verbPropertiesMultiplierAffectHorizon = new FieldReaderDgit<VerbProperties>();
 
-        public float meleeCooldownTimeMultiplierAffectHorizon = 1;
-
-        public float meleeDamageMultiplierAffectHorizon = 1;
-
-        public float burstShotCountMultiplierAffectHorizon = 1;
-
-        public float ticksBetweenBurstShotsMultiplierAffectHorizon = 1;
-
-        public float muzzleFlashScaleMultiplierAffectHorizon = 1;
-
-        public float rangeMultiplierAffectHorizon = 1;
-
-        public float warmupTimeMultiplierAffectHorizon = 1;
+        public FieldReaderDgit<Tool> toolsMultiplierAffectHorizon = new FieldReaderDgit<Tool>();
 
         public List<StatModifier> statMultiplierAffectHorizon = new List<StatModifier>();
         #endregion

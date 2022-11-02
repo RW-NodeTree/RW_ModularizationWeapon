@@ -43,6 +43,7 @@
 						<postion>(-1,0,0)</postion>
 						<defultThing>Gun_Test_A_Modularization</defultThing>
 						<allowEmpty>true</allowEmpty>
+						<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 						<filter>
 							<thingDefs>
 								<li>Gun_Test_A_Modularization</li>
@@ -125,6 +126,10 @@
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
             <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<verbPropertiesOffseter>
+					<range>10</range>
+				</verbPropertiesOffseter>
                 <attachmentProperties>
                     <li>
 						<id>test-1</id>
