@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using RW_NodeTree.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace RW_ModularizationWeapon
 
         public FieldReaderDgit(FieldReaderDgit<T> other)
         {
-            caches.AddRange(other.caches);
-            datas.AddRange(other.datas);
-            type = other.type;
+            if(other != null)
+            {
+                caches.AddRange(other.caches);
+                datas.AddRange(other.datas);
+                type = other.type;
+            }
         }
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
@@ -73,52 +77,40 @@ namespace RW_ModularizationWeapon
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
         {
-            if (a != null)
+            a = new FieldReaderDgit<T>(a);
+            foreach ((string name, double value) in a.datas)
             {
-                a = new FieldReaderDgit<T>(a);
-                foreach ((string name, double value) in a.datas)
-                {
-                    a.datas[name] = value + b;
-                }
+                a.datas[name] = value + b;
             }
             return a;
         }
 
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, double b)
         {
-            if (a != null)
+            a = new FieldReaderDgit<T>(a);
+            foreach ((string name, double value) in a.datas)
             {
-                a = new FieldReaderDgit<T>(a);
-                foreach ((string name, double value) in a.datas)
-                {
-                    a.datas[name] = value - b;
-                }
+                a.datas[name] = value - b;
             }
             return a;
         }
 
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, double b)
         {
-            if (a != null)
+            a = new FieldReaderDgit<T>(a);
+            foreach ((string name, double value) in a.datas)
             {
-                a = new FieldReaderDgit<T>(a);
-                foreach ((string name, double value) in a.datas)
-                {
-                    a.datas[name] = value * b;
-                }
+                a.datas[name] = value * b;
             }
             return a;
         }
 
         public static FieldReaderDgit<T> operator / (FieldReaderDgit<T> a, double b)
         {
-            if (a != null)
+            a = new FieldReaderDgit<T>(a);
+            foreach ((string name, double value) in a.datas)
             {
-                a = new FieldReaderDgit<T>(a);
-                foreach ((string name, double value) in a.datas)
-                {
-                    a.datas[name] = value / b;
-                }
+                a.datas[name] = value / b;
             }
             return a;
         }
@@ -126,19 +118,22 @@ namespace RW_ModularizationWeapon
 
         public static T operator +(T a, FieldReaderDgit<T> b)
         {
-            if (a != null && b != null)
+            if (b != null)
             {
-                b = new FieldReaderDgit<T>(b);
-                foreach ((string name, double value) in b.datas)
+                a = (T)a.SimpleCopy();
+                if(a != null)
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                    foreach ((string name, double value) in b.datas)
                     {
-                        if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) + value));
-                        else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) + value));
-                        else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) + value));
-                        else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) + value));
-                        else cache.SetValue(a, (double)cache.GetValue(a) + value);
+                        FieldInfo cache = b.caches[name];
+                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        {
+                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) + value));
+                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) + value));
+                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) + value));
+                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) + value));
+                            else cache.SetValue(a, (double)cache.GetValue(a) + value);
+                        }
                     }
                 }
             }
@@ -147,19 +142,22 @@ namespace RW_ModularizationWeapon
 
         public static T operator -(T a, FieldReaderDgit<T> b)
         {
-            if (a != null && b != null)
+            if (b != null)
             {
-                b = new FieldReaderDgit<T>(b);
-                foreach ((string name, double value) in b.datas)
+                a = (T)a.SimpleCopy();
+                if (a != null)
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                    foreach ((string name, double value) in b.datas)
                     {
-                        if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) - value));
-                        else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) - value));
-                        else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) - value));
-                        else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) - value));
-                        else cache.SetValue(a, (double)cache.GetValue(a) - value);
+                        FieldInfo cache = b.caches[name];
+                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        {
+                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) - value));
+                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) - value));
+                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) - value));
+                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) - value));
+                            else cache.SetValue(a, (double)cache.GetValue(a) - value);
+                        }
                     }
                 }
             }
@@ -168,19 +166,22 @@ namespace RW_ModularizationWeapon
 
         public static T operator *(T a, FieldReaderDgit<T> b)
         {
-            if (a != null && b != null)
+            if (b != null)
             {
-                b = new FieldReaderDgit<T>(b);
-                foreach ((string name, double value) in b.datas)
+                a = (T)a.SimpleCopy();
+                if (a != null)
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                    foreach ((string name, double value) in b.datas)
                     {
-                        if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) * value));
-                        else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) * value));
-                        else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) * value));
-                        else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) * value));
-                        else cache.SetValue(a, (double)cache.GetValue(a) * value);
+                        FieldInfo cache = b.caches[name];
+                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        {
+                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) * value));
+                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) * value));
+                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) * value));
+                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) * value));
+                            else cache.SetValue(a, (double)cache.GetValue(a) * value);
+                        }
                     }
                 }
             }
@@ -189,19 +190,22 @@ namespace RW_ModularizationWeapon
 
         public static T operator /(T a, FieldReaderDgit<T> b)
         {
-            if (a != null && b != null)
+            if (b != null)
             {
-                b = new FieldReaderDgit<T>(b);
-                foreach ((string name, double value) in b.datas)
+                a = (T)a.SimpleCopy();
+                if (a != null)
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                    foreach ((string name, double value) in b.datas)
                     {
-                        if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) / value));
-                        else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) / value));
-                        else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) / value));
-                        else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) / value));
-                        else cache.SetValue(a, (double)cache.GetValue(a) / value);
+                        FieldInfo cache = b.caches[name];
+                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        {
+                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) / value));
+                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) / value));
+                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) / value));
+                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) / value));
+                            else cache.SetValue(a, (double)cache.GetValue(a) / value);
+                        }
                     }
                 }
             }
@@ -211,29 +215,32 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
         {
             FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-            if (a != null && b != null)
-            {
-                if(a.type.IsAssignableFrom(b.type)) result.type = a.type;
-                else if(b.type.IsAssignableFrom(a.type)) result.type = b.type;
 
-                foreach ((string name, double value) in a.datas)
+            if (a == null && b == null) return result;
+
+            a = a ?? new FieldReaderDgit<T>();
+            b = b ?? new FieldReaderDgit<T>();
+
+            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
+            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
+
+            foreach ((string name, double value) in a.datas)
+            {
+                FieldInfo cache = a.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = a.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        result.datas.SetOrAdd(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    result.datas.SetOrAdd(name, value);
                 }
-                foreach ((string name, double value) in b.datas)
+            }
+            foreach ((string name, double value) in b.datas)
+            {
+                FieldInfo cache = b.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        if(result.datas.ContainsKey(name)) result.datas[name] += b.datas[name];
-                        else result.datas.Add(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    if (result.datas.ContainsKey(name)) result.datas[name] += b.datas[name];
+                    else result.datas.Add(name, value);
                 }
             }
             return result;
@@ -242,29 +249,32 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
         {
             FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-            if (a != null && b != null)
-            {
-                if (a.type.IsAssignableFrom(b.type)) result.type = a.type;
-                else if (b.type.IsAssignableFrom(a.type)) result.type = b.type;
 
-                foreach ((string name, double value) in a.datas)
+            if (a == null && b == null) return result;
+
+            a = a ?? new FieldReaderDgit<T>();
+            b = b ?? new FieldReaderDgit<T>();
+
+            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
+            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
+
+            foreach ((string name, double value) in a.datas)
+            {
+                FieldInfo cache = a.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = a.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        result.datas.SetOrAdd(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    result.datas.SetOrAdd(name, value);
                 }
-                foreach ((string name, double value) in b.datas)
+            }
+            foreach ((string name, double value) in b.datas)
+            {
+                FieldInfo cache = b.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        if (result.datas.ContainsKey(name)) result.datas[name] -= b.datas[name];
-                        else result.datas.Add(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    if (result.datas.ContainsKey(name)) result.datas[name] -= b.datas[name];
+                    else result.datas.Add(name, value);
                 }
             }
             return result;
@@ -273,29 +283,32 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
         {
             FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-            if (a != null && b != null)
-            {
-                if (a.type.IsAssignableFrom(b.type)) result.type = a.type;
-                else if (b.type.IsAssignableFrom(a.type)) result.type = b.type;
 
-                foreach ((string name, double value) in a.datas)
+            if (a == null && b == null) return result;
+
+            a = a ?? new FieldReaderDgit<T>();
+            b = b ?? new FieldReaderDgit<T>();
+
+            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
+            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
+
+            foreach ((string name, double value) in a.datas)
+            {
+                FieldInfo cache = a.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = a.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        result.datas.SetOrAdd(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    result.datas.SetOrAdd(name, value);
                 }
-                foreach ((string name, double value) in b.datas)
+            }
+            foreach ((string name, double value) in b.datas)
+            {
+                FieldInfo cache = b.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        if (result.datas.ContainsKey(name)) result.datas[name] *= b.datas[name];
-                        else result.datas.Add(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    if (result.datas.ContainsKey(name)) result.datas[name] *= b.datas[name];
+                    else result.datas.Add(name, value);
                 }
             }
             return result;
@@ -304,29 +317,32 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
         {
             FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-            if (a != null && b != null)
-            {
-                if (a.type.IsAssignableFrom(b.type)) result.type = a.type;
-                else if (b.type.IsAssignableFrom(a.type)) result.type = b.type;
 
-                foreach ((string name, double value) in a.datas)
+            if (a == null && b == null) return result;
+
+            a = a ?? new FieldReaderDgit<T>();
+            b = b ?? new FieldReaderDgit<T>();
+
+            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
+            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
+
+            foreach ((string name, double value) in a.datas)
+            {
+                FieldInfo cache = a.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = a.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        result.datas.SetOrAdd(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    result.datas.SetOrAdd(name, value);
                 }
-                foreach ((string name, double value) in b.datas)
+            }
+            foreach ((string name, double value) in b.datas)
+            {
+                FieldInfo cache = b.caches[name];
+                if (result.type.IsAssignableFrom(cache.DeclaringType))
                 {
-                    FieldInfo cache = b.caches[name];
-                    if (result.type.IsAssignableFrom(cache.DeclaringType))
-                    {
-                        result.caches.SetOrAdd(name, cache);
-                        if (result.datas.ContainsKey(name)) result.datas[name] /= b.datas[name];
-                        else result.datas.Add(name, value);
-                    }
+                    result.caches.SetOrAdd(name, cache);
+                    if (result.datas.ContainsKey(name)) result.datas[name] /= b.datas[name];
+                    else result.datas.Add(name, value);
                 }
             }
             return result;

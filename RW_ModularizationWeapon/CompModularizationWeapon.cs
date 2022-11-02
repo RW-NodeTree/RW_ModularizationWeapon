@@ -558,7 +558,7 @@ namespace RW_ModularizationWeapon
         #region Verb
         internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, bool affectDef)
         {
-            properties = (VerbProperties)properties.SimpleCopy();
+            //properties = (VerbProperties)properties.SimpleCopy();
             FieldReaderDgit<VerbProperties> mul = VerbPropertiesMultiplier / Props.verbPropertiesMultiplier;
             FieldReaderDgit<VerbProperties> fac = VerbPropertiesOffseter - Props.verbPropertiesOffseter;
             Log.Message($"mul : {mul}; fac : {fac}");
@@ -575,8 +575,10 @@ namespace RW_ModularizationWeapon
 
         internal Tool ToolAfterAffect(Tool tool)
         {
-            tool = (Tool)tool.SimpleCopy();
-            tool = tool * ToolsMultiplier / Props.toolsMultiplier + ToolsOffseter - Props.toolsOffseter;
+            //tool = (Tool)tool.SimpleCopy();
+            FieldReaderDgit<Tool> mul = ToolsMultiplier / Props.toolsMultiplier;
+            FieldReaderDgit<Tool> fac = ToolsOffseter - Props.toolsOffseter;
+            tool = tool * mul + fac;
             return tool;
         }
 
