@@ -49,7 +49,7 @@ namespace RW_ModularizationWeapon
                 {
                     Type vt = fieldInfo.FieldType;
                     if(vt == typeof(int) || vt == typeof(float) ||
-                       vt == typeof(long) || vt == typeof(sbyte) ||
+                       vt == typeof(long)|| vt == typeof(sbyte) ||
                        vt == typeof(double))
                     {
                         caches.Add(node.Name, fieldInfo);
