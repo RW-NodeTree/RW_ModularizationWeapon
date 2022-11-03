@@ -246,6 +246,7 @@
 					<ticksBetweenBurstShots>0.25</ticksBetweenBurstShots>
 					<warmupTime>0.25</warmupTime>
 				</verbPropertiesMultiplier>
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
                 <attachmentProperties>
                     <li>
 						<id>test-1</id>
