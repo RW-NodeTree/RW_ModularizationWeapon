@@ -1,7 +1,9 @@
 ﻿using HarmonyLib;
+using RimWorld;
 using RW_NodeTree.Tools;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,9 +16,8 @@ namespace RW_ModularizationWeapon
 {
     public class FieldReaderDgit<T> where T : new()
     {
-        public Type type = typeof(T);
-        private readonly Dictionary<string, FieldInfo> caches = new Dictionary<string, FieldInfo>();
-        private readonly Dictionary<string, double> datas = new Dictionary<string, double>();
+        private Type type = typeof(T);
+        private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
 
         public FieldReaderDgit() { }
 
@@ -24,10 +25,47 @@ namespace RW_ModularizationWeapon
         {
             if(other != null)
             {
-                caches.AddRange(other.caches);
                 datas.AddRange(other.datas);
                 type = other.type;
             }
+        }
+
+
+        public Type UsedType
+        {
+            get => type;
+            set
+            {
+                if (value != null && typeof(T).IsAssignableFrom(value))
+                {
+                    type = value;
+                    datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
+                }
+            }
+        }
+
+
+        public bool TryGetValue(string name, out double value)
+        {
+            value = 0;
+            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
+            return false;
+        }
+
+
+        public void SetOrAdd(string name, double value)
+        {
+            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (fieldInfo != null)
+            {
+                Type vt = fieldInfo.FieldType;
+                if (vt == typeof(int) || vt == typeof(float) ||
+                   vt == typeof(long) || vt == typeof(sbyte) ||
+                   vt == typeof(double))
+                    datas.SetOrAdd(fieldInfo, value);
+            }
+
         }
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
@@ -44,20 +82,10 @@ namespace RW_ModularizationWeapon
             }
             foreach(XmlNode node in xmlRoot.ChildNodes)
             {
-                FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                if(fieldInfo != null)
-                {
-                    Type vt = fieldInfo.FieldType;
-                    if(vt == typeof(int) || vt == typeof(float) ||
-                       vt == typeof(long)|| vt == typeof(sbyte) ||
-                       vt == typeof(double))
-                    {
-                        caches.Add(node.Name, fieldInfo);
-                        double data = (double)DirectXmlToObject.GetObjectFromXmlMethod(typeof(double))(node, true);
-                        datas.Add(node.Name, data);
-                    }
-                    
-                }
+                SetOrAdd(
+                    node.Name,
+                    (double)DirectXmlToObject.GetObjectFromXmlMethod(typeof(double))(node, true)
+                    );
             }
             //Log.Message(ToString());
         }
@@ -65,10 +93,10 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            string result = $"FieldReaderDgit<{typeof(T)}>\nHash={base.GetHashCode()}\ndata : \n";
-            foreach ((string name, double value) in datas)
+            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
+            foreach ((FieldInfo field, double value) in datas)
             {
-                result += $" {caches[name].FieldType} {caches[name].DeclaringType}.{name} : {value}\n";
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
             }
             return result;
         }
@@ -78,9 +106,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                a.datas[name] = value + b;
+                a.datas[field] = value + b;
             }
             return a;
         }
@@ -88,9 +116,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                a.datas[name] = value - b;
+                a.datas[field] = value - b;
             }
             return a;
         }
@@ -98,9 +126,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                a.datas[name] = value * b;
+                a.datas[field] = value * b;
             }
             return a;
         }
@@ -108,9 +136,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                a.datas[name] = value / b;
+                a.datas[field] = value / b;
             }
             return a;
         }
@@ -118,9 +146,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator %(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                a.datas[name] = value % b;
+                a.datas[field] = value % b;
             }
             return a;
         }
@@ -133,16 +161,15 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if(a != null)
                 {
-                    foreach ((string name, double value) in b.datas)
+                    foreach ((FieldInfo field, double value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) + value));
-                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) + value));
-                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) + value));
-                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) + value));
-                            else cache.SetValue(a, (double)cache.GetValue(a) + value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + value));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) + value));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) + value));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) + value));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) + value);
                         }
                     }
                 }
@@ -157,16 +184,15 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, double value) in b.datas)
+                    foreach ((FieldInfo field, double value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) - value));
-                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) - value));
-                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) - value));
-                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) - value));
-                            else cache.SetValue(a, (double)cache.GetValue(a) - value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - value));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) - value));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) - value));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) - value));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) - value);
                         }
                     }
                 }
@@ -181,16 +207,15 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, double value) in b.datas)
+                    foreach ((FieldInfo field, double value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) * value));
-                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) * value));
-                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) * value));
-                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) * value));
-                            else cache.SetValue(a, (double)cache.GetValue(a) * value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * value));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) * value));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) * value));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) * value));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) * value);
                         }
                     }
                 }
@@ -205,16 +230,15 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, double value) in b.datas)
+                    foreach ((FieldInfo field, double value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) / value));
-                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) / value));
-                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) / value));
-                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) / value));
-                            else cache.SetValue(a, (double)cache.GetValue(a) / value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / value));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) / value));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) / value));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) / value));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) / value);
                         }
                     }
                 }
@@ -229,16 +253,15 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, double value) in b.datas)
+                    foreach ((FieldInfo field, double value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (cache.FieldType == typeof(int)) cache.SetValue(a, (int)((int)cache.GetValue(a) % value));
-                            else if (cache.FieldType == typeof(float)) cache.SetValue(a, (float)((float)cache.GetValue(a) % value));
-                            else if (cache.FieldType == typeof(long)) cache.SetValue(a, (long)((long)cache.GetValue(a) % value));
-                            else if (cache.FieldType == typeof(sbyte)) cache.SetValue(a, (sbyte)((sbyte)cache.GetValue(a) % value));
-                            else cache.SetValue(a, (double)cache.GetValue(a) % value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % value));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) % value));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) % value));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) % value));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) % value);
                         }
                     }
                 }
@@ -258,23 +281,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, double value) in b.datas)
+            foreach ((FieldInfo field, double value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] += b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] += b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -292,23 +311,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, double value) in b.datas)
+            foreach ((FieldInfo field, double value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] -= b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] -= b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -326,23 +341,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, double value) in b.datas)
+            foreach ((FieldInfo field, double value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] *= b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] *= b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -360,23 +371,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, double value) in b.datas)
+            foreach ((FieldInfo field, double value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] /= b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] /= b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -394,23 +401,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, double value) in a.datas)
+            foreach ((FieldInfo field, double value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, double value) in b.datas)
+            foreach ((FieldInfo field, double value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] %= b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] %= b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -419,9 +422,8 @@ namespace RW_ModularizationWeapon
 
     public class FieldReaderBool<T> where T : new()
     {
-        public Type type = typeof(T);
-        private readonly Dictionary<string, FieldInfo> caches = new Dictionary<string, FieldInfo>();
-        private readonly Dictionary<string, bool> datas = new Dictionary<string, bool>();
+        private Type type = typeof(T);
+        private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
 
         public FieldReaderBool() { }
 
@@ -429,11 +431,46 @@ namespace RW_ModularizationWeapon
         {
             if (other != null)
             {
-                caches.AddRange(other.caches);
                 datas.AddRange(other.datas);
                 type = other.type;
             }
         }
+
+        public Type UsedType
+        {
+            get => type;
+            set
+            {
+                if (value != null && typeof(T).IsAssignableFrom(value))
+                {
+                    type = value;
+                    datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
+                }
+            }
+        }
+
+
+        public bool TryGetValue(string name, out bool value)
+        {
+            value = false;
+            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
+            return false;
+        }
+
+
+        public void SetOrAdd(string name, bool value)
+        {
+            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (fieldInfo != null)
+            {
+                Type vt = fieldInfo.FieldType;
+                if (vt == typeof(bool))
+                    datas.SetOrAdd(fieldInfo, value);
+            }
+
+        }
+
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
@@ -449,18 +486,10 @@ namespace RW_ModularizationWeapon
             }
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
-                FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                if (fieldInfo != null)
-                {
-                    Type vt = fieldInfo.FieldType;
-                    if (vt == typeof(bool))
-                    {
-                        caches.Add(node.Name, fieldInfo);
-                        bool data = (bool)DirectXmlToObject.GetObjectFromXmlMethod(typeof(bool))(node, true);
-                        datas.Add(node.Name, data);
-                    }
-
-                }
+                SetOrAdd(
+                    node.Name,
+                    (bool)DirectXmlToObject.GetObjectFromXmlMethod(typeof(bool))(node, true)
+                    );
             }
             //Log.Message(ToString());
         }
@@ -468,10 +497,10 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            string result = $"FieldReaderDgit<{typeof(T)}>\nHash={base.GetHashCode()}\ndata : \n";
-            foreach ((string name, bool value) in datas)
+            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
+            foreach ((FieldInfo field, bool value) in datas)
             {
-                result += $" {caches[name].FieldType} {caches[name].DeclaringType}.{name} : {value}\n";
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
             }
             return result;
         }
@@ -481,9 +510,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, bool b)
         {
             a = new FieldReaderBool<T>(a);
-            foreach ((string name, bool value) in a.datas)
+            foreach ((FieldInfo field, bool value) in a.datas)
             {
-                a.datas[name] = value && b;
+                a.datas[field] = value && b;
             }
             return a;
         }
@@ -491,9 +520,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderBool<T> operator |(FieldReaderBool<T> a, bool b)
         {
             a = new FieldReaderBool<T>(a);
-            foreach ((string name, bool value) in a.datas)
+            foreach ((FieldInfo field, bool value) in a.datas)
             {
-                a.datas[name] = value || b;
+                a.datas[field] = value || b;
             }
             return a;
         }
@@ -501,9 +530,9 @@ namespace RW_ModularizationWeapon
         public static FieldReaderBool<T> operator ~(FieldReaderBool<T> a)
         {
             a = new FieldReaderBool<T>(a);
-            foreach ((string name, bool value) in a.datas)
+            foreach ((FieldInfo field, bool value) in a.datas)
             {
-                a.datas[name] = !value;
+                a.datas[field] = !value;
             }
             return a;
         }
@@ -516,12 +545,11 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, bool value) in b.datas)
+                    foreach ((FieldInfo field, bool value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            cache.SetValue(a, (bool)cache.GetValue(a) && value);
+                            field.SetValue(a, (bool)field.GetValue(a) && value);
                         }
                     }
                 }
@@ -536,12 +564,11 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, bool value) in b.datas)
+                    foreach ((FieldInfo field, bool value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            cache.SetValue(a, (bool)cache.GetValue(a) || value);
+                            field.SetValue(a, (bool)field.GetValue(a) || value);
                         }
                     }
                 }
@@ -561,23 +588,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, bool value) in a.datas)
+            foreach ((FieldInfo field, bool value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, bool value) in b.datas)
+            foreach ((FieldInfo field, bool value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] = result.datas[name] && b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] = result.datas[field] && b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -595,23 +618,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, bool value) in a.datas)
+            foreach ((FieldInfo field, bool value) in a.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.SetOrAdd(field, value);
                 }
             }
-            foreach ((string name, bool value) in b.datas)
+            foreach ((FieldInfo field, bool value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name)) result.datas[name] = result.datas[name] || b.datas[name];
-                    else result.datas.Add(name, value);
+                    if (result.datas.ContainsKey(field)) result.datas[field] = result.datas[field] || b.datas[field];
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -620,9 +639,8 @@ namespace RW_ModularizationWeapon
 
     public class FieldReaderInst<T> where T : new()
     {
-        public Type type = typeof(T);
-        private readonly Dictionary<string, FieldInfo> caches = new Dictionary<string, FieldInfo>();
-        private readonly Dictionary<string, object> datas = new Dictionary<string, object>();
+        private Type type = typeof(T);
+        private readonly Dictionary<FieldInfo, object> datas = new Dictionary<FieldInfo, object>();
 
         public FieldReaderInst() { }
 
@@ -630,11 +648,50 @@ namespace RW_ModularizationWeapon
         {
             if (other != null)
             {
-                caches.AddRange(other.caches);
                 datas.AddRange(other.datas);
                 type = other.type;
             }
         }
+
+
+        public Type UsedType
+        {
+            get=> type;
+            set
+            {
+                if(value != null && typeof(T).IsAssignableFrom(value))
+                {
+                    type = value;
+                    datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
+                }
+            }
+        }
+
+
+        public bool TryGetValue(string name, out object value)
+        {
+            value = null;
+            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if(fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
+            return false;
+        }
+
+
+        public void SetOrAdd(string name, object value)
+        {
+            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if(fieldInfo != null)
+            {
+                Type vt = fieldInfo.FieldType;
+                if (vt != typeof(bool) && vt != typeof(int) &&
+                    vt != typeof(float) && vt != typeof(long) &&
+                    vt != typeof(sbyte) && vt != typeof(double) && 
+                    vt.IsAssignableFrom(value.GetType()))
+                    datas.SetOrAdd(fieldInfo, value);
+            }
+                
+        }
+
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
@@ -658,9 +715,8 @@ namespace RW_ModularizationWeapon
                         vt != typeof(float)&& vt != typeof(long)&&
                         vt != typeof(sbyte)&& vt != typeof(double))
                     {
-                        caches.Add(node.Name, fieldInfo);
-                        bool data = (bool)DirectXmlToObject.GetObjectFromXmlMethod(vt)(node, true);
-                        datas.Add(node.Name, data);
+                        object data = DirectXmlToObject.GetObjectFromXmlMethod(vt)(node, true);
+                        datas.Add(fieldInfo, data);
                     }
 
                 }
@@ -671,10 +727,10 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            string result = $"FieldReaderDgit<{typeof(T)}>\nHash={base.GetHashCode()}\ndata : \n";
-            foreach ((string name, object value) in datas)
+            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
+            foreach ((FieldInfo field, object value) in datas)
             {
-                result += $" {caches[name].FieldType} {caches[name].DeclaringType}.{name} : {value}\n";
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
             }
             return result;
         }
@@ -687,13 +743,12 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, object value) in b.datas)
+                    foreach ((FieldInfo field, object value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            object data = cache.GetValue(a);
-                            if(data != null) cache.SetValue(a, value ?? data);
+                            object data = field.GetValue(a);
+                            if(data != null) field.SetValue(a, value ?? data);
                         }
                     }
                 }
@@ -708,13 +763,12 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((string name, object value) in b.datas)
+                    foreach ((FieldInfo field, object value) in b.datas)
                     {
-                        FieldInfo cache = b.caches[name];
-                        if (cache != null && cache.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            object data = cache.GetValue(a);
-                            cache.SetValue(a, data ?? value);
+                            object data = field.GetValue(a);
+                            field.SetValue(a, data ?? value);
                         }
                     }
                 }
@@ -734,27 +788,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, object value) in a.datas)
+            foreach ((FieldInfo field, object value) in b.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, object value) in b.datas)
+            foreach ((FieldInfo field, object value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name))
+                    if (result.datas.ContainsKey(field))
                     {
-                        object data = result.datas[name];
-                        if (data != null) result.datas[name] = b.datas[name] ?? data;
+                        object data = result.datas[field];
+                        if (data != null) result.datas[field] = b.datas[field] ?? data;
                     }
-                    else result.datas.Add(name, value);
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
@@ -772,27 +822,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((string name, object value) in a.datas)
+            foreach ((FieldInfo field, object value) in b.datas)
             {
-                FieldInfo cache = a.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    result.datas.SetOrAdd(name, value);
+                    result.datas.Add(field, value);
                 }
             }
-            foreach ((string name, object value) in b.datas)
+            foreach ((FieldInfo field, object value) in b.datas)
             {
-                FieldInfo cache = b.caches[name];
-                if (result.type.IsAssignableFrom(cache.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.caches.SetOrAdd(name, cache);
-                    if (result.datas.ContainsKey(name))
+                    if (result.datas.ContainsKey(field))
                     {
-                        object data = result.datas[name];
-                        result.datas[name] = data ?? b.datas[name];
+                        object data = result.datas[field];
+                        result.datas[field] = data ?? b.datas[field];
                     }
-                    else result.datas.Add(name, value);
+                    else result.datas.Add(field, value);
                 }
             }
             return result;
