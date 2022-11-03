@@ -619,10 +619,10 @@ namespace RW_ModularizationWeapon
             if (affectDef)
             {
                 FieldReaderInst<VerbProperties> patchInst = VerbPropertiesObjectPatch;
-                properties |= patchInst;
                 properties &= patchInst;
-                properties |= VerbPropertiesBoolOrPatch;
+                properties |= patchInst;
                 properties &= VerbPropertiesBoolAndPatch;
+                properties |= VerbPropertiesBoolOrPatch;
             }
             return properties;
         }
@@ -638,10 +638,10 @@ namespace RW_ModularizationWeapon
             if (affectDef)
             {
                 FieldReaderInst<Tool> patchInst = ToolsObjectPatch;
-                tool |= patchInst;
                 tool &= patchInst;
-                tool |= ToolsBoolOrPatch;
+                tool |= patchInst;
                 tool &= ToolsBoolAndPatch;
+                tool |= ToolsBoolOrPatch;
             }
             return tool;
         }
