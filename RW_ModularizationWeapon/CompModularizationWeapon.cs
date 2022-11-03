@@ -484,12 +484,13 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        #region Def
-        public ThingDef ForceProjectile
+        #region Patch
+        public FieldReaderInst<VerbProperties> VerbPropertiesObjectPatch
         {
             get
             {
                 NodeContainer container = ChildNodes;
+                FieldReaderInst<VerbProperties> result = new FieldReaderInst<VerbProperties>();
                 for (int i = 0; i < container.Count; i++)
                 {
                     string id = container[(uint)i];
@@ -497,10 +498,7 @@ namespace RW_ModularizationWeapon
                     if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity && comp.Props.forceProjectile != null && typeof(Projectile).IsAssignableFrom(comp.Props.forceProjectile.thingClass))
-                        {
-                            return comp.Props.forceProjectile;
-                        }
+                        result |= comp.Props.verbPropertiesObjectPatch | VerbPropertiesObjectPatch;
                     }
                 }
                 return null;
@@ -508,11 +506,12 @@ namespace RW_ModularizationWeapon
         }
         
 
-        public SoundDef ForceSound
+        public FieldReaderInst<Tool> ToolsObjectPatch
         {
             get
             {
                 NodeContainer container = ChildNodes;
+                FieldReaderInst<Tool> result = new FieldReaderInst<Tool>();
                 for (int i = 0; i < container.Count; i++)
                 {
                     string id = container[(uint)i];
@@ -520,33 +519,87 @@ namespace RW_ModularizationWeapon
                     if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity && comp.Props.forceSound != null)
-                        {
-                            return comp.Props.forceSound;
-                        }
+                        result |= comp.Props.toolsObjectPatch | ToolsObjectPatch;
                     }
                 }
                 return null;
             }
         }
-        
 
-        public SoundDef ForceSoundCastTail
+
+        public FieldReaderBool<VerbProperties> VerbPropertiesBoolAndPatch
         {
             get
             {
                 NodeContainer container = ChildNodes;
+                FieldReaderBool<VerbProperties> result = new FieldReaderBool<VerbProperties>();
                 for (int i = 0; i < container.Count; i++)
                 {
-                    string id = container[(uint)i];
                     Thing thing = container[i];
                     if (thing != null)
                     {
                         CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity && comp.Props.forceSoundCastTail != null)
-                        {
-                            return comp.Props.forceSoundCastTail;
-                        }
+                        result &= comp.Props.verbPropertiesBoolAndPatch & VerbPropertiesBoolAndPatch;
+                    }
+                }
+                return null;
+            }
+        }
+
+
+        public FieldReaderBool<Tool> ToolsBoolAndPatch
+        {
+            get
+            {
+                NodeContainer container = ChildNodes;
+                FieldReaderBool<Tool> result = new FieldReaderBool<Tool>();
+                for (int i = 0; i < container.Count; i++)
+                {
+                    Thing thing = container[i];
+                    if (thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        result &= comp.Props.toolsBoolAndPatch & ToolsBoolAndPatch;
+                    }
+                }
+                return null;
+            }
+        }
+
+
+        public FieldReaderBool<VerbProperties> VerbPropertiesBoolOrPatch
+        {
+            get
+            {
+                NodeContainer container = ChildNodes;
+                FieldReaderBool<VerbProperties> result = new FieldReaderBool<VerbProperties>();
+                for (int i = 0; i < container.Count; i++)
+                {
+                    Thing thing = container[i];
+                    if (thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        result |= comp.Props.verbPropertiesBoolOrPatch | VerbPropertiesBoolOrPatch;
+                    }
+                }
+                return null;
+            }
+        }
+
+
+        public FieldReaderBool<Tool> ToolsBoolOrPatch
+        {
+            get
+            {
+                NodeContainer container = ChildNodes;
+                FieldReaderBool<Tool> result = new FieldReaderBool<Tool>();
+                for (int i = 0; i < container.Count; i++)
+                {
+                    Thing thing = container[i];
+                    if (thing != null)
+                    {
+                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                        result |= comp.Props.toolsBoolOrPatch | ToolsBoolOrPatch;
                     }
                 }
                 return null;
@@ -561,24 +614,35 @@ namespace RW_ModularizationWeapon
             //properties = (VerbProperties)properties.SimpleCopy();
             FieldReaderDgit<VerbProperties> mul = VerbPropertiesMultiplier / Props.verbPropertiesMultiplier;
             FieldReaderDgit<VerbProperties> fac = VerbPropertiesOffseter - Props.verbPropertiesOffseter;
-            Log.Message($"mul : {mul}; fac : {fac}");
+            //Log.Message($"mul : {mul}; fac : {fac}");
             properties = properties * mul + fac;
             if (affectDef)
             {
-                properties.defaultProjectile = ForceProjectile ?? properties.defaultProjectile;
-                properties.soundCast = ForceSound ?? properties.soundCast;
-                properties.soundCastTail = ForceSoundCastTail ?? properties.soundCastTail;
+                FieldReaderInst<VerbProperties> patchInst = VerbPropertiesObjectPatch;
+                properties |= patchInst;
+                properties &= patchInst;
+                properties |= VerbPropertiesBoolOrPatch;
+                properties &= VerbPropertiesBoolAndPatch;
             }
             return properties;
         }
 
 
-        internal Tool ToolAfterAffect(Tool tool)
+        internal Tool ToolAfterAffect(Tool tool, bool affectDef)
         {
             //tool = (Tool)tool.SimpleCopy();
             FieldReaderDgit<Tool> mul = ToolsMultiplier / Props.toolsMultiplier;
             FieldReaderDgit<Tool> fac = ToolsOffseter - Props.toolsOffseter;
             tool = tool * mul + fac;
+            tool = tool * mul + fac;
+            if (affectDef)
+            {
+                FieldReaderInst<Tool> patchInst = ToolsObjectPatch;
+                tool |= patchInst;
+                tool &= patchInst;
+                tool |= ToolsBoolOrPatch;
+                tool &= ToolsBoolAndPatch;
+            }
             return tool;
         }
 
@@ -590,7 +654,7 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < result.Count; i++)
                 {
                     VerbToolRegiestInfo prop = result[i];
-                    Tool newProp = ToolAfterAffect(prop.berforConvertTool);
+                    Tool newProp = ToolAfterAffect(prop.berforConvertTool, true);
                     prop.afterCobvertTool = newProp;
                     result[i] = prop;
                 }
@@ -613,7 +677,7 @@ namespace RW_ModularizationWeapon
                             {
                                 Tool cache = tools[j];
                                 Tool prop = ((CompChildNodeProccesser)container[i])?.GetBeforeConvertVerbCorrespondingThing(ownerType, cache, null).Item3;
-                                Tool newProp = ToolAfterAffect(prop ?? cache);
+                                Tool newProp = ToolAfterAffect(prop ?? cache, false);
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -1184,11 +1248,6 @@ namespace RW_ModularizationWeapon
             {
                 yield return error;
             }
-            if(forceProjectile != null && typeof(Projectile).IsAssignableFrom(forceProjectile.thingClass))
-            {
-                forceProjectile = null;
-                yield return "forceProjectile is not vaildity";
-            }
             for (int i = attachmentProperties.Count - 1; i >= 0; i--)
             {
                 WeaponAttachmentProperties properties = attachmentProperties[i];
@@ -1298,14 +1357,23 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        #region Def
-        public ThingDef forceProjectile = null;
+        #region Patchs
+        public FieldReaderInst<VerbProperties> verbPropertiesObjectPatch = new FieldReaderInst<VerbProperties>();
 
 
-        public SoundDef forceSound = null;
+        public FieldReaderInst<Tool> toolsObjectPatch = new FieldReaderInst<Tool>();
 
 
-        public SoundDef forceSoundCastTail = null;
+        public FieldReaderBool<VerbProperties> verbPropertiesBoolAndPatch = new FieldReaderBool<VerbProperties>();
+
+
+        public FieldReaderBool<Tool> toolsBoolAndPatch = new FieldReaderBool<Tool>();
+
+
+        public FieldReaderBool<VerbProperties> verbPropertiesBoolOrPatch = new FieldReaderBool<VerbProperties>();
+
+
+        public FieldReaderBool<Tool> toolsBoolOrPatch = new FieldReaderBool<Tool>();
         #endregion
 
 
