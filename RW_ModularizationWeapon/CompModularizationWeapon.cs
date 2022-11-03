@@ -634,7 +634,6 @@ namespace RW_ModularizationWeapon
             FieldReaderDgit<Tool> mul = ToolsMultiplier / Props.toolsMultiplier;
             FieldReaderDgit<Tool> fac = ToolsOffseter - Props.toolsOffseter;
             tool = tool * mul + fac;
-            tool = tool * mul + fac;
             if (affectDef)
             {
                 FieldReaderInst<Tool> patchInst = ToolsObjectPatch;
