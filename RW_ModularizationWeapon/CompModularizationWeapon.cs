@@ -339,53 +339,47 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public FieldReaderDgit<VerbProperties> VerbPropertiesOffseter
+        public FieldReaderDgit<VerbProperties> VerbPropertiesOffseter(string childNodeIdForVerbProperties)
         {
-            get
+            FieldReaderDgit<VerbProperties> result = new FieldReaderDgit<VerbProperties>();
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
             {
-                FieldReaderDgit<VerbProperties> result = new FieldReaderDgit<VerbProperties>(Props.verbPropertiesOffseter);
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if(thing != null)
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    if (comp != null && comp.Validity)
                     {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.VerbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon;
-                        }
+                        result += comp.Props.verbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon;
                     }
                 }
-                return result;
             }
+            return result;
         }
 
 
-        public FieldReaderDgit<Tool> ToolsOffseter
+        public FieldReaderDgit<Tool> ToolsOffseter(string childNodeIdForTool)
         {
-            get
+            FieldReaderDgit<Tool> result = new FieldReaderDgit<Tool>();
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
             {
-                FieldReaderDgit<Tool> result = new FieldReaderDgit<Tool>(Props.toolsOffseter);
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (thing != null && id != childNodeIdForTool)
                 {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if (thing != null)
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    if (comp != null && comp.Validity)
                     {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result += comp.ToolsOffseter * properties.toolsOffseterAffectHorizon;
-                        }
+                        result += comp.Props.toolsOffseter * properties.toolsOffseterAffectHorizon;
                     }
                 }
-                return result;
             }
+            return result;
         }
 
         public float GetStatOffset(StatDef stateDef)
@@ -412,53 +406,47 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public FieldReaderDgit<VerbProperties> VerbPropertiesMultiplier
+        public FieldReaderDgit<VerbProperties> VerbPropertiesMultiplier(string childNodeIdForVerbProperties)
         {
-            get
+            FieldReaderDgit<VerbProperties> result = new FieldReaderDgit<VerbProperties>();
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
             {
-                FieldReaderDgit<VerbProperties> result = new FieldReaderDgit<VerbProperties>(Props.verbPropertiesMultiplier);
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if (thing != null)
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    if (comp != null && comp.Validity)
                     {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= (comp.VerbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
-                        }
+                        result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
                 }
-                return result;
             }
+            return result;
         }
 
 
-        public FieldReaderDgit<Tool> ToolsMultiplier
+        public FieldReaderDgit<Tool> ToolsMultiplier(string childNodeIdForTool)
         {
-            get
+            FieldReaderDgit<Tool> result = new FieldReaderDgit<Tool>();
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
             {
-                FieldReaderDgit<Tool> result = new FieldReaderDgit<Tool>(Props.toolsMultiplier);
-                NodeContainer container = ChildNodes;
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForTool)
                 {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    if (thing != null)
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    if (comp != null && comp.Validity)
                     {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        if (comp != null && comp.Validity)
-                        {
-                            result *= (comp.ToolsMultiplier - 1f) * properties.toolsMultiplierAffectHorizon + 1f;
-                        }
+                        result *= (comp.Props.toolsMultiplier - 1f) * properties.toolsMultiplierAffectHorizon + 1f;
                     }
                 }
-                return result;
             }
+            return result;
         }
 
         public float GetStatMultiplier(StatDef stateDef)
@@ -485,162 +473,145 @@ namespace RW_ModularizationWeapon
 
 
         #region Patch
-        public FieldReaderInst<VerbProperties> VerbPropertiesObjectPatch
+        public FieldReaderInst<VerbProperties> VerbPropertiesObjectPatch(string childNodeIdForVerbProperties)
         {
-            get
+            NodeContainer container = ChildNodes;
+            FieldReaderInst<VerbProperties> result = new FieldReaderInst<VerbProperties>();
+            for (int i = 0; i < container.Count; i++)
             {
-                NodeContainer container = ChildNodes;
-                FieldReaderInst<VerbProperties> result = new FieldReaderInst<VerbProperties>();
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        result |= comp.Props.verbPropertiesObjectPatch | VerbPropertiesObjectPatch;
-                    }
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    result |= comp.Props.verbPropertiesObjectPatch;
                 }
-                return null;
             }
+            return null;
         }
         
 
-        public FieldReaderInst<Tool> ToolsObjectPatch
+        public FieldReaderInst<Tool> ToolsObjectPatch(string childNodeIdForTool)
         {
-            get
+            NodeContainer container = ChildNodes;
+            FieldReaderInst<Tool> result = new FieldReaderInst<Tool>();
+            for (int i = 0; i < container.Count; i++)
             {
-                NodeContainer container = ChildNodes;
-                FieldReaderInst<Tool> result = new FieldReaderInst<Tool>();
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForTool)
                 {
-                    string id = container[(uint)i];
-                    Thing thing = container[i];
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        result |= comp.Props.toolsObjectPatch | ToolsObjectPatch;
-                    }
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    result |= comp.Props.toolsObjectPatch;
                 }
-                return null;
             }
+            return null;
         }
 
 
-        public FieldReaderBool<VerbProperties> VerbPropertiesBoolAndPatch
+        public FieldReaderBool<VerbProperties> VerbPropertiesBoolAndPatch(string childNodeIdForVerbProperties)
         {
-            get
+            NodeContainer container = ChildNodes;
+            FieldReaderBool<VerbProperties> result = new FieldReaderBool<VerbProperties>();
+            for (int i = 0; i < container.Count; i++)
             {
-                NodeContainer container = ChildNodes;
-                FieldReaderBool<VerbProperties> result = new FieldReaderBool<VerbProperties>();
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    Thing thing = container[i];
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        result &= comp.Props.verbPropertiesBoolAndPatch & VerbPropertiesBoolAndPatch;
-                    }
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    result &= comp.Props.verbPropertiesBoolAndPatch;
                 }
-                return null;
             }
+            return null;
         }
 
 
-        public FieldReaderBool<Tool> ToolsBoolAndPatch
+        public FieldReaderBool<Tool> ToolsBoolAndPatch(string childNodeIdForTool)
         {
-            get
+            NodeContainer container = ChildNodes;
+            FieldReaderBool<Tool> result = new FieldReaderBool<Tool>();
+            for (int i = 0; i < container.Count; i++)
             {
-                NodeContainer container = ChildNodes;
-                FieldReaderBool<Tool> result = new FieldReaderBool<Tool>();
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForTool)
                 {
-                    Thing thing = container[i];
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        result &= comp.Props.toolsBoolAndPatch & ToolsBoolAndPatch;
-                    }
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    result &= comp.Props.toolsBoolAndPatch;
                 }
-                return null;
             }
+            return null;
         }
 
 
-        public FieldReaderBool<VerbProperties> VerbPropertiesBoolOrPatch
+        public FieldReaderBool<VerbProperties> VerbPropertiesBoolOrPatch(string childNodeIdForVerbProperties)
         {
-            get
+            NodeContainer container = ChildNodes;
+            FieldReaderBool<VerbProperties> result = new FieldReaderBool<VerbProperties>();
+            for (int i = 0; i < container.Count; i++)
             {
-                NodeContainer container = ChildNodes;
-                FieldReaderBool<VerbProperties> result = new FieldReaderBool<VerbProperties>();
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    Thing thing = container[i];
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        result |= comp.Props.verbPropertiesBoolOrPatch | VerbPropertiesBoolOrPatch;
-                    }
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    result |= comp.Props.verbPropertiesBoolOrPatch;
                 }
-                return null;
             }
+            return null;
         }
 
 
-        public FieldReaderBool<Tool> ToolsBoolOrPatch
+        public FieldReaderBool<Tool> ToolsBoolOrPatch(string childNodeIdForTool)
         {
-            get
+            NodeContainer container = ChildNodes;
+            FieldReaderBool<Tool> result = new FieldReaderBool<Tool>();
+            for (int i = 0; i < container.Count; i++)
             {
-                NodeContainer container = ChildNodes;
-                FieldReaderBool<Tool> result = new FieldReaderBool<Tool>();
-                for (int i = 0; i < container.Count; i++)
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForTool)
                 {
-                    Thing thing = container[i];
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                        result |= comp.Props.toolsBoolOrPatch | ToolsBoolOrPatch;
-                    }
+                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    result |= comp.Props.toolsBoolOrPatch;
                 }
-                return null;
             }
+            return null;
         }
         #endregion
 
 
         #region Verb
-        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, bool affectDef)
+        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties, bool affectDef)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
-            FieldReaderDgit<VerbProperties> mul = VerbPropertiesMultiplier / Props.verbPropertiesMultiplier;
-            FieldReaderDgit<VerbProperties> fac = VerbPropertiesOffseter - Props.verbPropertiesOffseter;
-            //Log.Message($"mul : {mul}; fac : {fac}");
-            properties = properties * mul + fac;
+            properties *= VerbPropertiesMultiplier(childNodeIdForVerbProperties);
+            properties += VerbPropertiesOffseter(childNodeIdForVerbProperties);
             if (affectDef)
             {
-                FieldReaderInst<VerbProperties> patchInst = VerbPropertiesObjectPatch;
+                FieldReaderInst<VerbProperties> patchInst = VerbPropertiesObjectPatch(childNodeIdForVerbProperties);
                 properties &= patchInst;
                 properties |= patchInst;
-                properties &= VerbPropertiesBoolAndPatch;
-                properties |= VerbPropertiesBoolOrPatch;
+                properties &= VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
+                properties |= VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
             }
             return properties;
         }
 
 
-        internal Tool ToolAfterAffect(Tool tool, bool affectDef)
+        internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool, bool affectDef)
         {
             //tool = (Tool)tool.SimpleCopy();
-            FieldReaderDgit<Tool> mul = ToolsMultiplier / Props.toolsMultiplier;
-            FieldReaderDgit<Tool> fac = ToolsOffseter - Props.toolsOffseter;
-            tool = tool * mul + fac;
+            tool *= ToolsMultiplier(childNodeIdForTool);
+            tool += ToolsOffseter(childNodeIdForTool);
             if (affectDef)
             {
-                FieldReaderInst<Tool> patchInst = ToolsObjectPatch;
+                FieldReaderInst<Tool> patchInst = ToolsObjectPatch(childNodeIdForTool);
                 tool &= patchInst;
                 tool |= patchInst;
-                tool &= ToolsBoolAndPatch;
-                tool |= ToolsBoolOrPatch;
+                tool &= ToolsBoolAndPatch(childNodeIdForTool);
+                tool |= ToolsBoolOrPatch(childNodeIdForTool);
             }
             return tool;
         }
@@ -653,7 +624,7 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < result.Count; i++)
                 {
                     VerbToolRegiestInfo prop = result[i];
-                    Tool newProp = ToolAfterAffect(prop.berforConvertTool, true);
+                    Tool newProp = ToolAfterAffect(prop.berforConvertTool, null, true);
                     prop.afterCobvertTool = newProp;
                     result[i] = prop;
                 }
@@ -675,8 +646,7 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < tools.Count; j++)
                             {
                                 Tool cache = tools[j];
-                                Tool prop = ((CompChildNodeProccesser)container[i])?.GetBeforeConvertVerbCorrespondingThing(ownerType, cache, null).Item3;
-                                Tool newProp = ToolAfterAffect(prop ?? cache, false);
+                                Tool newProp = ToolAfterAffect(cache,id, false);
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -702,7 +672,7 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < result.Count; i++)
                 {
                     VerbPropertiesRegiestInfo prop = result[i];
-                    VerbProperties newProp = VerbPropertiesAfterAffect(prop.berforConvertProperties, true);
+                    VerbProperties newProp = VerbPropertiesAfterAffect(prop.berforConvertProperties, null, true);
                     prop.afterConvertProperties = newProp;
                     result[i] = prop;
                 }
@@ -724,8 +694,7 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
                                 VerbProperties cache = verbProperties[j];
-                                VerbProperties prop = ((CompChildNodeProccesser)container[i])?.GetBeforeConvertVerbCorrespondingThing(ownerType, null, cache).Item4;
-                                VerbProperties newProp = VerbPropertiesAfterAffect(prop ?? cache, false);
+                                VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
                         }

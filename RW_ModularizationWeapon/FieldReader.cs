@@ -166,7 +166,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if(a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -191,7 +191,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -216,7 +216,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -241,7 +241,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -266,7 +266,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -586,7 +586,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -607,7 +607,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -796,7 +796,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
@@ -818,7 +818,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = (T)a.SimpleCopy();
+                a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
                     List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
