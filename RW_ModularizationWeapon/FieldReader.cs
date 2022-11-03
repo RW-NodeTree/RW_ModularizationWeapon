@@ -2,6 +2,7 @@
 using RimWorld;
 using RW_NodeTree.Tools;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,7 +15,7 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
-    public class FieldReaderDgit<T> where T : new()
+    public class FieldReaderDgit<T> : IEnumerable<KeyValuePair<FieldInfo, double>> where T : new()
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
@@ -43,6 +44,9 @@ namespace RW_ModularizationWeapon
                 }
             }
         }
+
+
+        public int Count => datas.Count;
 
 
         public bool TryGetValue(string name, out double value)
@@ -101,7 +105,15 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
+        public IEnumerator<KeyValuePair<FieldInfo, double>> GetEnumerator()
+        {
+            return datas.GetEnumerator();
+        }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return datas.GetEnumerator();
+        }
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
         {
@@ -458,7 +470,7 @@ namespace RW_ModularizationWeapon
         }
     }
 
-    public class FieldReaderBool<T> where T : new()
+    public class FieldReaderBool<T> : IEnumerable<KeyValuePair<FieldInfo, bool>> where T : new()
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
@@ -486,6 +498,9 @@ namespace RW_ModularizationWeapon
                 }
             }
         }
+
+
+        public int Count => datas.Count;
 
 
         public bool TryGetValue(string name, out bool value)
@@ -543,7 +558,15 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
+        public IEnumerator<KeyValuePair<FieldInfo, bool>> GetEnumerator()
+        {
+            return datas.GetEnumerator();
+        }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return datas.GetEnumerator();
+        }
 
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, bool b)
         {
@@ -693,7 +716,7 @@ namespace RW_ModularizationWeapon
         }
     }
 
-    public class FieldReaderInst<T> where T : new()
+    public class FieldReaderInst<T> : IEnumerable<KeyValuePair<FieldInfo, object>> where T : new()
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, object> datas = new Dictionary<FieldInfo, object>();
@@ -722,6 +745,9 @@ namespace RW_ModularizationWeapon
                 }
             }
         }
+
+
+        public int Count => datas.Count;
 
 
         public bool TryGetValue(string name, out object value)
@@ -791,6 +817,15 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
+        public IEnumerator<KeyValuePair<FieldInfo, object>> GetEnumerator()
+        {
+            return datas.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return datas.GetEnumerator();
+        }
 
         public static T operator &(T a, FieldReaderInst<T> b)
         {

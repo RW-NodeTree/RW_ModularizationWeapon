@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -722,6 +724,7 @@ namespace RW_ModularizationWeapon
                 CompEquippable eq = parent.GetComp<CompEquippable>();
                 if (eq != null)
                 {
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
                     forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
                     forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
                     //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
@@ -731,14 +734,8 @@ namespace RW_ModularizationWeapon
                     //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
                     foreach (Verb verb in verbs)
                     {
-                        if (verb.tool != null)
-                        {
-                            parent.def.tools.Add(verb.tool);
-                        }
-                        else
-                        {
-                            parent.def.Verbs.Add(verb.verbProps);
-                        }
+                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                        else parent.def.Verbs.Add(verb.verbProps);
                     }
                     //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
                 }
@@ -822,6 +819,74 @@ namespace RW_ModularizationWeapon
                 {
                     yield return new Dialog_InfoCard.Hyperlink(thing);
                 }
+            }
+        }
+
+
+        protected override IEnumerable<StatDrawEntry> PostThingDef_SpecialDisplayStats(ThingDef def, StatRequest req, IEnumerable<StatDrawEntry> result)
+        {
+            //Log.Message($"PostThingDef_SpecialDisplayStats({def},{req},{result})");
+            List<VerbProperties> verbProperties = null;
+            List<Tool> tools = null;
+            CompEquippable eq = parent.GetComp<CompEquippable>();
+            if (eq != null)
+            {
+                ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                verbProperties = new List<VerbProperties>(parent.def.Verbs);
+                tools = new List<Tool>(parent.def.tools);
+                List<Verb> verbs = eq.AllVerbs;
+                parent.def.Verbs.Clear();
+                parent.def.tools.Clear();
+                foreach (Verb verb in verbs)
+                {
+                    if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                    else parent.def.Verbs.Add(verb.verbProps);
+                }
+            }
+            foreach (StatDrawEntry entry in result)
+            {
+                yield return entry;
+            }
+            if(verbProperties != null && tools != null)
+            {
+                parent.def.Verbs.Clear();
+                parent.def.tools.Clear();
+                parent.def.Verbs.AddRange(verbProperties);
+                parent.def.tools.AddRange(tools);
+            }
+        }
+
+
+        protected override IEnumerable<StatDrawEntry> PostStatsReportUtility_StatsToDraw(Thing thing, IEnumerable<StatDrawEntry> result)
+        {
+            //Log.Message($"PostStatsReportUtility_StatsToDraw({thing},{result})");
+            List<VerbProperties> verbProperties = null;
+            List<Tool> tools = null;
+            CompEquippable eq = parent.GetComp<CompEquippable>();
+            if (eq != null)
+            {
+                ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                verbProperties = new List<VerbProperties>(parent.def.Verbs);
+                tools = new List<Tool>(parent.def.tools);
+                List<Verb> verbs = eq.AllVerbs;
+                parent.def.Verbs.Clear();
+                parent.def.tools.Clear();
+                foreach (Verb verb in verbs)
+                {
+                    if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                    else parent.def.Verbs.Add(verb.verbProps);
+                }
+            }
+            foreach (StatDrawEntry entry in result)
+            {
+                yield return entry;
+            }
+            if (verbProperties != null && tools != null)
+            {
+                parent.def.Verbs.Clear();
+                parent.def.tools.Clear();
+                parent.def.Verbs.AddRange(verbProperties);
+                parent.def.tools.AddRange(tools);
             }
         }
         #endregion
@@ -930,7 +995,7 @@ namespace RW_ModularizationWeapon
                     else
                     {
                         Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight), properties.UITexture,1);
-                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight), properties.name ?? properties.id);
+                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight), properties.Name);
                         if(Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight))) iconEvent?.Invoke(id,thing,this);
                     }
                     currentPos.y += BlockHeight;
@@ -1172,6 +1237,7 @@ namespace RW_ModularizationWeapon
         private bool usingTargetPart = false;
 
         private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
+        private static AccessTools.FieldRef<ThingDef, List<VerbProperties>> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>>("verbs");
     }
 
 
@@ -1268,10 +1334,110 @@ namespace RW_ModularizationWeapon
         }
 
 
-        //public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
-        //{
-        //    yield return new StatDrawEntry(StatCategoryDefOf.Weapon,)
-        //}
+        public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
+        {
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("verbPropertiesOffseter".Translate() + " :");
+            foreach ((FieldInfo field, double value) in verbPropertiesOffseter)
+            {
+                stringBuilder.AppendLine($"  {field.Name.Translate()} : +{value}");
+            }
+            stringBuilder.AppendLine("toolsOffseter".Translate() + " :");
+            foreach ((FieldInfo field, double value) in toolsOffseter)
+            {
+                stringBuilder.AppendLine($"  {field.Name.Translate()} : +{value}");
+            }
+            stringBuilder.AppendLine("statOffset".Translate() + " :");
+            foreach (StatModifier stat in statOffset)
+            {
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{stat.value}");
+            }
+            int count = verbPropertiesOffseter.Count + toolsOffseter.Count + statOffset.Count;
+            yield return new StatDrawEntry(
+                StatCategoryDefOf.Weapon,
+                "Offset".Translate(),
+                count + " " + "Offseter".Translate(),
+                stringBuilder.ToString(),
+                1000
+                );
+
+            stringBuilder.Clear();
+            stringBuilder.AppendLine("verbPropertiesMultiplier".Translate() + " :");
+            foreach ((FieldInfo field, double value) in verbPropertiesMultiplier)
+            {
+                stringBuilder.AppendLine($"  {field.Name.Translate()} : x{value}");
+            }
+            stringBuilder.AppendLine("toolsMultiplier".Translate() + " :");
+            foreach ((FieldInfo field, double value) in toolsMultiplier)
+            {
+                stringBuilder.AppendLine($"  {field.Name.Translate()} : x{value}");
+            }
+            stringBuilder.AppendLine("statMultiplier".Translate() + " :");
+            foreach (StatModifier stat in statMultiplier)
+            {
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{stat.value}");
+            }
+            count = verbPropertiesMultiplier.Count + toolsMultiplier.Count + statMultiplier.Count;
+            yield return new StatDrawEntry(
+                category: StatCategoryDefOf.Weapon, 
+                "Multiplier".Translate(),
+                count + " " + "Multiplier".Translate(), 
+                stringBuilder.ToString(), 
+                950
+                );
+
+            CompModularizationWeapon comp = req.Thing;
+            foreach (WeaponAttachmentProperties properties in attachmentProperties)
+            {
+                stringBuilder.Clear();
+                stringBuilder.AppendLine("OffseterAffectHorizon".Translate() + " :");
+                stringBuilder.AppendLine("  " + "verbPropertiesOffseterAffectHorizon".Translate() + " :");
+                foreach ((FieldInfo field, double value) in properties.verbPropertiesOffseterAffectHorizon)
+                {
+                    stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
+                }
+                stringBuilder.AppendLine("  " + "toolsOffseterAffectHorizon".Translate() + " :");
+                foreach ((FieldInfo field, double value) in properties.toolsOffseterAffectHorizon)
+                {
+                    stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
+                }
+                stringBuilder.AppendLine("  " + "statOffsetAffectHorizon".Translate() + " :");
+                foreach (StatModifier stat in properties.statOffsetAffectHorizon)
+                {
+                    stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{stat.value}");
+                }
+
+                stringBuilder.AppendLine("MultiplierAffectHorizon".Translate() + " :");
+                stringBuilder.AppendLine("  " + "verbPropertiesMultiplierAffectHorizon".Translate() + " :");
+                foreach ((FieldInfo field, double value) in properties.verbPropertiesMultiplierAffectHorizon)
+                {
+                    stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
+                }
+                stringBuilder.AppendLine("  " + "toolsMultiplierAffectHorizon".Translate() + " :");
+                foreach ((FieldInfo field, double value) in properties.toolsMultiplierAffectHorizon)
+                {
+                    stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
+                }
+                stringBuilder.AppendLine("  " + "statMultiplierAffectHorizon".Translate() + " :");
+                foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
+                {
+                    stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value}");
+                }
+
+                yield return new StatDrawEntry(
+                    StatCategoryDefOf.Weapon,
+                    "AttachmentPoint".Translate() + " : " + properties.Name,
+                    (properties.verbPropertiesOffseterAffectHorizon.Count + properties.toolsOffseterAffectHorizon.Count + properties.statOffsetAffectHorizon.Count)
+                    + " " + "Offseter".Translate() + "; " +
+                    (properties.verbPropertiesMultiplierAffectHorizon.Count + properties.toolsMultiplierAffectHorizon.Count + properties.statMultiplierAffectHorizon.Count)
+                    + " " + "Multiplier".Translate() + ";",
+                    stringBuilder.ToString(),
+                    900,null,
+                    from x in properties.filter.AllowedThingDefs select new Dialog_InfoCard.Hyperlink(x)
+                    );
+            }
+        }
 
 
         #region Condation

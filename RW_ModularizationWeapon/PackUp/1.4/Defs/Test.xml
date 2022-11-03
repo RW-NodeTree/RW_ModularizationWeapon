@@ -128,9 +128,10 @@
 			</li>
             <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
-				<verbPropertiesOffseter>
-					<range>10</range>
-				</verbPropertiesOffseter>
+				<verbPropertiesMultiplier>
+					<ticksBetweenBurstShots>0.25</ticksBetweenBurstShots>
+					<warmupTime>0.25</warmupTime>
+				</verbPropertiesMultiplier>
                 <attachmentProperties>
                     <li>
 						<id>test-1</id>
@@ -242,11 +243,10 @@
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
             <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<verbPropertiesMultiplier>
-					<ticksBetweenBurstShots>0.25</ticksBetweenBurstShots>
-					<warmupTime>0.25</warmupTime>
-				</verbPropertiesMultiplier>
 				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<verbPropertiesOffseter>
+					<range>10</range>
+				</verbPropertiesOffseter>
                 <attachmentProperties>
                     <li>
 						<id>test-1</id>

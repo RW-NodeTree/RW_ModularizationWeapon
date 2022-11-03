@@ -29,6 +29,8 @@ namespace RW_ModularizationWeapon
 
         public Matrix4x4 Transfrom => Matrix4x4.TRS(postion, Quaternion.Euler(rotation), scale);
 
+        public string Name => name ?? id;
+
         public string id;
 
         public string name;
