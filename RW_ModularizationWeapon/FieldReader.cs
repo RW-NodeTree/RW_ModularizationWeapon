@@ -106,9 +106,11 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value + b;
+                a.datas[field] += b;
             }
             return a;
         }
@@ -116,9 +118,11 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value - b;
+                a.datas[field] -= b;
             }
             return a;
         }
@@ -126,29 +130,33 @@ namespace RW_ModularizationWeapon
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, double b)
         {
             a = new FieldReaderDgit<T>(a);
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value * b;
+                a.datas[field] *= b;
             }
             return a;
         }
 
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, double b)
         {
-            a = new FieldReaderDgit<T>(a);
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value / b;
+                a.datas[field] /= b;
             }
             return a;
         }
 
         public static FieldReaderDgit<T> operator %(FieldReaderDgit<T> a, double b)
         {
-            a = new FieldReaderDgit<T>(a);
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value % b;
+                a.datas[field] %= b;
             }
             return a;
         }
@@ -161,15 +169,17 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if(a != null)
                 {
-                    foreach ((FieldInfo field, double value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + value));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) + value));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) + value));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) + value));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) + value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + b.datas[field]));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) + b.datas[field]));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) + b.datas[field]));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) + b.datas[field]));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) + b.datas[field]);
                         }
                     }
                 }
@@ -184,15 +194,17 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, double value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - value));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) - value));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) - value));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) - value));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) - value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - b.datas[field]));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) - b.datas[field]));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) - b.datas[field]));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) - b.datas[field]));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) - b.datas[field]);
                         }
                     }
                 }
@@ -207,15 +219,17 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, double value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * value));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) * value));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) * value));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) * value));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) * value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * b.datas[field]));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) * b.datas[field]));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) * b.datas[field]));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) * b.datas[field]));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) * b.datas[field]);
                         }
                     }
                 }
@@ -230,15 +244,17 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, double value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / value));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) / value));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) / value));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) / value));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) / value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / b.datas[field]));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) / b.datas[field]));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) / b.datas[field]));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) / b.datas[field]));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) / b.datas[field]);
                         }
                     }
                 }
@@ -253,15 +269,17 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, double value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % value));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) % value));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) % value));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) % value));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) % value);
+                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % b.datas[field]));
+                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) % b.datas[field]));
+                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) % b.datas[field]));
+                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) % b.datas[field]));
+                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) % b.datas[field]);
                         }
                     }
                 }
@@ -281,19 +299,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, double value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] += b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -311,19 +333,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, double value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] -= b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -341,19 +367,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, double value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] *= b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -371,19 +401,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, double value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] /= b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -401,19 +435,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, double value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, double value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] %= b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -510,9 +548,11 @@ namespace RW_ModularizationWeapon
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, bool b)
         {
             a = new FieldReaderBool<T>(a);
-            foreach ((FieldInfo field, bool value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value && b;
+                a.datas[field] = a.datas[field] && b;
             }
             return a;
         }
@@ -520,9 +560,11 @@ namespace RW_ModularizationWeapon
         public static FieldReaderBool<T> operator |(FieldReaderBool<T> a, bool b)
         {
             a = new FieldReaderBool<T>(a);
-            foreach ((FieldInfo field, bool value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = value || b;
+                a.datas[field] = a.datas[field] || b;
             }
             return a;
         }
@@ -530,9 +572,11 @@ namespace RW_ModularizationWeapon
         public static FieldReaderBool<T> operator ~(FieldReaderBool<T> a)
         {
             a = new FieldReaderBool<T>(a);
-            foreach ((FieldInfo field, bool value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
-                a.datas[field] = !value;
+                a.datas[field] = !a.datas[field];
             }
             return a;
         }
@@ -545,11 +589,13 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, bool value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            field.SetValue(a, (bool)field.GetValue(a) && value);
+                            field.SetValue(a, (bool)field.GetValue(a) && b.datas[field]);
                         }
                     }
                 }
@@ -564,11 +610,13 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, bool value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            field.SetValue(a, (bool)field.GetValue(a) || value);
+                            field.SetValue(a, (bool)field.GetValue(a) || b.datas[field]);
                         }
                     }
                 }
@@ -588,19 +636,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, bool value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, bool value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] = result.datas[field] && b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -618,19 +670,23 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, bool value) in a.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.SetOrAdd(field, value);
+                    result.datas.SetOrAdd(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, bool value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (result.datas.ContainsKey(field)) result.datas[field] = result.datas[field] || b.datas[field];
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -743,12 +799,14 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, object value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
                             object data = field.GetValue(a);
-                            if(data != null) field.SetValue(a, value ?? data);
+                            if(data != null) field.SetValue(a, b.datas[field] ?? data);
                         }
                     }
                 }
@@ -763,12 +821,14 @@ namespace RW_ModularizationWeapon
                 a = (T)a.SimpleCopy();
                 if (a != null)
                 {
-                    foreach ((FieldInfo field, object value) in b.datas)
+                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
+                    fieldInfos.AddRange(b.datas.Keys);
+                    foreach (FieldInfo field in fieldInfos)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
                             object data = field.GetValue(a);
-                            field.SetValue(a, data ?? value);
+                            field.SetValue(a, data ?? b.datas[field]);
                         }
                     }
                 }
@@ -788,14 +848,18 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, object value) in b.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, object value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
@@ -804,7 +868,7 @@ namespace RW_ModularizationWeapon
                         object data = result.datas[field];
                         if (data != null) result.datas[field] = b.datas[field] ?? data;
                     }
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;
@@ -822,14 +886,18 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            foreach ((FieldInfo field, object value) in b.datas)
+            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
+            fieldInfos.AddRange(a.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, value);
+                    result.datas.Add(field, a.datas[field]);
                 }
             }
-            foreach ((FieldInfo field, object value) in b.datas)
+            fieldInfos = new List<FieldInfo>(b.datas.Count);
+            fieldInfos.AddRange(b.datas.Keys);
+            foreach (FieldInfo field in fieldInfos)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
@@ -838,7 +906,7 @@ namespace RW_ModularizationWeapon
                         object data = result.datas[field];
                         result.datas[field] = data ?? b.datas[field];
                     }
-                    else result.datas.Add(field, value);
+                    else result.datas.Add(field, b.datas[field]);
                 }
             }
             return result;

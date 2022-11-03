@@ -55,6 +55,7 @@
 						<postion>(1,0,0)</postion>
 						<defultThing>Gun_Test_B_Modularization</defultThing>
 						<allowEmpty>true</allowEmpty>
+						<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 						<filter>
 							<thingDefs>
 								<li>Gun_Test_B_Modularization</li>
@@ -241,6 +242,10 @@
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
             <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<verbPropertiesMultiplier>
+					<ticksBetweenBurstShots>0.25</ticksBetweenBurstShots>
+					<warmupTime>0.25</warmupTime>
+				</verbPropertiesMultiplier>
                 <attachmentProperties>
                     <li>
 						<id>test-1</id>
