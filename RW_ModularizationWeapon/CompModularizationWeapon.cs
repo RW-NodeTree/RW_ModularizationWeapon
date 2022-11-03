@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.QuestGen;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
@@ -451,9 +452,9 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public float GetStatMultiplier(StatDef stateDef)
+        public float GetStatMultiplier(StatDef statDef)
         {
-            float result = Props.statMultiplier.GetStatFactorFromList(stateDef);
+            float result = Props.statMultiplier.GetStatFactorFromList(statDef);
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -465,7 +466,7 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
-                        result *= 1f + (comp.GetStatMultiplier(stateDef) - 1f) * properties.statMultiplierAffectHorizon.GetStatFactorFromList(stateDef);
+                        result *= 1f + (comp.GetStatMultiplier(statDef) - 1f) * properties.statMultiplierAffectHorizon.GetStatFactorFromList(statDef);
                     }
                 }
             }
@@ -775,8 +776,8 @@ namespace RW_ModularizationWeapon
             else if(!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
             {
                 StatDef statDef = StatWorker_stat(statWorker);
-                result *= GetStatMultiplier(statDef);
-                result += GetStatOffset(statDef);
+                result *= GetStatMultiplier(statDef) / Props.statMultiplier.GetStatFactorFromList(statDef);
+                result += GetStatOffset(statDef) - Props.statOffset.GetStatOffsetFromList(statDef);
             }
             return result;
         }
@@ -1337,6 +1338,7 @@ namespace RW_ModularizationWeapon
         public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
         {
 
+            CompModularizationWeapon comp = req.Thing;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("verbPropertiesOffseter".Translate() + " :");
             foreach ((FieldInfo field, double value) in verbPropertiesOffseter)
@@ -1351,7 +1353,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statOffset".Translate() + " :");
             foreach (StatModifier stat in statOffset)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{stat.value}");
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{comp?.GetStatOffset(stat.stat) ?? stat.value}");
             }
             int count = verbPropertiesOffseter.Count + toolsOffseter.Count + statOffset.Count;
             yield return new StatDrawEntry(
@@ -1376,7 +1378,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statMultiplier".Translate() + " :");
             foreach (StatModifier stat in statMultiplier)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{stat.value}");
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{comp?.GetStatMultiplier(stat.stat) ?? stat.value}");
             }
             count = verbPropertiesMultiplier.Count + toolsMultiplier.Count + statMultiplier.Count;
             yield return new StatDrawEntry(
@@ -1387,54 +1389,97 @@ namespace RW_ModularizationWeapon
                 950
                 );
 
-            CompModularizationWeapon comp = req.Thing;
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
+
+                CompModularizationWeapon childComp = comp?.ChildNodes[properties.id];
                 stringBuilder.Clear();
-                stringBuilder.AppendLine("OffseterAffectHorizon".Translate() + " :");
-                stringBuilder.AppendLine("  " + "verbPropertiesOffseterAffectHorizon".Translate() + " :");
-                foreach ((FieldInfo field, double value) in properties.verbPropertiesOffseterAffectHorizon)
+                if(childComp != null)
                 {
-                    stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
+                    stringBuilder.AppendLine("Offseter".Translate() + " :");
+                    stringBuilder.AppendLine("  " + "verbPropertiesOffseter".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in properties.verbPropertiesOffseterAffectHorizon * childComp.Props.verbPropertiesOffseter)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
+                    }
+                    stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in properties.toolsOffseterAffectHorizon * childComp.Props.toolsOffseter)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
+                    }
+                    stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
+                    foreach (StatModifier stat in properties.statOffsetAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{stat.value * childComp.GetStatOffset(stat.stat)}");
+                    }
+
+                    stringBuilder.AppendLine("Multiplier".Translate() + " :");
+                    stringBuilder.AppendLine("  " + "verbPropertiesMultiplier".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in (properties.verbPropertiesMultiplierAffectHorizon - 1) * childComp.Props.verbPropertiesMultiplier + 1)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
+                    }
+                    stringBuilder.AppendLine("  " + "toolsMultiplier".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in (properties.toolsMultiplierAffectHorizon - 1) * childComp.Props.toolsMultiplier + 1)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
+                    }
+                    stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
+                    foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value * (childComp.GetStatOffset(stat.stat) - 1) + 1}");
+                    }
                 }
-                stringBuilder.AppendLine("  " + "toolsOffseterAffectHorizon".Translate() + " :");
-                foreach ((FieldInfo field, double value) in properties.toolsOffseterAffectHorizon)
+                else
                 {
-                    stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
-                }
-                stringBuilder.AppendLine("  " + "statOffsetAffectHorizon".Translate() + " :");
-                foreach (StatModifier stat in properties.statOffsetAffectHorizon)
-                {
-                    stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{stat.value}");
+                    stringBuilder.AppendLine("OffseterAffectHorizon".Translate() + " :");
+                    stringBuilder.AppendLine("  " + "verbPropertiesOffseterAffectHorizon".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in properties.verbPropertiesOffseterAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
+                    }
+                    stringBuilder.AppendLine("  " + "toolsOffseterAffectHorizon".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in properties.toolsOffseterAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
+                    }
+                    stringBuilder.AppendLine("  " + "statOffsetAffectHorizon".Translate() + " :");
+                    foreach (StatModifier stat in properties.statOffsetAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value}");
+                    }
+
+                    stringBuilder.AppendLine("MultiplierAffectHorizon".Translate() + " :");
+                    stringBuilder.AppendLine("  " + "verbPropertiesMultiplierAffectHorizon".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in properties.verbPropertiesMultiplierAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : (k-1)x{value}+1");
+                    }
+                    stringBuilder.AppendLine("  " + "toolsMultiplierAffectHorizon".Translate() + " :");
+                    foreach ((FieldInfo field, double value) in properties.toolsMultiplierAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : (k-1)x{value}+1");
+                    }
+                    stringBuilder.AppendLine("  " + "statMultiplierAffectHorizon".Translate() + " :");
+                    foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
+                    {
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : (k-1)x{stat.value}+1");
+                    }
                 }
 
-                stringBuilder.AppendLine("MultiplierAffectHorizon".Translate() + " :");
-                stringBuilder.AppendLine("  " + "verbPropertiesMultiplierAffectHorizon".Translate() + " :");
-                foreach ((FieldInfo field, double value) in properties.verbPropertiesMultiplierAffectHorizon)
-                {
-                    stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
-                }
-                stringBuilder.AppendLine("  " + "toolsMultiplierAffectHorizon".Translate() + " :");
-                foreach ((FieldInfo field, double value) in properties.toolsMultiplierAffectHorizon)
-                {
-                    stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
-                }
-                stringBuilder.AppendLine("  " + "statMultiplierAffectHorizon".Translate() + " :");
-                foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
-                {
-                    stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value}");
-                }
-
+                List<Dialog_InfoCard.Hyperlink> hyperlinks = new List<Dialog_InfoCard.Hyperlink>(properties.filter.AllowedDefCount);
+                hyperlinks.AddRange(from x in properties.filter.AllowedThingDefs select new Dialog_InfoCard.Hyperlink(x));
+                if (childComp != null) hyperlinks.Insert(0, new Dialog_InfoCard.Hyperlink(childComp));
                 yield return new StatDrawEntry(
                     StatCategoryDefOf.Weapon,
                     "AttachmentPoint".Translate() + " : " + properties.Name,
-                    (properties.verbPropertiesOffseterAffectHorizon.Count + properties.toolsOffseterAffectHorizon.Count + properties.statOffsetAffectHorizon.Count)
+                    childComp?.parent.Label ?? ((properties.verbPropertiesOffseterAffectHorizon.Count + properties.toolsOffseterAffectHorizon.Count + properties.statOffsetAffectHorizon.Count)
                     + " " + "Offseter".Translate() + "; " +
                     (properties.verbPropertiesMultiplierAffectHorizon.Count + properties.toolsMultiplierAffectHorizon.Count + properties.statMultiplierAffectHorizon.Count)
-                    + " " + "Multiplier".Translate() + ";",
+                    + " " + "Multiplier".Translate() + ";"),
                     stringBuilder.ToString(),
                     900,null,
-                    from x in properties.filter.AllowedThingDefs select new Dialog_InfoCard.Hyperlink(x)
+                    hyperlinks
                     );
             }
         }
