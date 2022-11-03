@@ -90,7 +90,7 @@ namespace RW_ModularizationWeapon
             if(thing != null && properties != null)
             {
                 //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
-                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                CompModularizationWeapon comp = thing;
                 if (comp != null && comp.Validity)
                 {
                     return comp.Props.unchangeable || properties.unchangeable;
@@ -109,7 +109,7 @@ namespace RW_ModularizationWeapon
         {
             if (thing != null && properties != null)
             {
-                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                CompModularizationWeapon comp = thing;
                 if (comp != null && comp.Validity)
                 {
                     return comp.Props.notDrawInParent || properties.notDraw;
@@ -128,7 +128,7 @@ namespace RW_ModularizationWeapon
         {
             if (thing != null && properties != null)
             {
-                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                CompModularizationWeapon comp = thing;
                 if (comp != null && comp.Validity)
                 {
                     return comp.Props.notAllowParentUseTools || properties.notUseTools;
@@ -147,7 +147,7 @@ namespace RW_ModularizationWeapon
         {
             if (thing != null && properties != null)
             {
-                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                CompModularizationWeapon comp = thing;
                 if (comp != null && comp.Validity)
                 {
                     return comp.Props.notAllowParentUseVerbProperties && properties.notUseVerbProperties;
@@ -166,7 +166,7 @@ namespace RW_ModularizationWeapon
         {
             if (thing != null && properties != null)
             {
-                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                CompModularizationWeapon comp = thing;
                 if (comp != null && comp.Validity)
                 {
                     return comp.Props.verbPropertiesAffectByOtherPart && properties.verbPropertiesAffectByOtherPart;
@@ -1142,7 +1142,7 @@ namespace RW_ModularizationWeapon
                 return
                     ((CompModularizationWeapon)node)?.targetModeParent == null &&
                     properties.filter.Allows(node) &&
-                    !internal_Unchangeable(node, properties);
+                    !internal_Unchangeable(ChildNodes[id], properties);
             }
             return false;
         }
