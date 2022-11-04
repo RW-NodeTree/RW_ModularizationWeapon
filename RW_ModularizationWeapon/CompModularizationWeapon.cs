@@ -45,14 +45,32 @@ namespace RW_ModularizationWeapon
             CompChildNodeProccesser nodeProccesser = NodeProccesser;
             if(nodeProccesser != null)
             {
-                foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
+                if (Props.setRandomPartWhenCreate)
                 {
-                    ThingDef def = properties.defultThing;
-                    if(def != null)
+                    System.Random random = new System.Random();
+                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                     {
-                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                        nodeProccesser.AppendChild(thing, properties.id);
+                        int i = random.Next(properties.filter.AllowedDefCount + 1);
+                        ThingDef def = i < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[i] : null;
+                        if (def != null)
+                        {
+                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                            nodeProccesser.ChildNodes[properties.id] = thing;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                    {
+                        ThingDef def = properties.defultThing;
+                        if (def != null)
+                        {
+                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                            nodeProccesser.ChildNodes[properties.id] = thing;
+                        }
                     }
                 }
             }
@@ -1182,6 +1200,27 @@ namespace RW_ModularizationWeapon
         }
 
 
+        protected override IEnumerable<Thing> PostGenRecipe_MakeRecipeProducts(RecipeDef recipeDef, Pawn worker, List<Thing> ingredients, Thing dominantIngredient1, IBillGiver billGiver, Precept_ThingStyle precept, RecipeInvokeSource invokeSource, IEnumerable<Thing> result)
+        {
+            List<Thing> things = result.ToList();
+            CompChildNodeProccesser nodeProccesser = NodeProccesser;
+            if (nodeProccesser != null)
+            {
+                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                {
+                    ThingDef def = properties.defultThing;
+                    if (def != null)
+                    {
+                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                        nodeProccesser.ChildNodes[properties.id] = thing;
+                    }
+                }
+            }
+            return things;
+        }
+
+
         protected override void PostPreApplyDamageWithRef(ref DamageInfo dinfo, out bool absorbed)
         {
             absorbed = false;
@@ -1549,7 +1588,7 @@ namespace RW_ModularizationWeapon
         public bool notAllowParentUseVerbProperties = false;
 
 
-        public bool useOriginalCraftMethod = false;
+        public bool setRandomPartWhenCreate = false;
 
 
         public bool verbPropertiesAffectByOtherPart = false;
