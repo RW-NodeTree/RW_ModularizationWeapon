@@ -31,6 +31,24 @@ namespace RW_ModularizationWeapon
 
         public string Name => name ?? id;
 
+
+        public void ResolveReferences()
+        {
+            filter = filter ?? new ThingFilter();
+            filter.ResolveReferences();
+
+            verbPropertiesOffseterAffectHorizon = verbPropertiesOffseterAffectHorizon ?? new FieldReaderDgit<VerbProperties>();
+            verbPropertiesOffseterAffectHorizon.defaultValue = 1;
+            toolsOffseterAffectHorizon = toolsOffseterAffectHorizon ?? new FieldReaderDgit<Tool>();
+            toolsOffseterAffectHorizon.defaultValue = 1;
+
+            verbPropertiesMultiplierAffectHorizon = verbPropertiesMultiplierAffectHorizon ?? new FieldReaderDgit<VerbProperties>();
+            verbPropertiesMultiplierAffectHorizon.defaultValue = 1;
+            toolsMultiplierAffectHorizon = toolsMultiplierAffectHorizon ?? new FieldReaderDgit<Tool>();
+            toolsMultiplierAffectHorizon.defaultValue = 1;
+        }
+
+
         public string id;
 
         public string name;

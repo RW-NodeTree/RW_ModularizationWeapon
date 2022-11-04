@@ -385,9 +385,9 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public float GetStatOffset(StatDef stateDef)
+        public float GetStatOffset(StatDef statDef)
         {
-            float result = Props.statOffset.GetStatOffsetFromList(stateDef);
+            float result = Props.statOffset.GetStatOffsetFromList(statDef);
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -399,7 +399,7 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
-                        result += comp.GetStatOffset(stateDef) * properties.statOffsetAffectHorizon.GetStatFactorFromList(stateDef);
+                        result += comp.GetStatOffset(statDef) * properties.statOffsetAffectHorizon.GetStatFactorFromList(statDef);
                     }
                 }
             }
@@ -622,7 +622,7 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbToolRegiestInfo> PostIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> forPostRead)
         {
-            if (Props.verbPropertiesAffectByChildPart)
+            if (Props.toolsAffectByChildPart)
             {
                 for (int i = 0; i < result.Count; i++)
                 {
@@ -1329,28 +1329,44 @@ namespace RW_ModularizationWeapon
         {
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
-                properties.filter.ResolveReferences();
+                properties.ResolveReferences();
             }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
+
+            verbPropertiesOffseter = verbPropertiesOffseter ?? new FieldReaderDgit<VerbProperties>();
+            verbPropertiesOffseter.defaultValue = 0;
+            toolsOffseter = toolsOffseter ?? new FieldReaderDgit<Tool>();
+            toolsOffseter.defaultValue = 0;
+
+            verbPropertiesMultiplier = verbPropertiesMultiplier ?? new FieldReaderDgit<VerbProperties>();
+            verbPropertiesMultiplier.defaultValue = 1;
+            toolsMultiplier = toolsMultiplier ?? new FieldReaderDgit<Tool>();
+            toolsMultiplier.defaultValue = 1;
+
+            verbPropertiesObjectPatch = verbPropertiesObjectPatch ?? new FieldReaderInst<VerbProperties>();
+            toolsObjectPatch = toolsObjectPatch ?? new FieldReaderInst<Tool>();
+            verbPropertiesBoolAndPatch = verbPropertiesBoolAndPatch ?? new FieldReaderBool<VerbProperties>();
+            toolsBoolAndPatch = toolsBoolAndPatch ?? new FieldReaderBool<Tool>();
+            verbPropertiesBoolOrPatch = verbPropertiesBoolOrPatch ?? new FieldReaderBool<VerbProperties>();
+            toolsBoolOrPatch = toolsBoolOrPatch ?? new FieldReaderBool<Tool>();
         }
 
 
         public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
         {
-
             CompModularizationWeapon comp = req.Thing;
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("verbPropertiesOffseter".Translate() + " :");
+            stringBuilder.AppendLine("verbPropertiesOffseter".Translate().RawText + " :");
             foreach ((FieldInfo field, double value) in verbPropertiesOffseter)
             {
                 stringBuilder.AppendLine($"  {field.Name.Translate()} : +{value}");
             }
-            stringBuilder.AppendLine("toolsOffseter".Translate() + " :");
+            stringBuilder.AppendLine("toolsOffseter".Translate().RawText + " :");
             foreach ((FieldInfo field, double value) in toolsOffseter)
             {
                 stringBuilder.AppendLine($"  {field.Name.Translate()} : +{value}");
             }
-            stringBuilder.AppendLine("statOffset".Translate() + " :");
+            stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
             {
                 stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{comp?.GetStatOffset(stat.stat) ?? stat.value}");
@@ -1365,17 +1381,17 @@ namespace RW_ModularizationWeapon
                 );
 
             stringBuilder.Clear();
-            stringBuilder.AppendLine("verbPropertiesMultiplier".Translate() + " :");
+            stringBuilder.AppendLine("verbPropertiesMultiplier".Translate().RawText + " :");
             foreach ((FieldInfo field, double value) in verbPropertiesMultiplier)
             {
                 stringBuilder.AppendLine($"  {field.Name.Translate()} : x{value}");
             }
-            stringBuilder.AppendLine("toolsMultiplier".Translate() + " :");
+            stringBuilder.AppendLine("toolsMultiplier".Translate().RawText + " :");
             foreach ((FieldInfo field, double value) in toolsMultiplier)
             {
                 stringBuilder.AppendLine($"  {field.Name.Translate()} : x{value}");
             }
-            stringBuilder.AppendLine("statMultiplier".Translate() + " :");
+            stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
             {
                 stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{comp?.GetStatMultiplier(stat.stat) ?? stat.value}");
@@ -1386,9 +1402,43 @@ namespace RW_ModularizationWeapon
                 "Multiplier".Translate(),
                 count + " " + "Multiplier".Translate(), 
                 stringBuilder.ToString(), 
-                950
+                1000
                 );
 
+            stringBuilder.Clear();
+
+            string CheckAndMark(bool flag, string name)
+            {
+                string result = "<color=" + (flag ? "#d9ead3><b>" : "grey>");
+                result += name + " : " + (flag ? ("Yes".Translate().RawText + "</b>") : "No".Translate().RawText);
+                return result += "</color>";
+            }
+
+            //UnityEngine.GUIUtility.systemCopyBuffer = "<color=" + (unchangeable ? "green" : "red") + ">" + "unchangeable".Translate() + " : " + (unchangeable ? "Yes".Translate() : "No".Translate()) + "</color>";
+            //stringBuilder.AppendLine("<color=" + (unchangeable ? "green" : "red") + ">" + "unchangeable" + " : " + (unchangeable ? "Yes" : "No") + "</color>");
+            stringBuilder.AppendLine(CheckAndMark(unchangeable, "unchangeable".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(notAllowParentUseTools, "notAllowParentUseTools".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(notAllowParentUseVerbProperties, "notAllowParentUseVerbProperties".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByOtherPart, "verbPropertiesAffectByOtherPart".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(toolsAffectByOtherPart, "toolsAffectByOtherPart".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByChildPart, "verbPropertiesAffectByChildPart".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(toolsAffectByChildPart, "toolsAffectByChildPart".Translate()));
+            //stringBuilder.AppendLine("<color=" + (notAllowParentUseTools ? "green" : "red") + ">" + "notAllowParentUseTools".Translate() + " : " + (notAllowParentUseTools ? "Yes".Translate() : "No".Translate()) + "</color>");
+            //stringBuilder.AppendLine("<color=" + (notAllowParentUseVerbProperties ? "green" : "red") + ">" + "notAllowParentUseVerbProperties".Translate() + " : " + (notAllowParentUseVerbProperties ? "Yes".Translate() : "No".Translate()) + "</color>");
+            //stringBuilder.AppendLine("useOriginalCraftMethod".Translate() + " : <color=" + (useOriginalCraftMethod ? "green" : "red") + ">" + (useOriginalCraftMethod ? "Yes".Translate() : "No".Translate()) + "</color>");
+            //stringBuilder.AppendLine("<color=" + (verbPropertiesAffectByOtherPart ? "green" : "red") + ">" + "verbPropertiesAffectByOtherPart".Translate() + " : " + (verbPropertiesAffectByOtherPart ? "Yes".Translate() : "No".Translate()) + "</color>");
+            //stringBuilder.AppendLine("<color=" + (toolsAffectByOtherPart ? "green" : "red") + ">" + "toolsAffectByOtherPart".Translate() + " : " + (toolsAffectByOtherPart ? "Yes".Translate() : "No".Translate()) + "</color>");
+            //stringBuilder.AppendLine("<color=" + (verbPropertiesAffectByChildPart ? "green" : "red") + ">" + "verbPropertiesAffectByChildPart".Translate() + " : " + (verbPropertiesAffectByChildPart ? "Yes".Translate() : "No".Translate()) + "</color>");
+            //stringBuilder.AppendLine("<color=" + (toolsAffectByChildPart ? "green" : "red") + ">" + "toolsAffectByChildPart".Translate() + " : " + (toolsAffectByChildPart ? "Yes".Translate() : "No".Translate()) + "</color>");
+            yield return new StatDrawEntry(
+                category: StatCategoryDefOf.Weapon,
+                "Condation".Translate(),
+                "",
+                stringBuilder.ToString(),
+                1000
+                );
+            //UnityEngine.GUIUtility.systemCopyBuffer = stringBuilder.ToString();
+            #region child
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
 
@@ -1398,12 +1448,12 @@ namespace RW_ModularizationWeapon
                 {
                     stringBuilder.AppendLine("Offseter".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseter".Translate() + " :");
-                    foreach ((FieldInfo field, double value) in properties.verbPropertiesOffseterAffectHorizon * childComp.Props.verbPropertiesOffseter)
+                    foreach ((FieldInfo field, double value) in childComp.Props.verbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon)
                     {
                         stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
                     }
                     stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
-                    foreach ((FieldInfo field, double value) in properties.toolsOffseterAffectHorizon * childComp.Props.toolsOffseter)
+                    foreach ((FieldInfo field, double value) in childComp.Props.toolsOffseter * properties.toolsOffseterAffectHorizon)
                     {
                         stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
                     }
@@ -1415,12 +1465,12 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("Multiplier".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesMultiplier".Translate() + " :");
-                    foreach ((FieldInfo field, double value) in (properties.verbPropertiesMultiplierAffectHorizon - 1) * childComp.Props.verbPropertiesMultiplier + 1)
+                    foreach ((FieldInfo field, double value) in (childComp.Props.verbPropertiesMultiplier - 1) * properties.verbPropertiesMultiplierAffectHorizon + 1)
                     {
                         stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
                     }
                     stringBuilder.AppendLine("  " + "toolsMultiplier".Translate() + " :");
-                    foreach ((FieldInfo field, double value) in (properties.toolsMultiplierAffectHorizon - 1) * childComp.Props.toolsMultiplier + 1)
+                    foreach ((FieldInfo field, double value) in (childComp.Props.toolsMultiplier - 1) * properties.toolsMultiplierAffectHorizon + 1)
                     {
                         stringBuilder.AppendLine($"    {field.Name.Translate()} : x{value}");
                     }
@@ -1482,6 +1532,7 @@ namespace RW_ModularizationWeapon
                     hyperlinks
                     );
             }
+            #endregion
         }
 
 

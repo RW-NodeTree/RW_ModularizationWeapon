@@ -47,7 +47,7 @@ namespace RW_ModularizationWeapon
                     CustomWeapon window = new CustomWeapon(selPawn, this);
                     Find.WindowStack.Add(window);
                 };
-                FloatMenuOption option = new FloatMenuOption("StartAssembleWeapon".Translate(), action, MenuOptionPriority.Default, null, null, 0f, null, null);
+                FloatMenuOption option = new FloatMenuOption("StartModifyWeapon".Translate(), action, MenuOptionPriority.Default, null, null, 0f, null, null);
                 yield return option;
             }
         }

@@ -19,6 +19,7 @@ namespace RW_ModularizationWeapon
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
+        public double defaultValue;
 
         public FieldReaderDgit() { }
 
@@ -28,6 +29,7 @@ namespace RW_ModularizationWeapon
             {
                 datas.AddRange(other.datas);
                 type = other.type;
+                defaultValue = other.defaultValue;
             }
         }
 
@@ -181,17 +183,20 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if(a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + b.datas[field]));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) + b.datas[field]));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) + b.datas[field]));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) + b.datas[field]));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) + b.datas[field]);
+                            double value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + value));
+                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) + value));
+                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) + value));
+                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) + value));
+                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) + value);
+                            }
                         }
                     }
                 }
@@ -206,17 +211,20 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - b.datas[field]));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) - b.datas[field]));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) - b.datas[field]));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) - b.datas[field]));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) - b.datas[field]);
+                            double value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - value));
+                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) - value));
+                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) - value));
+                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) - value));
+                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) - value);
+                            }
                         }
                     }
                 }
@@ -231,17 +239,20 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * b.datas[field]));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) * b.datas[field]));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) * b.datas[field]));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) * b.datas[field]));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) * b.datas[field]);
+                            double value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * value));
+                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) * value));
+                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) * value));
+                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) * value));
+                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) * value);
+                            }
                         }
                     }
                 }
@@ -256,17 +267,20 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / b.datas[field]));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) / b.datas[field]));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) / b.datas[field]));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) / b.datas[field]));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) / b.datas[field]);
+                            double value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / value));
+                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) / value));
+                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) / value));
+                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) / value));
+                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) / value);
+                            }
                         }
                     }
                 }
@@ -281,17 +295,20 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if(field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % b.datas[field]));
-                            else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) % b.datas[field]));
-                            else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) % b.datas[field]));
-                            else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) % b.datas[field]));
-                            else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) % b.datas[field]);
+                            double value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % value));
+                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) % value));
+                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) % value));
+                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) % value));
+                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) % value);
+                            }
                         }
                     }
                 }
@@ -311,23 +328,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] + b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] + b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] += b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] + b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue + b.datas[field]);
                 }
             }
             return result;
@@ -345,23 +360,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] - b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] - b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] -= b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] - b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue - b.datas[field]);
                 }
             }
             return result;
@@ -379,23 +392,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if(b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] * b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] * b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] *= b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] * b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue * b.datas[field]);
                 }
             }
             return result;
@@ -413,23 +424,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] / b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] / b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] /= b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] / b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue / b.datas[field]);
                 }
             }
             return result;
@@ -447,23 +456,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] % b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] % b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] %= b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] % b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue % b.datas[field]);
                 }
             }
             return result;
@@ -474,6 +481,7 @@ namespace RW_ModularizationWeapon
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
+        public bool defaultValue;
 
         public FieldReaderBool() { }
 
@@ -483,6 +491,7 @@ namespace RW_ModularizationWeapon
             {
                 datas.AddRange(other.datas);
                 type = other.type;
+                defaultValue = other.defaultValue;
             }
         }
 
@@ -592,7 +601,7 @@ namespace RW_ModularizationWeapon
             return a;
         }
 
-        public static FieldReaderBool<T> operator ~(FieldReaderBool<T> a)
+        public static FieldReaderBool<T> operator !(FieldReaderBool<T> a)
         {
             a = new FieldReaderBool<T>(a);
             List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
@@ -612,13 +621,16 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            field.SetValue(a, (bool)field.GetValue(a) && b.datas[field]);
+                            bool value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                               field.SetValue(a, (bool)field.GetValue(a) && value);
+                            }
                         }
                     }
                 }
@@ -633,13 +645,16 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
+                        if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
-                            field.SetValue(a, (bool)field.GetValue(a) || b.datas[field]);
+                            bool value;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (field != null && b.datas.ContainsKey(field))
+                            {
+                                field.SetValue(a, (bool)field.GetValue(a) || value);
+                            }
                         }
                     }
                 }
@@ -659,23 +674,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] && b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] && b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] = result.datas[field] && b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] && b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue && b.datas[field]);
                 }
             }
             return result;
@@ -693,23 +706,21 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.SetOrAdd(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] || b.datas[field]);
+                    else result.datas.Add(field, a.datas[field] || b.defaultValue);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field)) result.datas[field] = result.datas[field] || b.datas[field];
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] || b.datas[field]);
+                    else result.datas.Add(field, a.defaultValue || b.datas[field]);
                 }
             }
             return result;
@@ -834,14 +845,11 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in b.datas.Keys)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            object data = field.GetValue(a);
-                            if(data != null) field.SetValue(a, b.datas[field] ?? data);
+                            field.SetValue(a, b.datas[field] ?? field.GetValue(a));
                         }
                     }
                 }
@@ -856,14 +864,11 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    List<FieldInfo> fieldInfos = new List<FieldInfo>(b.datas.Count);
-                    fieldInfos.AddRange(b.datas.Keys);
-                    foreach (FieldInfo field in fieldInfos)
+                    foreach (FieldInfo field in b.datas.Keys)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            object data = field.GetValue(a);
-                            field.SetValue(a, data ?? b.datas[field]);
+                            field.SetValue(a, field.GetValue(a) ?? b.datas[field]);
                         }
                     }
                 }
@@ -883,27 +888,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, b.datas[field] ?? a.datas[field]);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field))
-                    {
-                        object data = result.datas[field];
-                        if (data != null) result.datas[field] = b.datas[field] ?? data;
-                    }
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, b.datas[field] ?? a.datas[field]);
                 }
             }
             return result;
@@ -921,27 +918,19 @@ namespace RW_ModularizationWeapon
             if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
             else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
 
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+            foreach (FieldInfo field in a.datas.Keys)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    result.datas.Add(field, a.datas[field]);
+                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] ?? b.datas[field]);
                 }
             }
-            fieldInfos = new List<FieldInfo>(b.datas.Count);
-            fieldInfos.AddRange(b.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
+
+            foreach (FieldInfo field in b.datas.Keys)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (result.datas.ContainsKey(field))
-                    {
-                        object data = result.datas[field];
-                        result.datas[field] = data ?? b.datas[field];
-                    }
-                    else result.datas.Add(field, b.datas[field]);
+                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] ?? b.datas[field]);
                 }
             }
             return result;

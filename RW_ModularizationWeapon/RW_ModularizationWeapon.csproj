@@ -253,10 +253,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PackUp\1.4\Defs\Jobs_Misc.xml" />
+    <Content Include="PackUp\1.4\Languages\ChineseSimplified\Keyed\String_Misc.xml" />
+    <Content Include="PackUp\1.4\Languages\English\Keyed\String_Misc.xml" />
     <Content Include="PackUp\About\*" />
     <Content Include="PackUp\1.4\Defs\Test.xml" />
     <Content Include="PackUp\Patches\*" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rmdir "%25RW_HOME%25\Mods\$(ProjectName)" /s/q
