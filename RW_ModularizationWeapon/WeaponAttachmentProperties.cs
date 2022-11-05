@@ -99,26 +99,6 @@ namespace RW_ModularizationWeapon
 
         public string UITexPath;
 
-        public float verbPropertiesOffseterAffectHorizonDefaultValue = 1;
-
-        public float toolsOffseterAffectHorizonDefaultValue = 1;
-
-        public float verbPropertiesOtherPartOffseterAffectHorizonDefaultValue = 1;
-
-        public float toolsOtherPartOffseterAffectHorizonDefaultValue = 1;
-
-        public float statOffsetAffectHorizonDefaultValue = 1;
-
-        public float verbPropertiesMultiplierAffectHorizonDefaultValue = 1;
-
-        public float toolsMultiplierAffectHorizonDefaultValue = 1;
-
-        public float verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue = 1;
-
-        public float toolsOtherPartMultiplierAffectHorizonDefaultValue = 1;
-
-        public float statMultiplierAffectHorizonDefaultValue = 1;
-
         public bool allowEmpty;
 
         public bool unchangeable;
@@ -139,12 +119,22 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderDgit<Tool>> toolsOffseterAffectHorizon = new List<FieldReaderDgit<Tool>>();
 
         public List<StatModifier> statOffsetAffectHorizon = new List<StatModifier>();
+
+        public float verbPropertiesOffseterAffectHorizonDefaultValue = 1;
+
+        public float toolsOffseterAffectHorizonDefaultValue = 1;
+
+        public float statOffsetAffectHorizonDefaultValue = 1;
         #endregion
 
         #region OtherPart
         public Dictionary<string, List<FieldReaderDgit<VerbProperties>>> verbPropertiesOtherPartOffseterAffectHorizon = new Dictionary<string, List<FieldReaderDgit<VerbProperties>>>();
 
         public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartOffseterAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
+
+        public float verbPropertiesOtherPartOffseterAffectHorizonDefaultValue = 1;
+
+        public float toolsOtherPartOffseterAffectHorizonDefaultValue = 1;
         #endregion
         #endregion
 
@@ -156,12 +146,22 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderDgit<Tool>> toolsMultiplierAffectHorizon = new List<FieldReaderDgit<Tool>>();
 
         public List<StatModifier> statMultiplierAffectHorizon = new List<StatModifier>();
+
+        public float verbPropertiesMultiplierAffectHorizonDefaultValue = 1;
+
+        public float toolsMultiplierAffectHorizonDefaultValue = 1;
+
+        public float statMultiplierAffectHorizonDefaultValue = 1;
         #endregion
 
         #region OtherPart
         public Dictionary<string, List<FieldReaderDgit<VerbProperties>>> verbPropertiesOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<VerbProperties>>>();
 
         public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
+
+        public float verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue = 1;
+
+        public float toolsOtherPartMultiplierAffectHorizonDefaultValue = 1;
         #endregion
         #endregion
 

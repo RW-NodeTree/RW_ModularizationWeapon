@@ -730,7 +730,7 @@ namespace RW_ModularizationWeapon
                 }
             }
             results.ForEach(x => x.defaultValue = false);
-            return null;
+            return results;
         }
         #endregion
 
@@ -743,12 +743,6 @@ namespace RW_ModularizationWeapon
             VerbPropertiesOffseter(childNodeIdForVerbProperties).ForEach(x => properties += x);
             if (affectDef)
             {
-                VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
-                    .ForEach(x =>
-                    {
-                        properties &= x;
-                        properties |= x;
-                    });
                 List<FieldReaderBool<VerbProperties>> conAnd = VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
                 List<FieldReaderBool<VerbProperties>> conOr = VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
                 for(int i = 0; i < Math.Max(conAnd.Count, conOr.Count); i++)
@@ -756,6 +750,12 @@ namespace RW_ModularizationWeapon
                     if (i < conAnd.Count) properties &= conAnd[i];
                     if (i < conOr.Count) properties |= conOr[i];
                 }
+                VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
+                    .ForEach(x =>
+                    {
+                        properties &= x;
+                        properties |= x;
+                    });
             }
             return properties;
         }
@@ -768,12 +768,6 @@ namespace RW_ModularizationWeapon
             ToolsOffseter(childNodeIdForTool).ForEach(x => tool += x);
             if (affectDef)
             {
-                ToolsObjectPatch(childNodeIdForTool)
-                    .ForEach(x =>
-                    {
-                        tool &= x;
-                        tool |= x;
-                    });
                 List<FieldReaderBool<Tool>> conAnd = ToolsBoolAndPatch(childNodeIdForTool);
                 List<FieldReaderBool<Tool>> conOr = ToolsBoolOrPatch(childNodeIdForTool);
                 for (int i = 0; i < Math.Max(conAnd.Count, conOr.Count); i++)
@@ -781,42 +775,14 @@ namespace RW_ModularizationWeapon
                     if (i < conAnd.Count) tool &= conAnd[i];
                     if (i < conOr.Count) tool |= conOr[i];
                 }
+                ToolsObjectPatch(childNodeIdForTool)
+                    .ForEach(x =>
+                    {
+                        tool &= x;
+                        tool |= x;
+                    });
             }
             return tool;
-        }
-
-
-        protected override List<VerbToolRegiestInfo> PostIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> forPostRead)
-        {
-            for (int i = 0; i < result.Count; i++)
-            {
-                VerbToolRegiestInfo prop = result[i];
-                Tool newProp = ToolAfterAffect(prop.berforConvertTool, null, true);
-                prop.afterCobvertTool = newProp;
-                result[i] = prop;
-            }
-
-            NodeContainer container = ChildNodes;
-            for (int i = 0; i < container.Count; i++)
-            {
-                string id = container[(uint)i];
-                WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
-                if (!internal_NotUseTools(container[i], attachmentProperties))
-                {
-                    List<Tool> tools = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.Tools;
-                    if (tools != null)
-                    {
-                        result.Capacity += tools.Count;
-                        for (int j = 0; j < tools.Count; j++)
-                        {
-                            Tool cache = tools[j];
-                            Tool newProp = ToolAfterAffect(cache, id, false);
-                            result.Add(new VerbToolRegiestInfo(id, cache, newProp));
-                        }
-                    }
-                }
-            }
-            return result;
         }
 
 
@@ -841,11 +807,67 @@ namespace RW_ModularizationWeapon
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
-                        for (int j = 0; j < verbProperties.Count; j++)
+                        if (((CompModularizationWeapon)container[i])?.Props.verbPropertiesAffectByOtherPart ?? true)
                         {
-                            VerbProperties cache = verbProperties[j];
-                            VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
-                            result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
+                            for (int j = 0; j < verbProperties.Count; j++)
+                            {
+                                VerbProperties cache = verbProperties[j];
+                                VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
+                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 0; j < verbProperties.Count; j++)
+                            {
+                                VerbProperties cache = verbProperties[j];
+                                result.Add(new VerbPropertiesRegiestInfo(id, cache, cache));
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+
+        protected override List<VerbToolRegiestInfo> PostIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> forPostRead)
+        {
+            for (int i = 0; i < result.Count; i++)
+            {
+                VerbToolRegiestInfo prop = result[i];
+                Tool newProp = ToolAfterAffect(prop.berforConvertTool, null, true);
+                prop.afterCobvertTool = newProp;
+                result[i] = prop;
+            }
+
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
+                if (!internal_NotUseTools(container[i], attachmentProperties))
+                {
+                    List<Tool> tools = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.Tools;
+                    if (tools != null)
+                    {
+                        result.Capacity += tools.Count;
+                        if(((CompModularizationWeapon)container[i])?.Props.toolsAffectByOtherPart ?? true)
+                        {
+                            for (int j = 0; j < tools.Count; j++)
+                            {
+                                Tool cache = tools[j];
+                                Tool newProp = ToolAfterAffect(cache, id, false);
+                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 0; j < tools.Count; j++)
+                            {
+                                Tool cache = tools[j];
+                                result.Add(new VerbToolRegiestInfo(id, cache, cache));
+                            }
                         }
                     }
                 }
@@ -1488,6 +1510,9 @@ namespace RW_ModularizationWeapon
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
                 properties.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
             }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
@@ -1532,6 +1557,7 @@ namespace RW_ModularizationWeapon
 
             int listAll<T>(
                 List<FieldReaderDgit<T>> list,
+                bool mul,
                 bool snap = false
                 )
             {
@@ -1543,7 +1569,7 @@ namespace RW_ModularizationWeapon
                     foreach ((FieldInfo field, double value) in list[i])
                     {
                         if (snap) stringBuilder.Append("  ");
-                        stringBuilder.AppendLine($"    {field.Name.Translate()} : +{value}");
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {(mul ? "x" : "+")}{value}");
                     }
                     result += list[i].Count;
                 }
@@ -1551,10 +1577,10 @@ namespace RW_ModularizationWeapon
             }
             int count = statOffset.Count;
             stringBuilder.AppendLine("verbPropertiesOffseter".Translate().RawText + " :");
-            count += listAll(verbPropertiesOffseter);
+            count += listAll(verbPropertiesOffseter, false);
 
             stringBuilder.AppendLine("toolsOffseter".Translate().RawText + " :");
-            count += listAll(toolsOffseter);
+            count += listAll(toolsOffseter, false);
 
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
@@ -1572,10 +1598,10 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = statMultiplier.Count;
             stringBuilder.AppendLine("verbPropertiesMultiplier".Translate().RawText + " :");
-            count += listAll(verbPropertiesMultiplier);
+            count += listAll(verbPropertiesMultiplier, true);
 
             stringBuilder.AppendLine("toolsMultiplier".Translate().RawText + " :");
-            count += listAll(toolsMultiplier);
+            count += listAll(toolsMultiplier, true);
 
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
@@ -1604,6 +1630,8 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine(CheckAndMark(unchangeable, "unchangeable".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseTools, "notAllowParentUseTools".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseVerbProperties, "notAllowParentUseVerbProperties".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByOtherPart, "verbPropertiesAffectByOtherPart".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(toolsAffectByOtherPart, "toolsAffectByOtherPart".Translate()));
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseTools ? "green" : "red") + ">" + "notAllowParentUseTools".Translate() + " : " + (notAllowParentUseTools ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseVerbProperties ? "green" : "red") + ">" + "notAllowParentUseVerbProperties".Translate() + " : " + (notAllowParentUseVerbProperties ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("useOriginalCraftMethod".Translate() + " : <color=" + (useOriginalCraftMethod ? "green" : "red") + ">" + (useOriginalCraftMethod ? "Yes".Translate() : "No".Translate()) + "</color>");
@@ -1711,10 +1739,10 @@ namespace RW_ModularizationWeapon
                 {
                     stringBuilder.AppendLine("OffseterAffectHorizon".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseterAffectHorizon".Translate() + " :");
-                    Offseter += listAll(properties.verbPropertiesOffseterAffectHorizon, true);
+                    Offseter += listAll(properties.verbPropertiesOffseterAffectHorizon, false, true);
 
                     stringBuilder.AppendLine("  " + "toolsOffseterAffectHorizon".Translate() + " :");
-                    Offseter += listAll(properties.toolsOffseterAffectHorizon, true);
+                    Offseter += listAll(properties.toolsOffseterAffectHorizon, false, true);
 
                     stringBuilder.AppendLine("  " + "statOffsetAffectHorizon".Translate() + " :");
                     foreach (StatModifier stat in properties.statOffsetAffectHorizon)
@@ -1724,10 +1752,10 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("MultiplierAffectHorizon".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesMultiplierAffectHorizon".Translate() + " :");
-                    Multiplier += listAll(properties.verbPropertiesMultiplierAffectHorizon, true);
+                    Multiplier += listAll(properties.verbPropertiesMultiplierAffectHorizon, true, true);
 
                     stringBuilder.AppendLine("  " + "toolsMultiplierAffectHorizon".Translate() + " :");
-                    Multiplier += listAll(properties.toolsMultiplierAffectHorizon, true);
+                    Multiplier += listAll(properties.toolsMultiplierAffectHorizon, true, true);
 
                     stringBuilder.AppendLine("  " + "statMultiplierAffectHorizon".Translate() + " :");
                     foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
@@ -1769,6 +1797,12 @@ namespace RW_ModularizationWeapon
 
 
         public bool notAllowParentUseVerbProperties = false;
+
+
+        public bool verbPropertiesAffectByOtherPart = false;
+
+
+        public bool toolsAffectByOtherPart = false;
         #endregion
 
 

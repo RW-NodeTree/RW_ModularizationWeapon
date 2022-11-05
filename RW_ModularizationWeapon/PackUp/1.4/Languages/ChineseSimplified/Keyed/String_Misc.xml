@@ -15,8 +15,6 @@
 	<notAllowParentUseVerbProperties>禁止父部件使用此远程武器</notAllowParentUseVerbProperties>
 	<verbPropertiesAffectByOtherPart>远程武器可被其他部件影响</verbPropertiesAffectByOtherPart>
 	<toolsAffectByOtherPart>近战武器可被其他部件影响</toolsAffectByOtherPart>
-	<verbPropertiesAffectByChildPart>远程武器可被其配件影响</verbPropertiesAffectByChildPart>
-	<toolsAffectByChildPart>近战武器可被其配件影响</toolsAffectByChildPart>
 	<Condation>特殊条件</Condation>
 	<OffseterAffectHorizon>加成影响水平</OffseterAffectHorizon>
 	<verbPropertiesOffseterAffectHorizon>远程武器加成影响水平</verbPropertiesOffseterAffectHorizon>

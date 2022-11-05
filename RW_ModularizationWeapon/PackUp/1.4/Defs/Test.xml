@@ -43,7 +43,6 @@
 						<postion>(-1,0,0)</postion>
 						<defultThing>Gun_Test_A_Modularization</defultThing>
 						<allowEmpty>true</allowEmpty>
-						<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 						<filter>
 							<thingDefs>
 								<li>Gun_Test_A_Modularization</li>
@@ -55,7 +54,6 @@
 						<postion>(1,0,0)</postion>
 						<defultThing>Gun_Test_B_Modularization</defultThing>
 						<allowEmpty>true</allowEmpty>
-						<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 						<filter>
 							<thingDefs>
 								<li>Gun_Test_B_Modularization</li>

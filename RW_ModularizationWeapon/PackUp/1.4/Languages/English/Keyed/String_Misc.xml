@@ -15,8 +15,6 @@
 	<notAllowParentUseVerbProperties>Not Allow Parent Part Use Range Weapon</notAllowParentUseVerbProperties>
 	<verbPropertiesAffectByOtherPart>Range Weapon Affect By Other Part</verbPropertiesAffectByOtherPart>
 	<toolsAffectByOtherPart>Melee Weapon Affect By Other Part</toolsAffectByOtherPart>
-	<verbPropertiesAffectByChildPart>Range Weapon Affect By Child Part</verbPropertiesAffectByChildPart>
-	<toolsAffectByChildPart>Melee Weapon Affect By Child Part</toolsAffectByChildPart>
 	<Condation>Special Condation</Condation>
 	<OffseterAffectHorizon>Offseter Affect Horizon</OffseterAffectHorizon>
 	<verbPropertiesOffseterAffectHorizon>Range Weapon Offseter Affect Horizon</verbPropertiesOffseterAffectHorizon>
