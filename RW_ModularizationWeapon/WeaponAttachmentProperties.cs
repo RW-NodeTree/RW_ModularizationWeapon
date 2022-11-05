@@ -37,15 +37,36 @@ namespace RW_ModularizationWeapon
             filter = filter ?? new ThingFilter();
             filter.ResolveReferences();
 
-            verbPropertiesOffseterAffectHorizon = verbPropertiesOffseterAffectHorizon ?? new FieldReaderDgit<VerbProperties>();
-            verbPropertiesOffseterAffectHorizon.defaultValue = 1;
-            toolsOffseterAffectHorizon = toolsOffseterAffectHorizon ?? new FieldReaderDgit<Tool>();
-            toolsOffseterAffectHorizon.defaultValue = 1;
+            #region Offseter
+            #region Child
+            verbPropertiesOffseterAffectHorizon = verbPropertiesOffseterAffectHorizon ?? new List<FieldReaderDgit<VerbProperties>>();
+            verbPropertiesOffseterAffectHorizon.RemoveAll(f => f == null);
+            verbPropertiesOffseterAffectHorizon.ForEach(f => f.defaultValue = verbPropertiesOffseterAffectHorizonDefaultValue);
+            toolsOffseterAffectHorizon = toolsOffseterAffectHorizon ?? new List<FieldReaderDgit<Tool>>();
+            toolsOffseterAffectHorizon.RemoveAll(f => f == null);
+            toolsOffseterAffectHorizon.ForEach(f => f.defaultValue = toolsOffseterAffectHorizonDefaultValue);
+            #endregion
 
-            verbPropertiesMultiplierAffectHorizon = verbPropertiesMultiplierAffectHorizon ?? new FieldReaderDgit<VerbProperties>();
-            verbPropertiesMultiplierAffectHorizon.defaultValue = 1;
-            toolsMultiplierAffectHorizon = toolsMultiplierAffectHorizon ?? new FieldReaderDgit<Tool>();
-            toolsMultiplierAffectHorizon.defaultValue = 1;
+            #region OtherPart
+
+            #endregion
+            #endregion
+
+
+            #region Offseter
+            #region Child
+            verbPropertiesMultiplierAffectHorizon = verbPropertiesMultiplierAffectHorizon ?? new List<FieldReaderDgit<VerbProperties>>();
+            verbPropertiesMultiplierAffectHorizon.RemoveAll(f => f == null);
+            verbPropertiesMultiplierAffectHorizon.ForEach(f => f.defaultValue = verbPropertiesMultiplierAffectHorizonDefaultValue);
+            toolsMultiplierAffectHorizon = toolsMultiplierAffectHorizon ?? new List<FieldReaderDgit<Tool>>();
+            toolsMultiplierAffectHorizon.RemoveAll(f => f == null);
+            toolsMultiplierAffectHorizon.ForEach(f => f.defaultValue = toolsMultiplierAffectHorizonDefaultValue);
+            #endregion
+
+            #region OtherPart
+
+            #endregion
+            #endregion
         }
 
 
@@ -65,6 +86,30 @@ namespace RW_ModularizationWeapon
 
         public string UITexPath;
 
+        public float verbPropertiesOffseterAffectHorizonDefaultValue = 1;
+
+        public float toolsOffseterAffectHorizonDefaultValue = 1;
+
+        public float verbPropertiesOtherPartOffseterAffectHorizonDefaultValue = 1;
+
+        public float toolsOffseterOtherPartAffectHorizonDefaultValue = 1;
+
+        public float statOffsetAffectHorizonDefaultValue = 1;
+
+        public float verbPropertiesMultiplierAffectHorizonDefaultValue = 1;
+
+        public float toolsMultiplierAffectHorizonDefaultValue = 1;
+
+        public float verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue = 1;
+
+        public float toolsOtherPartMultiplierAffectHorizonDefaultValue = 1;
+
+        public float statMultiplierAffectHorizonDefaultValue = 1;
+
+        public bool verbPropertiesAffectByOtherPart;
+
+        public bool toolsAffectByOtherPart;
+
         public bool allowEmpty;
 
         public bool unchangeable;
@@ -75,28 +120,40 @@ namespace RW_ModularizationWeapon
 
         public bool notUseVerbProperties;
 
-        public bool verbPropertiesAffectByOtherPart;
-
-        public bool toolsAffectByOtherPart;
-
         public int drawWeight;
 
 
         #region Offset
-        public FieldReaderDgit<VerbProperties> verbPropertiesOffseterAffectHorizon = new FieldReaderDgit<VerbProperties>();
+        #region Child
+        public List<FieldReaderDgit<VerbProperties>> verbPropertiesOffseterAffectHorizon = new List<FieldReaderDgit<VerbProperties>>();
 
-        public FieldReaderDgit<Tool> toolsOffseterAffectHorizon = new FieldReaderDgit<Tool>();
+        public List<FieldReaderDgit<Tool>> toolsOffseterAffectHorizon = new List<FieldReaderDgit<Tool>>();
 
         public List<StatModifier> statOffsetAffectHorizon = new List<StatModifier>();
         #endregion
 
+        #region OtherPart
+        public Dictionary<string, List<FieldReaderDgit<VerbProperties>>> verbPropertiesOtherPartOffseterAffectHorizon = new Dictionary<string, List<FieldReaderDgit<VerbProperties>>>();
+
+        public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOffseterOtherPartAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
+        #endregion
+        #endregion
+
 
         #region Multiplier
-        public FieldReaderDgit<VerbProperties> verbPropertiesMultiplierAffectHorizon = new FieldReaderDgit<VerbProperties>();
+        #region Child
+        public List<FieldReaderDgit<VerbProperties>> verbPropertiesMultiplierAffectHorizon = new List<FieldReaderDgit<VerbProperties>>();
 
-        public FieldReaderDgit<Tool> toolsMultiplierAffectHorizon = new FieldReaderDgit<Tool>();
+        public List<FieldReaderDgit<Tool>> toolsMultiplierAffectHorizon = new List<FieldReaderDgit<Tool>>();
 
         public List<StatModifier> statMultiplierAffectHorizon = new List<StatModifier>();
+        #endregion
+
+        #region OtherPart
+        public Dictionary<string, List<FieldReaderDgit<VerbProperties>>> verbPropertiesOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<VerbProperties>>>();
+
+        public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
+        #endregion
         #endregion
 
 

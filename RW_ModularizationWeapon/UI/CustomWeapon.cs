@@ -86,8 +86,13 @@ namespace RW_ModularizationWeapon.UI
             (string id, CompModularizationWeapon parent) = SelectedPartForChange;
             if (parent != null && id != null)
             {
-                selections.Add((parent.OrginalPart(id).Thing, default(ThingDef)));
-                if(parent.NodeProccesser.AllowNode(null, id)) selections.Add((default(Thing), default(ThingDef)));
+                Thing OrginalPart = parent.OrginalPart(id).Thing;
+                selections.Add((OrginalPart, OrginalPart?.def));
+                if (parent.NodeProccesser.AllowNode(null, id))
+                {
+                    if(OrginalPart != null) selections.Add((default(Thing), default(ThingDef)));
+                }
+                else if (OrginalPart == null) selections.Clear();
                 selections.AddRange(
                     from x
                     in pawn.Map.listerThings.AllThings

@@ -15,7 +15,7 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
-    public class FieldReaderDgit<T> : IEnumerable<KeyValuePair<FieldInfo, double>> where T : new()
+    public class FieldReaderDgit<T> : IEnumerable<KeyValuePair<FieldInfo, double>>
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
@@ -70,6 +70,7 @@ namespace RW_ModularizationWeapon
                    vt == typeof(long) || vt == typeof(sbyte) ||
                    vt == typeof(double))
                     datas.SetOrAdd(fieldInfo, value);
+                else throw new ArgumentException($"not support value(name={name},type={vt})");
             }
 
         }
@@ -79,7 +80,7 @@ namespace RW_ModularizationWeapon
             string typename = xmlRoot.Attributes["Class"]?.Value;
             try
             {
-                type = typename != null ? GenTypes.GetTypeInAnyAssembly(typename) : type;
+                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
                 if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
             }
             catch(Exception ex)
@@ -88,10 +89,17 @@ namespace RW_ModularizationWeapon
             }
             foreach(XmlNode node in xmlRoot.ChildNodes)
             {
-                SetOrAdd(
-                    node.Name,
-                    (double)DirectXmlToObject.GetObjectFromXmlMethod(typeof(double))(node, true)
-                    );
+                try
+                {
+                    SetOrAdd(
+                        node.Name,
+                        ParseHelper.FromString<double>(node.InnerText)
+                        );
+                }
+                catch(Exception ex)
+                {
+                    Log.Error(ex.ToString());
+                }
             }
             //Log.Message(ToString());
         }
@@ -477,7 +485,7 @@ namespace RW_ModularizationWeapon
         }
     }
 
-    public class FieldReaderBool<T> : IEnumerable<KeyValuePair<FieldInfo, bool>> where T : new()
+    public class FieldReaderBool<T> : IEnumerable<KeyValuePair<FieldInfo, bool>>
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
@@ -529,6 +537,7 @@ namespace RW_ModularizationWeapon
                 Type vt = fieldInfo.FieldType;
                 if (vt == typeof(bool))
                     datas.SetOrAdd(fieldInfo, value);
+                else throw new ArgumentException($"not support value(name={name},type={vt})");
             }
 
         }
@@ -539,7 +548,7 @@ namespace RW_ModularizationWeapon
             string typename = xmlRoot.Attributes["Class"]?.Value;
             try
             {
-                type = typename != null ? GenTypes.GetTypeInAnyAssembly(typename) : type;
+                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
                 if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
             }
             catch (Exception ex)
@@ -548,10 +557,17 @@ namespace RW_ModularizationWeapon
             }
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
-                SetOrAdd(
-                    node.Name,
-                    (bool)DirectXmlToObject.GetObjectFromXmlMethod(typeof(bool))(node, true)
-                    );
+                try
+                {
+                    SetOrAdd(
+                        node.Name,
+                        ParseHelper.FromString<bool>(node.InnerText)
+                        );
+                }
+                catch(Exception ex)
+                {
+                    Log.Error(ex.ToString());
+                }
             }
             //Log.Message(ToString());
         }
@@ -727,7 +743,7 @@ namespace RW_ModularizationWeapon
         }
     }
 
-    public class FieldReaderInst<T> : IEnumerable<KeyValuePair<FieldInfo, object>> where T : new()
+    public class FieldReaderInst<T> : IEnumerable<KeyValuePair<FieldInfo, object>>
     {
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, object> datas = new Dictionary<FieldInfo, object>();
@@ -746,10 +762,10 @@ namespace RW_ModularizationWeapon
 
         public Type UsedType
         {
-            get=> type;
+            get => type;
             set
             {
-                if(value != null && typeof(T).IsAssignableFrom(value))
+                if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
                     datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
@@ -765,7 +781,7 @@ namespace RW_ModularizationWeapon
         {
             value = null;
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if(fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
+            if (fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
             return false;
         }
 
@@ -773,16 +789,13 @@ namespace RW_ModularizationWeapon
         public void SetOrAdd(string name, object value)
         {
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if(fieldInfo != null)
+            if (fieldInfo != null)
             {
                 Type vt = fieldInfo.FieldType;
-                if (vt != typeof(bool) && vt != typeof(int) &&
-                    vt != typeof(float) && vt != typeof(long) &&
-                    vt != typeof(sbyte) && vt != typeof(double) && 
-                    vt.IsAssignableFrom(value.GetType()))
+                if (vt.IsAssignableFrom(value.GetType()))
                     datas.SetOrAdd(fieldInfo, value);
             }
-                
+
         }
 
 
@@ -791,28 +804,28 @@ namespace RW_ModularizationWeapon
             string typename = xmlRoot.Attributes["Class"]?.Value;
             try
             {
-                type = typename != null ? GenTypes.GetTypeInAnyAssembly(typename) : type;
+                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
                 if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
             }
             catch (Exception ex)
             {
                 Log.Error(ex.ToString());
             }
-            foreach (XmlNode node in xmlRoot.ChildNodes)
+            try
             {
-                FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                if (fieldInfo != null)
+                T data = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);
+                foreach (XmlNode node in xmlRoot.ChildNodes)
                 {
-                    Type vt = fieldInfo.FieldType;
-                    if (vt != typeof(bool) && vt != typeof(int) &&
-                        vt != typeof(float)&& vt != typeof(long)&&
-                        vt != typeof(sbyte)&& vt != typeof(double))
+                    FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                    if (fieldInfo != null)
                     {
-                        object data = DirectXmlToObject.GetObjectFromXmlMethod(vt)(node, true);
-                        datas.Add(fieldInfo, data);
+                        datas.SetOrAdd(fieldInfo, fieldInfo.GetValue(data));
                     }
-
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
             }
             //Log.Message(ToString());
         }
@@ -849,7 +862,8 @@ namespace RW_ModularizationWeapon
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            field.SetValue(a, b.datas[field] ?? field.GetValue(a));
+                            object data = field.GetValue(a);
+                            if (data != null && b.datas[field] != null) field.SetValue(a, b.datas[field]);
                         }
                     }
                 }
@@ -892,7 +906,12 @@ namespace RW_ModularizationWeapon
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, b.datas[field] ?? a.datas[field]);
+                    if (b.datas.ContainsKey(field))
+                    {
+                        object data = a.datas[field];
+                        if (data != null && b.datas[field] != null)
+                            result.datas.Add(field, data);
+                    }
                 }
             }
 
@@ -900,7 +919,12 @@ namespace RW_ModularizationWeapon
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, b.datas[field] ?? a.datas[field]);
+                    if (a.datas.ContainsKey(field))
+                    {
+                        object data = a.datas[field];
+                        if (b.datas[field] != null && data != null)
+                            result.datas.Add(field, data);
+                    }
                 }
             }
             return result;
@@ -936,5 +960,4 @@ namespace RW_ModularizationWeapon
             return result;
         }
     }
-
 }
