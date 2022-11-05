@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using RimWorld;
 using RimWorld.QuestGen;
+using RW_ModularizationWeapon.Tools;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Noise;
 
 namespace RW_ModularizationWeapon
 {
@@ -171,49 +173,11 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = thing;
                 if (comp != null && comp.Validity)
                 {
-                    return comp.Props.notAllowParentUseVerbProperties && properties.notUseVerbProperties;
+                    return comp.Props.notAllowParentUseVerbProperties || properties.notUseVerbProperties;
                 }
                 else
                 {
                     return properties.notUseVerbProperties;
-                }
-            }
-            return false;
-        }
-        
-
-        public bool VerbPropertiesAffectByOtherPart(string id) => internal_VerbPropertiesAffectByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_VerbPropertiesAffectByOtherPart(Thing thing, WeaponAttachmentProperties properties)
-        {
-            if (thing != null && properties != null)
-            {
-                CompModularizationWeapon comp = thing;
-                if (comp != null && comp.Validity)
-                {
-                    return comp.Props.verbPropertiesAffectByOtherPart && properties.verbPropertiesAffectByOtherPart;
-                }
-                else
-                {
-                    return properties.verbPropertiesAffectByOtherPart;
-                }
-            }
-            return false;
-        }
-        
-
-        public bool ToolsAffectByOtherPart(string id) => internal_ToolsAffectByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_ToolsAffectByOtherPart(Thing thing, WeaponAttachmentProperties properties)
-        {
-            if (thing != null && properties != null)
-            {
-                CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                if (comp != null && comp.Validity)
-                {
-                    return comp.Props.toolsAffectByOtherPart && properties.toolsAffectByOtherPart;
-                }
-                else
-                {
-                    return properties.toolsAffectByOtherPart;
                 }
             }
             return false;
@@ -360,32 +324,33 @@ namespace RW_ModularizationWeapon
 
 
         #region ClacChild
-        internal static void ClacFieldList<T>(
+        internal static List<FieldReaderDgit<T>> ClacFieldList<T>(
             double defaultValue,
-            List<FieldReaderDgit<T>> list,
-            List<FieldReaderDgit<T>> horizons,
+            List<FieldReaderDgit<T>> listA,
+            List<FieldReaderDgit<T>> listB,
             List<FieldReaderDgit<T>> results,
             Func<FieldReaderDgit<T>, FieldReaderDgit<T>, FieldReaderDgit<T>> clac,
             Func<FieldReaderDgit<T>, FieldReaderDgit<T>, FieldReaderDgit<T>> clacToResult
             )
         {
-            foreach (FieldReaderDgit<T> child in list)
+            foreach (FieldReaderDgit<T> child in listA)
             {
                 int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> horizon =
-                    horizons.Find(
+                FieldReaderDgit<T> value =
+                    listB.Find(
                         x => x.UsedType == child.UsedType
                     );
-                if (horizon == null)
+                if (value == null)
                 {
-                    horizon = new FieldReaderDgit<T>();
-                    horizon.UsedType = child.UsedType;
-                    horizon.defaultValue = defaultValue;
-                    horizons.Add(horizon);
+                    value = new FieldReaderDgit<T>();
+                    value.UsedType = child.UsedType;
+                    value.defaultValue = defaultValue;
+                    listB.Add(value);
                 }
-                if (index < 0) results.Add(clac(child, horizon));
-                else results[index] = clacToResult(results[index],clac(child, horizon));
+                if (index < 0) results.Add(clac(child, value));
+                else results[index] = clacToResult(results[index],clac(child, value));
             }
+            return results;
         }
         #endregion
 
@@ -395,6 +360,7 @@ namespace RW_ModularizationWeapon
         {
             List<FieldReaderDgit<VerbProperties>> results = new List<FieldReaderDgit<VerbProperties>>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            List<FieldReaderDgit<VerbProperties>> cache = new List<FieldReaderDgit<VerbProperties>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -406,16 +372,27 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+
+                        if (current != null) ClacFieldList(
+                            current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue,
+                            comp.Props.verbPropertiesOffseter,
+                            current.verbPropertiesOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id),
+                            cache,
+                            (x, y) => x * y,
+                            (x, y) => x + y
+                            );
+                        else cache.AddRange(comp.Props.verbPropertiesOffseter);
                         ClacFieldList(
                             properties.verbPropertiesOffseterAffectHorizonDefaultValue,
-                            comp.Props.verbPropertiesOffseter,
+                            cache,
                             properties.verbPropertiesOffseterAffectHorizon,
                             results,
                             (x, y) => x * y,
-                            (x,y) => x + y
+                            (x, y) => x + y
                             );
                     }
                 }
+                cache.Clear();
             }
             results.ForEach(x => x.defaultValue = 0);
             return results;
@@ -425,6 +402,8 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderDgit<Tool>> ToolsOffseter(string childNodeIdForTool)
         {
             List<FieldReaderDgit<Tool>> results = new List<FieldReaderDgit<Tool>>();
+            WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
+            List<FieldReaderDgit<Tool>> cache = new List<FieldReaderDgit<Tool>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -436,9 +415,19 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+
+                        if (current != null) ClacFieldList(
+                            current.toolsOtherPartOffseterAffectHorizonDefaultValue,
+                            comp.Props.toolsOffseter,
+                            current.toolsOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id),
+                            cache,
+                            (x, y) => x * y,
+                            (x, y) => x + y
+                            );
+                        else cache.AddRange(comp.Props.toolsOffseter);
                         ClacFieldList(
                             properties.toolsOffseterAffectHorizonDefaultValue,
-                            comp.Props.toolsOffseter,
+                            cache,
                             properties.toolsOffseterAffectHorizon,
                             results,
                             (x, y) => x * y,
@@ -446,6 +435,7 @@ namespace RW_ModularizationWeapon
                             );
                     }
                 }
+                cache.Clear();
             }
             results.ForEach(x => x.defaultValue = 0);
             return results;
@@ -478,6 +468,8 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderDgit<VerbProperties>> VerbPropertiesMultiplier(string childNodeIdForVerbProperties)
         {
             List<FieldReaderDgit<VerbProperties>> results = new List<FieldReaderDgit<VerbProperties>>();
+            WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            List<FieldReaderDgit<VerbProperties>> cache = new List<FieldReaderDgit<VerbProperties>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -489,9 +481,19 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+
+                        if (current != null) ClacFieldList(
+                            current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue,
+                            comp.Props.verbPropertiesMultiplier,
+                            current.verbPropertiesOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id),
+                            cache,
+                            (x, y) => (x - 1) * y + 1,
+                            (x, y) => x * y
+                            );
+                        else cache.AddRange(comp.Props.verbPropertiesMultiplier);
                         ClacFieldList(
                             properties.verbPropertiesMultiplierAffectHorizonDefaultValue,
-                            comp.Props.verbPropertiesMultiplier,
+                            cache,
                             properties.verbPropertiesMultiplierAffectHorizon,
                             results,
                             (x, y) => (x - 1) * y + 1,
@@ -500,6 +502,7 @@ namespace RW_ModularizationWeapon
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
                 }
+                cache.Clear();
             }
             results.ForEach(x => x.defaultValue = 1);
             return results;
@@ -509,6 +512,8 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderDgit<Tool>> ToolsMultiplier(string childNodeIdForTool)
         {
             List<FieldReaderDgit<Tool>> results = new List<FieldReaderDgit<Tool>>();
+            WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
+            List<FieldReaderDgit<Tool>> cache = new List<FieldReaderDgit<Tool>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -520,9 +525,18 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+                        if (current != null) ClacFieldList(
+                            current.toolsOtherPartMultiplierAffectHorizonDefaultValue,
+                            comp.Props.toolsMultiplier,
+                            current.toolsOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id),
+                            cache,
+                            (x, y) => (x - 1) * y + 1,
+                            (x, y) => x * y
+                            );
+                        else cache.AddRange(comp.Props.toolsMultiplier);
                         ClacFieldList(
                             properties.toolsMultiplierAffectHorizonDefaultValue,
-                            comp.Props.toolsMultiplier,
+                            cache,
                             properties.toolsMultiplierAffectHorizon,
                             results,
                             (x, y) => (x - 1) * y + 1,
@@ -530,6 +544,7 @@ namespace RW_ModularizationWeapon
                             );
                     }
                 }
+                cache.Clear();
             }
             results.ForEach(x => x.defaultValue = 1);
             return results;
@@ -773,15 +788,12 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbToolRegiestInfo> PostIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> forPostRead)
         {
-            if (Props.toolsAffectByChildPart)
+            for (int i = 0; i < result.Count; i++)
             {
-                for (int i = 0; i < result.Count; i++)
-                {
-                    VerbToolRegiestInfo prop = result[i];
-                    Tool newProp = ToolAfterAffect(prop.berforConvertTool, null, true);
-                    prop.afterCobvertTool = newProp;
-                    result[i] = prop;
-                }
+                VerbToolRegiestInfo prop = result[i];
+                Tool newProp = ToolAfterAffect(prop.berforConvertTool, null, true);
+                prop.afterCobvertTool = newProp;
+                result[i] = prop;
             }
 
             NodeContainer container = ChildNodes;
@@ -795,22 +807,11 @@ namespace RW_ModularizationWeapon
                     if (tools != null)
                     {
                         result.Capacity += tools.Count;
-                        if (internal_ToolsAffectByOtherPart(container[i], attachmentProperties))
+                        for (int j = 0; j < tools.Count; j++)
                         {
-                            for (int j = 0; j < tools.Count; j++)
-                            {
-                                Tool cache = tools[j];
-                                Tool newProp = ToolAfterAffect(cache,id, false);
-                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
-                            }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < tools.Count; j++)
-                            {
-                                Tool cache = tools[j];
-                                result.Add(new VerbToolRegiestInfo(id, cache, cache));
-                            }
+                            Tool cache = tools[j];
+                            Tool newProp = ToolAfterAffect(cache, id, false);
+                            result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                         }
                     }
                 }
@@ -821,15 +822,12 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbPropertiesRegiestInfo> PostIVerbOwner_GetVerbProperties(Type ownerType, List<VerbPropertiesRegiestInfo> result, Dictionary<string, object> forPostRead)
         {
-            if (Props.verbPropertiesAffectByChildPart)
+            for (int i = 0; i < result.Count; i++)
             {
-                for (int i = 0; i < result.Count; i++)
-                {
-                    VerbPropertiesRegiestInfo prop = result[i];
-                    VerbProperties newProp = VerbPropertiesAfterAffect(prop.berforConvertProperties, null, true);
-                    prop.afterConvertProperties = newProp;
-                    result[i] = prop;
-                }
+                VerbPropertiesRegiestInfo prop = result[i];
+                VerbProperties newProp = VerbPropertiesAfterAffect(prop.berforConvertProperties, null, true);
+                prop.afterConvertProperties = newProp;
+                result[i] = prop;
             }
 
             NodeContainer container = ChildNodes;
@@ -843,22 +841,11 @@ namespace RW_ModularizationWeapon
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
-                        if (internal_VerbPropertiesAffectByOtherPart(container[i], attachmentProperties))
+                        for (int j = 0; j < verbProperties.Count; j++)
                         {
-                            for (int j = 0; j < verbProperties.Count; j++)
-                            {
-                                VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
-                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
-                            }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < verbProperties.Count; j++)
-                            {
-                                VerbProperties cache = verbProperties[j];
-                                result.Add(new VerbPropertiesRegiestInfo(id, cache, cache));
-                            }
+                            VerbProperties cache = verbProperties[j];
+                            VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
+                            result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                         }
                     }
                 }
@@ -1498,6 +1485,10 @@ namespace RW_ModularizationWeapon
             {
                 properties.ResolveReferences();
             }
+            foreach (WeaponAttachmentProperties properties in attachmentProperties)
+            {
+                properties.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+            }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
             verbPropertiesOffseter = verbPropertiesOffseter ?? new List<FieldReaderDgit<VerbProperties>>();
@@ -1614,10 +1605,6 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine(CheckAndMark(unchangeable, "unchangeable".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseTools, "notAllowParentUseTools".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseVerbProperties, "notAllowParentUseVerbProperties".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByOtherPart, "verbPropertiesAffectByOtherPart".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(toolsAffectByOtherPart, "toolsAffectByOtherPart".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByChildPart, "verbPropertiesAffectByChildPart".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(toolsAffectByChildPart, "toolsAffectByChildPart".Translate()));
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseTools ? "green" : "red") + ">" + "notAllowParentUseTools".Translate() + " : " + (notAllowParentUseTools ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseVerbProperties ? "green" : "red") + ">" + "notAllowParentUseVerbProperties".Translate() + " : " + (notAllowParentUseVerbProperties ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("useOriginalCraftMethod".Translate() + " : <color=" + (useOriginalCraftMethod ? "green" : "red") + ">" + (useOriginalCraftMethod ? "Yes".Translate() : "No".Translate()) + "</color>");
@@ -1645,17 +1632,17 @@ namespace RW_ModularizationWeapon
                 {
                     int clacListWithChild<T>(
                         double defaultValue,
-                        List<FieldReaderDgit<T>> list,
-                        List<FieldReaderDgit<T>> horizons,
+                        List<FieldReaderDgit<T>> listA,
+                        List<FieldReaderDgit<T>> listB,
                         Func<FieldReaderDgit<T>, FieldReaderDgit<T>, FieldReaderDgit<T>> calcFunc
                         )
                     {
                         int result = 0;
-                        for (int i = 0; i < list.Count; i++)
+                        for (int i = 0; i < listA.Count; i++)
                         {
-                            var child = list[i];
+                            var child = listA[i];
                             var horizon =
-                                horizons.Find(
+                                listB.Find(
                                     x => x.UsedType == child.UsedType
                                 );
                             if (horizon == null)
@@ -1663,7 +1650,7 @@ namespace RW_ModularizationWeapon
                                 horizon = new FieldReaderDgit<T>();
                                 horizon.UsedType = child.UsedType;
                                 horizon.defaultValue = defaultValue;
-                                horizons.Add(horizon);
+                                listB.Add(horizon);
                             }
                             child = calcFunc(child, horizon);
                             stringBuilder.AppendLine($"    {i} :");
@@ -1783,18 +1770,6 @@ namespace RW_ModularizationWeapon
 
 
         public bool notAllowParentUseVerbProperties = false;
-
-
-        public bool verbPropertiesAffectByOtherPart = false;
-
-
-        public bool toolsAffectByOtherPart = false;
-
-
-        public bool verbPropertiesAffectByChildPart = false;
-
-
-        public bool toolsAffectByChildPart = false;
         #endregion
 
 
