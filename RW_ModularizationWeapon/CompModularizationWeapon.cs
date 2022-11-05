@@ -1491,38 +1491,37 @@ namespace RW_ModularizationWeapon
             }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
-            verbPropertiesOffseter = verbPropertiesOffseter ?? new List<FieldReaderDgit<VerbProperties>>();
-            verbPropertiesOffseter.RemoveAll(f => f == null);
-            verbPropertiesOffseter.ForEach(f => f.defaultValue = 0);
-            toolsOffseter = toolsOffseter ?? new List<FieldReaderDgit<Tool>>();
-            toolsOffseter.RemoveAll(f => f == null);
-            toolsOffseter.ForEach(f => f.defaultValue = 0);
 
-            verbPropertiesMultiplier = verbPropertiesMultiplier ?? new List<FieldReaderDgit<VerbProperties>>();
-            verbPropertiesMultiplier.RemoveAll(f => f == null);
-            verbPropertiesMultiplier.ForEach(f => f.defaultValue = 1);
-            toolsMultiplier = toolsMultiplier ?? new List<FieldReaderDgit<Tool>>();
-            toolsMultiplier.RemoveAll(f => f == null);
-            toolsMultiplier.ForEach(f => f.defaultValue = 1);
+            void CheckAndSetListDgit<T>(ref List<FieldReaderDgit<T>> list, float defaultValue)
+            {
+                list = list ?? new List<FieldReaderDgit<T>>();
+                list.RemoveAll(f => f == null);
+                list.ForEach(f => f.defaultValue = defaultValue);
+            }
+
+            void CheckAndSetListBool<T>(ref List<FieldReaderBool<T>> list, bool defaultValue)
+            {
+                list = list ?? new List<FieldReaderBool<T>>();
+                list.RemoveAll(f => f == null);
+                list.ForEach(f => f.defaultValue = defaultValue);
+            }
+
+            CheckAndSetListDgit(ref verbPropertiesOffseter, 0);
+            CheckAndSetListDgit(ref toolsOffseter, 0);
+
+            CheckAndSetListDgit(ref verbPropertiesMultiplier, 1);
+            CheckAndSetListDgit(ref toolsMultiplier, 1);
 
             verbPropertiesObjectPatch = verbPropertiesObjectPatch ?? new List<FieldReaderInst<VerbProperties>>();
             verbPropertiesObjectPatch.RemoveAll(f => f == null);
             toolsObjectPatch = toolsObjectPatch ?? new List<FieldReaderInst<Tool>>();
             toolsObjectPatch.RemoveAll(f => f == null);
 
-            verbPropertiesBoolAndPatch = verbPropertiesBoolAndPatch ?? new List<FieldReaderBool<VerbProperties>>();
-            verbPropertiesBoolAndPatch.RemoveAll(f => f == null);
-            verbPropertiesBoolAndPatch.ForEach(f => f.defaultValue = true);
-            toolsBoolAndPatch = toolsBoolAndPatch ?? new List<FieldReaderBool<Tool>>();
-            toolsBoolAndPatch.RemoveAll(f => f == null);
-            toolsBoolAndPatch.ForEach(f => f.defaultValue = true);
+            CheckAndSetListBool(ref verbPropertiesBoolAndPatch, true);
+            CheckAndSetListBool(ref toolsBoolAndPatch, true);
 
-            verbPropertiesBoolOrPatch = verbPropertiesBoolOrPatch ?? new List<FieldReaderBool<VerbProperties>>();
-            verbPropertiesBoolOrPatch.RemoveAll(f => f == null);
-            verbPropertiesBoolOrPatch.ForEach(f => f.defaultValue = false);
-            toolsBoolOrPatch = toolsBoolOrPatch ?? new List<FieldReaderBool<Tool>>();
-            toolsBoolOrPatch.RemoveAll(f => f == null);
-            toolsBoolOrPatch.ForEach(f => f.defaultValue = false);
+            CheckAndSetListBool(ref verbPropertiesBoolOrPatch, false);
+            CheckAndSetListBool(ref toolsBoolOrPatch, false);
         }
 
 
