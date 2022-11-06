@@ -1417,15 +1417,15 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override void PostPreApplyDamageWithRef(ref DamageInfo dinfo, out bool absorbed)
+        protected override bool PostThingWithComps_PreApplyDamage(ref DamageInfo dinfo, bool absorbed)
         {
-            absorbed = false;
             int count = ChildNodes.Count + 1;
             dinfo.SetAmount(dinfo.Amount / count);
             foreach (Thing thing in ChildNodes.Values)
             {
                 thing.TakeDamage(dinfo);
             }
+            return absorbed;
         }
 
 
