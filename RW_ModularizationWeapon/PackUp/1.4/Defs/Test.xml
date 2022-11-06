@@ -131,6 +131,7 @@
 					<li>
 						<ticksBetweenBurstShots>0.25</ticksBetweenBurstShots>
 						<warmupTime>0.25</warmupTime>
+						<forcedMissRadius>0</forcedMissRadius>
 					</li>
 				</verbPropertiesMultiplier>
                 <attachmentProperties>
@@ -251,6 +252,9 @@
 						<range>10</range>
 					</li>
 				</verbPropertiesOffseter>
+				<statMultiplier>
+					<RangedWeapon_Cooldown>0</RangedWeapon_Cooldown>
+				</statMultiplier>
                 <attachmentProperties>
                     <li>
 						<id>test-1</id>

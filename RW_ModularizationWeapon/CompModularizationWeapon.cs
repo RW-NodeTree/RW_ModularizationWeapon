@@ -880,54 +880,80 @@ namespace RW_ModularizationWeapon
         #region Stat
         protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
         {
-            CompEquippable eq = parent.GetComp<CompEquippable>();
-            if (eq != null)
+            if(req.Thing == parent)
             {
-                ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
-                forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
-                //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
-                List<Verb> verbs = eq.AllVerbs;
-                parent.def.Verbs.Clear();
-                parent.def.tools.Clear();
-                //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                foreach (Verb verb in verbs)
+                CompEquippable eq = parent.GetComp<CompEquippable>();
+                if (eq != null)
                 {
-                    if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                    else parent.def.Verbs.Add(verb.verbProps);
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                    forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
+                    forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
+                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                    List<Verb> verbs = eq.AllVerbs;
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    foreach (Verb verb in verbs)
+                    {
+                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                        else parent.def.Verbs.Add(verb.verbProps);
+                    }
+                    //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
                 }
-                //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
             }
+            else ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, forPostRead);
         }
 
 
         protected override float PostStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            CompEquippable eq = parent.GetComp<CompEquippable>();
-            if (eq != null)
+            if (req.Thing == parent)
             {
-                //if (Prefs.DevMode) Log.Message(" postfix before clear: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                parent.def.Verbs.Clear();
-                parent.def.tools.Clear();
-                //if (Prefs.DevMode) Log.Message(" postfix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                parent.def.Verbs.AddRange((List<VerbProperties>)forPostRead["CompModularizationWeapon_verbs"]);
-                parent.def.tools.AddRange((List<Tool>)forPostRead["CompModularizationWeapon_tools"]);
-                //if (Prefs.DevMode) Log.Message(" postfix after change: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                CompEquippable eq = parent.GetComp<CompEquippable>();
+                if (eq != null)
+                {
+                    //if (Prefs.DevMode) Log.Message(" postfix before clear: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    //if (Prefs.DevMode) Log.Message(" postfix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    parent.def.Verbs.AddRange((List<VerbProperties>)forPostRead["CompModularizationWeapon_verbs"]);
+                    parent.def.tools.AddRange((List<Tool>)forPostRead["CompModularizationWeapon_tools"]);
+                    //if (Prefs.DevMode) Log.Message(" postfix after change: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                }
             }
+            else result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
             return result;
         }
 
 
         protected override float PostStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            if(statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
+
+            if (req.Thing == parent)
             {
-                foreach (Thing thing in ChildNodes.Values)
+                if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
                 {
-                    result += statWorker.GetValue(thing);
+                    foreach (Thing thing in ChildNodes.Values)
+                    {
+                        result += statWorker.GetValue(thing);
+                    }
+                }
+                else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
+                {
+                    StatDef statDef = StatWorker_stat(statWorker);
+                    result *= GetStatMultiplier(statDef) / Props.statMultiplier.GetStatFactorFromList(statDef);
+                    result += GetStatOffset(statDef) - Props.statOffset.GetStatOffsetFromList(statDef);
                 }
             }
-            else if(!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
+            else if (statWorker is StatWorker_MeleeAverageDPS ||
+                    statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                    statWorker is StatWorker_MarketValue ||
+                    statWorker == StatDefOf.Mass.Worker
+                )
+            {
+                result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
+            }
+            else
             {
                 StatDef statDef = StatWorker_stat(statWorker);
                 result *= GetStatMultiplier(statDef) / Props.statMultiplier.GetStatFactorFromList(statDef);
@@ -939,40 +965,51 @@ namespace RW_ModularizationWeapon
 
         protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            if (statWorker is StatWorker_MeleeAverageDPS || 
-                statWorker is StatWorker_MeleeAverageArmorPenetration || 
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker
-            )
+            if (req.Thing == parent)
             {
-                foreach (Thing thing in ChildNodes.Values)
+                StringBuilder stringBuilder = new StringBuilder();
+                if (statWorker is StatWorker_MeleeAverageDPS || 
+                    statWorker is StatWorker_MeleeAverageArmorPenetration || 
+                    statWorker is StatWorker_MarketValue ||
+                    statWorker == StatDefOf.Mass.Worker
+                )
                 {
-                    stringBuilder.AppendLine("  " + thing.Label + ":");
-                    string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
-                    exp = Regex.Replace(exp, "\n", "\n  ");
-                    stringBuilder.AppendLine(exp);
+                    foreach (Thing thing in ChildNodes.Values)
+                    {
+                        stringBuilder.AppendLine("  " + thing.Label + ":");
+                        string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
+                        exp = Regex.Replace(exp, "\n", "\n  ");
+                        stringBuilder.AppendLine(exp);
+                    }
                 }
+                result += "\n" + stringBuilder.ToString();
             }
-            return result + "\n" + stringBuilder.ToString();
+            else
+            {
+                result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, forPostRead) ?? result;
+            }
+            return result;
         }
 
 
-        protected override IEnumerable<Dialog_InfoCard.Hyperlink> PostStatWorker_GetInfoCardHyperlinks(StatWorker statWorker, StatRequest reqstatRequest, IEnumerable<Dialog_InfoCard.Hyperlink> result)
+        protected override IEnumerable<Dialog_InfoCard.Hyperlink> PostStatWorker_GetInfoCardHyperlinks(StatWorker statWorker, StatRequest statRequest, IEnumerable<Dialog_InfoCard.Hyperlink> result)
         {
             foreach(Dialog_InfoCard.Hyperlink link in result)
             {
                 yield return link;
             }
-            if (statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker
-            )
+            if (statRequest.Thing == parent)
             {
-                foreach (Thing thing in ChildNodes.Values)
+                if (statWorker is StatWorker_MeleeAverageDPS ||
+                    statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                    statWorker is StatWorker_MarketValue ||
+                    statWorker == StatDefOf.Mass.Worker
+                )
                 {
-                    yield return new Dialog_InfoCard.Hyperlink(thing);
+                    foreach (Thing thing in ChildNodes.Values)
+                    {
+                        yield return new Dialog_InfoCard.Hyperlink(thing);
+                    }
                 }
             }
         }
@@ -981,33 +1018,44 @@ namespace RW_ModularizationWeapon
         protected override IEnumerable<StatDrawEntry> PostThingDef_SpecialDisplayStats(ThingDef def, StatRequest req, IEnumerable<StatDrawEntry> result)
         {
             //Log.Message($"PostThingDef_SpecialDisplayStats({def},{req},{result})");
-            List<VerbProperties> verbProperties = null;
-            List<Tool> tools = null;
-            CompEquippable eq = parent.GetComp<CompEquippable>();
-            if (eq != null)
+            if (req.Thing == parent)
             {
-                ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                verbProperties = new List<VerbProperties>(parent.def.Verbs);
-                tools = new List<Tool>(parent.def.tools);
-                List<Verb> verbs = eq.AllVerbs;
-                parent.def.Verbs.Clear();
-                parent.def.tools.Clear();
-                foreach (Verb verb in verbs)
+                List<VerbProperties> verbProperties = null;
+                List<Tool> tools = null;
+                CompEquippable eq = parent.GetComp<CompEquippable>();
+                if (eq != null)
                 {
-                    if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                    else parent.def.Verbs.Add(verb.verbProps);
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                    verbProperties = new List<VerbProperties>(parent.def.Verbs);
+                    tools = new List<Tool>(parent.def.tools);
+                    List<Verb> verbs = eq.AllVerbs;
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    foreach (Verb verb in verbs)
+                    {
+                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                        else parent.def.Verbs.Add(verb.verbProps);
+                    }
+                }
+                foreach (StatDrawEntry entry in result)
+                {
+                    yield return entry;
+                }
+                if (verbProperties != null && tools != null)
+                {
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    parent.def.Verbs.AddRange(verbProperties);
+                    parent.def.tools.AddRange(tools);
                 }
             }
-            foreach (StatDrawEntry entry in result)
+            else
             {
-                yield return entry;
-            }
-            if(verbProperties != null && tools != null)
-            {
-                parent.def.Verbs.Clear();
-                parent.def.tools.Clear();
-                parent.def.Verbs.AddRange(verbProperties);
-                parent.def.tools.AddRange(tools);
+                result = ((CompChildNodeProccesser)req.Thing)?.PostThingDef_SpecialDisplayStats(def, req, result) ?? result;
+                foreach (StatDrawEntry entry in result)
+                {
+                    yield return entry;
+                }
             }
         }
 
@@ -1015,33 +1063,44 @@ namespace RW_ModularizationWeapon
         protected override IEnumerable<StatDrawEntry> PostStatsReportUtility_StatsToDraw(Thing thing, IEnumerable<StatDrawEntry> result)
         {
             //Log.Message($"PostStatsReportUtility_StatsToDraw({thing},{result})");
-            List<VerbProperties> verbProperties = null;
-            List<Tool> tools = null;
-            CompEquippable eq = parent.GetComp<CompEquippable>();
-            if (eq != null)
+            if (thing == parent)
             {
-                ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                verbProperties = new List<VerbProperties>(parent.def.Verbs);
-                tools = new List<Tool>(parent.def.tools);
-                List<Verb> verbs = eq.AllVerbs;
-                parent.def.Verbs.Clear();
-                parent.def.tools.Clear();
-                foreach (Verb verb in verbs)
+                List<VerbProperties> verbProperties = null;
+                List<Tool> tools = null;
+                CompEquippable eq = parent.GetComp<CompEquippable>();
+                if (eq != null)
                 {
-                    if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                    else parent.def.Verbs.Add(verb.verbProps);
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                    verbProperties = new List<VerbProperties>(parent.def.Verbs);
+                    tools = new List<Tool>(parent.def.tools);
+                    List<Verb> verbs = eq.AllVerbs;
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    foreach (Verb verb in verbs)
+                    {
+                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                        else parent.def.Verbs.Add(verb.verbProps);
+                    }
+                }
+                foreach (StatDrawEntry entry in result)
+                {
+                    yield return entry;
+                }
+                if (verbProperties != null && tools != null)
+                {
+                    parent.def.Verbs.Clear();
+                    parent.def.tools.Clear();
+                    parent.def.Verbs.AddRange(verbProperties);
+                    parent.def.tools.AddRange(tools);
                 }
             }
-            foreach (StatDrawEntry entry in result)
+            else
             {
-                yield return entry;
-            }
-            if (verbProperties != null && tools != null)
-            {
-                parent.def.Verbs.Clear();
-                parent.def.tools.Clear();
-                parent.def.Verbs.AddRange(verbProperties);
-                parent.def.tools.AddRange(tools);
+                result = ((CompChildNodeProccesser)thing)?.PostStatsReportUtility_StatsToDraw(thing, result) ?? result;
+                foreach (StatDrawEntry entry in result)
+                {
+                    yield return entry;
+                }
             }
         }
         #endregion
