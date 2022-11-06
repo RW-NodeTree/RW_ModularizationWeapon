@@ -41,7 +41,10 @@ namespace RW_ModularizationWeapon
             {
                 list = list ?? new List<FieldReaderDgit<T>>();
                 list.RemoveAll(f => f == null);
-                list.ForEach(f => f.defaultValue = defaultValue);
+                list.ForEach(f =>
+                {
+                    if (!f.HasDefaultValue) f.DefaultValue = defaultValue;
+                });
             }
 
 
@@ -52,7 +55,10 @@ namespace RW_ModularizationWeapon
                 foreach((string id, List<FieldReaderDgit<T>> innerList) in list)
                 {
                     innerList.RemoveAll(f => f == null);
-                    innerList.ForEach(f => f.defaultValue = defaultValue);
+                    innerList.ForEach(f =>
+                    {
+                        if (!f.HasDefaultValue) f.DefaultValue = defaultValue;
+                    });
                 }
             }
 
@@ -65,6 +71,8 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionary(ref verbPropertiesOtherPartOffseterAffectHorizon, verbPropertiesOtherPartOffseterAffectHorizonDefaultValue);
             CheckAndSetDictionary(ref toolsOtherPartOffseterAffectHorizon, toolsOtherPartOffseterAffectHorizonDefaultValue);
+            statOtherPartOffseterAffectHorizon = statOtherPartOffseterAffectHorizon ?? new Dictionary<string, List<StatModifier>>();
+            statOtherPartOffseterAffectHorizon.RemoveAll(x => x.Key == null || x.Value == null);
             #endregion
             #endregion
 
@@ -78,6 +86,8 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionary(ref verbPropertiesOtherPartMultiplierAffectHorizon, verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue);
             CheckAndSetDictionary(ref toolsOtherPartMultiplierAffectHorizon, toolsOtherPartMultiplierAffectHorizonDefaultValue);
+            statOtherPartMultiplierAffectHorizon = statOtherPartMultiplierAffectHorizon ?? new Dictionary<string, List<StatModifier>>();
+            statOtherPartMultiplierAffectHorizon.RemoveAll(x => x.Key == null || x.Value == null);
             #endregion
             #endregion
         }
@@ -132,9 +142,13 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartOffseterAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
 
+        public Dictionary<string, List<StatModifier>> statOtherPartOffseterAffectHorizon = new Dictionary<string, List<StatModifier>>();
+
         public float verbPropertiesOtherPartOffseterAffectHorizonDefaultValue = 1;
 
         public float toolsOtherPartOffseterAffectHorizonDefaultValue = 1;
+
+        public float statOtherPartOffseterAffectHorizonDefaultValue = 1;
         #endregion
         #endregion
 
@@ -159,9 +173,13 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
 
+        public Dictionary<string, List<StatModifier>> statOtherPartMultiplierAffectHorizon = new Dictionary<string, List<StatModifier>>();
+
         public float verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue = 1;
 
         public float toolsOtherPartMultiplierAffectHorizonDefaultValue = 1;
+
+        public float statOtherPartMultiplierAffectHorizonDefaultValue = 1;
         #endregion
         #endregion
 

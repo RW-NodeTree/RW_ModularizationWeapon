@@ -344,7 +344,7 @@ namespace RW_ModularizationWeapon
                 {
                     value = new FieldReaderDgit<T>();
                     value.UsedType = child.UsedType;
-                    value.defaultValue = defaultValue;
+                    value.DefaultValue = defaultValue;
                     listB.Add(value);
                 }
                 if (index < 0) results.Add(clac(child, value));
@@ -394,7 +394,7 @@ namespace RW_ModularizationWeapon
                 }
                 cache.Clear();
             }
-            results.ForEach(x => x.defaultValue = 0);
+            results.ForEach(x => x.DefaultValue = 0);
             return results;
         }
 
@@ -437,7 +437,7 @@ namespace RW_ModularizationWeapon
                 }
                 cache.Clear();
             }
-            results.ForEach(x => x.defaultValue = 0);
+            results.ForEach(x => x.DefaultValue = 0);
             return results;
         }
 
@@ -504,7 +504,7 @@ namespace RW_ModularizationWeapon
                 }
                 cache.Clear();
             }
-            results.ForEach(x => x.defaultValue = 1);
+            results.ForEach(x => x.DefaultValue = 1);
             return results;
         }
 
@@ -546,7 +546,7 @@ namespace RW_ModularizationWeapon
                 }
                 cache.Clear();
             }
-            results.ForEach(x => x.defaultValue = 1);
+            results.ForEach(x => x.DefaultValue = 1);
             return results;
         }
 
@@ -648,7 +648,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            results.ForEach(x => x.defaultValue = true);
+            results.ForEach(x => x.DefaultValue = true);
             return results;
         }
 
@@ -675,7 +675,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            results.ForEach(x => x.defaultValue = true);
+            results.ForEach(x => x.DefaultValue = true);
             return results;
         }
 
@@ -702,7 +702,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            results.ForEach(x => x.defaultValue = false);
+            results.ForEach(x => x.DefaultValue = false);
             return results;
         }
 
@@ -729,7 +729,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            results.ForEach(x => x.defaultValue = false);
+            results.ForEach(x => x.DefaultValue = false);
             return results;
         }
         #endregion
@@ -1580,14 +1580,14 @@ namespace RW_ModularizationWeapon
             {
                 list = list ?? new List<FieldReaderDgit<T>>();
                 list.RemoveAll(f => f == null);
-                list.ForEach(f => f.defaultValue = defaultValue);
+                list.ForEach(f => f.DefaultValue = defaultValue);
             }
 
             void CheckAndSetListBool<T>(ref List<FieldReaderBool<T>> list, bool defaultValue)
             {
                 list = list ?? new List<FieldReaderBool<T>>();
                 list.RemoveAll(f => f == null);
-                list.ForEach(f => f.defaultValue = defaultValue);
+                list.ForEach(f => f.DefaultValue = defaultValue);
             }
 
             CheckAndSetListDgit(ref verbPropertiesOffseter, 0);
@@ -1735,7 +1735,7 @@ namespace RW_ModularizationWeapon
                             {
                                 horizon = new FieldReaderDgit<T>();
                                 horizon.UsedType = child.UsedType;
-                                horizon.defaultValue = defaultValue;
+                                horizon.DefaultValue = defaultValue;
                                 listB.Add(horizon);
                             }
                             child = calcFunc(child, horizon);

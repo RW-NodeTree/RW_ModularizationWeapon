@@ -17,9 +17,9 @@ namespace RW_ModularizationWeapon
 {
     public class FieldReaderDgit<T> : IEnumerable<KeyValuePair<FieldInfo, double>>
     {
+        private double? defaultValue;
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
-        public double defaultValue;
 
         public FieldReaderDgit() { }
 
@@ -29,9 +29,18 @@ namespace RW_ModularizationWeapon
             {
                 datas.AddRange(other.datas);
                 type = other.type;
-                defaultValue = other.defaultValue;
+                DefaultValue = other.DefaultValue;
             }
         }
+
+
+        public double DefaultValue
+        {
+            get => defaultValue ?? 0;
+            set => defaultValue = value;
+        }
+
+        public bool HasDefaultValue => defaultValue != null;
 
 
         public Type UsedType
@@ -87,7 +96,18 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-            foreach(XmlNode node in xmlRoot.ChildNodes)
+
+            try
+            {
+                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                if (defaultValue != null) this.defaultValue = ParseHelper.FromString<double>(defaultValue);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+            }
+
+            foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
                 {
@@ -196,7 +216,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                 if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + value));
@@ -224,7 +244,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                 if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - value));
@@ -252,7 +272,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                 if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * value));
@@ -280,7 +300,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                 if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / value));
@@ -308,7 +328,7 @@ namespace RW_ModularizationWeapon
                         if(field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                 if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % value));
@@ -341,7 +361,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] + b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] + b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] + b.DefaultValue);
                 }
             }
 
@@ -350,7 +370,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] + b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue + b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue + b.datas[field]);
                 }
             }
             return result;
@@ -373,7 +393,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] - b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] - b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] - b.DefaultValue);
                 }
             }
 
@@ -382,7 +402,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] - b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue - b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue - b.datas[field]);
                 }
             }
             return result;
@@ -405,7 +425,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if(b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] * b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] * b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] * b.DefaultValue);
                 }
             }
 
@@ -414,7 +434,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] * b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue * b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue * b.datas[field]);
                 }
             }
             return result;
@@ -437,7 +457,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] / b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] / b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] / b.DefaultValue);
                 }
             }
 
@@ -446,7 +466,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] / b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue / b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue / b.datas[field]);
                 }
             }
             return result;
@@ -469,7 +489,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] % b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] % b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] % b.DefaultValue);
                 }
             }
 
@@ -478,7 +498,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] % b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue % b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue % b.datas[field]);
                 }
             }
             return result;
@@ -487,9 +507,9 @@ namespace RW_ModularizationWeapon
 
     public class FieldReaderBool<T> : IEnumerable<KeyValuePair<FieldInfo, bool>>
     {
+        private bool? defaultValue;
         private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
-        public bool defaultValue;
 
         public FieldReaderBool() { }
 
@@ -499,9 +519,19 @@ namespace RW_ModularizationWeapon
             {
                 datas.AddRange(other.datas);
                 type = other.type;
-                defaultValue = other.defaultValue;
+                DefaultValue = other.DefaultValue;
             }
         }
+
+        public bool DefaultValue
+        {
+            get => defaultValue ?? false;
+            set => defaultValue = value;
+        }
+
+
+        public bool HasDefaultValue => defaultValue != null;
+
 
         public Type UsedType
         {
@@ -555,6 +585,17 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
+
+            try
+            {
+                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                if (defaultValue != null) this.defaultValue = ParseHelper.FromString<bool>(defaultValue);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+            }
+
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
@@ -642,7 +683,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             bool value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                field.SetValue(a, (bool)field.GetValue(a) && value);
@@ -666,7 +707,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(b.type))
                         {
                             bool value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.defaultValue;
+                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
                             if (field != null && b.datas.ContainsKey(field))
                             {
                                 field.SetValue(a, (bool)field.GetValue(a) || value);
@@ -695,7 +736,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] && b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] && b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] && b.DefaultValue);
                 }
             }
 
@@ -704,7 +745,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] && b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue && b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue && b.datas[field]);
                 }
             }
             return result;
@@ -727,7 +768,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
                     if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] || b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] || b.defaultValue);
+                    else result.datas.Add(field, a.datas[field] || b.DefaultValue);
                 }
             }
 
@@ -736,7 +777,7 @@ namespace RW_ModularizationWeapon
                 if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
                 {
                     if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] || b.datas[field]);
-                    else result.datas.Add(field, a.defaultValue || b.datas[field]);
+                    else result.datas.Add(field, a.DefaultValue || b.datas[field]);
                 }
             }
             return result;
