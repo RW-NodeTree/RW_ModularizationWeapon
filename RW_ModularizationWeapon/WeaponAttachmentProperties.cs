@@ -37,10 +37,11 @@ namespace RW_ModularizationWeapon
             filter = filter ?? new ThingFilter();
             filter.ResolveReferences();
 
-            void CheckAndSetList<T>(ref FieldReaderDgitList<T> list)
+            void CheckAndSetList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
                 list = list ?? new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
+                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
 
@@ -57,8 +58,8 @@ namespace RW_ModularizationWeapon
 
             #region Offseter
             #region Child
-            CheckAndSetList(ref verbPropertiesOffseterAffectHorizon);
-            CheckAndSetList(ref toolsOffseterAffectHorizon);
+            CheckAndSetList(ref verbPropertiesOffseterAffectHorizon, 1);
+            CheckAndSetList(ref toolsOffseterAffectHorizon, 1);
             #endregion
 
             #region OtherPart
@@ -72,8 +73,8 @@ namespace RW_ModularizationWeapon
 
             #region Offseter
             #region Child
-            CheckAndSetList(ref verbPropertiesMultiplierAffectHorizon);
-            CheckAndSetList(ref toolsMultiplierAffectHorizon);
+            CheckAndSetList(ref verbPropertiesMultiplierAffectHorizon, 1);
+            CheckAndSetList(ref toolsMultiplierAffectHorizon, 1);
             #endregion
 
             #region OtherPart

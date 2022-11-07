@@ -274,7 +274,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderDgit<T> child in b)
             {
-                if(result.Find(x => x.UsedType == child.UsedType) == null)
+                if(a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderDgit<T> value = new FieldReaderDgit<T>();
@@ -322,7 +322,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (result.Find(x => x.UsedType == child.UsedType) == null)
+                if (a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderDgit<T> value = new FieldReaderDgit<T>();
@@ -372,7 +372,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (result.Find(x => x.UsedType == child.UsedType) == null)
+                if (a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderDgit<T> value = new FieldReaderDgit<T>();
@@ -422,7 +422,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (result.Find(x => x.UsedType == child.UsedType) == null)
+                if (a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderDgit<T> value = new FieldReaderDgit<T>();
@@ -471,7 +471,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (result.Find(x => x.UsedType == child.UsedType) == null)
+                if (a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderDgit<T> value = new FieldReaderDgit<T>();
@@ -651,7 +651,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderBool<T> child in b)
             {
-                if (result.Find(x => x.UsedType == child.UsedType) == null)
+                if (a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderBool<T> value = new FieldReaderBool<T>();
@@ -698,7 +698,7 @@ namespace RW_ModularizationWeapon
 
             foreach (FieldReaderBool<T> child in b)
             {
-                if (result.Find(x => x.UsedType == child.UsedType) == null)
+                if (a.Find(x => x.UsedType == child.UsedType) == null)
                 {
                     int index = result.FindIndex(x => x.UsedType == child.UsedType);
                     FieldReaderBool<T> value = new FieldReaderBool<T>();

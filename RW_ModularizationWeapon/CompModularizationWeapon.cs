@@ -341,13 +341,23 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
 
-                        if (current != null) cache = cache * current.verbPropertiesOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id);
+                        if (current != null) cache *= 
+                                current.verbPropertiesOtherPartOffseterAffectHorizon
+                                .GetOrNewWhenNull(
+                                    id,
+                                    delegate()
+                                    {
+                                        FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
+                                        result.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                                        return result;
+                                    }
+                                );
 
                         results += comp.Props.verbPropertiesMultiplier * cache;
                     }
                 }
             }
-            results.ForEach(x => x.DefaultValue = 0);
+            results.DefaultValue = 0;
             return results;
         }
 
@@ -369,32 +379,62 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<Tool> cache = properties.toolsOffseterAffectHorizon;
 
-                        if (current != null) cache = cache * current.toolsOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id);
+                        if (current != null) cache *=
+                                current.toolsOtherPartOffseterAffectHorizon
+                                .GetOrNewWhenNull(
+                                    id,
+                                    delegate ()
+                                    {
+                                        FieldReaderDgitList<Tool> result = new FieldReaderDgitList<Tool>();
+                                        result.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                                        return result;
+                                    }
+                                );
 
                         results += comp.Props.toolsMultiplier * cache;
                     }
                 }
             }
-            results.ForEach(x => x.DefaultValue = 0);
+            results.DefaultValue = 0;
             return results;
         }
 
         public float GetStatOffset(StatDef statDef, Thing part)
         {
-            float result = Props.statOffset.GetStatOffsetFromList(statDef);
             NodeContainer container = ChildNodes;
+            float result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatOffsetFromList(statDef);
+            WeaponAttachmentProperties current = null;
+
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (thing != null)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && comp.ChildNodes.IsChild(part))
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
-                    {
-                        result += comp.GetStatOffset(statDef) * properties.statOffsetAffectHorizon.GetStatValueFromList(statDef, properties.statOffsetAffectHorizonDefaultValue);
-                    }
+                    current = Props.WeaponAttachmentPropertiesById(id);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                CompModularizationWeapon comp = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (comp != null && comp.Validity)
+                {
+                    result += comp.GetStatOffset(statDef, part)
+                        * (comp.ChildNodes.IsChild(part) ? 1 : (properties.statOffsetAffectHorizon.GetStatValueFromList(
+                                statDef,
+                                properties.statOffsetAffectHorizonDefaultValue
+                            )
+                            * (current?.statOtherPartOffseterAffectHorizon
+                            .GetOrNewWhenNull(id, () => new List<StatModifier>())
+                            .GetStatValueFromList(
+                                statDef,
+                                current.statOtherPartOffseterAffectHorizonDefaultValue
+                            ) ?? 1))
+                        );
                 }
             }
             return result;
@@ -420,14 +460,24 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
 
-                        if (current != null) cache = (cache - 1) * current.verbPropertiesOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id) + 1;
+                        if (current != null) cache *=
+                                current.verbPropertiesOtherPartMultiplierAffectHorizon
+                                .GetOrNewWhenNull(
+                                    id,
+                                    delegate ()
+                                    {
+                                        FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
+                                        result.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                                        return result;
+                                    }
+                                );
 
                         results *= (comp.Props.verbPropertiesMultiplier - 1) * cache + 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
                 }
             }
-            results.ForEach(x => x.DefaultValue = 1);
+            results.DefaultValue = 1;
             return results;
         }
 
@@ -449,32 +499,62 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
 
-                        if (current != null) cache = (cache - 1) * current.toolsOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id) + 1;
+                        if (current != null) cache *=
+                                current.toolsOtherPartMultiplierAffectHorizon
+                                .GetOrNewWhenNull(
+                                    id,
+                                    delegate ()
+                                    {
+                                        FieldReaderDgitList<Tool> result = new FieldReaderDgitList<Tool>();
+                                        result.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                                        return result;
+                                    }
+                                );
 
                         results *= (comp.Props.toolsMultiplier - 1) * cache + 1;
                     }
                 }
             }
-            results.ForEach(x => x.DefaultValue = 1);
+            results.DefaultValue = 1;
             return results;
         }
 
-        public float GetStatMultiplier(StatDef statDef)
+        public float GetStatMultiplier(StatDef statDef, Thing part)
         {
-            float result = Props.statMultiplier.GetStatFactorFromList(statDef);
             NodeContainer container = ChildNodes;
+            float result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
+            WeaponAttachmentProperties current = null;
+
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (thing != null)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && comp.ChildNodes.IsChild(part))
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
-                    {
-                        result *= 1f + (comp.GetStatMultiplier(statDef) - 1f) * properties.statMultiplierAffectHorizon.GetStatValueFromList(statDef,properties.statMultiplierAffectHorizonDefaultValue);
-                    }
+                    current = Props.WeaponAttachmentPropertiesById(id);
+                    break;
+                }
+            }
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                CompModularizationWeapon comp = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (comp != null && comp.Validity)
+                {
+                    result *= 1f + (comp.GetStatMultiplier(statDef, part) - 1f)
+                        * (comp.ChildNodes.IsChild(part) ? 1 : (properties.statMultiplierAffectHorizon
+                            .GetStatValueFromList(
+                                statDef,
+                                properties.statMultiplierAffectHorizonDefaultValue
+                            )
+                            * (current?.statOtherPartMultiplierAffectHorizon
+                            .GetOrNewWhenNull(id, () => new List<StatModifier>())
+                            .GetStatValueFromList(
+                                statDef,
+                                current.statOtherPartMultiplierAffectHorizonDefaultValue
+                            ) ?? 1))
+                        );
                 }
             }
             return result;
@@ -850,8 +930,8 @@ namespace RW_ModularizationWeapon
                 else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
                 {
                     StatDef statDef = StatWorker_stat(statWorker);
-                    result *= GetStatMultiplier(statDef) / Props.statMultiplier.GetStatFactorFromList(statDef);
-                    result += GetStatOffset(statDef) - Props.statOffset.GetStatOffsetFromList(statDef);
+                    result *= GetStatMultiplier(statDef, req.Thing);
+                    result += GetStatOffset(statDef, req.Thing);
                 }
             }
             else if (statWorker is StatWorker_MeleeAverageDPS ||
@@ -865,8 +945,8 @@ namespace RW_ModularizationWeapon
             else
             {
                 StatDef statDef = StatWorker_stat(statWorker);
-                result *= GetStatMultiplier(statDef) / Props.statMultiplier.GetStatFactorFromList(statDef);
-                result += GetStatOffset(statDef) - Props.statOffset.GetStatOffsetFromList(statDef);
+                result *= GetStatMultiplier(statDef, req.Thing);
+                result += GetStatOffset(statDef, req.Thing);
             }
             return result;
         }
@@ -1553,7 +1633,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{comp?.GetStatOffset(stat.stat) ?? stat.value}");
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{comp?.GetStatOffset(stat.stat, null) ?? stat.value}");
             }
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon,
@@ -1574,7 +1654,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{comp?.GetStatMultiplier(stat.stat) ?? stat.value}");
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{comp?.GetStatMultiplier(stat.stat, null) ?? stat.value}");
             }
             yield return new StatDrawEntry(
                 category: StatCategoryDefOf.Weapon, 
@@ -1619,7 +1699,8 @@ namespace RW_ModularizationWeapon
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
 
-                CompModularizationWeapon childComp = comp?.ChildNodes[properties.id];
+                Thing child = comp?.ChildNodes[properties.id];
+                CompModularizationWeapon childComp = child;
                 stringBuilder.Clear();
                 int Offseter = properties.statOffsetAffectHorizon.Count;
                 int Multiplier = properties.statMultiplierAffectHorizon.Count;
@@ -1635,7 +1716,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in properties.statOffsetAffectHorizon)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{stat.value * childComp.GetStatOffset(stat.stat)}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{stat.value * childComp.GetStatOffset(stat.stat, childComp)}");
                     }
 
 
@@ -1649,7 +1730,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value * (childComp.GetStatOffset(stat.stat) - 1) + 1}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value * (childComp.GetStatOffset(stat.stat, childComp) - 1) + 1}");
                     }
                 }
                 else
@@ -1683,7 +1764,7 @@ namespace RW_ModularizationWeapon
 
                 List<Dialog_InfoCard.Hyperlink> hyperlinks = new List<Dialog_InfoCard.Hyperlink>(properties.filter.AllowedDefCount);
                 hyperlinks.AddRange(from x in properties.filter.AllowedThingDefs select new Dialog_InfoCard.Hyperlink(x));
-                if (childComp != null) hyperlinks.Insert(0, new Dialog_InfoCard.Hyperlink(childComp));
+                if (child != null) hyperlinks.Insert(0, new Dialog_InfoCard.Hyperlink(child));
                 yield return new StatDrawEntry(
                     StatCategoryDefOf.Weapon,
                     "AttachmentPoint".Translate() + " : " + properties.Name,
