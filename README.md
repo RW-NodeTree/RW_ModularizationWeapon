@@ -26,7 +26,7 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 
 ``` xml
 <Reference Include="Assembly-CSharp">
-    <HintPath>XXX\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <HintPath>(Your RimWorld root)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
 </Reference>
 ```
 
@@ -43,7 +43,7 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 
 ``` xml
 <Reference Include="0Harmony">
-    <HintPath>XXX\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+    <HintPath>(Your RimWorld SteamLibrary WorkShop Root)\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
 </Reference>
 ```
 ---
