@@ -1702,10 +1702,13 @@ namespace RW_ModularizationWeapon
                 Thing child = comp?.ChildNodes[properties.id];
                 CompModularizationWeapon childComp = child;
                 stringBuilder.Clear();
-                int Offseter = properties.statOffsetAffectHorizon.Count;
-                int Multiplier = properties.statMultiplierAffectHorizon.Count;
+                int Offseter = 0;
+                int Multiplier = 0;
                 if (childComp != null)
                 {
+                    Offseter = childComp.Props.statOffset.Count;
+                    Multiplier = childComp.Props.statMultiplier.Count;
+
                     stringBuilder.AppendLine("Offseter".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseter".Translate() + " :");
                     Offseter += listAll(childComp.Props.verbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon, false, true);
@@ -1714,9 +1717,9 @@ namespace RW_ModularizationWeapon
                     Offseter += listAll(childComp.Props.toolsOffseter * properties.toolsOffseterAffectHorizon, false, true);
 
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
-                    foreach (StatModifier stat in properties.statOffsetAffectHorizon)
+                    foreach (StatModifier stat in childComp.Props.statOffset)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{stat.value * childComp.GetStatOffset(stat.stat, childComp)}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, childComp)}");
                     }
 
 
@@ -1728,13 +1731,16 @@ namespace RW_ModularizationWeapon
                     Multiplier += listAll((childComp.Props.toolsMultiplier - 1) * properties.toolsMultiplierAffectHorizon + 1, true, true);
 
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
-                    foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
+                    foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{stat.value * (childComp.GetStatOffset(stat.stat, childComp) - 1) + 1}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, childComp) - 1) + 1}");
                     }
                 }
                 else
                 {
+                    Offseter = properties.statOffsetAffectHorizon.Count;
+                    Multiplier = properties.statMultiplierAffectHorizon.Count;
+
                     stringBuilder.AppendLine("OffseterAffectHorizon".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseterAffectHorizon".Translate() + " :");
                     Offseter += listAll(properties.verbPropertiesOffseterAffectHorizon, false, true);
