@@ -107,6 +107,11 @@ namespace RW_ModularizationWeapon
                 Log.Error(ex.ToString());
             }
 
+            /**
+            <xx Class="c# type" Default="default_value">
+                <member_name_of_type>value</member_name_of_type>
+            </xx>
+            **/
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
@@ -596,6 +601,11 @@ namespace RW_ModularizationWeapon
                 Log.Error(ex.ToString());
             }
 
+            /**
+            <xx Class="c# type" Default="default_value">
+                <member_name_of_type>value</member_name_of_type>
+            </xx>
+            **/
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
@@ -852,6 +862,11 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
+            /**
+            <xx Class="c# type">
+                <member_name_of_type>value</member_name_of_type>
+            </xx>
+            **/
             try
             {
                 T data = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);

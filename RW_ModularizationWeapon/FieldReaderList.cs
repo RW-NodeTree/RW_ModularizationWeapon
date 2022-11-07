@@ -40,6 +40,14 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
+
+            /**
+            <xx Default="default_value">
+                <xx Class="c# type" Default="default_value">
+                    <member_name_of_type>value</member_name_of_type>
+                </xx>
+            </xx>
+            **/
             try
             {
                 AddRange((List<FieldReaderDgit<T>>)DirectXmlToObject.GetObjectFromXmlMethod(typeof(List<FieldReaderDgit<T>>))(xmlRoot, true));
@@ -517,6 +525,14 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
+
+            /**
+            <xx Default="default_value">
+                <xx Class="c# type" Default="default_value">
+                    <member_name_of_type>value</member_name_of_type>
+                </xx>
+            </xx>
+            **/
             try
             {
                 AddRange((List<FieldReaderBool<T>>)DirectXmlToObject.GetObjectFromXmlMethod(typeof(List<FieldReaderBool<T>>))(xmlRoot, true));
