@@ -1613,7 +1613,7 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < list.Count; i++)
                 {
                     if (snap) stringBuilder.Append("  ");
-                    stringBuilder.AppendLine($"  {i} :");
+                    stringBuilder.AppendLine($"  NO.{i+1} :");
                     foreach ((FieldInfo field, double value) in list[i])
                     {
                         if (snap) stringBuilder.Append("  ");

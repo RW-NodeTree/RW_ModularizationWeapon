@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RW_ModularizationWeapon.Tools
 {
-    public static class Tools
+    public static class ToolsFunction
     {
         public static TV GetOrNewWhenNull<TK,TV>(this Dictionary<TK,TV> dictonary,TK key, Func<TV> funcCreate)
         {
