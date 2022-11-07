@@ -8,7 +8,7 @@
 git clone https://github.com/RW-NodeTree/RW_NodeTree.git
 ```
 
-2 set environment variable `RW_HOME` to your RimWorld root. For example:
+2 set environment variable `RW_HOME` to your `RimWorld root`. For example:
 ``` bash
 export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 ```
