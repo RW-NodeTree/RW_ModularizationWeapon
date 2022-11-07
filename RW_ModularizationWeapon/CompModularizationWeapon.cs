@@ -323,44 +323,11 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        #region ClacChild
-        internal static List<FieldReaderDgit<T>> ClacFieldList<T>(
-            double defaultValue,
-            List<FieldReaderDgit<T>> listA,
-            List<FieldReaderDgit<T>> listB,
-            List<FieldReaderDgit<T>> results,
-            Func<FieldReaderDgit<T>, FieldReaderDgit<T>, FieldReaderDgit<T>> clac,
-            Func<FieldReaderDgit<T>, FieldReaderDgit<T>, FieldReaderDgit<T>> clacToResult
-            )
-        {
-            foreach (FieldReaderDgit<T> child in listA)
-            {
-                int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> value =
-                    listB.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    value.DefaultValue = defaultValue;
-                    listB.Add(value);
-                }
-                if (index < 0) results.Add(clac(child, value));
-                else results[index] = clacToResult(results[index],clac(child, value));
-            }
-            return results;
-        }
-        #endregion
-
-
         #region Offset
-        public List<FieldReaderDgit<VerbProperties>> VerbPropertiesOffseter(string childNodeIdForVerbProperties)
+        public FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter(string childNodeIdForVerbProperties)
         {
-            List<FieldReaderDgit<VerbProperties>> results = new List<FieldReaderDgit<VerbProperties>>();
+            FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
-            List<FieldReaderDgit<VerbProperties>> cache = new List<FieldReaderDgit<VerbProperties>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -372,38 +339,23 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+                        FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
 
-                        if (current != null) ClacFieldList(
-                            current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue,
-                            comp.Props.verbPropertiesOffseter,
-                            current.verbPropertiesOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id),
-                            cache,
-                            (x, y) => x * y,
-                            (x, y) => x + y
-                            );
-                        else cache.AddRange(comp.Props.verbPropertiesOffseter);
-                        ClacFieldList(
-                            properties.verbPropertiesOffseterAffectHorizonDefaultValue,
-                            cache,
-                            properties.verbPropertiesOffseterAffectHorizon,
-                            results,
-                            (x, y) => x * y,
-                            (x, y) => x + y
-                            );
+                        if (current != null) cache = cache * current.verbPropertiesOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id);
+
+                        results += comp.Props.verbPropertiesMultiplier * cache;
                     }
                 }
-                cache.Clear();
             }
             results.ForEach(x => x.DefaultValue = 0);
             return results;
         }
 
 
-        public List<FieldReaderDgit<Tool>> ToolsOffseter(string childNodeIdForTool)
+        public FieldReaderDgitList<Tool> ToolsOffseter(string childNodeIdForTool)
         {
-            List<FieldReaderDgit<Tool>> results = new List<FieldReaderDgit<Tool>>();
+            FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
-            List<FieldReaderDgit<Tool>> cache = new List<FieldReaderDgit<Tool>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -415,33 +367,19 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+                        FieldReaderDgitList<Tool> cache = properties.toolsOffseterAffectHorizon;
 
-                        if (current != null) ClacFieldList(
-                            current.toolsOtherPartOffseterAffectHorizonDefaultValue,
-                            comp.Props.toolsOffseter,
-                            current.toolsOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id),
-                            cache,
-                            (x, y) => x * y,
-                            (x, y) => x + y
-                            );
-                        else cache.AddRange(comp.Props.toolsOffseter);
-                        ClacFieldList(
-                            properties.toolsOffseterAffectHorizonDefaultValue,
-                            cache,
-                            properties.toolsOffseterAffectHorizon,
-                            results,
-                            (x, y) => x * y,
-                            (x, y) => x + y
-                            );
+                        if (current != null) cache = cache * current.toolsOtherPartOffseterAffectHorizon.GetOrNewWhenNull(id);
+
+                        results += comp.Props.toolsMultiplier * cache;
                     }
                 }
-                cache.Clear();
             }
             results.ForEach(x => x.DefaultValue = 0);
             return results;
         }
 
-        public float GetStatOffset(StatDef statDef)
+        public float GetStatOffset(StatDef statDef, Thing part)
         {
             float result = Props.statOffset.GetStatOffsetFromList(statDef);
             NodeContainer container = ChildNodes;
@@ -465,11 +403,10 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public List<FieldReaderDgit<VerbProperties>> VerbPropertiesMultiplier(string childNodeIdForVerbProperties)
+        public FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string childNodeIdForVerbProperties)
         {
-            List<FieldReaderDgit<VerbProperties>> results = new List<FieldReaderDgit<VerbProperties>>();
+            FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
-            List<FieldReaderDgit<VerbProperties>> cache = new List<FieldReaderDgit<VerbProperties>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -481,39 +418,24 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
+                        FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
 
-                        if (current != null) ClacFieldList(
-                            current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue,
-                            comp.Props.verbPropertiesMultiplier,
-                            current.verbPropertiesOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id),
-                            cache,
-                            (x, y) => (x - 1) * y + 1,
-                            (x, y) => x * y
-                            );
-                        else cache.AddRange(comp.Props.verbPropertiesMultiplier);
-                        ClacFieldList(
-                            properties.verbPropertiesMultiplierAffectHorizonDefaultValue,
-                            cache,
-                            properties.verbPropertiesMultiplierAffectHorizon,
-                            results,
-                            (x, y) => (x - 1) * y + 1,
-                            (x, y) => x * y
-                            );
+                        if (current != null) cache = (cache - 1) * current.verbPropertiesOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id) + 1;
+
+                        results *= (comp.Props.verbPropertiesMultiplier - 1) * cache + 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
                 }
-                cache.Clear();
             }
             results.ForEach(x => x.DefaultValue = 1);
             return results;
         }
 
 
-        public List<FieldReaderDgit<Tool>> ToolsMultiplier(string childNodeIdForTool)
+        public FieldReaderDgitList<Tool> ToolsMultiplier(string childNodeIdForTool)
         {
-            List<FieldReaderDgit<Tool>> results = new List<FieldReaderDgit<Tool>>();
+            FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
-            List<FieldReaderDgit<Tool>> cache = new List<FieldReaderDgit<Tool>>();
             NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
@@ -525,26 +447,13 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
-                        if (current != null) ClacFieldList(
-                            current.toolsOtherPartMultiplierAffectHorizonDefaultValue,
-                            comp.Props.toolsMultiplier,
-                            current.toolsOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id),
-                            cache,
-                            (x, y) => (x - 1) * y + 1,
-                            (x, y) => x * y
-                            );
-                        else cache.AddRange(comp.Props.toolsMultiplier);
-                        ClacFieldList(
-                            properties.toolsMultiplierAffectHorizonDefaultValue,
-                            cache,
-                            properties.toolsMultiplierAffectHorizon,
-                            results,
-                            (x, y) => (x - 1) * y + 1,
-                            (x, y) => x * y
-                            );
+                        FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
+
+                        if (current != null) cache = (cache - 1) * current.toolsOtherPartMultiplierAffectHorizon.GetOrNewWhenNull(id) + 1;
+
+                        results *= (comp.Props.toolsMultiplier - 1) * cache + 1;
                     }
                 }
-                cache.Clear();
             }
             results.ForEach(x => x.DefaultValue = 1);
             return results;
@@ -1576,9 +1485,9 @@ namespace RW_ModularizationWeapon
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
 
-            void CheckAndSetListDgit<T>(ref List<FieldReaderDgit<T>> list, float defaultValue)
+            void CheckAndSetListDgit<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
-                list = list ?? new List<FieldReaderDgit<T>>();
+                list = list ?? new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
                 list.ForEach(f => f.DefaultValue = defaultValue);
             }
@@ -1615,7 +1524,7 @@ namespace RW_ModularizationWeapon
             StringBuilder stringBuilder = new StringBuilder();
 
             int listAll<T>(
-                List<FieldReaderDgit<T>> list,
+                FieldReaderDgitList<T> list,
                 bool mul,
                 bool snap = false
                 )
@@ -1716,54 +1625,12 @@ namespace RW_ModularizationWeapon
                 int Multiplier = properties.statMultiplierAffectHorizon.Count;
                 if (childComp != null)
                 {
-                    int clacListWithChild<T>(
-                        double defaultValue,
-                        List<FieldReaderDgit<T>> listA,
-                        List<FieldReaderDgit<T>> listB,
-                        Func<FieldReaderDgit<T>, FieldReaderDgit<T>, FieldReaderDgit<T>> calcFunc
-                        )
-                    {
-                        int result = 0;
-                        for (int i = 0; i < listA.Count; i++)
-                        {
-                            var child = listA[i];
-                            var horizon =
-                                listB.Find(
-                                    x => x.UsedType == child.UsedType
-                                );
-                            if (horizon == null)
-                            {
-                                horizon = new FieldReaderDgit<T>();
-                                horizon.UsedType = child.UsedType;
-                                horizon.DefaultValue = defaultValue;
-                                listB.Add(horizon);
-                            }
-                            child = calcFunc(child, horizon);
-                            stringBuilder.AppendLine($"    {i} :");
-                            foreach ((FieldInfo field, double value) in child)
-                            {
-                                stringBuilder.AppendLine($"      {field.Name.Translate()} : +{value}");
-                            }
-                            result += child.Count;
-                        }
-                        return result;
-                    }
                     stringBuilder.AppendLine("Offseter".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseter".Translate() + " :");
-                    Offseter += clacListWithChild(
-                        properties.verbPropertiesOffseterAffectHorizonDefaultValue,
-                        verbPropertiesOffseter,
-                        properties.verbPropertiesOffseterAffectHorizon,
-                        (x, y) => x * y
-                        );
+                    Offseter += listAll(childComp.Props.verbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon, false, true);
 
                     stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
-                    Offseter += clacListWithChild(
-                        properties.toolsOffseterAffectHorizonDefaultValue,
-                        toolsOffseter,
-                        properties.toolsOffseterAffectHorizon,
-                        (x, y) => x * y
-                        );
+                    Offseter += listAll(childComp.Props.toolsOffseter * properties.toolsOffseterAffectHorizon, false, true);
 
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in properties.statOffsetAffectHorizon)
@@ -1774,20 +1641,11 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("Multiplier".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesMultiplier".Translate() + " :");
-                    Multiplier += clacListWithChild(
-                        properties.verbPropertiesMultiplierAffectHorizonDefaultValue,
-                        verbPropertiesMultiplier,
-                        properties.verbPropertiesMultiplierAffectHorizon,
-                        (x, y) => (x - 1) * y + 1
-                        );
+                    Multiplier += listAll((childComp.Props.verbPropertiesMultiplier - 1) * properties.verbPropertiesMultiplierAffectHorizon + 1, true, true);
 
                     stringBuilder.AppendLine("  " + "toolsMultiplier".Translate() + " :");
-                    Multiplier += clacListWithChild(
-                        properties.toolsMultiplierAffectHorizonDefaultValue,
-                        toolsMultiplier,
-                        properties.toolsMultiplierAffectHorizon,
-                        (x, y) => (x - 1) * y + 1
-                        );
+                    Multiplier += listAll((childComp.Props.toolsMultiplier - 1) * properties.toolsMultiplierAffectHorizon + 1, true, true);
+
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
                     {
@@ -1866,30 +1724,30 @@ namespace RW_ModularizationWeapon
 
 
         #region Offset
-        public List<FieldReaderDgit<VerbProperties>> verbPropertiesOffseter = new List<FieldReaderDgit<VerbProperties>>();
+        public FieldReaderDgitList<VerbProperties> verbPropertiesOffseter = new FieldReaderDgitList<VerbProperties>();
 
 
-        public List<FieldReaderDgit<Tool>> toolsOffseter = new List<FieldReaderDgit<Tool>>();
+        public FieldReaderDgitList<Tool> toolsOffseter = new FieldReaderDgitList<Tool>();
 
 
         public List<StatModifier> statOffset = new List<StatModifier>();
 
 
-        //public List<FieldReaderDgit<CompProperties>> ThingCompOffseter = new List<FieldReaderDgit<CompProperties>>();
+        //public FieldReaderDgitList<CompProperties>> ThingCompOffseter = new FieldReaderDgitList<CompProperties>>();
         #endregion
 
 
         #region Multiplier
-        public List<FieldReaderDgit<VerbProperties>> verbPropertiesMultiplier = new List<FieldReaderDgit<VerbProperties>>();
+        public FieldReaderDgitList<VerbProperties> verbPropertiesMultiplier = new FieldReaderDgitList<VerbProperties>();
 
 
-        public List<FieldReaderDgit<Tool>> toolsMultiplier = new List<FieldReaderDgit<Tool>>();
+        public FieldReaderDgitList<Tool> toolsMultiplier = new FieldReaderDgitList<Tool>();
 
 
         public List<StatModifier> statMultiplier = new List<StatModifier>();
 
 
-        //public List<FieldReaderDgit<CompProperties>> ThingCompMultiplier = new List<FieldReaderDgit<CompProperties>>();
+        //public FieldReaderDgitList<CompProperties>> ThingCompMultiplier = new FieldReaderDgitList<CompProperties>>();
         #endregion
 
 

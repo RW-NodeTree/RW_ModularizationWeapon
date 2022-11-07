@@ -37,35 +37,28 @@ namespace RW_ModularizationWeapon
             filter = filter ?? new ThingFilter();
             filter.ResolveReferences();
 
-            void CheckAndSetList<T>(ref List<FieldReaderDgit<T>> list,float defaultValue)
+            void CheckAndSetList<T>(ref FieldReaderDgitList<T> list)
             {
-                list = list ?? new List<FieldReaderDgit<T>>();
+                list = list ?? new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
-                list.ForEach(f =>
-                {
-                    if (!f.HasDefaultValue) f.DefaultValue = defaultValue;
-                });
             }
 
 
-            void CheckAndSetDictionary<T>(ref Dictionary<string, List<FieldReaderDgit<T>>> list, float defaultValue)
+            void CheckAndSetDictionary<T>(ref Dictionary<string, FieldReaderDgitList<T>> list, float defaultValue)
             {
-                list = list ?? new Dictionary<string, List<FieldReaderDgit<T>>>();
+                list = list ?? new Dictionary<string, FieldReaderDgitList<T>>();
                 list.RemoveAll(f => f.Key == null || f.Value == null);
-                foreach((string id, List<FieldReaderDgit<T>> innerList) in list)
+                foreach((string id, FieldReaderDgitList<T> innerList) in list)
                 {
                     innerList.RemoveAll(f => f == null);
-                    innerList.ForEach(f =>
-                    {
-                        if (!f.HasDefaultValue) f.DefaultValue = defaultValue;
-                    });
+                    if (!innerList.HasDefaultValue) innerList.DefaultValue = defaultValue;
                 }
             }
 
             #region Offseter
             #region Child
-            CheckAndSetList(ref verbPropertiesOffseterAffectHorizon, verbPropertiesOffseterAffectHorizonDefaultValue);
-            CheckAndSetList(ref toolsOffseterAffectHorizon, toolsOffseterAffectHorizonDefaultValue);
+            CheckAndSetList(ref verbPropertiesOffseterAffectHorizon);
+            CheckAndSetList(ref toolsOffseterAffectHorizon);
             #endregion
 
             #region OtherPart
@@ -79,8 +72,8 @@ namespace RW_ModularizationWeapon
 
             #region Offseter
             #region Child
-            CheckAndSetList(ref verbPropertiesMultiplierAffectHorizon, verbPropertiesMultiplierAffectHorizonDefaultValue);
-            CheckAndSetList(ref toolsMultiplierAffectHorizon, toolsMultiplierAffectHorizonDefaultValue);
+            CheckAndSetList(ref verbPropertiesMultiplierAffectHorizon);
+            CheckAndSetList(ref toolsMultiplierAffectHorizon);
             #endregion
 
             #region OtherPart
@@ -124,23 +117,19 @@ namespace RW_ModularizationWeapon
 
         #region Offset
         #region Child
-        public List<FieldReaderDgit<VerbProperties>> verbPropertiesOffseterAffectHorizon = new List<FieldReaderDgit<VerbProperties>>();
+        public FieldReaderDgitList<VerbProperties> verbPropertiesOffseterAffectHorizon = new FieldReaderDgitList<VerbProperties>();
 
-        public List<FieldReaderDgit<Tool>> toolsOffseterAffectHorizon = new List<FieldReaderDgit<Tool>>();
+        public FieldReaderDgitList<Tool> toolsOffseterAffectHorizon = new FieldReaderDgitList<Tool>();
 
         public List<StatModifier> statOffsetAffectHorizon = new List<StatModifier>();
-
-        public float verbPropertiesOffseterAffectHorizonDefaultValue = 1;
-
-        public float toolsOffseterAffectHorizonDefaultValue = 1;
 
         public float statOffsetAffectHorizonDefaultValue = 1;
         #endregion
 
         #region OtherPart
-        public Dictionary<string, List<FieldReaderDgit<VerbProperties>>> verbPropertiesOtherPartOffseterAffectHorizon = new Dictionary<string, List<FieldReaderDgit<VerbProperties>>>();
+        public Dictionary<string, FieldReaderDgitList<VerbProperties>> verbPropertiesOtherPartOffseterAffectHorizon = new Dictionary<string, FieldReaderDgitList<VerbProperties>>();
 
-        public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartOffseterAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
+        public Dictionary<string, FieldReaderDgitList<Tool>> toolsOtherPartOffseterAffectHorizon = new Dictionary<string, FieldReaderDgitList<Tool>>();
 
         public Dictionary<string, List<StatModifier>> statOtherPartOffseterAffectHorizon = new Dictionary<string, List<StatModifier>>();
 
@@ -155,23 +144,19 @@ namespace RW_ModularizationWeapon
 
         #region Multiplier
         #region Child
-        public List<FieldReaderDgit<VerbProperties>> verbPropertiesMultiplierAffectHorizon = new List<FieldReaderDgit<VerbProperties>>();
+        public FieldReaderDgitList<VerbProperties> verbPropertiesMultiplierAffectHorizon = new FieldReaderDgitList<VerbProperties>();
 
-        public List<FieldReaderDgit<Tool>> toolsMultiplierAffectHorizon = new List<FieldReaderDgit<Tool>>();
+        public FieldReaderDgitList<Tool> toolsMultiplierAffectHorizon = new FieldReaderDgitList<Tool>();
 
         public List<StatModifier> statMultiplierAffectHorizon = new List<StatModifier>();
-
-        public float verbPropertiesMultiplierAffectHorizonDefaultValue = 1;
-
-        public float toolsMultiplierAffectHorizonDefaultValue = 1;
 
         public float statMultiplierAffectHorizonDefaultValue = 1;
         #endregion
 
         #region OtherPart
-        public Dictionary<string, List<FieldReaderDgit<VerbProperties>>> verbPropertiesOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<VerbProperties>>>();
+        public Dictionary<string, FieldReaderDgitList<VerbProperties>> verbPropertiesOtherPartMultiplierAffectHorizon = new Dictionary<string, FieldReaderDgitList<VerbProperties>>();
 
-        public Dictionary<string, List<FieldReaderDgit<Tool>>> toolsOtherPartMultiplierAffectHorizon = new Dictionary<string, List<FieldReaderDgit<Tool>>>();
+        public Dictionary<string, FieldReaderDgitList<Tool>> toolsOtherPartMultiplierAffectHorizon = new Dictionary<string, FieldReaderDgitList<Tool>>();
 
         public Dictionary<string, List<StatModifier>> statOtherPartMultiplierAffectHorizon = new Dictionary<string, List<StatModifier>>();
 

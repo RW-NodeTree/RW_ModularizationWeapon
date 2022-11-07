@@ -40,7 +40,7 @@ namespace RW_ModularizationWeapon
             set => defaultValue = value;
         }
 
-        public bool HasDefaultValue => defaultValue != null;
+        public bool HasDefaultValue => defaultValue.HasValue;
 
 
         public Type UsedType
@@ -530,7 +530,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool HasDefaultValue => defaultValue != null;
+        public bool HasDefaultValue => defaultValue.HasValue;
 
 
         public Type UsedType
