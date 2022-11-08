@@ -1290,28 +1290,27 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (id.NullOrEmpty() && part == parent)
                 {
-                    List<RenderInfo> cacheInfo = renderInfos;
                     if (ParentProccesser != null)
                     {
-                        for(int j = 0; j < cacheInfo.Count; j++)
+                        Material material = graphic?.MatAt(rot, this.parent);
+                        for (int j = 0; j < renderInfos.Count; j++)
                         {
-                            RenderInfo info = cacheInfo[j];
-                            if(info.material == graphic?.MatAt(rot, this.parent))
+                            RenderInfo info = renderInfos[j];
+                            if(info.material == material)
                             {
                                 info.material = Props.PartTexMaterial ?? info.material;
-                                cacheInfo[j] = info;
+                                renderInfos[j] = info;
                             }
                         }
                     }
                 }
                 else if (!internal_NotDraw(part, properties))
                 {
-                    List<RenderInfo> cacheInfo = renderInfos;
                     if (properties != null)
                     {
-                        for (int j = 0; j < cacheInfo.Count; j++)
+                        for (int j = 0; j < renderInfos.Count; j++)
                         {
-                            RenderInfo info = cacheInfo[j];
+                            RenderInfo info = renderInfos[j];
                             Matrix4x4[] matrix = info.matrices;
                             for (int k = 0; k < matrix.Length; k++)
                             {
@@ -1327,9 +1326,13 @@ namespace RW_ModularizationWeapon
                                 //matrix[k] = properties.Transfrom * matrix[k];
                                 matrix[k] = properties.Transfrom;
                             }
-                            cacheInfo[j] = info;
+                            renderInfos[j] = info;
                         }
                     }
+                }
+                else
+                {
+                    renderInfos.Clear();
                 }
             }
             nodeRenderingInfos.SortBy(x =>
