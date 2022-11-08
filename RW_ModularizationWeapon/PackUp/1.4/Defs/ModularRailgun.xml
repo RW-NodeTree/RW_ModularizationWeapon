@@ -82,6 +82,7 @@
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<attachmentProperties>
 					<li>
 						<id>ModRailgun_Magazine</id>
@@ -123,10 +124,7 @@
 							<thingDefs>
 								<li>ModRailgun_Bayonet</li>
 								<li>ModRailgun_VertiGrip</li>
-								<li>ModRailgun_UBGL_HE</li>
-								<li>ModRailgun_UBGL_EMP</li>
-								<li>ModRailgun_UBGL_Inc</li>
-								<li>ModRailgun_UBGL_Smoke</li>
+								<li>ModRailgun_UBGL</li>
 							</thingDefs>
 						</filter>
 					</li>
@@ -200,19 +198,19 @@
 		</comps>
 	</ThingDef>
 
+	<!--Magazine-->
+
 	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_MagClip</defName>
 		<label>railgun clip magazine</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
 		<statBases>
 			<Mass>0.3</Mass>
 		</statBases>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_ClipMagazine</PartTexPath>
-				<statOffset>
-					<Mass>0.3</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
@@ -221,6 +219,7 @@
 		<defName>ModRailgun_MagDrum</defName>
 		<label>railgun drum magazine</label>
 		<description>Drun magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
 		<statBases>
 			<Mass>0.6</Mass>
 		</statBases>
@@ -239,26 +238,23 @@
 					<AccuracyLong>0.8</AccuracyLong>
 					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
 				</statMultiplier>
-				<statOffset>
-					<Mass>0.6</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
+
+	<!--sight-->
 
 	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_SightIron</defName>
 		<label>railgun iron sight</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
 		<statBases>
 			<Mass>0.1</Mass>
 		</statBases>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_IronSight</PartTexPath>
-				<statOffset>
-					<Mass>0.1</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
@@ -267,6 +263,7 @@
 		<defName>ModRailgun_SightHolo</defName>
 		<label>railgun holographic sight</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
 		<statBases>
 			<Mass>0.3</Mass>
 		</statBases>
@@ -284,9 +281,6 @@
 					<AccuracyShort>1.1</AccuracyShort>
 					<RangedWeapon_Cooldown>0.9</RangedWeapon_Cooldown>
 				</statMultiplier>
-				<statOffset>
-					<Mass>0.3</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
@@ -295,6 +289,7 @@
 		<defName>ModRailgun_SightScope</defName>
 		<label>railgun scope</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
 		<statBases>
 			<Mass>0.6</Mass>
 		</statBases>
@@ -319,17 +314,17 @@
 					<AccuracyLong>1.4</AccuracyLong>
 					<RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
 				</statMultiplier>
-				<statOffset>
-					<Mass>0.6</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
+
+	<!--grip-->
 
 	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_StandardGrip</defName>
 		<label>railgun standard grip</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Grip</uiIconPath>
 		<statBases>
 			<Mass>0.3</Mass>
 		</statBases>
@@ -344,6 +339,7 @@
 		<defName>ModRailgun_AdvGrip</defName>
 		<label>railgun ergonomic grip</label>
 		<description>Drun magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Grip</uiIconPath>
 		<statBases>
 			<Mass>0.6</Mass>
 		</statBases>
@@ -354,10 +350,13 @@
 		</comps>
 	</ThingDef>
 
+	<!--Muzzle device-->
+
 	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_Silencer</defName>
 		<label>railgun silencer</label>
 		<description>I know railgun can't be silenced, this is for demonstration.</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</uiIconPath>
 		<statBases>
 			<Mass>0.2</Mass>
 		</statBases>
@@ -366,62 +365,38 @@
 				<PartTexPath>ModularRailgun/ModRailgun_Silencer</PartTexPath>
 				<verbPropertiesObjectPatch>
 					<li>
-						<soundCast>Shot_Silenced</soundCast>
-						<soundCastTail>GunTail_Silenced</soundCastTail>
+						<soundCast>Shot_AssaultRifleSilenced</soundCast>
 					</li>
 				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
 
-
-    <SoundDef>
-    <defName>Shot_Silenced</defName>  
-    <context>MapOnly</context>  
-    <eventNames />  
-    <maxSimultaneous>2</maxSimultaneous>  
-    <subSounds>
-      <li>
-        <grains>
-          <li Class="AudioGrain_Clip">
-            <clipPath>Weapon/Shot_Muffler</clipPath>
-          </li>
-        </grains>      
-      </li>
-    </subSounds>
-  </SoundDef>
-
-
 	<SoundDef>
-		<defName>GunTail_Silenced</defName>
+		<defName>Shot_AssaultRifleSilenced</defName>
 		<context>MapOnly</context>
-		<eventNames />
-		<maxVoices>2</maxVoices>
 		<maxSimultaneous>1</maxSimultaneous>
 		<subSounds>
 			<li>
-				<onCamera>True</onCamera>
 				<grains>
-					<li Class="AudioGrain_Folder">
-						<clipFolderPath>Weapon/Gun_Muffler_Tail</clipFolderPath>
+					<li Class="AudioGrain_Clip">
+						<clipPath>Weapon/Shot_Muffler</clipPath>
 					</li>
 				</grains>
-				<volumeRange>
-					<min>18.23529</min>
-					<max>20.58824</max>
-				</volumeRange>
-				<pitchRange>
-					<min>0.9082352</min>
-					<max>1.091765</max>
-				</pitchRange>
+				<volumeRange>300</volumeRange>
+				<pitchRange>1</pitchRange>
+				<sustainLoop>False</sustainLoop>
 			</li>
 		</subSounds>
 	</SoundDef>
+
+	<!--Underbarrel-->
 
 	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_Bayonet</defName>
 		<label>railgun ECS bayonet</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
 		<statBases>
 			<Mass>0.2</Mass>
 		</statBases>
@@ -451,9 +426,6 @@
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<toolsAffectByOtherPart>true</toolsAffectByOtherPart>
 				<PartTexPath>ModularRailgun/ModRailgun_Bayonet</PartTexPath>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
@@ -462,6 +434,7 @@
 		<defName>ModRailgun_VertiGrip</defName>
 		<label>railgun vertical grip</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
 		<statBases>
 			<Mass>0.2</Mass>
 		</statBases>
@@ -473,9 +446,6 @@
 						<warmupTime>0.9</warmupTime>
 					</li>
 				</verbPropertiesMultiplier>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
 			</li>
 		</comps>
 	</ThingDef>
@@ -484,42 +454,7 @@
 		<defName>ModRailgun_UBGL</defName>
 		<label>railgun UBGL</label>
 		<description>Standard clip magazine</description>
-		<statBases>
-			<Mass>0.2</Mass>
-		</statBases>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
-				<attachmentProperties>
-					<li>
-						<id>ModRailgun_UBGL</id>
-						<name>UBGL</name>
-						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
-						<scale>(0,0,0)</scale>
-						<allowEmpty>true</allowEmpty>
-						<defultThing>ModRailgun_UBGL_HE</defultThing>
-						<filter>
-							<thingDefs>
-								<li>ModRailgun_UBGL_HE</li>
-								<li>ModRailgun_UBGL_EMP</li>
-								<li>ModRailgun_UBGL_Inc</li>
-								<li>ModRailgun_UBGL_Smoke</li>
-							</thingDefs>
-						</filter>
-					</li>
-				</attachmentProperties>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="RailgunPartBase">
-		<defName>ModRailgun_UBGL_HE</defName>
-		<label>high explosive grenade</label>
-		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
 		<statBases>
 			<Mass>0.2</Mass>
 		</statBases>
@@ -543,9 +478,23 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<attachmentProperties>
+					<li>
+						<id>ModRailgun_UBGL</id>
+						<name>UBGL</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
+						<scale>(0,0,0)</scale>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>ModRailgun_UBGL_EMP</li>
+								<li>ModRailgun_UBGL_Inc</li>
+								<li>ModRailgun_UBGL_Smoke</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
 			</li>
 		</comps>
 	</ThingDef>
@@ -573,32 +522,19 @@
 		<defName>ModRailgun_UBGL_EMP</defName>
 		<label>EMP grenade</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
 		<statBases>
 			<Mass>0.2</Mass>
 		</statBases>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
-				<warmupTime>3.5</warmupTime>
-				<range>23.9</range>
-				<forcedMissRadius>1.9</forcedMissRadius>
-				<burstShotCount>1</burstShotCount>
-				<soundCast>Shot_IncendiaryLauncher</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>14</muzzleFlashScale>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
@@ -607,32 +543,19 @@
 		<defName>ModRailgun_UBGL_Inc</defName>
 		<label>incendiary grenade</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
 		<statBases>
-			<Mass>0.2</Mass>
+			<Mass>0.1</Mass>
 		</statBases>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
-				<warmupTime>3.5</warmupTime>
-				<range>23.9</range>
-				<forcedMissRadius>1.9</forcedMissRadius>
-				<burstShotCount>1</burstShotCount>
-				<soundCast>Shot_IncendiaryLauncher</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>14</muzzleFlashScale>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
@@ -641,32 +564,19 @@
 		<defName>ModRailgun_UBGL_Smoke</defName>
 		<label>smoke grenade</label>
 		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
 		<statBases>
-			<Mass>0.2</Mass>
+			<Mass>0.1</Mass>
 		</statBases>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_RailgunUBGL</defaultProjectile>
-				<warmupTime>3.5</warmupTime>
-				<range>23.9</range>
-				<forcedMissRadius>1.9</forcedMissRadius>
-				<burstShotCount>1</burstShotCount>
-				<soundCast>Bullet_SmokeLauncher</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>14</muzzleFlashScale>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<statOffset>
-					<Mass>0.2</Mass>
-				</statOffset>
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_SmokeLauncher</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
