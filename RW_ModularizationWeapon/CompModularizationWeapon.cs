@@ -52,7 +52,7 @@ namespace RW_ModularizationWeapon
                     System.Random random = new System.Random();
                     foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                     {
-                        int i = random.Next(properties.filter.AllowedDefCount + 1);
+                        int i = random.Next(properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
                         ThingDef def = i < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[i] : null;
                         if (def != null)
                         {
@@ -416,7 +416,9 @@ namespace RW_ModularizationWeapon
         public float GetStatOffset(StatDef statDef, Thing part)
         {
             NodeContainer container = ChildNodes;
-            float result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatOffsetFromList(statDef);
+            float result = 0;
+            if (statOffsetCache.TryGetValue((statDef, part), out result)) return result;
+            result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatOffsetFromList(statDef);
             WeaponAttachmentProperties current = null;
 
             for (int i = 0; i < container.Count; i++)
@@ -452,6 +454,7 @@ namespace RW_ModularizationWeapon
                 }
             }
             //if (result != 0) Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}");
+            statOffsetCache.Add((statDef, part), result);
             return result;
         }
         #endregion
@@ -552,7 +555,9 @@ namespace RW_ModularizationWeapon
         public float GetStatMultiplier(StatDef statDef, Thing part)
         {
             NodeContainer container = ChildNodes;
-            float result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
+            float result = 1;
+            if (statMultiplierCache.TryGetValue((statDef, part), out result)) return result;
+            result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
             WeaponAttachmentProperties current = null;
 
             for (int i = 0; i < container.Count; i++)
@@ -588,6 +593,7 @@ namespace RW_ModularizationWeapon
                 }
             }
             //if(result != 1) Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result}");
+            statMultiplierCache.Add((statDef, part), result);
             return result;
         }
         #endregion
@@ -1144,8 +1150,10 @@ namespace RW_ModularizationWeapon
         
         public float DrawChildTreeView(
             Vector2 DrawPos,
+            float ScrollPos,
             float BlockHeight,
             float ContainerWidth,
+            float ContainerHeight,
             Action<string,Thing,CompModularizationWeapon> openEvent,
             Action<string,Thing,CompModularizationWeapon> closeEvent,
             Action<string,Thing,CompModularizationWeapon> iconEvent,
@@ -1163,46 +1171,59 @@ namespace RW_ModularizationWeapon
             {
                 if(id != null)
                 {
-                    if (Selected?.Contains((id,this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
-                    else if(GetChildTreeViewOpend(id)) Widgets.DrawHighlightSelected(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight));
-                    Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y,ContainerWidth,BlockHeight));//hover
+                    if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
+                    {
+                        if (Selected?.Contains((id, this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        else if (GetChildTreeViewOpend(id)) Widgets.DrawHighlightSelected(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));
+                        Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));//hover
+                    }
 
                     if(thing != null)
                     {
                         CompModularizationWeapon comp = thing;
-                        if(comp != null)
+                        if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                         {
-                            comp.NodeProccesser.ResetRenderedTexture();
-                            comp.targetModeParent = null;
-                        }
-                        Widgets.ThingIcon(new Rect(currentPos.x+1, currentPos.y+1,BlockHeight-1,BlockHeight-2),thing);
-                        if (comp != null)
-                        {
-                            comp.NodeProccesser.ResetRenderedTexture();
-                            comp.targetModeParent = NodeProccesser;
-                        }
-                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y+1,ContainerWidth-BlockHeight-1,BlockHeight-2),$"{properties.Name} : {thing.Label}");
+                            CompChildNodeProccesser comp_targetModeParent = comp?.targetModeParent;
+                            if (comp_targetModeParent != null)
+                            {
+                                comp.NodeProccesser.ResetRenderedTexture();
+                                comp.targetModeParent = null;
+                            }
+                            Widgets.ThingIcon(new Rect(currentPos.x + 1, currentPos.y + 1, BlockHeight - 1, BlockHeight - 2), thing);
+                            if (comp_targetModeParent != null)
+                            {
+                                comp.NodeProccesser.ResetRenderedTexture();
+                                comp.targetModeParent = comp_targetModeParent;
+                            }
+                            Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y + 1, ContainerWidth - BlockHeight - 1, BlockHeight - 2), $"{properties.Name} : {thing.Label}");
 
-                        if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
-                        {
-                            iconEvent?.Invoke(id, thing, this);
+                            if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
+                            {
+                                iconEvent?.Invoke(id, thing, this);
+                            }
                         }
                         if (comp != null)
                         {
                             bool opend = GetChildTreeViewOpend(id);
-                            if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+
+                            if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                             {
-                                opend = !opend;
-                                if (opend) openEvent?.Invoke(id, thing, this);
-                                else closeEvent?.Invoke(id, thing, this);
-                                SetChildTreeViewOpend(id, opend);
+                                if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                                {
+                                    opend = !opend;
+                                    if (opend) openEvent?.Invoke(id, thing, this);
+                                    else closeEvent?.Invoke(id, thing, this);
+                                    SetChildTreeViewOpend(id, opend);
+                                }
                             }
                             if (opend)
                             {
                                 currentPos.y += comp.DrawChildTreeView(
                                     currentPos + Vector2.one * BlockHeight,
+                                    ScrollPos,
                                     BlockHeight,
                                     ContainerWidth - BlockHeight,
+                                    ContainerHeight,
                                     openEvent,
                                     closeEvent,
                                     iconEvent,
@@ -1210,12 +1231,12 @@ namespace RW_ModularizationWeapon
                                 );
                             }
                         }
-                        else if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                        else if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight && Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
                         {
                             openEvent?.Invoke(id, thing, this);
                         }
                     }
-                    else
+                    else if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                     {
                         Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y,BlockHeight,BlockHeight), properties.UITexture,1);
                         Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y,ContainerWidth-BlockHeight,BlockHeight), properties.Name);
@@ -1442,6 +1463,14 @@ namespace RW_ModularizationWeapon
         }
 
 
+        protected override bool UpdateNode(CompChildNodeProccesser actionNode)
+        {
+            statOffsetCache.Clear();
+            statMultiplierCache.Clear();
+            return false;
+        }
+
+
         protected override HashSet<string> RegiestedNodeId(HashSet<string> regiestedNodeId)
         {
             foreach(WeaponAttachmentProperties properties in Props.attachmentProperties) regiestedNodeId.Add(properties.id);
@@ -1484,9 +1513,11 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
+        internal CompChildNodeProccesser targetModeParent;
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
+        private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
+        private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
-        private CompChildNodeProccesser targetModeParent;
         private bool showTargetPart = false;
         private bool usingTargetPart = false;
 
@@ -1749,7 +1780,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, childComp)}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, req.Thing)}");
                     }
 
 
@@ -1763,7 +1794,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, childComp) - 1f) + 1f}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, req.Thing) - 1f) + 1f}");
                     }
                 }
                 else
