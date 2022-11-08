@@ -1,7 +1,9 @@
 ﻿using RimWorld;
+using RW_NodeTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -202,8 +204,10 @@ namespace RW_ModularizationWeapon.UI
             );
             weapon?.DrawChildTreeView(
                 Vector2.zero,
+                ScrollViews[0].y,
                 48,
                 ScrollViewSize.x,
+                ScrollViewSize.y,
                 (string id,Thing part, CompModularizationWeapon Parent)=>
                 {
                     if (SelectedPartForChange == (id, Parent))
@@ -250,13 +254,25 @@ namespace RW_ModularizationWeapon.UI
                 {
                     (Thing selThing, ThingDef selDef) = selections[i];
 
+                    CompModularizationWeapon comp = selThing;
                     if (partForChange != null && idForChange != null)
                     {
                         if (partForChange.ChildNodes[idForChange] == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
+                            CompChildNodeProccesser comp_targetModeParent = comp?.targetModeParent;
+                            if (comp_targetModeParent != null)
+                            {
+                                comp.NodeProccesser.ResetRenderedTexture();
+                                comp.targetModeParent = null;
+                            }
                             Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selThing);
+                            if (comp_targetModeParent != null)
+                            {
+                                comp.NodeProccesser.ResetRenderedTexture();
+                                comp.targetModeParent = comp_targetModeParent;
+                            }
                             Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))
                             {
