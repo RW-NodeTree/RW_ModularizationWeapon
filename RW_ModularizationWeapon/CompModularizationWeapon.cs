@@ -1169,14 +1169,25 @@ namespace RW_ModularizationWeapon
 
                     if(thing != null)
                     {
+                        CompModularizationWeapon comp = thing;
+                        if(comp != null)
+                        {
+                            comp.NodeProccesser.ResetRenderedTexture();
+                            comp.targetModeParent = null;
+                        }
                         Widgets.ThingIcon(new Rect(currentPos.x+1, currentPos.y+1,BlockHeight-1,BlockHeight-2),thing);
+                        if (comp != null)
+                        {
+                            comp.NodeProccesser.ResetRenderedTexture();
+                            comp.targetModeParent = NodeProccesser;
+                        }
                         Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y+1,ContainerWidth-BlockHeight-1,BlockHeight-2),$"{properties.Name} : {thing.Label}");
 
                         if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
                         {
                             iconEvent?.Invoke(id, thing, this);
                         }
-                        if ((CompModularizationWeapon)thing != null)
+                        if (comp != null)
                         {
                             bool opend = GetChildTreeViewOpend(id);
                             if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
@@ -1188,7 +1199,7 @@ namespace RW_ModularizationWeapon
                             }
                             if (opend)
                             {
-                                currentPos.y += ((CompModularizationWeapon)thing).DrawChildTreeView(
+                                currentPos.y += comp.DrawChildTreeView(
                                     currentPos + Vector2.one * BlockHeight,
                                     BlockHeight,
                                     ContainerWidth - BlockHeight,
@@ -1457,7 +1468,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override CompChildNodeProccesser OverrideParentProccesser(CompChildNodeProccesser orginal) => UsingTargetPart ? (targetModeParent ?? orginal) : orginal;
+        protected override CompChildNodeProccesser OverrideParentProccesser(CompChildNodeProccesser orginal) => UsingTargetPart ? targetModeParent : orginal;
 
 
         #region operator

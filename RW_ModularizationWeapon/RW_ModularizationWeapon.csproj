@@ -254,17 +254,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PackUp\1.4\Defs\Jobs_Misc.xml" />
-    <Content Include="PackUp\1.4\Defs\ModularRailgun.xml" />
-    <Content Include="PackUp\1.4\Languages\ChineseSimplified\Keyed\String_Misc.xml" />
-    <Content Include="PackUp\1.4\Languages\ChineseSimplified\Keyed\String_Tool.xml" />
-    <Content Include="PackUp\1.4\Languages\ChineseSimplified\Keyed\String_VerbProperties.xml" />
-    <Content Include="PackUp\1.4\Languages\English\Keyed\String_Tool.xml" />
-    <Content Include="PackUp\1.4\Languages\English\Keyed\String_VerbProperties.xml" />
-    <Content Include="PackUp\1.4\Languages\English\Keyed\String_Misc.xml" />
+    <Content Include="PackUp\1.4\Languages\ChineseSimplified\Keyed\*" />
+    <Content Include="PackUp\1.4\Languages\English\Keyed\*" />
+    <Content Include="PackUp\1.4\Defs\*" />
     <Content Include="PackUp\About\*" />
-    <Content Include="PackUp\1.4\Defs\Test.xml" />
     <Content Include="PackUp\Patches\*" />
+    <Content Include="PackUp\Sounds\*" />
+    <Content Include="PackUp\Textures\*" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
