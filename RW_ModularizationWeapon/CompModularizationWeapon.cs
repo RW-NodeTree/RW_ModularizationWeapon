@@ -364,7 +364,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            Log.Message($"{this}.VerbPropertiesOffseter({childNodeIdForVerbProperties}) :\nresults : {results}");
+            //Log.Message($"{this}.VerbPropertiesOffseter({childNodeIdForVerbProperties}) :\nresults : {results}");
             return results;
         }
 
@@ -409,7 +409,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
+            //Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
@@ -498,7 +498,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            Log.Message($"{this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
+            //Log.Message($"{this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
 
             return results;
         }
@@ -544,7 +544,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
+            //Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
