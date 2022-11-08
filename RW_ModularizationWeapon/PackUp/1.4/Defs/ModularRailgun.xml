@@ -5,6 +5,8 @@
 		<defName>Gun_ModularRailgun</defName>
 		<label>modular railgun</label>
 		<description>A general-purpose gas-operated assault rifle for field or urban combat. It has good range, decent power, and good accuracy.</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>ModularRailgun/ModRailgun_Base</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -87,7 +89,6 @@
 						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_MagClip</defultThing>
-						<allowEmpty>false</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>ModRailgun_MagClip</li>
@@ -101,12 +102,37 @@
 						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_SightIron</defultThing>
-						<allowEmpty>false</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>ModRailgun_SightIron</li>
 								<li>ModRailgun_SightHolo</li>
 								<li>ModRailgun_SightScope</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>ModRailgun_UnderBarrel</id>
+						<name>under barrel</name>
+						<scale>(1.25,0,1.25)</scale>
+						<postion>(0.45,0,0)</postion>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>ModRailgun_Bayonet</li>
+								<li>ModRailgun_VertiGrip</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>ModRailgun_Grip</id>
+						<name>grip</name>
+						<scale>(1.25,0,1.25)</scale>
+						<postion>(0,0.1,0)</postion>
+						<defultThing>ModRailgun_StandardGrip</defultThing>
+						<filter>
+							<thingDefs>
+								<li>ModRailgun_StandardGrip</li>
+								<li>ModRailgun_AdvGrip</li>
 							</thingDefs>
 						</filter>
 					</li>
@@ -126,6 +152,8 @@
 		<defName>ModRailgun_MagClip</defName>
 		<label>railgun clip magazine</label>
 		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/Item/Health/HealthItem</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -165,7 +193,9 @@
 	<ThingDef ParentName="ResourceBase">
 		<defName>ModRailgun_MagDrum</defName>
 		<label>railgun drum magazine</label>
-		<description>Standard clip magazine</description>
+		<description>Drun magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/Item/Health/HealthItem</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -200,11 +230,6 @@
 						<burstShotCount>3</burstShotCount>
 					</li>
 				</verbPropertiesOffseter>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>1.2</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
 				<statMultiplier>
 					<AccuracyTouch>0.9</AccuracyTouch>
 					<AccuracyShort>0.9</AccuracyShort>
@@ -223,6 +248,8 @@
 		<defName>ModRailgun_SightIron</defName>
 		<label>railgun iron sight</label>
 		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/Item/Health/HealthItem</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -263,6 +290,8 @@
 		<defName>ModRailgun_SightHolo</defName>
 		<label>railgun holographic sight</label>
 		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/Item/Health/HealthItem</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -314,6 +343,8 @@
 		<defName>ModRailgun_SightScope</defName>
 		<label>railgun scope</label>
 		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/Item/Health/HealthItem</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -358,6 +389,195 @@
 				</statMultiplier>
 				<statOffset>
 					<Mass>0.6</Mass>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>ModRailgun_StandardGrip</defName>
+		<label>railgun standard grip</label>
+		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.3</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_StandardGrip</PartTexPath>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>ModRailgun_AdvGrip</defName>
+		<label>railgun ergonomic grip</label>
+		<description>Drun magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.6</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_AdvGrip</PartTexPath>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>ModRailgun_Bayonet</defName>
+		<label>railgun ECS bayonet</label>
+		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+			<shaderType>Transparent</shaderType>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.2</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+		<tools>
+			<li>
+				<label>e-bayonet blade</label>
+				<capacities>
+					<li>Cut</li>
+				</capacities>
+				<power>12</power>
+				<cooldownTime>1.5</cooldownTime>
+				<armorPenetration>0.4</armorPenetration>
+			</li>
+			<li>
+				<label>e-bayonet point</label>
+				<capacities>
+					<li>Stab</li>
+				</capacities>
+				<power>13</power>
+				<cooldownTime>2</cooldownTime>
+				<armorPenetration>0.5</armorPenetration>
+			</li>
+		</tools>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<toolsAffectByOtherPart>true</toolsAffectByOtherPart>
+				<PartTexPath>ModularRailgun/ModRailgun_Bayonet</PartTexPath>
+				<statOffset>
+					<Mass>0.2</Mass>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>ModRailgun_VertiGrip</defName>
+		<label>railgun vertical grip</label>
+		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.2</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_VerticalGrip</PartTexPath>
+				<verbPropertiesMultiplier>
+					<li>
+						<warmupTime>0.9</warmupTime>
+					</li>
+				</verbPropertiesMultiplier>
+				<statOffset>
+					<Mass>0.2</Mass>
 				</statOffset>
 			</li>
 		</comps>
