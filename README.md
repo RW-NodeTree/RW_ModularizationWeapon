@@ -13,7 +13,7 @@ git clone https://github.com/RW-NodeTree/RW_NodeTree.git
 export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 ```
 
-3 open RW_ModularizationWeapon/RW_ModularizationWeapon.csproj, and replace all path perfix with `"D:\SteamLibrary\steamapps\common\RimWorld"` to yuor `RimWorld root`. For example:
+3 Replace all path perfix with `"D:\SteamLibrary\steamapps\common\RimWorld"` to yuor `RimWorld root` in `RW_ModularizationWeapon/RW_ModularizationWeapon.csproj`. For example:
 
 **from**
 
@@ -30,7 +30,7 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 </Reference>
 ```
 
-4 open RW_ModularizationWeapon/RW_ModularizationWeapon.csproj, and replace all path perfix with `"D:\SteamLibrary\steamapps\workshop\content\294100"` to yuor `RimWorld SteamLibrary WorkShop Root`.
+4 Replace all path perfix with `"D:\SteamLibrary\steamapps\workshop\content\294100"` to yuor `RimWorld SteamLibrary WorkShop Root` in `RW_ModularizationWeapon/RW_ModularizationWeapon.csproj`.
 
 **from**
 
