@@ -503,6 +503,7 @@
 		<tools>
 			<li>
 				<label>e-bayonet blade</label>
+				<chanceFactor>100</chanceFactor>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -512,6 +513,7 @@
 			</li>
 			<li>
 				<label>e-bayonet point</label>
+				<chanceFactor>100</chanceFactor>
 				<capacities>
 					<li>Stab</li>
 				</capacities>

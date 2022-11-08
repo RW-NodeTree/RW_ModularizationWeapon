@@ -801,7 +801,7 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseVerbProperties(container[i], attachmentProperties))
                 {
-                    List<VerbProperties> verbProperties = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.VerbProperties;
+                    List<VerbProperties> verbProperties = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.VerbProperties ?? container[i]?.def.Verbs;
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
@@ -846,7 +846,7 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseTools(container[i], attachmentProperties))
                 {
-                    List<Tool> tools = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.Tools;
+                    List<Tool> tools = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.Tools ?? container[i]?.def.tools;
                     if (tools != null)
                     {
                         result.Capacity += tools.Count;
@@ -1170,7 +1170,7 @@ namespace RW_ModularizationWeapon
                     if(thing != null)
                     {
                         Widgets.ThingIcon(new Rect(currentPos.x+1, currentPos.y+1,BlockHeight-1,BlockHeight-2),thing);
-                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y+1,ContainerWidth-BlockHeight-1,BlockHeight-2),$"{id} : {thing.Label}");
+                        Widgets.Label(new Rect(currentPos.x+BlockHeight, currentPos.y+1,ContainerWidth-BlockHeight-1,BlockHeight-2),$"{properties.Name} : {thing.Label}");
 
                         if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
                         {
