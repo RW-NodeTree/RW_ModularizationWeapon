@@ -438,7 +438,7 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity)
                 {
                     result += comp.GetStatOffset(statDef, part)
-                        * (comp.ChildNodes.IsChild(part) ? 1 : (properties.statOffsetAffectHorizon.GetStatValueFromList(
+                        * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statOffsetAffectHorizon.GetStatValueFromList(
                                 statDef,
                                 properties.statOffsetAffectHorizonDefaultValue
                             )
@@ -447,10 +447,11 @@ namespace RW_ModularizationWeapon
                             .GetStatValueFromList(
                                 statDef,
                                 current.statOtherPartOffseterAffectHorizonDefaultValue
-                            ) ?? 1))
+                            ) ?? 1f))
                         );
                 }
             }
+            //if (result != 0) Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}");
             return result;
         }
         #endregion
@@ -492,7 +493,7 @@ namespace RW_ModularizationWeapon
                             else cache.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
                         }
 
-                        results *= (comp.Props.verbPropertiesMultiplier - 1) * cache + 1;
+                        results *= (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
                         results.DefaultValue = 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
@@ -539,8 +540,8 @@ namespace RW_ModularizationWeapon
                             else cache.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
                         }
 
-                        results *= (comp.Props.toolsMultiplier - 1) * cache + 1;
-                        results.DefaultValue = 1;
+                        results *= (comp.Props.toolsMultiplier - 1f) * cache + 1f;
+                        results.DefaultValue = 1f;
                     }
                 }
             }
@@ -572,7 +573,7 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity)
                 {
                     result *= 1f + (comp.GetStatMultiplier(statDef, part) - 1f)
-                        * (comp.ChildNodes.IsChild(part) ? 1 : (properties.statMultiplierAffectHorizon
+                        * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statMultiplierAffectHorizon
                             .GetStatValueFromList(
                                 statDef,
                                 properties.statMultiplierAffectHorizonDefaultValue
@@ -582,10 +583,11 @@ namespace RW_ModularizationWeapon
                             .GetStatValueFromList(
                                 statDef,
                                 current.statOtherPartMultiplierAffectHorizonDefaultValue
-                            ) ?? 1))
+                            ) ?? 1f))
                         );
                 }
             }
+            //if(result != 1) Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result}");
             return result;
         }
         #endregion
@@ -1750,7 +1752,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, childComp) - 1) + 1}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, childComp) - 1f) + 1f}");
                     }
                 }
                 else
