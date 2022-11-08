@@ -123,7 +123,23 @@
 							<thingDefs>
 								<li>ModRailgun_Bayonet</li>
 								<li>ModRailgun_VertiGrip</li>
-								<li>ModRailgun_UBGL</li>
+								<li>ModRailgun_UBGL_HE</li>
+								<li>ModRailgun_UBGL_EMP</li>
+								<li>ModRailgun_UBGL_Inc</li>
+								<li>ModRailgun_UBGL_Smoke</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>ModRailgun_Muzzle</id>
+						<name>muzzle</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</UITexPath>
+						<scale>(1.25,0,1.25)</scale>
+						<postion>(0.2,0,0)</postion>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>ModRailgun_Silencer</li>
 							</thingDefs>
 						</filter>
 					</li>
@@ -153,12 +169,7 @@
 		<parent>Manufactured</parent>
 	</ThingCategoryDef>
 
-	<ThingDef ParentName="ResourceBase">
-		<defName>ModRailgun_MagClip</defName>
-		<label>railgun clip magazine</label>
-		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
+	<ThingDef Name="RailgunPartBase" ParentName="ResourceBase"  Abstract="True">
 		<graphicData>
 			<texPath>Things/Item/Health/HealthItem</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -172,13 +183,13 @@
 		<statBases>
 			<MaxHitPoints>70</MaxHitPoints>
 			<MarketValue>32</MarketValue>
-			<Mass>0.3</Mass>
+			<Mass>0.2</Mass>
 			<Flammability>0.6</Flammability>
 			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
 		<intricate>true</intricate>
 		<thingCategories>
-			<li>Manufactured</li>
+			<li>ThingCategory_RaingunParts</li>
 		</thingCategories>
 		<comps>
 			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
@@ -186,6 +197,17 @@
 				<TextureFilterMode>Bilinear</TextureFilterMode>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_MagClip</defName>
+		<label>railgun clip magazine</label>
+		<description>Standard clip magazine</description>
+		<statBases>
+			<Mass>0.3</Mass>
+		</statBases>
+		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_ClipMagazine</PartTexPath>
 				<statOffset>
@@ -195,39 +217,14 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_MagDrum</defName>
 		<label>railgun drum magazine</label>
 		<description>Drun magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.6</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_DrumMagazine</PartTexPath>
 				<verbPropertiesOffseter>
@@ -249,39 +246,14 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_SightIron</defName>
 		<label>railgun iron sight</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.1</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_IronSight</PartTexPath>
 				<statOffset>
@@ -291,39 +263,14 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_SightHolo</defName>
 		<label>railgun holographic sight</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.3</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_HoloSight</PartTexPath>
 				<verbPropertiesOffseter>
@@ -344,33 +291,13 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_SightScope</defName>
 		<label>railgun scope</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.6</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
 			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
 				<TextureSizeFactor>256</TextureSizeFactor>
@@ -399,112 +326,78 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_StandardGrip</defName>
 		<label>railgun standard grip</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.3</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_StandardGrip</PartTexPath>
 			</li>
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_AdvGrip</defName>
 		<label>railgun ergonomic grip</label>
 		<description>Drun magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.6</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_AdvGrip</PartTexPath>
 			</li>
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_Silencer</defName>
+		<label>railgun silencer</label>
+		<description>I know railgun can't be silenced, this is for demonstration.</description>
+		<statBases>
+			<Mass>0.2</Mass>
+		</statBases>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_Silencer</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<soundCast>Shot_AssaultRifleSilenced</soundCast>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<SoundDef>
+		<defName>Shot_AssaultRifleSilenced</defName>
+		<context>MapOnly</context>
+		<maxSimultaneous>1</maxSimultaneous>
+		<subSounds>
+			<li>
+				<grains>
+					<li Class="AudioGrain_Clip">
+						<clipPath>Weapon/Shot_Muffler</clipPath>
+					</li>
+				</grains>
+				<volumeRange>200~201</volumeRange>
+				<pitchRange>1.091765~1</pitchRange>
+				<sustainLoop>False</sustainLoop>
+			</li>
+		</subSounds>
+	</SoundDef>
+
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_Bayonet</defName>
 		<label>railgun ECS bayonet</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-			<shaderType>Transparent</shaderType>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.2</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<tools>
 			<li>
 				<label>e-bayonet blade</label>
@@ -528,11 +421,6 @@
 			</li>
 		</tools>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<toolsAffectByOtherPart>true</toolsAffectByOtherPart>
 				<PartTexPath>ModularRailgun/ModRailgun_Bayonet</PartTexPath>
@@ -543,39 +431,14 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_VertiGrip</defName>
 		<label>railgun vertical grip</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.2</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_VerticalGrip</PartTexPath>
 				<verbPropertiesMultiplier>
@@ -590,60 +453,190 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="ResourceBase">
+	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_UBGL</defName>
 		<label>railgun UBGL</label>
 		<description>Standard clip magazine</description>
-		<drawerType>RealtimeOnly</drawerType>
-		<tickerType>Normal</tickerType>
-		<graphicData>
-			<texPath>Things/Item/Health/HealthItem</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>0.80</drawSize>
-			<color>(189,169,118)</color>
-		</graphicData>
-		<soundInteract>Metal_Drop</soundInteract>
-		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
-		<healthAffectsPrice>false</healthAffectsPrice>
 		<statBases>
-			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
 			<Mass>0.2</Mass>
-			<Flammability>0.6</Flammability>
-			<DeteriorationRate>2.0</DeteriorationRate>
 		</statBases>
-		<intricate>true</intricate>
-		<thingCategories>
-			<li>Manufactured</li>
-		</thingCategories>
-		<verbs>
-			<li>
-				<label>throw frag grenade</label>
-				<verbClass>Verb_LaunchProjectile</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<range>12.9</range>
-				<forcedMissRadius>1.9</forcedMissRadius>
-				<warmupTime>1.5</warmupTime>
-				<noiseRadius>4</noiseRadius>
-				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
-				<soundCast>ThrowGrenade</soundCast>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-				<defaultProjectile>Proj_GrenadeFrag</defaultProjectile>
-				<rangedFireRulepack>Combat_RangedFire_Thrown</rangedFireRulepack>
-			</li>
-		</verbs>
 		<comps>
-			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
-				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ForceNodeIdControl>true</ForceNodeIdControl>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
 				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
+				<statOffset>
+					<Mass>0.2</Mass>
+				</statOffset>
+				<attachmentProperties>
+					<li>
+						<id>ModRailgun_UBGL</id>
+						<name>UBGL</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
+						<scale>(0,0,0)</scale>
+						<allowEmpty>true</allowEmpty>
+						<defultThing>ModRailgun_UBGL_HE</defultThing>
+						<filter>
+							<thingDefs>
+								<li>ModRailgun_UBGL_HE</li>
+								<li>ModRailgun_UBGL_EMP</li>
+								<li>ModRailgun_UBGL_Inc</li>
+								<li>ModRailgun_UBGL_Smoke</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_UBGL_HE</defName>
+		<label>high explosive grenade</label>
+		<description>Standard clip magazine</description>
+		<statBases>
+			<Mass>0.2</Mass>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_RailgunUBGL</defaultProjectile>
+				<warmupTime>3.5</warmupTime>
+				<range>23.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Shot_IncendiaryLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
+				<statOffset>
+					<Mass>0.2</Mass>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Bullet_RailgunUBGL</defName>
+		<label>explosive bolt</label>
+		<graphicData>
+			<texPath>Things/Projectile/LauncherShot</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<color>(254,189,58)</color>
+		</graphicData>
+		<thingClass>Projectile_Explosive</thingClass>
+		<projectile>
+			<speed>40</speed>
+			<explosionRadius>1.9</explosionRadius >
+			<damageDef>Bomb</damageDef>
+			<arcHeightFactor>0.2</arcHeightFactor>
+			<shadowSize>0.6</shadowSize>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_UBGL_EMP</defName>
+		<label>EMP grenade</label>
+		<description>Standard clip magazine</description>
+		<statBases>
+			<Mass>0.2</Mass>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
+				<warmupTime>3.5</warmupTime>
+				<range>23.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Shot_IncendiaryLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
+				<statOffset>
+					<Mass>0.2</Mass>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_UBGL_Inc</defName>
+		<label>incendiary grenade</label>
+		<description>Standard clip magazine</description>
+		<statBases>
+			<Mass>0.2</Mass>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
+				<warmupTime>3.5</warmupTime>
+				<range>23.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Shot_IncendiaryLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
+				<statOffset>
+					<Mass>0.2</Mass>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_UBGL_Smoke</defName>
+		<label>smoke grenade</label>
+		<description>Standard clip magazine</description>
+		<statBases>
+			<Mass>0.2</Mass>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_RailgunUBGL</defaultProjectile>
+				<warmupTime>3.5</warmupTime>
+				<range>23.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Bullet_SmokeLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
 				<statOffset>
 					<Mass>0.2</Mass>
 				</statOffset>
