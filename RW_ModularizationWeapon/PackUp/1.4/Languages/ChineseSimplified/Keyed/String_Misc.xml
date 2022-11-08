@@ -26,4 +26,5 @@
 	<statMultiplierAffectHorizon>状态值乘数影响水平</statMultiplierAffectHorizon>
 	<AttachmentPoint>部件附着点</AttachmentPoint>
 	<setEmpty>设为空</setEmpty>
+	<allowCreateOnCraftingPort>允许在合成点生成</allowCreateOnCraftingPort>
 </LanguageData>

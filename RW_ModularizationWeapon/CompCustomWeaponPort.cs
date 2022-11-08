@@ -109,6 +109,20 @@ namespace RW_ModularizationWeapon
             filter.ResolveReferences();
         }
 
+
+        public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
+        {
+            yield return new StatDrawEntry(
+                StatCategoryDefOf.Basics,
+                "CustomWeaponPort".Translate(),
+                filter.AllowedDefCount.ToString() + "Allowd".Translate(),
+                "CustomWeaponPortDesc".Translate(),
+                100, null,
+                from x in filter.AllowedThingDefs select new Dialog_InfoCard.Hyperlink(x)
+                );
+        }
+
+
         public ThingFilter filter = new ThingFilter();
     }
 }

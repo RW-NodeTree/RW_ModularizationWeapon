@@ -119,7 +119,8 @@ namespace RW_ModularizationWeapon.UI
                     from x
                     in creaftingTable.Props.AllowsMakedDefs
                     where
-                        x?.GetCompProperties<CompProperties_ModularizationWeapon>() != null
+                        x?.GetCompProperties<CompProperties_ModularizationWeapon>() != null &&
+                        x.GetCompProperties<CompProperties_ModularizationWeapon>().allowCreateOnCraftingPort
                     select (default(Thing), x)
                 );
             }

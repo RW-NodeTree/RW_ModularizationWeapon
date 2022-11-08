@@ -46,6 +46,8 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
     <HintPath>(Your RimWorld SteamLibrary WorkShop Root)\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
 </Reference>
 ```
+5 Now you can compile. And mod will auto copy to your `RimWorld Mod Directory`
+
 ---
 ## Content :
 > - [Create Weapon](Docs/Create_Weapon.md)
@@ -54,3 +56,6 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 
 ## Base Usage
 
+This mod allow create weapon with traditional method and modify with `Machining table` or other `Modify Port` set in the mod. And also, some port probably will not allow to modify some weapon, that depand with moder set.
+
+To modify weapon, select a colonist first, then right click `Modify Port` select `Start Modify Weapon`.

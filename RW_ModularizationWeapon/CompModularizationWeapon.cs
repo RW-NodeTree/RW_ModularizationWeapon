@@ -615,37 +615,80 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public List<FieldReaderBool<VerbProperties>> VerbPropertiesBoolAndPatch(string childNodeIdForVerbProperties)
+        public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string childNodeIdForVerbProperties)
         {
             NodeContainer container = ChildNodes;
-            List<FieldReaderBool<VerbProperties>> results = new List<FieldReaderBool<VerbProperties>>();
+            FieldReaderBoolList<VerbProperties> results = new FieldReaderBoolList<VerbProperties>();
+            results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
                 Thing thing = container[i];
                 if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    CompModularizationWeapon comp = thing;
                     if (comp != null && comp.Validity)
                     {
-                        foreach (FieldReaderBool<VerbProperties> child in comp.Props.verbPropertiesBoolAndPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] &= child;
-                        }
+                        results &= comp.Props.verbPropertiesBoolAndPatch;
+                        results.DefaultValue = true;
                     }
                 }
             }
-            results.ForEach(x => x.DefaultValue = true);
             return results;
         }
 
 
-        public List<FieldReaderBool<Tool>> ToolsBoolAndPatch(string childNodeIdForTool)
+        public FieldReaderBoolList<Tool> ToolsBoolAndPatch(string childNodeIdForTool)
         {
             NodeContainer container = ChildNodes;
-            List<FieldReaderBool<Tool>> results = new List<FieldReaderBool<Tool>>();
+            FieldReaderBoolList<Tool> results = new FieldReaderBoolList<Tool>();
+            results.DefaultValue = true;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForTool)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        results &= comp.Props.toolsBoolAndPatch;
+                        results.DefaultValue = true;
+                    }
+                }
+            }
+            return results;
+        }
+
+
+        public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolOrPatch(string childNodeIdForVerbProperties)
+        {
+            NodeContainer container = ChildNodes;
+            FieldReaderBoolList<VerbProperties> results = new FieldReaderBoolList<VerbProperties>();
+            results.DefaultValue = false;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                if (thing != null && id != childNodeIdForVerbProperties)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        results |= comp.Props.verbPropertiesBoolOrPatch;
+                        results.DefaultValue = false;
+                    }
+                }
+            }
+            return results;
+        }
+
+
+        public FieldReaderBoolList<Tool> ToolsBoolOrPatch(string childNodeIdForTool)
+        {
+            NodeContainer container = ChildNodes;
+            FieldReaderBoolList<Tool> results = new FieldReaderBoolList<Tool>();
+            results.DefaultValue = false;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -655,70 +698,11 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
                     if (comp != null && comp.Validity)
                     {
-                        foreach (FieldReaderBool<Tool> child in comp.Props.toolsBoolAndPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] &= child;
-                        }
+                        results |= comp.Props.toolsBoolOrPatch;
+                        results.DefaultValue = false;
                     }
                 }
             }
-            results.ForEach(x => x.DefaultValue = true);
-            return results;
-        }
-
-
-        public List<FieldReaderBool<VerbProperties>> VerbPropertiesBoolOrPatch(string childNodeIdForVerbProperties)
-        {
-            NodeContainer container = ChildNodes;
-            List<FieldReaderBool<VerbProperties>> results = new List<FieldReaderBool<VerbProperties>>();
-            for (int i = 0; i < container.Count; i++)
-            {
-                string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForVerbProperties)
-                {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
-                    {
-                        foreach (FieldReaderBool<VerbProperties> child in comp.Props.verbPropertiesBoolOrPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] |= child;
-                        }
-                    }
-                }
-            }
-            results.ForEach(x => x.DefaultValue = false);
-            return results;
-        }
-
-
-        public List<FieldReaderBool<Tool>> ToolsBoolOrPatch(string childNodeIdForTool)
-        {
-            NodeContainer container = ChildNodes;
-            List<FieldReaderBool<Tool>> results = new List<FieldReaderBool<Tool>>();
-            for (int i = 0; i < container.Count; i++)
-            {
-                string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForTool)
-                {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
-                    {
-                        foreach (FieldReaderBool<Tool> child in comp.Props.toolsBoolOrPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] |= child;
-                        }
-                    }
-                }
-            }
-            results.ForEach(x => x.DefaultValue = false);
             return results;
         }
         #endregion
@@ -732,13 +716,10 @@ namespace RW_ModularizationWeapon
             VerbPropertiesOffseter(childNodeIdForVerbProperties).ForEach(x => properties += x);
             if (affectDef)
             {
-                List<FieldReaderBool<VerbProperties>> conAnd = VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
-                List<FieldReaderBool<VerbProperties>> conOr = VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
-                for(int i = 0; i < Math.Max(conAnd.Count, conOr.Count); i++)
-                {
-                    if (i < conAnd.Count) properties &= conAnd[i];
-                    if (i < conOr.Count) properties |= conOr[i];
-                }
+                FieldReaderBoolList<VerbProperties> conAnd = VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
+                FieldReaderBoolList<VerbProperties> conOr = VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
+                properties &= conAnd;
+                properties |= conOr;
                 VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
                     .ForEach(x =>
                     {
@@ -757,13 +738,10 @@ namespace RW_ModularizationWeapon
             ToolsOffseter(childNodeIdForTool).ForEach(x => tool += x);
             if (affectDef)
             {
-                List<FieldReaderBool<Tool>> conAnd = ToolsBoolAndPatch(childNodeIdForTool);
-                List<FieldReaderBool<Tool>> conOr = ToolsBoolOrPatch(childNodeIdForTool);
-                for (int i = 0; i < Math.Max(conAnd.Count, conOr.Count); i++)
-                {
-                    if (i < conAnd.Count) tool &= conAnd[i];
-                    if (i < conOr.Count) tool |= conOr[i];
-                }
+                FieldReaderBoolList<Tool> conAnd = ToolsBoolAndPatch(childNodeIdForTool);
+                FieldReaderBoolList<Tool> conOr = ToolsBoolOrPatch(childNodeIdForTool);
+                tool &= conAnd;
+                tool |= conOr;
                 ToolsObjectPatch(childNodeIdForTool)
                     .ForEach(x =>
                     {
@@ -1569,14 +1547,14 @@ namespace RW_ModularizationWeapon
             {
                 list = list ?? new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
-                list.ForEach(f => f.DefaultValue = defaultValue);
+                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
-            void CheckAndSetListBool<T>(ref List<FieldReaderBool<T>> list, bool defaultValue)
+            void CheckAndSetListBool<T>(ref FieldReaderBoolList<T> list, bool defaultValue)
             {
-                list = list ?? new List<FieldReaderBool<T>>();
+                list = list ?? new FieldReaderBoolList<T>();
                 list.RemoveAll(f => f == null);
-                list.ForEach(f => f.DefaultValue = defaultValue);
+                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
             CheckAndSetListDgit(ref verbPropertiesOffseter, 0);
@@ -1657,7 +1635,7 @@ namespace RW_ModularizationWeapon
                 stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{comp?.GetStatMultiplier(stat.stat, null) ?? stat.value}");
             }
             yield return new StatDrawEntry(
-                category: StatCategoryDefOf.Weapon, 
+                StatCategoryDefOf.Weapon, 
                 "Multiplier".Translate(),
                 count + " " + "Multiplier".Translate(), 
                 stringBuilder.ToString(), 
@@ -1676,6 +1654,7 @@ namespace RW_ModularizationWeapon
             //UnityEngine.GUIUtility.systemCopyBuffer = "<color=" + (unchangeable ? "green" : "red") + ">" + "unchangeable".Translate() + " : " + (unchangeable ? "Yes".Translate() : "No".Translate()) + "</color>";
             //stringBuilder.AppendLine("<color=" + (unchangeable ? "green" : "red") + ">" + "unchangeable" + " : " + (unchangeable ? "Yes" : "No") + "</color>");
             stringBuilder.AppendLine(CheckAndMark(unchangeable, "unchangeable".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(allowCreateOnCraftingPort, "allowCreateOnCraftingPort".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseTools, "notAllowParentUseTools".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseVerbProperties, "notAllowParentUseVerbProperties".Translate()));
             stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByOtherPart, "verbPropertiesAffectByOtherPart".Translate()));
@@ -1794,6 +1773,9 @@ namespace RW_ModularizationWeapon
         public bool notDrawInParent = false;
 
 
+        public bool allowCreateOnCraftingPort = false;
+
+
         public bool setRandomPartWhenCreate = false;
 
 
@@ -1845,16 +1827,16 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderInst<Tool>> toolsObjectPatch = new List<FieldReaderInst<Tool>>();
 
 
-        public List<FieldReaderBool<VerbProperties>> verbPropertiesBoolAndPatch = new List<FieldReaderBool<VerbProperties>>();
+        public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatch = new FieldReaderBoolList<VerbProperties>();
 
 
-        public List<FieldReaderBool<Tool>> toolsBoolAndPatch = new List<FieldReaderBool<Tool>>();
+        public FieldReaderBoolList<Tool> toolsBoolAndPatch = new FieldReaderBoolList<Tool>();
 
 
-        public List<FieldReaderBool<VerbProperties>> verbPropertiesBoolOrPatch = new List<FieldReaderBool<VerbProperties>>();
+        public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatch = new FieldReaderBoolList<VerbProperties>();
 
 
-        public List<FieldReaderBool<Tool>> toolsBoolOrPatch = new List<FieldReaderBool<Tool>>();
+        public FieldReaderBoolList<Tool> toolsBoolOrPatch = new FieldReaderBoolList<Tool>();
         #endregion
 
 
