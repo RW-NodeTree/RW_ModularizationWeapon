@@ -86,6 +86,7 @@
 					<li>
 						<id>ModRailgun_Magazine</id>
 						<name>magazine</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_MagClip</defultThing>
@@ -99,6 +100,7 @@
 					<li>
 						<id>ModRailgun_Sight</id>
 						<name>sight</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</UITexPath>
 						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_SightIron</defultThing>
@@ -113,6 +115,7 @@
 					<li>
 						<id>ModRailgun_UnderBarrel</id>
 						<name>under barrel</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
 						<scale>(1.25,0,1.25)</scale>
 						<postion>(0.45,0,0)</postion>
 						<allowEmpty>true</allowEmpty>
@@ -120,12 +123,14 @@
 							<thingDefs>
 								<li>ModRailgun_Bayonet</li>
 								<li>ModRailgun_VertiGrip</li>
+								<li>ModRailgun_UBGL</li>
 							</thingDefs>
 						</filter>
 					</li>
 					<li>
 						<id>ModRailgun_Grip</id>
 						<name>grip</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Grip</UITexPath>
 						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_StandardGrip</defultThing>
@@ -503,23 +508,23 @@
 		<tools>
 			<li>
 				<label>e-bayonet blade</label>
-				<chanceFactor>100</chanceFactor>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
 				<power>12</power>
 				<cooldownTime>1.5</cooldownTime>
 				<armorPenetration>0.4</armorPenetration>
+				<chanceFactor>100</chanceFactor>
 			</li>
 			<li>
 				<label>e-bayonet point</label>
-				<chanceFactor>100</chanceFactor>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
 				<power>13</power>
 				<cooldownTime>2</cooldownTime>
 				<armorPenetration>0.5</armorPenetration>
+				<chanceFactor>100</chanceFactor>
 			</li>
 		</tools>
 		<comps>
@@ -578,6 +583,67 @@
 						<warmupTime>0.9</warmupTime>
 					</li>
 				</verbPropertiesMultiplier>
+				<statOffset>
+					<Mass>0.2</Mass>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="ResourceBase">
+		<defName>ModRailgun_UBGL</defName>
+		<label>railgun UBGL</label>
+		<description>Standard clip magazine</description>
+		<drawerType>RealtimeOnly</drawerType>
+		<tickerType>Normal</tickerType>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.2</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+		<verbs>
+			<li>
+				<label>throw frag grenade</label>
+				<verbClass>Verb_LaunchProjectile</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<range>12.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<warmupTime>1.5</warmupTime>
+				<noiseRadius>4</noiseRadius>
+				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+				<soundCast>ThrowGrenade</soundCast>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+				<defaultProjectile>Proj_GrenadeFrag</defaultProjectile>
+				<rangedFireRulepack>Combat_RangedFire_Thrown</rangedFireRulepack>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
+				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<statOffset>
 					<Mass>0.2</Mass>
 				</statOffset>
