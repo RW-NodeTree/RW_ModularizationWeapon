@@ -261,6 +261,7 @@ namespace RW_ModularizationWeapon.UI
                             if(Widgets.ButtonInvisible(rect))
                             {
                                 partForChange.SetTargetPart(idForChange, selThing);
+                                ResetInfoTags();
                             }
                         }
                         else if(selDef == null)
@@ -270,6 +271,7 @@ namespace RW_ModularizationWeapon.UI
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 partForChange.SetTargetPart(idForChange, null);
+                                ResetInfoTags();
                             }
                         }
                     }
@@ -284,6 +286,7 @@ namespace RW_ModularizationWeapon.UI
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 creaftingTable.SetTarget(selThing, this);
+                                ResetInfoTags();
                             }
                         }
                         else if (selDef != null)
@@ -293,6 +296,7 @@ namespace RW_ModularizationWeapon.UI
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 creaftingTable.SetTarget(selDef, this);
+                                ResetInfoTags();
                             }
                         }
                     }
