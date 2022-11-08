@@ -248,7 +248,7 @@
 		<defName>ModRailgun_SightIron</defName>
 		<label>railgun iron sight</label>
 		<description>Standard clip magazine</description>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
 		<statBases>
 			<Mass>0.1</Mass>
 		</statBases>
