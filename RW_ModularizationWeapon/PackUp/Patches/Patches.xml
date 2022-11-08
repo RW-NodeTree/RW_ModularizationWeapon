@@ -11,11 +11,12 @@
 						<li>Gun_Test_Modularization</li>
 						<li>Gun_Test_A_Modularization</li>
 						<li>Gun_Test_B_Modularization</li>
+						<li>Gun_ModularRailgun</li>
 					</thingDefs>
 				</filter>
 			</li>
 		</value>
 		<order>Append</order>
 	</Operation>
-	
-</Patch> 
+
+</Patch>
