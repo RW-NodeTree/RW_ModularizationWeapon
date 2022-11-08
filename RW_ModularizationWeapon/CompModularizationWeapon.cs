@@ -329,6 +329,7 @@ namespace RW_ModularizationWeapon
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
             NodeContainer container = ChildNodes;
+            results.DefaultValue = 0;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -353,11 +354,12 @@ namespace RW_ModularizationWeapon
                                     }
                                 );
 
-                        results += comp.Props.verbPropertiesMultiplier * cache;
+                        results += comp.Props.verbPropertiesOffseter * cache;
+                        results.DefaultValue = 0;
                     }
                 }
             }
-            results.DefaultValue = 0;
+            Log.Message($"VerbPropertiesOffseter({childNodeIdForVerbProperties}) :\nresults : {results}");
             return results;
         }
 
@@ -367,6 +369,7 @@ namespace RW_ModularizationWeapon
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
             NodeContainer container = ChildNodes;
+            results.DefaultValue = 0;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -391,11 +394,12 @@ namespace RW_ModularizationWeapon
                                     }
                                 );
 
-                        results += comp.Props.toolsMultiplier * cache;
+                        results += comp.Props.toolsOffseter * cache;
+                        results.DefaultValue = 0;
                     }
                 }
             }
-            results.DefaultValue = 0;
+            Log.Message($"ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
@@ -448,6 +452,7 @@ namespace RW_ModularizationWeapon
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
             NodeContainer container = ChildNodes;
+            results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -473,11 +478,13 @@ namespace RW_ModularizationWeapon
                                 );
 
                         results *= (comp.Props.verbPropertiesMultiplier - 1) * cache + 1;
+                        results.DefaultValue = 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
                 }
             }
-            results.DefaultValue = 1;
+            Log.Message($"VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
+
             return results;
         }
 
@@ -487,6 +494,7 @@ namespace RW_ModularizationWeapon
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
             NodeContainer container = ChildNodes;
+            results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -512,10 +520,11 @@ namespace RW_ModularizationWeapon
                                 );
 
                         results *= (comp.Props.toolsMultiplier - 1) * cache + 1;
+                        results.DefaultValue = 1;
                     }
                 }
             }
-            results.DefaultValue = 1;
+            Log.Message($"ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
@@ -1290,6 +1299,7 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (id.NullOrEmpty() && part == parent)
                 {
+                    //Log.Message($"ParentProccesser : {ParentProccesser}");
                     if (ParentProccesser != null)
                     {
                         Material material = graphic?.MatAt(rot, this.parent);
@@ -1408,15 +1418,20 @@ namespace RW_ModularizationWeapon
 
         protected override void Added(NodeContainer container, string id)
         {
+            //Log.Message($"container add {container.Comp}");
             targetModeParent = container.Comp;
             UsingTargetPart = ShowTargetPart;
+            NodeProccesser.NeedUpdate = true;
         }
 
 
         protected override void Removed(NodeContainer container, string id)
         {
+            //Log.Message($"container remove {container.Comp}");
             targetModeParent = null;
             UsingTargetPart = ShowTargetPart;
+            NodeProccesser.NeedUpdate = true;
+            NodeProccesser.UpdateNode();
         }
 
 

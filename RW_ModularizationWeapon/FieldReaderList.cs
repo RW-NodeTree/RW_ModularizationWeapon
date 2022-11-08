@@ -58,6 +58,19 @@ namespace RW_ModularizationWeapon
             }
         }
 
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < this.Count; i++)
+            {
+                FieldReaderDgit<T> field = this[i];
+                builder.AppendLine($"{i} : {field}");
+            }
+            return builder.ToString();
+        }
+
+
         #region FieldReaderDgitList_double
         public static FieldReaderDgitList<T> operator +(FieldReaderDgitList<T> a, double b)
         {
@@ -543,6 +556,20 @@ namespace RW_ModularizationWeapon
             }
         }
 
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < this.Count; i++)
+            {
+                FieldReaderBool<T> field = this[i];
+                builder.AppendLine($"{i} : {field}");
+            }
+            return builder.ToString();
+        }
+
+
+        #region FieldReaderBoolList_bool
         public static FieldReaderBoolList<T> operator !(FieldReaderBoolList<T> a)
         {
             FieldReaderBoolList<T> list = new FieldReaderBoolList<T>(a);
@@ -554,7 +581,6 @@ namespace RW_ModularizationWeapon
             return list;
         }
 
-        #region FieldReaderBoolList_double
         public static FieldReaderBoolList<T> operator &(FieldReaderBoolList<T> a, bool b)
         {
             FieldReaderBoolList<T> list = new FieldReaderBoolList<T>(a);
@@ -632,7 +658,7 @@ namespace RW_ModularizationWeapon
         }
         #endregion
 
-        #region FieldReaderDgitList_FieldReaderDgitList
+        #region FieldReaderBoolList_FieldReaderBoolList
         public static FieldReaderBoolList<T> operator &(FieldReaderBoolList<T> a, FieldReaderBoolList<T> b)
         {
             FieldReaderBoolList<T> result = new FieldReaderBoolList<T>();
