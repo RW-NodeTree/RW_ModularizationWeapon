@@ -270,40 +270,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderDgitList<T>();
             b = b ?? new FieldReaderDgitList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderDgit<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child + value);
-                else result[index] += child + value;
+                if (index < 0) result.Add(child);
+                else result[index] += child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderDgitList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-                if(a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderDgit<T> value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    if (index < 0) result.Add(value + child);
-                    else result[index] += value + child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] += child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderDgitList<T>();
+
+            foreach(Type type in UsedTypes)
+            {
+                FieldReaderDgit<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                FieldReaderDgit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va + vb);
             }
             return result;
         }
@@ -317,42 +314,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderDgitList<T>();
             b = b ?? new FieldReaderDgitList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                    b.Add(value);
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderDgit<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child - value);
-                else result[index] -= child - value;
+                if (index < 0) result.Add(child);
+                else result[index] -= child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderDgitList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderDgit<T> value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    a.Add(value);
-                    if (index < 0) result.Add(value - child);
-                    else result[index] -= value - child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] -= child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderDgitList<T>();
+
+            foreach (Type type in UsedTypes)
+            {
+                FieldReaderDgit<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                FieldReaderDgit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va - vb);
             }
             return result;
         }
@@ -367,42 +359,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderDgitList<T>();
             b = b ?? new FieldReaderDgitList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                    b.Add(value);
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderDgit<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child * value);
-                else result[index] *= child * value;
+                if (index < 0) result.Add(child);
+                else result[index] *= child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderDgitList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderDgit<T> value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    a.Add(value);
-                    if (index < 0) result.Add(value * child);
-                    else result[index] *= value * child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] *= child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderDgitList<T>();
+
+            foreach (Type type in UsedTypes)
+            {
+                FieldReaderDgit<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                FieldReaderDgit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va * vb);
             }
             return result;
         }
@@ -417,42 +404,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderDgitList<T>();
             b = b ?? new FieldReaderDgitList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                    b.Add(value);
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderDgit<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child / value);
-                else result[index] /= child / value;
+                if (index < 0) result.Add(child);
+                else result[index] /= child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderDgitList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderDgit<T> value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    a.Add(value);
-                    if (index < 0) result.Add(value / child);
-                    else result[index] /= value / child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] /= child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderDgitList<T>();
+
+            foreach (Type type in UsedTypes)
+            {
+                FieldReaderDgit<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                FieldReaderDgit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va / vb);
             }
             return result;
         }
@@ -466,42 +448,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderDgitList<T>();
             b = b ?? new FieldReaderDgitList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderDgit<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                    b.Add(value);
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderDgit<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child % value);
-                else result[index] %= child % value;
+                if (index < 0) result.Add(child);
+                else result[index] %= child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderDgitList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-                if (a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderDgit<T> value = new FieldReaderDgit<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    a.Add(value);
-                    if (index < 0) result.Add(value % child);
-                    else result[index] %= value % child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] %= child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderDgitList<T>();
+
+            foreach (Type type in UsedTypes)
+            {
+                FieldReaderDgit<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                FieldReaderDgit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDgit<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va % vb);
             }
             return result;
         }
@@ -668,40 +645,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderBoolList<T>();
             b = b ?? new FieldReaderBoolList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderBool<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderBool<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderBool<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderBool<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child & value);
-                else result[index] &= child & value;
+                if (index < 0) result.Add(child);
+                else result[index] &= child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderBoolList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderBool<T> child in b)
             {
-                if (a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderBool<T> value = new FieldReaderBool<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    if (index < 0) result.Add(value & child);
-                    else result[index] &= value & child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] &= child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderBoolList<T>();
+
+            foreach (Type type in UsedTypes)
+            {
+                FieldReaderBool<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderBool<T>();
+                FieldReaderBool<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderBool<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va & vb);
             }
             return result;
         }
@@ -715,40 +689,37 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderBoolList<T>();
             b = b ?? new FieldReaderBoolList<T>();
 
+            HashSet<Type> UsedTypes = new HashSet<Type>();
 
+            if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderBool<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                FieldReaderBool<T> value =
-                    b.Find(
-                        x => x.UsedType == child.UsedType
-                    );
-                if (value == null)
-                {
-                    value = new FieldReaderBool<T>();
-                    value.UsedType = child.UsedType;
-                    if (b.HasDefaultValue) value.DefaultValue = b.DefaultValue;
-                }
-                else if (!value.HasDefaultValue)
-                {
-                    value = new FieldReaderBool<T>(value);
-                    value.DefaultValue = b.DefaultValue;
-                }
-                if (index < 0) result.Add(child | value);
-                else result[index] |= child | value;
+                if (index < 0) result.Add(child);
+                else result[index] |= child;
+                UsedTypes.Add(child.UsedType);
             }
+            a = result;
+            result = new FieldReaderBoolList<T>();
 
+            if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderBool<T> child in b)
             {
-                if (a.Find(x => x.UsedType == child.UsedType) == null)
-                {
-                    int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                    FieldReaderBool<T> value = new FieldReaderBool<T>();
-                    value.UsedType = child.UsedType;
-                    if (a.HasDefaultValue) value.DefaultValue = a.DefaultValue;
-                    if (index < 0) result.Add(value | child);
-                    else result[index] |= value | child;
-                }
+                int index = result.FindIndex(x => x.UsedType == child.UsedType);
+                if (index < 0) result.Add(child);
+                else result[index] |= child;
+                UsedTypes.Add(child.UsedType);
+            }
+            b = result;
+            result = new FieldReaderBoolList<T>();
+
+            foreach (Type type in UsedTypes)
+            {
+                FieldReaderBool<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderBool<T>();
+                FieldReaderBool<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderBool<T>();
+                if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
+                if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
+                result.Add(va | vb);
             }
             return result;
         }

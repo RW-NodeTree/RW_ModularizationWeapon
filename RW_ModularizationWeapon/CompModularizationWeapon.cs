@@ -342,24 +342,29 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
 
-                        if (current != null) cache *= 
+                        if (current != null)
+                        {
+                            cache *=
                                 current.verbPropertiesOtherPartOffseterAffectHorizon
                                 .GetOrNewWhenNull(
                                     id,
-                                    delegate()
+                                    delegate ()
                                     {
                                         FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
                                         result.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
                                         return result;
                                     }
                                 );
+                            if (properties.verbPropertiesOffseterAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                            else cache.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                        }
 
                         results += comp.Props.verbPropertiesOffseter * cache;
                         results.DefaultValue = 0;
                     }
                 }
             }
-            Log.Message($"VerbPropertiesOffseter({childNodeIdForVerbProperties}) :\nresults : {results}");
+            Log.Message($"{this}.VerbPropertiesOffseter({childNodeIdForVerbProperties}) :\nresults : {results}");
             return results;
         }
 
@@ -382,7 +387,9 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<Tool> cache = properties.toolsOffseterAffectHorizon;
 
-                        if (current != null) cache *=
+                        if (current != null)
+                        {
+                            cache *=
                                 current.toolsOtherPartOffseterAffectHorizon
                                 .GetOrNewWhenNull(
                                     id,
@@ -393,13 +400,16 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
+                            if (properties.toolsOffseterAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                            else cache.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                        }
 
                         results += comp.Props.toolsOffseter * cache;
                         results.DefaultValue = 0;
                     }
                 }
             }
-            Log.Message($"ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
+            Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
@@ -465,7 +475,9 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
 
-                        if (current != null) cache *=
+                        if (current != null)
+                        {
+                            cache *=
                                 current.verbPropertiesOtherPartMultiplierAffectHorizon
                                 .GetOrNewWhenNull(
                                     id,
@@ -476,6 +488,9 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
+                            if (properties.verbPropertiesMultiplierAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                            else cache.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                        }
 
                         results *= (comp.Props.verbPropertiesMultiplier - 1) * cache + 1;
                         results.DefaultValue = 1;
@@ -483,7 +498,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            Log.Message($"VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
+            Log.Message($"{this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
 
             return results;
         }
@@ -507,7 +522,9 @@ namespace RW_ModularizationWeapon
                     {
                         FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
 
-                        if (current != null) cache *=
+                        if (current != null)
+                        {
+                            cache *=
                                 current.toolsOtherPartMultiplierAffectHorizon
                                 .GetOrNewWhenNull(
                                     id,
@@ -518,13 +535,16 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
+                            if (properties.toolsMultiplierAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                            else cache.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                        }
 
                         results *= (comp.Props.toolsMultiplier - 1) * cache + 1;
                         results.DefaultValue = 1;
                     }
                 }
             }
-            Log.Message($"ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
+            Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
