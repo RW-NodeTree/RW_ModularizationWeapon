@@ -477,7 +477,6 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<attachmentProperties>
 					<li>
 						<id>ModRailgun_UBGL</id>
@@ -528,7 +527,6 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<verbPropertiesObjectPatch>
 					<li>
 						<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
@@ -549,7 +547,6 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<verbPropertiesObjectPatch>
 					<li>
 						<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
@@ -570,7 +567,6 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<verbPropertiesObjectPatch>
 					<li>
 						<defaultProjectile>Bullet_SmokeLauncher</defaultProjectile>
