@@ -712,8 +712,8 @@ namespace RW_ModularizationWeapon
         internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties, bool affectDef)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
-            VerbPropertiesMultiplier(childNodeIdForVerbProperties).ForEach(x => properties *= x);
-            VerbPropertiesOffseter(childNodeIdForVerbProperties).ForEach(x => properties += x);
+            properties *= VerbPropertiesMultiplier(childNodeIdForVerbProperties);
+            properties += VerbPropertiesOffseter(childNodeIdForVerbProperties);
             if (affectDef)
             {
                 FieldReaderBoolList<VerbProperties> conAnd = VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
@@ -734,8 +734,8 @@ namespace RW_ModularizationWeapon
         internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool, bool affectDef)
         {
             //tool = (Tool)tool.SimpleCopy();
-            ToolsMultiplier(childNodeIdForTool).ForEach(x => tool *= x);
-            ToolsOffseter(childNodeIdForTool).ForEach(x => tool += x);
+            tool *= ToolsMultiplier(childNodeIdForTool);
+            tool += ToolsOffseter(childNodeIdForTool);
             if (affectDef)
             {
                 FieldReaderBoolList<Tool> conAnd = ToolsBoolAndPatch(childNodeIdForTool);
