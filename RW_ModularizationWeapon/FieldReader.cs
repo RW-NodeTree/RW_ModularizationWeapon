@@ -938,6 +938,7 @@ namespace RW_ModularizationWeapon
                         {
                             object data = field.GetValue(a);
                             if (data != null && obj != null) field.SetValue(a, obj);
+                            else if (!data.GetType().IsValueType) field.SetValue(a, null);
                         }
                     }
                 }
@@ -984,6 +985,11 @@ namespace RW_ModularizationWeapon
                     if (data != null && obj != null)
                     {
                         field.SetValue(result.datas, data);
+                        result.fields.Add(field);
+                    }
+                    else if(!data.GetType().IsValueType)
+                    {
+                        field.SetValue(result.datas, null);
                         result.fields.Add(field);
                     }
                 }

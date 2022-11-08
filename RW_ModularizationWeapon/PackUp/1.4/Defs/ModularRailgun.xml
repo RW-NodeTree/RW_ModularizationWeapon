@@ -365,7 +365,8 @@
 				<PartTexPath>ModularRailgun/ModRailgun_Silencer</PartTexPath>
 				<verbPropertiesObjectPatch>
 					<li>
-						<soundCast>Shot_AssaultRifleSilenced</soundCast>
+						<soundCast>Shot_Silenced</soundCast>
+						<soundCastTail IsNull="true"/>
 					</li>
 				</verbPropertiesObjectPatch>
 			</li>
@@ -373,9 +374,10 @@
 	</ThingDef>
 
 	<SoundDef>
-		<defName>Shot_AssaultRifleSilenced</defName>
+		<defName>Shot_Silenced</defName>
 		<context>MapOnly</context>
-		<maxSimultaneous>1</maxSimultaneous>
+		<eventNames />
+		<maxSimultaneous>2</maxSimultaneous>
 		<subSounds>
 			<li>
 				<grains>
@@ -383,9 +385,6 @@
 						<clipPath>Weapon/Shot_Muffler</clipPath>
 					</li>
 				</grains>
-				<volumeRange>300</volumeRange>
-				<pitchRange>1</pitchRange>
-				<sustainLoop>False</sustainLoop>
 			</li>
 		</subSounds>
 	</SoundDef>
