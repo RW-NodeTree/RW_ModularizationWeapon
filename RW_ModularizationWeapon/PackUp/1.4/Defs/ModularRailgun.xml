@@ -367,7 +367,7 @@
 				<verbPropertiesObjectPatch>
 					<li>
 						<soundCast>Shot_Silenced</soundCast>
-						<soundCastTail>GunTail_Silenced</soundCastTail>
+						<soundCastTail IsNull="true"/>
 					</li>
 				</verbPropertiesObjectPatch>
 			</li>
@@ -386,37 +386,10 @@
           <li Class="AudioGrain_Clip">
             <clipPath>Weapon/Shot_Muffler</clipPath>
           </li>
-        </grains>      
+        </grains>
       </li>
     </subSounds>
   </SoundDef>
-
-
-	<SoundDef>
-		<defName>GunTail_Silenced</defName>
-		<context>MapOnly</context>
-		<eventNames />
-		<maxVoices>2</maxVoices>
-		<maxSimultaneous>1</maxSimultaneous>
-		<subSounds>
-			<li>
-				<onCamera>True</onCamera>
-				<grains>
-					<li Class="AudioGrain_Folder">
-						<clipFolderPath>Weapon/Gun_Muffler_Tail</clipFolderPath>
-					</li>
-				</grains>
-				<volumeRange>
-					<min>18.23529</min>
-					<max>20.58824</max>
-				</volumeRange>
-				<pitchRange>
-					<min>0.9082352</min>
-					<max>1.091765</max>
-				</pitchRange>
-			</li>
-		</subSounds>
-	</SoundDef>
 
 	<ThingDef ParentName="RailgunPartBase">
 		<defName>ModRailgun_Bayonet</defName>

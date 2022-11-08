@@ -986,6 +986,11 @@ namespace RW_ModularizationWeapon
                         field.SetValue(result.datas, data);
                         result.fields.Add(field);
                     }
+                    else if(!data.GetType().IsValueType)
+                    {
+                        field.SetValue(result.datas, null);
+                        result.fields.Add(field);
+                    }
                 }
             }
             return result;
