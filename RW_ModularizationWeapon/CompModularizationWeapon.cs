@@ -555,7 +555,7 @@ namespace RW_ModularizationWeapon
         public float GetStatMultiplier(StatDef statDef, Thing part)
         {
             NodeContainer container = ChildNodes;
-            float result = 0;
+            float result = 1;
             if (statMultiplierCache.TryGetValue((statDef, part), out result)) return result;
             result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
             WeaponAttachmentProperties current = null;
@@ -1780,7 +1780,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, childComp)}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, req.Thing)}");
                     }
 
 
@@ -1794,7 +1794,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, childComp) - 1f) + 1f}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, req.Thing) - 1f) + 1f}");
                     }
                 }
                 else
