@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using UnityEngine;
 using Verse;
+using static HarmonyLib.Code;
 
 namespace RW_ModularizationWeapon
 {
@@ -797,7 +798,8 @@ namespace RW_ModularizationWeapon
     public class FieldReaderInst<T> : IEnumerable<KeyValuePair<FieldInfo, object>>
     {
         private Type type = typeof(T);
-        private readonly Dictionary<FieldInfo, object> datas = new Dictionary<FieldInfo, object>();
+        private T datas = (T)Activator.CreateInstance(typeof(T));
+        private readonly HashSet<FieldInfo> fields = new HashSet<FieldInfo>();
 
         public FieldReaderInst() { }
 
@@ -805,7 +807,7 @@ namespace RW_ModularizationWeapon
         {
             if (other != null)
             {
-                datas.AddRange(other.datas);
+                datas = Gen.MemberwiseClone(other.datas);
                 type = other.type;
             }
         }
@@ -819,20 +821,30 @@ namespace RW_ModularizationWeapon
                 if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
-                    datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
+                    fields.RemoveWhere(x => type.IsAssignableFrom(x.DeclaringType));
+                    T org = datas;
+                    datas = (T)Activator.CreateInstance(type);
+                    foreach(FieldInfo field in fields)
+                    {
+                        field.SetValue(datas, field.GetValue(org));
+                    }
                 }
             }
         }
 
 
-        public int Count => datas.Count;
+        public int Count => fields.Count;
 
 
         public bool TryGetValue(string name, out object value)
         {
             value = null;
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
+            if (fieldInfo != null)
+            {
+                value = fieldInfo.GetValue(datas);
+                return true;
+            }
             return false;
         }
 
@@ -844,7 +856,10 @@ namespace RW_ModularizationWeapon
             {
                 Type vt = fieldInfo.FieldType;
                 if (vt.IsAssignableFrom(value.GetType()))
-                    datas.SetOrAdd(fieldInfo, value);
+                {
+                    fieldInfo.SetValue(datas, value);
+                    fields.Add(fieldInfo);
+                }
             }
 
         }
@@ -869,13 +884,13 @@ namespace RW_ModularizationWeapon
             **/
             try
             {
-                T data = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);
+                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);
                 foreach (XmlNode node in xmlRoot.ChildNodes)
                 {
                     FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                     if (fieldInfo != null)
                     {
-                        datas.SetOrAdd(fieldInfo, fieldInfo.GetValue(data));
+                        fields.Add(fieldInfo);
                     }
                 }
             }
@@ -890,21 +905,24 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
-            foreach ((FieldInfo field, object value) in datas)
+            foreach (FieldInfo field in fields)
             {
-                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {field.GetValue(datas)}\n";
             }
             return result;
         }
 
         public IEnumerator<KeyValuePair<FieldInfo, object>> GetEnumerator()
         {
-            return datas.GetEnumerator();
+            foreach (FieldInfo field in fields)
+            {
+                yield return new KeyValuePair<FieldInfo, object>(field, field.GetValue(datas));
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return datas.GetEnumerator();
+            return GetEnumerator();
         }
 
         public static T operator &(T a, FieldReaderInst<T> b)
@@ -914,12 +932,12 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    foreach (FieldInfo field in b.datas.Keys)
+                    foreach ((FieldInfo field, object obj) in b)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
                             object data = field.GetValue(a);
-                            if (data != null && b.datas[field] != null) field.SetValue(a, b.datas[field]);
+                            if (data != null && obj != null) field.SetValue(a, obj);
                         }
                     }
                 }
@@ -934,11 +952,11 @@ namespace RW_ModularizationWeapon
                 a = Gen.MemberwiseClone(a);
                 if (a != null)
                 {
-                    foreach (FieldInfo field in b.datas.Keys)
+                    foreach ((FieldInfo field, object obj) in b)
                     {
                         if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
                         {
-                            field.SetValue(a, field.GetValue(a) ?? b.datas[field]);
+                            field.SetValue(a, field.GetValue(a) ?? obj);
                         }
                     }
                 }
@@ -955,31 +973,18 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderInst<T>();
             b = b ?? new FieldReaderInst<T>();
 
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
+            if (a.type.IsAssignableFrom(b.type)) result.UsedType = b.type;
+            else if (b.type.IsAssignableFrom(a.type)) result.UsedType = a.type;
 
-            foreach (FieldInfo field in a.datas.Keys)
+            foreach ((FieldInfo field, object obj) in a)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && b.fields.Contains(field))
                 {
-                    if (b.datas.ContainsKey(field))
+                    object data = field.GetValue(b.datas);
+                    if (data != null && obj != null)
                     {
-                        object data = a.datas[field];
-                        if (data != null && b.datas[field] != null)
-                            result.datas.Add(field, data);
-                    }
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field))
-                    {
-                        object data = a.datas[field];
-                        if (b.datas[field] != null && data != null)
-                            result.datas.Add(field, data);
+                        field.SetValue(result.datas, data);
+                        result.fields.Add(field);
                     }
                 }
             }
@@ -995,22 +1000,22 @@ namespace RW_ModularizationWeapon
             a = a ?? new FieldReaderInst<T>();
             b = b ?? new FieldReaderInst<T>();
 
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
+            if (a.type.IsAssignableFrom(b.type)) result.UsedType = b.type;
+            else if (b.type.IsAssignableFrom(a.type)) result.UsedType = a.type;
 
-            foreach (FieldInfo field in a.datas.Keys)
+            foreach ((FieldInfo field, object obja) in a)
             {
                 if (result.type.IsAssignableFrom(field.DeclaringType))
                 {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] ?? b.datas[field]);
+                    field.SetValue(result.datas, obja ?? field.GetValue(b.datas));
                 }
             }
 
-            foreach (FieldInfo field in b.datas.Keys)
+            foreach ((FieldInfo field, object objb) in b)
             {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
+                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.fields.Contains(field))
                 {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] ?? b.datas[field]);
+                    field.SetValue(result.datas, field.GetValue(a.datas) ?? objb);
                 }
             }
             return result;

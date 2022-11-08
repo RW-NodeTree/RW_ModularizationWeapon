@@ -760,6 +760,7 @@ namespace RW_ModularizationWeapon
                 VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
                     .ForEach(x =>
                     {
+                        Log.Message(x.ToString());
                         properties &= x;
                         properties |= x;
                     });
@@ -782,6 +783,7 @@ namespace RW_ModularizationWeapon
                 ToolsObjectPatch(childNodeIdForTool)
                     .ForEach(x =>
                     {
+                        Log.Message(x.ToString());
                         tool &= x;
                         tool |= x;
                     });
