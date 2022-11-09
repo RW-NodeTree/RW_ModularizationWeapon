@@ -820,7 +820,8 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
                                 VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp = VerbPropertiesAfterAffect(comp.VerbPropertiesAfterAffect(cache, id, false), id, false);
+                                VerbProperties newProp = comp.VerbPropertiesAfterAffect(cache, id, true);
+                                if (comp?.Props.verbPropertiesAffectByOtherPart ?? true) newProp = VerbPropertiesAfterAffect(newProp, id, false);
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -876,7 +877,8 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < tools.Count; j++)
                             {
                                 Tool cache = tools[j];
-                                Tool newProp = ToolAfterAffect(comp.ToolAfterAffect(cache, id, false), id, false);
+                                Tool newProp = comp.ToolAfterAffect(cache, id, true);
+                                if (comp?.Props.toolsAffectByOtherPart ?? true) newProp = ToolAfterAffect(newProp, id, false);
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
