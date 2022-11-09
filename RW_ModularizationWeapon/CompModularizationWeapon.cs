@@ -345,7 +345,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = comp.Props.verbPropertiesOffseter * cache;
-                        if(currentComp != null) cache = cache * currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
+                        if(currentComp != null && comp != currentComp) cache = cache * currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -394,7 +394,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = comp.Props.toolsOffseter * cache;
-                        if(currentComp != null) cache = cache * currentComp.Props.toolsOtherPartOffseterAffectHorizon;
+                        if(currentComp != null && comp != currentComp) cache = cache * currentComp.Props.toolsOtherPartOffseterAffectHorizon;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -444,12 +444,12 @@ namespace RW_ModularizationWeapon
                                     statDef,
                                     current.statOtherPartOffseterAffectHorizonDefaultValue
                                 ) ?? 1f)
-                                * (currentComp?.Props.statOtherPartOffseterAffectHorizon ?? 1))
+                                * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon ?? 1f) : 1f))
                             );
                     }
                 }
                 statOffsetCache.Add((statDef, part), result);
-                Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
+                //Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
             }
             return result;
         }
@@ -494,7 +494,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
-                        if (currentComp != null) cache = (cache - 1f) * currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon + 1;
+                        if (currentComp != null && comp != currentComp) cache = (cache - 1f) * currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon + 1;
                         cache.DefaultValue = 1;
                         results *= cache;
                         results.DefaultValue = 1;
@@ -544,7 +544,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
-                        if (currentComp != null) cache = (cache - 1f) * currentComp.Props.toolsOtherPartMultiplierAffectHorizon + 1;
+                        if (currentComp != null && comp != currentComp) cache = (cache - 1f) * currentComp.Props.toolsOtherPartMultiplierAffectHorizon + 1;
                         cache.DefaultValue = 1;
                         results *= cache;
                         results.DefaultValue = 1f;
@@ -594,12 +594,12 @@ namespace RW_ModularizationWeapon
                                     statDef,
                                     current.statOtherPartMultiplierAffectHorizonDefaultValue
                                 ) ?? 1f)
-                                * (currentComp?.Props.statOtherPartMultiplierAffectHorizon ?? 1))
+                                * (currentComp != comp ? (currentComp?.Props.statOtherPartMultiplierAffectHorizon ?? 1f) : 1f))
                             );
                     }
                 }
                 statMultiplierCache.Add((statDef, part), result);
-                Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
+                //Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
             }
             return result;
         }
@@ -1255,7 +1255,8 @@ namespace RW_ModularizationWeapon
                         CompModularizationWeapon comp = thing;
                         if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                         {
-                            CompChildNodeProccesser comp_targetModeParent = comp?.targetModeParent;
+                            ThingStyleDef styleDef = thing.StyleDef;
+                            CompChildNodeProccesser comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.targetModeParent : null;
                             if (comp_targetModeParent != null)
                             {
                                 comp.NodeProccesser.ResetRenderedTexture();

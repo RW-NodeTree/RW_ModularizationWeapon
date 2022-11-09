@@ -261,7 +261,8 @@ namespace RW_ModularizationWeapon.UI
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
-                            CompChildNodeProccesser comp_targetModeParent = comp?.targetModeParent;
+                            ThingStyleDef styleDef = selThing.StyleDef;
+                            CompChildNodeProccesser comp_targetModeParent = (selDef.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && selDef.uiIconPath.NullOrEmpty() && !(selThing is Pawn || selThing is Corpse)) ? comp?.targetModeParent : null;
                             if (comp_targetModeParent != null)
                             {
                                 comp.NodeProccesser.ResetRenderedTexture();
