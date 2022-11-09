@@ -981,7 +981,7 @@ namespace RW_ModularizationWeapon
             {
                 statWorker.FinalizeValue(req, ref result, applyPostProcess);
                 forPostRead.Add("afterRedirectoryReq", result);
-                Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
+                //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
             }
             return result;
         }
@@ -992,7 +992,7 @@ namespace RW_ModularizationWeapon
 
             if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
             {
-                Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
+                //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
                 return (float)cache;
             }
             if (req.Thing == parent)
