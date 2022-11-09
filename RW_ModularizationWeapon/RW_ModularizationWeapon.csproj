@@ -254,13 +254,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PackUp\1.4\Languages\ChineseSimplified\Keyed\*" />
-    <Content Include="PackUp\1.4\Languages\English\Keyed\*" />
-    <Content Include="PackUp\1.4\Defs\*" />
-    <Content Include="PackUp\About\*" />
-    <Content Include="PackUp\Patches\*" />
-    <Content Include="PackUp\Sounds\*" />
-    <Content Include="PackUp\Textures\*" />
+    <Content Include="PackUp\*" />
+    <Content Include="PackUp\*\*" />
+    <Content Include="PackUp\*\*\*" />
+    <Content Include="PackUp\*\*\*\*" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
