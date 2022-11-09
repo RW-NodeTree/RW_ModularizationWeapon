@@ -1255,7 +1255,8 @@ namespace RW_ModularizationWeapon
                         CompModularizationWeapon comp = thing;
                         if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                         {
-                            CompChildNodeProccesser comp_targetModeParent = comp?.targetModeParent;
+                            ThingStyleDef styleDef = thing.StyleDef;
+                            CompChildNodeProccesser comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.targetModeParent : null;
                             if (comp_targetModeParent != null)
                             {
                                 comp.NodeProccesser.ResetRenderedTexture();

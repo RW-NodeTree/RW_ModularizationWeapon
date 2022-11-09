@@ -76,9 +76,8 @@
 			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
 				<TextureSizeFactor>256</TextureSizeFactor>
 				<TextureFilterMode>Bilinear</TextureFilterMode>
-				<ExceedanceFactor>2</ExceedanceFactor>
-				<ExceedanceOffset>1</ExceedanceOffset>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
+				<ExceedanceOffset>0</ExceedanceOffset>
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
@@ -188,6 +187,7 @@
 				<TextureSizeFactor>256</TextureSizeFactor>
 				<TextureFilterMode>Bilinear</TextureFilterMode>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
+				<ExceedanceOffset>0</ExceedanceOffset>
 			</li>
 		</comps>
 	</ThingDef>
@@ -292,6 +292,7 @@
 				<TextureSizeFactor>256</TextureSizeFactor>
 				<TextureFilterMode>Bilinear</TextureFilterMode>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
+				<ExceedanceOffset>0</ExceedanceOffset>
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_Scope</PartTexPath>
