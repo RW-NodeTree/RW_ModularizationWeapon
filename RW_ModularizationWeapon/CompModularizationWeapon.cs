@@ -1450,17 +1450,17 @@ namespace RW_ModularizationWeapon
                             Matrix4x4[] matrix = info.matrices;
                             for (int k = 0; k < matrix.Length; k++)
                             {
-                                //Vector4 cache = matrix[k].GetRow(0);
-                                //matrix[k].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
+                                Vector4 cache = matrix[k].GetRow(0);
+                                matrix[k].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
 
-                                //cache = matrix[k].GetRow(1);
-                                //matrix[k].SetRow(1, new Vector4(0, new Vector3(cache.x, cache.y, cache.z).magnitude, 0, cache.w));
+                                cache = matrix[k].GetRow(1);
+                                matrix[k].SetRow(1, new Vector4(0, new Vector3(cache.x, cache.y, cache.z).magnitude, 0, cache.w));
 
-                                //cache = matrix[k].GetRow(2);
-                                //matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
+                                cache = matrix[k].GetRow(2);
+                                matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
 
-                                //matrix[k] = properties.Transfrom * matrix[k];
-                                matrix[k] = properties.Transfrom;
+                                matrix[k] = properties.Transfrom * matrix[k];
+                                //matrix[k] = properties.Transfrom;
                             }
                             renderInfos[j] = info;
                         }

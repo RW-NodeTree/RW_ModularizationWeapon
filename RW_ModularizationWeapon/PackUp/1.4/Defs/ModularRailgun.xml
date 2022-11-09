@@ -144,7 +144,6 @@
 						<id>ModRailgun_Grip</id>
 						<name>grip</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Grip</UITexPath>
-						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_StandardGrip</defultThing>
 						<filter>
