@@ -32,6 +32,7 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/GrenadeLauncher</PartTexPath>
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
 				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
 				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
@@ -85,7 +86,7 @@
 		</statBases>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/Module_UBGL</PartTexPath>
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<verbPropertiesObjectPatch>
 					<li>
 						<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
@@ -105,7 +106,7 @@
 		</statBases>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/Module_UBGL</PartTexPath>
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<verbPropertiesObjectPatch>
 					<li>
 						<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
@@ -125,7 +126,7 @@
 		</statBases>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/Module_UBGL</PartTexPath>
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<verbPropertiesObjectPatch>
 					<li>
 						<defaultProjectile>Bullet_SmokeLauncher</defaultProjectile>
