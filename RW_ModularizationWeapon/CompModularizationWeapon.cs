@@ -1250,7 +1250,19 @@ namespace RW_ModularizationWeapon
                         Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));//hover
                     }
 
-                    if(thing != null)
+                    bool opend = GetChildTreeViewOpend(id);
+
+                    if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
+                    {
+                        if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                        {
+                            opend = !opend;
+                            if (opend) openEvent?.Invoke(id, thing, this);
+                            else closeEvent?.Invoke(id, thing, this);
+                            SetChildTreeViewOpend(id, opend);
+                        }
+                    }
+                    if (thing != null)
                     {
                         CompModularizationWeapon comp = thing;
                         if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
@@ -1277,18 +1289,6 @@ namespace RW_ModularizationWeapon
                         }
                         if (comp != null)
                         {
-                            bool opend = GetChildTreeViewOpend(id);
-
-                            if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
-                            {
-                                if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
-                                {
-                                    opend = !opend;
-                                    if (opend) openEvent?.Invoke(id, thing, this);
-                                    else closeEvent?.Invoke(id, thing, this);
-                                    SetChildTreeViewOpend(id, opend);
-                                }
-                            }
                             if (opend)
                             {
                                 currentPos.y += comp.DrawChildTreeView(
