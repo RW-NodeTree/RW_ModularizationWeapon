@@ -125,7 +125,6 @@
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
             <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<verbPropertiesMultiplier>
 					<li>
@@ -245,7 +244,6 @@
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
             <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<verbPropertiesOffseter>
 					<li>
