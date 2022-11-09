@@ -312,6 +312,7 @@ namespace RW_ModularizationWeapon
         {
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            CompModularizationWeapon currentComp = ChildNodes[childNodeIdForVerbProperties];
             NodeContainer container = ChildNodes;
             results.DefaultValue = 0;
             for (int i = 0; i < container.Count; i++)
@@ -344,6 +345,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = comp.Props.verbPropertiesOffseter * cache;
+                        if(currentComp != null) cache = cache * currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -359,6 +361,7 @@ namespace RW_ModularizationWeapon
         {
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
+            CompModularizationWeapon currentComp = ChildNodes[childNodeIdForTool];
             NodeContainer container = ChildNodes;
             results.DefaultValue = 0;
             for (int i = 0; i < container.Count; i++)
@@ -391,6 +394,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = comp.Props.toolsOffseter * cache;
+                        if(currentComp != null) cache = cache * currentComp.Props.toolsOtherPartOffseterAffectHorizon;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -405,44 +409,48 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer container = ChildNodes;
             float result = 0;
-            if (statOffsetCache.TryGetValue((statDef, part), out result)) return result;
-            result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatOffsetFromList(statDef);
-            WeaponAttachmentProperties current = null;
-
-            for (int i = 0; i < container.Count; i++)
+            if (!statOffsetCache.TryGetValue((statDef, part), out result))
             {
-                string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                if (comp != null && comp.Validity && comp.ChildNodes.IsChild(part))
+                result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatOffsetFromList(statDef);
+                WeaponAttachmentProperties current = null;
+                CompModularizationWeapon currentComp = null;
+                for (int i = 0; i < container.Count; i++)
                 {
-                    current = Props.WeaponAttachmentPropertiesById(id);
-                    break;
+                    string id = container[(uint)i];
+                    CompModularizationWeapon comp = container[i];
+                    if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
+                    {
+                        current = Props.WeaponAttachmentPropertiesById(id);
+                        currentComp = comp;
+                        break;
+                    }
                 }
-            }
 
-            for (int i = 0; i < container.Count; i++)
-            {
-                string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (comp != null && comp.Validity)
+                for (int i = 0; i < container.Count; i++)
                 {
-                    result += comp.GetStatOffset(statDef, part)
-                        * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statOffsetAffectHorizon.GetStatValueFromList(
-                                statDef,
-                                properties.statOffsetAffectHorizonDefaultValue
-                            )
-                            * (current?.statOtherPartOffseterAffectHorizon
-                            .GetOrNewWhenNull(id, () => new List<StatModifier>())
-                            .GetStatValueFromList(
-                                statDef,
-                                current.statOtherPartOffseterAffectHorizonDefaultValue
-                            ) ?? 1f))
-                        );
+                    string id = container[(uint)i];
+                    CompModularizationWeapon comp = container[i];
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if (comp != null && comp.Validity)
+                    {
+                        result += comp.GetStatOffset(statDef, part)
+                            * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statOffsetAffectHorizon.GetStatValueFromList(
+                                    statDef,
+                                    properties.statOffsetAffectHorizonDefaultValue
+                                )
+                                * (current?.statOtherPartOffseterAffectHorizon
+                                .GetOrNewWhenNull(id, () => new List<StatModifier>())
+                                .GetStatValueFromList(
+                                    statDef,
+                                    current.statOtherPartOffseterAffectHorizonDefaultValue
+                                ) ?? 1f)
+                                * (currentComp?.Props.statOtherPartOffseterAffectHorizon ?? 1))
+                            );
+                    }
                 }
+                statOffsetCache.Add((statDef, part), result);
+                Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
             }
-            //if (result != 0) Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}");
-            statOffsetCache.Add((statDef, part), result);
             return result;
         }
         #endregion
@@ -453,6 +461,7 @@ namespace RW_ModularizationWeapon
         {
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            CompModularizationWeapon currentComp = ChildNodes[childNodeIdForVerbProperties];
             NodeContainer container = ChildNodes;
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
@@ -485,6 +494,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
+                        if (currentComp != null) cache = (cache - 1f) * currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon + 1;
                         cache.DefaultValue = 1;
                         results *= cache;
                         results.DefaultValue = 1;
@@ -501,6 +511,7 @@ namespace RW_ModularizationWeapon
         {
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
             WeaponAttachmentProperties current = Props.WeaponAttachmentPropertiesById(childNodeIdForTool);
+            CompModularizationWeapon currentComp = ChildNodes[childNodeIdForTool];
             NodeContainer container = ChildNodes;
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
@@ -533,6 +544,7 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
+                        if (currentComp != null) cache = (cache - 1f) * currentComp.Props.toolsOtherPartMultiplierAffectHorizon + 1;
                         cache.DefaultValue = 1;
                         results *= cache;
                         results.DefaultValue = 1f;
@@ -547,44 +559,48 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer container = ChildNodes;
             float result = 1;
-            if (statMultiplierCache.TryGetValue((statDef, part), out result)) return result;
-            result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
-            WeaponAttachmentProperties current = null;
-
-            for (int i = 0; i < container.Count; i++)
+            if (!statMultiplierCache.TryGetValue((statDef, part), out result))
             {
-                string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                if (comp != null && comp.Validity && comp.ChildNodes.IsChild(part))
+                result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
+                WeaponAttachmentProperties current = null;
+                CompModularizationWeapon currentComp = null;
+                for (int i = 0; i < container.Count; i++)
                 {
-                    current = Props.WeaponAttachmentPropertiesById(id);
-                    break;
+                    string id = container[(uint)i];
+                    CompModularizationWeapon comp = container[i];
+                    if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
+                    {
+                        current = Props.WeaponAttachmentPropertiesById(id);
+                        currentComp = comp;
+                        break;
+                    }
                 }
-            }
-            for (int i = 0; i < container.Count; i++)
-            {
-                string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (comp != null && comp.Validity)
+                for (int i = 0; i < container.Count; i++)
                 {
-                    result *= 1f + (comp.GetStatMultiplier(statDef, part) - 1f)
-                        * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statMultiplierAffectHorizon
-                            .GetStatValueFromList(
-                                statDef,
-                                properties.statMultiplierAffectHorizonDefaultValue
-                            )
-                            * (current?.statOtherPartMultiplierAffectHorizon
-                            .GetOrNewWhenNull(id, () => new List<StatModifier>())
-                            .GetStatValueFromList(
-                                statDef,
-                                current.statOtherPartMultiplierAffectHorizonDefaultValue
-                            ) ?? 1f))
-                        );
+                    string id = container[(uint)i];
+                    CompModularizationWeapon comp = container[i];
+                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                    if (comp != null && comp.Validity)
+                    {
+                        result *= 1f + (comp.GetStatMultiplier(statDef, part) - 1f)
+                            * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statMultiplierAffectHorizon
+                                .GetStatValueFromList(
+                                    statDef,
+                                    properties.statMultiplierAffectHorizonDefaultValue
+                                )
+                                * (current?.statOtherPartMultiplierAffectHorizon
+                                .GetOrNewWhenNull(id, () => new List<StatModifier>())
+                                .GetStatValueFromList(
+                                    statDef,
+                                    current.statOtherPartMultiplierAffectHorizonDefaultValue
+                                ) ?? 1f)
+                                * (currentComp?.Props.statOtherPartMultiplierAffectHorizon ?? 1))
+                            );
+                    }
                 }
+                statMultiplierCache.Add((statDef, part), result);
+                Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
             }
-            //if(result != 1) Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result}");
-            statMultiplierCache.Add((statDef, part), result);
             return result;
         }
         #endregion
@@ -811,17 +827,7 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
                                 VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp = comp.VerbPropertiesAfterAffect(cache, id, true);
-                                if (comp?.Props.verbPropertiesAffectByOtherPart ?? true) newProp = VerbPropertiesAfterAffect(newProp, id, false);
-                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
-                            }
-                        }
-                        else if (comp?.Props.verbPropertiesAffectByOtherPart ?? true)
-                        {
-                            for (int j = 0; j < verbProperties.Count; j++)
-                            {
-                                VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
+                                VerbProperties newProp = VerbPropertiesAfterAffect(comp.VerbPropertiesAfterAffect(cache, null, true), id, false);
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -830,7 +836,8 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
                                 VerbProperties cache = verbProperties[j];
-                                result.Add(new VerbPropertiesRegiestInfo(id, cache, cache));
+                                VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
+                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
                         }
                     }
@@ -868,17 +875,7 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < tools.Count; j++)
                             {
                                 Tool cache = tools[j];
-                                Tool newProp = comp.ToolAfterAffect(cache, id, true);
-                                if (comp?.Props.toolsAffectByOtherPart ?? true) newProp = ToolAfterAffect(newProp, id, false);
-                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
-                            }
-                        }
-                        else if (comp?.Props.toolsAffectByOtherPart ?? true)
-                        {
-                            for (int j = 0; j < tools.Count; j++)
-                            {
-                                Tool cache = tools[j];
-                                Tool newProp = ToolAfterAffect(cache, id, false);
+                                Tool newProp = ToolAfterAffect(comp.ToolAfterAffect(cache, null, true), id, false);
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -887,7 +884,8 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < tools.Count; j++)
                             {
                                 Tool cache = tools[j];
-                                result.Add(new VerbToolRegiestInfo(id, cache, cache));
+                                Tool newProp = ToolAfterAffect(cache, id, false);
+                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
                     }
@@ -899,35 +897,63 @@ namespace RW_ModularizationWeapon
 
 
         #region Stat
-        protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
+        private StatRequest RedirectoryReq(StatWorker statWorker, StatRequest req)
         {
-            if(req.Thing == parent)
+            StatDef statDef = StatWorker_stat(statWorker);
+            if (statDef.category == StatCategoryDefOf.Weapon || statDef.category == StatCategoryDefOf.Weapon_Ranged)
             {
-                CompEquippable eq = parent.GetComp<CompEquippable>();
-                if (eq != null)
+                CompEquippable eq = req.Thing.TryGetComp<CompEquippable>();
+                CompChildNodeProccesser proccesser = req.Thing;
+                if (eq != null && proccesser != null)
                 {
-                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                    forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
-                    forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
-                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
-                    List<Verb> verbs = eq.AllVerbs;
-                    parent.def.Verbs.Clear();
-                    parent.def.tools.Clear();
-                    //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                    foreach (Verb verb in verbs)
-                    {
-                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                        else parent.def.Verbs.Add(verb.verbProps);
-                    }
-                    //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    req = StatRequest.For(proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), eq.PrimaryVerb).Item1);
                 }
             }
-            else ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, forPostRead);
+            return req;
+        }
+
+
+        protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
+        {
+            StatRequest before = req;
+            req = RedirectoryReq(statWorker, req);
+            if(req.Thing == before.Thing)
+            {
+                if (req.Thing == parent)
+                {
+                    CompEquippable eq = parent.GetComp<CompEquippable>();
+                    if (eq != null)
+                    {
+                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                        forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
+                        forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
+                        //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                        List<Verb> verbs = eq.AllVerbs;
+                        parent.def.Verbs.Clear();
+                        parent.def.tools.Clear();
+                        //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                        foreach (Verb verb in verbs)
+                        {
+                            if (verb.tool != null) parent.def.tools.Add(verb.tool);
+                            else parent.def.Verbs.Add(verb.verbProps);
+                        }
+                        //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                    }
+                }
+                else ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, forPostRead);
+            }
         }
 
 
         protected override float PostStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
+            StatRequest before = req;
+            req = RedirectoryReq(statWorker, req);
+            if (req.Thing != before.Thing)
+            {
+                return statWorker.GetValueUnfinalized(req, applyPostProcess);
+            }
+
             if (req.Thing == parent)
             {
                 CompEquippable eq = parent.GetComp<CompEquippable>();
@@ -947,9 +973,28 @@ namespace RW_ModularizationWeapon
         }
 
 
+        protected override float PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
+        {
+            StatRequest before = req;
+            req = RedirectoryReq(statWorker, req);
+            if (before.Thing != req.Thing)
+            {
+                statWorker.FinalizeValue(req, ref result, applyPostProcess);
+                forPostRead.Add("afterRedirectoryReq", result);
+                Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
+            }
+            return result;
+        }
+
+
         protected override float PostStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
 
+            if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
+            {
+                Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
+                return (float)cache;
+            }
             if (req.Thing == parent)
             {
                 if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
@@ -986,6 +1031,12 @@ namespace RW_ModularizationWeapon
 
         protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
         {
+            StatRequest before = req;
+            req = RedirectoryReq(statWorker, req);
+            if (before.Thing != req.Thing)
+            {
+                return statWorker.GetExplanationUnfinalized(req, numberSense);
+            }
             if (req.Thing == parent)
             {
                 StringBuilder stringBuilder = new StringBuilder();
@@ -1005,8 +1056,8 @@ namespace RW_ModularizationWeapon
                             stringBuilder.AppendLine(exp);
                         }
                     }
+                    result += "\n" + stringBuilder.ToString();
                 }
-                result += "\n" + stringBuilder.ToString();
             }
             else
             {
@@ -1018,7 +1069,8 @@ namespace RW_ModularizationWeapon
 
         protected override IEnumerable<Dialog_InfoCard.Hyperlink> PostStatWorker_GetInfoCardHyperlinks(StatWorker statWorker, StatRequest statRequest, IEnumerable<Dialog_InfoCard.Hyperlink> result)
         {
-            foreach(Dialog_InfoCard.Hyperlink link in result)
+            statRequest = RedirectoryReq(statWorker, statRequest);
+            foreach (Dialog_InfoCard.Hyperlink link in result)
             {
                 yield return link;
             }
@@ -1768,8 +1820,6 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine(CheckAndMark(allowCreateOnCraftingPort, "allowCreateOnCraftingPort".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseTools, "notAllowParentUseTools".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseVerbProperties, "notAllowParentUseVerbProperties".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(verbPropertiesAffectByOtherPart, "verbPropertiesAffectByOtherPart".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(toolsAffectByOtherPart, "toolsAffectByOtherPart".Translate()));
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseTools ? "green" : "red") + ">" + "notAllowParentUseTools".Translate() + " : " + (notAllowParentUseTools ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseVerbProperties ? "green" : "red") + ">" + "notAllowParentUseVerbProperties".Translate() + " : " + (notAllowParentUseVerbProperties ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("useOriginalCraftMethod".Translate() + " : <color=" + (useOriginalCraftMethod ? "green" : "red") + ">" + (useOriginalCraftMethod ? "Yes".Translate() : "No".Translate()) + "</color>");
@@ -1890,16 +1940,10 @@ namespace RW_ModularizationWeapon
         public bool setRandomPartWhenCreate = false;
 
 
-        public bool notAllowParentUseTools = false;
-
-
         public bool notAllowParentUseVerbProperties = false;
 
 
-        public bool verbPropertiesAffectByOtherPart = false;
-
-
-        public bool toolsAffectByOtherPart = false;
+        public bool notAllowParentUseTools = false;
         #endregion
 
 
@@ -1914,6 +1958,12 @@ namespace RW_ModularizationWeapon
 
 
         //public FieldReaderDgitList<CompProperties>> ThingCompOffseter = new FieldReaderDgitList<CompProperties>>();
+
+        public float verbPropertiesOtherPartOffseterAffectHorizon = 1;
+
+        public float toolsOtherPartOffseterAffectHorizon= 1;
+
+        public float statOtherPartOffseterAffectHorizon = 1;
         #endregion
 
 
@@ -1928,6 +1978,12 @@ namespace RW_ModularizationWeapon
 
 
         //public FieldReaderDgitList<CompProperties>> ThingCompMultiplier = new FieldReaderDgitList<CompProperties>>();
+
+        public float verbPropertiesOtherPartMultiplierAffectHorizon = 1;
+
+        public float toolsOtherPartMultiplierAffectHorizon = 1;
+
+        public float statOtherPartMultiplierAffectHorizon = 1;
         #endregion
 
 

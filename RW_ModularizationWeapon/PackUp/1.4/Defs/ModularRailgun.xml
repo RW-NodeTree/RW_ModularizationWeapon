@@ -81,7 +81,6 @@
 				<ForceNodeIdControl>true</ForceNodeIdControl>
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<verbPropertiesAffectByOtherPart>true</verbPropertiesAffectByOtherPart>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<attachmentProperties>
 					<li>
@@ -482,7 +481,10 @@
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
-				<verbPropertiesAffectByOtherPart>false</verbPropertiesAffectByOtherPart>
+				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
+				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
+				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
+				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
 				<attachmentProperties>
 					<li>
 						<id>ModRailgun_UBGL</id>
