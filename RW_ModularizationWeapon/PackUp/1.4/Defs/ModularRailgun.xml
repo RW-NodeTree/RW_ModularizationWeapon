@@ -114,7 +114,7 @@
 						<id>ModRailgun_UnderBarrel</id>
 						<name>under barrel</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
-						<postion>(0.45,0,0)</postion>
+						<postion>(0.2,0,0)</postion>
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
@@ -372,22 +372,6 @@
 		</comps>
 	</ThingDef>
 
-	<SoundDef>
-		<defName>Shot_Silenced</defName>
-		<context>MapOnly</context>
-		<eventNames />
-		<maxSimultaneous>2</maxSimultaneous>
-		<subSounds>
-			<li>
-				<grains>
-					<li Class="AudioGrain_Clip">
-						<clipPath>Weapon/Shot_Muffler</clipPath>
-					</li>
-				</grains>
-			</li>
-		</subSounds>
-	</SoundDef>
-
 	<!--Underbarrel-->
 
 	<ThingDef ParentName="RailgunPartBase">
@@ -459,6 +443,7 @@
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
 				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_UBGL</defaultProjectile>
 				<warmupTime>3.5</warmupTime>
 				<range>23.9</range>
 				<forcedMissRadius>1.9</forcedMissRadius>
@@ -488,92 +473,13 @@
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
-								<li>ModRailgun_UBGL_EMP</li>
-								<li>ModRailgun_UBGL_Inc</li>
-								<li>ModRailgun_UBGL_Smoke</li>
+								<li>Module_UBGL_EMP</li>
+								<li>Module_UBGL_Inc</li>
+								<li>Module_UBGL_Smoke</li>
 							</thingDefs>
 						</filter>
 					</li>
 				</attachmentProperties>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="BaseBullet">
-		<defName>Bullet_RailgunUBGL</defName>
-		<label>explosive bolt</label>
-		<graphicData>
-			<texPath>Things/Projectile/LauncherShot</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>TransparentPostLight</shaderType>
-			<color>(254,189,58)</color>
-		</graphicData>
-		<thingClass>Projectile_Explosive</thingClass>
-		<projectile>
-			<speed>40</speed>
-			<explosionRadius>1.9</explosionRadius >
-			<damageDef>Bomb</damageDef>
-			<arcHeightFactor>0.2</arcHeightFactor>
-			<shadowSize>0.6</shadowSize>
-		</projectile>
-	</ThingDef>
-
-	<ThingDef ParentName="RailgunPartBase">
-		<defName>ModRailgun_UBGL_EMP</defName>
-		<label>EMP grenade</label>
-		<description>Standard clip magazine</description>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
-		<statBases>
-			<Mass>0.2</Mass>
-		</statBases>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesObjectPatch>
-					<li>
-						<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
-					</li>
-				</verbPropertiesObjectPatch>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="RailgunPartBase">
-		<defName>ModRailgun_UBGL_Inc</defName>
-		<label>incendiary grenade</label>
-		<description>Standard clip magazine</description>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
-		<statBases>
-			<Mass>0.1</Mass>
-		</statBases>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesObjectPatch>
-					<li>
-						<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
-					</li>
-				</verbPropertiesObjectPatch>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="RailgunPartBase">
-		<defName>ModRailgun_UBGL_Smoke</defName>
-		<label>smoke grenade</label>
-		<description>Standard clip magazine</description>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
-		<statBases>
-			<Mass>0.1</Mass>
-		</statBases>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
-				<verbPropertiesObjectPatch>
-					<li>
-						<defaultProjectile>Bullet_SmokeLauncher</defaultProjectile>
-					</li>
-				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>

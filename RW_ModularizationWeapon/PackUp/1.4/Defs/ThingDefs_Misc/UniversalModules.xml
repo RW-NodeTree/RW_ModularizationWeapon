@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingCategoryDef>
+		<defName>ThingCategory_GunParts</defName>
+		<label>gun parts</label>
+		<parent>Manufactured</parent>
+	</ThingCategoryDef>
+
+	<ThingDef Name="GunPartBase" ParentName="ResourceBase"  Abstract="True">
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.8</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.2</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>ThingCategory_GunParts</li>
+		</thingCategories>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<!--Sights-->
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_ACOG</defName>
+		<label>ACOG sight</label>
+		<description>2x5 magnification scope that improves medium range aiming capability.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_ACOG</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/ACOG</PartTexPath>
+				<verbPropertiesOffseter>
+					<li>
+						<warmupTime>0.3</warmupTime>
+						<range>3</range>
+					</li>
+				</verbPropertiesOffseter>
+				<statMultiplier>
+					<AccuracyMedium>1.25</AccuracyMedium>
+					<AccuracyLong>1.25</AccuracyLong>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<!--Expensive but good, but bulky. not usable on pistols-->
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_HoloSight</defName>
+		<label>holographic sight</label>
+		<description>This advanced sight projects a holographic recticle focused on barrel orientation, good for short to medium range and does not affect field of vision.</description>
+		<statBases>
+			<Mass>0.5</Mass>
+		</statBases>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Holographic</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Holographic</PartTexPath>
+				<statMultiplier>
+					<AccuracyTouch>1.2</AccuracyTouch>
+					<AccuracyShort>1.2</AccuracyShort>
+					<AccuracyMedium>1.2</AccuracyMedium>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<!--Inexpensive, not good for long range, slows down aiming, small enough to be installed on pistols-->
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_RedDotSight</defName>
+		<label>red dot sight</label>
+		<description>An aiming device of relative low technology requirement, while it works good at close distance, the projected red dot obstructs aiming when target is far and small.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_RedDot</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/RedDot</PartTexPath>
+				<verbPropertiesOffseter>
+					<li>
+						<warmupTime>0.2</warmupTime>
+					</li>
+				</verbPropertiesOffseter>
+				<statMultiplier>
+					<AccuracyTouch>1.2</AccuracyTouch>
+					<AccuracyShort>1.1</AccuracyShort>
+					<AccuracyMedium>0.9</AccuracyMedium>
+					<AccuracyLong>0.8</AccuracyLong>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_SniperScope</defName>
+		<label>sniper scope</label>
+		<description>Delicate optical scope with adjustable magnification. Great for shooting target afar, not so good when target is close.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/BoltActionRifle/Item_4X_8XSniperScope</texPath>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/BoltActionRifle/4X_8XSniperScope</PartTexPath>
+				<verbPropertiesMultiplier>
+					<li>
+						<warmupTime>1.5</warmupTime>
+					</li>
+				</verbPropertiesMultiplier>
+				<verbPropertiesOffseter>
+					<li>
+						<range>10</range>
+					</li>
+				</verbPropertiesOffseter>
+				<statMultiplier>
+					<AccuracyTouch>0.3</AccuracyTouch>
+					<AccuracyShort>0.8</AccuracyShort>
+					<AccuracyMedium>1.25</AccuracyMedium>
+					<AccuracyLong>1.5</AccuracyLong>
+				</statMultiplier>
+				<statOffset>
+					<RangedWeapon_Cooldown>0.5</RangedWeapon_Cooldown>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<!--Underbarrel attachments-->
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_Bipod</defName>
+		<label>bipod</label>
+		<description>This device allows resting the gun on the ground, offering better accuracy. However deploying and stowing the bipod takes significant time.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Armrack</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Armrack</PartTexPath>
+				<verbPropertiesOffseter>
+					<li>
+						<warmupTime>0.3</warmupTime>
+						<range>5</range>
+					</li>
+				</verbPropertiesOffseter>
+				<statMultiplier>
+					<AccuracyShort>1.2</AccuracyShort>
+					<AccuracyMedium>1.3</AccuracyMedium>
+					<AccuracyLong>1.5</AccuracyLong>
+				</statMultiplier>
+				<statOffset>
+					<RangedWeapon_Cooldown>0.6</RangedWeapon_Cooldown>
+				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_VerticalGrip</defName>
+		<label>vertical grip</label>
+		<description>A handy grip allows faster aiming.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Grip</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Grip</PartTexPath>
+				<verbPropertiesMultiplier>
+					<li>
+						<warmupTime>0.9</warmupTime>
+					</li>
+				</verbPropertiesMultiplier>
+				<statMultiplier>
+					<AccuracyTouch>1.1</AccuracyTouch>
+					<AccuracyShort>1.1</AccuracyShort>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_AngledGrip</defName>
+		<label>angled grip</label>
+		<description>A handy grip allows faster aiming.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_TriangleGrip</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/TriangleGrip</PartTexPath>
+				<verbPropertiesMultiplier>
+					<li>
+						<warmupTime>0.8</warmupTime>
+					</li>
+				</verbPropertiesMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+</Defs>

@@ -11,6 +11,7 @@
 						<li>Gun_Test_Modularization</li>
 						<li>Gun_Test_A_Modularization</li>
 						<li>Gun_Test_B_Modularization</li>
+						<li>Gun_ModularAssaultRifle</li>
 						<li>Gun_ModularRailgun</li>
 					</thingDefs>
 				</filter>
