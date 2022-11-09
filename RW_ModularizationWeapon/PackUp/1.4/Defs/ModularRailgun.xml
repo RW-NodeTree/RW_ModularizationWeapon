@@ -367,6 +367,7 @@
 					<li>
 						<soundCast>Shot_Silenced</soundCast>
 						<soundCastTail IsNull="true"/>
+						<muzzleFlashScale>.25</muzzleFlashScale>
 					</li>
 				</verbPropertiesObjectPatch>
 			</li>
