@@ -809,11 +809,22 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseVerbProperties(container[i], attachmentProperties))
                 {
-                    List<VerbProperties> verbProperties = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.VerbProperties ?? container[i]?.def.Verbs;
+                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i]);
+                    List<VerbProperties> verbProperties = verbOwner?.VerbProperties ?? container[i]?.def.Verbs;
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
-                        if (((CompModularizationWeapon)container[i])?.Props.verbPropertiesAffectByOtherPart ?? true)
+                        CompModularizationWeapon comp = container[i];
+                        if(comp != null && verbOwner == null)
+                        {
+                            for (int j = 0; j < verbProperties.Count; j++)
+                            {
+                                VerbProperties cache = verbProperties[j];
+                                VerbProperties newProp = VerbPropertiesAfterAffect(comp.VerbPropertiesAfterAffect(cache, id, false), id, false);
+                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
+                            }
+                        }
+                        else if (comp?.Props.verbPropertiesAffectByOtherPart ?? true)
                         {
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
@@ -854,11 +865,22 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseTools(container[i], attachmentProperties))
                 {
-                    List<Tool> tools = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i])?.Tools ?? container[i]?.def.tools;
+                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i]);
+                    List<Tool> tools = verbOwner?.Tools ?? container[i]?.def.tools;
                     if (tools != null)
                     {
                         result.Capacity += tools.Count;
-                        if(((CompModularizationWeapon)container[i])?.Props.toolsAffectByOtherPart ?? true)
+                        CompModularizationWeapon comp = container[i];
+                        if (comp != null && verbOwner == null)
+                        {
+                            for (int j = 0; j < tools.Count; j++)
+                            {
+                                Tool cache = tools[j];
+                                Tool newProp = ToolAfterAffect(comp.ToolAfterAffect(cache, id, false), id, false);
+                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
+                            }
+                        }
+                        else if (comp?.Props.toolsAffectByOtherPart ?? true)
                         {
                             for (int j = 0; j < tools.Count; j++)
                             {
@@ -980,12 +1002,15 @@ namespace RW_ModularizationWeapon
                     statWorker == StatDefOf.Mass.Worker
                 )
                 {
-                    foreach (Thing thing in ChildNodes.Values)
+                    foreach ((string id, Thing thing) in ChildNodes)
                     {
-                        stringBuilder.AppendLine("  " + thing.Label + ":");
-                        string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
-                        exp = Regex.Replace(exp, "\n", "\n  ");
-                        stringBuilder.AppendLine(exp);
+                        if(!NotUseTools(id))
+                        {
+                            stringBuilder.AppendLine("  " + thing.Label + ":");
+                            string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
+                            exp = Regex.Replace(exp, "\n", "\n  ");
+                            stringBuilder.AppendLine(exp);
+                        }
                     }
                 }
                 result += "\n" + stringBuilder.ToString();
