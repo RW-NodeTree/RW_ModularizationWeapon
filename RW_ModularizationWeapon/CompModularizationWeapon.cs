@@ -1486,7 +1486,7 @@ namespace RW_ModularizationWeapon
                                 cache = matrix[k].GetRow(2);
                                 matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
 
-                                matrix[k] = properties.Transfrom * matrix[k];
+                                matrix[k] = properties.Transfrom * scale * matrix[k];
                                 //matrix[k] = properties.Transfrom;
                             }
                             renderInfos[j] = info;
