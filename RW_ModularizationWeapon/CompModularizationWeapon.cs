@@ -1419,6 +1419,7 @@ namespace RW_ModularizationWeapon
 
         protected override List<(Thing, string, List<RenderInfo>)> OverrideDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
         {
+            Vector2 scale = Vector2.one;
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
                 (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
@@ -1432,15 +1433,24 @@ namespace RW_ModularizationWeapon
                         for (int j = 0; j < renderInfos.Count; j++)
                         {
                             RenderInfo info = renderInfos[j];
-                            if(info.material == material)
+                            if (info.material == material)
                             {
                                 info.material = Props.PartTexMaterial ?? info.material;
+                                scale.x = info.mesh.bounds.size.x;
+                                scale.y = info.mesh.bounds.size.z;
                                 renderInfos[j] = info;
                             }
                         }
                     }
+                    break;
                 }
-                else if (!internal_NotDraw(part, properties))
+            }
+            scale = Props.DrawSizeWhenAttach / scale;
+            for (int i = 0; i < nodeRenderingInfos.Count; i++)
+            {
+                (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (!id.NullOrEmpty() && part != parent && !internal_NotDraw(part, properties))
                 {
                     if (properties != null)
                     {
@@ -1925,6 +1935,8 @@ namespace RW_ModularizationWeapon
             }
             #endregion
         }
+
+        public Vector2 DrawSizeWhenAttach = Vector2.one;
 
 
         #region Condation
