@@ -476,15 +476,15 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_UBGL</PartTexPath>
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
+				<verbPropertiesAffectByOtherPart>false</verbPropertiesAffectByOtherPart>
 				<attachmentProperties>
 					<li>
 						<id>ModRailgun_UBGL</id>
 						<name>UBGL</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
 						<scale>(0,0,0)</scale>
-						<verbPropertiesAffectByOtherPart>false</verbPropertiesAffectByOtherPart>
 						<allowEmpty>true</allowEmpty>
-						<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 						<filter>
 							<thingDefs>
 								<li>ModRailgun_UBGL_EMP</li>

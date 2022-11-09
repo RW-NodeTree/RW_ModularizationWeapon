@@ -44,26 +44,22 @@ namespace RW_ModularizationWeapon
 
         public override void PostPostMake()
         {
-            CompChildNodeProccesser nodeProccesser = NodeProccesser;
-            if(nodeProccesser != null)
+            if (Props.setRandomPartWhenCreate)
             {
-                if (Props.setRandomPartWhenCreate)
+                System.Random random = new System.Random();
+                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
-                    System.Random random = new System.Random();
-                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                    int i = random.Next(properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
+                    ThingDef def = i < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[i] : null;
+                    if (def != null)
                     {
-                        int i = random.Next(properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
-                        ThingDef def = i < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[i] : null;
-                        if (def != null)
-                        {
-                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                            nodeProccesser.ChildNodes[properties.id] = thing;
-                        }
+                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                        ChildNodes[properties.id] = thing;
                     }
                 }
-                else SetThingToDefault();
             }
+            else SetThingToDefault();
         }
 
 
