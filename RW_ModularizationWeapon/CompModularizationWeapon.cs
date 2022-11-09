@@ -1419,7 +1419,7 @@ namespace RW_ModularizationWeapon
 
         protected override List<(Thing, string, List<RenderInfo>)> OverrideDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
         {
-            Vector2 scale = Vector2.one;
+            Matrix4x4 scale = Matrix4x4.identity;
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
                 (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
@@ -1436,21 +1436,38 @@ namespace RW_ModularizationWeapon
                             if (info.material == material)
                             {
                                 info.material = Props.PartTexMaterial ?? info.material;
-                                scale.x = info.mesh.bounds.size.x;
-                                scale.y = info.mesh.bounds.size.z;
+                                scale.m00 = Props.DrawSizeWhenAttach.x / info.mesh.bounds.size.x;
+                                scale.m22 = Props.DrawSizeWhenAttach.y / info.mesh.bounds.size.z;
                                 renderInfos[j] = info;
+                                break;
                             }
                         }
                     }
                     break;
                 }
             }
-            scale = Props.DrawSizeWhenAttach / scale;
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
                 (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (!id.NullOrEmpty() && part != parent && !internal_NotDraw(part, properties))
+                if(id.NullOrEmpty() && part == parent)
+                {
+                    if (ParentProccesser != null)
+                    {
+                        Material material = graphic?.MatAt(rot, this.parent);
+                        for (int j = 0; j < renderInfos.Count; j++)
+                        {
+                            RenderInfo info = renderInfos[j];
+                            Matrix4x4[] matrix = info.matrices;
+
+                            for (int k = 0; k < matrix.Length; k++)
+                            {
+                                matrix[k] = scale * matrix[k];
+                            }
+                        }
+                    }
+                }
+                else if (!internal_NotDraw(part, properties))
                 {
                     if (properties != null)
                     {

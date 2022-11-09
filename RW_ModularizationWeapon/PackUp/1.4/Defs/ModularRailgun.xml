@@ -87,7 +87,6 @@
 						<id>ModRailgun_Magazine</id>
 						<name>magazine</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
-						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_MagClip</defultThing>
 						<filter>
@@ -101,7 +100,6 @@
 						<id>ModRailgun_Sight</id>
 						<name>sight</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</UITexPath>
-						<scale>(1.25,0,1.25)</scale>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_SightIron</defultThing>
 						<filter>
@@ -116,7 +114,6 @@
 						<id>ModRailgun_UnderBarrel</id>
 						<name>under barrel</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
-						<scale>(1.25,0,1.25)</scale>
 						<postion>(0.45,0,0)</postion>
 						<allowEmpty>true</allowEmpty>
 						<filter>
@@ -131,7 +128,6 @@
 						<id>ModRailgun_Muzzle</id>
 						<name>muzzle</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</UITexPath>
-						<scale>(1.25,0,1.25)</scale>
 						<postion>(0.2,0,0)</postion>
 						<allowEmpty>true</allowEmpty>
 						<filter>
@@ -426,7 +422,6 @@
 		</tools>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<toolsAffectByOtherPart>true</toolsAffectByOtherPart>
 				<PartTexPath>ModularRailgun/ModRailgun_Bayonet</PartTexPath>
 			</li>
 		</comps>
