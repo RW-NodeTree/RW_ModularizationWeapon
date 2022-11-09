@@ -62,19 +62,7 @@ namespace RW_ModularizationWeapon
                         }
                     }
                 }
-                else
-                {
-                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
-                    {
-                        ThingDef def = properties.defultThing;
-                        if (def != null)
-                        {
-                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                            nodeProccesser.ChildNodes[properties.id] = thing;
-                        }
-                    }
-                }
+                else SetThingToDefault();
             }
         }
 
@@ -1459,21 +1447,30 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public void SetThingToDefault()
+        {
+            foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+            {
+                ThingDef def = properties.defultThing;
+                if (def != null)
+                {
+                    Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                    thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                    ChildNodes[properties.id] = thing;
+                }
+            }
+        }
+
+
         protected override IEnumerable<Thing> PostGenRecipe_MakeRecipeProducts(RecipeDef recipeDef, Pawn worker, List<Thing> ingredients, Thing dominantIngredient1, IBillGiver billGiver, Precept_ThingStyle precept, RecipeInvokeSource invokeSource, IEnumerable<Thing> result)
         {
             List<Thing> things = result.ToList();
-            CompChildNodeProccesser nodeProccesser = NodeProccesser;
-            if (nodeProccesser != null)
+            if(invokeSource == RecipeInvokeSource.products)
             {
-                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                SetThingToDefault();
+                foreach(Thing thing in ChildNodes.Values)
                 {
-                    ThingDef def = properties.defultThing;
-                    if (def != null)
-                    {
-                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                        nodeProccesser.ChildNodes[properties.id] = thing;
-                    }
+                    ((CompModularizationWeapon)thing)?.SetThingToDefault();
                 }
             }
             return things;

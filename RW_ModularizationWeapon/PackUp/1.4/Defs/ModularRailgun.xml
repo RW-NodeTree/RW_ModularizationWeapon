@@ -484,6 +484,7 @@
 						<scale>(0,0,0)</scale>
 						<verbPropertiesAffectByOtherPart>false</verbPropertiesAffectByOtherPart>
 						<allowEmpty>true</allowEmpty>
+						<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 						<filter>
 							<thingDefs>
 								<li>ModRailgun_UBGL_EMP</li>
