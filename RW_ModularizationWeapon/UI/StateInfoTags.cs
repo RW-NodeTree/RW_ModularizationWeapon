@@ -70,8 +70,15 @@ namespace RW_ModularizationWeapon.UI
             statInfos.AddRange(from x in (List<StatDrawEntry>)StatsReportUtility_cachedDrawEntries.GetValue(null) select (false, x));
             infoCardMaxHeight = (float)StatsReportUtility_listHeight.GetValue(null);
             StatsReportUtility.Reset();
-            statInfos.SortBy(x => x.Item2.DisplayPriorityWithinCategory);
-            if (statInfos.Count > 0) statInfos[0] = (true, statInfos[0].Item2);
+            for(int i = 0; i < statInfos.Count; i++)
+            {
+                (bool opened, StatDrawEntry entry) = statInfos[i];
+                if (entry.LabelCap.StartsWith("Description".Translate()))
+                {
+                    statInfos[i] = (true, entry);
+                    break;
+                }
+            }
         }
 
         public void Draw(Rect rect)
