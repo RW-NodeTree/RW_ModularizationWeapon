@@ -363,11 +363,15 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>ModularRailgun/ModRailgun_Silencer</PartTexPath>
+				<verbPropertiesMultiplier>
+					<li>
+						<muzzleFlashScale>.5</muzzleFlashScale>
+					</li>
+				</verbPropertiesMultiplier>
 				<verbPropertiesObjectPatch>
 					<li>
 						<soundCast>Shot_Silenced</soundCast>
 						<soundCastTail IsNull="true"/>
-						<muzzleFlashScale>.25</muzzleFlashScale>
 					</li>
 				</verbPropertiesObjectPatch>
 			</li>

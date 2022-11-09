@@ -343,7 +343,9 @@ namespace RW_ModularizationWeapon
                             else cache.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
                         }
 
-                        results += comp.Props.verbPropertiesOffseter * cache;
+                        cache = comp.Props.verbPropertiesOffseter * cache;
+                        cache.DefaultValue = 0;
+                        results += cache;
                         results.DefaultValue = 0;
                     }
                 }
@@ -388,7 +390,9 @@ namespace RW_ModularizationWeapon
                             else cache.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
                         }
 
-                        results += comp.Props.toolsOffseter * cache;
+                        cache = comp.Props.toolsOffseter * cache;
+                        cache.DefaultValue = 0;
+                        results += cache;
                         results.DefaultValue = 0;
                     }
                 }
@@ -480,14 +484,15 @@ namespace RW_ModularizationWeapon
                             else cache.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
                         }
 
-                        results *= (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
+                        cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
+                        cache.DefaultValue = 1;
+                        results *= cache;
                         results.DefaultValue = 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
                 }
             }
             //Log.Message($"{this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
-
             return results;
         }
 
@@ -527,7 +532,9 @@ namespace RW_ModularizationWeapon
                             else cache.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
                         }
 
-                        results *= (comp.Props.toolsMultiplier - 1f) * cache + 1f;
+                        cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
+                        cache.DefaultValue = 1;
+                        results *= cache;
                         results.DefaultValue = 1f;
                     }
                 }
@@ -744,7 +751,7 @@ namespace RW_ModularizationWeapon
                 VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
                     .ForEach(x =>
                     {
-                        Log.Message(x.ToString());
+                        //Log.Message(x.ToString());
                         properties &= x;
                         properties |= x;
                     });
@@ -767,7 +774,7 @@ namespace RW_ModularizationWeapon
                 ToolsObjectPatch(childNodeIdForTool)
                     .ForEach(x =>
                     {
-                        Log.Message(x.ToString());
+                        //Log.Message(x.ToString());
                         tool &= x;
                         tool |= x;
                     });
