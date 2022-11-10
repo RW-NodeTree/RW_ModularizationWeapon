@@ -30,7 +30,7 @@ namespace RW_ModularizationWeapon
             {
                 datas.AddRange(other.datas);
                 type = other.type;
-                DefaultValue = other.DefaultValue;
+                defaultValue = other.defaultValue;
             }
         }
 
@@ -525,7 +525,7 @@ namespace RW_ModularizationWeapon
             {
                 datas.AddRange(other.datas);
                 type = other.type;
-                DefaultValue = other.DefaultValue;
+                defaultValue = other.defaultValue;
             }
         }
 

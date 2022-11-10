@@ -535,11 +535,10 @@ namespace RW_ModularizationWeapon
                         results *= cache;
                         results.DefaultValue = 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
-                        Log.Message($"{i} : cache={cache}; results={results}");
                     }
                 }
             }
-            Log.Message($" Final {this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
+            //Log.Message($" Final {this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
             return results;
         }
 

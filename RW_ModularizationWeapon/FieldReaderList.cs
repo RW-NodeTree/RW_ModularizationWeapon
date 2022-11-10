@@ -62,6 +62,7 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"defaultValue : {defaultValue}");
             for (int i = 0; i < this.Count; i++)
             {
                 FieldReaderDgit<T> field = this[i];
@@ -275,7 +276,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -292,7 +293,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -331,7 +332,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -348,7 +349,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -374,7 +375,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderDgitList<T> operator *(FieldReaderDgitList<T> a, FieldReaderDgitList<T> b)
+        public static FieldReaderDgitList<T> operator *(FieldReaderDgitList<T> a, FieldReaderDgitList<T> b)// a : mul, b : fordebug
         {
             FieldReaderDgitList<T> result = new FieldReaderDgitList<T>();
 
@@ -388,7 +389,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -405,7 +406,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -445,7 +446,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -462,7 +463,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -501,7 +502,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderDgit<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -518,7 +519,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderDgit<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -597,6 +598,7 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"defaultValue : {defaultValue}");
             for (int i = 0; i < this.Count; i++)
             {
                 FieldReaderBool<T> field = this[i];
@@ -710,7 +712,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderBool<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -727,7 +729,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderBool<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -766,7 +768,7 @@ namespace RW_ModularizationWeapon
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
             foreach (FieldReaderBool<T> child in a)
             {
-	        if(a.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = a.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
@@ -783,7 +785,7 @@ namespace RW_ModularizationWeapon
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
             foreach (FieldReaderBool<T> child in b)
             {
-	        if(b.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = b.DefaultValue;
+                if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
                 {
