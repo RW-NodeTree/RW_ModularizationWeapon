@@ -937,7 +937,7 @@ namespace RW_ModularizationWeapon
             **/
             try
             {
-                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(typeof(T))(xmlRoot, true);
+                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);
                 type = datas?.GetType() ?? typeof(T);
                 foreach (XmlNode node in xmlRoot.ChildNodes)
                 {
