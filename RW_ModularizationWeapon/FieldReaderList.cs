@@ -276,8 +276,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] += child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -287,8 +292,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] += child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -320,8 +330,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] -= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -331,8 +346,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] -= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -365,8 +385,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] *= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -376,8 +401,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] *= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -410,8 +440,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] /= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -421,8 +456,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] /= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -454,8 +494,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] %= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -465,8 +510,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderDgit<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] %= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -651,8 +701,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderBool<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] &= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -662,8 +717,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderBool<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] &= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -695,8 +755,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderBool<T> child in a)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] |= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -706,8 +771,13 @@ namespace RW_ModularizationWeapon
             foreach (FieldReaderBool<T> child in b)
             {
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
-                if (index < 0) result.Add(child);
+                if (index < 0)
+                {
+                    index = result.Count;
+                    result.Add(child);
+                }
                 else result[index] |= child;
+                if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
             b = result;

@@ -122,6 +122,8 @@ namespace RW_ModularizationWeapon
 
         public FieldReaderDgitList<Tool> toolsOffseterAffectHorizon = new FieldReaderDgitList<Tool>();
 
+        public FieldReaderDgitList<CompProperties> compPropertiesOffseterAffectHorizon = new FieldReaderDgitList<CompProperties>();
+
         public List<StatModifier> statOffsetAffectHorizon = new List<StatModifier>();
 
         public float statOffsetAffectHorizonDefaultValue = 1;
@@ -148,6 +150,8 @@ namespace RW_ModularizationWeapon
         public FieldReaderDgitList<VerbProperties> verbPropertiesMultiplierAffectHorizon = new FieldReaderDgitList<VerbProperties>();
 
         public FieldReaderDgitList<Tool> toolsMultiplierAffectHorizon = new FieldReaderDgitList<Tool>();
+
+        public FieldReaderDgitList<CompProperties> compPropertiesMultiplierAffectHorizon = new FieldReaderDgitList<CompProperties>();
 
         public List<StatModifier> statMultiplierAffectHorizon = new List<StatModifier>();
 

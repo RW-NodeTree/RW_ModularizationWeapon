@@ -322,7 +322,7 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (thing != null && id != childNodeIdForVerbProperties)
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    CompModularizationWeapon comp = thing;
                     if (comp != null && comp.Validity)
                     {
                         FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
@@ -340,8 +340,7 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
-                            if (properties.verbPropertiesOffseterAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
-                            else cache.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                            cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
                             if (currentComp != null && comp != currentComp)
                             {
                                 cache *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
@@ -393,8 +392,7 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
-                            if (properties.toolsOffseterAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
-                            else cache.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                            cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
                             if (currentComp != null && comp != currentComp)
                             {
                                 cache *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
@@ -403,6 +401,35 @@ namespace RW_ModularizationWeapon
                         }
 
                         cache = comp.Props.toolsOffseter * cache;
+                        cache.DefaultValue = 0;
+                        results += cache;
+                        results.DefaultValue = 0;
+                    }
+                }
+            }
+            //Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
+            return results;
+        }
+
+
+        public FieldReaderDgitList<CompProperties> CompPropertiesOffseter()
+        {
+            FieldReaderDgitList<CompProperties> results = new FieldReaderDgitList<CompProperties>();
+            NodeContainer container = ChildNodes;
+            results.DefaultValue = 0;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon;
+
+                        cache = comp.Props.compPropertiesOffseter * cache;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -479,7 +506,7 @@ namespace RW_ModularizationWeapon
                 if (thing != null && id != childNodeIdForVerbProperties)
                 {
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    CompModularizationWeapon comp = thing;
                     if (comp != null && comp.Validity)
                     {
                         FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
@@ -497,8 +524,7 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
-                            if (properties.verbPropertiesMultiplierAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
-                            else cache.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                            cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
                             if (currentComp != null && comp != currentComp)
                             {
                                 cache *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
@@ -533,7 +559,7 @@ namespace RW_ModularizationWeapon
                 if (thing != null && id != childNodeIdForTool)
                 {
                     WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
+                    CompModularizationWeapon comp = thing;
                     if (comp != null && comp.Validity)
                     {
                         FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
@@ -551,8 +577,7 @@ namespace RW_ModularizationWeapon
                                         return result;
                                     }
                                 );
-                            if (properties.toolsMultiplierAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
-                            else cache.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                            cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
                             if (currentComp != null && comp != currentComp)
                             {
                                 cache *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
@@ -568,6 +593,35 @@ namespace RW_ModularizationWeapon
                 }
             }
             //Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
+            return results;
+        }
+
+
+        public FieldReaderDgitList<CompProperties> CompPropertiesMultiplier()
+        {
+            FieldReaderDgitList<CompProperties> results = new FieldReaderDgitList<CompProperties>();
+            NodeContainer container = ChildNodes;
+            results.DefaultValue = 1;
+            for (int i = 0; i < container.Count; i++)
+            {
+                string id = container[(uint)i];
+                Thing thing = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        FieldReaderDgitList<CompProperties> cache = properties.compPropertiesMultiplierAffectHorizon;
+
+                        cache = (comp.Props.compPropertiesMultiplier - 1f) * cache + 1f;
+                        cache.DefaultValue = 1;
+                        results += cache;
+                        results.DefaultValue = 1;
+                    }
+                }
+            }
+            //Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
             return results;
         }
 
