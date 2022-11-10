@@ -142,6 +142,18 @@
 						</filter>
 					</li>
 					<li>
+						<id>ModHvySMG_Receiver</id>
+						<name>receiver</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
+						<postion>(0,0.1,0)</postion>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_HvySMG_Chamber</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
 						<id>ModHvySMG_Muzzle</id>
 						<name>muzzle</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</UITexPath>
@@ -154,18 +166,6 @@
 								<li>Module_MuzzleBrake</li>
 								<li>Module_MuzzleCompensator</li>
 								<li>Module_FlashHider</li>
-							</thingDefs>
-						</filter>
-					</li>
-					<li>
-						<id>ModHvySMG_Receiver</id>
-						<name>receiver</name>
-						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
-						<postion>(0,0.1,0)</postion>
-						<allowEmpty>true</allowEmpty>
-						<filter>
-							<thingDefs>
-								<li>Module_HvySMG_Chamber</li>
 							</thingDefs>
 						</filter>
 					</li>
@@ -188,7 +188,7 @@
 
 	<ThingDef ParentName="HvySMGGunPartBase">
 		<defName>Module_HvySMG_MagClip</defName>
-		<label>heavy SMG magazine</label>
+		<label>SMG magazine</label>
 		<description>Standard 30 round clip magazine designed for heavy SMG.</description>
 		<graphicData>
 			<texPath>Things/WeaponPart/Gun/HeavySMG/Item_HeavySMG_Magazine</texPath>
@@ -207,7 +207,7 @@
 
 	<ThingDef ParentName="HvySMGGunPartBase">
 		<defName>Module_HvySNG_MagDrum</defName>
-		<label>heavy SMG drum magazine</label>
+		<label>SMG drum magazine</label>
 		<description>100 round drum magazine provides better sustained firepower, at the cost of reload speed. It also affects the center of gravity of the gun, making it unwieldy.</description>
 		<graphicData>
 			<texPath>Things/WeaponPart/Gun/HeavySMG/Item_HeavySMG_CartridgeDrum</texPath>
