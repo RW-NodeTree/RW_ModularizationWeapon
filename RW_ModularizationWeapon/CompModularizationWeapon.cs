@@ -167,6 +167,81 @@ namespace RW_ModularizationWeapon
             return false;
         }
 
+        public bool VerbPropertiesObjectPatchByChildPart(string id) => internal_VerbPropertiesObjectPatchByChildPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_VerbPropertiesObjectPatchByChildPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart;
+                }
+                else
+                {
+                    return properties.verbPropertiesObjectPatchByChildPart;
+                }
+            }
+            return false;
+        }
+
+        public bool ToolsObjectPatchByChildPart(string id) => internal_ToolsObjectPatchByChildPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_ToolsObjectPatchByChildPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart;
+                }
+                else
+                {
+                    return properties.toolsObjectPatchByChildPart;
+                }
+            }
+            return false;
+        }
+
+        public bool VerbPropertiesObjectPatchByOtherPart(string id) => internal_VerbPropertiesObjectPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_VerbPropertiesObjectPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.verbPropertiesObjectPatchByOtherPart && properties.verbPropertiesObjectPatchByOtherPart;
+                }
+                else
+                {
+                    return properties.verbPropertiesObjectPatchByOtherPart;
+                }
+            }
+            return false;
+        }
+
+        public bool ToolsObjectPatchByOtherPart(string id) => internal_ToolsObjectPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal bool internal_ToolsObjectPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.toolsObjectPatchByOtherPart && properties.toolsObjectPatchByOtherPart;
+                }
+                else
+                {
+                    return properties.toolsObjectPatchByOtherPart;
+                }
+            }
+            return false;
+        }
         #endregion
 
 

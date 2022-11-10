@@ -274,8 +274,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderDgit<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -291,8 +292,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderDgitList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderDgit<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -330,8 +332,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderDgit<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -347,8 +350,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderDgitList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderDgit<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -387,8 +391,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderDgit<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -404,8 +409,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderDgitList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderDgit<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -444,8 +450,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderDgit<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -461,8 +468,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderDgitList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderDgit<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -500,8 +508,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderDgit<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -517,8 +526,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderDgitList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderDgit<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderDgit<T> child = new FieldReaderDgit<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -710,8 +720,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderBool<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderBool<T> child = new FieldReaderBool<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -727,8 +738,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderBoolList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderBool<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderBool<T> child = new FieldReaderBool<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -766,8 +778,9 @@ namespace RW_ModularizationWeapon
             HashSet<Type> UsedTypes = new HashSet<Type>();
 
             if (a.HasDefaultValue) result.DefaultValue = a.DefaultValue;
-            foreach (FieldReaderBool<T> child in a)
+            for (int i = 0; i < a.Count; i++)
             {
+                FieldReaderBool<T> child = new FieldReaderBool<T>(a[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)
@@ -783,8 +796,9 @@ namespace RW_ModularizationWeapon
             result = new FieldReaderBoolList<T>();
 
             if (b.HasDefaultValue) result.DefaultValue = b.DefaultValue;
-            foreach (FieldReaderBool<T> child in b)
+            for (int i = 0; i < b.Count; i++)
             {
+                FieldReaderBool<T> child = new FieldReaderBool<T>(b[i]);
                 if (result.HasDefaultValue && !child.HasDefaultValue) child.DefaultValue = result.DefaultValue;
                 int index = result.FindIndex(x => x.UsedType == child.UsedType);
                 if (index < 0)

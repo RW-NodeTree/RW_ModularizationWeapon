@@ -10,13 +10,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using UnityEngine;
 using Verse;
 using static HarmonyLib.Code;
 
 namespace RW_ModularizationWeapon
 {
-    public class FieldReaderDgit<T> : IEnumerable<KeyValuePair<FieldInfo, double>>
+    public class FieldReaderDgit<T> : IDictionary<FieldInfo, double>
     {
         private double? defaultValue;
         private Type type = typeof(T);
@@ -60,6 +61,17 @@ namespace RW_ModularizationWeapon
 
         public int Count => datas.Count;
 
+        public ICollection<FieldInfo> Keys => datas.Keys;
+
+        public ICollection<double> Values => datas.Values;
+
+        public bool IsReadOnly => ((ICollection<KeyValuePair<FieldInfo, double>>)datas).IsReadOnly;
+
+        public double this[FieldInfo key] 
+        {
+            get => ((IDictionary<FieldInfo, double>)datas)[key];
+            set => Add(key, value);
+        }
 
         public bool TryGetValue(string name, out double value)
         {
@@ -73,16 +85,7 @@ namespace RW_ModularizationWeapon
         public void SetOrAdd(string name, double value)
         {
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null)
-            {
-                Type vt = fieldInfo.FieldType;
-                if (vt == typeof(int) || vt == typeof(float) ||
-                   vt == typeof(long) || vt == typeof(sbyte) ||
-                   vt == typeof(double))
-                    datas.SetOrAdd(fieldInfo, value);
-                else throw new ArgumentException($"not support value(name={name},type={vt})");
-            }
-
+            if (fieldInfo != null) Add(fieldInfo, value);
         }
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
@@ -141,15 +144,38 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public IEnumerator<KeyValuePair<FieldInfo, double>> GetEnumerator()
+        public bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
+
+        public void Add(FieldInfo key, double value)
         {
-            return datas.GetEnumerator();
+            if (key != null)
+            {
+                Type vt = key.FieldType;
+                if (vt == typeof(int) || vt == typeof(float) ||
+                   vt == typeof(long) || vt == typeof(sbyte) ||
+                   vt == typeof(double))
+                    datas.SetOrAdd(key, value);
+                else throw new ArgumentException($"not support value(name={key.Name},type={vt})");
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return datas.GetEnumerator();
-        }
+        public bool Remove(FieldInfo key) => datas.Remove(key);
+
+        public bool TryGetValue(FieldInfo key, out double value) => datas.TryGetValue(key, out value);
+
+        public void Add(KeyValuePair<FieldInfo, double> item) => Add(item.Key, item.Value);
+
+        public void Clear() => datas.Clear();
+
+        public bool Contains(KeyValuePair<FieldInfo, double> item)=> datas.Contains(item);
+
+        public void CopyTo(KeyValuePair<FieldInfo, double>[] array, int arrayIndex) => ((ICollection<KeyValuePair<FieldInfo, double>>)datas).CopyTo(array, arrayIndex);
+
+        public bool Remove(KeyValuePair<FieldInfo, double> item) => ((ICollection<KeyValuePair<FieldInfo, double>>)datas).Remove(item);
+
+        public IEnumerator<KeyValuePair<FieldInfo, double>> GetEnumerator() => datas.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => datas.GetEnumerator();
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
         {
@@ -511,7 +537,7 @@ namespace RW_ModularizationWeapon
         }
     }
 
-    public class FieldReaderBool<T> : IEnumerable<KeyValuePair<FieldInfo, bool>>
+    public class FieldReaderBool<T> : IDictionary<FieldInfo, bool>
     {
         private bool? defaultValue;
         private Type type = typeof(T);
@@ -555,6 +581,18 @@ namespace RW_ModularizationWeapon
 
         public int Count => datas.Count;
 
+        public ICollection<FieldInfo> Keys => datas.Keys;
+
+        public ICollection<bool> Values => datas.Values;
+
+        public bool IsReadOnly => ((ICollection<KeyValuePair<FieldInfo, object>>)datas).IsReadOnly;
+
+        public bool this[FieldInfo key]
+        {
+            get => datas[key];
+            set => Add(key, value);
+        }
+
 
         public bool TryGetValue(string name, out bool value)
         {
@@ -568,14 +606,7 @@ namespace RW_ModularizationWeapon
         public void SetOrAdd(string name, bool value)
         {
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null)
-            {
-                Type vt = fieldInfo.FieldType;
-                if (vt == typeof(bool))
-                    datas.SetOrAdd(fieldInfo, value);
-                else throw new ArgumentException($"not support value(name={name},type={vt})");
-            }
-
+            if (fieldInfo != null) Add(fieldInfo, value);
         }
 
 
@@ -635,15 +666,36 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public IEnumerator<KeyValuePair<FieldInfo, bool>> GetEnumerator()
+        public bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
+
+        public void Add(FieldInfo key, bool value)
         {
-            return datas.GetEnumerator();
+            if (key != null)
+            {
+                Type vt = key.FieldType;
+                if (vt == typeof(bool))
+                    datas.SetOrAdd(key, value);
+                else throw new ArgumentException($"not support value(name={key.Name},type={vt})");
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return datas.GetEnumerator();
-        }
+        public bool Remove(FieldInfo key) => datas.Remove(key);
+
+        public bool TryGetValue(FieldInfo key, out bool value) => datas.TryGetValue(key, out value);
+
+        public void Add(KeyValuePair<FieldInfo, bool> item) => Add(item.Key, item.Value);
+
+        public void Clear() => datas.Clear();
+
+        public bool Contains(KeyValuePair<FieldInfo, bool> item) => datas.Contains(item);
+
+        public void CopyTo(KeyValuePair<FieldInfo, bool>[] array, int arrayIndex) => ((ICollection<KeyValuePair<FieldInfo, bool>>)datas).CopyTo(array, arrayIndex);
+
+        public bool Remove(KeyValuePair<FieldInfo, bool> item) => ((ICollection<KeyValuePair<FieldInfo, bool>>)datas).Remove(item);
+
+        public IEnumerator<KeyValuePair<FieldInfo, bool>> GetEnumerator() => datas.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => datas.GetEnumerator();
 
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, bool b)
         {
@@ -795,7 +847,7 @@ namespace RW_ModularizationWeapon
         }
     }
 
-    public class FieldReaderInst<T> : IEnumerable<KeyValuePair<FieldInfo, object>>
+    public class FieldReaderInst<T> : IDictionary<FieldInfo, object>
     {
         private Type type = typeof(T);
         private T datas = (T)Activator.CreateInstance(typeof(T));
@@ -835,6 +887,18 @@ namespace RW_ModularizationWeapon
 
         public int Count => fields.Count;
 
+        public ICollection<FieldInfo> Keys => new HashSet<FieldInfo>(fields);
+
+        public ICollection<object> Values => (from x in fields select x.GetValue(datas)).ToList();
+
+        public bool IsReadOnly => true;
+
+        public object this[FieldInfo key]
+        {
+            get => (key != null && fields.Contains(key)) ? key.GetValue(datas) : null;
+            set => Add(key, value);
+        }
+
 
         public bool TryGetValue(string name, out object value)
         {
@@ -842,8 +906,7 @@ namespace RW_ModularizationWeapon
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             if (fieldInfo != null)
             {
-                value = fieldInfo.GetValue(datas);
-                return true;
+                return TryGetValue(fieldInfo, out value);
             }
             return false;
         }
@@ -852,16 +915,7 @@ namespace RW_ModularizationWeapon
         public void SetOrAdd(string name, object value)
         {
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null)
-            {
-                Type vt = fieldInfo.FieldType;
-                if (vt.IsAssignableFrom(value.GetType()))
-                {
-                    fieldInfo.SetValue(datas, value);
-                    fields.Add(fieldInfo);
-                }
-            }
-
+            if (fieldInfo != null) Add(fieldInfo, value);
         }
 
 
@@ -902,6 +956,51 @@ namespace RW_ModularizationWeapon
             }
             return result;
         }
+
+        public bool ContainsKey(FieldInfo key) => fields.Contains(key);
+
+        public void Add(FieldInfo key, object value)
+        {
+            if (key != null)
+            {
+                if (key.FieldType.IsAssignableFrom(value.GetType()) && key.DeclaringType.IsAssignableFrom(datas.GetType()))
+                {
+                    key.SetValue(datas, value);
+                    fields.Add(key);
+                }
+            }
+        }
+
+        public bool Remove(FieldInfo key) => fields.Remove(key);
+
+        public bool TryGetValue(FieldInfo key, out object value)
+        {
+            value = default(object);
+            if (fields.Contains(key))
+            {
+                value = key.GetValue(datas);
+                return true;
+            }
+            return false;
+        }
+
+        public void Add(KeyValuePair<FieldInfo, object> item) => Add(item.Key, item.Value);
+
+        public void Clear() => fields.Clear();
+
+        public bool Contains(KeyValuePair<FieldInfo, object> item) => fields.Contains(item.Key) && item.Key.GetValue(datas) == item.Value;
+
+        public void CopyTo(KeyValuePair<FieldInfo, object>[] array, int arrayIndex)
+        {
+            int i = arrayIndex;
+            foreach(FieldInfo field in fields)
+            {
+                array[i] = new KeyValuePair<FieldInfo, object>(field,field.GetValue(datas));
+                i++;
+            }
+        }
+
+        public bool Remove(KeyValuePair<FieldInfo, object> item) => Remove(item.Key);
 
         public IEnumerator<KeyValuePair<FieldInfo, object>> GetEnumerator()
         {
