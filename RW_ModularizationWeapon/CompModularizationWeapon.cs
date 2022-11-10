@@ -935,7 +935,7 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = container[i];
                 if (comp != null && comp.Validity && Props.WeaponAttachmentPropertiesById(id).compPropertiesBoolOrPatchByChildPart)
                 {
-                    results &= comp.Props.compPropertiesBoolOrPatch;
+                    results |= comp.Props.compPropertiesBoolOrPatch;
                     results.DefaultValue = true;
                 }
             }

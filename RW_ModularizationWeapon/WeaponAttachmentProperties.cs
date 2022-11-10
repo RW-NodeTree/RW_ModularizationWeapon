@@ -60,6 +60,7 @@ namespace RW_ModularizationWeapon
             #region Child
             CheckAndSetList(ref verbPropertiesOffseterAffectHorizon, 1);
             CheckAndSetList(ref toolsOffseterAffectHorizon, 1);
+            CheckAndSetList(ref compPropertiesOffseterAffectHorizon, 1);
             #endregion
 
             #region OtherPart
@@ -75,6 +76,7 @@ namespace RW_ModularizationWeapon
             #region Child
             CheckAndSetList(ref verbPropertiesMultiplierAffectHorizon, 1);
             CheckAndSetList(ref toolsMultiplierAffectHorizon, 1);
+            CheckAndSetList(ref compPropertiesMultiplierAffectHorizon, 1);
             #endregion
 
             #region OtherPart
