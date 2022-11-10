@@ -1188,18 +1188,25 @@ namespace RW_ModularizationWeapon
                     CompEquippable eq = parent.GetComp<CompEquippable>();
                     if (eq != null)
                     {
-                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                        forPostRead.Add("CompModularizationWeapon_verbs", new List<VerbProperties>(parent.def.Verbs));
-                        forPostRead.Add("CompModularizationWeapon_tools", new List<Tool>(parent.def.tools));
                         //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
                         List<Verb> verbs = eq.AllVerbs;
-                        parent.def.Verbs.Clear();
-                        parent.def.tools.Clear();
-                        //if (Prefs.DevMode) Log.Message(" prefix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+                        List<VerbProperties> cachedVerbs = new List<VerbProperties>();
+                        List<Tool> cachedTools = new List<Tool>();
                         foreach (Verb verb in verbs)
                         {
-                            if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                            else parent.def.Verbs.Add(verb.verbProps);
+                            if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
+                            else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
+                        }
+                        if(!cachedVerbs.NullOrEmpty())
+                        {
+                            ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                            forPostRead.Add("CompModularizationWeapon_verbs", ThingDef_verbs(parent.def));
+                            ThingDef_verbs(parent.def) = cachedVerbs;
+                        }
+                        if(!cachedTools.NullOrEmpty())
+                        {
+                            forPostRead.Add("CompModularizationWeapon_tools", parent.def.tools);
+                            parent.def.tools = cachedTools;
                         }
                         //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
                     }
@@ -1223,13 +1230,17 @@ namespace RW_ModularizationWeapon
                 CompEquippable eq = parent.GetComp<CompEquippable>();
                 if (eq != null)
                 {
-                    //if (Prefs.DevMode) Log.Message(" postfix before clear: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                    parent.def.Verbs.Clear();
-                    parent.def.tools.Clear();
-                    //if (Prefs.DevMode) Log.Message(" postfix before change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                    parent.def.Verbs.AddRange((List<VerbProperties>)forPostRead["CompModularizationWeapon_verbs"]);
-                    parent.def.tools.AddRange((List<Tool>)forPostRead["CompModularizationWeapon_tools"]);
-                    //if (Prefs.DevMode) Log.Message(" postfix after change: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                    object
+                    obj = forPostRead.TryGetValue("CompModularizationWeapon_verbs");
+                    if(obj != null)
+                    {
+                        ThingDef_verbs(parent.def) = (List<VerbProperties>)obj;
+                    }
+                    obj = forPostRead.TryGetValue("CompModularizationWeapon_tools");
+                    if (obj != null)
+                    {
+                        parent.def.tools = (List<Tool>)obj;
+                    }
                 }
             }
             else result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
@@ -1365,36 +1376,44 @@ namespace RW_ModularizationWeapon
                 CompEquippable eq = parent.GetComp<CompEquippable>();
                 if (eq != null)
                 {
-                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                    verbProperties = new List<VerbProperties>(parent.def.Verbs);
-                    tools = new List<Tool>(parent.def.tools);
+                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
                     List<Verb> verbs = eq.AllVerbs;
-                    parent.def.Verbs.Clear();
-                    parent.def.tools.Clear();
+                    List<VerbProperties> cachedVerbs = new List<VerbProperties>();
+                    List<Tool> cachedTools = new List<Tool>();
                     foreach (Verb verb in verbs)
                     {
-                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                        else parent.def.Verbs.Add(verb.verbProps);
+                        if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
+                        else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
+                    }
+                    if (!cachedVerbs.NullOrEmpty())
+                    {
+                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                        verbProperties = ThingDef_verbs(parent.def);
+                        ThingDef_verbs(parent.def) = cachedVerbs;
+                    }
+                    if (!cachedTools.NullOrEmpty())
+                    {
+                        tools = parent.def.tools;
+                        parent.def.tools = cachedTools;
                     }
                 }
-                List<CompProperties> compProperties = new List<CompProperties>(def.comps);
-                def.comps.Clear();
-                def.comps.AddRange(from x in parent.AllComps select x.props);
+                List<CompProperties> compProperties = def.comps;
+                def.comps = (from x in parent.AllComps select x.props).ToList();
 
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
                 }
-                if (verbProperties != null && tools != null)
+                if (verbProperties != null)
                 {
-                    parent.def.Verbs.Clear();
-                    parent.def.tools.Clear();
-                    parent.def.Verbs.AddRange(verbProperties);
-                    parent.def.tools.AddRange(tools);
+                    ThingDef_verbs(parent.def) = verbProperties;
+                }
+                if (tools != null)
+                {
+                    parent.def.tools = tools;
                 }
 
-                def.comps.Clear();
-                def.comps.AddRange(compProperties);
+                def.comps = compProperties;
 
             }
             else
@@ -1418,29 +1437,45 @@ namespace RW_ModularizationWeapon
                 CompEquippable eq = parent.GetComp<CompEquippable>();
                 if (eq != null)
                 {
-                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                    verbProperties = new List<VerbProperties>(parent.def.Verbs);
-                    tools = new List<Tool>(parent.def.tools);
+                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
                     List<Verb> verbs = eq.AllVerbs;
-                    parent.def.Verbs.Clear();
-                    parent.def.tools.Clear();
+                    List<VerbProperties> cachedVerbs = new List<VerbProperties>();
+                    List<Tool> cachedTools = new List<Tool>();
                     foreach (Verb verb in verbs)
                     {
-                        if (verb.tool != null) parent.def.tools.Add(verb.tool);
-                        else parent.def.Verbs.Add(verb.verbProps);
+                        if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
+                        else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
+                    }
+                    if (!cachedVerbs.NullOrEmpty())
+                    {
+                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                        verbProperties = ThingDef_verbs(parent.def);
+                        ThingDef_verbs(parent.def) = cachedVerbs;
+                    }
+                    if (!cachedTools.NullOrEmpty())
+                    {
+                        tools = parent.def.tools;
+                        parent.def.tools = cachedTools;
                     }
                 }
+
+                List<CompProperties> compProperties = parent.def.comps;
+                parent.def.comps = (from x in parent.AllComps select x.props).ToList();
+
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
                 }
-                if (verbProperties != null && tools != null)
+                if (verbProperties != null)
                 {
-                    parent.def.Verbs.Clear();
-                    parent.def.tools.Clear();
-                    parent.def.Verbs.AddRange(verbProperties);
-                    parent.def.tools.AddRange(tools);
+                    ThingDef_verbs(parent.def) = verbProperties;
                 }
+                if (tools != null)
+                {
+                    parent.def.tools = tools;
+                }
+
+                parent.def.comps = compProperties;
             }
             else
             {
