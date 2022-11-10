@@ -251,7 +251,7 @@
 					<SwayFactor>0.1</SwayFactor>
 				</statOffset>
 				<compPropertiesObjectPatch>
-					<li Class="CombatExtended.CompProperties_AmmoUser">
+					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
 						<magazineSize>75</magazineSize>
 						<reloadTime>5.6</reloadTime>
 					</li>

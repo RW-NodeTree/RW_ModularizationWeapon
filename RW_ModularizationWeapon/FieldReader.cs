@@ -13,7 +13,6 @@ using System.Xml;
 using System.Xml.Linq;
 using UnityEngine;
 using Verse;
-using static HarmonyLib.Code;
 
 namespace RW_ModularizationWeapon
 {
@@ -90,13 +89,13 @@ namespace RW_ModularizationWeapon
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            string typename = xmlRoot.Attributes["Class"]?.Value;
+            string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
             try
             {
                 type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
                 if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex.ToString());
             }
@@ -112,7 +111,7 @@ namespace RW_ModularizationWeapon
             }
 
             /**
-            <xx Class="c# type" Default="default_value">
+            <xx Reader-Class="c# type" Default="default_value">
                 <member_name_of_type>value</member_name_of_type>
             </xx>
             **/
@@ -612,7 +611,7 @@ namespace RW_ModularizationWeapon
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            string typename = xmlRoot.Attributes["Class"]?.Value;
+            string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
             try
             {
                 type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
@@ -634,7 +633,7 @@ namespace RW_ModularizationWeapon
             }
 
             /**
-            <xx Class="c# type" Default="default_value">
+            <xx Reader-Class="c# type" Default="default_value">
                 <member_name_of_type>value</member_name_of_type>
             </xx>
             **/
@@ -921,8 +920,18 @@ namespace RW_ModularizationWeapon
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
+            string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
+            try
+            {
+                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
+                if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+            }
             /**
-            <xx Class="c# type">
+            <xx Reader-Class="c# type">
                 <member_name_of_type>value</member_name_of_type>
             </xx>
             **/
