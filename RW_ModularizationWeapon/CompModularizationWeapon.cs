@@ -451,8 +451,8 @@ namespace RW_ModularizationWeapon
                                 .GetStatValueFromList(
                                     statDef,
                                     current.statOtherPartOffseterAffectHorizonDefaultValue
-                                ) ?? 1f)
-                                * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon ?? 1f) : 1f))
+                                ) ?? 1)
+                                * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon ?? 1) : 1))
                             );
                     }
                 }
@@ -563,7 +563,7 @@ namespace RW_ModularizationWeapon
                         cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
                         cache.DefaultValue = 1;
                         results *= cache;
-                        results.DefaultValue = 1f;
+                        results.DefaultValue = 1;
                     }
                 }
             }
@@ -2003,11 +2003,14 @@ namespace RW_ModularizationWeapon
         public List<StatModifier> statOffset = new List<StatModifier>();
 
 
+        public FieldReaderDgitList<CompProperties> compPropertiesOffseter = new FieldReaderDgitList<CompProperties>();
+
+
         //public FieldReaderDgitList<CompProperties>> ThingCompOffseter = new FieldReaderDgitList<CompProperties>>();
 
         public float verbPropertiesOtherPartOffseterAffectHorizon = 1;
 
-        public float toolsOtherPartOffseterAffectHorizon= 1;
+        public float toolsOtherPartOffseterAffectHorizon = 1;
 
         public float statOtherPartOffseterAffectHorizon = 1;
         #endregion
@@ -2021,6 +2024,9 @@ namespace RW_ModularizationWeapon
 
 
         public List<StatModifier> statMultiplier = new List<StatModifier>();
+
+
+        public FieldReaderDgitList<CompProperties> compPropertiesMultiplier = new FieldReaderDgitList<CompProperties>();
 
 
         //public FieldReaderDgitList<CompProperties>> ThingCompMultiplier = new FieldReaderDgitList<CompProperties>>();
@@ -2040,16 +2046,29 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderInst<Tool>> toolsObjectPatch = new List<FieldReaderInst<Tool>>();
 
 
+        public List<FieldReaderInst<CompProperties>> compPropertiesObjectPatch = new List<FieldReaderInst<CompProperties>>();
+
+
+
+
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatch = new FieldReaderBoolList<VerbProperties>();
 
 
         public FieldReaderBoolList<Tool> toolsBoolAndPatch = new FieldReaderBoolList<Tool>();
 
 
+        public FieldReaderBoolList<CompProperties> compPropertiesBoolAndPatch = new FieldReaderBoolList<CompProperties>();
+
+
+
+
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatch = new FieldReaderBoolList<VerbProperties>();
 
 
         public FieldReaderBoolList<Tool> toolsBoolOrPatch = new FieldReaderBoolList<Tool>();
+
+
+        public FieldReaderBoolList<CompProperties> compPropertiesBoolOrPatch = new FieldReaderBoolList<CompProperties>();
         #endregion
 
 

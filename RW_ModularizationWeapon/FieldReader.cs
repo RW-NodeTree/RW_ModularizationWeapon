@@ -52,7 +52,7 @@ namespace RW_ModularizationWeapon
                 if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
-                    datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
+                    datas.RemoveAll(x => !type.IsAssignableFrom(x.Key.DeclaringType));
                 }
             }
         }
@@ -547,7 +547,7 @@ namespace RW_ModularizationWeapon
                 if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
-                    datas.RemoveAll(x => type.IsAssignableFrom(x.Key.DeclaringType));
+                    datas.RemoveAll(x => !type.IsAssignableFrom(x.Key.DeclaringType));
                 }
             }
         }
@@ -821,7 +821,7 @@ namespace RW_ModularizationWeapon
                 if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
-                    fields.RemoveWhere(x => type.IsAssignableFrom(x.DeclaringType));
+                    fields.RemoveWhere(x => !type.IsAssignableFrom(x.DeclaringType));
                     T org = datas;
                     datas = (T)Activator.CreateInstance(type);
                     foreach(FieldInfo field in fields)
@@ -867,16 +867,6 @@ namespace RW_ModularizationWeapon
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            string typename = xmlRoot.Attributes["Class"]?.Value;
-            try
-            {
-                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
-                if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.ToString());
-            }
             /**
             <xx Class="c# type">
                 <member_name_of_type>value</member_name_of_type>
@@ -884,7 +874,8 @@ namespace RW_ModularizationWeapon
             **/
             try
             {
-                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);
+                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(typeof(T))(xmlRoot, true);
+                type = datas?.GetType() ?? typeof(T);
                 foreach (XmlNode node in xmlRoot.ChildNodes)
                 {
                     FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
