@@ -628,7 +628,9 @@ namespace RW_ModularizationWeapon
                         }
                     }
 
-                    cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
+                    FieldReaderDgitList<VerbProperties> mul = comp.Props.verbPropertiesMultiplier - 1f;
+                    if (mul.HasDefaultValue) mul.DefaultValue--;
+                    cache = mul * cache + 1;
                     cache.DefaultValue = 1;
                     results *= cache;
                     results.DefaultValue = 1;
@@ -677,7 +679,9 @@ namespace RW_ModularizationWeapon
                         }
                     }
 
-                    cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
+                    FieldReaderDgitList<Tool> mul = comp.Props.toolsMultiplier - 1f;
+                    if (mul.HasDefaultValue) mul.DefaultValue--;
+                    cache = mul * cache + 1;
                     cache.DefaultValue = 1;
                     results *= cache;
                     results.DefaultValue = 1;
@@ -700,7 +704,9 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity)
                 {
-                    FieldReaderDgitList<CompProperties> cache = (comp.Props.compPropertiesMultiplier - 1f) * properties.compPropertiesMultiplierAffectHorizon + 1f;
+                    FieldReaderDgitList<CompProperties> cache = comp.Props.compPropertiesMultiplier - 1;
+                    if (cache.HasDefaultValue) cache.DefaultValue--;
+                    cache = cache * properties.compPropertiesMultiplierAffectHorizon + 1;
                     cache.DefaultValue = 1;
                     results *= cache;
                     results.DefaultValue = 1;
