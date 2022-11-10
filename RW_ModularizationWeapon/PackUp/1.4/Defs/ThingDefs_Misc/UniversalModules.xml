@@ -17,9 +17,24 @@
 		<soundDrop>Standard_Drop</soundDrop>
 		<stackLimit>1</stackLimit>
 		<healthAffectsPrice>false</healthAffectsPrice>
+		<smeltable>true</smeltable>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Smith</soundWorking>
+			<recipeUsers>
+				<li>TableMachining</li>
+			</recipeUsers>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>Gunsmithing</researchPrerequisite>
+			<skillRequirements>
+				<Crafting>4</Crafting>
+			</skillRequirements>
+		</recipeMaker>
 		<statBases>
 			<MaxHitPoints>70</MaxHitPoints>
-			<MarketValue>32</MarketValue>
+			<WorkToMake>1500</WorkToMake>
 			<Mass>0.2</Mass>
 			<Flammability>0.6</Flammability>
 			<DeteriorationRate>2.0</DeteriorationRate>
@@ -43,11 +58,26 @@
 		<defName>Module_ACOG</defName>
 		<label>ACOG sight</label>
 		<description>2x5 magnification scope that improves medium range aiming capability.</description>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.5</Mass>
+		</statBases>
 		<graphicData>
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_ACOG</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<costList>
+			<Plasteel>10</Plasteel>
+			<Steel>25</Steel>
+			<ComponentIndustrial>1</ComponentIndustrial>
+		</costList>
+		<recipeMaker>
+			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
+			<skillRequirements>
+				<Crafting>6</Crafting>
+			</skillRequirements>
+		</recipeMaker>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/ACOG</PartTexPath>
@@ -72,13 +102,25 @@
 		<label>holographic sight</label>
 		<description>This advanced sight projects a holographic recticle focused on barrel orientation, good for short to medium range and does not affect field of vision.</description>
 		<statBases>
-			<Mass>0.5</Mass>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.3</Mass>
 		</statBases>
 		<graphicData>
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Holographic</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<costList>
+			<Plasteel>20</Plasteel>
+			<Steel>10</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<recipeMaker>
+			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
+			<skillRequirements>
+				<Crafting>6</Crafting>
+			</skillRequirements>
+		</recipeMaker>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Holographic</PartTexPath>
@@ -101,7 +143,14 @@
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_RedDot</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
+		<recipeMaker>
+			<researchPrerequisite>BlowbackOperation</researchPrerequisite>
+		</recipeMaker>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<costList>
+			<Steel>25</Steel>
+			<ComponentIndustrial>1</ComponentIndustrial>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/RedDot</PartTexPath>
@@ -124,10 +173,24 @@
 		<defName>Module_SniperScope</defName>
 		<label>sniper scope</label>
 		<description>Delicate optical scope with adjustable magnification. Great for shooting target afar, not so good when target is close.</description>
+		<statBases>
+			<WorkToMake>7500</WorkToMake>
+			<Mass>0.7</Mass>
+		</statBases>
 		<graphicData>
 			<texPath>Things/WeaponPart/Gun/BoltActionRifle/Item_4X_8XSniperScope</texPath>
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
+		<costList>
+			<Steel>35</Steel>
+			<ComponentIndustrial>3</ComponentIndustrial>
+		</costList>
+		<recipeMaker>
+			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
+			<skillRequirements>
+				<Crafting>6</Crafting>
+			</skillRequirements>
+		</recipeMaker>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/BoltActionRifle/4X_8XSniperScope</PartTexPath>
@@ -165,6 +228,10 @@
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<costList>
+			<Steel>50</Steel>
+			<ComponentIndustrial>1</ComponentIndustrial>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Armrack</PartTexPath>
@@ -194,6 +261,12 @@
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Grip</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
+		<recipeMaker>
+			<researchPrerequisite>BlowbackOperation</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>40</Steel>
+		</costList>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
@@ -219,6 +292,12 @@
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_TriangleGrip</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
+		<recipeMaker>
+			<researchPrerequisite>BlowbackOperation</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>40</Steel>
+		</costList>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">

@@ -12,6 +12,7 @@
 						<clipPath>Weapon/Shot_Muffler</clipPath>
 					</li>
 				</grains>
+				<volumeRange>400~410</volumeRange>
 			</li>
 		</subSounds>
 	</SoundDef>

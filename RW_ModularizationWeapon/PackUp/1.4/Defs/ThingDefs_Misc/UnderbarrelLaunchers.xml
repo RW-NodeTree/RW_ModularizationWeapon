@@ -10,8 +10,14 @@
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
 		<statBases>
+			<WorkToMake>3000</WorkToMake>
 			<Mass>0.5</Mass>
 		</statBases>
+		<costList>
+			<Steel>75</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+			<Weapon_GrenadeFrag>1</Weapon_GrenadeFrag>
+		</costList>
 		<verbs>
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
@@ -32,6 +38,69 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/GrenadeLauncher</PartTexPath>
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
+				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
+				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
+				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
+				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
+				<attachmentProperties>
+					<li>
+						<id>Module_UBGL</id>
+						<name>Payload</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
+						<scale>(0,0,0)</scale>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_UBGL_EMP</li>
+								<li>Module_UBGL_Inc</li>
+								<li>Module_UBGL_Smoke</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGLLight</defName>
+		<label>light UBGL</label>
+		<description>Underbarrel grenade launcher that can launch a variety of payloads.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/ChainShotgun/Item_LightGrenadeLauncher</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.5</Mass>
+		</statBases>
+		<costList>
+			<Steel>75</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+			<Weapon_GrenadeFrag>1</Weapon_GrenadeFrag>
+		</costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_UBGL</defaultProjectile>
+				<warmupTime>3.5</warmupTime>
+				<range>15.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Shot_IncendiaryLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/LightGrenadeLauncher</PartTexPath>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
 				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
@@ -82,8 +151,12 @@
 		<description>Standard clip magazine</description>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
 		<statBases>
+			<WorkToMake>60</WorkToMake>
 			<Mass>0.2</Mass>
 		</statBases>
+		<costList>
+			<Gun_EmpLauncher>1</Gun_EmpLauncher>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
@@ -102,8 +175,12 @@
 		<description>Standard clip magazine</description>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
 		<statBases>
+			<WorkToMake>60</WorkToMake>
 			<Mass>0.1</Mass>
 		</statBases>
+		<costList>
+			<Gun_IncendiaryLauncher>1</Gun_IncendiaryLauncher>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
@@ -122,8 +199,12 @@
 		<description>Standard clip magazine</description>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
 		<statBases>
+			<WorkToMake>60</WorkToMake>
 			<Mass>0.1</Mass>
 		</statBases>
+		<costList>
+			<Gun_SmokeLauncher>1</Gun_SmokeLauncher>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
@@ -148,6 +229,10 @@
 		<statBases>
 			<Mass>0.5</Mass>
 		</statBases>
+		<costList>
+			<Steel>60</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
 		<verbs>
 			<li>
 				<verbClass>Verb_Shoot</verbClass>

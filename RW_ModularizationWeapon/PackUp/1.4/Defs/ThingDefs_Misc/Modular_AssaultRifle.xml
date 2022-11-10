@@ -169,8 +169,15 @@
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
 		<statBases>
+			<WorkToMake>500</WorkToMake>
 			<Mass>0.3</Mass>
 		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>25</Steel>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_Magazine</PartTexPath>
@@ -188,8 +195,16 @@
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
 		<statBases>
-			<Mass>0.3</Mass>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.7</Mass>
 		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>50</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_CartridgeDrum</PartTexPath>
@@ -223,9 +238,12 @@
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
 		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
-		<statBases>
-			<Mass>0.3</Mass>
-		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>30</Steel>
+		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_LengthenedBarrel</PartTexPath>

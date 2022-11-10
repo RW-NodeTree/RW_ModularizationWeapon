@@ -8,11 +8,14 @@
 			<li Class="RW_ModularizationWeapon.CompProperties_CustomWeaponPort">
 				<filter>
 					<thingDefs>
-						<li>Gun_Test_Modularization</li>
-						<li>Gun_Test_A_Modularization</li>
-						<li>Gun_Test_B_Modularization</li>
 						<li>Gun_ModularAssaultRifle</li>
 						<li>Gun_ModularRailgun</li>
+						<li>Gun_ModularHeavySMG</li>
+						<li>Gun_ModularChainShotgun</li>
+						<li>Gun_ModularPumpShotgun</li>
+						<li>Gun_ModularMachinepistol</li>
+						<li>Gun_ModularSniperRifle</li>
+						<li>Gun_ModularBoltActionRifle</li>
 					</thingDefs>
 				</filter>
 			</li>
