@@ -427,9 +427,7 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing;
                     if (comp != null && comp.Validity)
                     {
-                        FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon;
-
-                        cache = comp.Props.compPropertiesOffseter * cache;
+                        FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon * comp.Props.compPropertiesOffseter;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -537,10 +535,11 @@ namespace RW_ModularizationWeapon
                         results *= cache;
                         results.DefaultValue = 1;
                         //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
+                        Log.Message($"{i} : cache={cache}; results={results}");
                     }
                 }
             }
-            //Log.Message($"{this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
+            Log.Message($" Final {this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
             return results;
         }
 
@@ -612,11 +611,9 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing;
                     if (comp != null && comp.Validity)
                     {
-                        FieldReaderDgitList<CompProperties> cache = properties.compPropertiesMultiplierAffectHorizon;
-
-                        cache = (comp.Props.compPropertiesMultiplier - 1f) * cache + 1f;
+                        FieldReaderDgitList<CompProperties> cache = (comp.Props.compPropertiesMultiplier - 1f) * properties.compPropertiesMultiplierAffectHorizon + 1f;
                         cache.DefaultValue = 1;
-                        results += cache;
+                        results *= cache;
                         results.DefaultValue = 1;
                     }
                 }
@@ -729,6 +726,32 @@ namespace RW_ModularizationWeapon
         }
 
 
+
+        public List<FieldReaderInst<CompProperties>> CompPropertiesObjectPatch()
+        {
+            NodeContainer container = ChildNodes;
+            List<FieldReaderInst<CompProperties>> results = new List<FieldReaderInst<CompProperties>>();
+            for (int i = 0; i < container.Count; i++)
+            {
+                Thing thing = container[i];
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        foreach (FieldReaderInst<CompProperties> child in comp.Props.compPropertiesObjectPatch)
+                        {
+                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                            if (index < 0) results.Add(child);
+                            else results[index] |= child;
+                        }
+                    }
+                }
+            }
+            return results;
+        }
+
+
         public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string childNodeIdForVerbProperties)
         {
             NodeContainer container = ChildNodes;
@@ -767,6 +790,28 @@ namespace RW_ModularizationWeapon
                     if (comp != null && comp.Validity)
                     {
                         results &= comp.Props.toolsBoolAndPatch;
+                        results.DefaultValue = true;
+                    }
+                }
+            }
+            return results;
+        }
+
+
+        public FieldReaderBoolList<CompProperties> CompPropertiesAndPatch()
+        {
+            NodeContainer container = ChildNodes;
+            FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
+            results.DefaultValue = true;
+            for (int i = 0; i < container.Count; i++)
+            {
+                Thing thing = container[i];
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        results &= comp.Props.compPropertiesBoolAndPatch;
                         results.DefaultValue = true;
                     }
                 }
@@ -814,6 +859,28 @@ namespace RW_ModularizationWeapon
                     {
                         results |= comp.Props.toolsBoolOrPatch;
                         results.DefaultValue = false;
+                    }
+                }
+            }
+            return results;
+        }
+
+
+        public FieldReaderBoolList<CompProperties> CompPropertiesOrPatch()
+        {
+            NodeContainer container = ChildNodes;
+            FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
+            results.DefaultValue = true;
+            for (int i = 0; i < container.Count; i++)
+            {
+                Thing thing = container[i];
+                if (thing != null)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp != null && comp.Validity)
+                    {
+                        results &= comp.Props.compPropertiesBoolOrPatch;
+                        results.DefaultValue = true;
                     }
                 }
             }
@@ -2103,6 +2170,18 @@ namespace RW_ModularizationWeapon
         public List<FieldReaderInst<CompProperties>> compPropertiesObjectPatch = new List<FieldReaderInst<CompProperties>>();
 
 
+        public bool verbPropertiesObjectPatchByChildPart = true;
+
+
+        public bool toolsObjectPatchByChildPart = true;
+
+
+        public bool verbPropertiesObjectPatchByOtherPart = false;
+
+
+        public bool toolsObjectPatchByOtherPart = false;
+
+
 
 
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatch = new FieldReaderBoolList<VerbProperties>();
@@ -2114,6 +2193,18 @@ namespace RW_ModularizationWeapon
         public FieldReaderBoolList<CompProperties> compPropertiesBoolAndPatch = new FieldReaderBoolList<CompProperties>();
 
 
+        public bool verbPropertiesBoolAndPatchByChildPart = true;
+
+
+        public bool toolsBoolAndPatchByChildPart = true;
+
+
+        public bool verbPropertiesBoolAndPatchByOtherPart = false;
+
+
+        public bool toolsBoolAndPatchByOtherPart = false;
+
+
 
 
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatch = new FieldReaderBoolList<VerbProperties>();
@@ -2123,6 +2214,18 @@ namespace RW_ModularizationWeapon
 
 
         public FieldReaderBoolList<CompProperties> compPropertiesBoolOrPatch = new FieldReaderBoolList<CompProperties>();
+
+
+        public bool verbPropertiesBoolOrPatchByChildPart = true;
+
+
+        public bool toolsBoolOrPatchByChildPart = true;
+
+
+        public bool verbPropertiesBoolOrPatchByOtherPart = false;
+
+
+        public bool toolsBoolOrPatchByOtherPart = false;
         #endregion
 
 

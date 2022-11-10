@@ -174,6 +174,38 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
+        #region Patch
+        #region Object
+        public bool verbPropertiesObjectPatchByChildPart = true;
+
+        public bool toolsObjectPatchByChildPart = true;
+
+        public bool verbPropertiesObjectPatchByOtherPart = false;
+
+        public bool toolsObjectPatchByOtherPart = false;
+        #endregion
+
+        #region And
+        public bool verbPropertiesBoolAndPatchByChildPart = true;
+
+        public bool toolsBoolAndPatchByChildPart = true;
+
+        public bool verbPropertiesBoolAndPatchByOtherPart = false;
+
+        public bool toolsBoolAndPatchByOtherPart = false;
+        #endregion
+
+        #region And
+        public bool verbPropertiesBoolOrPatchByChildPart = true;
+
+        public bool toolsBoolOrPatchByChildPart = true;
+
+        public bool verbPropertiesBoolOrPatchByOtherPart = false;
+
+        public bool toolsBoolOrPatchByOtherPart = false;
+        #endregion
+        #endregion
+
         private Material materialCache;
     }
 }

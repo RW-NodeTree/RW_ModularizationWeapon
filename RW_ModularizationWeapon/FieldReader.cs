@@ -133,7 +133,7 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
+            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
             foreach ((FieldInfo field, double value) in datas)
             {
                 result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
@@ -627,7 +627,7 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
+            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
             foreach ((FieldInfo field, bool value) in datas)
             {
                 result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
