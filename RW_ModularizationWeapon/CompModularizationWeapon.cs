@@ -342,10 +342,14 @@ namespace RW_ModularizationWeapon
                                 );
                             if (properties.verbPropertiesOffseterAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
                             else cache.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                            if (currentComp != null && comp != currentComp)
+                            {
+                                cache *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
+                                cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
+                            }
                         }
 
                         cache = comp.Props.verbPropertiesOffseter * cache;
-                        if(currentComp != null && comp != currentComp) cache = cache * currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -391,10 +395,14 @@ namespace RW_ModularizationWeapon
                                 );
                             if (properties.toolsOffseterAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
                             else cache.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                            if (currentComp != null && comp != currentComp)
+                            {
+                                cache *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
+                                cache.DefaultValue *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
+                            }
                         }
 
                         cache = comp.Props.toolsOffseter * cache;
-                        if(currentComp != null && comp != currentComp) cache = cache * currentComp.Props.toolsOtherPartOffseterAffectHorizon;
                         cache.DefaultValue = 0;
                         results += cache;
                         results.DefaultValue = 0;
@@ -491,10 +499,14 @@ namespace RW_ModularizationWeapon
                                 );
                             if (properties.verbPropertiesMultiplierAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
                             else cache.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                            if (currentComp != null && comp != currentComp)
+                            {
+                                cache *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
+                                cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
+                            }
                         }
 
                         cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
-                        if (currentComp != null && comp != currentComp) cache = (cache - 1f) * currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon + 1;
                         cache.DefaultValue = 1;
                         results *= cache;
                         results.DefaultValue = 1;
@@ -541,10 +553,14 @@ namespace RW_ModularizationWeapon
                                 );
                             if (properties.toolsMultiplierAffectHorizon.HasDefaultValue) cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
                             else cache.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                            if (currentComp != null && comp != currentComp)
+                            {
+                                cache *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
+                                cache.DefaultValue *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
+                            }
                         }
 
                         cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
-                        if (currentComp != null && comp != currentComp) cache = (cache - 1f) * currentComp.Props.toolsOtherPartMultiplierAffectHorizon + 1;
                         cache.DefaultValue = 1;
                         results *= cache;
                         results.DefaultValue = 1f;
