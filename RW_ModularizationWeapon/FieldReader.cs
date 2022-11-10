@@ -585,7 +585,7 @@ namespace RW_ModularizationWeapon
 
         public ICollection<bool> Values => datas.Values;
 
-        public bool IsReadOnly => ((ICollection<KeyValuePair<FieldInfo, object>>)datas).IsReadOnly;
+        public bool IsReadOnly => ((ICollection<KeyValuePair<FieldInfo, bool>>)datas).IsReadOnly;
 
         public bool this[FieldInfo key]
         {

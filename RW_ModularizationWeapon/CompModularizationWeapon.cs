@@ -92,7 +92,7 @@ namespace RW_ModularizationWeapon
 
         #region Condition
         public bool Unchangeable(string id) => internal_Unchangeable(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_Unchangeable(Thing thing, WeaponAttachmentProperties properties)
+        internal static bool internal_Unchangeable(Thing thing, WeaponAttachmentProperties properties)
         {
             if(thing != null && properties != null)
             {
@@ -112,7 +112,7 @@ namespace RW_ModularizationWeapon
 
 
         public bool NotDraw(string id) => internal_NotDraw(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_NotDraw(Thing thing, WeaponAttachmentProperties properties)
+        internal static bool internal_NotDraw(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
             {
@@ -131,7 +131,7 @@ namespace RW_ModularizationWeapon
 
 
         public bool NotUseTools(string id) => internal_NotUseTools(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_NotUseTools(Thing thing, WeaponAttachmentProperties properties)
+        internal static bool internal_NotUseTools(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
             {
@@ -150,7 +150,7 @@ namespace RW_ModularizationWeapon
         
 
         public bool NotUseVerbProperties(string id) => internal_NotUseVerbProperties(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_NotUseVerbProperties(Thing thing, WeaponAttachmentProperties properties)
+        internal static bool internal_NotUseVerbProperties(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
             {
@@ -167,46 +167,8 @@ namespace RW_ModularizationWeapon
             return false;
         }
 
-        public bool VerbPropertiesObjectPatchByChildPart(string id) => internal_VerbPropertiesObjectPatchByChildPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_VerbPropertiesObjectPatchByChildPart(Thing thing, WeaponAttachmentProperties properties)
-        {
-            if (thing != null && properties != null)
-            {
-                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
-                CompModularizationWeapon comp = thing;
-                if (comp != null && comp.Validity)
-                {
-                    return comp.Props.verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart;
-                }
-                else
-                {
-                    return properties.verbPropertiesObjectPatchByChildPart;
-                }
-            }
-            return false;
-        }
-
-        public bool ToolsObjectPatchByChildPart(string id) => internal_ToolsObjectPatchByChildPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_ToolsObjectPatchByChildPart(Thing thing, WeaponAttachmentProperties properties)
-        {
-            if (thing != null && properties != null)
-            {
-                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
-                CompModularizationWeapon comp = thing;
-                if (comp != null && comp.Validity)
-                {
-                    return comp.Props.toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart;
-                }
-                else
-                {
-                    return properties.toolsObjectPatchByChildPart;
-                }
-            }
-            return false;
-        }
-
         public bool VerbPropertiesObjectPatchByOtherPart(string id) => internal_VerbPropertiesObjectPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_VerbPropertiesObjectPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        internal static bool internal_VerbPropertiesObjectPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
             {
@@ -225,7 +187,7 @@ namespace RW_ModularizationWeapon
         }
 
         public bool ToolsObjectPatchByOtherPart(string id) => internal_ToolsObjectPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
-        internal bool internal_ToolsObjectPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        internal static bool internal_ToolsObjectPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
             {
@@ -238,6 +200,82 @@ namespace RW_ModularizationWeapon
                 else
                 {
                     return properties.toolsObjectPatchByOtherPart;
+                }
+            }
+            return false;
+        }
+
+        public bool VerbPropertiesBoolAndPatchByOtherPart(string id) => internal_VerbPropertiesBoolAndPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal static bool internal_VerbPropertiesBoolAndPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.verbPropertiesBoolAndPatchByOtherPart && properties.verbPropertiesBoolAndPatchByOtherPart;
+                }
+                else
+                {
+                    return properties.verbPropertiesBoolAndPatchByOtherPart;
+                }
+            }
+            return false;
+        }
+
+        public bool ToolsBoolAndPatchByOtherPart(string id) => internal_ToolsBoolAndPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal static bool internal_ToolsBoolAndPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.toolsBoolAndPatchByOtherPart && properties.toolsBoolAndPatchByOtherPart;
+                }
+                else
+                {
+                    return properties.toolsBoolAndPatchByOtherPart;
+                }
+            }
+            return false;
+        }
+
+        public bool VerbPropertiesBoolOrPatchByOtherPart(string id) => internal_VerbPropertiesBoolOrPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal static bool internal_VerbPropertiesBoolOrPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.verbPropertiesBoolOrPatchByOtherPart && properties.verbPropertiesBoolOrPatchByOtherPart;
+                }
+                else
+                {
+                    return properties.verbPropertiesBoolOrPatchByOtherPart;
+                }
+            }
+            return false;
+        }
+
+        public bool ToolsBoolOrPatchByOtherPart(string id) => internal_ToolsBoolOrPatchByOtherPart(ChildNodes[id], Props.WeaponAttachmentPropertiesById(id));
+        internal static bool internal_ToolsBoolOrPatchByOtherPart(Thing thing, WeaponAttachmentProperties properties)
+        {
+            if (thing != null && properties != null)
+            {
+                //if (Prefs.DevMode) Log.Message($"properties.unchangeable : {properties.unchangeable}");
+                CompModularizationWeapon comp = thing;
+                if (comp != null && comp.Validity)
+                {
+                    return comp.Props.toolsBoolOrPatchByOtherPart && properties.toolsBoolOrPatchByOtherPart;
+                }
+                else
+                {
+                    return properties.toolsBoolOrPatchByOtherPart;
                 }
             }
             return false;
@@ -393,41 +431,37 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
+                CompModularizationWeapon comp = container[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (thing != null && id != childNodeIdForVerbProperties)
+                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
+                    FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
+
+                    if (current != null)
                     {
-                        FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
-
-                        if (current != null)
+                        cache *=
+                            current.verbPropertiesOtherPartOffseterAffectHorizon
+                            .GetOrNewWhenNull(
+                                id,
+                                delegate ()
+                                {
+                                    FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
+                                    result.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                                    return result;
+                                }
+                            );
+                        cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                        if (currentComp != null && comp != currentComp)
                         {
-                            cache *=
-                                current.verbPropertiesOtherPartOffseterAffectHorizon
-                                .GetOrNewWhenNull(
-                                    id,
-                                    delegate ()
-                                    {
-                                        FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
-                                        result.DefaultValue = current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
-                                        return result;
-                                    }
-                                );
-                            cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
-                            if (currentComp != null && comp != currentComp)
-                            {
-                                cache *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
-                                cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
-                            }
+                            cache *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
+                            cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
                         }
-
-                        cache = comp.Props.verbPropertiesOffseter * cache;
-                        cache.DefaultValue = 0;
-                        results += cache;
-                        results.DefaultValue = 0;
                     }
+
+                    cache = comp.Props.verbPropertiesOffseter * cache;
+                    cache.DefaultValue = 0;
+                    results += cache;
+                    results.DefaultValue = 0;
                 }
             }
             //Log.Message($"{this}.VerbPropertiesOffseter({childNodeIdForVerbProperties}) :\nresults : {results}");
@@ -445,41 +479,37 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
+                CompModularizationWeapon comp = container[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (thing != null && id != childNodeIdForTool)
+                if (comp != null && comp.Validity && id != childNodeIdForTool)
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
+                    FieldReaderDgitList<Tool> cache = properties.toolsOffseterAffectHorizon;
+
+                    if (current != null)
                     {
-                        FieldReaderDgitList<Tool> cache = properties.toolsOffseterAffectHorizon;
-
-                        if (current != null)
+                        cache *=
+                            current.toolsOtherPartOffseterAffectHorizon
+                            .GetOrNewWhenNull(
+                                id,
+                                delegate ()
+                                {
+                                    FieldReaderDgitList<Tool> result = new FieldReaderDgitList<Tool>();
+                                    result.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                                    return result;
+                                }
+                            );
+                        cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                        if (currentComp != null && comp != currentComp)
                         {
-                            cache *=
-                                current.toolsOtherPartOffseterAffectHorizon
-                                .GetOrNewWhenNull(
-                                    id,
-                                    delegate ()
-                                    {
-                                        FieldReaderDgitList<Tool> result = new FieldReaderDgitList<Tool>();
-                                        result.DefaultValue = current.toolsOtherPartOffseterAffectHorizonDefaultValue;
-                                        return result;
-                                    }
-                                );
-                            cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
-                            if (currentComp != null && comp != currentComp)
-                            {
-                                cache *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
-                                cache.DefaultValue *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
-                            }
+                            cache *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
+                            cache.DefaultValue *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
                         }
-
-                        cache = comp.Props.toolsOffseter * cache;
-                        cache.DefaultValue = 0;
-                        results += cache;
-                        results.DefaultValue = 0;
                     }
+
+                    cache = comp.Props.toolsOffseter * cache;
+                    cache.DefaultValue = 0;
+                    results += cache;
+                    results.DefaultValue = 0;
                 }
             }
             //Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
@@ -495,18 +525,14 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
+                CompModularizationWeapon comp = container[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (thing != null)
+                if (comp != null && comp.Validity)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon * comp.Props.compPropertiesOffseter;
-                        cache.DefaultValue = 0;
-                        results += cache;
-                        results.DefaultValue = 0;
-                    }
+                    FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon * comp.Props.compPropertiesOffseter;
+                    cache.DefaultValue = 0;
+                    results += cache;
+                    results.DefaultValue = 0;
                 }
             }
             //Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
@@ -575,42 +601,38 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForVerbProperties)
+                CompModularizationWeapon comp = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties)
                 {
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
+                    FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
+
+                    if (current != null)
                     {
-                        FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
-
-                        if (current != null)
+                        cache *=
+                            current.verbPropertiesOtherPartMultiplierAffectHorizon
+                            .GetOrNewWhenNull(
+                                id,
+                                delegate ()
+                                {
+                                    FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
+                                    result.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                                    return result;
+                                }
+                            );
+                        cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                        if (currentComp != null && comp != currentComp)
                         {
-                            cache *=
-                                current.verbPropertiesOtherPartMultiplierAffectHorizon
-                                .GetOrNewWhenNull(
-                                    id,
-                                    delegate ()
-                                    {
-                                        FieldReaderDgitList<VerbProperties> result = new FieldReaderDgitList<VerbProperties>();
-                                        result.DefaultValue = current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
-                                        return result;
-                                    }
-                                );
-                            cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
-                            if (currentComp != null && comp != currentComp)
-                            {
-                                cache *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
-                                cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
-                            }
+                            cache *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
+                            cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
                         }
-
-                        cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
-                        cache.DefaultValue = 1;
-                        results *= cache;
-                        results.DefaultValue = 1;
-                        //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                     }
+
+                    cache = (comp.Props.verbPropertiesMultiplier - 1f) * cache + 1f;
+                    cache.DefaultValue = 1;
+                    results *= cache;
+                    results.DefaultValue = 1;
+                    //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                 }
             }
             //Log.Message($" Final {this}.VerbPropertiesMultiplier({childNodeIdForVerbProperties}) :\nresults : {results}");
@@ -628,41 +650,37 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForTool)
+                CompModularizationWeapon comp = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                if (comp != null && comp.Validity && id != childNodeIdForTool)
                 {
-                    WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
+                    FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
+
+                    if (current != null)
                     {
-                        FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
-
-                        if (current != null)
+                        cache *=
+                            current.toolsOtherPartMultiplierAffectHorizon
+                            .GetOrNewWhenNull(
+                                id,
+                                delegate ()
+                                {
+                                    FieldReaderDgitList<Tool> result = new FieldReaderDgitList<Tool>();
+                                    result.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                                    return result;
+                                }
+                            );
+                        cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                        if (currentComp != null && comp != currentComp)
                         {
-                            cache *=
-                                current.toolsOtherPartMultiplierAffectHorizon
-                                .GetOrNewWhenNull(
-                                    id,
-                                    delegate ()
-                                    {
-                                        FieldReaderDgitList<Tool> result = new FieldReaderDgitList<Tool>();
-                                        result.DefaultValue = current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
-                                        return result;
-                                    }
-                                );
-                            cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
-                            if (currentComp != null && comp != currentComp)
-                            {
-                                cache *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
-                                cache.DefaultValue *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
-                            }
+                            cache *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
+                            cache.DefaultValue *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
                         }
-
-                        cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
-                        cache.DefaultValue = 1;
-                        results *= cache;
-                        results.DefaultValue = 1;
                     }
+
+                    cache = (comp.Props.toolsMultiplier - 1f) * cache + 1f;
+                    cache.DefaultValue = 1;
+                    results *= cache;
+                    results.DefaultValue = 1;
                 }
             }
             //Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
@@ -678,18 +696,14 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
+                CompModularizationWeapon comp = container[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (thing != null)
+                if (comp != null && comp.Validity)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        FieldReaderDgitList<CompProperties> cache = (comp.Props.compPropertiesMultiplier - 1f) * properties.compPropertiesMultiplierAffectHorizon + 1f;
-                        cache.DefaultValue = 1;
-                        results *= cache;
-                        results.DefaultValue = 1;
-                    }
+                    FieldReaderDgitList<CompProperties> cache = (comp.Props.compPropertiesMultiplier - 1f) * properties.compPropertiesMultiplierAffectHorizon + 1f;
+                    cache.DefaultValue = 1;
+                    results *= cache;
+                    results.DefaultValue = 1;
                 }
             }
             //Log.Message($"{this}.ToolsOffseter({childNodeIdForTool}) :\nresults : {results}");
@@ -755,18 +769,14 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForVerbProperties)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && Props.WeaponAttachmentPropertiesById(id).verbPropertiesBoolAndPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
+                    foreach (FieldReaderInst<VerbProperties> child in comp.Props.verbPropertiesObjectPatch)
                     {
-                        foreach (FieldReaderInst<VerbProperties> child in comp.Props.verbPropertiesObjectPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] |= child;
-                        }
+                        int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                        if (index < 0) results.Add(child);
+                        else results[index] |= child;
                     }
                 }
             }
@@ -781,18 +791,14 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForTool)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && id != childNodeIdForTool && Props.WeaponAttachmentPropertiesById(id).toolsBoolAndPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
+                    foreach (FieldReaderInst<Tool> child in comp.Props.toolsObjectPatch)
                     {
-                        foreach (FieldReaderInst<Tool> child in comp.Props.toolsObjectPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] |= child;
-                        }
+                        int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                        if (index < 0) results.Add(child);
+                        else results[index] |= child;
                     }
                 }
             }
@@ -807,18 +813,15 @@ namespace RW_ModularizationWeapon
             List<FieldReaderInst<CompProperties>> results = new List<FieldReaderInst<CompProperties>>();
             for (int i = 0; i < container.Count; i++)
             {
-                Thing thing = container[i];
-                if (thing != null)
+                string id = container[(uint)i];
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && Props.WeaponAttachmentPropertiesById(id).compPropertiesObjectPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
+                    foreach (FieldReaderInst<CompProperties> child in comp.Props.compPropertiesObjectPatch)
                     {
-                        foreach (FieldReaderInst<CompProperties> child in comp.Props.compPropertiesObjectPatch)
-                        {
-                            int index = results.FindIndex(x => x.UsedType == child.UsedType);
-                            if (index < 0) results.Add(child);
-                            else results[index] |= child;
-                        }
+                        int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                        if (index < 0) results.Add(child);
+                        else results[index] |= child;
                     }
                 }
             }
@@ -834,15 +837,11 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForVerbProperties)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && Props.WeaponAttachmentPropertiesById(id).verbPropertiesBoolAndPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        results &= comp.Props.verbPropertiesBoolAndPatch;
-                        results.DefaultValue = true;
-                    }
+                    results &= comp.Props.verbPropertiesBoolAndPatch;
+                    results.DefaultValue = true;
                 }
             }
             return results;
@@ -857,37 +856,30 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForTool)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && id != childNodeIdForTool && Props.WeaponAttachmentPropertiesById(id).toolsBoolAndPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        results &= comp.Props.toolsBoolAndPatch;
-                        results.DefaultValue = true;
-                    }
+                    results &= comp.Props.toolsBoolAndPatch;
+                    results.DefaultValue = true;
                 }
             }
             return results;
         }
 
 
-        public FieldReaderBoolList<CompProperties> CompPropertiesAndPatch()
+        public FieldReaderBoolList<CompProperties> CompPropertiesBoolAndPatch()
         {
             NodeContainer container = ChildNodes;
             FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
             results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
-                Thing thing = container[i];
-                if (thing != null)
+                string id = container[(uint)i];
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && Props.WeaponAttachmentPropertiesById(id).compPropertiesBoolAndPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        results &= comp.Props.compPropertiesBoolAndPatch;
-                        results.DefaultValue = true;
-                    }
+                    results &= comp.Props.compPropertiesBoolAndPatch;
+                    results.DefaultValue = true;
                 }
             }
             return results;
@@ -902,15 +894,11 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForVerbProperties)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && Props.WeaponAttachmentPropertiesById(id).verbPropertiesBoolOrPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        results |= comp.Props.verbPropertiesBoolOrPatch;
-                        results.DefaultValue = false;
-                    }
+                    results |= comp.Props.verbPropertiesBoolOrPatch;
+                    results.DefaultValue = false;
                 }
             }
             return results;
@@ -925,37 +913,30 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                Thing thing = container[i];
-                if (thing != null && id != childNodeIdForTool)
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && id != childNodeIdForTool && Props.WeaponAttachmentPropertiesById(id).toolsBoolOrPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing.TryGetComp<CompModularizationWeapon>();
-                    if (comp != null && comp.Validity)
-                    {
-                        results |= comp.Props.toolsBoolOrPatch;
-                        results.DefaultValue = false;
-                    }
+                    results |= comp.Props.toolsBoolOrPatch;
+                    results.DefaultValue = false;
                 }
             }
             return results;
         }
 
 
-        public FieldReaderBoolList<CompProperties> CompPropertiesOrPatch()
+        public FieldReaderBoolList<CompProperties> CompPropertiesBoolOrPatch()
         {
             NodeContainer container = ChildNodes;
             FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
             results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
-                Thing thing = container[i];
-                if (thing != null)
+                string id = container[(uint)i];
+                CompModularizationWeapon comp = container[i];
+                if (comp != null && comp.Validity && Props.WeaponAttachmentPropertiesById(id).compPropertiesBoolOrPatchByChildPart)
                 {
-                    CompModularizationWeapon comp = thing;
-                    if (comp != null && comp.Validity)
-                    {
-                        results &= comp.Props.compPropertiesBoolOrPatch;
-                        results.DefaultValue = true;
-                    }
+                    results &= comp.Props.compPropertiesBoolOrPatch;
+                    results.DefaultValue = true;
                 }
             }
             return results;
@@ -964,48 +945,40 @@ namespace RW_ModularizationWeapon
 
 
         #region Verb
-        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties, bool affectDef)
+        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties, bool verbPropertiesBoolAndPatch, bool verbPropertiesBoolOrPatch, bool verbPropertiesObjectPatch)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
             properties *= VerbPropertiesMultiplier(childNodeIdForVerbProperties);
             properties += VerbPropertiesOffseter(childNodeIdForVerbProperties);
-            if (affectDef)
-            {
-                FieldReaderBoolList<VerbProperties> conAnd = VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
-                FieldReaderBoolList<VerbProperties> conOr = VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
-                properties &= conAnd;
-                properties |= conOr;
+            if (verbPropertiesBoolAndPatch) properties &= VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
+            if (verbPropertiesBoolOrPatch) properties |= VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
+            if (verbPropertiesObjectPatch)
                 VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
-                    .ForEach(x =>
-                    {
-                        //Log.Message(x.ToString());
-                        properties &= x;
-                        properties |= x;
-                    });
-            }
+                .ForEach(x =>
+                {
+                    //Log.Message(x.ToString());
+                    properties &= x;
+                    properties |= x;
+                });
             return properties;
         }
 
 
-        internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool, bool affectDef)
+        internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool, bool toolsBoolAndPatch, bool toolsBoolOrPatch, bool toolsObjectPatch)
         {
             //tool = (Tool)tool.SimpleCopy();
             tool *= ToolsMultiplier(childNodeIdForTool);
             tool += ToolsOffseter(childNodeIdForTool);
-            if (affectDef)
-            {
-                FieldReaderBoolList<Tool> conAnd = ToolsBoolAndPatch(childNodeIdForTool);
-                FieldReaderBoolList<Tool> conOr = ToolsBoolOrPatch(childNodeIdForTool);
-                tool &= conAnd;
-                tool |= conOr;
+            if (toolsBoolAndPatch) tool &= ToolsBoolAndPatch(childNodeIdForTool);
+            if (toolsBoolOrPatch) tool |= ToolsBoolOrPatch(childNodeIdForTool);
+            if (toolsObjectPatch)
                 ToolsObjectPatch(childNodeIdForTool)
-                    .ForEach(x =>
-                    {
-                        //Log.Message(x.ToString());
-                        tool &= x;
-                        tool |= x;
-                    });
-            }
+                .ForEach(x =>
+                {
+                    //Log.Message(x.ToString());
+                    tool &= x;
+                    tool |= x;
+                });
             return tool;
         }
 
@@ -1015,7 +988,12 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < result.Count; i++)
             {
                 VerbPropertiesRegiestInfo prop = result[i];
-                VerbProperties newProp = VerbPropertiesAfterAffect(prop.berforConvertProperties, null, true);
+                VerbProperties newProp = VerbPropertiesAfterAffect(
+                    prop.berforConvertProperties, 
+                    null, 
+                    Props.verbPropertiesBoolAndPatchByChildPart,
+                    Props.verbPropertiesBoolOrPatchByChildPart,
+                    Props.verbPropertiesObjectPatchByChildPart);
                 prop.afterConvertProperties = newProp;
                 result[i] = prop;
             }
@@ -1038,7 +1016,26 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
                                 VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp = VerbPropertiesAfterAffect(comp.VerbPropertiesAfterAffect(cache, null, true), id, false);
+                                VerbProperties newProp 
+                                    = VerbPropertiesAfterAffect(
+                                        comp.VerbPropertiesAfterAffect(
+                                            cache, 
+                                            null,
+                                            comp.Props.verbPropertiesBoolAndPatchByChildPart,
+                                            comp.Props.verbPropertiesBoolOrPatchByChildPart,
+                                            comp.Props.verbPropertiesObjectPatchByChildPart
+                                            ), 
+                                        id, 
+                                        internal_VerbPropertiesBoolAndPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_VerbPropertiesBoolOrPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_VerbPropertiesObjectPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties)
+                                        );
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -1047,7 +1044,20 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < verbProperties.Count; j++)
                             {
                                 VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp = VerbPropertiesAfterAffect(cache, id, false);
+                                VerbProperties newProp
+                                    = VerbPropertiesAfterAffect(
+                                        cache,
+                                        id,
+                                        internal_VerbPropertiesBoolAndPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_VerbPropertiesBoolOrPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_VerbPropertiesObjectPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties)
+                                        );
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -1063,7 +1073,12 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < result.Count; i++)
             {
                 VerbToolRegiestInfo prop = result[i];
-                Tool newProp = ToolAfterAffect(prop.berforConvertTool, null, true);
+                Tool newProp = ToolAfterAffect(
+                    prop.berforConvertTool,
+                    null,
+                    Props.toolsBoolAndPatchByChildPart,
+                    Props.toolsBoolOrPatchByChildPart,
+                    Props.toolsObjectPatchByChildPart);
                 prop.afterCobvertTool = newProp;
                 result[i] = prop;
             }
@@ -1086,7 +1101,26 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < tools.Count; j++)
                             {
                                 Tool cache = tools[j];
-                                Tool newProp = ToolAfterAffect(comp.ToolAfterAffect(cache, null, true), id, false);
+                                Tool newProp
+                                    = ToolAfterAffect(
+                                        comp.ToolAfterAffect(
+                                            cache,
+                                            null,
+                                            comp.Props.toolsBoolAndPatchByChildPart,
+                                            comp.Props.toolsBoolOrPatchByChildPart,
+                                            comp.Props.toolsObjectPatchByChildPart
+                                            ),
+                                        id,
+                                        internal_ToolsBoolAndPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_ToolsBoolOrPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_ToolsObjectPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties)
+                                        );
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -1095,7 +1129,20 @@ namespace RW_ModularizationWeapon
                             for (int j = 0; j < tools.Count; j++)
                             {
                                 Tool cache = tools[j];
-                                Tool newProp = ToolAfterAffect(cache, id, false);
+                                Tool newProp
+                                    = ToolAfterAffect(
+                                        cache,
+                                        id,
+                                        internal_ToolsBoolAndPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_ToolsBoolOrPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties),
+                                        internal_ToolsObjectPatchByOtherPart(
+                                            container[i],
+                                            attachmentProperties)
+                                        );
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
                         }
@@ -1324,6 +1371,10 @@ namespace RW_ModularizationWeapon
                         else parent.def.Verbs.Add(verb.verbProps);
                     }
                 }
+                List<CompProperties> compProperties = new List<CompProperties>(def.comps);
+                def.comps.Clear();
+                def.comps.AddRange(from x in parent.AllComps select x.props);
+
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
@@ -1335,6 +1386,10 @@ namespace RW_ModularizationWeapon
                     parent.def.Verbs.AddRange(verbProperties);
                     parent.def.tools.AddRange(tools);
                 }
+
+                def.comps.Clear();
+                def.comps.AddRange(compProperties);
+
             }
             else
             {
@@ -1783,10 +1838,47 @@ namespace RW_ModularizationWeapon
         }
 
 
+        internal CompProperties CompPropertiesAfterAffect(CompProperties compProperties)
+        {
+            //tool = (Tool)tool.SimpleCopy();
+            compProperties *= CompPropertiesMultiplier();
+            compProperties += CompPropertiesOffseter();
+            compProperties &= CompPropertiesBoolAndPatch();
+            compProperties |= CompPropertiesBoolOrPatch();
+            CompPropertiesObjectPatch()
+            .ForEach(x =>
+            {
+                //Log.Message(x.ToString());
+                compProperties &= x;
+                compProperties |= x;
+            });
+            return compProperties;
+        }
+
+
         protected override bool UpdateNode(CompChildNodeProccesser actionNode)
         {
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
+
+            foreach(ThingComp comp in parent.AllComps)
+            {
+                if (comp == this) continue;
+                CompProperties properties = null;
+                foreach(CompProperties def in parent.def.comps)
+                {
+                    if(def.compClass == comp.GetType())
+                    {
+                        properties = def;
+                        break;
+                    }
+                }
+                if(properties != null)
+                {
+                    comp.props = CompPropertiesAfterAffect(properties);
+                }
+            }
+
             return false;
         }
 
@@ -1949,14 +2041,14 @@ namespace RW_ModularizationWeapon
             {
                 list = list ?? new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
-                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
+                list.DefaultValue = defaultValue;
             }
 
             void CheckAndSetListBool<T>(ref FieldReaderBoolList<T> list, bool defaultValue)
             {
                 list = list ?? new FieldReaderBoolList<T>();
                 list.RemoveAll(f => f == null);
-                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
+                list.DefaultValue = defaultValue;
             }
 
             CheckAndSetListDgit(ref verbPropertiesOffseter, 0);

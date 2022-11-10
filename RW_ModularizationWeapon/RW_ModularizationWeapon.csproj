@@ -256,7 +256,22 @@
   <ItemGroup>
     <Content Include="PackUp\*" />
     <Content Include="PackUp\*\*" />
-    <Content Include="PackUp\*\*\*" />
+    <Content Include="PackUp\1.4\Defs\Jobs_Misc.xml" />
+    <Content Include="PackUp\1.4\Defs\SoundDef.xml" />
+    <Content Include="PackUp\Sounds\Weapon\Shot_Muffler.ogg" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_AdvGrip.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_Base.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_Bayonet.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_ClipMagazine.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_DrumMagazine.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_HoloSight.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_IronSight.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_Scope.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_Silencer.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_StandardGrip.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_UBGL.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\ModRailgun_VerticalGrip.png" />
+    <Content Include="PackUp\Textures\ModularRailgun\none.png" />
     <Content Include="PackUp\*\*\*\*" />
   </ItemGroup>
   <ItemGroup />

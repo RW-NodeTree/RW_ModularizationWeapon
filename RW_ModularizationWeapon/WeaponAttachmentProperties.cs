@@ -180,6 +180,8 @@ namespace RW_ModularizationWeapon
 
         public bool toolsObjectPatchByChildPart = true;
 
+        public bool compPropertiesObjectPatchByChildPart = true;
+
         public bool verbPropertiesObjectPatchByOtherPart = false;
 
         public bool toolsObjectPatchByOtherPart = false;
@@ -190,6 +192,8 @@ namespace RW_ModularizationWeapon
 
         public bool toolsBoolAndPatchByChildPart = true;
 
+        public bool compPropertiesBoolAndPatchByChildPart = true;
+
         public bool verbPropertiesBoolAndPatchByOtherPart = false;
 
         public bool toolsBoolAndPatchByOtherPart = false;
@@ -199,6 +203,8 @@ namespace RW_ModularizationWeapon
         public bool verbPropertiesBoolOrPatchByChildPart = true;
 
         public bool toolsBoolOrPatchByChildPart = true;
+
+        public bool compPropertiesBoolOrPatchByChildPart = true;
 
         public bool verbPropertiesBoolOrPatchByOtherPart = false;
 
