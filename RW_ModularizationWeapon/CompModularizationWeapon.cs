@@ -1196,6 +1196,58 @@ namespace RW_ModularizationWeapon
         }
 
 
+        private void StatWorkerPerfix(Dictionary<string, object> forPostRead)
+        {
+            CompEquippable eq = parent.GetComp<CompEquippable>();
+            if (eq != null)
+            {
+                //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
+                List<Verb> verbs = eq.AllVerbs;
+                List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && !parent.def.Verbs.Contains(x.verbProps) select x.verbProps).ToList();
+                List<Tool> cachedTools = (from x in verbs where x.tool != null && !parent.def.tools.Contains(x.tool) select x.tool).ToList();
+                if (cachedVerbs.Count > 0)
+                {
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                    forPostRead.Add("CompModularizationWeapon_verbs", ThingDef_verbs(parent.def));
+                    ThingDef_verbs(parent.def) = cachedVerbs;
+                }
+                if (cachedTools.Count > 0)
+                {
+                    forPostRead.Add("CompModularizationWeapon_tools", parent.def.tools);
+                    parent.def.tools = cachedTools;
+                }
+                //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
+            }
+            forPostRead.Add("CompModularizationWeapon_comps", parent.def.comps);
+            parent.def.comps = (from x in parent.AllComps select x.props).ToList();
+        }
+
+
+        private void StatWorkerPostfix(Dictionary<string, object> forPostRead)
+        {
+            object obj;
+            CompEquippable eq = parent.GetComp<CompEquippable>();
+            if (eq != null)
+            {
+                obj = forPostRead.TryGetValue("CompModularizationWeapon_verbs");
+                if (obj != null)
+                {
+                    ThingDef_verbs(parent.def) = (List<VerbProperties>)obj;
+                }
+                obj = forPostRead.TryGetValue("CompModularizationWeapon_tools");
+                if (obj != null)
+                {
+                    parent.def.tools = (List<Tool>)obj;
+                }
+            }
+            obj = forPostRead.TryGetValue("CompModularizationWeapon_comps");
+            if (obj != null)
+            {
+                parent.def.comps = (List<CompProperties>)obj;
+            }
+        }
+
+
         protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
         {
             StatRequest before = req;
@@ -1204,29 +1256,7 @@ namespace RW_ModularizationWeapon
             {
                 if (req.Thing == parent)
                 {
-                    CompEquippable eq = parent.GetComp<CompEquippable>();
-                    if (eq != null)
-                    {
-                        //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
-                        List<Verb> verbs = eq.AllVerbs;
-                        List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && !parent.def.Verbs.Contains(x.verbProps) select x.verbProps).ToList();
-                        List<Tool> cachedTools = (from x in verbs where x.tool != null && !parent.def.tools.Contains(x.tool) select x.tool).ToList();
-                        if(cachedVerbs.Count > 0)
-                        {
-                            ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                            forPostRead.Add("CompModularizationWeapon_verbs", ThingDef_verbs(parent.def));
-                            ThingDef_verbs(parent.def) = cachedVerbs;
-                        }
-                        if (cachedTools.Count > 0)
-                        {
-                            forPostRead.Add("CompModularizationWeapon_tools", parent.def.tools);
-                            parent.def.tools = cachedTools;
-                        }
-                        //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
-                    }
-                    forPostRead.Add("CompModularizationWeapon_comps", parent.def.comps);
-                    parent.def.comps = (from x in parent.AllComps select x.props).ToList();
-
+                    StatWorkerPerfix(forPostRead);
                 }
                 else ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, forPostRead);
             }
@@ -1244,26 +1274,7 @@ namespace RW_ModularizationWeapon
 
             if (req.Thing == parent)
             {
-                object obj = null;
-                CompEquippable eq = parent.GetComp<CompEquippable>();
-                if (eq != null)
-                {
-                    obj = forPostRead.TryGetValue("CompModularizationWeapon_verbs");
-                    if(obj != null)
-                    {
-                        ThingDef_verbs(parent.def) = (List<VerbProperties>)obj;
-                    }
-                    obj = forPostRead.TryGetValue("CompModularizationWeapon_tools");
-                    if (obj != null)
-                    {
-                        parent.def.tools = (List<Tool>)obj;
-                    }
-                }
-                obj = forPostRead.TryGetValue("CompModularizationWeapon_comps");
-                if (obj != null)
-                {
-                    parent.def.comps = (List<CompProperties>)obj;
-                }
+                StatWorkerPostfix(forPostRead);
             }
             else result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
             return result;
@@ -1322,6 +1333,39 @@ namespace RW_ModularizationWeapon
                 result *= GetStatMultiplier(statDef, req.Thing);
                 result += GetStatOffset(statDef, req.Thing);
             }
+            return result;
+        }
+
+
+        protected override void PreStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, Dictionary<string, object> forPostRead)
+        {
+            StatRequest before = optionalReq;
+            optionalReq = RedirectoryReq(statWorker, optionalReq);
+            if (optionalReq.Thing == before.Thing)
+            {
+                if (optionalReq.Thing == parent)
+                {
+                    StatWorkerPerfix(forPostRead);
+                }
+                else ((CompModularizationWeapon)optionalReq.Thing)?.PreStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, forPostRead);
+            }
+        }
+
+
+        protected override string PostStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, string result, Dictionary<string, object> forPostRead)
+        {
+            StatRequest before = optionalReq;
+            optionalReq = RedirectoryReq(statWorker, optionalReq);
+            if (optionalReq.Thing != before.Thing)
+            {
+                return statWorker.GetStatDrawEntryLabel(stat, value, numberSense, optionalReq, finalized);
+            }
+
+            if (optionalReq.Thing == parent)
+            {
+                StatWorkerPostfix(forPostRead);
+            }
+            else result = ((CompChildNodeProccesser)optionalReq.Thing)?.PostStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, forPostRead) ?? result;
             return result;
         }
 
