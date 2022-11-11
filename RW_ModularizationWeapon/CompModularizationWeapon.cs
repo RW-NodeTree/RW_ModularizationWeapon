@@ -1382,20 +1382,14 @@ namespace RW_ModularizationWeapon
                     List<Tool> cachedTools = new List<Tool>();
                     foreach (Verb verb in verbs)
                     {
-                        if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
-                        else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
+                        if (verb.tool != null) cachedTools.Add(verb.tool);
+                        else cachedVerbs.Add(verb.verbProps);
                     }
-                    if (!cachedVerbs.NullOrEmpty())
-                    {
-                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                        verbProperties = ThingDef_verbs(parent.def);
-                        ThingDef_verbs(parent.def) = cachedVerbs;
-                    }
-                    if (!cachedTools.NullOrEmpty())
-                    {
-                        tools = parent.def.tools;
-                        parent.def.tools = cachedTools;
-                    }
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                    verbProperties = ThingDef_verbs(parent.def);
+                    ThingDef_verbs(parent.def) = cachedVerbs;
+                    tools = parent.def.tools;
+                    parent.def.tools = cachedTools;
                 }
                 List<CompProperties> compProperties = def.comps;
                 def.comps = (from x in parent.AllComps select x.props).ToList();
@@ -1446,17 +1440,11 @@ namespace RW_ModularizationWeapon
                         if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
                         else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
                     }
-                    if (!cachedVerbs.NullOrEmpty())
-                    {
-                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                        verbProperties = ThingDef_verbs(parent.def);
-                        ThingDef_verbs(parent.def) = cachedVerbs;
-                    }
-                    if (!cachedTools.NullOrEmpty())
-                    {
-                        tools = parent.def.tools;
-                        parent.def.tools = cachedTools;
-                    }
+                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                    verbProperties = ThingDef_verbs(parent.def);
+                    ThingDef_verbs(parent.def) = cachedVerbs;
+                    tools = parent.def.tools;
+                    parent.def.tools = cachedTools;
                 }
 
                 List<CompProperties> compProperties = parent.def.comps;
