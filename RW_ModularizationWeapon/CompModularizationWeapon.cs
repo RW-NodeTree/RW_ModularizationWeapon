@@ -1209,13 +1209,8 @@ namespace RW_ModularizationWeapon
                     {
                         //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
                         List<Verb> verbs = eq.AllVerbs;
-                        List<VerbProperties> cachedVerbs = new List<VerbProperties>();
-                        List<Tool> cachedTools = new List<Tool>();
-                        foreach (Verb verb in verbs)
-                        {
-                            if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
-                            else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
-                        }
+                        List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && !parent.def.Verbs.Contains(x.verbProps) select x.verbProps).ToList();
+                        List<Tool> cachedTools = (from x in verbs where x.tool != null && !parent.def.tools.Contains(x.tool) select x.tool).ToList();
                         if(cachedVerbs.Count > 0)
                         {
                             ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
@@ -1229,6 +1224,9 @@ namespace RW_ModularizationWeapon
                         }
                         //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
                     }
+                    forPostRead.Add("CompModularizationWeapon_comps", parent.def.comps);
+                    parent.def.comps = (from x in parent.AllComps select x.props).ToList();
+
                 }
                 else ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, forPostRead);
             }
@@ -1246,10 +1244,10 @@ namespace RW_ModularizationWeapon
 
             if (req.Thing == parent)
             {
+                object obj = null;
                 CompEquippable eq = parent.GetComp<CompEquippable>();
                 if (eq != null)
                 {
-                    object
                     obj = forPostRead.TryGetValue("CompModularizationWeapon_verbs");
                     if(obj != null)
                     {
@@ -1260,6 +1258,11 @@ namespace RW_ModularizationWeapon
                     {
                         parent.def.tools = (List<Tool>)obj;
                     }
+                }
+                obj = forPostRead.TryGetValue("CompModularizationWeapon_comps");
+                if (obj != null)
+                {
+                    parent.def.comps = (List<CompProperties>)obj;
                 }
             }
             else result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
