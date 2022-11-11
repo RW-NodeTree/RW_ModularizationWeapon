@@ -1197,17 +1197,11 @@ namespace RW_ModularizationWeapon
                             if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
                             else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
                         }
-                        if(!cachedVerbs.NullOrEmpty())
-                        {
-                            ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                            forPostRead.Add("CompModularizationWeapon_verbs", ThingDef_verbs(parent.def));
-                            ThingDef_verbs(parent.def) = cachedVerbs;
-                        }
-                        if(!cachedTools.NullOrEmpty())
-                        {
-                            forPostRead.Add("CompModularizationWeapon_tools", parent.def.tools);
-                            parent.def.tools = cachedTools;
-                        }
+                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                        forPostRead.Add("CompModularizationWeapon_verbs", ThingDef_verbs(parent.def));
+                        ThingDef_verbs(parent.def) = cachedVerbs;
+                        forPostRead.Add("CompModularizationWeapon_tools", parent.def.tools);
+                        parent.def.tools = cachedTools;
                         //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
                     }
                 }
