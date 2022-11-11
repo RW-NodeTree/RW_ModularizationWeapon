@@ -140,7 +140,7 @@
 						<id>ModRailgun_UnderBarrel</id>
 						<name>under barrel</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
-						<postion>(0.45,0,0)</postion>
+						<postion>(0.35,0.1,0)</postion>
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
@@ -158,6 +158,18 @@
 						<filter>
 							<thingDefs>
 								<li>ModRailgun_Silencer</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>ModRailgun_Chamber</id>
+						<name>chanber</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
+						<defultThing>ModRailgun_556cal</defultThing>
+						<filter>
+							<thingDefs>
+								<li>ModRailgun_556cal</li>
+								<li>ModRailgun_762cal</li>
 							</thingDefs>
 						</filter>
 					</li>
@@ -457,6 +469,67 @@
 				<statOffset>
 					<SwayFactor>-0.2</SwayFactor>
 				</statOffset>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<!--Chamber-->
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_556cal</defName>
+		<label>5.56NATO chamber</label>
+		<description>TODO</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</uiIconPath>
+		<statBases>
+			<Mass>0.1</Mass>
+		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>GasOperation</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>30</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<notDrawInParent>true</notDrawInParent>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="RailgunPartBase">
+		<defName>ModRailgun_762cal</defName>
+		<label>7.62NATO chamber</label>
+		<description>TODO</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</uiIconPath>
+		<statBases>
+			<Mass>0.1</Mass>
+		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>GasOperation</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>30</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<notDrawInParent>true</notDrawInParent>
+				<verbPropertiesMultiplier>
+					<li>
+						<warmupTime>1.1</warmupTime>
+						<ticksBetweenBurstShots>1.2</ticksBetweenBurstShots>
+					</li>
+				</verbPropertiesMultiplier>
+				<statOffset>
+					<RangedWeapon_Cooldown>0.15</RangedWeapon_Cooldown>
+					<ShotSpread>0.1</ShotSpread>
+					<SwayFactor>0.1</SwayFactor>
+				</statOffset>
+				<compPropertiesObjectPatch>
+					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
+						<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
+					</li>
+				</compPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
