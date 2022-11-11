@@ -60,6 +60,7 @@ namespace RW_ModularizationWeapon
                 }
             }
             else SetThingToDefault();
+            NodeProccesser.UpdateNode();
         }
 
 
@@ -80,6 +81,24 @@ namespace RW_ModularizationWeapon
                         comp.UsingTargetPart = comp.ShowTargetPart;
                     }
                 }
+                foreach (ThingComp comp in parent.AllComps)
+                {
+                    if (comp == this) continue;
+                    CompProperties properties = null;
+                    foreach (CompProperties def in parent.def.comps)
+                    {
+                        if (def.compClass == comp.GetType())
+                        {
+                            properties = def;
+                            break;
+                        }
+                    }
+                    if (properties != null)
+                    {
+                        comp.props = CompPropertiesAfterAffect(properties);
+                    }
+                }
+                NodeProccesser.UpdateNode();
             }
         }
 
