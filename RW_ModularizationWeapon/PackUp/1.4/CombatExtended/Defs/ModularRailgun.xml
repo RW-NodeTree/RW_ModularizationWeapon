@@ -43,7 +43,6 @@
 				<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
 				<warmupTime>1.1</warmupTime>
 				<range>55</range>
-				<burstShotCount>6</burstShotCount>
 				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
 				<soundCast>Shot_AssaultRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
@@ -89,16 +88,6 @@
 			</li>
 		</tools>
 		<comps>
-			<li Class="CombatExtended.CompProperties_AmmoUser">
-				<magazineSize>1</magazineSize>
-				<reloadTime>0.85</reloadTime>
-				<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
-			</li>
-			<li Class="CombatExtended.CompProperties_FireModes">
-				<aiUseBurstMode>TRUE</aiUseBurstMode>
-				<aimedBurstShotCount>3</aimedBurstShotCount>
-				<aiAimMode>AimedShot</aiAimMode>
-			</li>
 			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
 				<TextureSizeFactor>256</TextureSizeFactor>
 				<TextureFilterMode>Bilinear</TextureFilterMode>
@@ -231,7 +220,6 @@
 				<PartTexPath>ModularRailgun/ModRailgun_ClipMagazine</PartTexPath>
 				<compPropertiesObjectPatch>
 					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
-						<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
 						<magazineSize>30</magazineSize>
 						<reloadTime>4.5</reloadTime>
 					</li>
@@ -258,7 +246,6 @@
 				</statOffset>
 				<compPropertiesObjectPatch>
 					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
-						<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
 						<magazineSize>75</magazineSize>
 						<reloadTime>5.6</reloadTime>
 					</li>
@@ -280,7 +267,6 @@
 				<PartTexPath>ModularRailgun/ModRailgun_ClipMagazine</PartTexPath>
 				<compPropertiesObjectPatch>
 					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
-						<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
 						<magazineSize>30</magazineSize>
 						<reloadTime>4.5</reloadTime>
 					</li>
@@ -307,7 +293,6 @@
 				</statOffset>
 				<compPropertiesObjectPatch>
 					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
-						<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
 						<magazineSize>75</magazineSize>
 						<reloadTime>5.6</reloadTime>
 					</li>
@@ -534,14 +519,18 @@
 			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
 		<comps>
+			<li Class="CombatExtended.CompProperties_AmmoUser">
+				<magazineSize>1</magazineSize>
+				<reloadTime>0.85</reloadTime>
+				<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
+			</li>
+			<li Class="CombatExtended.CompProperties_FireModes">
+				<aiUseBurstMode>TRUE</aiUseBurstMode>
+				<aiAimMode>AimedShot</aiAimMode>
+			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
-				<compPropertiesObjectPatch>
-					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
-						<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
-					</li>
-				</compPropertiesObjectPatch>
 				<attachmentProperties>
 					<li>
 						<id>ModRailgun_Magazine</id>
@@ -560,7 +549,6 @@
 						<id>ModRailgun_Bolt</id>
 						<name>bolt</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
-						<postion>(0,0.1,0)</postion>
 						<defultThing>ModRailgun_StandardBolt</defultThing>
 						<filter>
 							<thingDefs>
@@ -592,6 +580,15 @@
 			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
 		<comps>
+			<li Class="CombatExtended.CompProperties_AmmoUser">
+				<magazineSize>1</magazineSize>
+				<reloadTime>0.85</reloadTime>
+				<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
+			</li>
+			<li Class="CombatExtended.CompProperties_FireModes">
+				<aiUseBurstMode>TRUE</aiUseBurstMode>
+				<aiAimMode>AimedShot</aiAimMode>
+			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<verbPropertiesMultiplier>
@@ -606,11 +603,6 @@
 					<ShotSpread>0.1</ShotSpread>
 					<SwayFactor>0.1</SwayFactor>
 				</statOffset>
-				<compPropertiesObjectPatch>
-					<li Reader-Class="CombatExtended.CompProperties_AmmoUser">
-						<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
-					</li>
-				</compPropertiesObjectPatch>
 				<attachmentProperties>
 					<li>
 						<id>ModRailgun_Magazine</id>
@@ -666,7 +658,7 @@
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<verbPropertiesOffseter>
 					<li>
-						<burstShotCount>2</burstShotCount>
+						<burstShotCount>5</burstShotCount>
 					</li>
 				</verbPropertiesOffseter>
 				<verbPropertiesMultiplier>
@@ -702,7 +694,7 @@
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
 				<verbPropertiesOffseter>
 					<li>
-						<burstShotCount>2</burstShotCount>
+						<burstShotCount>9</burstShotCount>
 					</li>
 				</verbPropertiesOffseter>
 				<verbPropertiesMultiplier>
