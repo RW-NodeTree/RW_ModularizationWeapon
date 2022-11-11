@@ -35,20 +35,6 @@
 			<Steel>60</Steel>
 			<ComponentIndustrial>5</ComponentIndustrial>
 		</costList>
-		<verbs>
-			<li Class="CombatExtended.VerbPropertiesCE">
-				<recoilAmount>1.50</recoilAmount>
-				<verbClass>CombatExtended.Verb_ShootCE</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
-				<warmupTime>1.1</warmupTime>
-				<range>55</range>
-				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
-				<soundCast>Shot_AssaultRifle</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>9</muzzleFlashScale>
-			</li>
-		</verbs>
 		<weaponTags>
 			<li>IndustrialGunAdvanced</li>
 			<li>AssaultRifle</li>
@@ -518,18 +504,25 @@
 			<Steel>30</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
+		<verbs>
+			<li Class="CombatExtended.VerbPropertiesCE">
+				<recoilAmount>1.50</recoilAmount>
+				<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<warmupTime>1.1</warmupTime>
+				<range>55</range>
+				<burstShotCount>6</burstShotCount>
+				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+				<soundCast>Shot_AssaultRifle</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
 		<comps>
-			<li Class="CombatExtended.CompProperties_AmmoUser">
-				<magazineSize>1</magazineSize>
-				<reloadTime>0.85</reloadTime>
-				<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
-			</li>
-			<li Class="CombatExtended.CompProperties_FireModes">
-				<aiUseBurstMode>TRUE</aiUseBurstMode>
-				<aiAimMode>AimedShot</aiAimMode>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<DrawSizeWhenAttach>(0.8,0.8)</DrawSizeWhenAttach>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<attachmentProperties>
 					<li>
@@ -579,18 +572,25 @@
 			<Steel>30</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
+		<verbs>
+			<li Class="CombatExtended.VerbPropertiesCE">
+				<recoilAmount>1.50</recoilAmount>
+				<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<warmupTime>1.1</warmupTime>
+				<range>55</range>
+				<burstShotCount>6</burstShotCount>
+				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+				<soundCast>Shot_AssaultRifle</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
 		<comps>
-			<li Class="CombatExtended.CompProperties_AmmoUser">
-				<magazineSize>1</magazineSize>
-				<reloadTime>0.85</reloadTime>
-				<ammoSet>AmmoSet_762x51mmNATO</ammoSet>
-			</li>
-			<li Class="CombatExtended.CompProperties_FireModes">
-				<aiUseBurstMode>TRUE</aiUseBurstMode>
-				<aiAimMode>AimedShot</aiAimMode>
-			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<DrawSizeWhenAttach>(0.8,0.8)</DrawSizeWhenAttach>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.1</warmupTime>
