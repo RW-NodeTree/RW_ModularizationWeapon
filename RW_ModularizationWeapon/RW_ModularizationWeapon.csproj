@@ -242,13 +242,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\CompModularizationWeapon.cs" />
     <Compile Include="AI\JobDriver_ModifyWeapon.cs" />
     <Compile Include="CompCustomWeaponPort.cs" />
+    <Compile Include="Condition\CompModularizationWeapon.cs" />
     <Compile Include="FieldReader.cs" />
     <Compile Include="FieldReaderList.cs" />
+    <Compile Include="Multiplier\CompModularizationWeapon.cs" />
+    <Compile Include="Offset\CompModularizationWeapon.cs" />
+    <Compile Include="Patch\CompModularizationWeapon.cs" />
+    <Compile Include="Stat\CompModularizationWeapon.cs" />
+    <Compile Include="TargetPart\CompModularizationWeapon.cs" />
     <Compile Include="Tools\Tools.cs" />
+    <Compile Include="UI\CompModularizationWeapon.cs" />
     <Compile Include="UI\CustomWeapon.cs" />
     <Compile Include="UI\StateInfoTags.cs" />
+    <Compile Include="Verb\CompModularizationWeapon.cs" />
     <Compile Include="WeaponAttachmentProperties.cs" />
     <Compile Include="CompModularizationWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
