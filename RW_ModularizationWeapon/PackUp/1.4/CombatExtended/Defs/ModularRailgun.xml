@@ -35,20 +35,6 @@
 			<Steel>60</Steel>
 			<ComponentIndustrial>5</ComponentIndustrial>
 		</costList>
-		<verbs>
-			<li Class="CombatExtended.VerbPropertiesCE">
-				<recoilAmount>1.50</recoilAmount>
-				<verbClass>CombatExtended.Verb_ShootCE</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
-				<warmupTime>1.1</warmupTime>
-				<range>55</range>
-				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
-				<soundCast>Shot_AssaultRifle</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>9</muzzleFlashScale>
-			</li>
-		</verbs>
 		<weaponTags>
 			<li>IndustrialGunAdvanced</li>
 			<li>AssaultRifle</li>
@@ -94,6 +80,7 @@
 				<ExceedanceFactor>2</ExceedanceFactor>
 				<ExceedanceOffset>1</ExceedanceOffset>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
+				<VerbIconVerbInstanceSource>true</VerbIconVerbInstanceSource>
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
@@ -201,6 +188,38 @@
 				<TextureSizeFactor>256</TextureSizeFactor>
 				<TextureFilterMode>Bilinear</TextureFilterMode>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef Name="RailgunPartChamber" ParentName="ResourceBase"  Abstract="True">
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<healthAffectsPrice>false</healthAffectsPrice>
+		<statBases>
+			<MaxHitPoints>70</MaxHitPoints>
+			<MarketValue>32</MarketValue>
+			<Mass>0.2</Mass>
+			<Flammability>0.6</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>ThingCategory_RaingunParts</li>
+		</thingCategories>
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+				<VerbIconVerbInstanceSource>true</VerbIconVerbInstanceSource>
 			</li>
 		</comps>
 	</ThingDef>
@@ -503,7 +522,7 @@
 	</ThingDef>
 
 	<!--Chamber-->
-	<ThingDef ParentName="RailgunPartBase">
+	<ThingDef ParentName="RailgunPartChamber">
 		<defName>ModRailgun_556cal</defName>
 		<label>5.56NATO chamber</label>
 		<description>TODO</description>
@@ -518,6 +537,21 @@
 			<Steel>30</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
+		<verbs>
+			<li Class="CombatExtended.VerbPropertiesCE">
+				<recoilAmount>1.50</recoilAmount>
+				<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<warmupTime>1.1</warmupTime>
+				<range>55</range>
+				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+				<burstShotCount>3</burstShotCount>
+				<soundCast>Shot_AssaultRifle</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
 		<comps>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 				<magazineSize>1</magazineSize>
@@ -530,6 +564,7 @@
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<DrawSizeWhenAttach>(0.8,0.8)</DrawSizeWhenAttach>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<attachmentProperties>
 					<li>
@@ -564,7 +599,7 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="RailgunPartBase">
+	<ThingDef ParentName="RailgunPartChamber">
 		<defName>ModRailgun_762cal</defName>
 		<label>7.62NATO chamber</label>
 		<description>TODO</description>
@@ -579,6 +614,21 @@
 			<Steel>30</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
+		<verbs>
+			<li Class="CombatExtended.VerbPropertiesCE">
+				<recoilAmount>1.50</recoilAmount>
+				<verbClass>CombatExtended.Verb_ShootCE</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_762x51mmNATO_FMJ</defaultProjectile>
+				<warmupTime>1.1</warmupTime>
+				<range>55</range>
+				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+				<burstShotCount>3</burstShotCount>
+				<soundCast>Shot_AssaultRifle</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
 		<comps>
 			<li Class="CombatExtended.CompProperties_AmmoUser">
 				<magazineSize>1</magazineSize>
@@ -591,6 +641,7 @@
 			</li>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<DrawSizeWhenAttach>(0.8,0.8)</DrawSizeWhenAttach>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.1</warmupTime>

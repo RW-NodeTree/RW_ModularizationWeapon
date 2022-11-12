@@ -16,13 +16,18 @@ namespace RW_ModularizationWeapon
         private StatRequest RedirectoryReq(StatWorker statWorker, StatRequest req)
         {
             StatDef statDef = StatWorker_stat(statWorker);
-            if (statDef.category == StatCategoryDefOf.Weapon || statDef.category == StatCategoryDefOf.Weapon_Ranged)
+            if ((statDef.category == StatCategoryDefOf.Weapon || statDef.category == StatCategoryDefOf.Weapon_Ranged))
             {
                 CompEquippable eq = req.Thing.TryGetComp<CompEquippable>();
                 CompChildNodeProccesser proccesser = req.Thing;
                 if (eq != null && proccesser != null)
                 {
+                    StatRequest cache = req;
                     req = StatRequest.For(proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), eq.PrimaryVerb).Item1);
+                    if(statWorker.IsDisabledFor(req.Thing))
+                    {
+                        return cache;
+                    }
                 }
             }
             return req;
@@ -83,45 +88,36 @@ namespace RW_ModularizationWeapon
 
         protected override void PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, Dictionary<string, object> forPostRead)
         {
-            StatRequest before = req;
-            req = RedirectoryReq(statWorker, req);
-            if (req.Thing == before.Thing)
-            {
-                if (req.Thing == parent)
-                {
-                    StatWorkerPerfix(forPostRead);
-                }
-                else ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, forPostRead);
-            }
+            //Log.Message($"{statWorker} : PreStatWorker_GetValueUnfinalized");
+            StatWorkerPerfix(forPostRead);
         }
 
 
         protected override float PostStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
+            //Log.Message($"{statWorker} : PostStatWorker_GetValueUnfinalized");
+            StatWorkerPostfix(forPostRead);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
-            if (req.Thing != before.Thing)
+            if (before.Thing != req.Thing && req.Thing != parent)
             {
                 return statWorker.GetValueUnfinalized(req, applyPostProcess);
             }
-
-            if (req.Thing == parent)
-            {
-                StatWorkerPostfix(forPostRead);
-            }
-            else result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
             return result;
         }
 
 
         protected override float PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
+            //Log.Message($"{statWorker} : PreStatWorker_FinalizeValue");
+            StatWorkerPerfix(forPostRead);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
-            if (before.Thing != req.Thing)
+            if (before.Thing != req.Thing && req.Thing != parent)
             {
-                statWorker.FinalizeValue(req, ref result, applyPostProcess);
-                forPostRead.Add("afterRedirectoryReq", result);
+                float cache = result;
+                statWorker.FinalizeValue(req, ref cache, applyPostProcess);
+                forPostRead.Add("afterRedirectoryReq", cache);
                 //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
             }
             return result;
@@ -130,37 +126,21 @@ namespace RW_ModularizationWeapon
 
         protected override float PostStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-
+            //Log.Message($"{statWorker} : PostStatWorker_FinalizeValue");
+            StatWorkerPostfix(forPostRead);
             if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
             {
                 //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
                 return (float)cache;
             }
-            if (req.Thing == parent)
+            if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
             {
-                if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
+                foreach (Thing thing in ChildNodes.Values)
                 {
-                    foreach (Thing thing in ChildNodes.Values)
-                    {
-                        result += statWorker.GetValue(thing);
-                    }
-                }
-                else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
-                {
-                    StatDef statDef = StatWorker_stat(statWorker);
-                    result *= GetStatMultiplier(statDef, req.Thing);
-                    result += GetStatOffset(statDef, req.Thing);
+                    result += statWorker.GetValue(thing);
                 }
             }
-            else if (statWorker is StatWorker_MeleeAverageDPS ||
-                    statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                    statWorker is StatWorker_MarketValue ||
-                    statWorker == StatDefOf.Mass.Worker
-                )
-            {
-                result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
-            }
-            else
+            else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
             {
                 StatDef statDef = StatWorker_stat(statWorker);
                 result *= GetStatMultiplier(statDef, req.Thing);
@@ -172,70 +152,70 @@ namespace RW_ModularizationWeapon
 
         protected override void PreStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, Dictionary<string, object> forPostRead)
         {
-            StatRequest before = optionalReq;
-            optionalReq = RedirectoryReq(statWorker, optionalReq);
-            if (optionalReq.Thing == before.Thing)
-            {
-                if (optionalReq.Thing == parent)
-                {
-                    StatWorkerPerfix(forPostRead);
-                }
-                else ((CompModularizationWeapon)optionalReq.Thing)?.PreStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, forPostRead);
-            }
+            //Log.Message($"{statWorker} : PreStatWorker_GetStatDrawEntryLabel");
+            StatWorkerPerfix(forPostRead);
         }
 
 
         protected override string PostStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, string result, Dictionary<string, object> forPostRead)
         {
+            //Log.Message($"{statWorker} : PostStatWorker_GetStatDrawEntryLabel");
+            StatWorkerPostfix(forPostRead);
             StatRequest before = optionalReq;
             optionalReq = RedirectoryReq(statWorker, optionalReq);
-            if (optionalReq.Thing != before.Thing)
+            if (before.Thing != optionalReq.Thing && optionalReq.Thing != parent)
             {
                 return statWorker.GetStatDrawEntryLabel(stat, value, numberSense, optionalReq, finalized);
             }
-
-            if (optionalReq.Thing == parent)
-            {
-                StatWorkerPostfix(forPostRead);
-            }
-            else result = ((CompChildNodeProccesser)optionalReq.Thing)?.PostStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, forPostRead) ?? result;
             return result;
+        }
+
+
+        protected override void PreStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, Dictionary<string, object> forPostRead)
+        {
+            //Log.Message($"{statWorker} : PreStatWorker_GetExplanationUnfinalized");
+            if (!(statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker)
+            )
+                StatWorkerPerfix(forPostRead);
         }
 
 
         protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
         {
+            //Log.Message($"{statWorker} : PostStatWorker_GetExplanationUnfinalized");
+            if (!(statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker)
+            )
+                StatWorkerPostfix(forPostRead);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
-            if (before.Thing != req.Thing)
+            if (before.Thing != req.Thing && req.Thing != parent)
             {
                 return statWorker.GetExplanationUnfinalized(req, numberSense);
             }
-            if (req.Thing == parent)
+            if (statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker
+            )
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                if (statWorker is StatWorker_MeleeAverageDPS ||
-                    statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                    statWorker is StatWorker_MarketValue ||
-                    statWorker == StatDefOf.Mass.Worker
-                )
+                foreach ((string id, Thing thing) in ChildNodes)
                 {
-                    foreach ((string id, Thing thing) in ChildNodes)
+                    if (!NotUseTools(id))
                     {
-                        if (!NotUseTools(id))
-                        {
-                            stringBuilder.AppendLine("  " + thing.Label + ":");
-                            string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
-                            exp = Regex.Replace(exp, "\n", "\n  ");
-                            stringBuilder.AppendLine(exp);
-                        }
+                        stringBuilder.AppendLine("  " + thing.Label + ":");
+                        string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
+                        exp = Regex.Replace(exp, "\n", "\n  ");
+                        stringBuilder.AppendLine(exp);
                     }
-                    result += "\n" + stringBuilder.ToString();
                 }
-            }
-            else
-            {
-                result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, forPostRead) ?? result;
+                result += "\n" + stringBuilder.ToString();
             }
             return result;
         }
@@ -243,23 +223,19 @@ namespace RW_ModularizationWeapon
 
         protected override IEnumerable<Dialog_InfoCard.Hyperlink> PostStatWorker_GetInfoCardHyperlinks(StatWorker statWorker, StatRequest statRequest, IEnumerable<Dialog_InfoCard.Hyperlink> result)
         {
-            statRequest = RedirectoryReq(statWorker, statRequest);
             foreach (Dialog_InfoCard.Hyperlink link in result)
             {
                 yield return link;
             }
-            if (statRequest.Thing == parent)
+            if (statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker
+            )
             {
-                if (statWorker is StatWorker_MeleeAverageDPS ||
-                    statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                    statWorker is StatWorker_MarketValue ||
-                    statWorker == StatDefOf.Mass.Worker
-                )
+                foreach (Thing thing in ChildNodes.Values)
                 {
-                    foreach (Thing thing in ChildNodes.Values)
-                    {
-                        yield return new Dialog_InfoCard.Hyperlink(thing);
-                    }
+                    yield return new Dialog_InfoCard.Hyperlink(thing);
                 }
             }
         }

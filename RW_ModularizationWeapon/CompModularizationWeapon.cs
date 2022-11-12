@@ -95,6 +95,19 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            for(int i = 0; i < ChildNodes.Count; i++)
+            {
+                ThingWithComps part = ChildNodes[i] as ThingWithComps;
+                foreach (Gizmo gizmo in part.GetGizmos())
+                {
+                    yield return gizmo;
+                }
+            }
+        }
+
+
         protected override List<(Thing, string, List<RenderInfo>)> OverrideDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
         {
             Matrix4x4 scale = Matrix4x4.identity;
