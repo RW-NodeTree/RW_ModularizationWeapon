@@ -100,9 +100,19 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < ChildNodes.Count; i++)
             {
                 ThingWithComps part = ChildNodes[i] as ThingWithComps;
-                foreach (Gizmo gizmo in part.GetGizmos())
+                if(part != null)
                 {
-                    yield return gizmo;
+                    foreach (ThingComp comp in part.AllComps)
+                    {
+                        Type type = comp.GetType();
+                        if(type == typeof(CompModularizationWeapon) || type.FullName == "CombatExtended.CompAmmoUser" || type.FullName == "CombatExtended.CompFireModes")
+                        {
+                            foreach(Gizmo gizmo in comp.CompGetGizmosExtra())
+                            {
+                                yield return gizmo;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -210,6 +220,25 @@ namespace RW_ModularizationWeapon
             if (properties != null)
             {
                 if(node == null) return properties.allowEmpty;
+                CompModularizationWeapon comp = node;
+                if(comp != null)
+                {
+                    for (int i = 0; i < ChildNodes.Count; i++)
+                    {
+                        if (comp.Props.disallowedOtherPart.Allows(ChildNodes[i]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                for (int i = 0; i < ChildNodes.Count; i++)
+                {
+                    comp = ChildNodes[i];
+                    if(comp != null && comp.Props.disallowedOtherPart.Allows(node))
+                    {
+                        return false;
+                    }
+                }
                 //if (Prefs.DevMode) Log.Message($"properties.filter.AllowedDefCount : {properties.filter.AllowedDefCount}");
                 return
                     ((CompModularizationWeapon)node)?.targetModeParent == null &&
@@ -244,13 +273,17 @@ namespace RW_ModularizationWeapon
             System.Random random = new System.Random();
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
-                int i = random.Next(properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
-                ThingDef def = i < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[i] : null;
-                if (def != null)
+                for(int i = 0; i < 3; i++)
                 {
-                    Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                    thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                    ChildNodes[properties.id] = thing;
+                    int j = random.Next(properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
+                    ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
+                    if (def != null)
+                    {
+                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                        ChildNodes[properties.id] = thing;
+                        if (ChildNodes[properties.id] == thing) break;
+                    }
                 }
             }
         }
@@ -508,6 +541,11 @@ namespace RW_ModularizationWeapon
 
             CheckAndSetListBool(ref verbPropertiesBoolOrPatch, false);
             CheckAndSetListBool(ref toolsBoolOrPatch, false);
+
+            parentDef.weaponTags = parentDef.weaponTags ?? new List<string>();
+
+            disallowedOtherPart = disallowedOtherPart ?? new ThingFilter();
+            disallowedOtherPart.ResolveReferences();
         }
 
 
@@ -837,6 +875,9 @@ namespace RW_ModularizationWeapon
 
 
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
+
+
+        public ThingFilter disallowedOtherPart = new ThingFilter();
 
 
         public string PartTexPath = null;
