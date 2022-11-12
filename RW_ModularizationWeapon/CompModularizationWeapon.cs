@@ -97,7 +97,7 @@ namespace RW_ModularizationWeapon
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            for(int i = 0; i < ChildNodes.Count; i++)
+            for (int i = 0; i < ChildNodes.Count; i++)
             {
                 ThingWithComps part = ChildNodes[i] as ThingWithComps;
                 foreach (Gizmo gizmo in part.GetGizmos())

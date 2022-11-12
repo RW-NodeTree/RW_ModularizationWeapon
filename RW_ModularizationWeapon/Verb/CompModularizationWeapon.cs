@@ -130,6 +130,12 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            //StringBuilder stringBuilder = new StringBuilder();
+            //for (int i = 0; i < result.Count; i++)
+            //{
+            //    stringBuilder.AppendLine($"{i} : {result[i]}");
+            //}
+            //Log.Message(stringBuilder.ToString());
             return result;
         }
 
@@ -215,6 +221,12 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            //StringBuilder stringBuilder = new StringBuilder();
+            //for (int i = 0; i < result.Count; i++)
+            //{
+            //    stringBuilder.AppendLine($"{i} : {result[i]}");
+            //}
+            //Log.Message(stringBuilder.ToString());
             return result;
         }
     }
