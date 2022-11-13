@@ -686,7 +686,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                return b.ClacValue((va, vb) => (va != null && vb != null) ? vb : va, a);
+                return b.ClacValue((va, vb) => (va != null) ? vb : va, a);
             }
             return a;
         }
@@ -701,7 +701,7 @@ namespace RW_ModularizationWeapon
         }
 
         public static FieldReaderInst<T> operator &(FieldReaderInst<T> a, FieldReaderInst<T> b)
-            => ClacValue((va, vb) => (va != null && vb != null) ? vb : va, a, b);
+            => ClacValue((va, vb) => (va != null) ? vb : va, a, b);
 
         public static FieldReaderInst<T> operator |(FieldReaderInst<T> a, FieldReaderInst<T> b)
             => ClacValue((va, vb) => va ?? vb, a, b);
