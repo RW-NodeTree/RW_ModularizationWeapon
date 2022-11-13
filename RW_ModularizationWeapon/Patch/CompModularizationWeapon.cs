@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 CompModularizationWeapon comp = container[i];
-                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && Props.WeaponAttachmentPropertiesById(id).verbPropertiesBoolAndPatchByChildPart)
+                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && Props.WeaponAttachmentPropertiesById(id).verbPropertiesObjectPatchByChildPart)
                 {
                     foreach (FieldReaderInst<VerbProperties> child in comp.Props.verbPropertiesObjectPatch)
                     {
@@ -41,7 +41,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 CompModularizationWeapon comp = container[i];
-                if (comp != null && comp.Validity && id != childNodeIdForTool && Props.WeaponAttachmentPropertiesById(id).toolsBoolAndPatchByChildPart)
+                if (comp != null && comp.Validity && id != childNodeIdForTool && Props.WeaponAttachmentPropertiesById(id).toolsObjectPatchByChildPart)
                 {
                     foreach (FieldReaderInst<Tool> child in comp.Props.toolsObjectPatch)
                     {

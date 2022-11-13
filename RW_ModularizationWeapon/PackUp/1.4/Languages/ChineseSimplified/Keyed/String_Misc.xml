@@ -15,6 +15,8 @@
 	<notAllowParentUseVerbProperties>禁止父部件使用此远程武器</notAllowParentUseVerbProperties>
 	<verbPropertiesAffectByOtherPart>远程武器可被其他部件影响</verbPropertiesAffectByOtherPart>
 	<toolsAffectByOtherPart>近战武器可被其他部件影响</toolsAffectByOtherPart>
+	<verbPropertiesPatch>远程武器替换参数</verbPropertiesPatch>
+	<toolsPatch>近战武器替换参数</toolsPatch>
 	<Condation>特殊条件</Condation>
 	<OffseterAffectHorizon>加成影响水平</OffseterAffectHorizon>
 	<allowCreateOnCraftingPort>允许在改装点直接创造</allowCreateOnCraftingPort>

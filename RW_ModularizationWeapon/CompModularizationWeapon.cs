@@ -204,11 +204,10 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < Props.attachmentProperties.Count; i++)
                 {
                     WeaponAttachmentProperties properties = Props.attachmentProperties[i];
-                    if (properties.id == x.Item2) return i;
+                    if (properties.id == x.Item2) return i + properties.drawWeight * Props.attachmentProperties.Count;
                 }
                 return -1;
             });
-            nodeRenderingInfos.SortBy(x => Props.WeaponAttachmentPropertiesById(x.Item2)?.drawWeight ?? 0);
             return nodeRenderingInfos;
         }
 
@@ -555,9 +554,9 @@ namespace RW_ModularizationWeapon
             CompModularizationWeapon comp = req.Thing;
             StringBuilder stringBuilder = new StringBuilder();
 
-            int listAll<T>(
-                FieldReaderDgitList<T> list,
-                bool mul,
+            int listAllDgit<T>(
+                List<FieldReaderDgit<T>> list,
+                string perfix,
                 bool snap = false
                 )
             {
@@ -566,10 +565,31 @@ namespace RW_ModularizationWeapon
                 {
                     if (snap) stringBuilder.Append("  ");
                     stringBuilder.AppendLine($"  NO.{i+1} :");
-                    foreach ((FieldInfo field, double value) in list[i])
+                    foreach ((FieldInfo field, IConvertible value) in list[i])
                     {
                         if (snap) stringBuilder.Append("  ");
-                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {(mul ? "x" : "+")}{value}");
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{value}");
+                    }
+                    result += list[i].Count;
+                }
+                return result;
+            }
+
+            int listAllInst<T>(
+                List<FieldReaderInst<T>> list,
+                string perfix,
+                bool snap = false
+                )
+            {
+                int result = 0;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (snap) stringBuilder.Append("  ");
+                    stringBuilder.AppendLine($"  NO.{i + 1} :");
+                    foreach ((FieldInfo field, object value) in list[i])
+                    {
+                        if (snap) stringBuilder.Append("  ");
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{value}");
                     }
                     result += list[i].Count;
                 }
@@ -577,10 +597,10 @@ namespace RW_ModularizationWeapon
             }
             int count = statOffset.Count;
             stringBuilder.AppendLine("verbPropertiesOffseter".Translate().RawText + " :");
-            count += listAll(verbPropertiesOffseter, false);
+            count += listAllDgit(verbPropertiesOffseter, "+");
 
             stringBuilder.AppendLine("toolsOffseter".Translate().RawText + " :");
-            count += listAll(toolsOffseter, false);
+            count += listAllDgit(toolsOffseter, "+");
 
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
@@ -598,10 +618,10 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = statMultiplier.Count;
             stringBuilder.AppendLine("verbPropertiesMultiplier".Translate().RawText + " :");
-            count += listAll(verbPropertiesMultiplier, true);
+            count += listAllDgit(verbPropertiesMultiplier, "x");
 
             stringBuilder.AppendLine("toolsMultiplier".Translate().RawText + " :");
-            count += listAll(toolsMultiplier, true);
+            count += listAllDgit(toolsMultiplier, "x");
 
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
@@ -617,6 +637,22 @@ namespace RW_ModularizationWeapon
                 );
 
             stringBuilder.Clear();
+            count = 0;
+            stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
+            count += listAllInst(verbPropertiesObjectPatch, "");
+
+            stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
+            count += listAllInst(toolsObjectPatch, "");
+
+            yield return new StatDrawEntry(
+                StatCategoryDefOf.Weapon,
+                "Patcher".Translate(),
+                count + " " + "Patcher".Translate(),
+                stringBuilder.ToString(),
+                1000
+                );
+
+            stringBuilder.Clear();
 
             string CheckAndMark(bool flag, string name)
             {
@@ -628,8 +664,8 @@ namespace RW_ModularizationWeapon
             //UnityEngine.GUIUtility.systemCopyBuffer = "<color=" + (unchangeable ? "green" : "red") + ">" + "unchangeable".Translate() + " : " + (unchangeable ? "Yes".Translate() : "No".Translate()) + "</color>";
             //stringBuilder.AppendLine("<color=" + (unchangeable ? "green" : "red") + ">" + "unchangeable" + " : " + (unchangeable ? "Yes" : "No") + "</color>");
             stringBuilder.AppendLine(CheckAndMark(unchangeable, "unchangeable".Translate()));
-            stringBuilder.AppendLine(CheckAndMark(allowCreateOnCraftingPort, "allowCreateOnCraftingPort".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseTools, "notAllowParentUseTools".Translate()));
+            stringBuilder.AppendLine(CheckAndMark(allowCreateOnCraftingPort, "allowCreateOnCraftingPort".Translate()));
             stringBuilder.AppendLine(CheckAndMark(notAllowParentUseVerbProperties, "notAllowParentUseVerbProperties".Translate()));
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseTools ? "green" : "red") + ">" + "notAllowParentUseTools".Translate() + " : " + (notAllowParentUseTools ? "Yes".Translate() : "No".Translate()) + "</color>");
             //stringBuilder.AppendLine("<color=" + (notAllowParentUseVerbProperties ? "green" : "red") + ">" + "notAllowParentUseVerbProperties".Translate() + " : " + (notAllowParentUseVerbProperties ? "Yes".Translate() : "No".Translate()) + "</color>");
@@ -653,6 +689,8 @@ namespace RW_ModularizationWeapon
                 Thing child = comp?.ChildNodes[properties.id];
                 CompModularizationWeapon childComp = child;
                 stringBuilder.Clear();
+
+                count = 0;
                 int Offseter = 0;
                 int Multiplier = 0;
                 if (childComp != null)
@@ -662,10 +700,10 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("Offseter".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseter".Translate() + " :");
-                    Offseter += listAll(childComp.Props.verbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon, false, true);
+                    Offseter += listAllDgit(childComp.Props.verbPropertiesOffseter * properties.verbPropertiesOffseterAffectHorizon, "+", true);
 
                     stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
-                    Offseter += listAll(childComp.Props.toolsOffseter * properties.toolsOffseterAffectHorizon, false, true);
+                    Offseter += listAllDgit(childComp.Props.toolsOffseter * properties.toolsOffseterAffectHorizon, "+", true);
 
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
@@ -676,16 +714,22 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("Multiplier".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesMultiplier".Translate() + " :");
-                    Multiplier += listAll((childComp.Props.verbPropertiesMultiplier - 1) * properties.verbPropertiesMultiplierAffectHorizon + 1, true, true);
+                    Multiplier += listAllDgit((childComp.Props.verbPropertiesMultiplier - 1) * properties.verbPropertiesMultiplierAffectHorizon + 1, "x", true);
 
                     stringBuilder.AppendLine("  " + "toolsMultiplier".Translate() + " :");
-                    Multiplier += listAll((childComp.Props.toolsMultiplier - 1) * properties.toolsMultiplierAffectHorizon + 1, true, true);
+                    Multiplier += listAllDgit((childComp.Props.toolsMultiplier - 1) * properties.toolsMultiplierAffectHorizon + 1, "x", true);
 
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
                         stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, req.Thing) - 1f) + 1f}");
                     }
+
+                    stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
+                    if(verbPropertiesObjectPatchByChildPart) count += listAllInst(childComp.Props.verbPropertiesObjectPatch, "", true);
+
+                    stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
+                    if (toolsObjectPatchByChildPart) count += listAllInst(childComp.Props.toolsObjectPatch, "", true);
                 }
                 else
                 {
@@ -694,10 +738,10 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("OffseterAffectHorizon".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseterAffectHorizon".Translate() + " :");
-                    Offseter += listAll(properties.verbPropertiesOffseterAffectHorizon, false, true);
+                    Offseter += listAllDgit(properties.verbPropertiesOffseterAffectHorizon, "+", true);
 
                     stringBuilder.AppendLine("  " + "toolsOffseterAffectHorizon".Translate() + " :");
-                    Offseter += listAll(properties.toolsOffseterAffectHorizon, false, true);
+                    Offseter += listAllDgit(properties.toolsOffseterAffectHorizon, "+", true);
 
                     stringBuilder.AppendLine("  " + "statOffsetAffectHorizon".Translate() + " :");
                     foreach (StatModifier stat in properties.statOffsetAffectHorizon)
@@ -707,10 +751,10 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("MultiplierAffectHorizon".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesMultiplierAffectHorizon".Translate() + " :");
-                    Multiplier += listAll(properties.verbPropertiesMultiplierAffectHorizon, true, true);
+                    Multiplier += listAllDgit(properties.verbPropertiesMultiplierAffectHorizon, "x", true);
 
                     stringBuilder.AppendLine("  " + "toolsMultiplierAffectHorizon".Translate() + " :");
-                    Multiplier += listAll(properties.toolsMultiplierAffectHorizon, true, true);
+                    Multiplier += listAllDgit(properties.toolsMultiplierAffectHorizon, "x", true);
 
                     stringBuilder.AppendLine("  " + "statMultiplierAffectHorizon".Translate() + " :");
                     foreach (StatModifier stat in properties.statMultiplierAffectHorizon)

@@ -15,6 +15,8 @@
 	<notAllowParentUseVerbProperties>Not Allow Parent Part Use Range Weapon</notAllowParentUseVerbProperties>
 	<verbPropertiesAffectByOtherPart>Range Weapon Affect By Other Part</verbPropertiesAffectByOtherPart>
 	<toolsAffectByOtherPart>Melee Weapon Affect By Other Part</toolsAffectByOtherPart>
+	<verbPropertiesPatch>Range Weapon Patch</verbPropertiesPatch>
+	<toolsPatch>Melee Weapon Patch</toolsPatch>
 	<Condation>Special Condation</Condation>
 	<OffseterAffectHorizon>Offseter Affect Horizon</OffseterAffectHorizon>
 	<allowCreateOnCraftingPort>Allow Create On Crafting Port</allowCreateOnCraftingPort>

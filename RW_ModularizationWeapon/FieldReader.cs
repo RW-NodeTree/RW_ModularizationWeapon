@@ -16,33 +16,10 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
-    public class FieldReaderDgit<T> : IDictionary<FieldInfo, double>
+
+    public abstract class FieldReader<T, TV> : IDictionary<FieldInfo, TV>
     {
-        private double? defaultValue;
         private Type type = typeof(T);
-        private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
-
-        public FieldReaderDgit() { }
-
-        public FieldReaderDgit(FieldReaderDgit<T> other)
-        {
-            if(other != null)
-            {
-                datas.AddRange(other.datas);
-                type = other.type;
-                defaultValue = other.defaultValue;
-            }
-        }
-
-
-        public double DefaultValue
-        {
-            get => defaultValue ?? 0;
-            set => defaultValue = value;
-        }
-
-        public bool HasDefaultValue => defaultValue.HasValue;
-
 
         public Type UsedType
         {
@@ -52,54 +29,198 @@ namespace RW_ModularizationWeapon
                 if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
-                    datas.RemoveAll(x => !type.IsAssignableFrom(x.Key.DeclaringType));
+                    List<FieldInfo> forRemove = (from x in Keys where !type.IsAssignableFrom(x.DeclaringType) select x).ToList();
+                    foreach (FieldInfo f in forRemove)
+                    {
+                        Remove(f);
+                    }
+                    UsedTypeUpdate();
                 }
             }
         }
 
+        public abstract TV DefaultValue { get; set; }
 
-        public int Count => datas.Count;
+        public abstract bool HasDefaultValue { get; }
 
-        public ICollection<FieldInfo> Keys => datas.Keys;
+        public abstract TV this[FieldInfo key] { get; set; }
 
-        public ICollection<double> Values => datas.Values;
+        public abstract ICollection<FieldInfo> Keys { get; }
 
-        public bool IsReadOnly => ((ICollection<KeyValuePair<FieldInfo, double>>)datas).IsReadOnly;
+        public abstract ICollection<TV> Values { get; }
 
-        public double this[FieldInfo key] 
+        public abstract int Count { get; }
+
+        public bool IsReadOnly => true;
+
+        public abstract void Add(FieldInfo key, TV value);
+
+        public abstract void Clear();
+
+        public abstract bool ContainsKey(FieldInfo key);
+
+        public abstract bool Remove(FieldInfo key);
+
+        public abstract bool TryGetValue(FieldInfo key, out TV value);
+
+        public abstract FieldReader<T, TV> Clone();
+
+        public abstract void UsedTypeUpdate();
+
+        public void Add(KeyValuePair<FieldInfo, TV> item) => Add(item.Key, item.Value);
+
+        public bool Contains(KeyValuePair<FieldInfo, TV> item) => TryGetValue(item.Key, out TV value) && (object)value == (object)item.Value;
+
+        public void CopyTo(KeyValuePair<FieldInfo, TV>[] array, int arrayIndex)
         {
-            get => ((IDictionary<FieldInfo, double>)datas)[key];
-            set => Add(key, value);
+            foreach((FieldInfo field, TV value) in this)
+            {
+                array[arrayIndex] = new KeyValuePair<FieldInfo, TV>(field, value);
+                arrayIndex++;
+            }
         }
 
-        public bool TryGetValue(string name, out double value)
+        public IEnumerator<KeyValuePair<FieldInfo, TV>> GetEnumerator()
         {
-            value = 0;
-            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
+            foreach(FieldInfo key in Keys) yield return new KeyValuePair<FieldInfo, TV>(key, this[key]);
+        }
+
+        public bool Remove(KeyValuePair<FieldInfo, TV> item)
+        {
+            if(Contains(item)) return Remove(item.Key);
             return false;
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void SetOrAdd(string name, double value)
+        public FieldReader<T, TV> ClacValue(Func<TV, TV, TV> calc, TV value)
         {
-            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null) Add(fieldInfo, value);
+            FieldReader<T, TV> result = this.Clone();
+            if(calc != null && value != null)
+            {
+                List<FieldInfo> fieldInfos = new List<FieldInfo>(result.Keys);
+                foreach (FieldInfo field in fieldInfos)
+                {
+                    result[field] = calc(result[field], value);
+                }
+            }
+            return result;
         }
 
-        public void LoadDataFromXmlCustom(XmlNode xmlRoot)
+        public T ClacValue(Func<TV, TV, TV> calc, T orginal)
+        {
+            if (orginal != null)
+            {
+                T result = Gen.MemberwiseClone(orginal);
+                if (calc != null)
+                {
+                    foreach (FieldInfo field in result.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    {
+                        if (field.DeclaringType.IsAssignableFrom(UsedType) && typeof(TV).IsAssignableFrom(field.FieldType))
+                        {
+                            if (!TryGetValue(field, out TV value)) value = DefaultValue;
+                            field.SetValue(result, calc((TV)field.GetValue(result), value));
+                        }
+                    }
+                }
+                return result;
+            }
+            return orginal;
+        }
+
+        public static TFR ClacValue<TFR>(Func<TV, TV, TV> calc, TFR a, TFR b) where TFR : FieldReader<T, TV>, new()
+        {
+
+            TFR result = new TFR();
+
+            if (a == null && b == null) return null;
+
+            a = a ?? new TFR();
+            b = b ?? new TFR();
+
+            if (a.UsedType.IsAssignableFrom(b.UsedType)) result.UsedType = b.UsedType;
+            else if (b.UsedType.IsAssignableFrom(a.UsedType)) result.UsedType = a.UsedType;
+
+            foreach (FieldInfo field in a.Keys)
+            {
+                if (result.UsedType.IsAssignableFrom(field.DeclaringType))
+                {
+                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field]));
+                    else result.Add(field, calc(a[field], b.DefaultValue));
+                }
+            }
+
+            foreach (FieldInfo field in b.Keys)
+            {
+                if (result.UsedType.IsAssignableFrom(field.DeclaringType) && !result.ContainsKey(field))
+                {
+                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field]));
+                    else result.Add(field, calc(a.DefaultValue, b[field]));
+                }
+            }
+            return result;
+        }
+
+
+        public virtual void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
             try
             {
-                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
-                if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
+                if (typename != null)
+                {
+                    UsedType = GenTypes.GetTypeInAnyAssembly(typename);
+                }
             }
             catch (Exception ex)
             {
                 Log.Error(ex.ToString());
             }
+        }
+    }
+    
+    public class FieldReaderDgit<T> : FieldReader<T, IConvertible>
+    {
+        private double? defaultValue;
+        private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
 
+        public FieldReaderDgit() { }
+
+        public FieldReaderDgit(FieldReaderDgit<T> other)
+        {
+            if(other != null)
+            {
+                datas.AddRange(other.datas);
+                UsedType = other.UsedType;
+                defaultValue = other.defaultValue;
+            }
+        }
+
+
+        public override IConvertible DefaultValue
+        {
+            get => defaultValue.GetValueOrDefault();
+            set => defaultValue = value.ToDouble(null);
+        }
+
+        public override bool HasDefaultValue => defaultValue.HasValue;
+
+
+        public override int Count => datas.Count;
+
+        public override ICollection<FieldInfo> Keys => datas.Keys;
+
+        public override ICollection<IConvertible> Values => (from x in datas.Values select (IConvertible)x).ToArray();
+
+        public override IConvertible this[FieldInfo key] 
+        {
+            get => datas.TryGetValue(key);
+            set => Add(key, value);
+        }
+
+        public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
+        {
+            base.LoadDataFromXmlCustom(xmlRoot);
             try
             {
                 string defaultValue = xmlRoot.Attributes["Default"]?.Value;
@@ -119,10 +240,8 @@ namespace RW_ModularizationWeapon
             {
                 try
                 {
-                    SetOrAdd(
-                        node.Name,
-                        ParseHelper.FromString<double>(node.InnerText)
-                        );
+                    FieldInfo field = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    this[field] = ParseHelper.FromString<double>(node.InnerText);
                 }
                 catch(Exception ex)
                 {
@@ -143,122 +262,69 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
+        public override bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
 
-        public void Add(FieldInfo key, double value)
+        public override void Add(FieldInfo key, IConvertible value)
         {
-            if (key != null)
+            if (key != null && key.DeclaringType.IsAssignableFrom(UsedType))
             {
                 Type vt = key.FieldType;
                 if (vt == typeof(int) || vt == typeof(float) ||
                    vt == typeof(long) || vt == typeof(sbyte) ||
                    vt == typeof(double))
-                    datas.SetOrAdd(key, value);
+                    datas.SetOrAdd(key, value.ToDouble(null));
                 else throw new ArgumentException($"not support value(name={key.Name},type={vt})");
             }
         }
 
-        public bool Remove(FieldInfo key) => datas.Remove(key);
+        public override bool Remove(FieldInfo key) => datas.Remove(key);
 
-        public bool TryGetValue(FieldInfo key, out double value) => datas.TryGetValue(key, out value);
+        public override bool TryGetValue(FieldInfo key, out IConvertible value)
+        {
+            value = default(double);
+            bool result = datas.TryGetValue(key, out double outer);
+            value = outer;
+            return result;
+        }
 
-        public void Add(KeyValuePair<FieldInfo, double> item) => Add(item.Key, item.Value);
+        public override void Clear() => datas.Clear();
 
-        public void Clear() => datas.Clear();
+        public override FieldReader<T, IConvertible> Clone() => new FieldReaderDgit<T>(this);
 
-        public bool Contains(KeyValuePair<FieldInfo, double> item)=> datas.Contains(item);
-
-        public void CopyTo(KeyValuePair<FieldInfo, double>[] array, int arrayIndex) => ((ICollection<KeyValuePair<FieldInfo, double>>)datas).CopyTo(array, arrayIndex);
-
-        public bool Remove(KeyValuePair<FieldInfo, double> item) => ((ICollection<KeyValuePair<FieldInfo, double>>)datas).Remove(item);
-
-        public IEnumerator<KeyValuePair<FieldInfo, double>> GetEnumerator() => datas.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => datas.GetEnumerator();
+        public override void UsedTypeUpdate() { }
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
-        {
-            a = new FieldReaderDgit<T>(a);
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] += b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av.ToDouble(null) + bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, double b)
-        {
-            a = new FieldReaderDgit<T>(a);
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] -= b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av.ToDouble(null) - bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, double b)
-        {
-            a = new FieldReaderDgit<T>(a);
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] *= b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av.ToDouble(null) * bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, double b)
-        {
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] /= b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av.ToDouble(null) / bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator %(FieldReaderDgit<T> a, double b)
-        {
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] %= b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av.ToDouble(null) % bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
 
         public static T operator +(T a, FieldReaderDgit<T> b)
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if(a != null)
+                a = b.ClacValue((va, vb) =>
                 {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    if (va != null)
                     {
-                        if (field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) + value));
-                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) + value));
-                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) + value));
-                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) + value));
-                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) + value);
-                            }
-                        }
+                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) + vb.ToDouble(null);
                     }
-                }
+                    return va;
+                }, a);
             }
             return a;
         }
@@ -267,26 +333,18 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
+                a = b.ClacValue((va, vb) =>
                 {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    if (va != null)
                     {
-                        if (field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) - value));
-                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) - value));
-                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) - value));
-                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) - value));
-                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) - value);
-                            }
-                        }
+                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) - vb.ToDouble(null);
                     }
-                }
+                    return va;
+                }, a);
             }
             return a;
         }
@@ -295,26 +353,18 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
+                a = b.ClacValue((va, vb) =>
                 {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    if (va != null)
                     {
-                        if (field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) * value));
-                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) * value));
-                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) * value));
-                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) * value));
-                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) * value);
-                            }
-                        }
+                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) * vb.ToDouble(null);
                     }
-                }
+                    return va;
+                }, a);
             }
             return a;
         }
@@ -323,26 +373,18 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
+                a = b.ClacValue((va, vb) =>
                 {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    if (va != null)
                     {
-                        if (field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) / value));
-                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) / value));
-                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) / value));
-                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) / value));
-                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) / value);
-                            }
-                        }
+                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) / vb.ToDouble(null);
                     }
-                }
+                    return va;
+                }, a);
             }
             return a;
         }
@@ -351,195 +393,41 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
+                a = b.ClacValue((va, vb) =>
                 {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    if (va != null)
                     {
-                        if(field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            double value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                                if (field.FieldType == typeof(int)) field.SetValue(a, (int)((int)field.GetValue(a) % value));
-                                else if (field.FieldType == typeof(float)) field.SetValue(a, (float)((float)field.GetValue(a) % value));
-                                else if (field.FieldType == typeof(long)) field.SetValue(a, (long)((long)field.GetValue(a) % value));
-                                else if (field.FieldType == typeof(sbyte)) field.SetValue(a, (sbyte)((sbyte)field.GetValue(a) % value));
-                                else if (field.FieldType == typeof(double)) field.SetValue(a, (double)field.GetValue(a) % value);
-                            }
-                        }
+                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) % vb.ToDouble(null);
                     }
-                }
+                    return va;
+                }, a);
             }
             return a;
         }
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-        {
-            FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderDgit<T>();
-            b = b ?? new FieldReaderDgit<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] + b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] + b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] + b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue + b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va.ToDouble(null) + vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-        {
-            FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderDgit<T>();
-            b = b ?? new FieldReaderDgit<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] - b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] - b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] - b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue - b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va.ToDouble(null) - vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-        {
-            FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderDgit<T>();
-            b = b ?? new FieldReaderDgit<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if(b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] * b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] * b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] * b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue * b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va.ToDouble(null) * vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-        {
-            FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderDgit<T>();
-            b = b ?? new FieldReaderDgit<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] / b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] / b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] / b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue / b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va.ToDouble(null) / vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator %(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-        {
-            FieldReaderDgit<T> result = new FieldReaderDgit<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderDgit<T>();
-            b = b ?? new FieldReaderDgit<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] % b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] % b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] % b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue % b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va.ToDouble(null) % vb.ToDouble(null), a, b);
     }
 
-    public class FieldReaderBool<T> : IDictionary<FieldInfo, bool>
+    public class FieldReaderBool<T> : FieldReader<T, bool>
     {
         private bool? defaultValue;
-        private Type type = typeof(T);
         private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
 
         public FieldReaderBool() { }
@@ -549,79 +437,35 @@ namespace RW_ModularizationWeapon
             if (other != null)
             {
                 datas.AddRange(other.datas);
-                type = other.type;
+                UsedType = other.UsedType;
                 defaultValue = other.defaultValue;
             }
         }
 
-        public bool DefaultValue
+        public override bool DefaultValue
         {
-            get => defaultValue ?? false;
+            get => defaultValue.GetValueOrDefault();
             set => defaultValue = value;
         }
 
+        public override bool HasDefaultValue => defaultValue.HasValue;
 
-        public bool HasDefaultValue => defaultValue.HasValue;
+        public override int Count => datas.Count;
 
+        public override ICollection<FieldInfo> Keys => datas.Keys;
 
-        public Type UsedType
-        {
-            get => type;
-            set
-            {
-                if (value != null && typeof(T).IsAssignableFrom(value))
-                {
-                    type = value;
-                    datas.RemoveAll(x => !type.IsAssignableFrom(x.Key.DeclaringType));
-                }
-            }
-        }
+        public override ICollection<bool> Values => datas.Values;
 
-
-        public int Count => datas.Count;
-
-        public ICollection<FieldInfo> Keys => datas.Keys;
-
-        public ICollection<bool> Values => datas.Values;
-
-        public bool IsReadOnly => ((ICollection<KeyValuePair<FieldInfo, bool>>)datas).IsReadOnly;
-
-        public bool this[FieldInfo key]
+        public override bool this[FieldInfo key]
         {
             get => datas[key];
             set => Add(key, value);
         }
 
 
-        public bool TryGetValue(string name, out bool value)
+        public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            value = false;
-            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null) return datas.TryGetValue(fieldInfo, out value);
-            return false;
-        }
-
-
-        public void SetOrAdd(string name, bool value)
-        {
-            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null) Add(fieldInfo, value);
-        }
-
-
-        public void LoadDataFromXmlCustom(XmlNode xmlRoot)
-        {
-            string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
-            try
-            {
-                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
-                if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.ToString());
-            }
-
+            base.LoadDataFromXmlCustom(xmlRoot);
             try
             {
                 string defaultValue = xmlRoot.Attributes["Default"]?.Value;
@@ -641,10 +485,8 @@ namespace RW_ModularizationWeapon
             {
                 try
                 {
-                    SetOrAdd(
-                        node.Name,
-                        ParseHelper.FromString<bool>(node.InnerText)
-                        );
+                    FieldInfo field = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    this[field] = ParseHelper.FromString<bool>(node.InnerText);
                 }
                 catch(Exception ex)
                 {
@@ -665,9 +507,9 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
+        public override bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
 
-        public void Add(FieldInfo key, bool value)
+        public override void Add(FieldInfo key, bool value)
         {
             if (key != null)
             {
@@ -678,81 +520,31 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public bool Remove(FieldInfo key) => datas.Remove(key);
+        public override bool Remove(FieldInfo key) => datas.Remove(key);
 
-        public bool TryGetValue(FieldInfo key, out bool value) => datas.TryGetValue(key, out value);
+        public override bool TryGetValue(FieldInfo key, out bool value) => datas.TryGetValue(key, out value);
 
-        public void Add(KeyValuePair<FieldInfo, bool> item) => Add(item.Key, item.Value);
+        public override void Clear() => datas.Clear();
 
-        public void Clear() => datas.Clear();
+        public override FieldReader<T, bool> Clone() => new FieldReaderBool<T>(this);
 
-        public bool Contains(KeyValuePair<FieldInfo, bool> item) => datas.Contains(item);
-
-        public void CopyTo(KeyValuePair<FieldInfo, bool>[] array, int arrayIndex) => ((ICollection<KeyValuePair<FieldInfo, bool>>)datas).CopyTo(array, arrayIndex);
-
-        public bool Remove(KeyValuePair<FieldInfo, bool> item) => ((ICollection<KeyValuePair<FieldInfo, bool>>)datas).Remove(item);
-
-        public IEnumerator<KeyValuePair<FieldInfo, bool>> GetEnumerator() => datas.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => datas.GetEnumerator();
+        public override void UsedTypeUpdate() { }
 
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, bool b)
-        {
-            a = new FieldReaderBool<T>(a);
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] = a.datas[field] && b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av && bv, b) as FieldReaderBool<T>) ?? a;
 
         public static FieldReaderBool<T> operator |(FieldReaderBool<T> a, bool b)
-        {
-            a = new FieldReaderBool<T>(a);
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] = a.datas[field] || b;
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => av || bv, b) as FieldReaderBool<T>) ?? a;
 
         public static FieldReaderBool<T> operator !(FieldReaderBool<T> a)
-        {
-            a = new FieldReaderBool<T>(a);
-            List<FieldInfo> fieldInfos = new List<FieldInfo>(a.datas.Count);
-            fieldInfos.AddRange(a.datas.Keys);
-            foreach (FieldInfo field in fieldInfos)
-            {
-                a.datas[field] = !a.datas[field];
-            }
-            return a;
-        }
+            => (a?.ClacValue((av, bv) => !av, false) as FieldReaderBool<T>) ?? a;
 
 
         public static T operator &(T a, FieldReaderBool<T> b)
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
-                {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                    {
-                        if (field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            bool value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                               field.SetValue(a, (bool)field.GetValue(a) && value);
-                            }
-                        }
-                    }
-                }
+                return b.ClacValue((va, vb) => va && vb, a);
             }
             return a;
         }
@@ -761,94 +553,20 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
-                {
-                    foreach (FieldInfo field in a.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                    {
-                        if (field.DeclaringType.IsAssignableFrom(b.type))
-                        {
-                            bool value;
-                            if (!b.datas.TryGetValue(field, out value)) value = b.DefaultValue;
-                            if (field != null && b.datas.ContainsKey(field))
-                            {
-                                field.SetValue(a, (bool)field.GetValue(a) || value);
-                            }
-                        }
-                    }
-                }
+                return b.ClacValue((va, vb) => va || vb, a);
             }
             return a;
         }
 
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, FieldReaderBool<T> b)
-        {
-            FieldReaderBool<T> result = new FieldReaderBool<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderBool<T>();
-            b = b ?? new FieldReaderBool<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] && b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] && b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] && b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue && b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va && vb, a, b);
 
         public static FieldReaderBool<T> operator |(FieldReaderBool<T> a, FieldReaderBool<T> b)
-        {
-            FieldReaderBool<T> result = new FieldReaderBool<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderBool<T>();
-            b = b ?? new FieldReaderBool<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.type = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.type = a.type;
-
-            foreach (FieldInfo field in a.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    if (b.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] || b.datas[field]);
-                    else result.datas.Add(field, a.datas[field] || b.DefaultValue);
-                }
-            }
-
-            foreach (FieldInfo field in b.datas.Keys)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.datas.ContainsKey(field))
-                {
-                    if (a.datas.ContainsKey(field)) result.datas.Add(field, a.datas[field] || b.datas[field]);
-                    else result.datas.Add(field, a.DefaultValue || b.datas[field]);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va || vb, a, b);
     }
 
-    public class FieldReaderInst<T> : IDictionary<FieldInfo, object>
+    public class FieldReaderInst<T> : FieldReader<T, object>
     {
-        private Type type = typeof(T);
         private T datas = (T)Activator.CreateInstance(typeof(T));
         private readonly HashSet<FieldInfo> fields = new HashSet<FieldInfo>();
 
@@ -859,77 +577,30 @@ namespace RW_ModularizationWeapon
             if (other != null)
             {
                 datas = Gen.MemberwiseClone(other.datas);
-                type = other.type;
+                UsedType = other.UsedType;
             }
         }
 
+        public override int Count => fields.Count;
 
-        public Type UsedType
-        {
-            get => type;
-            set
-            {
-                if (value != null && typeof(T).IsAssignableFrom(value))
-                {
-                    type = value;
-                    fields.RemoveWhere(x => !type.IsAssignableFrom(x.DeclaringType));
-                    T org = datas;
-                    datas = (T)Activator.CreateInstance(type);
-                    foreach(FieldInfo field in fields)
-                    {
-                        field.SetValue(datas, field.GetValue(org));
-                    }
-                }
-            }
-        }
+        public override ICollection<FieldInfo> Keys => new HashSet<FieldInfo>(fields);
 
+        public override ICollection<object> Values => (from x in fields select x.GetValue(datas)).ToList();
 
-        public int Count => fields.Count;
+        public override object DefaultValue { get => null; set => throw new NotImplementedException(); }
 
-        public ICollection<FieldInfo> Keys => new HashSet<FieldInfo>(fields);
+        public override bool HasDefaultValue => false;
 
-        public ICollection<object> Values => (from x in fields select x.GetValue(datas)).ToList();
-
-        public bool IsReadOnly => true;
-
-        public object this[FieldInfo key]
+        public override object this[FieldInfo key]
         {
             get => (key != null && fields.Contains(key)) ? key.GetValue(datas) : null;
             set => Add(key, value);
         }
 
 
-        public bool TryGetValue(string name, out object value)
+        public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            value = null;
-            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null)
-            {
-                return TryGetValue(fieldInfo, out value);
-            }
-            return false;
-        }
-
-
-        public void SetOrAdd(string name, object value)
-        {
-            FieldInfo fieldInfo = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fieldInfo != null) Add(fieldInfo, value);
-        }
-
-
-        public void LoadDataFromXmlCustom(XmlNode xmlRoot)
-        {
-            string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
-            try
-            {
-                type = typename != null ? (GenTypes.GetTypeInAnyAssembly(typename) ?? type) : type;
-                if (!typeof(T).IsAssignableFrom(type)) type = typeof(T);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.ToString());
-            }
+            base.LoadDataFromXmlCustom(xmlRoot);
             /**
             <xx Reader-Class="c# type">
                 <member_name_of_type>value</member_name_of_type>
@@ -937,11 +608,11 @@ namespace RW_ModularizationWeapon
             **/
             try
             {
-                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(type)(xmlRoot, true);
-                type = datas?.GetType() ?? typeof(T);
+                datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(UsedType)(xmlRoot, true);
+                UsedType = datas?.GetType() ?? typeof(T);
                 foreach (XmlNode node in xmlRoot.ChildNodes)
                 {
-                    FieldInfo fieldInfo = type.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                    FieldInfo fieldInfo = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                     if (fieldInfo != null)
                     {
                         fields.Add(fieldInfo);
@@ -966,9 +637,9 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public bool ContainsKey(FieldInfo key) => fields.Contains(key);
+        public override bool ContainsKey(FieldInfo key) => fields.Contains(key);
 
-        public void Add(FieldInfo key, object value)
+        public override void Add(FieldInfo key, object value)
         {
             if (key != null)
             {
@@ -980,9 +651,9 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public bool Remove(FieldInfo key) => fields.Remove(key);
+        public override bool Remove(FieldInfo key) => fields.Remove(key);
 
-        public bool TryGetValue(FieldInfo key, out object value)
+        public override bool TryGetValue(FieldInfo key, out object value)
         {
             value = default(object);
             if (fields.Contains(key))
@@ -993,54 +664,22 @@ namespace RW_ModularizationWeapon
             return false;
         }
 
-        public void Add(KeyValuePair<FieldInfo, object> item) => Add(item.Key, item.Value);
+        public override void Clear() => fields.Clear();
 
-        public void Clear() => fields.Clear();
+        public override FieldReader<T, object> Clone() => new FieldReaderInst<T>();
 
-        public bool Contains(KeyValuePair<FieldInfo, object> item) => fields.Contains(item.Key) && item.Key.GetValue(datas) == item.Value;
-
-        public void CopyTo(KeyValuePair<FieldInfo, object>[] array, int arrayIndex)
+        public override void UsedTypeUpdate()
         {
-            int i = arrayIndex;
-            foreach(FieldInfo field in fields)
-            {
-                array[i] = new KeyValuePair<FieldInfo, object>(field,field.GetValue(datas));
-                i++;
-            }
-        }
-
-        public bool Remove(KeyValuePair<FieldInfo, object> item) => Remove(item.Key);
-
-        public IEnumerator<KeyValuePair<FieldInfo, object>> GetEnumerator()
-        {
-            foreach (FieldInfo field in fields)
-            {
-                yield return new KeyValuePair<FieldInfo, object>(field, field.GetValue(datas));
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            T old = datas;
+            datas = (T)Activator.CreateInstance(UsedType);
+            foreach(FieldInfo field in fields) field.SetValue(datas, field.GetValue(old));
         }
 
         public static T operator &(T a, FieldReaderInst<T> b)
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
-                {
-                    foreach ((FieldInfo field, object obj) in b)
-                    {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
-                        {
-                            object data = field.GetValue(a);
-                            if (data != null && obj != null) field.SetValue(a, obj);
-                            else if (!field.FieldType.IsValueType) field.SetValue(a, null);
-                        }
-                    }
-                }
+                return b.ClacValue((va, vb) => (va != null && vb != null) ? vb : va, a);
             }
             return a;
         }
@@ -1049,81 +688,15 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = Gen.MemberwiseClone(a);
-                if (a != null)
-                {
-                    foreach ((FieldInfo field, object obj) in b)
-                    {
-                        if (field != null && field.DeclaringType.IsAssignableFrom(a.GetType()))
-                        {
-                            field.SetValue(a, field.GetValue(a) ?? obj);
-                        }
-                    }
-                }
+                return b.ClacValue((va, vb) => va ?? vb, a);
             }
             return a;
         }
 
         public static FieldReaderInst<T> operator &(FieldReaderInst<T> a, FieldReaderInst<T> b)
-        {
-            FieldReaderInst<T> result = new FieldReaderInst<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderInst<T>();
-            b = b ?? new FieldReaderInst<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.UsedType = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.UsedType = a.type;
-
-            foreach ((FieldInfo field, object obj) in a)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && b.fields.Contains(field))
-                {
-                    object data = field.GetValue(b.datas);
-                    if (data != null && obj != null)
-                    {
-                        field.SetValue(result.datas, data);
-                        result.fields.Add(field);
-                    }
-                    else if(!field.FieldType.IsValueType)
-                    {
-                        field.SetValue(result.datas, null);
-                        result.fields.Add(field);
-                    }
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => (va != null && vb != null) ? vb : va, a, b);
 
         public static FieldReaderInst<T> operator |(FieldReaderInst<T> a, FieldReaderInst<T> b)
-        {
-            FieldReaderInst<T> result = new FieldReaderInst<T>();
-
-            if (a == null && b == null) return result;
-
-            a = a ?? new FieldReaderInst<T>();
-            b = b ?? new FieldReaderInst<T>();
-
-            if (a.type.IsAssignableFrom(b.type)) result.UsedType = b.type;
-            else if (b.type.IsAssignableFrom(a.type)) result.UsedType = a.type;
-
-            foreach ((FieldInfo field, object obja) in a)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType))
-                {
-                    field.SetValue(result.datas, obja ?? field.GetValue(b.datas));
-                }
-            }
-
-            foreach ((FieldInfo field, object objb) in b)
-            {
-                if (result.type.IsAssignableFrom(field.DeclaringType) && !result.fields.Contains(field))
-                {
-                    field.SetValue(result.datas, field.GetValue(a.datas) ?? objb);
-                }
-            }
-            return result;
-        }
+            => ClacValue((va, vb) => va ?? vb, a, b);
     }
 }
