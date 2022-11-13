@@ -182,17 +182,17 @@ namespace RW_ModularizationWeapon
             {
                 result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
             }
+            if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
+            {
+                //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
+                result = (float)cache;
+            }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
                 statWorker == StatDefOf.Mass.Worker)
             )
                 StatWorkerPostfix(forPostRead);
-            if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
-            {
-                //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
-                return (float)cache;
-            }
             return result;
         }
 
