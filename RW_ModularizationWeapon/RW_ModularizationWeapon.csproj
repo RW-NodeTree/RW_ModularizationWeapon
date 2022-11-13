@@ -266,7 +266,7 @@
     <Content Include="PackUp\*" />
     <Content Include="PackUp\*\*" />
     <Content Include="PackUp\*\*\*" />
-    <Content Include="PackUp\*\*\*\*" />
+    <Content Include="PackUp\1.4\Vanilla\Patches\Patches.xml" />
     <Content Include="PackUp\*\*\*\*\*" />
     <Content Include="PackUp\*\*\*\*\*\*" />
   </ItemGroup>

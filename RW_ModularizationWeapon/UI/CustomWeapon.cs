@@ -180,7 +180,16 @@ namespace RW_ModularizationWeapon.UI
                 SelectedPartForChange = (null, null);
             }
             else Widgets.DrawHighlightIfMouseover(new Rect(7, 7, 336, 336));
-            if (weapon != null) Widgets.ThingIcon(new Rect(7, 7, 336, 336), weapon);
+            if (weapon != null)
+            {
+                Rot4 defaultPlacingRot = weapon.parent.def.defaultPlacingRot;
+                Vector2 drawSize = weapon.NodeProccesser.GetAndUpdateDrawSize(defaultPlacingRot);
+                if (defaultPlacingRot.IsHorizontal) drawSize = drawSize.Rotated();
+                IntVec2 before = weapon.parent.def.size;
+                weapon.parent.def.size = new IntVec2((int)Math.Ceiling(drawSize.x), (int)Math.Ceiling(drawSize.y));
+                Widgets.ThingIcon(new Rect(7, 7, 336, 336), weapon);
+                weapon.parent.def.size = before;
+            }
             else
             {
                 Widgets.DrawBoxSolid(new Rect(71, 170, 208, 10), Color.gray);
