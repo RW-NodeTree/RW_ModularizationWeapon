@@ -55,10 +55,18 @@ namespace RW_ModularizationWeapon
 
                     FieldReaderDgitList<VerbProperties> mul = comp.Props.verbPropertiesMultiplier - 1f;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
-                    cache = mul * cache + 1;
-                    cache.DefaultValue = 1;
-                    results *= cache;
+                    mul = mul * cache + 1;
+                    mul.DefaultValue = 1;
+                    results *= mul;
                     results.DefaultValue = 1;
+
+                    mul = comp.VerbPropertiesMultiplier(null) - 1;
+                    if (mul.HasDefaultValue) mul.DefaultValue--;
+                    mul = mul * cache + 1;
+                    mul.DefaultValue = 1;
+                    results *= mul;
+                    results.DefaultValue = 1;
+
                     //result *= (comp.Props.verbPropertiesMultiplier - 1f) * properties.verbPropertiesMultiplierAffectHorizon + 1f;
                 }
             }
@@ -106,9 +114,16 @@ namespace RW_ModularizationWeapon
 
                     FieldReaderDgitList<Tool> mul = comp.Props.toolsMultiplier - 1f;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
-                    cache = mul * cache + 1;
-                    cache.DefaultValue = 1;
-                    results *= cache;
+                    mul = mul * cache + 1;
+                    mul.DefaultValue = 1;
+                    results *= mul;
+                    results.DefaultValue = 1;
+
+                    mul = comp.ToolsMultiplier(null) - 1;
+                    if (mul.HasDefaultValue) mul.DefaultValue--;
+                    mul = mul * cache + 1;
+                    mul.DefaultValue = 1;
+                    results *= mul;
                     results.DefaultValue = 1;
                 }
             }
@@ -130,6 +145,13 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity)
                 {
                     FieldReaderDgitList<CompProperties> cache = comp.Props.compPropertiesMultiplier - 1;
+                    if (cache.HasDefaultValue) cache.DefaultValue--;
+                    cache = cache * properties.compPropertiesMultiplierAffectHorizon + 1;
+                    cache.DefaultValue = 1;
+                    results *= cache;
+                    results.DefaultValue = 1;
+
+                    cache = comp.CompPropertiesMultiplier() - 1;
                     if (cache.HasDefaultValue) cache.DefaultValue--;
                     cache = cache * properties.compPropertiesMultiplierAffectHorizon + 1;
                     cache.DefaultValue = 1;

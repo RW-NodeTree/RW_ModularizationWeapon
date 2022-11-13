@@ -27,6 +27,12 @@ namespace RW_ModularizationWeapon
                         if (index < 0) results.Add(child);
                         else results[index] |= child;
                     }
+                    foreach (FieldReaderInst<VerbProperties> child in comp.VerbPropertiesObjectPatch(null))
+                    {
+                        int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                        if (index < 0) results.Add(child);
+                        else results[index] |= child;
+                    }
                 }
             }
             return results;
@@ -44,6 +50,12 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity && id != childNodeIdForTool && Props.WeaponAttachmentPropertiesById(id).toolsObjectPatchByChildPart)
                 {
                     foreach (FieldReaderInst<Tool> child in comp.Props.toolsObjectPatch)
+                    {
+                        int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                        if (index < 0) results.Add(child);
+                        else results[index] |= child;
+                    }
+                    foreach (FieldReaderInst<Tool> child in comp.ToolsObjectPatch(null))
                     {
                         int index = results.FindIndex(x => x.UsedType == child.UsedType);
                         if (index < 0) results.Add(child);
@@ -72,6 +84,12 @@ namespace RW_ModularizationWeapon
                         if (index < 0) results.Add(child);
                         else results[index] |= child;
                     }
+                    foreach (FieldReaderInst<CompProperties> child in comp.CompPropertiesObjectPatch())
+                    {
+                        int index = results.FindIndex(x => x.UsedType == child.UsedType);
+                        if (index < 0) results.Add(child);
+                        else results[index] |= child;
+                    }
                 }
             }
             return results;
@@ -90,6 +108,8 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && Props.WeaponAttachmentPropertiesById(id).verbPropertiesBoolAndPatchByChildPart)
                 {
                     results &= comp.Props.verbPropertiesBoolAndPatch;
+                    results.DefaultValue = true;
+                    results &= comp.VerbPropertiesBoolAndPatch(null);
                     results.DefaultValue = true;
                 }
             }
@@ -110,6 +130,8 @@ namespace RW_ModularizationWeapon
                 {
                     results &= comp.Props.toolsBoolAndPatch;
                     results.DefaultValue = true;
+                    results &= comp.ToolsBoolAndPatch(null);
+                    results.DefaultValue = true;
                 }
             }
             return results;
@@ -128,6 +150,8 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity && Props.WeaponAttachmentPropertiesById(id).compPropertiesBoolAndPatchByChildPart)
                 {
                     results &= comp.Props.compPropertiesBoolAndPatch;
+                    results.DefaultValue = true;
+                    results &= comp.CompPropertiesBoolAndPatch();
                     results.DefaultValue = true;
                 }
             }
@@ -148,6 +172,8 @@ namespace RW_ModularizationWeapon
                 {
                     results |= comp.Props.verbPropertiesBoolOrPatch;
                     results.DefaultValue = false;
+                    results |= comp.VerbPropertiesBoolOrPatch(null);
+                    results.DefaultValue = false;
                 }
             }
             return results;
@@ -167,6 +193,8 @@ namespace RW_ModularizationWeapon
                 {
                     results |= comp.Props.toolsBoolOrPatch;
                     results.DefaultValue = false;
+                    results |= comp.ToolsBoolOrPatch(null);
+                    results.DefaultValue = false;
                 }
             }
             return results;
@@ -185,7 +213,9 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity && Props.WeaponAttachmentPropertiesById(id).compPropertiesBoolOrPatchByChildPart)
                 {
                     results |= comp.Props.compPropertiesBoolOrPatch;
-                    results.DefaultValue = true;
+                    results.DefaultValue = false;
+                    results |= comp.CompPropertiesBoolOrPatch();
+                    results.DefaultValue = false;
                 }
             }
             return results;

@@ -50,9 +50,16 @@ namespace RW_ModularizationWeapon
                         }
                     }
 
-                    cache = comp.Props.verbPropertiesOffseter * cache;
-                    cache.DefaultValue = 0;
-                    results += cache;
+
+                    FieldReaderDgitList<VerbProperties>
+                    offset = comp.Props.verbPropertiesOffseter * cache;
+                    offset.DefaultValue = 0;
+                    results += offset;
+                    results.DefaultValue = 0;
+
+                    offset = comp.VerbPropertiesOffseter(null) * cache;
+                    offset.DefaultValue = 0;
+                    results += offset;
                     results.DefaultValue = 0;
                 }
             }
@@ -98,9 +105,15 @@ namespace RW_ModularizationWeapon
                         }
                     }
 
-                    cache = comp.Props.toolsOffseter * cache;
-                    cache.DefaultValue = 0;
-                    results += cache;
+                    FieldReaderDgitList<Tool>
+                    offset = comp.Props.toolsOffseter * cache;
+                    offset.DefaultValue = 0;
+                    results += offset;
+                    results.DefaultValue = 0;
+
+                    offset = comp.ToolsOffseter(null) * cache;
+                    offset.DefaultValue = 0;
+                    results += offset;
                     results.DefaultValue = 0;
                 }
             }
@@ -122,6 +135,11 @@ namespace RW_ModularizationWeapon
                 if (comp != null && comp.Validity)
                 {
                     FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon * comp.Props.compPropertiesOffseter;
+                    cache.DefaultValue = 0;
+                    results += cache;
+                    results.DefaultValue = 0;
+
+                    cache = properties.compPropertiesOffseterAffectHorizon * comp.CompPropertiesOffseter();
                     cache.DefaultValue = 0;
                     results += cache;
                     results.DefaultValue = 0;

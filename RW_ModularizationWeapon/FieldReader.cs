@@ -647,7 +647,7 @@ namespace RW_ModularizationWeapon
         {
             if (key != null)
             {
-                if (key.FieldType.IsAssignableFrom(value.GetType()) && key.DeclaringType.IsAssignableFrom(datas.GetType()))
+                if (value == null || (key.FieldType.IsAssignableFrom(value.GetType()) && key.DeclaringType.IsAssignableFrom(datas.GetType())))
                 {
                     key.SetValue(datas, value);
                     fields.Add(key);
@@ -660,7 +660,7 @@ namespace RW_ModularizationWeapon
         public override bool TryGetValue(FieldInfo key, out object value)
         {
             value = default(object);
-            if (fields.Contains(key))
+            if (key != null && fields.Contains(key))
             {
                 value = key.GetValue(datas);
                 return true;

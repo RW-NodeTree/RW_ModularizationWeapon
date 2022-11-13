@@ -68,15 +68,16 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
+                Thing child = container[i];
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
-                if (!internal_NotUseVerbProperties(container[i], attachmentProperties))
+                if (!internal_NotUseVerbProperties(child, attachmentProperties))
                 {
-                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i]);
-                    List<VerbProperties> verbProperties = verbOwner?.VerbProperties ?? container[i]?.def.Verbs;
+                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, child);
+                    List<VerbProperties> verbProperties = verbOwner?.VerbProperties ?? child?.def.Verbs;
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
-                        CompModularizationWeapon comp = container[i];
+                        CompModularizationWeapon comp = child;
                         if (comp != null && verbOwner == null)
                         {
                             for (int j = 0; j < verbProperties.Count; j++)
@@ -93,13 +94,13 @@ namespace RW_ModularizationWeapon
                                             ),
                                         id,
                                         internal_VerbPropertiesBoolAndPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_VerbPropertiesBoolOrPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_VerbPropertiesObjectPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties)
                                         );
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
@@ -115,13 +116,13 @@ namespace RW_ModularizationWeapon
                                         cache,
                                         id,
                                         internal_VerbPropertiesBoolAndPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_VerbPropertiesBoolOrPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_VerbPropertiesObjectPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties)
                                         );
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
@@ -159,15 +160,16 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
+                Thing child = container[i];
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
-                if (!internal_NotUseTools(container[i], attachmentProperties))
+                if (!internal_NotUseTools(child, attachmentProperties))
                 {
-                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, container[i]);
-                    List<Tool> tools = verbOwner?.Tools ?? container[i]?.def.tools;
+                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, child);
+                    List<Tool> tools = verbOwner?.Tools ?? child?.def.tools;
                     if (tools != null)
                     {
                         result.Capacity += tools.Count;
-                        CompModularizationWeapon comp = container[i];
+                        CompModularizationWeapon comp = child;
                         if (comp != null && verbOwner == null)
                         {
                             for (int j = 0; j < tools.Count; j++)
@@ -184,13 +186,13 @@ namespace RW_ModularizationWeapon
                                             ),
                                         id,
                                         internal_ToolsBoolAndPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_ToolsBoolOrPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_ToolsObjectPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties)
                                         );
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
@@ -206,13 +208,13 @@ namespace RW_ModularizationWeapon
                                         cache,
                                         id,
                                         internal_ToolsBoolAndPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_ToolsBoolOrPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties),
                                         internal_ToolsObjectPatchByOtherPart(
-                                            container[i],
+                                            child,
                                             attachmentProperties)
                                         );
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
