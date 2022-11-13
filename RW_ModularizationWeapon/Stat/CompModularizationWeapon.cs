@@ -105,25 +105,25 @@ namespace RW_ModularizationWeapon
         protected override float PostStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetValueUnfinalized");
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerPostfix(forPostRead);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing != parent)
             {
                 if (before.Thing == req.Thing)
                 {
-                    return ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
+                    result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetValueUnfinalized(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
                 }
                 else
                 {
-                    return statWorker.GetValueUnfinalized(req, applyPostProcess);
+                    result = statWorker.GetValueUnfinalized(req, applyPostProcess);
                 }
             }
+            if (!(statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker)
+            )
+                StatWorkerPostfix(forPostRead);
             return result;
         }
 
@@ -160,12 +160,6 @@ namespace RW_ModularizationWeapon
         protected override float PostStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_FinalizeValue");
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerPostfix(forPostRead);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
@@ -186,8 +180,14 @@ namespace RW_ModularizationWeapon
             }
             else if (before.Thing == req.Thing)
             {
-                return ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
+                result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
             }
+            if (!(statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker)
+            )
+                StatWorkerPostfix(forPostRead);
             if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
             {
                 //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
@@ -220,23 +220,23 @@ namespace RW_ModularizationWeapon
             //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetStatDrawEntryLabel({optionalReq})");
             StatRequest before = optionalReq;
             optionalReq = RedirectoryReq(statWorker, optionalReq);
+            if (optionalReq.Thing != parent)
+            {
+                if (before.Thing == optionalReq.Thing)
+                {
+                    result = ((CompChildNodeProccesser)optionalReq.Thing)?.PostStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, forPostRead) ?? result;
+                }
+                else
+                {
+                    result = statWorker.GetStatDrawEntryLabel(stat, value, numberSense, optionalReq, finalized);
+                }
+            }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
                 statWorker == StatDefOf.Mass.Worker)
             )
                 StatWorkerPostfix(forPostRead);
-            if (optionalReq.Thing != parent)
-            {
-                if (before.Thing == optionalReq.Thing)
-                {
-                    return ((CompChildNodeProccesser)optionalReq.Thing)?.PostStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, forPostRead) ?? result;
-                }
-                else
-                {
-                    return statWorker.GetStatDrawEntryLabel(stat, value, numberSense, optionalReq, finalized);
-                }
-            }
             return result;
         }
 
@@ -262,12 +262,6 @@ namespace RW_ModularizationWeapon
         protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetExplanationUnfinalized");
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerPostfix(forPostRead);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req); if (req.Thing == parent)
             if (req.Thing == parent)
@@ -294,12 +288,18 @@ namespace RW_ModularizationWeapon
             }
             else if (before.Thing == req.Thing)
             {
-                return ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, forPostRead) ?? result;
+                result = ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, forPostRead) ?? result;
             }
             else
             {
-                return statWorker.GetExplanationUnfinalized(req, numberSense);
+                result = statWorker.GetExplanationUnfinalized(req, numberSense);
             }
+            if (!(statWorker is StatWorker_MeleeAverageDPS ||
+                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+                statWorker is StatWorker_MarketValue ||
+                statWorker == StatDefOf.Mass.Worker)
+            )
+                StatWorkerPostfix(forPostRead);
             return result;
         }
 
