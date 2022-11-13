@@ -94,7 +94,7 @@ namespace RW_ModularizationWeapon
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public FieldReader<T, TV> ClacValue(Func<TV, TV, TV> calc, TV value)
+        public FieldReader<T, TV> ClacValue(Func<TV, TV, FieldInfo, TV> calc, TV value)
         {
             FieldReader<T, TV> result = this.Clone();
             if(calc != null && value != null)
@@ -102,13 +102,13 @@ namespace RW_ModularizationWeapon
                 List<FieldInfo> fieldInfos = new List<FieldInfo>(result.Keys);
                 foreach (FieldInfo field in fieldInfos)
                 {
-                    result[field] = calc(result[field], value);
+                    result[field] = calc(result[field], value, field);
                 }
             }
             return result;
         }
 
-        public T ClacValue(Func<TV, TV, TV> calc, T orginal)
+        public T ClacValue(Func<TV, TV, FieldInfo, TV> calc, T orginal)
         {
             if (orginal != null)
             {
@@ -120,7 +120,7 @@ namespace RW_ModularizationWeapon
                         if (field.DeclaringType.IsAssignableFrom(UsedType) && typeof(TV).IsAssignableFrom(field.FieldType))
                         {
                             if (!TryGetValue(field, out TV value)) value = DefaultValue;
-                            field.SetValue(result, calc((TV)field.GetValue(result), value));
+                            field.SetValue(result, calc((TV)field.GetValue(result), value, field));
                         }
                     }
                 }
@@ -129,7 +129,7 @@ namespace RW_ModularizationWeapon
             return orginal;
         }
 
-        public static TFR ClacValue<TFR>(Func<TV, TV, TV> calc, TFR a, TFR b) where TFR : FieldReader<T, TV>, new()
+        public static TFR ClacValue<TFR>(Func<TV, TV, FieldInfo, TV> calc, TFR a, TFR b) where TFR : FieldReader<T, TV>, new()
         {
 
             TFR result = new TFR();
@@ -146,8 +146,8 @@ namespace RW_ModularizationWeapon
             {
                 if (result.UsedType.IsAssignableFrom(field.DeclaringType))
                 {
-                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field]));
-                    else result.Add(field, calc(a[field], b.DefaultValue));
+                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], field));
+                    else result.Add(field, calc(a[field], b.DefaultValue, field));
                 }
             }
 
@@ -155,8 +155,8 @@ namespace RW_ModularizationWeapon
             {
                 if (result.UsedType.IsAssignableFrom(field.DeclaringType) && !result.ContainsKey(field))
                 {
-                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field]));
-                    else result.Add(field, calc(a.DefaultValue, b[field]));
+                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], field));
+                    else result.Add(field, calc(a.DefaultValue, b[field], field));
                 }
             }
             return result;
@@ -295,26 +295,26 @@ namespace RW_ModularizationWeapon
         public override void UsedTypeUpdate() { }
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, double b)
-            => (a?.ClacValue((av, bv) => av.ToDouble(null) + bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av.ToDouble(null) + bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, double b)
-            => (a?.ClacValue((av, bv) => av.ToDouble(null) - bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av.ToDouble(null) - bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, double b)
-            => (a?.ClacValue((av, bv) => av.ToDouble(null) * bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av.ToDouble(null) * bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, double b)
-            => (a?.ClacValue((av, bv) => av.ToDouble(null) / bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av.ToDouble(null) / bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
         public static FieldReaderDgit<T> operator %(FieldReaderDgit<T> a, double b)
-            => (a?.ClacValue((av, bv) => av.ToDouble(null) % bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av.ToDouble(null) % bv.ToDouble(null), b) as FieldReaderDgit<T>) ?? a;
 
 
         public static T operator +(T a, FieldReaderDgit<T> b)
         {
             if (b != null)
             {
-                a = b.ClacValue((va, vb) =>
+                a = b.ClacValue((va, vb, field) =>
                 {
                     if (va != null)
                     {
@@ -334,7 +334,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = b.ClacValue((va, vb) =>
+                a = b.ClacValue((va, vb, field) =>
                 {
                     if (va != null)
                     {
@@ -354,7 +354,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = b.ClacValue((va, vb) =>
+                a = b.ClacValue((va, vb, field) =>
                 {
                     if (va != null)
                     {
@@ -374,7 +374,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = b.ClacValue((va, vb) =>
+                a = b.ClacValue((va, vb, field) =>
                 {
                     if (va != null)
                     {
@@ -394,7 +394,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                a = b.ClacValue((va, vb) =>
+                a = b.ClacValue((va, vb, field) =>
                 {
                     if (va != null)
                     {
@@ -411,19 +411,19 @@ namespace RW_ModularizationWeapon
         }
 
         public static FieldReaderDgit<T> operator +(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-            => ClacValue((va, vb) => va.ToDouble(null) + vb.ToDouble(null), a, b);
+            => ClacValue((va, vb, field) => va.ToDouble(null) + vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator -(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-            => ClacValue((va, vb) => va.ToDouble(null) - vb.ToDouble(null), a, b);
+            => ClacValue((va, vb, field) => va.ToDouble(null) - vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator *(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-            => ClacValue((va, vb) => va.ToDouble(null) * vb.ToDouble(null), a, b);
+            => ClacValue((va, vb, field) => va.ToDouble(null) * vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator /(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-            => ClacValue((va, vb) => va.ToDouble(null) / vb.ToDouble(null), a, b);
+            => ClacValue((va, vb, field) => va.ToDouble(null) / vb.ToDouble(null), a, b);
 
         public static FieldReaderDgit<T> operator %(FieldReaderDgit<T> a, FieldReaderDgit<T> b)
-            => ClacValue((va, vb) => va.ToDouble(null) % vb.ToDouble(null), a, b);
+            => ClacValue((va, vb, field) => va.ToDouble(null) % vb.ToDouble(null), a, b);
     }
 
     public class FieldReaderBool<T> : FieldReader<T, bool>
@@ -532,20 +532,20 @@ namespace RW_ModularizationWeapon
         public override void UsedTypeUpdate() { }
 
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, bool b)
-            => (a?.ClacValue((av, bv) => av && bv, b) as FieldReaderBool<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av && bv, b) as FieldReaderBool<T>) ?? a;
 
         public static FieldReaderBool<T> operator |(FieldReaderBool<T> a, bool b)
-            => (a?.ClacValue((av, bv) => av || bv, b) as FieldReaderBool<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => av || bv, b) as FieldReaderBool<T>) ?? a;
 
         public static FieldReaderBool<T> operator !(FieldReaderBool<T> a)
-            => (a?.ClacValue((av, bv) => !av, false) as FieldReaderBool<T>) ?? a;
+            => (a?.ClacValue((av, bv, field) => !av, false) as FieldReaderBool<T>) ?? a;
 
 
         public static T operator &(T a, FieldReaderBool<T> b)
         {
             if (b != null)
             {
-                return b.ClacValue((va, vb) => va && vb, a);
+                return b.ClacValue((va, vb, field) => va && vb, a);
             }
             return a;
         }
@@ -554,16 +554,16 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                return b.ClacValue((va, vb) => va || vb, a);
+                return b.ClacValue((va, vb, field) => va || vb, a);
             }
             return a;
         }
 
         public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, FieldReaderBool<T> b)
-            => ClacValue((va, vb) => va && vb, a, b);
+            => ClacValue((va, vb, field) => va && vb, a, b);
 
         public static FieldReaderBool<T> operator |(FieldReaderBool<T> a, FieldReaderBool<T> b)
-            => ClacValue((va, vb) => va || vb, a, b);
+            => ClacValue((va, vb, field) => va || vb, a, b);
     }
 
     public class FieldReaderInst<T> : FieldReader<T, object>
@@ -686,7 +686,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                return b.ClacValue((va, vb) => (va != null) ? vb : va, a);
+                return b.ClacValue((va, vb, field) => (va != null && b.ContainsKey(field)) ? vb : va, a);
             }
             return a;
         }
@@ -695,15 +695,15 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                return b.ClacValue((va, vb) => va ?? vb, a);
+                return b.ClacValue((va, vb, field) => va ?? vb, a);
             }
             return a;
         }
 
         public static FieldReaderInst<T> operator &(FieldReaderInst<T> a, FieldReaderInst<T> b)
-            => ClacValue((va, vb) => (va != null) ? vb : va, a, b);
+            => ClacValue((va, vb, field) => (va != null && b.ContainsKey(field)) ? vb : va, a, b);
 
         public static FieldReaderInst<T> operator |(FieldReaderInst<T> a, FieldReaderInst<T> b)
-            => ClacValue((va, vb) => va ?? vb, a, b);
+            => ClacValue((va, vb, field) => va ?? vb, a, b);
     }
 }
