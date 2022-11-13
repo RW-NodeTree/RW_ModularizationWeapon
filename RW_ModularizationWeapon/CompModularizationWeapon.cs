@@ -284,6 +284,7 @@ namespace RW_ModularizationWeapon
                         ChildNodes[properties.id] = thing;
                         if (ChildNodes[properties.id] == thing) break;
                     }
+                    else break;
                 }
             }
         }

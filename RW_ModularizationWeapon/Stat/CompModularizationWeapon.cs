@@ -42,19 +42,15 @@ namespace RW_ModularizationWeapon
                 List<Verb> verbs = eq.AllVerbs;
                 List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && !parent.def.Verbs.Contains(x.verbProps) select x.verbProps).ToList();
                 List<Tool> cachedTools = (from x in verbs where x.tool != null && !parent.def.tools.Contains(x.tool) select x.tool).ToList();
-                if (cachedVerbs.Count > 0)
-                {
-                    ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                    Stack<List<VerbProperties>> stackVerb = (Stack<List<VerbProperties>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_verbs", () => new Stack<List<VerbProperties>>());
-                    stackVerb.Push(ThingDef_verbs(parent.def));
-                    ThingDef_verbs(parent.def) = cachedVerbs;
-                }
-                if (cachedTools.Count > 0)
-                {
-                    Stack<List<Tool>> stackTool = (Stack<List<Tool>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_tools", () => new Stack<List<Tool>>());
-                    stackTool.Push(parent.def.tools);
-                    parent.def.tools = cachedTools;
-                }
+
+                ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
+                Stack<List<VerbProperties>> stackVerb = (Stack<List<VerbProperties>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_verbs", () => new Stack<List<VerbProperties>>());
+                stackVerb.Push(ThingDef_verbs(parent.def));
+                ThingDef_verbs(parent.def) = cachedVerbs;
+
+                Stack<List<Tool>> stackTool = (Stack<List<Tool>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_tools", () => new Stack<List<Tool>>());
+                stackTool.Push(parent.def.tools);
+                parent.def.tools = cachedTools;
                 //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
             }
             Stack<List<CompProperties>> stackComp = (Stack<List<CompProperties>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_comps", () => new Stack<List<CompProperties>>());
@@ -134,15 +130,15 @@ namespace RW_ModularizationWeapon
 
         protected override float PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue");
-            StatRequest before = req;
-            req = RedirectoryReq(statWorker, req);
+            Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue");
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
                 statWorker == StatDefOf.Mass.Worker)
             )
                 StatWorkerPerfix(forPostRead);
+            StatRequest before = req;
+            req = RedirectoryReq(statWorker, req);
             if (req.Thing != parent)
             {
                 if (before.Thing == req.Thing)
@@ -170,11 +166,8 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker)
             )
                 StatWorkerPostfix(forPostRead);
-            if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
-            {
-                //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
-                return (float)cache;
-            }
+            StatRequest before = req;
+            req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
             {
                 if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
@@ -191,9 +184,14 @@ namespace RW_ModularizationWeapon
                     result += GetStatOffset(statDef, req.Thing);
                 }
             }
-            else
+            else if (before.Thing == req.Thing)
             {
                 return ((CompChildNodeProccesser)req.Thing)?.PostStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
+            }
+            if (forPostRead.TryGetValue("afterRedirectoryReq", out object cache))
+            {
+                //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
+                return (float)cache;
             }
             return result;
         }
@@ -331,50 +329,15 @@ namespace RW_ModularizationWeapon
             //Log.Message($"PostThingDef_SpecialDisplayStats({def},{req},{result})");
             if (req.Thing == parent)
             {
-                List<VerbProperties> verbProperties = null;
-                List<Tool> tools = null;
-                CompEquippable eq = parent.GetComp<CompEquippable>();
-                if (eq != null)
-                {
-                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
-                    List<Verb> verbs = eq.AllVerbs;
-                    List<VerbProperties> cachedVerbs = new List<VerbProperties>();
-                    List<Tool> cachedTools = new List<Tool>();
-                    foreach (Verb verb in verbs)
-                    {
-                        if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
-                        else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
-                    }
-                    if (cachedVerbs.Count > 0)
-                    {
-                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                        verbProperties = ThingDef_verbs(parent.def);
-                        ThingDef_verbs(parent.def) = cachedVerbs;
-                    }
-                    if (cachedTools.Count > 0)
-                    {
-                        tools = parent.def.tools;
-                        parent.def.tools = cachedTools;
-                    }
-                }
-                List<CompProperties> compProperties = def.comps;
-                def.comps = (from x in parent.AllComps select x.props).ToList();
+                Dictionary<string, object> forPostRead = new Dictionary<string, object>();
+                StatWorkerPerfix(forPostRead);
 
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
                 }
-                if (verbProperties != null)
-                {
-                    ThingDef_verbs(parent.def) = verbProperties;
-                }
-                if (tools != null)
-                {
-                    parent.def.tools = tools;
-                }
 
-                def.comps = compProperties;
-
+                StatWorkerPostfix(forPostRead);
             }
             else
             {
@@ -392,50 +355,15 @@ namespace RW_ModularizationWeapon
             //Log.Message($"PostStatsReportUtility_StatsToDraw({thing},{result})");
             if (thing == parent)
             {
-                List<VerbProperties> verbProperties = null;
-                List<Tool> tools = null;
-                CompEquippable eq = parent.GetComp<CompEquippable>();
-                if (eq != null)
-                {
-                    //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
-                    List<Verb> verbs = eq.AllVerbs;
-                    List<VerbProperties> cachedVerbs = new List<VerbProperties>();
-                    List<Tool> cachedTools = new List<Tool>();
-                    foreach (Verb verb in verbs)
-                    {
-                        if (verb.tool != null && !parent.def.tools.Contains(verb.tool)) cachedTools.Add(verb.tool);
-                        else if (!parent.def.Verbs.Contains(verb.verbProps)) cachedVerbs.Add(verb.verbProps);
-                    }
-                    if (cachedVerbs.Count > 0)
-                    {
-                        ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                        verbProperties = ThingDef_verbs(parent.def);
-                        ThingDef_verbs(parent.def) = cachedVerbs;
-                    }
-                    if (cachedTools.Count > 0)
-                    {
-                        tools = parent.def.tools;
-                        parent.def.tools = cachedTools;
-                    }
-                }
-
-                List<CompProperties> compProperties = parent.def.comps;
-                parent.def.comps = (from x in parent.AllComps select x.props).ToList();
+                Dictionary<string, object> forPostRead = new Dictionary<string, object>();
+                StatWorkerPerfix(forPostRead);
 
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
                 }
-                if (verbProperties != null)
-                {
-                    ThingDef_verbs(parent.def) = verbProperties;
-                }
-                if (tools != null)
-                {
-                    parent.def.tools = tools;
-                }
 
-                parent.def.comps = compProperties;
+                StatWorkerPostfix(forPostRead);
             }
             else
             {
