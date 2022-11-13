@@ -41,7 +41,7 @@
 				<defaultProjectile>Bullet_AssaultRifle</defaultProjectile>
 				<warmupTime>1.0</warmupTime>
 				<range>30.9</range>
-				<burstShotCount>3</burstShotCount>
+				<burstShotCount>1</burstShotCount>
 				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
 				<soundCast>Shot_AssaultRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
@@ -88,6 +88,7 @@
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>Module_AR_MagClip</defultThing>
+						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_AR_MagClip</li>
@@ -181,6 +182,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_Magazine</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<burstShotCount>3</burstShotCount>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
@@ -208,11 +214,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_CartridgeDrum</PartTexPath>
-				<verbPropertiesOffseter>
+				<verbPropertiesObjectPatch>
 					<li>
-						<burstShotCount>3</burstShotCount>
+						<burstShotCount>10</burstShotCount>
 					</li>
-				</verbPropertiesOffseter>
+				</verbPropertiesObjectPatch>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.1</warmupTime>
