@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -567,6 +568,7 @@ namespace RW_ModularizationWeapon
 
     public class FieldReaderInst<T> : FieldReader<T, object>
     {
+        private bool loading = false;
         private T datas = (T)Activator.CreateInstance(typeof(T));
         private readonly HashSet<FieldInfo> fields = new HashSet<FieldInfo>();
 
@@ -600,6 +602,7 @@ namespace RW_ModularizationWeapon
 
         public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
+            loading = true;
             base.LoadDataFromXmlCustom(xmlRoot);
             /**
             <xx Reader-Class="c# type">
@@ -623,6 +626,7 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
+            loading = false;
             //Log.Message(ToString());
         }
 
@@ -670,9 +674,12 @@ namespace RW_ModularizationWeapon
 
         public override void UsedTypeUpdate()
         {
-            T old = datas;
-            datas = (T)Activator.CreateInstance(UsedType);
-            foreach(FieldInfo field in fields) field.SetValue(datas, field.GetValue(old));
+            if(!loading)
+            {
+                T old = datas;
+                datas = (T)Activator.CreateInstance(UsedType);
+                foreach (FieldInfo field in fields) field.SetValue(datas, field.GetValue(old));
+            }
         }
 
         public static T operator &(T a, FieldReaderInst<T> b)
