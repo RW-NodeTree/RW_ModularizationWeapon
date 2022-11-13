@@ -130,7 +130,7 @@ namespace RW_ModularizationWeapon
 
         protected override float PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue");
+            Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue");
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
