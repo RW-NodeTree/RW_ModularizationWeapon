@@ -8,7 +8,7 @@
 		<li>1.4</li>
 	</supportedVersions>
 	<packageId>cnnuclear.RWModularizationWeapon</packageId>
-	<description>This is Node Tree framework for rimworld, It also provide some interface for doing some complex function</description>
+	<description>As the name, This is a Weapon Modularization Mod, allow you modify your weapon in the game</description>
 	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>

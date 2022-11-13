@@ -17,6 +17,7 @@
 	<toolsAffectByOtherPart>Melee Weapon Affect By Other Part</toolsAffectByOtherPart>
 	<Condation>Special Condation</Condation>
 	<OffseterAffectHorizon>Offseter Affect Horizon</OffseterAffectHorizon>
+	<allowCreateOnCraftingPort>Allow Create On Crafting Port</allowCreateOnCraftingPort>
 	<verbPropertiesOffseterAffectHorizon>Range Weapon Offseter Affect Horizon</verbPropertiesOffseterAffectHorizon>
 	<toolsOffseterAffectHorizon>Melee Weapon Offseter Affect Horizon</toolsOffseterAffectHorizon>
 	<statOffsetAffectHorizon>Stat Value Offset Affect Horizon</statOffsetAffectHorizon>

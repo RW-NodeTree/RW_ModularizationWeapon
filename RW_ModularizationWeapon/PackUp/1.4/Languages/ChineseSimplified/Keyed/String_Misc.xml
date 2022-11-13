@@ -17,6 +17,7 @@
 	<toolsAffectByOtherPart>近战武器可被其他部件影响</toolsAffectByOtherPart>
 	<Condation>特殊条件</Condation>
 	<OffseterAffectHorizon>加成影响水平</OffseterAffectHorizon>
+	<allowCreateOnCraftingPort>允许在改装点直接创造</allowCreateOnCraftingPort>
 	<verbPropertiesOffseterAffectHorizon>远程武器加成影响水平</verbPropertiesOffseterAffectHorizon>
 	<toolsOffseterAffectHorizon>近战武器加成影响水平</toolsOffseterAffectHorizon>
 	<statOffsetAffectHorizon>状态值加成影响水平</statOffsetAffectHorizon>
