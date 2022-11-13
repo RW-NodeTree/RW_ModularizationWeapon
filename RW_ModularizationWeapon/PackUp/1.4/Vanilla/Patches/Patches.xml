@@ -9,7 +9,6 @@
 				<filter>
 					<thingDefs>
 						<li>Gun_ModularAssaultRifle</li>
-						<li>Gun_ModularRailgun</li>
 						<li>Gun_ModularHeavySMG</li>
 						<li>Gun_ModularChainShotgun</li>
 						<li>Gun_ModularPumpShotgun</li>
