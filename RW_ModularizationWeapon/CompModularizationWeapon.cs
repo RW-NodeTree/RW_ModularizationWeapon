@@ -156,7 +156,6 @@ namespace RW_ModularizationWeapon
                 {
                     if (ParentProccesser != null)
                     {
-                        Material material = graphic?.MatAt(rot, this.parent);
                         for (int j = 0; j < renderInfos.Count; j++)
                         {
                             RenderInfo info = renderInfos[j];

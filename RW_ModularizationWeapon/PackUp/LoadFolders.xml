@@ -3,7 +3,7 @@
 	<v1.4>
 		<li>/</li>
 		<li>1.4</li>
-		<li IfModNotActive="CETeam.CombatExtended">1.4/Vanilla</li>
-		<!--<li IfModActive="CETeam.CombatExtended">1.4/CombatExtended</li>-->
+		<!-- <li IfModNotActive="CETeam.CombatExtended">1.4/Vanilla</li> -->
+		<li IfModActive="CETeam.CombatExtended">1.4/CombatExtended</li>
 	</v1.4>
 </loadFolders>

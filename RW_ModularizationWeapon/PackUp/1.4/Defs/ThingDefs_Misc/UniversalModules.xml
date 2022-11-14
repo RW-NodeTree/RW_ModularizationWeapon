@@ -213,6 +213,21 @@
 				<statOffset>
 					<RangedWeapon_Cooldown>0.5</RangedWeapon_Cooldown>
 				</statOffset>
+				<attachmentProperties>
+					<li>
+						<id>ModSC_SubScope</id>
+						<name>Sub Scope</name>
+						<allowEmpty>true</allowEmpty>
+						<UITexPath>Things/WeaponPart/Gun/AssaultRifle/Item_RedDot/Item_RedDot1</UITexPath>
+						<postion>(0.0625,0.1,0.0859375)</postion>
+						<filter>
+						<thingDefs>
+							<li>Module_HoloSight</li>
+							<li>Module_RedDotSight</li>
+						</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
 			</li>
 		</comps>
 	</ThingDef>
