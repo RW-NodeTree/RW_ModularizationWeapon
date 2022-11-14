@@ -10,6 +10,7 @@
 	<toolsMultiplier>近战武器乘数</toolsMultiplier>
 	<statMultiplier>状态值乘数</statMultiplier>
 	<Multiplier>乘数</Multiplier>
+	<Patcher>替换参数</Patcher>
 	<unchangeable>不可被更改配件</unchangeable>
 	<notAllowParentUseTools>禁止父部件使用此近战武器</notAllowParentUseTools>
 	<notAllowParentUseVerbProperties>禁止父部件使用此远程武器</notAllowParentUseVerbProperties>
@@ -17,6 +18,8 @@
 	<toolsAffectByOtherPart>近战武器可被其他部件影响</toolsAffectByOtherPart>
 	<verbPropertiesPatch>远程武器替换参数</verbPropertiesPatch>
 	<toolsPatch>近战武器替换参数</toolsPatch>
+	<verbPropertiesObjectPatchByChildPart>接受子部件远程武器替换参数</verbPropertiesObjectPatchByChildPart>
+	<toolsObjectPatchByChildPart>接受子部件近战武器替换参数</toolsObjectPatchByChildPart>
 	<Condation>特殊条件</Condation>
 	<OffseterAffectHorizon>加成影响水平</OffseterAffectHorizon>
 	<allowCreateOnCraftingPort>允许在改装点直接创造</allowCreateOnCraftingPort>
