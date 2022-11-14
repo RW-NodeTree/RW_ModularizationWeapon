@@ -24,146 +24,34 @@
 		<SightsEfficiency>1.1</SightsEfficiency>
 		</value>
 	</Operation>
-
-	<ThingDef ParentName="GunPartBase">
-		<defName>Module_SniperScope</defName>
-		<label>sniper scope</label>
-		<description>Delicate optical scope with adjustable magnification. Great for shooting target afar, not so good when target is close.</description>
-		<statBases>
-			<WorkToMake>7500</WorkToMake>
-			<Mass>0.7</Mass>
-		</statBases>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/BoltActionRifle/Item_4X_8XSniperScope</texPath>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</uiIconPath>
-		<costList>
-			<Steel>35</Steel>
-			<ComponentIndustrial>3</ComponentIndustrial>
-		</costList>
-		<recipeMaker>
-			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>6</Crafting>
-			</skillRequirements>
-		</recipeMaker>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/BoltActionRifle/4X_8XSniperScope</PartTexPath>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>1.5</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
-				<verbPropertiesOffseter>
-					<li>
-						<range>10</range>
-					</li>
-				</verbPropertiesOffseter>
-				<statMultiplier>
-					<AccuracyTouch>0.3</AccuracyTouch>
-					<AccuracyShort>0.8</AccuracyShort>
-					<AccuracyMedium>1.25</AccuracyMedium>
-					<AccuracyLong>1.5</AccuracyLong>
-				</statMultiplier>
-				<statOffset>
-					<RangedWeapon_Cooldown>0.5</RangedWeapon_Cooldown>
-				</statOffset>
-			</li>
-		</comps>
-	</ThingDef>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_SniperScope"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+		<SightsEfficiency>1.5</SightsEfficiency>
+		</value>
+	</Operation>
 
 	<!--Underbarrel attachments-->
-
-	<ThingDef ParentName="GunPartBase">
-		<defName>Module_Bipod</defName>
-		<label>bipod</label>
-		<description>This device allows resting the gun on the ground, offering better accuracy. However deploying and stowing the bipod takes significant time.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Armrack</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
-		<costList>
-			<Steel>50</Steel>
-			<ComponentIndustrial>1</ComponentIndustrial>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Armrack</PartTexPath>
-				<verbPropertiesOffseter>
-					<li>
-						<warmupTime>0.3</warmupTime>
-						<range>5</range>
-					</li>
-				</verbPropertiesOffseter>
-				<statMultiplier>
-					<AccuracyShort>1.2</AccuracyShort>
-					<AccuracyMedium>1.3</AccuracyMedium>
-					<AccuracyLong>1.5</AccuracyLong>
-				</statMultiplier>
-				<statOffset>
-					<RangedWeapon_Cooldown>0.6</RangedWeapon_Cooldown>
-				</statOffset>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="GunPartBase">
-		<defName>Module_VerticalGrip</defName>
-		<label>vertical grip</label>
-		<description>A handy grip allows faster aiming.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Grip</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<recipeMaker>
-			<researchPrerequisite>BlowbackOperation</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>40</Steel>
-		</costList>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Grip</PartTexPath>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>0.9</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
-				<statMultiplier>
-					<AccuracyTouch>1.1</AccuracyTouch>
-					<AccuracyShort>1.1</AccuracyShort>
-				</statMultiplier>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="GunPartBase">
-		<defName>Module_AngledGrip</defName>
-		<label>angled grip</label>
-		<description>A handy grip allows faster aiming.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_TriangleGrip</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<recipeMaker>
-			<researchPrerequisite>BlowbackOperation</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>40</Steel>
-		</costList>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/TriangleGrip</PartTexPath>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>0.8</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
-			</li>
-		</comps>
-	</ThingDef>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_Bipod"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+			<SwayFactor>0.75</SwayFactor>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_VerticalGrip"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+			<SwayFactor>0.8</SwayFactor>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_AngledGrip"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+			<SwayFactor>0.85</SwayFactor>
+		</value>
+	</Operation>
 </Patch>
