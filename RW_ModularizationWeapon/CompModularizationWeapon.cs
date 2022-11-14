@@ -200,30 +200,37 @@ namespace RW_ModularizationWeapon
 
                                 matrix[k] = properties.Transfrom * scale * matrix[k];
 
-                                Vector3 l = matrix[k].GetRow(0);
-                                Vector3 r = matrix[k].GetRow(1);
-                                Vector3 h = matrix[k].GetRow(2);
-                                if(Vector3.Dot(Vector3.Cross(l,r),h) < 0)
-                                {
-                                    info.mesh = MeshReindexed.GetOrNewWhenNull(info.mesh, () =>
-                                    {
-                                        Mesh mesh = new Mesh();
-                                        mesh.name = info.mesh.name + "Reindexed";
-                                        mesh.vertices = info.mesh.vertices;
-                                        mesh.uv = info.mesh.uv;
-                                        int[] trangles = mesh.GetTriangles(0);
-                                        for(int m = 0; m < (trangles.Length >> 1); m++)
-                                        {
-                                            trangles[m] = trangles[trangles.Length - 1 - m];
-                                        }
-                                        mesh.SetTriangles(trangles, 0);
-                                        mesh.RecalculateNormals();
-                                        mesh.RecalculateBounds();
-                                        return mesh;
-                                    });
-                                }
                                 //matrix[k] = properties.Transfrom;
                             }
+                            info.mesh = MeshReindexed.GetOrNewWhenNull(info.mesh, () =>
+                            {
+                                if (MeshReindexed.ContainsValue(info.mesh))
+                                {
+                                    return info.mesh;
+                                }
+                                Mesh mesh = new Mesh();
+                                mesh.name = info.mesh.name + " Reindexed";
+
+                                List<Vector3> vert = new List<Vector3>(info.mesh.vertices);
+                                vert.AddRange(vert);
+                                mesh.vertices = vert.ToArray();
+
+                                List<Vector2> uv = new List<Vector2>(info.mesh.uv);
+                                uv.AddRange(uv);
+                                mesh.uv = uv.ToArray();
+
+                                List<int> trangles = new List<int>(info.mesh.GetTriangles(0));
+                                trangles.Capacity = 2 * trangles.Count;
+                                for (int k = trangles.Count - 1; k >= 0; k--)
+                                {
+                                    trangles.Add(trangles[k] + 4);
+                                }
+                                mesh.SetTriangles(trangles, 0);
+                                mesh.RecalculateNormals();
+                                mesh.RecalculateBounds();
+                                return mesh;
+                            });
+
                             renderInfos[j] = info;
                         }
                     }
