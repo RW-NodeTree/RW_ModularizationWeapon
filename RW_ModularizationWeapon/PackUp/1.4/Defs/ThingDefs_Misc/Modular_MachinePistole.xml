@@ -44,7 +44,6 @@
 				<defaultProjectile>Bullet_MachinePistol</defaultProjectile>
 				<warmupTime>0.5</warmupTime>
 				<range>19.9</range>
-				<burstShotCount>3</burstShotCount>
 				<ticksBetweenBurstShots>7</ticksBetweenBurstShots>
 				<soundCast>Shot_MachinePistol</soundCast>
 				<soundCastTail>GunTail_Light</soundCastTail>
@@ -88,6 +87,7 @@
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>Module_HvySMG_MagClip</defultThing>
+						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_HvySMG_MagClip</li>

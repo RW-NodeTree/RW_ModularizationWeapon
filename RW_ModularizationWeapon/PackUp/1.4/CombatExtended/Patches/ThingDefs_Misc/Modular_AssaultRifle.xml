@@ -31,6 +31,7 @@
 		</Properties>
 		<AmmoUser>
 			<reloadTime>4</reloadTime>
+			<magazineSize>1</magazineSize>
 			<ammoSet>AmmoSet_556x45mmNATO</ammoSet>
 		</AmmoUser>
 		<FireModes>
@@ -48,160 +49,38 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/ThingDef[defName="Module_AR_MagClip"]/comps/li[@Class="CompProperties_AssembleWeaponPart"]</xpath>
 		<value>
-		  	<SightsEfficiency>1.25</SightsEfficiency>
+			<compPropertiesObjectPatch>
+				<il Reader-Class="CombatExtended.CompProperties_AmmoUser">
+					<magazineSize>30</magazineSize>
+				</il>
+			</compPropertiesObjectPatch>
+		</value>
+		<order>Append</order>
+	</Operation>
+
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_AR_MagDrum"]/comps/li[@Class="CompProperties_AssembleWeaponPart"]</xpath>
+		<value>
+			<compPropertiesObjectPatch>
+				<il Reader-Class="CombatExtended.CompProperties_AmmoUser">
+					<magazineSize>100</magazineSize>
+				</il>
+			</compPropertiesObjectPatch>
 		</value>
 		<order>Append</order>
 	</Operation>
 	
-	<ThingDef ParentName="ARGunPartBase">
-		<defName>Module_AR_MagClip</defName>
-		<label>STANAG magazine</label>
-		<description>Standard 30 round clip magazine designed for various assault rifles.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_AssaultRifle_Magazine</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
-		<statBases>
-			<WorkToMake>500</WorkToMake>
-			<Mass>0.3</Mass>
-		</statBases>
-		<recipeMaker>
-			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>25</Steel>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_Magazine</PartTexPath>
-				<verbPropertiesObjectPatch>
-					<li>
-						<burstShotCount>3</burstShotCount>
-					</li>
-				</verbPropertiesObjectPatch>
-			</li>
-		</comps>
-	</ThingDef>
 
-	<ThingDef ParentName="ARGunPartBase">
-		<defName>Module_AR_MagDrum</defName>
-		<label>Beta C-Mag</label>
-		<description>100 round drum magazine provides better sustained firepower, at the cost of reload speed. It also affects the center of gravity of the gun, making it unwieldy.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_AssaultRifle_CartridgeDrum</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
-		<statBases>
-			<WorkToMake>3000</WorkToMake>
-			<Mass>0.7</Mass>
-		</statBases>
-		<recipeMaker>
-			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>50</Steel>
-			<ComponentIndustrial>2</ComponentIndustrial>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_CartridgeDrum</PartTexPath>
-				<verbPropertiesObjectPatch>
-					<li>
-						<burstShotCount>10</burstShotCount>
-					</li>
-				</verbPropertiesObjectPatch>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>1.1</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
-				<statMultiplier>
-					<AccuracyTouch>0.9</AccuracyTouch>
-					<AccuracyShort>0.9</AccuracyShort>
-					<AccuracyMedium>0.8</AccuracyMedium>
-					<AccuracyLong>0.8</AccuracyLong>
-					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
-				</statMultiplier>
-			</li>
-		</comps>
-	</ThingDef>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_AR_LongBarrel"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+			<ShotSpread>0.75</ShotSpread>
+		</value>
+		<order>Append</order>
+	</Operation>
 
-	<ThingDef ParentName="ARGunPartBase">
-		<defName>Module_AR_LongBarrel</defName>
-		<label>long barrel</label>
-		<description>TODO</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_AssaultRifle_LengthenedBarrel</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
-		<recipeMaker>
-			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>30</Steel>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_LengthenedBarrel</PartTexPath>
-				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
-				<verbPropertiesOffseter>
-					<li>
-						<warmupTime>0.5</warmupTime>
-						<range>3</range>
-					</li>
-				</verbPropertiesOffseter>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>1.2</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
-				<statMultiplier>
-					<AccuracyTouch>0.8</AccuracyTouch>
-					<AccuracyShort>0.9</AccuracyShort>
-					<AccuracyMedium>1.1</AccuracyMedium>
-					<AccuracyLong>1.1</AccuracyLong>
-					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
-				</statMultiplier>
-				<verbPropertiesObjectPatch>
-					<li>
-						<defaultProjectile>Bullet_AssaultRifleLongBarrel</defaultProjectile>
-					</li>
-				</verbPropertiesObjectPatch>
-				<attachmentProperties>
-					<li>
-						<id>ModARLong_Muzzle</id>
-						<name>muzzle</name>
-						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</UITexPath>
-						<postion>(0.49,0.1,0.005)</postion>
-						<allowEmpty>true</allowEmpty>
-						<filter>
-							<thingDefs>
-								<li>Module_Silencer</li>
-								<li>Module_MuzzleBrake</li>
-								<li>Module_MuzzleCompensator</li>
-								<li>Module_FlashHider</li>
-							</thingDefs>
-						</filter>
-					</li>
-				</attachmentProperties>
-			</li>
-		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="BaseBullet">
-		<defName>Bullet_AssaultRifleLongBarrel</defName>
-		<label>assault rifle bullet</label>
-		<graphicData>
-			<texPath>Things/Projectile/Bullet_Small</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<projectile>
-			<damageDef>Bullet</damageDef>
-			<damageAmountBase>14</damageAmountBase>
-			<speed>100</speed>
-		</projectile>
-	</ThingDef>
+	<Operation Class="PatchOperationRemove">
+		<xpath>Defs/ThingDef[defName="Bullet_AssaultRifleLongBarrel"]</xpath>
+	</Operation>
 </Patch>

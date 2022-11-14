@@ -199,6 +199,29 @@ namespace RW_ModularizationWeapon
                                 matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
 
                                 matrix[k] = properties.Transfrom * scale * matrix[k];
+
+                                Vector3 l = matrix[k].GetRow(0);
+                                Vector3 r = matrix[k].GetRow(1);
+                                Vector3 h = matrix[k].GetRow(2);
+                                if(Vector3.Dot(Vector3.Cross(l,r),h) < 0)
+                                {
+                                    info.mesh = MeshReindexed.GetOrNewWhenNull(info.mesh, () =>
+                                    {
+                                        Mesh mesh = new Mesh();
+                                        mesh.name = info.mesh.name + "Reindexed";
+                                        mesh.vertices = info.mesh.vertices;
+                                        mesh.uv = info.mesh.uv;
+                                        int[] trangles = mesh.GetTriangles(0);
+                                        for(int m = 0; m < (trangles.Length >> 1); m++)
+                                        {
+                                            trangles[m] = trangles[trangles.Length - 1 - m];
+                                        }
+                                        mesh.SetTriangles(trangles, 0);
+                                        mesh.RecalculateNormals();
+                                        mesh.RecalculateBounds();
+                                        return mesh;
+                                    });
+                                }
                                 //matrix[k] = properties.Transfrom;
                             }
                             renderInfos[j] = info;
@@ -440,6 +463,8 @@ namespace RW_ModularizationWeapon
         private static AccessTools.FieldRef<object, ThingDef> CombatExtended_CompAmmoUser_currentAmmoInt = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_get = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_set = null;
+
+        private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
     }
 
 

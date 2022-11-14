@@ -41,7 +41,6 @@
 				<defaultProjectile>Bullet_AssaultRifle</defaultProjectile>
 				<warmupTime>1.0</warmupTime>
 				<range>30.9</range>
-				<burstShotCount>1</burstShotCount>
 				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
 				<soundCast>Shot_AssaultRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
@@ -257,12 +256,12 @@
 				<verbPropertiesOffseter>
 					<li>
 						<warmupTime>0.5</warmupTime>
-						<range>3</range>
 					</li>
 				</verbPropertiesOffseter>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.2</warmupTime>
+						<range>1.25</range>
 					</li>
 				</verbPropertiesMultiplier>
 				<statMultiplier>

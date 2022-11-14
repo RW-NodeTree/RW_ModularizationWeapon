@@ -85,6 +85,7 @@
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<postion>(-0.17,0.1,-0.09)</postion>
 						<defultThing>Module_AP_MagClip</defultThing>
+						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_AP_MagClip</li>
@@ -126,11 +127,11 @@
 						<name>stock</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Stock</UITexPath>
 						<postion>(-0.4,-0.1,0.03)</postion>
+						<scale>(1,1,-1)</scale>
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_HvySMG_WireStock</li>
-								<li>Module_HvySMG_Stock</li>
 							</thingDefs>
 						</filter>
 					</li>

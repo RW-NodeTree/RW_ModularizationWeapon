@@ -46,7 +46,6 @@
 				<defaultProjectile>Bullet_HeavySMG</defaultProjectile>
 				<warmupTime>0.5</warmupTime>
 				<range>22.9</range>
-				<burstShotCount>3</burstShotCount>
 				<ticksBetweenBurstShots>11</ticksBetweenBurstShots>
 				<soundCast>Shot_HeavySMG</soundCast>
 				<soundCastTail>GunTail_Heavy</soundCastTail>
@@ -93,6 +92,7 @@
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>Module_HvySMG_MagClip</defultThing>
+						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_HvySMG_MagClip</li>
@@ -207,6 +207,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/HeavySMG/HeavySMG_Magazine</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<burstShotCount>3</burstShotCount>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
@@ -234,11 +239,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/HeavySMG/HeavySMG_CartridgeDrum</PartTexPath>
-				<verbPropertiesOffseter>
+				<verbPropertiesObjectPatch>
 					<li>
-						<burstShotCount>3</burstShotCount>
+						<burstShotCount>5</burstShotCount>
 					</li>
-				</verbPropertiesOffseter>
+				</verbPropertiesObjectPatch>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.1</warmupTime>

@@ -278,12 +278,12 @@
 				<verbPropertiesOffseter>
 					<li>
 						<warmupTime>0.5</warmupTime>
-						<range>5</range>
 					</li>
 				</verbPropertiesOffseter>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.2</warmupTime>
+						<range>1.25</range>
 					</li>
 				</verbPropertiesMultiplier>
 				<statMultiplier>

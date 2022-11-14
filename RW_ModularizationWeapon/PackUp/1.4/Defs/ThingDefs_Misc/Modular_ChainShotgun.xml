@@ -42,7 +42,6 @@
 				<defaultProjectile>Bullet_Shotgun</defaultProjectile>
 				<warmupTime>1.2</warmupTime>
 				<range>12.9</range>
-				<burstShotCount>3</burstShotCount>
 				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
 				<soundCast>Shot_Shotgun</soundCast>
 				<soundCastTail>GunTail_Heavy</soundCastTail>
@@ -90,6 +89,7 @@
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<postion>(0,0.1,0)</postion>
 						<defultThing>Module_AR_MagClip</defultThing>
+						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_ChainSG_MagClip</li>
@@ -292,6 +292,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/ChainShotgun_Magazine</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<burstShotCount>3</burstShotCount>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
@@ -319,11 +324,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/ChainShotgun_CartridgeDrum</PartTexPath>
-				<verbPropertiesOffseter>
+				<verbPropertiesObjectPatch>
 					<li>
-						<burstShotCount>2</burstShotCount>
+						<burstShotCount>5</burstShotCount>
 					</li>
-				</verbPropertiesOffseter>
+				</verbPropertiesObjectPatch>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.1</warmupTime>

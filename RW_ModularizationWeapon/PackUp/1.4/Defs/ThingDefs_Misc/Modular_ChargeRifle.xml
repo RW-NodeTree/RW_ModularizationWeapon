@@ -54,7 +54,6 @@
 				<warmupTime>1.0</warmupTime>
 				<range>25.9</range>
 				<ticksBetweenBurstShots>12</ticksBetweenBurstShots>
-				<burstShotCount>3</burstShotCount>
 				<soundCast>Shot_ChargeRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
 				<muzzleFlashScale>9</muzzleFlashScale>
@@ -97,6 +96,7 @@
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
 						<postion>(0,0.1,0.02)</postion>
 						<defultThing>Module_CR_Mag</defultThing>
+						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
 								<li>Module_CR_Mag</li>
@@ -186,6 +186,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/ChargeRifle/ChargeRifle_Battery</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<burstShotCount>3</burstShotCount>
+					</li>
+				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
 	</ThingDef>
@@ -213,11 +218,11 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/ChargeRifle/ChargeRifle_LargeBattery</PartTexPath>
-				<verbPropertiesOffseter>
+				<verbPropertiesObjectPatch>
 					<li>
-						<burstShotCount>3</burstShotCount>
+						<burstShotCount>5</burstShotCount>
 					</li>
-				</verbPropertiesOffseter>
+				</verbPropertiesObjectPatch>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.1</warmupTime>
