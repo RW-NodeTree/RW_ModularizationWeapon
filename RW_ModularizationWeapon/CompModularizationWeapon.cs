@@ -18,10 +18,10 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
-using static HarmonyLib.Code;
 
 namespace RW_ModularizationWeapon
 {
+    [StaticConstructorOnStartup]
     public partial class CompModularizationWeapon : CompBasicNodeComp, IEnumerable<(string,Thing,WeaponAttachmentProperties)>
     {
         public CompProperties_ModularizationWeapon Props => (CompProperties_ModularizationWeapon)props;
@@ -40,6 +40,17 @@ namespace RW_ModularizationWeapon
                     current = current.ParentPart;
                 }
                 return result;
+            }
+        }
+
+
+        static CompModularizationWeapon()
+        {
+            if(CombatExtended_CompAmmoUser != null)
+            {
+                CombatExtended_CompAmmoUser_currentAmmoInt = AccessTools.FieldRefAccess<ThingDef>(CombatExtended_CompAmmoUser, "currentAmmoInt");
+                CombatExtended_CompAmmoUser_CurMagCount_get = CombatExtended_CompAmmoUser.GetMethod("get_CurMagCount", BindingFlags.Instance | BindingFlags.Public);
+                CombatExtended_CompAmmoUser_CurMagCount_set = CombatExtended_CompAmmoUser.GetMethod("set_CurMagCount", BindingFlags.Instance | BindingFlags.Public);
             }
         }
 
@@ -106,7 +117,7 @@ namespace RW_ModularizationWeapon
                     foreach (ThingComp comp in part.AllComps)
                     {
                         Type type = comp.GetType();
-                        if(type == typeof(CompModularizationWeapon) || type.FullName == "CombatExtended.CompAmmoUser" || type.FullName == "CombatExtended.CompFireModes")
+                        if(type == typeof(CompModularizationWeapon) || type == CombatExtended_CompAmmoUser || type == CombatExtended_CompFireModes)
                         {
                             foreach(Gizmo gizmo in comp.CompGetGizmosExtra())
                             {
@@ -335,21 +346,36 @@ namespace RW_ModularizationWeapon
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
 
-            foreach(ThingComp comp in parent.AllComps)
+            if (!UsingTargetPart && CombatExtended_CompAmmoUser != null)
+            {
+                foreach (ThingComp comp in parent.AllComps)
+                {
+                    Type type = comp.GetType();
+                    if (type == CombatExtended_CompAmmoUser)
+                    {
+                        Thing thing = ThingMaker.MakeThing(CombatExtended_CompAmmoUser_currentAmmoInt(comp), null);
+                        thing.stackCount = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(comp,null);
+                        CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(comp, new object[] { 0 });
+                        GenThing.TryDropAndSetForbidden(thing, parent.PositionHeld, parent.MapHeld, ThingPlaceMode.Near, out _, false);
+                    }
+                }
+            }
+
+            foreach (ThingComp comp in parent.AllComps)
             {
                 if (comp == this) continue;
                 CompProperties properties = null;
-                foreach(CompProperties def in parent.def.comps)
+                foreach(CompProperties prop in parent.def.comps)
                 {
-                    if(def.compClass == comp.GetType())
+                    if(prop.compClass == comp.GetType())
                     {
-                        properties = def;
+                        properties = prop;
                         break;
                     }
                 }
                 if(properties != null)
                 {
-                    comp.props = CompPropertiesAfterAffect(properties);
+                    comp.Initialize(CompPropertiesAfterAffect(properties));
                 }
             }
 
@@ -407,8 +433,13 @@ namespace RW_ModularizationWeapon
         private bool showTargetPart = false;
         private bool usingTargetPart = false;
 
+        private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
+        private static Type CombatExtended_CompFireModes = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompFireModes");
         private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
         private static AccessTools.FieldRef<ThingDef, List<VerbProperties>> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>>("verbs");
+        private static AccessTools.FieldRef<object, ThingDef> CombatExtended_CompAmmoUser_currentAmmoInt = null;
+        private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_get = null;
+        private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_set = null;
     }
 
 
