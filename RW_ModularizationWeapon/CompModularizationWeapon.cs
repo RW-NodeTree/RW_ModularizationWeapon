@@ -338,7 +338,7 @@ namespace RW_ModularizationWeapon
                         foreach(ThingDefWeight weight in properties.randomThingDefWeights)
                         {
                             float next = k + weight.weight;
-                            if (k < j && next >= j) def = weight.thingDef;
+                            if (k <= j && next >= j) def = weight.thingDef;
                             k = next;
                         }
                         if (def != null)
