@@ -127,6 +127,18 @@
 						</filter>
 					</li>
 					<li>
+						<id>ModAR_Receiver</id>
+						<name>receiver</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
+						<postion>(0,0.1,0)</postion>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_AR_Chamber</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
 						<id>ModAR_Muzzle</id>
 						<name>muzzle</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</UITexPath>
@@ -230,6 +242,40 @@
 					<AccuracyMedium>0.8</AccuracyMedium>
 					<AccuracyLong>0.8</AccuracyLong>
 					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+	
+
+	<ThingDef ParentName="HvySMGGunPartBase">
+		<defName>Module_AR_Chamber</defName>
+		<label>reinforced receiver</label>
+		<description>TODO</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</uiIconPath>
+		<statBases>
+			<Mass>0.1</Mass>
+		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>GasOperation</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>30</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<notDrawInParent>true</notDrawInParent>
+				<verbPropertiesMultiplier>
+					<li>
+						<ticksBetweenBurstShots>0.75</ticksBetweenBurstShots>
+					</li>
+				</verbPropertiesMultiplier>
+				<statMultiplier>
+					<AccuracyTouch>0.9</AccuracyTouch>
+					<AccuracyShort>0.9</AccuracyShort>
+					<AccuracyMedium>0.9</AccuracyMedium>
+					<AccuracyLong>0.9</AccuracyLong>
 				</statMultiplier>
 			</li>
 		</comps>
