@@ -123,6 +123,7 @@
 						<id>ModCR_UnderBarrel</id>
 						<name>under barrel</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
+						<verbPropertiesObjectPatchByChildPart>false</verbPropertiesObjectPatchByChildPart>
 						<allowEmpty>true</allowEmpty>
 						<postion>(0.01,0.1,-0.02)</postion>
 						<filter>

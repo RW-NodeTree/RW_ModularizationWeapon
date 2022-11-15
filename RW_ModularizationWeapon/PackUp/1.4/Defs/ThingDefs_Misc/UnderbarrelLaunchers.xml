@@ -43,6 +43,7 @@
 				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
 				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
 				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
+				<verbPropertiesObjectPatchByOtherPart>false</verbPropertiesObjectPatchByOtherPart>
 				<attachmentProperties>
 					<li>
 						<id>Module_UBGL</id>
@@ -106,6 +107,7 @@
 				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
 				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
 				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
+				<verbPropertiesObjectPatchByOtherPart>false</verbPropertiesObjectPatchByOtherPart>
 				<attachmentProperties>
 					<li>
 						<id>Module_UBGL</id>

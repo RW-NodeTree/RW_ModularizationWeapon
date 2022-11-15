@@ -114,6 +114,7 @@
 						<id>ModAR_UnderBarrel</id>
 						<name>under barrel</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
+						<verbPropertiesObjectPatchByChildPart>false</verbPropertiesObjectPatchByChildPart>
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
