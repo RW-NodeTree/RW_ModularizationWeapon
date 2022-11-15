@@ -261,14 +261,13 @@
 				<notDrawInParent>true</notDrawInParent>
 				<verbPropertiesOffseter>
 					<li>
-						<warmupTime>0.5</warmupTime>
 						<range>-3</range>
-						<ticksBetweenBurstShots>8</ticksBetweenBurstShots>
 					</li>
 				</verbPropertiesOffseter>
 				<verbPropertiesMultiplier>
 					<li>
 						<warmupTime>1.2</warmupTime>
+						<ticksBetweenBurstShots>0.75</ticksBetweenBurstShots>
 					</li>
 				</verbPropertiesMultiplier>
 				<statMultiplier>

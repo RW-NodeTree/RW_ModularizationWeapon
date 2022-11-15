@@ -305,7 +305,7 @@
 	<ThingDef ParentName="SGGunPartBase">
 		<defName>Module_ChainSG_MagDrum</defName>
 		<label>chain shotgun drum magazine</label>
-		<description>30 round drum magazine provides better sustained firepower, at the cost of reload speed. It also affects the center of gravity of the gun, making it unwieldy.</description>
+		<description>20 round drum magazine provides better sustained firepower, at the cost of reload speed. It also affects the center of gravity of the gun, making it unwieldy.</description>
 		<graphicData>
 			<texPath>Things/WeaponPart/Gun/ChainShotgun/Item_ChainShotgun_CartridgeDrum</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>

@@ -81,119 +81,42 @@
 	</Operation>
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>Defs/ThingDef[defName="Module_ChainSG_MagClip"]/comps/li[@Class="CompProperties_AssembleWeaponPart"]</xpath>
+		<xpath>Defs/ThingDef[defName="Gun_ModularChainShotgun"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/attachmentProperties/li[id="ModChainSG_Magazine"]</xpath>
+		<value>
+			<verbPropertiesObjectPatchByChildPart>false</verbPropertiesObjectPatchByChildPart>
+		</value>
+		<order>Append</order>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_ChainSG_MagClip"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
 		<value>
 			<compPropertiesObjectPatch>
 				<il Reader-Class="CombatExtended.CompProperties_AmmoUser">
-					<magazineSize>8</magazineSize>
+					<magazineSize>10</magazineSize>
 				</il>
 			</compPropertiesObjectPatch>
 		</value>
 		<order>Append</order>
 	</Operation>
 
-	<ThingDef ParentName="SGGunPartBase">
-		<defName>Module_ChainSG_MagClip</defName>
-		<label>chain shotgun magazine</label>
-		<description>Standard 10 round clip magazine designed for the chain shotgun.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/ChainShotgun/Item_ChainShotgun_Magazine</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
-		<statBases>
-			<WorkToMake>500</WorkToMake>
-			<Mass>0.3</Mass>
-		</statBases>
-		<recipeMaker>
-			<researchPrerequisite>GasOperation</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>30</Steel>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/ChainShotgun_Magazine</PartTexPath>
-			</li>
-		</comps>
-	</ThingDef>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_ChainSG_MagClip"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
+		<value>
+			<compPropertiesObjectPatch>
+				<il Reader-Class="CombatExtended.CompProperties_AmmoUser">
+					<magazineSize>20</magazineSize>
+				</il>
+			</compPropertiesObjectPatch>
+		</value>
+		<order>Append</order>
+	</Operation>
 
-	<ThingDef ParentName="SGGunPartBase">
-		<defName>Module_ChainSG_MagDrum</defName>
-		<label>chain shotgun drum magazine</label>
-		<description>30 round drum magazine provides better sustained firepower, at the cost of reload speed. It also affects the center of gravity of the gun, making it unwieldy.</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/ChainShotgun/Item_ChainShotgun_CartridgeDrum</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
-		<statBases>
-			<WorkToMake>3000</WorkToMake>
-			<Mass>0.7</Mass>
-		</statBases>
-		<recipeMaker>
-			<researchPrerequisite>GasOperation</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>60</Steel>
-			<ComponentIndustrial>2</ComponentIndustrial>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/ChainShotgun_CartridgeDrum</PartTexPath>
-				<verbPropertiesOffseter>
-					<li>
-						<burstShotCount>2</burstShotCount>
-					</li>
-				</verbPropertiesOffseter>
-				<verbPropertiesMultiplier>
-					<li>
-						<warmupTime>1.1</warmupTime>
-					</li>
-				</verbPropertiesMultiplier>
-				<statMultiplier>
-					<AccuracyTouch>0.9</AccuracyTouch>
-					<AccuracyShort>0.9</AccuracyShort>
-					<AccuracyMedium>0.8</AccuracyMedium>
-					<AccuracyLong>0.8</AccuracyLong>
-					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
-				</statMultiplier>
-			</li>
-		</comps>
-	</ThingDef>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_SGmuzzleChoke"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+			<ShotSpread>0.75</ShotSpread>
+		</value>
+	</Operation>
 
-	<ThingDef ParentName="SGGunPartBase">
-		<defName>Module_SGmuzzleChoke</defName>
-		<label>muzzle choke</label>
-		<description>An muzzle device that tightens the spread of pellets, making it more accurate at medium distance, but harder to hit at close range..</description>
-		<graphicData>
-			<texPath>Things/WeaponPart/Gun/ChainShotgun/Item_ChainShotgun_Buncher</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</uiIconPath>
-		<statBases>
-			<WorkToMake>3000</WorkToMake>
-			<Mass>0.5</Mass>
-		</statBases>
-		<recipeMaker>
-			<researchPrerequisite>BlowbackOperation</researchPrerequisite>
-		</recipeMaker>
-		<costList>
-			<Steel>40</Steel>
-		</costList>
-		<comps>
-			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
-				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/ChainShotgun_Buncher</PartTexPath>
-				<verbPropertiesOffseter>
-					<li>
-						<range>3</range>
-					</li>
-				</verbPropertiesOffseter>
-				<statMultiplier>
-					<AccuracyTouch>0.8</AccuracyTouch>
-					<AccuracyMedium>1.2</AccuracyMedium>
-				</statMultiplier>
-			</li>
-		</comps>
-	</ThingDef>
 </Patch>

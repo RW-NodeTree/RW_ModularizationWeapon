@@ -104,7 +104,7 @@
 						<id>ModHvySMG_Stock</id>
 						<name>stock</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Stock</UITexPath>
-						<postion>(-0.5,0.1,0)</postion>
+						<postion>(-0.5,-0.1,0)</postion>
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
