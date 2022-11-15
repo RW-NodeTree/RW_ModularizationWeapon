@@ -103,6 +103,10 @@
 								<li>Module_CR_MagExt</li>
 							</thingDefs>
 						</filter>
+						<randomThingDefWeights>
+							<Module_CR_Mag>1</Module_CR_Mag>
+							<Module_CR_MagExt>1</Module_CR_MagExt>
+						</randomThingDefWeights>
 					</li>
 					<li>
 						<id>ModCR_Sight</id>

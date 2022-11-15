@@ -37,6 +37,9 @@ namespace RW_ModularizationWeapon
             filter = filter ?? new ThingFilter();
             filter.ResolveReferences();
 
+            randomThingDefWeights = randomThingDefWeights ?? new List<ThingDefWeight>();
+            randomThingDefWeights.RemoveAll(x => x.thingDef == null || !filter.Allows(x.thingDef));
+
             void CheckAndSetList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
                 list = list ?? new FieldReaderDgitList<T>();
@@ -96,6 +99,8 @@ namespace RW_ModularizationWeapon
         public ThingFilter filter = new ThingFilter();
 
         public ThingDef defultThing = null;
+
+        public List<ThingDefWeight> randomThingDefWeights = new List<ThingDefWeight>();
 
         public Vector3 postion = Vector3.zero;
         

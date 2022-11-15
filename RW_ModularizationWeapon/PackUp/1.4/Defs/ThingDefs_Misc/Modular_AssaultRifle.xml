@@ -94,6 +94,10 @@
 								<li>Module_AR_MagDrum</li>
 							</thingDefs>
 						</filter>
+						<randomThingDefWeights>
+							<Module_AR_MagClip>1</Module_AR_MagClip>
+							<Module_AR_MagDrum>1</Module_AR_MagDrum>
+						</randomThingDefWeights>
 					</li>
 					<li>
 						<id>ModAR_Sight</id>

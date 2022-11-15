@@ -253,6 +253,7 @@
     <Compile Include="Patch\CompModularizationWeapon.cs" />
     <Compile Include="Stat\CompModularizationWeapon.cs" />
     <Compile Include="TargetPart\CompModularizationWeapon.cs" />
+    <Compile Include="ThingDefWeight.cs" />
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="UI\CompModularizationWeapon.cs" />
     <Compile Include="UI\CustomWeapon.cs" />

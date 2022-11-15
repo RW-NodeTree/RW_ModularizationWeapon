@@ -92,6 +92,10 @@
 								<li>Module_HvySNG_MagDrum</li>
 							</thingDefs>
 						</filter>
+						<randomThingDefWeights>
+							<Module_AP_MagClip>1</Module_AP_MagClip>
+							<Module_HvySNG_MagDrum>1</Module_HvySNG_MagDrum>
+						</randomThingDefWeights>
 					</li>
 					<li>
 						<id>ModAP_Sight</id>

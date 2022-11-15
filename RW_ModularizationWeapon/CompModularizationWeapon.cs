@@ -308,21 +308,48 @@ namespace RW_ModularizationWeapon
 
         public void SetThingToRandom()
         {
-            System.Random random = new System.Random();
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
-                for(int i = 0; i < 3; i++)
+                if(properties.randomThingDefWeights.NullOrEmpty())
                 {
-                    int j = random.Next(properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
-                    ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
-                    if (def != null)
+                    for (int i = 0; i < 3; i++)
                     {
-                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                        ChildNodes[properties.id] = thing;
-                        if (ChildNodes[properties.id] == thing) break;
+                        int j = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
+                        ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
+                        if (def != null)
+                        {
+                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                            ChildNodes[properties.id] = thing;
+                            if (ChildNodes[properties.id] == thing) break;
+                        }
+                        else break;
                     }
-                    else break;
+                }
+                else
+                {
+                    float count = 0;
+                    properties.randomThingDefWeights.ForEach(x => count += x.weight);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        float j = Rand.Range(0, count);
+                        float k = 0;
+                        ThingDef def = null;
+                        foreach(ThingDefWeight weight in properties.randomThingDefWeights)
+                        {
+                            float next = k + weight.weight;
+                            if (k < j && next >= j) def = weight.thingDef;
+                            k = next;
+                        }
+                        if (def != null)
+                        {
+                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                            ChildNodes[properties.id] = thing;
+                            if (ChildNodes[properties.id] == thing) break;
+                        }
+                        else break;
+                    }
                 }
             }
         }

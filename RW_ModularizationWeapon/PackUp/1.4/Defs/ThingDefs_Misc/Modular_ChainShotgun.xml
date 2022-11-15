@@ -96,6 +96,10 @@
 								<li>Module_ChainSG_MagDrum</li>
 							</thingDefs>
 						</filter>
+						<randomThingDefWeights>
+							<Module_ChainSG_MagClip>1</Module_ChainSG_MagClip>
+							<Module_ChainSG_MagDrum>1</Module_ChainSG_MagDrum>
+						</randomThingDefWeights>
 					</li>
 					<li>
 						<id>ModChainSG_Sight</id>
