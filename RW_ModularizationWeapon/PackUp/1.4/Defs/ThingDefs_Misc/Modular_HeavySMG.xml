@@ -101,7 +101,7 @@
 						</filter>
 						<randomThingDefWeights>
 							<Module_HvySMG_MagClip>1</Module_HvySMG_MagClip>
-							<Module_HvySMG_MagClip>1</Module_HvySMG_MagClip>
+							<Module_HvySNG_MagDrum>1</Module_HvySNG_MagDrum>
 						</randomThingDefWeights>
 					</li>
 					<li>
