@@ -178,7 +178,7 @@ namespace RW_ModularizationWeapon
                         }
                     }
                 }
-                else if (!internal_NotDraw(part, properties))
+                else if (!internal_NotDraw(part, properties) && (ParentProccesser != null || Props.drawChildPartWhenOnGround))
                 {
                     if (properties != null)
                     {
@@ -697,10 +697,30 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = 0;
             stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
-            count += listAllInst(comp?.VerbPropertiesObjectPatch(null) ?? verbPropertiesObjectPatch, "", "");
+            List<FieldReaderInst<VerbProperties>> VerbPropertiesObjectPatch = verbPropertiesObjectPatch;
+            if(comp != null)
+            {
+                foreach(FieldReaderInst<VerbProperties> fieldReader in comp.VerbPropertiesObjectPatch(null))
+                {
+                    int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                    if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
+                    else VerbPropertiesObjectPatch[index] |= fieldReader;
+                }
+            }
+            count += listAllInst(VerbPropertiesObjectPatch, "", "");
 
             stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
-            count += listAllInst(comp?.ToolsObjectPatch(null) ?? toolsObjectPatch, "", "");
+            List<FieldReaderInst<Tool>> ToolsObjectPatch = toolsObjectPatch;
+            if (comp != null)
+            {
+                foreach (FieldReaderInst<Tool> fieldReader in comp.ToolsObjectPatch(null))
+                {
+                    int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                    if (index < 0) ToolsObjectPatch.Add(fieldReader);
+                    else ToolsObjectPatch[index] |= fieldReader;
+                }
+            }
+            count += listAllInst(ToolsObjectPatch, "", "");
 
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon,
@@ -866,6 +886,9 @@ namespace RW_ModularizationWeapon
 
 
         public bool notAllowParentUseTools = false;
+
+
+        public bool drawChildPartWhenOnGround = true;
         #endregion
 
 

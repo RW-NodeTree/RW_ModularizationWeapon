@@ -243,7 +243,7 @@
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_AssaultRifle_LengthenedBarrel</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</uiIconPath>
 		<recipeMaker>
 			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
 		</recipeMaker>
@@ -254,6 +254,7 @@
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/AssaultRifle_LengthenedBarrel</PartTexPath>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
+				<drawChildPartWhenOnGround>false</drawChildPartWhenOnGround>
 				<verbPropertiesOffseter>
 					<li>
 						<warmupTime>0.5</warmupTime>

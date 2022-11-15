@@ -264,7 +264,7 @@
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_AssaultRifle_LengthenedBarrel</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</uiIconPath>
 		<recipeMaker>
 			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
 		</recipeMaker>
@@ -274,6 +274,7 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/SniperRifle/SniperRifle_LengthenedBarrel</PartTexPath>
+				<drawChildPartWhenOnGround>false</drawChildPartWhenOnGround>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<verbPropertiesOffseter>
 					<li>
@@ -340,7 +341,7 @@
 			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_AssaultRifle_LengthenedBarrel</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>
 		</graphicData>
-		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</uiIconPath>
 		<recipeMaker>
 			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
 		</recipeMaker>
@@ -350,6 +351,7 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<PartTexPath>Things/WeaponPart/Gun/SniperRifle/SniperRifle_LengthenedBarrel</PartTexPath>
+				<drawChildPartWhenOnGround>false</drawChildPartWhenOnGround>
 				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
 				<verbPropertiesOffseter>
 					<li>

@@ -15,7 +15,7 @@
 		</graphicData>
 		<soundInteract>Metal_Drop</soundInteract>
 		<soundDrop>Standard_Drop</soundDrop>
-		<stackLimit>1</stackLimit>
+		<stackLimit>25</stackLimit>
 		<healthAffectsPrice>false</healthAffectsPrice>
 		<smeltable>true</smeltable>
 		<recipeMaker>
