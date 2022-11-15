@@ -75,7 +75,6 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = thing;
                     if(comp != null)
                     {
-                        comp.targetModeParent = NodeProccesser;
                         comp.UsingTargetPart = comp.ShowTargetPart;
                     }
                 }
@@ -281,7 +280,6 @@ namespace RW_ModularizationWeapon
                 }
                 //if (Prefs.DevMode) Log.Message($"properties.filter.AllowedDefCount : {properties.filter.AllowedDefCount}");
                 return
-                    ((CompModularizationWeapon)node)?.targetModeParent == null &&
                     properties.filter.Allows(node) &&
                     !internal_Unchangeable(ChildNodes[id], properties);
             }
@@ -423,23 +421,19 @@ namespace RW_ModularizationWeapon
         protected override void Added(NodeContainer container, string id)
         {
             //Log.Message($"container add {container.Comp}");
-            targetModeParent = container.Comp;
-            UsingTargetPart = ShowTargetPart;
-            NodeProccesser.NeedUpdate = true;
-        }
-
-
-        protected override void Removed(NodeContainer container, string id)
-        {
-            //Log.Message($"container remove {container.Comp}");
-            targetModeParent = null;
             UsingTargetPart = ShowTargetPart;
             NodeProccesser.NeedUpdate = true;
             NodeProccesser.UpdateNode();
         }
 
 
-        protected override CompChildNodeProccesser OverrideParentProccesser(CompChildNodeProccesser orginal) => UsingTargetPart ? targetModeParent : orginal;
+        protected override void Removed(NodeContainer container, string id)
+        {
+            //Log.Message($"container remove {container.Comp}");
+            UsingTargetPart = ShowTargetPart;
+            NodeProccesser.NeedUpdate = true;
+            NodeProccesser.UpdateNode();
+        }
 
 
         #region operator
@@ -455,7 +449,6 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        internal CompChildNodeProccesser targetModeParent;
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();

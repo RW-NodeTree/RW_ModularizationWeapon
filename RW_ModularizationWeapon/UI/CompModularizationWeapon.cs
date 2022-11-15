@@ -1,4 +1,5 @@
-﻿using RW_NodeTree;
+﻿using RimWorld;
+using RW_NodeTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -96,17 +97,17 @@ namespace RW_ModularizationWeapon
                         if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                         {
                             ThingStyleDef styleDef = thing.StyleDef;
-                            CompChildNodeProccesser comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.targetModeParent : null;
+                            CompChildNodeProccesser comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.ParentProccesser : null;
                             if (comp_targetModeParent != null)
                             {
+                                thing.holdingOwner = null;
                                 comp.NodeProccesser.ResetRenderedTexture();
-                                comp.targetModeParent = null;
                             }
                             Widgets.ThingIcon(new Rect(currentPos.x + 1, currentPos.y + 1, BlockHeight - 1, BlockHeight - 2), thing);
                             if (comp_targetModeParent != null)
                             {
+                                thing.holdingOwner = comp_targetModeParent.ChildNodes;
                                 comp.NodeProccesser.ResetRenderedTexture();
-                                comp.targetModeParent = comp_targetModeParent;
                             }
                             Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y + 1, ContainerWidth - BlockHeight - 1, BlockHeight - 2), $"{properties.Name} : {thing.Label}");
 

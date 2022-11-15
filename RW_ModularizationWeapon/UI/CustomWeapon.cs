@@ -271,17 +271,17 @@ namespace RW_ModularizationWeapon.UI
                         if (selThing != null)
                         {
                             ThingStyleDef styleDef = selThing.StyleDef;
-                            CompChildNodeProccesser comp_targetModeParent = (selDef.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && selDef.uiIconPath.NullOrEmpty() && !(selThing is Pawn || selThing is Corpse)) ? comp?.targetModeParent : null;
+                            CompChildNodeProccesser comp_targetModeParent = (selDef.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && selDef.uiIconPath.NullOrEmpty() && !(selThing is Pawn || selThing is Corpse)) ? comp?.ParentProccesser : null;
                             if (comp_targetModeParent != null)
                             {
+                                selThing.holdingOwner = null;
                                 comp.NodeProccesser.ResetRenderedTexture();
-                                comp.targetModeParent = null;
                             }
                             Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selThing);
                             if (comp_targetModeParent != null)
                             {
+                                selThing.holdingOwner = comp_targetModeParent.ChildNodes;
                                 comp.NodeProccesser.ResetRenderedTexture();
-                                comp.targetModeParent = comp_targetModeParent;
                             }
                             Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))

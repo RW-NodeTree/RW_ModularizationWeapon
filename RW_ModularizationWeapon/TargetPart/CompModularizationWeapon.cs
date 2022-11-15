@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon
                 while (!result && current != null)
                 {
                     result = current.showTargetPart;
-                    current = current.targetModeParent?.parent;
+                    current = current.ParentPart;
                 }
                 return result;
             }
@@ -29,7 +29,6 @@ namespace RW_ModularizationWeapon
 
                 showTargetPart = value;
                 UsingTargetPart = ShowTargetPart;
-                NodeProccesser?.UpdateNode();
             }
         }
 
@@ -55,11 +54,11 @@ namespace RW_ModularizationWeapon
                             CompModularizationWeapon comp = ChildNodes[id];
                             if (comp != null)
                             {
-                                comp.targetModeParent = NodeProccesser;
                                 comp.UsingTargetPart = value;
                             }
                         }
                     }
+                    NodeProccesser?.UpdateNode();
                 }
             }
         }
