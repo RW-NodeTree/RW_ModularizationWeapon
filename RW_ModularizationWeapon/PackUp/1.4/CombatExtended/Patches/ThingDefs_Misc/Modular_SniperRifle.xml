@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
+<Patch>
 
 	<Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
 		<defName>Gun_ModularSniperRifle</defName>
@@ -116,4 +116,4 @@
 		<xpath>Defs/ThingDef[defName="Bullet_SniperRifleLongBarrel"]</xpath>
 	</Operation>
 
-</Defs>
+</Patch>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
+<Patch>
 
 	<Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
 		<defName>Gun_ModularHeavySMG</defName>
@@ -94,4 +94,4 @@
 		<SwayFactor>0.75</SwayFactor>
 		</value>
 	</Operation>
-</Defs>
+</Patch>

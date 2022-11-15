@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-
-
+<Patch>
 	<Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
 		<defName>Gun_ModularChargeRifle</defName>
 		<statBases>
@@ -79,4 +77,4 @@
 	<Operation Class="PatchOperationRemove">
 		<xpath>Defs/ThingDef[defName="Bullet_ChargeRifleEX"]</xpath>
 	</Operation>
-</Defs>
+</Patch>
