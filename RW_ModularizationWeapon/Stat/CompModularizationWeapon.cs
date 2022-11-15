@@ -243,9 +243,9 @@ namespace RW_ModularizationWeapon
 
         protected override void PreStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_GetExplanationUnfinalized");
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
+            //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_GetExplanationUnfinalized; req : {req}; reqBefore : {before};parent : {parent}");
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
@@ -261,9 +261,8 @@ namespace RW_ModularizationWeapon
 
         protected override string PostStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetExplanationUnfinalized");
             StatRequest before = req;
-            req = RedirectoryReq(statWorker, req); if (req.Thing == parent)
+            req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
             {
                 if (statWorker is StatWorker_MeleeAverageDPS ||
@@ -300,6 +299,7 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker)
             )
                 StatWorkerPostfix(forPostRead);
+            //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetExplanationUnfinalized; req : {req}; reqBefore : {before};parent : {parent}");
             return result;
         }
 

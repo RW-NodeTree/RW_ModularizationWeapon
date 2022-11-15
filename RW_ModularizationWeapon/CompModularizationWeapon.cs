@@ -611,7 +611,7 @@ namespace RW_ModularizationWeapon
             StringBuilder stringBuilder = new StringBuilder();
 
             int listAllDgit<T>(
-                List<FieldReaderDgit<T>> list,
+                FieldReaderDgitList<T> list,
                 string perfix,
                 string postfix,
                 bool snap = false
@@ -655,10 +655,14 @@ namespace RW_ModularizationWeapon
             }
             int count = statOffset.Count;
             stringBuilder.AppendLine("verbPropertiesOffseter".Translate().RawText + " :");
-            count += listAllDgit(comp?.VerbPropertiesOffseter(null) ?? verbPropertiesOffseter, "+", "");
+            FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter = verbPropertiesOffseter;
+            if (comp != null) VerbPropertiesOffseter += comp.VerbPropertiesOffseter(null);
+            count += listAllDgit(VerbPropertiesOffseter, "+", "");
 
             stringBuilder.AppendLine("toolsOffseter".Translate().RawText + " :");
-            count += listAllDgit(comp?.ToolsOffseter(null) ?? toolsOffseter, "+", "");
+            FieldReaderDgitList<Tool> ToolsOffseter = toolsOffseter;
+            if (comp != null) ToolsOffseter += comp.ToolsOffseter(null);
+            count += listAllDgit(ToolsOffseter, "+", "");
 
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
@@ -676,10 +680,14 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = statMultiplier.Count;
             stringBuilder.AppendLine("verbPropertiesMultiplier".Translate().RawText + " :");
-            count += listAllDgit(comp?.VerbPropertiesMultiplier(null) ?? verbPropertiesMultiplier, "x", "");
+            VerbPropertiesOffseter = verbPropertiesMultiplier;
+            if (comp != null) VerbPropertiesOffseter *= comp.VerbPropertiesMultiplier(null);
+            count += listAllDgit(VerbPropertiesOffseter, "x", "");
 
             stringBuilder.AppendLine("toolsMultiplier".Translate().RawText + " :");
-            count += listAllDgit(comp?.ToolsMultiplier(null) ?? toolsMultiplier, "x", "");
+            ToolsOffseter = toolsMultiplier;
+            if (comp != null) ToolsOffseter *= comp.ToolsMultiplier(null);
+            count += listAllDgit(ToolsOffseter, "x", "");
 
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
@@ -697,10 +705,10 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = 0;
             stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
-            List<FieldReaderInst<VerbProperties>> VerbPropertiesObjectPatch = verbPropertiesObjectPatch;
+            List<FieldReaderInst<VerbProperties>> VerbPropertiesObjectPatch = comp.VerbPropertiesObjectPatch(null);
             if(comp != null)
             {
-                foreach(FieldReaderInst<VerbProperties> fieldReader in comp.VerbPropertiesObjectPatch(null))
+                foreach(FieldReaderInst<VerbProperties> fieldReader in verbPropertiesObjectPatch)
                 {
                     int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
                     if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
@@ -710,10 +718,10 @@ namespace RW_ModularizationWeapon
             count += listAllInst(VerbPropertiesObjectPatch, "", "");
 
             stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
-            List<FieldReaderInst<Tool>> ToolsObjectPatch = toolsObjectPatch;
+            List<FieldReaderInst<Tool>> ToolsObjectPatch = comp.ToolsObjectPatch(null);
             if (comp != null)
             {
-                foreach (FieldReaderInst<Tool> fieldReader in comp.ToolsObjectPatch(null))
+                foreach (FieldReaderInst<Tool> fieldReader in toolsObjectPatch)
                 {
                     int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
                     if (index < 0) ToolsObjectPatch.Add(fieldReader);
@@ -778,10 +786,10 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("Offseter".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesOffseter".Translate() + " :");
-                    listAllDgit(childComp.VerbPropertiesOffseter(null) * properties.verbPropertiesOffseterAffectHorizon, "+", "", true);
+                    listAllDgit((childComp.VerbPropertiesOffseter(null) + childComp.Props.verbPropertiesOffseter) * properties.verbPropertiesOffseterAffectHorizon, "+", "", true);
 
                     stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
-                    listAllDgit(childComp.ToolsOffseter(null) * properties.toolsOffseterAffectHorizon, "+", "", true);
+                    listAllDgit((childComp.ToolsOffseter(null) + childComp.Props.toolsOffseter) * properties.toolsOffseterAffectHorizon, "+", "", true);
 
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
@@ -792,13 +800,17 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("Multiplier".Translate() + " :");
                     stringBuilder.AppendLine("  " + "verbPropertiesMultiplier".Translate() + " :");
-                    FieldReaderDgitList<VerbProperties> cacheVerbProperties = childComp.VerbPropertiesMultiplier(null) - 1;
-                    if (cacheVerbProperties.HasDefaultValue) cacheVerbProperties.DefaultValue--;
+                    FieldReaderDgitList<VerbProperties> cacheVerbProperties = childComp.VerbPropertiesMultiplier(null);
+                    cacheVerbProperties *= childComp.Props.verbPropertiesMultiplier;
+                    cacheVerbProperties -= 1;
+                    cacheVerbProperties.DefaultValue = 0;
                     listAllDgit(cacheVerbProperties * properties.verbPropertiesMultiplierAffectHorizon + 1, "x", "", true);
 
                     stringBuilder.AppendLine("  " + "toolsMultiplier".Translate() + " :");
-                    FieldReaderDgitList<Tool> cacheTools = childComp.ToolsMultiplier(null) - 1;
-                    if (cacheTools.HasDefaultValue) cacheTools.DefaultValue--;
+                    FieldReaderDgitList<Tool> cacheTools = childComp.ToolsMultiplier(null);
+                    cacheTools *= childComp.Props.toolsMultiplier;
+                    cacheTools -= 1;
+                    cacheTools.DefaultValue = 0;
                     listAllDgit(cacheTools * properties.toolsMultiplierAffectHorizon + 1, "x", "", true);
 
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
@@ -808,10 +820,36 @@ namespace RW_ModularizationWeapon
                     }
 
                     stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
-                    if(verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart) listAllInst(childComp.VerbPropertiesObjectPatch(null), "", "", true);
+                    if (verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart)
+                    {
+                        VerbPropertiesObjectPatch = childComp.VerbPropertiesObjectPatch(null);
+                        if (comp != null)
+                        {
+                            foreach (FieldReaderInst<VerbProperties> fieldReader in childComp.Props.verbPropertiesObjectPatch)
+                            {
+                                int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                                if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
+                                else VerbPropertiesObjectPatch[index] |= fieldReader;
+                            }
+                        }
+                        listAllInst(VerbPropertiesObjectPatch, "", "", true);
+                    }
 
                     stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
-                    if (toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart) listAllInst(childComp.ToolsObjectPatch(null), "", "", true);
+                    if (toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart)
+                    {
+                        ToolsObjectPatch = childComp.ToolsObjectPatch(null);
+                        if (comp != null)
+                        {
+                            foreach (FieldReaderInst<Tool> fieldReader in childComp.Props.toolsObjectPatch)
+                            {
+                                int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                                if (index < 0) ToolsObjectPatch.Add(fieldReader);
+                                else ToolsObjectPatch[index] |= fieldReader;
+                            }
+                        }
+                        listAllInst(ToolsObjectPatch, "", "", true);
+                    }
                 }
                 else
                 {
