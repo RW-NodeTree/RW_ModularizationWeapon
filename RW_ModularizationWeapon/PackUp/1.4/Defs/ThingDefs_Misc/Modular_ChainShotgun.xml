@@ -75,7 +75,7 @@
 		<comps>
 			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
 				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<TextureFilterMode>Point</TextureFilterMode>
 				<ExceedanceFactor>2</ExceedanceFactor>
 				<ExceedanceOffset>1</ExceedanceOffset>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
@@ -216,7 +216,7 @@
 		<comps>
 			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
 				<TextureSizeFactor>256</TextureSizeFactor>
-				<TextureFilterMode>Bilinear</TextureFilterMode>
+				<TextureFilterMode>Point</TextureFilterMode>
 				<ExceedanceFactor>2</ExceedanceFactor>
 				<ExceedanceOffset>1</ExceedanceOffset>
 				<ForceNodeIdControl>true</ForceNodeIdControl>
