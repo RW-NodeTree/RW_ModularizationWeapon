@@ -9,8 +9,6 @@
 	<Gun_ModularChargeRifle.comps.CompModularizationWeapon.attachmentProperties.2.name>下挂件</Gun_ModularChargeRifle.comps.CompModularizationWeapon.attachmentProperties.2.name>
 	<Gun_ModularChargeRifle.comps.CompModularizationWeapon.attachmentProperties.3.name>枪机</Gun_ModularChargeRifle.comps.CompModularizationWeapon.attachmentProperties.3.name>
 
-	<ThingCategory_CRGunParts.lable>电荷步枪配件</ThingCategory_CRGunParts.lable>
-
 	<Module_CR_Mag.label>电荷步枪电池</Module_CR_Mag.label>
 	<Module_CR_Mag.description>电荷步枪基础弹匣</Module_CR_Mag.description>
 

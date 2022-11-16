@@ -166,7 +166,7 @@
 
 	<ThingCategoryDef>
 		<defName>ThingCategory_ARGunParts</defName>
-		<label>assault rifle parts</label>
+		<label>rifle parts</label>
 		<parent>ThingCategory_GunParts</parent>
 	</ThingCategoryDef>
 

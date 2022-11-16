@@ -12,12 +12,11 @@
 	<Module_AP_MagClip.label>自动手枪弹匣</Module_AP_MagClip.label>
 	<Module_AP_MagClip.description>自动手枪的基础弹匣</Module_AP_MagClip.description>
 
-
 	<Gun_ModularRevolver.label>左轮手枪（可装配件）</Gun_ModularRevolver.label>
 	<Gun_ModularRevolver.description>古老构造的复动式左轮手枪。威力和射程一般,但射击迅速。</Gun_ModularRevolver.description>
 	<Gun_ModularRevolver.tools.0.label>握把</Gun_ModularRevolver.tools.0.label>
 	<Gun_ModularRevolver.tools.1.label>枪管</Gun_ModularRevolver.tools.1.label>
 	<Gun_ModularRevolver.comps.CompModularizationWeapon.attachmentProperties.0.name>瞄具</Gun_ModularRevolver.comps.CompModularizationWeapon.attachmentProperties.0.name>
 	<Gun_ModularRevolver.comps.CompModularizationWeapon.attachmentProperties.1.name>枪管</Gun_ModularRevolver.comps.CompModularizationWeapon.attachmentProperties.1.name>
-  
+
 </LanguageData>

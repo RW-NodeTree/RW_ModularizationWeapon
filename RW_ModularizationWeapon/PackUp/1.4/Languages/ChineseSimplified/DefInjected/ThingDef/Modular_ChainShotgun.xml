@@ -18,9 +18,6 @@
 	<Gun_ModularPumpShotgun.comps.CompModularizationWeapon.attachmentProperties.0.name>瞄具</Gun_ModularPumpShotgun.comps.CompModularizationWeapon.attachmentProperties.0.name>
 	<Gun_ModularPumpShotgun.comps.CompModularizationWeapon.attachmentProperties.1.name>枪管</Gun_ModularPumpShotgun.comps.CompModularizationWeapon.attachmentProperties.1.name>
 
-	<ThingCategory_SGGunParts.lable>霰弹枪配件</ThingCategory_SGGunParts.lable>
-
-
 	<Module_ChainSG_MagClip.label>链式霰弹枪弹匣</Module_ChainSG_MagClip.label>
 	<Module_ChainSG_MagClip.description>链式霰弹枪基础弹匣</Module_ChainSG_MagClip.description>
 

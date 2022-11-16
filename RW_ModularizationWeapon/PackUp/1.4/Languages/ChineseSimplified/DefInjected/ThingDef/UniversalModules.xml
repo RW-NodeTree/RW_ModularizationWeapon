@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-	<ThingCategory_ARGunParts.lable>通用配件</ThingCategory_ARGunParts.lable>
+	<ThingCategory_ARGunParts.label>通用配件</ThingCategory_ARGunParts.label>
 	
 	<Module_ACOG.label>ACOG瞄准镜</Module_ACOG.label>
 	<Module_ACOG.description>可以在2.5 - 4倍之间自由调节倍率的光学瞄准镜</Module_ACOG.description>
