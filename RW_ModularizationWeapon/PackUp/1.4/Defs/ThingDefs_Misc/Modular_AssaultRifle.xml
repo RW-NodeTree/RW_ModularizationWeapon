@@ -132,7 +132,7 @@
 					</li>
 					<li>
 						<id>ModAR_Receiver</id>
-						<name>receiver</name>
+						<name>chamber</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
 						<postion>(0,0.1,0)</postion>
 						<allowEmpty>true</allowEmpty>

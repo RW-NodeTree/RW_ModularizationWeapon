@@ -129,6 +129,18 @@
 						</filter>
 					</li>
 					<li>
+						<id>ModMP_Receiver</id>
+						<name>chamber</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
+						<postion>(0,0.1,0)</postion>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_HvySMG_Chamber</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
 						<id>ModMP_Muzzle</id>
 						<name>muzzle</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Muzzle</UITexPath>
@@ -141,18 +153,6 @@
 								<li>Module_MuzzleBrake</li>
 								<li>Module_MuzzleCompensator</li>
 								<li>Module_FlashHider</li>
-							</thingDefs>
-						</filter>
-					</li>
-					<li>
-						<id>ModMP_Receiver</id>
-						<name>receiver</name>
-						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
-						<postion>(0,0.1,0)</postion>
-						<allowEmpty>true</allowEmpty>
-						<filter>
-							<thingDefs>
-								<li>Module_HvySMG_Chamber</li>
 							</thingDefs>
 						</filter>
 					</li>

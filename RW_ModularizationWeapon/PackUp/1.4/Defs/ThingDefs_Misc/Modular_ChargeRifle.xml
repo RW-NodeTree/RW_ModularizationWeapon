@@ -142,7 +142,7 @@
 					</li>
 					<li>
 						<id>ModCR_Chamber</id>
-						<name>muzzle</name>
+						<name>capacitor</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
 						<allowEmpty>true</allowEmpty>
 						<filter>
@@ -263,46 +263,18 @@
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
 				<notDrawInParent>true</notDrawInParent>
-				<verbPropertiesOffseter>
-					<li>
-						<range>-3</range>
-					</li>
-				</verbPropertiesOffseter>
 				<verbPropertiesMultiplier>
 					<li>
-						<warmupTime>1.2</warmupTime>
 						<ticksBetweenBurstShots>0.75</ticksBetweenBurstShots>
 					</li>
 				</verbPropertiesMultiplier>
 				<statMultiplier>
-					<AccuracyTouch>0.8</AccuracyTouch>
-					<AccuracyShort>0.8</AccuracyShort>
-					<AccuracyMedium>0.8</AccuracyMedium>
-					<AccuracyLong>0.8</AccuracyLong>
-					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
+					<AccuracyTouch>0.9</AccuracyTouch>
+					<AccuracyShort>0.9</AccuracyShort>
+					<AccuracyMedium>0.9</AccuracyMedium>
+					<AccuracyLong>0.9</AccuracyLong>
 				</statMultiplier>
-				<verbPropertiesObjectPatch>
-					<li>
-						<defaultProjectile>Bullet_ChargeRifleEX</defaultProjectile>
-					</li>
-				</verbPropertiesObjectPatch>
 			</li>
 		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="BaseBullet">
-		<defName>Bullet_ChargeRifleEX</defName>
-		<label>charge shot</label>
-		<graphicData>
-			<texPath>Things/Projectile/Charge_Small</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<color>(255,255,0)</color>
-		</graphicData>
-		<projectile>
-			<damageDef>Bullet</damageDef>
-			<damageAmountBase>12</damageAmountBase>
-			<armorPenetrationBase>0.5</armorPenetrationBase>
-			<speed>70</speed>
-		</projectile>
 	</ThingDef>
 </Defs>

@@ -119,4 +119,12 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Module_ModChainSG_Chamber"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]/statMultiplier</xpath>
+		<value>
+			<SwayFactor>1.1333</SwayFactor>
+		</value>
+		<order>Append</order>
+	</Operation>
+
 </Patch>

@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/RW_ModularizationWeapon/RW_ModularizationWeapon.csproj",
+                "${workspaceFolder}/li/li.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/RW_ModularizationWeapon/RW_ModularizationWeapon.csproj",
+                "${workspaceFolder}/li/li.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/RW_ModularizationWeapon/RW_ModularizationWeapon.csproj"
+                "${workspaceFolder}/li/li.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

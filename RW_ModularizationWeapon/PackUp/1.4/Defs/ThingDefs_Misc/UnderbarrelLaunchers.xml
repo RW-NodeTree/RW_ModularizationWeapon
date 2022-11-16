@@ -86,7 +86,6 @@
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
 				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_UBGL</defaultProjectile>
 				<warmupTime>3.5</warmupTime>
 				<range>15.9</range>
 				<forcedMissRadius>1.9</forcedMissRadius>
@@ -117,6 +116,7 @@
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
+								<li>Module_UBGL_Farg</li>
 								<li>Module_UBGL_EMP</li>
 								<li>Module_UBGL_Inc</li>
 								<li>Module_UBGL_Smoke</li>
@@ -145,6 +145,30 @@
 			<arcHeightFactor>0.2</arcHeightFactor>
 			<shadowSize>0.6</shadowSize>
 		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGL_Farg</defName>
+		<label>Farg grenade</label>
+		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
+		<statBases>
+			<WorkToMake>60</WorkToMake>
+			<Mass>0.2</Mass>
+		</statBases>
+		<costList>
+			<Gun_EmpLauncher>1</Gun_EmpLauncher>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_UBGL</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
 	</ThingDef>
 
 	<ThingDef ParentName="GunPartBase">
