@@ -123,7 +123,7 @@ namespace RW_ModularizationWeapon
                                 Command command = gizmo as Command;
                                 if(command != null && type != typeof(CompModularizationWeapon))
                                 {
-                                    command.defaultLabel = part.Label + " : " + command.defaultLabel;
+                                    command.defaultLabel = part.LabelCap + " : " + command.defaultLabel;
                                 }
                                 yield return gizmo;
                             }

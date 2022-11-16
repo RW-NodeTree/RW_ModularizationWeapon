@@ -15,7 +15,7 @@ namespace RW_ModularizationWeapon
         private StatRequest RedirectoryReq(StatWorker statWorker, StatRequest req)
         {
             StatDef statDef = StatWorker_stat(statWorker);
-            if (statDef.category == StatCategoryDefOf.Weapon || statDef.category == StatCategoryDefOf.Weapon_Ranged)
+            if ((statDef.category == StatCategoryDefOf.Weapon || statDef.category == StatCategoryDefOf.Weapon_Ranged) && statWorker.GetType().FullName != "CombatExtended.StatWorker_Magazine")
             {
                 CompEquippable eq = req.Thing.TryGetComp<CompEquippable>();
                 CompChildNodeProccesser proccesser = req.Thing;
