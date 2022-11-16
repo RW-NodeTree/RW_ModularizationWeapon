@@ -22,8 +22,8 @@ namespace RW_ModularizationWeapon
                 if (eq != null && proccesser != null)
                 {
                     StatRequest cache = req;
-                    req = StatRequest.For(proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), eq.PrimaryVerb).Item1);
-                    if(statWorker.IsDisabledFor(req.Thing))
+                    req = StatRequest.For(proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), CompChildNodeProccesser.GetOriginalPrimaryVerbs(eq.VerbTracker)).Item1);
+                    if(statWorker.IsDisabledFor(req.Thing) || !req.HasThing)
                     {
                         return cache;
                     }
@@ -272,12 +272,12 @@ namespace RW_ModularizationWeapon
                 )
                 {
                     StringBuilder stringBuilder = new StringBuilder();
-                    foreach ((string id, Thing thing) in ChildNodes)
+                    foreach (KeyValuePair<string,Thing> data in ChildNodes)
                     {
-                        if (!NotUseTools(id))
+                        if (!NotUseTools(data.Key))
                         {
-                            stringBuilder.AppendLine("  " + thing.Label + ":");
-                            string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(thing), numberSense);
+                            stringBuilder.AppendLine("  " + data.Value.Label + ":");
+                            string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(data.Value), numberSense);
                             exp = Regex.Replace(exp, "\n", "\n  ");
                             stringBuilder.AppendLine(exp);
                         }

@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="BaseHumanMakeableGun">
+		<defName>Gun_ModularChargeRifle</defName>
+		<label>modular charge rifle</label>
+		<description>A charged-shot assault rifle. Pulse-charge technology charges each shot with unstable energy as it leaves the barrel. Released on impact, the charged energy greatly increases the damage done.</description>
+		<techLevel>Spacer</techLevel>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/ChargeRifle/ChargeRifle</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Interact_ChargeRifle</soundInteract>
+		<statBases>
+			<WorkToMake>45000</WorkToMake>
+			<Mass>4.6</Mass>
+			<AccuracyTouch>0.55</AccuracyTouch>
+			<AccuracyShort>0.64</AccuracyShort>
+			<AccuracyMedium>0.55</AccuracyMedium>
+			<AccuracyLong>0.45</AccuracyLong>
+			<RangedWeapon_Cooldown>2.00</RangedWeapon_Cooldown>
+		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>ChargedShot</researchPrerequisite>
+			<skillRequirements>
+				<Crafting>7</Crafting>
+			</skillRequirements>
+			<recipeUsers Inherit="False">
+				<li>FabricationBench</li>
+			</recipeUsers>
+			<displayPriority>200</displayPriority>
+		</recipeMaker>
+		<costList>
+			<Plasteel>50</Plasteel>
+			<ComponentSpacer>2</ComponentSpacer>
+		</costList>
+		<thingSetMakerTags>
+			<li>RewardStandardLowFreq</li>
+			<li>RewardStandardQualitySuper</li>
+		</thingSetMakerTags>
+		<weaponTags>
+			<li>SpacerGun</li>
+		</weaponTags>
+		<tradeTags>
+			<li>WeaponRanged</li>
+		</tradeTags>
+		<weaponClasses>
+			<li>RangedLight</li>
+		</weaponClasses>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_ChargeRifle</defaultProjectile>
+				<warmupTime>1.0</warmupTime>
+				<range>25.9</range>
+				<ticksBetweenBurstShots>12</ticksBetweenBurstShots>
+				<soundCast>Shot_ChargeRifle</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>stock</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+			<li>
+				<label>barrel</label>
+				<capacities>
+					<li>Blunt</li>
+					<li>Poke</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+		</tools>
+
+		<comps>
+			<li Class="RW_NodeTree.CompProperties_ChildNodeProccesser">
+				<TextureSizeFactor>256</TextureSizeFactor>
+				<TextureFilterMode>Point</TextureFilterMode>
+				<ExceedanceFactor>2</ExceedanceFactor>
+				<ExceedanceOffset>1</ExceedanceOffset>
+				<ForceNodeIdControl>true</ForceNodeIdControl>
+			</li>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
+				<attachmentProperties>
+					<li>
+						<id>ModCR_Magazine</id>
+						<name>magazine</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</UITexPath>
+						<postion>(0,0.1,0.02)</postion>
+						<defultThing>Module_CR_Mag</defultThing>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_CR_Mag</li>
+								<li>Module_CR_MagExt</li>
+							</thingDefs>
+						</filter>
+						<randomThingDefWeights>
+							<Module_CR_Mag>1</Module_CR_Mag>
+							<Module_CR_MagExt>1</Module_CR_MagExt>
+						</randomThingDefWeights>
+					</li>
+					<li>
+						<id>ModCR_Sight</id>
+						<name>sight</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Scope</UITexPath>
+						<postion>(0.02,0.1,0)</postion>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_ACOG</li>
+								<li>Module_HoloSight</li>
+								<li>Module_RedDotSight</li>
+								<li>Module_SniperScope</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>ModCR_UnderBarrel</id>
+						<name>under barrel</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
+						<verbPropertiesObjectPatchByChildPart>false</verbPropertiesObjectPatchByChildPart>
+						<allowEmpty>true</allowEmpty>
+						<postion>(0.01,0.1,-0.02)</postion>
+						<filter>
+							<thingDefs>
+								<li>Module_Bipod</li>
+								<li>Module_UBGL</li>
+								<li>Module_MasterKey</li>
+								<li>Module_VerticalGrip</li>
+								<li>Module_AngledGrip</li>
+							</thingDefs>
+						</filter>
+					</li>
+					<li>
+						<id>ModCR_Chamber</id>
+						<name>capacitor</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</UITexPath>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_CR_Capacitor</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingCategoryDef>
+		<defName>ThingCategory_CRGunParts</defName>
+		<label>charge rifle parts</label>
+		<parent>ThingCategory_GunParts</parent>
+	</ThingCategoryDef>
+
+	<ThingDef Name="CRGunPartBase" ParentName="GunPartBase"  Abstract="True">
+		<thingCategories>
+			<li>ThingCategory_ARGunParts</li>
+		</thingCategories>
+	</ThingDef>
+
+	<ThingDef ParentName="CRGunPartBase">
+		<defName>Module_CR_Mag</defName>
+		<label>charge battery</label>
+		<description>Standard 30 round clip magazine designed for various assault rifles.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/ChargeRifle/Item_ChargeRifle_Battery</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
+		<statBases>
+			<WorkToMake>500</WorkToMake>
+			<Mass>0.3</Mass>
+		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>ChargedShot</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>25</Steel>
+			<ComponentIndustrial>1</ComponentIndustrial>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/ChargeRifle/ChargeRifle_Battery</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<burstShotCount>3</burstShotCount>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="CRGunPartBase">
+		<defName>Module_CR_MagExt</defName>
+		<label>extended charge battery</label>
+		<description>100 round drum magazine provides better sustained firepower, at the cost of reload speed. It also affects the center of gravity of the gun, making it unwieldy.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/ChargeRifle/Item_ChargeRifle_LargeBattery</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Mag</uiIconPath>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.7</Mass>
+		</statBases>
+		<recipeMaker>
+			<researchPrerequisite>ChargedShot</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Steel>50</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/ChargeRifle/ChargeRifle_LargeBattery</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<burstShotCount>5</burstShotCount>
+					</li>
+				</verbPropertiesObjectPatch>
+				<verbPropertiesMultiplier>
+					<li>
+						<warmupTime>1.1</warmupTime>
+					</li>
+				</verbPropertiesMultiplier>
+				<statMultiplier>
+					<AccuracyTouch>0.9</AccuracyTouch>
+					<AccuracyShort>0.9</AccuracyShort>
+					<AccuracyMedium>0.8</AccuracyMedium>
+					<AccuracyLong>0.8</AccuracyLong>
+					<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="ARGunPartBase">
+		<defName>Module_CR_Capacitor</defName>
+		<label>charged capacitor</label>
+		<description>TODO</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/ChargeRifle/Item_AdvancedCapacitor</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Receiver</uiIconPath>
+		<recipeMaker>
+			<researchPrerequisite>ChargedShot</researchPrerequisite>
+		</recipeMaker>
+		<costList>
+			<Plasteel>30</Plasteel>
+			<ComponentSpacer>1</ComponentSpacer>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<notDrawInParent>true</notDrawInParent>
+				<verbPropertiesMultiplier>
+					<li>
+						<ticksBetweenBurstShots>0.75</ticksBetweenBurstShots>
+					</li>
+				</verbPropertiesMultiplier>
+				<statMultiplier>
+					<AccuracyTouch>0.9</AccuracyTouch>
+					<AccuracyShort>0.9</AccuracyShort>
+					<AccuracyMedium>0.9</AccuracyMedium>
+					<AccuracyLong>0.9</AccuracyLong>
+				</statMultiplier>
+			</li>
+		</comps>
+	</ThingDef>
+</Defs>

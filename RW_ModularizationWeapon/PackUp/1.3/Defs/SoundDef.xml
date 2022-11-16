@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<SoundDef>
+		<defName>Shot_Silenced</defName>
+		<context>MapOnly</context>
+		<eventNames />
+		<maxSimultaneous>2</maxSimultaneous>
+		<subSounds>
+			<li>
+				<grains>
+					<li Class="AudioGrain_Clip">
+						<clipPath>Weapon/Shot_Muffler</clipPath>
+					</li>
+				</grains>
+				<volumeRange>400~410</volumeRange>
+			</li>
+		</subSounds>
+	</SoundDef>
+</Defs>

@@ -120,6 +120,11 @@ namespace RW_ModularizationWeapon
                         {
                             foreach(Gizmo gizmo in comp.CompGetGizmosExtra())
                             {
+                                Command command = gizmo as Command;
+                                if(command != null && type != typeof(CompModularizationWeapon))
+                                {
+                                    command.defaultLabel = part.Label + " : " + command.defaultLabel;
+                                }
                                 yield return gizmo;
                             }
                         }
@@ -401,21 +406,6 @@ namespace RW_ModularizationWeapon
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
 
-            if (!UsingTargetPart && CombatExtended_CompAmmoUser != null)
-            {
-                foreach (ThingComp comp in parent.AllComps)
-                {
-                    Type type = comp.GetType();
-                    if (type == CombatExtended_CompAmmoUser)
-                    {
-                        Thing thing = ThingMaker.MakeThing(CombatExtended_CompAmmoUser_currentAmmoInt(comp), null);
-                        thing.stackCount = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(comp,null);
-                        CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(comp, new object[] { 0 });
-                        GenThing.TryDropAndSetForbidden(thing, parent.PositionHeld, parent.MapHeld, ThingPlaceMode.Near, out _, false);
-                    }
-                }
-            }
-
             foreach (ThingComp comp in parent.AllComps)
             {
                 if (comp == this) continue;
@@ -649,10 +639,10 @@ namespace RW_ModularizationWeapon
                 {
                     if (snap) stringBuilder.Append("  ");
                     stringBuilder.AppendLine($"  NO.{i+1} :");
-                    foreach ((FieldInfo field, IConvertible value) in list[i])
+                    foreach (KeyValuePair<FieldInfo, IConvertible> data in list[i])
                     {
                         if (snap) stringBuilder.Append("  ");
-                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{value}{postfix}");
+                        stringBuilder.AppendLine($"    {data.Key.Name.Translate()} : {perfix}{data.Value}{postfix}");
                     }
                     result += list[i].Count;
                 }
@@ -671,10 +661,10 @@ namespace RW_ModularizationWeapon
                 {
                     if (snap) stringBuilder.Append("  ");
                     stringBuilder.AppendLine($"  NO.{i + 1} :");
-                    foreach ((FieldInfo field, object value) in list[i])
+                    foreach (KeyValuePair<FieldInfo, object> data in list[i])
                     {
                         if (snap) stringBuilder.Append("  ");
-                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{value}{postfix}");
+                        stringBuilder.AppendLine($"    {data.Key.Name.Translate()} : {perfix}{data.Value}{postfix}");
                     }
                     result += list[i].Count;
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,12 +104,12 @@ namespace RW_ModularizationWeapon
         public void ApplyTargetPart(IntVec3 pos, Map map)
         {
             UsingTargetPart = false;
-            foreach ((string id, LocalTargetInfo item) in targetPartsWithId)
+            foreach (KeyValuePair<string, LocalTargetInfo> data in targetPartsWithId)
             {
-                Thing thing = ChildNodes[id];
-                if (item.HasThing && item.Thing.Spawned) item.Thing.DeSpawn();
-                ChildNodes[id] = item.Thing;
-                if (thing != null && map != null && ChildNodes[id] != thing)
+                Thing thing = ChildNodes[data.Key];
+                if (data.Value.HasThing && data.Value.Thing.Spawned) data.Value.Thing.DeSpawn();
+                ChildNodes[data.Key] = data.Value.Thing;
+                if (thing != null && map != null && ChildNodes[data.Key] != thing)
                 {
                     GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
                 }
@@ -122,6 +123,21 @@ namespace RW_ModularizationWeapon
                 if (comp != null)
                 {
                     comp.ApplyTargetPart(pos, map);
+                }
+            }
+
+            if (CombatExtended_CompAmmoUser != null)
+            {
+                foreach (ThingComp comp in parent.AllComps)
+                {
+                    Type type = comp.GetType();
+                    if (type == CombatExtended_CompAmmoUser)
+                    {
+                        Thing thing = ThingMaker.MakeThing(CombatExtended_CompAmmoUser_currentAmmoInt(comp), null);
+                        thing.stackCount = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(comp, null);
+                        CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(comp, new object[] { 0 });
+                        GenThing.TryDropAndSetForbidden(thing, pos, map, ThingPlaceMode.Near, out _, false);
+                    }
                 }
             }
         }

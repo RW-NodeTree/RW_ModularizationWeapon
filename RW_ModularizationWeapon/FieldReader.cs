@@ -74,9 +74,9 @@ namespace RW_ModularizationWeapon
 
         public void CopyTo(KeyValuePair<FieldInfo, TV>[] array, int arrayIndex)
         {
-            foreach((FieldInfo field, TV value) in this)
+            foreach(KeyValuePair<FieldInfo, TV> data in this)
             {
-                array[arrayIndex] = new KeyValuePair<FieldInfo, TV>(field, value);
+                array[arrayIndex] = data;
                 arrayIndex++;
             }
         }
@@ -256,9 +256,9 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
-            foreach ((FieldInfo field, double value) in datas)
+            foreach (KeyValuePair<FieldInfo, double> data in datas)
             {
-                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
+                result += $" {data.Key.FieldType} {data.Key.DeclaringType}.{data.Key.Name} : {data.Value}\n";
             }
             return result;
         }
@@ -501,9 +501,9 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
-            foreach ((FieldInfo field, bool value) in datas)
+            foreach (KeyValuePair<FieldInfo, bool> data in datas)
             {
-                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {value}\n";
+                result += $" {data.Key.FieldType} {data.Key.DeclaringType}.{data.Key.Name} : {data.Value}\n";
             }
             return result;
         }

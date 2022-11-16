@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGL</defName>
+		<label>UBGL</label>
+		<description>Underbarrel grenade launcher that can launch a variety of payloads.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_GrenadeLauncher</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.5</Mass>
+		</statBases>
+		<costList>
+			<Steel>75</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+			<Weapon_GrenadeFrag>1</Weapon_GrenadeFrag>
+		</costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_UBGL</defaultProjectile>
+				<warmupTime>3.5</warmupTime>
+				<range>23.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Shot_IncendiaryLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/GrenadeLauncher</PartTexPath>
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
+				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
+				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
+				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
+				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
+				<verbPropertiesObjectPatchByOtherPart>false</verbPropertiesObjectPatchByOtherPart>
+				<attachmentProperties>
+					<li>
+						<id>Module_UBGL</id>
+						<name>Payload</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
+						<scale>(0,0,0)</scale>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_UBGL_EMP</li>
+								<li>Module_UBGL_Inc</li>
+								<li>Module_UBGL_Smoke</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGLLight</defName>
+		<label>light UBGL</label>
+		<description>Underbarrel grenade launcher that can launch a variety of payloads.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/ChainShotgun/Item_LightGrenadeLauncher</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>0.5</Mass>
+		</statBases>
+		<costList>
+			<Steel>75</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+			<Weapon_GrenadeFrag>1</Weapon_GrenadeFrag>
+		</costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<warmupTime>3.5</warmupTime>
+				<range>15.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<soundCast>Shot_IncendiaryLauncher</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<muzzleFlashScale>14</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/ChainShotgun/LightGrenadeLauncher</PartTexPath>
+				<setRandomPartWhenCreate>true</setRandomPartWhenCreate>
+				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
+				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
+				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
+				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
+				<verbPropertiesObjectPatchByOtherPart>false</verbPropertiesObjectPatchByOtherPart>
+				<attachmentProperties>
+					<li>
+						<id>Module_UBGL</id>
+						<name>Payload</name>
+						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</UITexPath>
+						<scale>(0,0,0)</scale>
+						<allowEmpty>true</allowEmpty>
+						<filter>
+							<thingDefs>
+								<li>Module_UBGL_Farg</li>
+								<li>Module_UBGL_EMP</li>
+								<li>Module_UBGL_Inc</li>
+								<li>Module_UBGL_Smoke</li>
+							</thingDefs>
+						</filter>
+					</li>
+				</attachmentProperties>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Bullet_UBGL</defName>
+		<label>explosive bolt</label>
+		<graphicData>
+			<texPath>Things/Projectile/LauncherShot</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<color>(254,189,58)</color>
+		</graphicData>
+		<thingClass>Projectile_Explosive</thingClass>
+		<projectile>
+			<speed>40</speed>
+			<explosionRadius>1.9</explosionRadius >
+			<damageDef>Bomb</damageDef>
+			<arcHeightFactor>0.2</arcHeightFactor>
+			<shadowSize>0.6</shadowSize>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGL_Farg</defName>
+		<label>Farg grenade</label>
+		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
+		<statBases>
+			<WorkToMake>60</WorkToMake>
+			<Mass>0.2</Mass>
+		</statBases>
+		<costList>
+			<Gun_EmpLauncher>1</Gun_EmpLauncher>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_UBGL</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGL_EMP</defName>
+		<label>EMP grenade</label>
+		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
+		<statBases>
+			<WorkToMake>60</WorkToMake>
+			<Mass>0.2</Mass>
+		</statBases>
+		<costList>
+			<Gun_EmpLauncher>1</Gun_EmpLauncher>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_EMPLauncher</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGL_Inc</defName>
+		<label>incendiary grenade</label>
+		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
+		<statBases>
+			<WorkToMake>60</WorkToMake>
+			<Mass>0.1</Mass>
+		</statBases>
+		<costList>
+			<Gun_IncendiaryLauncher>1</Gun_IncendiaryLauncher>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_IncendiaryLauncher</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_UBGL_Smoke</defName>
+		<label>smoke grenade</label>
+		<description>Standard clip magazine</description>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Ammo</uiIconPath>
+		<statBases>
+			<WorkToMake>60</WorkToMake>
+			<Mass>0.1</Mass>
+		</statBases>
+		<costList>
+			<Gun_SmokeLauncher>1</Gun_SmokeLauncher>
+		</costList>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<PartTexPath>Things/WeaponPart/Gun/none</PartTexPath>
+				<verbPropertiesObjectPatch>
+					<li>
+						<defaultProjectile>Bullet_SmokeLauncher</defaultProjectile>
+					</li>
+				</verbPropertiesObjectPatch>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="GunPartBase">
+		<defName>Module_MasterKey</defName>
+		<label>Masterkey UBSG</label>
+		<description>Underbarrel shotgun designed for door breaching or human breaching.</description>
+		<graphicData>
+			<texPath>Things/WeaponPart/Gun/AssaultRifle/Item_Masterkey</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<uiIconPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</uiIconPath>
+		<statBases>
+			<Mass>0.5</Mass>
+		</statBases>
+		<costList>
+			<Steel>60</Steel>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>Bullet_Shotgun</defaultProjectile>
+				<warmupTime>0.9</warmupTime>
+				<range>9.9</range>
+				<soundCast>Shot_Shotgun</soundCast>
+				<soundCastTail>GunTail_Heavy</soundCastTail>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
+		<comps>
+			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+				<verbPropertiesOtherPartOffseterAffectHorizon>0</verbPropertiesOtherPartOffseterAffectHorizon>
+				<verbPropertiesOtherPartMultiplierAffectHorizon>0</verbPropertiesOtherPartMultiplierAffectHorizon>
+				<statOtherPartOffseterAffectHorizon>0</statOtherPartOffseterAffectHorizon>
+				<statOtherPartMultiplierAffectHorizon>0</statOtherPartMultiplierAffectHorizon>
+				<PartTexPath>Things/WeaponPart/Gun/AssaultRifle/Masterkey</PartTexPath>
+			</li>
+		</comps>
+	</ThingDef>
+</Defs>

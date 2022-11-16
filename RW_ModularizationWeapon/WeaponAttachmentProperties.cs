@@ -52,10 +52,10 @@ namespace RW_ModularizationWeapon
             {
                 list = list ?? new Dictionary<string, FieldReaderDgitList<T>>();
                 list.RemoveAll(f => f.Key == null || f.Value == null);
-                foreach((string id, FieldReaderDgitList<T> innerList) in list)
+                foreach(KeyValuePair<string, FieldReaderDgitList<T>> data in list)
                 {
-                    innerList.RemoveAll(f => f == null);
-                    if (!innerList.HasDefaultValue) innerList.DefaultValue = defaultValue;
+                    data.Value.RemoveAll(f => f == null);
+                    if (!data.Value.HasDefaultValue) data.Value.DefaultValue = defaultValue;
                 }
             }
 

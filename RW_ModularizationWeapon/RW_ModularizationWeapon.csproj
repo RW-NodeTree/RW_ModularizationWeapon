@@ -43,8 +43,9 @@
     <Reference Include="HarmonyMod">
       <HintPath>D:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\HarmonyMod.dll</HintPath>
     </Reference>
-    <Reference Include="RW_NodeTree">
-      <HintPath>..\..\RW_NodeTree\RW_NodeTree\bin\Debug\RW_NodeTree.dll</HintPath>
+    <Reference Include="RW_NodeTree, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\SteamLibrary\steamapps\common\RimWorld\Mods\RW_NodeTree\1.4\Assemblies\RW_NodeTree.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -274,10 +275,11 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rmdir "%25RW_HOME%25\Mods\$(ProjectName)" /s/q
-mkdir "%25RW_HOME%25\Mods\$(ProjectName)"
-xcopy "$(ProjectDir)\PackUp" "%25RW_HOME%25\Mods\$(ProjectName)" /e/s/q
-mkdir "%25RW_HOME%25\Mods\$(ProjectName)\1.4\Assemblies"
-copy "$(TargetDir)$(TargetName).*" "%25RW_HOME%25\Mods\$(ProjectName)\1.4\Assemblies"</PostBuildEvent>
+    <PostBuildEvent>set ver=1.4
+rmdir "%25RW_HOME%25\Mods\$(ProjectName)\%25ver%25" /s/q
+mkdir "%25RW_HOME%25\Mods\$(ProjectName)\%25ver%25"
+xcopy "$(ProjectDir)\PackUp" "%25RW_HOME%25\Mods\$(ProjectName)" /e/s/q/y
+mkdir "%25RW_HOME%25\Mods\$(ProjectName)\%25ver%25\Assemblies"
+copy "$(TargetDir)$(TargetName).*" "%25RW_HOME%25\Mods\$(ProjectName)\%25ver%25\Assemblies"</PostBuildEvent>
   </PropertyGroup>
 </Project>
