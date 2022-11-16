@@ -27,6 +27,6 @@
 
 	<Module_HvySMG_Stock.label>战术枪托</Module_HvySMG_Stock.label>
 	<Module_HvySMG_Stock.description>战术枪托可以让使用者在使用时更加舒适,可以提升更多射击精度和瞄准速度</Module_HvySMG_Stock.description>
-	<Module_HvySMG_Stock.tools.0.label>枪托</Module_HvySMG_Stock.tools.0.label>
+	<!-- <Module_HvySMG_Stock.tools.0.label>枪托</Module_HvySMG_Stock.tools.0.label> -->
 
 </LanguageData>
