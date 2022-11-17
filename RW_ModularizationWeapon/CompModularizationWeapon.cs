@@ -66,34 +66,38 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref showTargetPart, "showTargetPart");
-            Scribe_Values.Look(ref usingTargetPart, "usingTargetPart");
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
             if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
-                foreach(Thing thing in ChildNodes.Values)
+                NodeContainer container = ChildNodes;
+                foreach(Thing thing in container.Values)
                 {
                     CompModularizationWeapon comp = thing;
                     if(comp != null)
                     {
-                        comp.UsingTargetPart = comp.ShowTargetPart;
+                        comp.targetParentPart = container;
                     }
                 }
-                foreach (ThingComp comp in parent.AllComps)
+
+                for (int i = 0; i < parent.AllComps.Count; i++)
                 {
-                    if (comp == this) continue;
-                    CompProperties properties = null;
-                    foreach (CompProperties def in parent.def.comps)
+                    ThingComp comp = parent.AllComps[i];
+                    Type type = comp.GetType();
+                    if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+                    CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+                    if (properties != null && Props.compPropertiesAffectCompType.Contains(type))
                     {
-                        if (def.compClass == comp.GetType())
+                        try
                         {
-                            properties = def;
-                            break;
+                            if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
+                            comp.parent = parent;
+                            comp.Initialize(CompPropertiesAfterAffect(properties));
+                            parent.AllComps[i] = comp;
                         }
-                    }
-                    if (properties != null)
-                    {
-                        comp.props = CompPropertiesAfterAffect(properties);
+                        catch (Exception ex)
+                        {
+                            Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
+                        }
                     }
                 }
                 NodeProccesser.UpdateNode();
@@ -407,7 +411,6 @@ namespace RW_ModularizationWeapon
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
 
-            CompChildNodeProccesser nodeProccesser = NodeProccesser;
             for (int i = 0; i < parent.AllComps.Count; i++)
             {
                 ThingComp comp = parent.AllComps[i];
@@ -444,6 +447,16 @@ namespace RW_ModularizationWeapon
         protected override void Added(NodeContainer container, string id)
         {
             //Log.Message($"container add {container.Comp}");
+            if (UsingTargetPart)
+            {
+                parent.holdingOwner?.Remove(parent);
+                parent.holdingOwner = container;
+            }
+            else
+            {
+                targetParentPart?.Remove(parent);
+                targetParentPart = container;
+            }
             UsingTargetPart = ShowTargetPart;
             NodeProccesser.NeedUpdate = true;
             NodeProccesser.UpdateNode();
@@ -454,6 +467,7 @@ namespace RW_ModularizationWeapon
         {
             //Log.Message($"container remove {container.Comp}");
             UsingTargetPart = ShowTargetPart;
+            targetParentPart = null;
             NodeProccesser.NeedUpdate = true;
             NodeProccesser.UpdateNode();
         }
@@ -476,6 +490,7 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
+        private ThingOwner targetParentPart = null;
         private bool showTargetPart = false;
         private bool usingTargetPart = false;
 

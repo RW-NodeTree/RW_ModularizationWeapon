@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using RW_NodeTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace RW_ModularizationWeapon
                 while (!result && current != null)
                 {
                     result = current.showTargetPart;
-                    current = current.ParentPart;
+                    if(UsingTargetPart) current = ParentPart;
+                    else current = (CompModularizationWeapon)(current.targetParentPart?.Owner as CompChildNodeProccesser)?.parent;
                 }
                 return result;
             }
@@ -42,6 +44,9 @@ namespace RW_ModularizationWeapon
                 if (usingTargetPart != value)
                 {
                     usingTargetPart = value;
+                    ThingOwner cacheOwner = parent.holdingOwner;
+                    parent.holdingOwner = targetParentPart;
+                    targetParentPart = cacheOwner;
                     foreach (string id in NodeProccesser.RegiestedNodeId)
                     {
                         LocalTargetInfo cache;
