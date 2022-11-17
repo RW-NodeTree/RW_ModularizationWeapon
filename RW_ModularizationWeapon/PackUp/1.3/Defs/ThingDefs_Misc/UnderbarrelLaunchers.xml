@@ -13,6 +13,7 @@
 			<WorkToMake>3000</WorkToMake>
 			<Mass>0.5</Mass>
 		</statBases>
+		<soundInteract>Interact_Autopistol</soundInteract>
 		<costList>
 			<Steel>75</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
@@ -77,6 +78,7 @@
 			<WorkToMake>3000</WorkToMake>
 			<Mass>0.5</Mass>
 		</statBases>
+		<soundInteract>Interact_Autopistol</soundInteract>
 		<costList>
 			<Steel>75</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
@@ -255,6 +257,7 @@
 		<statBases>
 			<Mass>0.5</Mass>
 		</statBases>
+		<soundInteract>Interact_Shotgun</soundInteract>
 		<costList>
 			<Steel>60</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>

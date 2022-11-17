@@ -46,6 +46,21 @@
 		<researchPrerequisite>ChargedShot</researchPrerequisite>
 	</Operation>
 
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Gun_ModularChargeRifle"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
+		<value>
+			<compPropertiesAffectCompType>
+				<li>CombatExtended.CompAmmoUser</li>
+				<li>CombatExtended.CompFireModes</li>
+			</compPropertiesAffectCompType>
+			<compPropertiesCreateInstanceCompType>
+				<li>CombatExtended.CompFireModes</li>
+			</compPropertiesCreateInstanceCompType>
+		</value>
+		<order>Append</order>
+	</Operation>
+
 	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/ThingDef[defName="Module_CR_Mag"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
 		<value>

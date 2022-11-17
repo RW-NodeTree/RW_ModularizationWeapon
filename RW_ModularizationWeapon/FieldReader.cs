@@ -18,7 +18,7 @@ using Verse;
 namespace RW_ModularizationWeapon
 {
 
-    public abstract class FieldReader<T, TV> : IDictionary<FieldInfo, TV>
+    public abstract class FieldReader<T, TV> : IDictionary<RuntimeFieldHandle, TV>
     {
         private Type type = typeof(T);
 
@@ -30,8 +30,8 @@ namespace RW_ModularizationWeapon
                 if (value != null && typeof(T).IsAssignableFrom(value))
                 {
                     type = value;
-                    List<FieldInfo> forRemove = (from x in Keys where !type.IsAssignableFrom(x.DeclaringType) select x).ToList();
-                    foreach (FieldInfo f in forRemove)
+                    List<RuntimeFieldHandle> forRemove = (from x in Keys where !type.IsAssignableFrom(FieldInfo.GetFieldFromHandle(x).DeclaringType) select x).ToList();
+                    foreach (RuntimeFieldHandle f in forRemove)
                     {
                         Remove(f);
                     }
@@ -44,9 +44,9 @@ namespace RW_ModularizationWeapon
 
         public abstract bool HasDefaultValue { get; }
 
-        public abstract TV this[FieldInfo key] { get; set; }
+        public abstract TV this[RuntimeFieldHandle key] { get; set; }
 
-        public abstract ICollection<FieldInfo> Keys { get; }
+        public abstract ICollection<RuntimeFieldHandle> Keys { get; }
 
         public abstract ICollection<TV> Values { get; }
 
@@ -54,39 +54,39 @@ namespace RW_ModularizationWeapon
 
         public bool IsReadOnly => true;
 
-        public abstract void Add(FieldInfo key, TV value);
+        public abstract void Add(RuntimeFieldHandle key, TV value);
 
         public abstract void Clear();
 
-        public abstract bool ContainsKey(FieldInfo key);
+        public abstract bool ContainsKey(RuntimeFieldHandle key);
 
-        public abstract bool Remove(FieldInfo key);
+        public abstract bool Remove(RuntimeFieldHandle key);
 
-        public abstract bool TryGetValue(FieldInfo key, out TV value);
+        public abstract bool TryGetValue(RuntimeFieldHandle key, out TV value);
 
         public abstract FieldReader<T, TV> Clone();
 
         public abstract void UsedTypeUpdate();
 
-        public void Add(KeyValuePair<FieldInfo, TV> item) => Add(item.Key, item.Value);
+        public void Add(KeyValuePair<RuntimeFieldHandle, TV> item) => Add(item.Key, item.Value);
 
-        public bool Contains(KeyValuePair<FieldInfo, TV> item) => TryGetValue(item.Key, out TV value) && (object)value == (object)item.Value;
+        public bool Contains(KeyValuePair<RuntimeFieldHandle, TV> item) => TryGetValue(item.Key, out TV value) && (object)value == (object)item.Value;
 
-        public void CopyTo(KeyValuePair<FieldInfo, TV>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<RuntimeFieldHandle, TV>[] array, int arrayIndex)
         {
-            foreach(KeyValuePair<FieldInfo, TV> data in this)
+            foreach(KeyValuePair<RuntimeFieldHandle, TV> data in this)
             {
                 array[arrayIndex] = data;
                 arrayIndex++;
             }
         }
 
-        public IEnumerator<KeyValuePair<FieldInfo, TV>> GetEnumerator()
+        public IEnumerator<KeyValuePair<RuntimeFieldHandle, TV>> GetEnumerator()
         {
-            foreach(FieldInfo key in Keys) yield return new KeyValuePair<FieldInfo, TV>(key, this[key]);
+            foreach(RuntimeFieldHandle key in Keys) yield return new KeyValuePair<RuntimeFieldHandle, TV>(key, this[key]);
         }
 
-        public bool Remove(KeyValuePair<FieldInfo, TV> item)
+        public bool Remove(KeyValuePair<RuntimeFieldHandle, TV> item)
         {
             if(Contains(item)) return Remove(item.Key);
             return false;
@@ -99,10 +99,10 @@ namespace RW_ModularizationWeapon
             FieldReader<T, TV> result = this.Clone();
             if(calc != null && value != null)
             {
-                List<FieldInfo> fieldInfos = new List<FieldInfo>(result.Keys);
-                foreach (FieldInfo field in fieldInfos)
+                List<RuntimeFieldHandle> fieldInfos = new List<RuntimeFieldHandle>(result.Keys);
+                foreach (RuntimeFieldHandle field in fieldInfos)
                 {
-                    result[field] = calc(result[field], value, field);
+                    result[field] = calc(result[field], value, FieldInfo.GetFieldFromHandle(field));
                 }
             }
             return result;
@@ -117,9 +117,9 @@ namespace RW_ModularizationWeapon
                 {
                     foreach (FieldInfo field in result.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                     {
-                        if (field.DeclaringType.IsAssignableFrom(UsedType) && typeof(TV).IsAssignableFrom(field.FieldType))
+                        if (UsedType.IsAssignableFrom(field.DeclaringType) && typeof(TV).IsAssignableFrom(field.FieldType))
                         {
-                            if (!TryGetValue(field, out TV value)) value = DefaultValue;
+                            if (!TryGetValue(field.FieldHandle, out TV value)) value = DefaultValue;
                             field.SetValue(result, calc((TV)field.GetValue(result), value, field));
                         }
                     }
@@ -142,21 +142,21 @@ namespace RW_ModularizationWeapon
             if (a.UsedType.IsAssignableFrom(b.UsedType)) result.UsedType = b.UsedType;
             else if (b.UsedType.IsAssignableFrom(a.UsedType)) result.UsedType = a.UsedType;
 
-            foreach (FieldInfo field in a.Keys)
+            foreach (RuntimeFieldHandle field in a.Keys)
             {
-                if (result.UsedType.IsAssignableFrom(field.DeclaringType))
+                if (result.UsedType.IsAssignableFrom(FieldInfo.GetFieldFromHandle(field).DeclaringType))
                 {
-                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], field));
-                    else result.Add(field, calc(a[field], b.DefaultValue, field));
+                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], FieldInfo.GetFieldFromHandle(field)));
+                    else result.Add(field, calc(a[field], b.DefaultValue, FieldInfo.GetFieldFromHandle(field)));
                 }
             }
 
-            foreach (FieldInfo field in b.Keys)
+            foreach (RuntimeFieldHandle field in b.Keys)
             {
-                if (result.UsedType.IsAssignableFrom(field.DeclaringType) && !result.ContainsKey(field))
+                if (result.UsedType.IsAssignableFrom(FieldInfo.GetFieldFromHandle(field).DeclaringType) && !result.ContainsKey(field))
                 {
-                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], field));
-                    else result.Add(field, calc(a.DefaultValue, b[field], field));
+                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], FieldInfo.GetFieldFromHandle(field)));
+                    else result.Add(field, calc(a.DefaultValue, b[field], FieldInfo.GetFieldFromHandle(field)));
                 }
             }
             return result;
@@ -183,7 +183,7 @@ namespace RW_ModularizationWeapon
     public class FieldReaderDgit<T> : FieldReader<T, IConvertible>
     {
         private double? defaultValue;
-        private readonly Dictionary<FieldInfo, double> datas = new Dictionary<FieldInfo, double>();
+        private readonly Dictionary<RuntimeFieldHandle, double> datas = new Dictionary<RuntimeFieldHandle, double>();
 
         public FieldReaderDgit() { }
 
@@ -209,11 +209,11 @@ namespace RW_ModularizationWeapon
 
         public override int Count => datas.Count;
 
-        public override ICollection<FieldInfo> Keys => datas.Keys;
+        public override ICollection<RuntimeFieldHandle> Keys => datas.Keys;
 
         public override ICollection<IConvertible> Values => (from x in datas.Values select (IConvertible)x).ToArray();
 
-        public override IConvertible this[FieldInfo key] 
+        public override IConvertible this[RuntimeFieldHandle key] 
         {
             get => datas.TryGetValue(key);
             set => Add(key, value);
@@ -242,7 +242,7 @@ namespace RW_ModularizationWeapon
                 try
                 {
                     FieldInfo field = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    this[field] = ParseHelper.FromString<double>(node.InnerText);
+                    this[field.FieldHandle] = ParseHelper.FromString<double>(node.InnerText);
                 }
                 catch(Exception ex)
                 {
@@ -256,33 +256,34 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
-            foreach (KeyValuePair<FieldInfo, double> data in datas)
+            foreach (KeyValuePair<RuntimeFieldHandle, double> data in datas)
             {
-                result += $" {data.Key.FieldType} {data.Key.DeclaringType}.{data.Key.Name} : {data.Value}\n";
+                FieldInfo field = FieldInfo.GetFieldFromHandle(data.Key);
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {data.Value}\n";
             }
             return result;
         }
 
-        public override bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
+        public override bool ContainsKey(RuntimeFieldHandle key) => datas.ContainsKey(key);
 
-        public override void Add(FieldInfo key, IConvertible value)
+        public override void Add(RuntimeFieldHandle key, IConvertible value)
         {
-            if (key != null && key.DeclaringType.IsAssignableFrom(UsedType))
+            FieldInfo field = FieldInfo.GetFieldFromHandle(key);
+            if (field != null && field.DeclaringType.IsAssignableFrom(UsedType))
             {
-                Type vt = key.FieldType;
+                Type vt = field.FieldType;
                 if (vt == typeof(int) || vt == typeof(float) ||
                    vt == typeof(long) || vt == typeof(sbyte) ||
                    vt == typeof(double))
                     datas.SetOrAdd(key, value.ToDouble(null));
-                else throw new ArgumentException($"not support value(name={key.Name},type={vt})");
+                else throw new ArgumentException($"not support value(name={field.Name},type={vt})");
             }
         }
 
-        public override bool Remove(FieldInfo key) => datas.Remove(key);
+        public override bool Remove(RuntimeFieldHandle key) => datas.Remove(key);
 
-        public override bool TryGetValue(FieldInfo key, out IConvertible value)
+        public override bool TryGetValue(RuntimeFieldHandle key, out IConvertible value)
         {
-            value = default(double);
             bool result = datas.TryGetValue(key, out double outer);
             value = outer;
             return result;
@@ -429,7 +430,7 @@ namespace RW_ModularizationWeapon
     public class FieldReaderBool<T> : FieldReader<T, bool>
     {
         private bool? defaultValue;
-        private readonly Dictionary<FieldInfo, bool> datas = new Dictionary<FieldInfo, bool>();
+        private readonly Dictionary<RuntimeFieldHandle, bool> datas = new Dictionary<RuntimeFieldHandle, bool>();
 
         public FieldReaderBool() { }
 
@@ -453,11 +454,11 @@ namespace RW_ModularizationWeapon
 
         public override int Count => datas.Count;
 
-        public override ICollection<FieldInfo> Keys => datas.Keys;
+        public override ICollection<RuntimeFieldHandle> Keys => datas.Keys;
 
         public override ICollection<bool> Values => datas.Values;
 
-        public override bool this[FieldInfo key]
+        public override bool this[RuntimeFieldHandle key]
         {
             get => datas[key];
             set => Add(key, value);
@@ -487,7 +488,7 @@ namespace RW_ModularizationWeapon
                 try
                 {
                     FieldInfo field = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    this[field] = ParseHelper.FromString<bool>(node.InnerText);
+                    this[field.FieldHandle] = ParseHelper.FromString<bool>(node.InnerText);
                 }
                 catch(Exception ex)
                 {
@@ -501,29 +502,31 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
-            foreach (KeyValuePair<FieldInfo, bool> data in datas)
+            foreach (KeyValuePair<RuntimeFieldHandle, bool> data in datas)
             {
-                result += $" {data.Key.FieldType} {data.Key.DeclaringType}.{data.Key.Name} : {data.Value}\n";
+                FieldInfo field = FieldInfo.GetFieldFromHandle(data.Key);
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {data.Value}\n";
             }
             return result;
         }
 
-        public override bool ContainsKey(FieldInfo key) => datas.ContainsKey(key);
+        public override bool ContainsKey(RuntimeFieldHandle key) => datas.ContainsKey(key);
 
-        public override void Add(FieldInfo key, bool value)
+        public override void Add(RuntimeFieldHandle key, bool value)
         {
-            if (key != null)
+            FieldInfo field = FieldInfo.GetFieldFromHandle(key);
+            if (field != null && field.DeclaringType.IsAssignableFrom(UsedType))
             {
-                Type vt = key.FieldType;
+                Type vt = field.FieldType;
                 if (vt == typeof(bool))
                     datas.SetOrAdd(key, value);
-                else throw new ArgumentException($"not support value(name={key.Name},type={vt})");
+                else throw new ArgumentException($"not support value(name={field.Name},type={vt})");
             }
         }
 
-        public override bool Remove(FieldInfo key) => datas.Remove(key);
+        public override bool Remove(RuntimeFieldHandle key) => datas.Remove(key);
 
-        public override bool TryGetValue(FieldInfo key, out bool value) => datas.TryGetValue(key, out value);
+        public override bool TryGetValue(RuntimeFieldHandle key, out bool value) => datas.TryGetValue(key, out value);
 
         public override void Clear() => datas.Clear();
 
@@ -570,7 +573,7 @@ namespace RW_ModularizationWeapon
     {
         private bool loading = false;
         private T datas = (T)Activator.CreateInstance(typeof(T));
-        private readonly HashSet<FieldInfo> fields = new HashSet<FieldInfo>();
+        private readonly HashSet<RuntimeFieldHandle> fields = new HashSet<RuntimeFieldHandle>();
 
         public FieldReaderInst() { }
 
@@ -585,17 +588,17 @@ namespace RW_ModularizationWeapon
 
         public override int Count => fields.Count;
 
-        public override ICollection<FieldInfo> Keys => new HashSet<FieldInfo>(fields);
+        public override ICollection<RuntimeFieldHandle> Keys => new HashSet<RuntimeFieldHandle>(fields);
 
-        public override ICollection<object> Values => (from x in fields select x.GetValue(datas)).ToList();
+        public override ICollection<object> Values => (from x in fields select FieldInfo.GetFieldFromHandle(x).GetValue(datas)).ToList();
 
         public override object DefaultValue { get => null; set => throw new NotImplementedException(); }
 
         public override bool HasDefaultValue => false;
 
-        public override object this[FieldInfo key]
+        public override object this[RuntimeFieldHandle key]
         {
-            get => (key != null && fields.Contains(key)) ? key.GetValue(datas) : null;
+            get => (key != null && fields.Contains(key)) ? FieldInfo.GetFieldFromHandle(key).GetValue(datas) : null;
             set => Add(key, value);
         }
 
@@ -618,7 +621,7 @@ namespace RW_ModularizationWeapon
                     FieldInfo fieldInfo = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                     if (fieldInfo != null)
                     {
-                        fields.Add(fieldInfo);
+                        fields.Add(fieldInfo.FieldHandle);
                     }
                 }
             }
@@ -634,35 +637,38 @@ namespace RW_ModularizationWeapon
         public override string ToString()
         {
             string result = $"{GetType()}\nHash={base.GetHashCode()}\ndata : \n";
-            foreach (FieldInfo field in fields)
+            foreach (RuntimeFieldHandle key in fields)
             {
+                FieldInfo field = FieldInfo.GetFieldFromHandle(key);
                 result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {field.GetValue(datas)}\n";
             }
             return result;
         }
 
-        public override bool ContainsKey(FieldInfo key) => fields.Contains(key);
+        public override bool ContainsKey(RuntimeFieldHandle key) => fields.Contains(key);
 
-        public override void Add(FieldInfo key, object value)
+        public override void Add(RuntimeFieldHandle key, object value)
         {
-            if (key != null)
+            FieldInfo field = FieldInfo.GetFieldFromHandle(key);
+            if (field != null && field.DeclaringType.IsAssignableFrom(UsedType))
             {
-                if (value == null || (key.FieldType.IsAssignableFrom(value.GetType()) && key.DeclaringType.IsAssignableFrom(datas.GetType())))
+                if (value == null || (field.FieldType.IsAssignableFrom(value.GetType()) && field.DeclaringType.IsAssignableFrom(datas.GetType())))
                 {
-                    key.SetValue(datas, value);
+                    field.SetValue(datas, value);
                     fields.Add(key);
                 }
             }
         }
 
-        public override bool Remove(FieldInfo key) => fields.Remove(key);
+        public override bool Remove(RuntimeFieldHandle key) => fields.Remove(key);
 
-        public override bool TryGetValue(FieldInfo key, out object value)
+        public override bool TryGetValue(RuntimeFieldHandle key, out object value)
         {
             value = default(object);
-            if (key != null && fields.Contains(key))
+            FieldInfo field = FieldInfo.GetFieldFromHandle(key);
+            if (field != null && fields.Contains(key))
             {
-                value = key.GetValue(datas);
+                value = field.GetValue(datas);
                 return true;
             }
             return false;
@@ -678,7 +684,11 @@ namespace RW_ModularizationWeapon
             {
                 T old = datas;
                 datas = (T)Activator.CreateInstance(UsedType);
-                foreach (FieldInfo field in fields) field.SetValue(datas, field.GetValue(old));
+                foreach (RuntimeFieldHandle key in fields)
+                {
+                    FieldInfo field = FieldInfo.GetFieldFromHandle(key);
+                    field.SetValue(datas, field.GetValue(old));
+                }
             }
         }
 
@@ -686,7 +696,7 @@ namespace RW_ModularizationWeapon
         {
             if (b != null)
             {
-                return b.ClacValue((va, vb, field) => (va != null && b.ContainsKey(field)) ? vb : va, a);
+                return b.ClacValue((va, vb, field) => (va != null && b.ContainsKey(field.FieldHandle)) ? vb : va, a);
             }
             return a;
         }
@@ -701,7 +711,7 @@ namespace RW_ModularizationWeapon
         }
 
         public static FieldReaderInst<T> operator &(FieldReaderInst<T> a, FieldReaderInst<T> b)
-            => ClacValue((va, vb, field) => (va != null && b.ContainsKey(field)) ? vb : va, a, b);
+            => ClacValue((va, vb, field) => (va != null && b.ContainsKey(field.FieldHandle)) ? vb : va, a, b);
 
         public static FieldReaderInst<T> operator |(FieldReaderInst<T> a, FieldReaderInst<T> b)
             => ClacValue((va, vb, field) => va ?? vb, a, b);

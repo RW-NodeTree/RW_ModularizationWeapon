@@ -41,6 +41,21 @@
 	</Operation>
 
 
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Gun_ModularChainShotgun"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
+		<value>
+			<compPropertiesAffectCompType>
+				<li>CombatExtended.CompAmmoUser</li>
+				<li>CombatExtended.CompFireModes</li>
+			</compPropertiesAffectCompType>
+			<compPropertiesCreateInstanceCompType>
+				<li>CombatExtended.CompFireModes</li>
+			</compPropertiesCreateInstanceCompType>
+		</value>
+		<order>Append</order>
+	</Operation>
+
+
 	<Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
 		<defName>Gun_ModularPumpShotgun</defName>
 		<statBases>

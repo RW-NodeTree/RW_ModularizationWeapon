@@ -49,6 +49,7 @@ namespace RW_ModularizationWeapon
             if(CombatExtended_CompAmmoUser != null)
             {
                 CombatExtended_CompAmmoUser_currentAmmoInt = AccessTools.FieldRefAccess<ThingDef>(CombatExtended_CompAmmoUser, "currentAmmoInt");
+                //CombatExtended_CompFireModes_availableAimModes = AccessTools.FieldRefAccess<IList>(CombatExtended_CompFireModes, "availableAimModes");
                 CombatExtended_CompAmmoUser_CurMagCount_get = CombatExtended_CompAmmoUser.GetMethod("get_CurMagCount", BindingFlags.Instance | BindingFlags.Public);
                 CombatExtended_CompAmmoUser_CurMagCount_set = CombatExtended_CompAmmoUser.GetMethod("set_CurMagCount", BindingFlags.Instance | BindingFlags.Public);
             }
@@ -406,21 +407,26 @@ namespace RW_ModularizationWeapon
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
 
-            foreach (ThingComp comp in parent.AllComps)
+            CompChildNodeProccesser nodeProccesser = NodeProccesser;
+            for (int i = 0; i < parent.AllComps.Count; i++)
             {
-                if (comp == this) continue;
-                CompProperties properties = null;
-                foreach(CompProperties prop in parent.def.comps)
+                ThingComp comp = parent.AllComps[i];
+                Type type = comp.GetType();
+                if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+                CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+                if(properties != null && Props.compPropertiesAffectCompType.Contains(type))
                 {
-                    if(prop.compClass == comp.GetType())
+                    try
                     {
-                        properties = prop;
-                        break;
+                        if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
+                        comp.parent = parent;
+                        comp.Initialize(CompPropertiesAfterAffect(properties));
+                        parent.AllComps[i] = comp;
                     }
-                }
-                if(properties != null)
-                {
-                    comp.Initialize(CompPropertiesAfterAffect(properties));
+                    catch (Exception ex)
+                    {
+                        Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
+                    }
                 }
             }
 
@@ -479,6 +485,7 @@ namespace RW_ModularizationWeapon
         private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
         private static AccessTools.FieldRef<ThingDef, List<VerbProperties>> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>>("verbs");
         private static AccessTools.FieldRef<object, ThingDef> CombatExtended_CompAmmoUser_currentAmmoInt = null;
+        //private static AccessTools.FieldRef<object, IList> CombatExtended_CompFireModes_availableAimModes = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_get = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_set = null;
 
@@ -620,6 +627,12 @@ namespace RW_ModularizationWeapon
 
             disallowedOtherPart = disallowedOtherPart ?? new ThingFilter();
             disallowedOtherPart.ResolveReferences();
+
+            compPropertiesAffectCompType = compPropertiesAffectCompType ?? new List<Type>();
+            compPropertiesAffectCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
+
+            compPropertiesCreateInstanceCompType = compPropertiesCreateInstanceCompType ?? new List<Type>();
+            compPropertiesCreateInstanceCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
         }
 
 
@@ -640,10 +653,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (snap) stringBuilder.Append("  ");
                     stringBuilder.AppendLine($"  NO.{i+1} :");
-                    foreach (KeyValuePair<FieldInfo, IConvertible> data in list[i])
+                    foreach (KeyValuePair<RuntimeFieldHandle, IConvertible> data in list[i])
                     {
+                        FieldInfo field = FieldInfo.GetFieldFromHandle(data.Key);
                         if (snap) stringBuilder.Append("  ");
-                        stringBuilder.AppendLine($"    {data.Key.Name.Translate()} : {perfix}{data.Value}{postfix}");
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{data.Value}{postfix}");
                     }
                     result += list[i].Count;
                 }
@@ -662,10 +676,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (snap) stringBuilder.Append("  ");
                     stringBuilder.AppendLine($"  NO.{i + 1} :");
-                    foreach (KeyValuePair<FieldInfo, object> data in list[i])
+                    foreach (KeyValuePair<RuntimeFieldHandle, object> data in list[i])
                     {
+                        FieldInfo field = FieldInfo.GetFieldFromHandle(data.Key);
                         if (snap) stringBuilder.Append("  ");
-                        stringBuilder.AppendLine($"    {data.Key.Name.Translate()} : {perfix}{data.Value}{postfix}");
+                        stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{data.Value}{postfix}");
                     }
                     result += list[i].Count;
                 }
@@ -922,6 +937,7 @@ namespace RW_ModularizationWeapon
             #endregion
         }
 
+
         public Vector2 DrawSizeWhenAttach = Vector2.one;
 
 
@@ -1064,6 +1080,12 @@ namespace RW_ModularizationWeapon
 
 
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
+
+
+        public List<Type> compPropertiesAffectCompType = new List<Type>();
+
+
+        public List<Type> compPropertiesCreateInstanceCompType = new List<Type>();
 
 
         public ThingFilter disallowedOtherPart = new ThingFilter();

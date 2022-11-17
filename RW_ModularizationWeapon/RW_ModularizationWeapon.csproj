@@ -251,6 +251,8 @@
     <Compile Include="FieldReaderList.cs" />
     <Compile Include="Multiplier\CompModularizationWeapon.cs" />
     <Compile Include="Offset\CompModularizationWeapon.cs" />
+    <Compile Include="Patch\CombatExtended\0HarmonyInjector_CombatExtended.cs" />
+    <Compile Include="Patch\CombatExtended\CombatExtended_Command_Reload_Patcher.cs" />
     <Compile Include="Patch\CompModularizationWeapon.cs" />
     <Compile Include="Stat\CompModularizationWeapon.cs" />
     <Compile Include="TargetPart\CompModularizationWeapon.cs" />

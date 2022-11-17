@@ -128,15 +128,21 @@ namespace RW_ModularizationWeapon
 
             if (CombatExtended_CompAmmoUser != null)
             {
-                foreach (ThingComp comp in parent.AllComps)
+                for (int i = 0; i < parent.AllComps.Count; i++)
                 {
+                    ThingComp comp = parent.AllComps[i];
                     Type type = comp.GetType();
                     if (type == CombatExtended_CompAmmoUser)
                     {
-                        Thing thing = ThingMaker.MakeThing(CombatExtended_CompAmmoUser_currentAmmoInt(comp), null);
-                        thing.stackCount = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(comp, null);
-                        CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(comp, new object[] { 0 });
-                        GenThing.TryDropAndSetForbidden(thing, pos, map, ThingPlaceMode.Near, out _, false);
+                        ThingDef def = CombatExtended_CompAmmoUser_currentAmmoInt(comp);
+                        int count = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(comp, null);
+                        if (def != null && count > 0)
+                        {
+                            Thing thing = ThingMaker.MakeThing(def, null);
+                            thing.stackCount = count;
+                            CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(comp, new object[] { 0 });
+                            GenThing.TryDropAndSetForbidden(thing, pos, map, ThingPlaceMode.Near, out _, false);
+                        }
                     }
                 }
             }

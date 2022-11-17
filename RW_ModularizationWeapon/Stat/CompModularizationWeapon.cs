@@ -164,6 +164,7 @@ namespace RW_ModularizationWeapon
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
             {
+                StatDef statDef = StatWorker_stat(statWorker);
                 if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
                 {
                     foreach (Thing thing in ChildNodes.Values)
@@ -173,9 +174,27 @@ namespace RW_ModularizationWeapon
                 }
                 else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
                 {
-                    StatDef statDef = StatWorker_stat(statWorker);
-                    result *= GetStatMultiplier(statDef, req.Thing);
-                    result += GetStatOffset(statDef, req.Thing);
+                    if (statDef.defName == "BurstShotCount")
+                    {
+                        VerbTracker verbTracker = parent.TryGetComp<CompEquippable>()?.VerbTracker;
+                        if(verbTracker != null)
+                        {
+                            List<Verb> verbList = CompChildNodeProccesser.GetOriginalAllVerbs(verbTracker);
+                            foreach(Verb verb in verbList)
+                            {
+                                if(verb.verbProps.isPrimary && NodeProccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable),verb).Item1 == parent)
+                                {
+                                    result = verb.verbProps.burstShotCount;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        result *= GetStatMultiplier(statDef, req.Thing);
+                        result += GetStatOffset(statDef, req.Thing);
+                    }
                 }
             }
             else if (before.Thing == req.Thing)
