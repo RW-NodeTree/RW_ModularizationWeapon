@@ -21,7 +21,7 @@ namespace RW_ModularizationWeapon
                 while (!result && current != null)
                 {
                     result = current.showTargetPart;
-                    if(current.UsingTargetPart) current = ParentPart;
+                    if(current.UsingTargetPart) current = current.ParentPart;
                     else current = (CompModularizationWeapon)(current.targetParentPart?.Owner as CompChildNodeProccesser)?.parent;
                 }
                 return result;

@@ -448,7 +448,7 @@ namespace RW_ModularizationWeapon
         {
             //Log.Message($"container add {container.Comp}");
             UsingTargetPart = true;
-            if(parent.holdingOwner != targetParentPart) parent.holdingOwner?.Remove(parent);
+            if (parent.holdingOwner != targetParentPart) parent.holdingOwner?.Remove(parent);
             parent.holdingOwner = container;
             UsingTargetPart = ShowTargetPart;
             NodeProccesser.NeedUpdate = true;
