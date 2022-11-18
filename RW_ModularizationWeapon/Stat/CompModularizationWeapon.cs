@@ -22,10 +22,16 @@ namespace RW_ModularizationWeapon
                 if (eq != null && proccesser != null)
                 {
                     StatRequest cache = req;
-                    req = StatRequest.For(proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), CompChildNodeProccesser.GetOriginalPrimaryVerbs(eq.VerbTracker)).Item1);
-                    if(statWorker.IsDisabledFor(req.Thing) || !req.HasThing)
+                    Verb verb = CompChildNodeProccesser.GetOriginalPrimaryVerbs(eq.VerbTracker);
+                    Thing thing = proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1;
+                    //Log.Message($"{req.Thing} -> {verb} -> {thing}");
+                    if (thing != null)
                     {
-                        return cache;
+                        req = StatRequest.For(thing);
+                        if (statWorker.IsDisabledFor(req.Thing) || !req.HasThing)
+                        {
+                            return cache;
+                        }
                     }
                 }
             }
@@ -143,6 +149,7 @@ namespace RW_ModularizationWeapon
             {
                 if (before.Thing == req.Thing)
                 {
+                    //Log.Message($"{req.Thing} -> {req.Thing?.Spawned} -> {req.Thing?.Map} -> {req.Thing?.MapHeld} -> {req.Thing?.ParentHolder}");
                     return ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_FinalizeValue(statWorker, req, applyPostProcess, result, forPostRead) ?? result;
                     //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
                 }

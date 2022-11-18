@@ -21,7 +21,7 @@ namespace RW_ModularizationWeapon
                 while (!result && current != null)
                 {
                     result = current.showTargetPart;
-                    if(UsingTargetPart) current = ParentPart;
+                    if(current.UsingTargetPart) current = ParentPart;
                     else current = (CompModularizationWeapon)(current.targetParentPart?.Owner as CompChildNodeProccesser)?.parent;
                 }
                 return result;
@@ -45,7 +45,7 @@ namespace RW_ModularizationWeapon
                 {
                     usingTargetPart = value;
                     ThingOwner cacheOwner = parent.holdingOwner;
-                    parent.holdingOwner = targetParentPart;
+                    parent.holdingOwner = targetParentPart ?? cacheOwner;
                     targetParentPart = cacheOwner;
                     foreach (string id in NodeProccesser.RegiestedNodeId)
                     {

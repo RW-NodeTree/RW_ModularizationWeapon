@@ -447,16 +447,9 @@ namespace RW_ModularizationWeapon
         protected override void Added(NodeContainer container, string id)
         {
             //Log.Message($"container add {container.Comp}");
-            if (UsingTargetPart)
-            {
-                parent.holdingOwner?.Remove(parent);
-                parent.holdingOwner = container;
-            }
-            else
-            {
-                targetParentPart?.Remove(parent);
-                targetParentPart = container;
-            }
+            UsingTargetPart = true;
+            if(parent.holdingOwner != targetParentPart) parent.holdingOwner?.Remove(parent);
+            parent.holdingOwner = container;
             UsingTargetPart = ShowTargetPart;
             NodeProccesser.NeedUpdate = true;
             NodeProccesser.UpdateNode();
@@ -466,8 +459,9 @@ namespace RW_ModularizationWeapon
         protected override void Removed(NodeContainer container, string id)
         {
             //Log.Message($"container remove {container.Comp}");
-            UsingTargetPart = ShowTargetPart;
+            UsingTargetPart = false;
             targetParentPart = null;
+            UsingTargetPart = ShowTargetPart;
             NodeProccesser.NeedUpdate = true;
             NodeProccesser.UpdateNode();
         }
