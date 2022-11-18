@@ -179,10 +179,10 @@ namespace RW_ModularizationWeapon.UI
                 Widgets.DrawHighlightSelected(new Rect(7, 7, 336, 336));
                 SelectedPartForChange = (null, null);
             }
-            else Widgets.DrawHighlightIfMouseover(new Rect(91, 91, 168, 168));
+            else Widgets.DrawHighlightIfMouseover(new Rect(7, 7, 336, 336));
             if (weapon != null)
             {
-                Widgets.ThingIcon(new Rect(7, 7, 336, 336), weapon);
+                Widgets.ThingIcon(new Rect(91, 91, 168, 168), weapon);
             }
             else
             {
