@@ -339,15 +339,15 @@ namespace RW_ModularizationWeapon
                 else
                 {
                     float count = 0;
-                    properties.randomThingDefWeights.ForEach(x => count += x.weight);
+                    properties.randomThingDefWeights.ForEach(x => count += x.count);
                     for (int i = 0; i < 3; i++)
                     {
                         float j = Rand.Range(0, count);
                         float k = 0;
                         ThingDef def = null;
-                        foreach(ThingDefWeight weight in properties.randomThingDefWeights)
+                        foreach(ThingDefCountClass weight in properties.randomThingDefWeights)
                         {
-                            float next = k + weight.weight;
+                            float next = k + weight.count;
                             if (k <= j && next >= j) def = weight.thingDef;
                             k = next;
                         }

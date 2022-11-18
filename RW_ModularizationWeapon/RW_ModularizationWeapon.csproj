@@ -256,7 +256,6 @@
     <Compile Include="Patch\CompModularizationWeapon.cs" />
     <Compile Include="Stat\CompModularizationWeapon.cs" />
     <Compile Include="TargetPart\CompModularizationWeapon.cs" />
-    <Compile Include="ThingDefWeight.cs" />
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="UI\CompModularizationWeapon.cs" />
     <Compile Include="UI\CustomWeapon.cs" />
@@ -274,7 +273,9 @@
     <Content Include="PackUp\*\*\*\*\*" />
     <Content Include="PackUp\*\*\*\*\*\*" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set ver=1.4
