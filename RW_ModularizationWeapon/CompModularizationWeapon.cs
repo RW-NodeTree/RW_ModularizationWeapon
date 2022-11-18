@@ -747,8 +747,8 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = 0;
             stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
-            List<FieldReaderInst<VerbProperties>> VerbPropertiesObjectPatch = comp.VerbPropertiesObjectPatch(null);
-            if(comp != null)
+            List<FieldReaderInst<VerbProperties>> VerbPropertiesObjectPatch = comp?.VerbPropertiesObjectPatch(null);
+            if(VerbPropertiesObjectPatch != null)
             {
                 foreach(FieldReaderInst<VerbProperties> fieldReader in verbPropertiesObjectPatch)
                 {
@@ -760,8 +760,8 @@ namespace RW_ModularizationWeapon
             count += listAllInst(VerbPropertiesObjectPatch, "", "");
 
             stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
-            List<FieldReaderInst<Tool>> ToolsObjectPatch = comp.ToolsObjectPatch(null);
-            if (comp != null)
+            List<FieldReaderInst<Tool>> ToolsObjectPatch = comp?.ToolsObjectPatch(null);
+            if (ToolsObjectPatch != null)
             {
                 foreach (FieldReaderInst<Tool> fieldReader in toolsObjectPatch)
                 {
