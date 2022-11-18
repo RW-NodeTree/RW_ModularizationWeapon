@@ -756,8 +756,8 @@ namespace RW_ModularizationWeapon
                     if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
                     else VerbPropertiesObjectPatch[index] |= fieldReader;
                 }
+                count += listAllInst(VerbPropertiesObjectPatch, "", "");
             }
-            count += listAllInst(VerbPropertiesObjectPatch, "", "");
 
             stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
             List<FieldReaderInst<Tool>> ToolsObjectPatch = comp?.ToolsObjectPatch(null);
@@ -769,8 +769,8 @@ namespace RW_ModularizationWeapon
                     if (index < 0) ToolsObjectPatch.Add(fieldReader);
                     else ToolsObjectPatch[index] |= fieldReader;
                 }
+                count += listAllInst(ToolsObjectPatch, "", "");
             }
-            count += listAllInst(ToolsObjectPatch, "", "");
 
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon,
