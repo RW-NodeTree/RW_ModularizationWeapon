@@ -119,6 +119,7 @@
 						<name>under barrel</name>
 						<UITexPath>ui/icons/AttachmentIcon/AttachmentIcon_Underbarrel</UITexPath>
 						<verbPropertiesObjectPatchByChildPart>false</verbPropertiesObjectPatchByChildPart>
+						<postion>(0,0.1,0)</postion>
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
