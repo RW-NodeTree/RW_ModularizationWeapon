@@ -10,7 +10,6 @@ using UnityEngine.UIElements;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
-using static HarmonyLib.Code;
 
 namespace RW_ModularizationWeapon.UI
 {
@@ -26,14 +25,18 @@ namespace RW_ModularizationWeapon.UI
             this.soundClose = SoundDefOf.InfoCard_Close;
             this.pawn = pawn;
             this.creaftingTable = creaftingTable;
+            this.optionalTitle = "ModifyWeapon".Translate();
             ResetSelections();
         }
+
+
+        protected override float Margin => 4;
 
         public override Vector2 InitialSize
         {
             get
             {
-                return new Vector2(Math.Max(Verse.UI.screenWidth, 1024), Math.Max(Verse.UI.screenHeight, 576));
+                return new Vector2(1024 + Margin * 2, Math.Max(Verse.UI.screenHeight, 576));
             }
         }
 
@@ -132,13 +135,13 @@ namespace RW_ModularizationWeapon.UI
 
         /// <summary>
         /// +-------+-------+-------+
-        /// |weapon |       |       |
-        /// |perview|       |       |
-        /// +-------+       |       |
-        /// |       |target | info  |
-        /// | tree  |picker | card  |
-        /// | view  |       |       |
-        /// |       |       |       |
+        /// |               |       |
+        /// |    weapon     |       |
+        /// |    perview    |       |
+        /// |               | info  |
+        /// +-------+-------+ card  |
+        /// | tree  |target |       |
+        /// | view  |picker |       |
         /// |       |       |       |
         /// +-------+-------+-------+
         /// </summary>
@@ -168,40 +171,45 @@ namespace RW_ModularizationWeapon.UI
             //    //if (Prefs.DevMode) Log.Message($"Gun_Test_Modularization : {Gun_Test_Modularization}; thing : {thing}");
             //}
 
+            GUI.color = _Border;
+            Widgets.DrawLineHorizontal(0, 480, 684);
+            Widgets.DrawLineVertical(683, 0, inRect.height);
+            Widgets.DrawLineVertical(340, 480, inRect.height - 480);
+            GUI.color = Color.white;
+
 
             #region weaponPerview
-            GUI.color = _Border;
-            Widgets.DrawBox(new Rect(0, 0, 350, 350));
-            GUI.color = Color.white;
+
+            Rect BoxSize = new Rect(8, 8, 668, 464);
+            Rect BoxInnerSize = new Rect(214, 112, 256, 256);
             //Log.Message($"draw size : {weapon.NodeProccesser.GetAndUpdateDrawSize(weapon.parent.def.defaultPlacingRot)}");
-            if (Widgets.ButtonInvisible(new Rect(7, 7, 336, 336)))
+            if (Widgets.ButtonInvisible(BoxSize))
             {
-                Widgets.DrawHighlightSelected(new Rect(7, 7, 336, 336));
+                Widgets.DrawHighlightSelected(BoxSize);
                 SelectedPartForChange = (null, null);
             }
-            else Widgets.DrawHighlightIfMouseover(new Rect(7, 7, 336, 336));
+            else Widgets.DrawHighlightIfMouseover(BoxSize);
             if (weapon != null)
             {
-                Widgets.ThingIcon(new Rect(91, 91, 168, 168), weapon);
+                Widgets.ThingIcon(BoxInnerSize, weapon);
             }
             else
             {
-                Widgets.DrawBoxSolid(new Rect(71, 170, 208, 10), Color.gray);
-                Widgets.DrawBoxSolid(new Rect(170, 71, 10, 208), Color.gray);
+                Widgets.DrawBoxSolid(new Rect(BoxInnerSize.x, BoxInnerSize.y + (BoxInnerSize.height - 10) / 2, BoxInnerSize.width, 10), Color.gray);
+                Widgets.DrawBoxSolid(new Rect(BoxInnerSize.x + (BoxInnerSize.width - 10) / 2, BoxInnerSize.y, 10, BoxInnerSize.height), Color.gray);
             }
             Text.Font = GameFont.Small;
             #endregion
 
 
             #region treeView
-            Vector2 ScrollViewSize = weapon?.TreeViewDrawSize(new Vector2(284, 48)) ?? Vector2.zero;
-            ScrollViewSize.x = Math.Max(ScrollViewSize.x, ScrollViewSize.y < inRect.height - 360 ? 348 : 332);
+
+            BoxSize = new Rect(0, 481, 340, inRect.height - 481);
+            Vector2 ScrollViewSize = weapon?.TreeViewDrawSize(new Vector2(276, 48)) ?? Vector2.zero;
+            ScrollViewSize.x = Math.Max(ScrollViewSize.x, ScrollViewSize.y < BoxSize.height ? 340 : 304);
             //if (Prefs.DevMode) Log.Message($"creaftingTable.GetTargetCompModularizationWeapon() : {creaftingTable.GetTargetCompModularizationWeapon()}; ScrollViewSize : {ScrollViewSize}");
-            GUI.color = _Border;
-            Widgets.DrawBox(new Rect(0, 358, 350,inRect.height - 358));
-            GUI.color = Color.white;
             Widgets.BeginScrollView(
-                new Rect(1, 359, 348, inRect.height - 360),
+                BoxSize,
                 ref ScrollViews[0],
                 new Rect(Vector2.zero, ScrollViewSize)
             );
@@ -240,11 +248,12 @@ namespace RW_ModularizationWeapon.UI
 
 
             #region targetPicker
+            BoxSize = new Rect(341, 481, 342, inRect.height - 481);
             //Widgets.DrawBoxSolid(new Rect(350, 0, inRect.width - 700, inRect.height), Color.black);
-            ScrollViewSize = new Vector2(inRect.width - 700, selections.Count * 48);
+            ScrollViewSize = new Vector2(BoxSize.width, selections.Count * 48);
             ScrollViewSize.x = ScrollViewSize.y < inRect.height ? ScrollViewSize.x : ScrollViewSize.x - GUI.skin.verticalScrollbar.fixedWidth;
             Widgets.BeginScrollView(
-                new Rect(350, 0, inRect.width - 700, inRect.height),
+                BoxSize,
                 ref ScrollViews[1],
                 new Rect(Vector2.zero, ScrollViewSize)
             );
@@ -253,7 +262,7 @@ namespace RW_ModularizationWeapon.UI
             for(int i = 0; i < selections.Count; i++)
             {
                 Rect rect = new Rect(0, i * 48, ScrollViewSize.x, 48);
-                if (rect.y + 48 >= ScrollViews[1].y && rect.y <= ScrollViews[1].y + inRect.height)
+                if (rect.y + rect.height >= ScrollViews[1].y && rect.y <= ScrollViews[1].y + BoxSize.height)
                 {
                     (Thing selThing, ThingDef selDef) = selections[i];
 
@@ -271,13 +280,13 @@ namespace RW_ModularizationWeapon.UI
                                 selThing.holdingOwner = null;
                                 comp.NodeProccesser.ResetRenderedTexture();
                             }
-                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selThing);
+                            Widgets.ThingIcon(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), selThing);
                             if (comp_targetModeParent != null)
                             {
                                 selThing.holdingOwner = comp_targetModeParent.ChildNodes;
                                 comp.NodeProccesser.ResetRenderedTexture();
                             }
-                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
+                            Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))
                             {
                                 partForChange.SetTargetPart(idForChange, selThing);
@@ -286,8 +295,8 @@ namespace RW_ModularizationWeapon.UI
                         }
                         else if(selDef == null)
                         {
-                            Widgets.DrawTextureFitted(new Rect(1, rect.y + 1, 46, 46), partForChange.Props.WeaponAttachmentPropertiesById(idForChange).UITexture,1);
-                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
+                            Widgets.DrawTextureFitted(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), partForChange.Props.WeaponAttachmentPropertiesById(idForChange).UITexture, 1);
+                            Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 partForChange.SetTargetPart(idForChange, null);
@@ -301,8 +310,8 @@ namespace RW_ModularizationWeapon.UI
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
-                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selThing);
-                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
+                            Widgets.ThingIcon(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), selThing);
+                            Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 creaftingTable.SetTarget(selThing, this);
@@ -311,8 +320,8 @@ namespace RW_ModularizationWeapon.UI
                         }
                         else if (selDef != null)
                         {
-                            Widgets.ThingIcon(new Rect(1, rect.y + 1, 46, 46), selDef);
-                            Widgets.Label(new Rect(48, rect.y + 1, rect.width - 49, rect.height - 2), selDef.label);
+                            Widgets.ThingIcon(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), selDef);
+                            Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selDef.label);
                             if (Widgets.ButtonInvisible(rect))
                             {
                                 creaftingTable.SetTarget(selDef, this);
@@ -329,13 +338,10 @@ namespace RW_ModularizationWeapon.UI
 
 
             #region infoCard
-            GUI.color = _Border;
-            Widgets.DrawBox(new Rect(inRect.width - 350, 0, 350, inRect.height - 48));
-            GUI.color = Color.white;
-            InfoTags?.Draw(new Rect(inRect.width - 349, 1, 348, inRect.height - 50));
+            InfoTags?.Draw(new Rect(684, 0, 340, inRect.height - 48));
             #endregion
 
-            if(Widgets.ButtonText(new Rect(inRect.width - 350, inRect.height - 48, 350,48), "Apply"))
+            if(Widgets.ButtonText(new Rect(684, inRect.height - 48, 340,48), "apply".Translate()))
             {
                 Close(false);
                 if(weapon != null)

@@ -37,7 +37,7 @@ namespace RW_ModularizationWeapon
                 if (id != null && GetChildTreeViewOpend(id))
                 {
                     CompModularizationWeapon comp = thing;
-                    if (comp != null)
+                    if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
                         Vector2 childSize = comp.TreeViewDrawSize(BlockSize);
                         result.y += childSize.y;
@@ -116,7 +116,7 @@ namespace RW_ModularizationWeapon
                                 iconEvent?.Invoke(id, thing, this);
                             }
                         }
-                        if (comp != null)
+                        if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                         {
                             if (opend)
                             {

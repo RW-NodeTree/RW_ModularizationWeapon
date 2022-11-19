@@ -32,4 +32,6 @@
 	<statMultiplierAffectHorizon>Stat Value Multiplier Affect Horizon</statMultiplierAffectHorizon>
 	<AttachmentPoint>Attachment Point</AttachmentPoint>
 	<setEmpty>Set Empty</setEmpty>
+	<apply>Apply</apply>
+	<ModifyWeapon>Modify Weapon</ModifyWeapon>
 </LanguageData>

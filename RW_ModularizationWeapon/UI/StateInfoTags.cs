@@ -86,7 +86,7 @@ namespace RW_ModularizationWeapon.UI
             if(statInfos != null)
             {
 
-                float infoCardWidth = rect.height > infoCardMaxHeight ? rect.width : rect.width - GUI.skin.verticalScrollbar.fixedWidth;
+                float infoCardWidth = rect.height > infoCardMaxHeight ? rect.width : rect.width - GUI.skin.verticalScrollbar.fixedWidth - 1;
                 Widgets.BeginScrollView(
                     rect,
                     ref scrollView,

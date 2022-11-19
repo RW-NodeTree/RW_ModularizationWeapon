@@ -32,4 +32,6 @@
 	<statMultiplierAffectHorizon>状态值乘数影响水平</statMultiplierAffectHorizon>
 	<AttachmentPoint>部件附着点</AttachmentPoint>
 	<setEmpty>设为空</setEmpty>
+	<apply>应用</apply>
+	<ModifyWeapon>改装武器</ModifyWeapon>
 </LanguageData>
