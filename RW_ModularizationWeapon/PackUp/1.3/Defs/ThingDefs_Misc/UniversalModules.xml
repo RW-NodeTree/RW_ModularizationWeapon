@@ -17,6 +17,7 @@
 		<soundDrop>Standard_Drop</soundDrop>
 		<stackLimit>25</stackLimit>
 		<healthAffectsPrice>false</healthAffectsPrice>
+		<resourceReadoutPriority>Uncounted</resourceReadoutPriority>
 		<smeltable>true</smeltable>
 		<recipeMaker>
 			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>

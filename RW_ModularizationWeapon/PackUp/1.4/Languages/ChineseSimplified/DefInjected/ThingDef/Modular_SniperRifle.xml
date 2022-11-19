@@ -19,7 +19,7 @@
 	<Gun_ModularBoltActionRifle.comps.CompModularizationWeapon.attachmentProperties.2.name>枪管</Gun_ModularBoltActionRifle.comps.CompModularizationWeapon.attachmentProperties.2.name>
 
 
-	<Module_RF_LongBarrel.label>狙击步枪加长枪管</Module_RF_LongBarrel.label>
+	<Module_RF_LongBarrel.label>栓动步枪加长枪管</Module_RF_LongBarrel.label>
 	<Module_RF_LongBarrel.description>使用加长枪管的枪械可以让子弹能够更有效地吸收火药提供的动能,从而使有效射程更远</Module_RF_LongBarrel.description>
 
 	<Bullet_BoltActionRifleLingBarrel.label>栓动步枪子弹</Bullet_BoltActionRifleLingBarrel.label>

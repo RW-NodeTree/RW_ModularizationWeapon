@@ -54,6 +54,7 @@
 						<allowEmpty>true</allowEmpty>
 						<filter>
 							<thingDefs>
+								<li>Module_UBGL_Farg</li>
 								<li>Module_UBGL_EMP</li>
 								<li>Module_UBGL_Inc</li>
 								<li>Module_UBGL_Smoke</li>
@@ -159,7 +160,8 @@
 			<Mass>0.2</Mass>
 		</statBases>
 		<costList>
-			<Gun_EmpLauncher>1</Gun_EmpLauncher>
+			<Steel>20</Steel>
+			<Chemfuel>80</Chemfuel>
 		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
@@ -183,7 +185,8 @@
 			<Mass>0.2</Mass>
 		</statBases>
 		<costList>
-			<Gun_EmpLauncher>1</Gun_EmpLauncher>
+			<Steel>20</Steel>
+			<ComponentIndustrial>6</ComponentIndustrial>
 		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
@@ -207,7 +210,8 @@
 			<Mass>0.1</Mass>
 		</statBases>
 		<costList>
-			<Gun_IncendiaryLauncher>1</Gun_IncendiaryLauncher>
+			<Steel>25</Steel>
+			<Chemfuel>80</Chemfuel>
 		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
@@ -231,7 +235,8 @@
 			<Mass>0.1</Mass>
 		</statBases>
 		<costList>
-			<Gun_SmokeLauncher>1</Gun_SmokeLauncher>
+			<Steel>15</Steel>
+			<Chemfuel>80</Chemfuel>
 		</costList>
 		<comps>
 			<li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
