@@ -22,6 +22,7 @@
 
 	<Module_AR_LongBarrel.label>突击步枪加长枪管</Module_AR_LongBarrel.label>
 	<Module_AR_LongBarrel.description>使用加长枪管的枪械可以让子弹能够更有效地吸收火药提供的动能,从而使有效射程更远</Module_AR_LongBarrel.description>
+	<Module_AR_LongBarrel.comps.CompModularizationWeapon.attachmentProperties.0.name>枪口</Module_AR_LongBarrel.comps.CompModularizationWeapon.attachmentProperties.0.name>
 
 	<Bullet_AssaultRifleLongBarrel.label>突击步枪子弹</Bullet_AssaultRifleLongBarrel.label>
 	<Bullet_AssaultRifleLongBarrel.description>突击步枪子弹</Bullet_AssaultRifleLongBarrel.description>
