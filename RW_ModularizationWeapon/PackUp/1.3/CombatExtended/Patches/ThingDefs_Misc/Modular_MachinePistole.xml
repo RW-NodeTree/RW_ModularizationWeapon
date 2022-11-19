@@ -2,7 +2,7 @@
 <Patch>
 
 	<Operation Class="CombatExtended.PatchOperationMakeGunCECompatible">
-		<defName>Gun_ModularMachinepistol</defName>
+		<defName>Gun_ModularMachinePistol</defName>
 		<statBases>
 			<Mass>2.84</Mass>
 			<RangedWeapon_Cooldown>0.72</RangedWeapon_Cooldown>
@@ -47,7 +47,7 @@
 
 
 	<Operation Class="PatchOperationAdd">
-		<xpath>Defs/ThingDef[defName="Gun_ModularMachinepistol"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
+		<xpath>Defs/ThingDef[defName="Gun_ModularMachinePistol"]/comps/li[@Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon"]</xpath>
 		<value>
 			<compPropertiesAffectCompType>
 				<li>CombatExtended.CompAmmoUser</li>

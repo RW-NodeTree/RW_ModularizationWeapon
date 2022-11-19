@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<ThingDef ParentName="BaseHumanMakeableGun">
-		<defName>Gun_ModularMachinepistol</defName>
+		<defName>Gun_ModularMachinePistol</defName>
 		<label>modular machine pistol</label>
 		<description>A micro-submachine gun. It is short-ranged, but very light in the hands. Its rate of fire tends to make up for its weakness.</description>
 		<graphicData>
