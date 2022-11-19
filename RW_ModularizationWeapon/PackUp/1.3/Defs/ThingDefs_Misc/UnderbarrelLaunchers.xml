@@ -17,7 +17,6 @@
 		<costList>
 			<Steel>75</Steel>
 			<ComponentIndustrial>2</ComponentIndustrial>
-			<Weapon_GrenadeFrag>1</Weapon_GrenadeFrag>
 		</costList>
 		<verbs>
 			<li>
