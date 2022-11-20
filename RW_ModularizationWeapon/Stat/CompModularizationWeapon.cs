@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using HarmonyLib;
+using RimWorld;
 using RW_ModularizationWeapon.Tools;
 using RW_NodeTree;
 using System;
@@ -122,7 +123,14 @@ namespace RW_ModularizationWeapon
                 }
                 else
                 {
-                    result = statWorker.GetValueUnfinalized(req, applyPostProcess);
+                    try
+                    {
+                        result = statWorker.GetValueUnfinalized(req, applyPostProcess);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex.ToString());
+                    }
                 }
             }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
@@ -156,9 +164,16 @@ namespace RW_ModularizationWeapon
                 }
                 else
                 {
-                    float cache = result;
-                    statWorker.FinalizeValue(req, ref cache, applyPostProcess);
-                    forPostRead.Add("afterRedirectoryReq", cache);
+                    try
+                    {
+                        float cache = result;
+                        statWorker.FinalizeValue(req, ref cache, applyPostProcess);
+                        forPostRead.Add("afterRedirectoryReq", cache);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex.ToString());
+                    }
                 }
             }
             return result;
@@ -177,7 +192,14 @@ namespace RW_ModularizationWeapon
                 {
                     foreach (Thing thing in ChildNodes.Values)
                     {
-                        result += statWorker.GetValue(thing);
+                        try
+                        {
+                            result += statWorker.GetValue(thing);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex.ToString());
+                        }
                     }
                 }
                 else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
@@ -255,7 +277,14 @@ namespace RW_ModularizationWeapon
                 }
                 else
                 {
-                    result = statWorker.GetStatDrawEntryLabel(stat, value, numberSense, optionalReq, finalized);
+                    try
+                    {
+                        result = statWorker.GetStatDrawEntryLabel(stat, value, numberSense, optionalReq, finalized);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex.ToString());
+                    }
                 }
             }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
@@ -318,7 +347,14 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                result = statWorker.GetExplanationUnfinalized(req, numberSense);
+                try
+                {
+                    result = statWorker.GetExplanationUnfinalized(req, numberSense);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.ToString());
+                }
             }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
@@ -359,10 +395,18 @@ namespace RW_ModularizationWeapon
                 Dictionary<string, object> forPostRead = new Dictionary<string, object>();
                 StatWorkerPerfix(forPostRead);
 
-                foreach (StatDrawEntry entry in result)
+                List<StatDrawEntry> cache = new List<StatDrawEntry>();
+
+                try
                 {
-                    yield return entry;
+                    cache.AddRange(result);
                 }
+                catch(Exception ex)
+                {
+                    Log.Error(ex.ToString());
+                }
+
+                foreach (StatDrawEntry entry in cache) yield return entry;
 
                 StatWorkerPostfix(forPostRead);
             }
@@ -385,10 +429,18 @@ namespace RW_ModularizationWeapon
                 Dictionary<string, object> forPostRead = new Dictionary<string, object>();
                 StatWorkerPerfix(forPostRead);
 
-                foreach (StatDrawEntry entry in result)
+                List<StatDrawEntry> cache = new List<StatDrawEntry>();
+
+                try
                 {
-                    yield return entry;
+                    cache.AddRange(result);
                 }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.ToString());
+                }
+
+                foreach (StatDrawEntry entry in cache) yield return entry;
 
                 StatWorkerPostfix(forPostRead);
             }
@@ -407,9 +459,15 @@ namespace RW_ModularizationWeapon
             return result * GetStatMultiplier(stat, gear) + GetStatOffset(stat, gear);
         }
 
-        protected override bool PostStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object> forPostRead)
+        protected override IEnumerable<Thing> PostStatWorker_RelevantGear(Thing gear, StatDef stat, IEnumerable<Thing> result, Dictionary<string, object> forPostRead)
         {
-            return result || StatWorker.StatOffsetFromGear(gear, stat) != 0;
+            List<Thing> list = new List<Thing>();
+            foreach (Thing thing in result)
+            {
+                list.Add(thing);
+                yield return thing;
+            }
+            if (!list.Contains(gear) && StatWorker.StatOffsetFromGear(gear,stat) != 0) yield return gear;
         }
     }
 }
