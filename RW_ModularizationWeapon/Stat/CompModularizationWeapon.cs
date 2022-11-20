@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Verse;
+using static UnityEngine.Random;
 
 namespace RW_ModularizationWeapon
 {
@@ -399,6 +400,16 @@ namespace RW_ModularizationWeapon
                     yield return entry;
                 }
             }
+        }
+
+        protected override float PostStatWorker_StatOffsetFromGear(Thing gear, StatDef stat, float result, Dictionary<string, object> forPostRead)
+        {
+            return result * GetStatMultiplier(stat, gear) + GetStatOffset(stat, gear);
+        }
+
+        protected override bool PostStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object> forPostRead)
+        {
+            return result || StatWorker.StatOffsetFromGear(gear, stat) != 0;
         }
     }
 }

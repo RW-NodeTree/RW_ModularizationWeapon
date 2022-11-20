@@ -273,6 +273,9 @@
     <Content Include="PackUp\*\*\*\*\*" />
     <Content Include="PackUp\*\*\*\*\*\*" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set ver=1.4

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -57,8 +58,8 @@ namespace RW_ModularizationWeapon
 
         public override void PostPostMake()
         {
-            if (Props.setRandomPartWhenCreate) LongEventHandler.ExecuteWhenFinished(SetThingToRandom);
-            else LongEventHandler.ExecuteWhenFinished(SetThingToDefault);
+            if (Props.setRandomPartWhenCreate) LongEventHandler.ExecuteWhenFinished(SetPartToRandom);
+            else LongEventHandler.ExecuteWhenFinished(SetPartToDefault);
             NodeProccesser.UpdateNode();
         }
 
@@ -297,7 +298,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void SetThingToDefault()
+        public void SetPartToDefault()
         {
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
@@ -308,15 +309,16 @@ namespace RW_ModularizationWeapon
                     thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
                     ChildNodes[properties.id] = thing;
                 }
+                else ChildNodes[properties.id] = null;
             }
             foreach (Thing thing in ChildNodes.Values)
             {
-                ((CompModularizationWeapon)thing)?.SetThingToDefault();
+                ((CompModularizationWeapon)thing)?.SetPartToDefault();
             }
         }
 
 
-        public void SetThingToRandom()
+        public void SetPartToRandom()
         {
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
@@ -367,12 +369,25 @@ namespace RW_ModularizationWeapon
 
         protected override IEnumerable<Thing> PostGenRecipe_MakeRecipeProducts(RecipeDef recipeDef, Pawn worker, List<Thing> ingredients, Thing dominantIngredient1, IBillGiver billGiver, Precept_ThingStyle precept, RecipeInvokeSource invokeSource, IEnumerable<Thing> result)
         {
-            List<Thing> things = result.ToList();
             if(invokeSource == RecipeInvokeSource.products)
             {
-                LongEventHandler.ExecuteWhenFinished(SetThingToDefault);
+                LongEventHandler.ExecuteWhenFinished(SetPartToDefault);
             }
-            return things;
+            else if(invokeSource == RecipeInvokeSource.ingredients)
+            {
+                IEnumerable<Thing> Ingredients(IEnumerable<Thing> org)
+                {
+                    foreach(Thing ingredient in org) yield return ingredient;
+                    foreach (string id in ChildNodes.Keys)
+                    {
+                        Thing part = ChildNodes[id];
+                        ChildNodes[id] = null;
+                        yield return part;
+                    }
+                }
+                return Ingredients(result);
+            }
+            return result;
         }
 
 
