@@ -459,15 +459,9 @@ namespace RW_ModularizationWeapon
             return result * GetStatMultiplier(stat, gear) + GetStatOffset(stat, gear);
         }
 
-        protected override IEnumerable<Thing> PostStatWorker_RelevantGear(Thing gear, StatDef stat, IEnumerable<Thing> result, Dictionary<string, object> forPostRead)
+        protected override bool PostStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object> forPostRead)
         {
-            List<Thing> list = new List<Thing>();
-            foreach (Thing thing in result)
-            {
-                list.Add(thing);
-                yield return thing;
-            }
-            if (!list.Contains(gear) && StatWorker.StatOffsetFromGear(gear,stat) != 0) yield return gear;
+            return result || StatWorker.StatOffsetFromGear(gear, stat) != 0;
         }
     }
 }
