@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -70,6 +71,7 @@ namespace RW_ModularizationWeapon
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
             if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
+                NodeProccesser.UpdateNode();
                 NodeContainer container = ChildNodes;
                 foreach(Thing thing in container.Values)
                 {
@@ -101,6 +103,17 @@ namespace RW_ModularizationWeapon
                         }
                     }
                 }
+
+                foreach (CompProperties prop in AllExtraCompProperties())
+                {
+                    if (parent.AllComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+                    {
+                        ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
+                        comp.parent = parent;
+                        comp.Initialize(CompPropertiesAfterAffect(prop));
+                        parent.AllComps.Add(comp);
+                    }
+                }
                 NodeProccesser.UpdateNode();
             }
         }
@@ -122,7 +135,7 @@ namespace RW_ModularizationWeapon
                     foreach (ThingComp comp in part.AllComps)
                     {
                         Type type = comp.GetType();
-                        if(type == typeof(CompModularizationWeapon) || type == CombatExtended_CompAmmoUser || type == CombatExtended_CompFireModes)
+                        if(type == typeof(CompModularizationWeapon) || Props.compGetGizmosExtraAllowedCompType.Contains(type))
                         {
                             foreach(Gizmo gizmo in comp.CompGetGizmosExtra())
                             {
@@ -421,10 +434,42 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public List<CompProperties> AllExtraCompProperties()
+        {
+            List<CompProperties> result = new List<CompProperties>();
+            NodeContainer container = ChildNodes;
+            for (int i = 0; i < container.Count; i++)
+            {
+                CompModularizationWeapon comp = container[i];
+                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(container[(uint)i]);
+                if(comp != null)
+                {
+                    result.AddRange(
+                        from x 
+                        in comp.Props.extraComp 
+                        where properties.allowedExtraCompType.Contains(x.compClass) 
+                            && result.FirstOrDefault(c => c.compClass == x.compClass) == null 
+                        select x
+                    );
+                    result.AddRange(
+                        from x
+                        in comp.AllExtraCompProperties()
+                        where properties.allowedExtraCompType.Contains(x.compClass)
+                            && result.FirstOrDefault(c => c.compClass == x.compClass) == null
+                        select x
+                    );
+                }
+            }
+            return result;
+        }
+
+
         protected override bool UpdateNode(CompChildNodeProccesser actionNode)
         {
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
+
+            parent.AllComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
 
             for (int i = 0; i < parent.AllComps.Count; i++)
             {
@@ -445,6 +490,17 @@ namespace RW_ModularizationWeapon
                     {
                         Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
                     }
+                }
+            }
+
+            foreach (CompProperties prop in AllExtraCompProperties())
+            {
+                if(parent.AllComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+                {
+                    ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
+                    comp.parent = parent;
+                    comp.Initialize(CompPropertiesAfterAffect(prop));
+                    parent.AllComps.Add(comp);
                 }
             }
 
@@ -612,11 +668,17 @@ namespace RW_ModularizationWeapon
                 properties.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
                 properties.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
                 properties.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
             }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
 
-
+            #region innerMethod
             void CheckAndSetDgitList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
                 list = list ?? new FieldReaderDgitList<T>();
@@ -649,6 +711,7 @@ namespace RW_ModularizationWeapon
                 list = list ?? new List<StatModifier>();
                 list.RemoveAll(f => f == null);
             }
+            #endregion
 
             CheckAndSetDgitList(ref verbPropertiesOffseter, 0);
             CheckAndSetDgitList(ref toolsOffseter, 0);
@@ -1155,7 +1218,13 @@ namespace RW_ModularizationWeapon
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
 
 
+        public List<CompProperties> extraComp = new List<CompProperties>();
+
+
         public List<Type> compPropertiesCreateInstanceCompType = new List<Type>();
+
+
+        public List<Type> compGetGizmosExtraAllowedCompType = new List<Type>();
 
 
         public ThingFilter disallowedOtherPart = new ThingFilter();

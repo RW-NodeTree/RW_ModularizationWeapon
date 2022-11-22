@@ -40,6 +40,8 @@ namespace RW_ModularizationWeapon
             randomThingDefWeights = randomThingDefWeights ?? new List<ThingDefCountClass>();
             randomThingDefWeights.RemoveAll(x => x.thingDef == null || !filter.Allows(x.thingDef));
 
+
+            #region innerMethod
             void CheckAndSetDgitList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
                 list = list ?? new FieldReaderDgitList<T>();
@@ -96,6 +98,8 @@ namespace RW_ModularizationWeapon
                     if (!data.Value.HasDefaultValue) data.Value.DefaultValue = defaultValue;
                 }
             }
+            #endregion
+
 
             #region Offseter
             #region Child
