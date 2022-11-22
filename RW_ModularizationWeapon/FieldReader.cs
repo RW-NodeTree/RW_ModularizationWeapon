@@ -716,4 +716,178 @@ namespace RW_ModularizationWeapon
         public static FieldReaderInst<T> operator |(FieldReaderInst<T> a, FieldReaderInst<T> b)
             => ClacValue((va, vb, field) => va ?? vb, a, b);
     }
+
+    public class FieldReaderFilt<T> : FieldReader<T, bool>
+    {
+        private bool? defaultValue;
+        private readonly Dictionary<RuntimeFieldHandle, bool> datas = new Dictionary<RuntimeFieldHandle, bool>();
+
+        public FieldReaderFilt() { }
+
+        public FieldReaderFilt(FieldReaderFilt<T> other)
+        {
+            if (other != null)
+            {
+                datas.AddRange(other.datas);
+                UsedType = other.UsedType;
+                defaultValue = other.defaultValue;
+            }
+        }
+
+        public override bool DefaultValue
+        {
+            get => defaultValue.GetValueOrDefault();
+            set => defaultValue = value;
+        }
+
+        public override bool HasDefaultValue => defaultValue.HasValue;
+
+        public override int Count => datas.Count;
+
+        public override ICollection<RuntimeFieldHandle> Keys => datas.Keys;
+
+        public override ICollection<bool> Values => datas.Values;
+
+        public override bool this[RuntimeFieldHandle key]
+        {
+            get => datas[key];
+            set => Add(key, value);
+        }
+
+
+        public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
+        {
+            base.LoadDataFromXmlCustom(xmlRoot);
+            try
+            {
+                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                if (defaultValue != null) this.defaultValue = ParseHelper.FromString<bool>(defaultValue);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+            }
+
+            /**
+            <xx Reader-Class="c# type" Default="default_value">
+                <member_name_of_type>value</member_name_of_type>
+            </xx>
+            **/
+            foreach (XmlNode node in xmlRoot.ChildNodes)
+            {
+                try
+                {
+                    FieldInfo field = UsedType.GetField(node.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    this[field.FieldHandle] = ParseHelper.FromString<bool>(node.InnerText);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.ToString());
+                }
+            }
+            //Log.Message(ToString());
+        }
+
+
+        public override string ToString()
+        {
+            string result = $"{GetType()}\nHash={base.GetHashCode()}\ndefaultValue={defaultValue}\ndata : \n";
+            foreach (KeyValuePair<RuntimeFieldHandle, bool> data in datas)
+            {
+                FieldInfo field = FieldInfo.GetFieldFromHandle(data.Key);
+                result += $" {field.FieldType} {field.DeclaringType}.{field.Name} : {data.Value}\n";
+            }
+            return result;
+        }
+
+        public override bool ContainsKey(RuntimeFieldHandle key) => datas.ContainsKey(key);
+
+        public override void Add(RuntimeFieldHandle key, bool value)
+        {
+            FieldInfo field = FieldInfo.GetFieldFromHandle(key);
+            if (field != null && field.DeclaringType.IsAssignableFrom(UsedType))
+            {
+                datas.SetOrAdd(key, value);
+            }
+        }
+
+        public override bool Remove(RuntimeFieldHandle key) => datas.Remove(key);
+
+        public override bool TryGetValue(RuntimeFieldHandle key, out bool value) => datas.TryGetValue(key, out value);
+
+        public override void Clear() => datas.Clear();
+
+        public override FieldReader<T, bool> Clone() => new FieldReaderFilt<T>(this);
+
+        public override void UsedTypeUpdate() { }
+
+        public static FieldReaderFilt<T> operator &(FieldReaderFilt<T> a, bool b)
+            => (a?.ClacValue((av, bv, field) => av && bv, b) as FieldReaderFilt<T>) ?? a;
+
+        public static FieldReaderFilt<T> operator |(FieldReaderFilt<T> a, bool b)
+            => (a?.ClacValue((av, bv, field) => av || bv, b) as FieldReaderFilt<T>) ?? a;
+
+        public static FieldReaderFilt<T> operator !(FieldReaderFilt<T> a)
+            => (a?.ClacValue((av, bv, field) => !av, false) as FieldReaderFilt<T>) ?? a;
+
+        public static FieldReaderFilt<T> operator &(FieldReaderFilt<T> a, FieldReaderFilt<T> b)
+            => ClacValue((va, vb, field) => va && vb, a, b);
+
+        public static FieldReaderFilt<T> operator |(FieldReaderFilt<T> a, FieldReaderFilt<T> b)
+            => ClacValue((va, vb, field) => va || vb, a, b);
+
+        public static FieldReaderDgit<T> operator &(FieldReaderDgit<T> a, FieldReaderFilt<T> b)
+        {
+            if(a != null && b != null)
+            {
+                FieldReaderDgit<T> org = a;
+                a = (FieldReaderDgit<T>)a.Clone();
+                foreach(RuntimeFieldHandle fieldHandle in org.Keys)
+                {
+                    if (b.ContainsKey(fieldHandle))
+                    {
+                        if (!b[fieldHandle] && a.ContainsKey(fieldHandle)) a.Remove(fieldHandle);
+                    }
+                    else if(!b.DefaultValue && a.ContainsKey(fieldHandle)) a.Remove(fieldHandle);
+                }
+            }
+            return a;
+        }
+
+        public static FieldReaderBool<T> operator &(FieldReaderBool<T> a, FieldReaderFilt<T> b)
+        {
+            if (a != null && b != null)
+            {
+                FieldReaderBool<T> org = a;
+                a = (FieldReaderBool<T>)a.Clone();
+                foreach (RuntimeFieldHandle fieldHandle in org.Keys)
+                {
+                    if (b.ContainsKey(fieldHandle))
+                    {
+                        if (!b[fieldHandle] && a.ContainsKey(fieldHandle)) a.Remove(fieldHandle);
+                    }
+                    else if (!b.DefaultValue && a.ContainsKey(fieldHandle)) a.Remove(fieldHandle);
+                }
+            }
+            return a;
+        }
+
+        public static FieldReaderInst<T> operator &(FieldReaderInst<T> a, FieldReaderFilt<T> b)
+        {
+            if (a != null && b != null)
+            {
+                FieldReaderInst<T> org = a;
+                a = (FieldReaderInst<T>)a.Clone();
+                foreach (RuntimeFieldHandle fieldHandle in org.Keys)
+                {
+                    if (b.ContainsKey(fieldHandle))
+                    {
+                        if (!b[fieldHandle] && a.ContainsKey(fieldHandle)) a.Remove(fieldHandle);
+                    }
+                    else if (!b.DefaultValue && a.ContainsKey(fieldHandle)) a.Remove(fieldHandle);
+                }
+            }
+            return a;
+        }
+    }
 }

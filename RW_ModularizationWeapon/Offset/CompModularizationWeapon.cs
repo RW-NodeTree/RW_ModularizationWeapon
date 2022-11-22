@@ -31,6 +31,7 @@ namespace RW_ModularizationWeapon
 
                     if (current != null)
                     {
+                        double defaultValue = cache.DefaultValue;
                         cache *=
                             current.verbPropertiesOtherPartOffseterAffectHorizon
                             .GetOrNewWhenNull(
@@ -42,11 +43,12 @@ namespace RW_ModularizationWeapon
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = properties.verbPropertiesOffseterAffectHorizon.DefaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                        cache.DefaultValue = defaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                        defaultValue = cache.DefaultValue;
                         if (currentComp != null && comp != currentComp)
                         {
                             cache *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
-                            cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
+                            cache.DefaultValue = defaultValue * currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon.DefaultValue;
                         }
                     }
 
@@ -86,6 +88,7 @@ namespace RW_ModularizationWeapon
 
                     if (current != null)
                     {
+                        double defaultValue = cache.DefaultValue;
                         cache *=
                             current.toolsOtherPartOffseterAffectHorizon
                             .GetOrNewWhenNull(
@@ -97,11 +100,12 @@ namespace RW_ModularizationWeapon
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = properties.toolsOffseterAffectHorizon.DefaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                        cache.DefaultValue = defaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                        defaultValue = cache.DefaultValue;
                         if (currentComp != null && comp != currentComp)
                         {
                             cache *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
-                            cache.DefaultValue *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
+                            cache.DefaultValue = defaultValue * currentComp.Props.toolsOtherPartOffseterAffectHorizon.DefaultValue;
                         }
                     }
 
@@ -155,7 +159,10 @@ namespace RW_ModularizationWeapon
             float result = 0;
             if (!statOffsetCache.TryGetValue((statDef, part), out result))
             {
-                result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatOffsetFromList(statDef);
+                result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatValueFromList(
+                    statDef,
+                    Props.statOffsetDefaultValue
+                );
                 WeaponAttachmentProperties current = null;
                 CompModularizationWeapon currentComp = null;
                 for (int i = 0; i < container.Count; i++)
@@ -188,7 +195,11 @@ namespace RW_ModularizationWeapon
                                     statDef,
                                     current.statOtherPartOffseterAffectHorizonDefaultValue
                                 ) ?? 1)
-                                * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon ?? 1) : 1))
+                                * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon.GetStatValueFromList(
+                                        statDef,
+                                        currentComp.Props.statOtherPartOffseterAffectHorizonDefaultValue
+                                    ) ?? 1
+                                ) : 1))
                             );
                     }
                 }

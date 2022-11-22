@@ -11,40 +11,38 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties, bool verbPropertiesBoolAndPatch, bool verbPropertiesBoolOrPatch, bool verbPropertiesObjectPatch)
+        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
             properties *= VerbPropertiesMultiplier(childNodeIdForVerbProperties);
             properties += VerbPropertiesOffseter(childNodeIdForVerbProperties);
-            if (verbPropertiesBoolAndPatch) properties &= VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
-            if (verbPropertiesBoolOrPatch) properties |= VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
-            if (verbPropertiesObjectPatch)
-                VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
-                .ForEach(x =>
-                {
-                    //Log.Message(x.ToString());
-                    properties &= x;
-                    properties |= x;
-                });
+            properties &= VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
+            properties |= VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
+            VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
+            .ForEach(x =>
+            {
+                //Log.Message(x.ToString());
+                properties &= x;
+                properties |= x;
+            });
             return properties;
         }
 
 
-        internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool, bool toolsBoolAndPatch, bool toolsBoolOrPatch, bool toolsObjectPatch)
+        internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool)
         {
             //tool = (Tool)tool.SimpleCopy();
             tool *= ToolsMultiplier(childNodeIdForTool);
             tool += ToolsOffseter(childNodeIdForTool);
-            if (toolsBoolAndPatch) tool &= ToolsBoolAndPatch(childNodeIdForTool);
-            if (toolsBoolOrPatch) tool |= ToolsBoolOrPatch(childNodeIdForTool);
-            if (toolsObjectPatch)
-                ToolsObjectPatch(childNodeIdForTool)
-                .ForEach(x =>
-                {
-                    //Log.Message(x.ToString());
-                    tool &= x;
-                    tool |= x;
-                });
+            tool &= ToolsBoolAndPatch(childNodeIdForTool);
+            tool |= ToolsBoolOrPatch(childNodeIdForTool);
+            ToolsObjectPatch(childNodeIdForTool)
+            .ForEach(x =>
+            {
+                //Log.Message(x.ToString());
+                tool &= x;
+                tool |= x;
+            });
             return tool;
         }
 
@@ -56,10 +54,8 @@ namespace RW_ModularizationWeapon
                 VerbPropertiesRegiestInfo prop = result[i];
                 VerbProperties newProp = VerbPropertiesAfterAffect(
                     prop.berforConvertProperties,
-                    null,
-                    Props.verbPropertiesBoolAndPatchByChildPart,
-                    Props.verbPropertiesBoolOrPatchByChildPart,
-                    Props.verbPropertiesObjectPatchByChildPart);
+                    null
+                    );
                 prop.afterConvertProperties = newProp;
                 result[i] = prop;
             }
@@ -87,21 +83,9 @@ namespace RW_ModularizationWeapon
                                     = VerbPropertiesAfterAffect(
                                         comp.VerbPropertiesAfterAffect(
                                             cache,
-                                            null,
-                                            comp.Props.verbPropertiesBoolAndPatchByChildPart,
-                                            comp.Props.verbPropertiesBoolOrPatchByChildPart,
-                                            comp.Props.verbPropertiesObjectPatchByChildPart
+                                            null
                                             ),
-                                        id,
-                                        internal_VerbPropertiesBoolAndPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_VerbPropertiesBoolOrPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_VerbPropertiesObjectPatchByOtherPart(
-                                            child,
-                                            attachmentProperties)
+                                        id
                                         );
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
@@ -114,16 +98,7 @@ namespace RW_ModularizationWeapon
                                 VerbProperties newProp
                                     = VerbPropertiesAfterAffect(
                                         cache,
-                                        id,
-                                        internal_VerbPropertiesBoolAndPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_VerbPropertiesBoolOrPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_VerbPropertiesObjectPatchByOtherPart(
-                                            child,
-                                            attachmentProperties)
+                                        id
                                         );
                                 result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                             }
@@ -148,10 +123,8 @@ namespace RW_ModularizationWeapon
                 VerbToolRegiestInfo prop = result[i];
                 Tool newProp = ToolAfterAffect(
                     prop.berforConvertTool,
-                    null,
-                    Props.toolsBoolAndPatchByChildPart,
-                    Props.toolsBoolOrPatchByChildPart,
-                    Props.toolsObjectPatchByChildPart);
+                    null
+                    );
                 prop.afterCobvertTool = newProp;
                 result[i] = prop;
             }
@@ -179,21 +152,8 @@ namespace RW_ModularizationWeapon
                                     = ToolAfterAffect(
                                         comp.ToolAfterAffect(
                                             cache,
-                                            null,
-                                            comp.Props.toolsBoolAndPatchByChildPart,
-                                            comp.Props.toolsBoolOrPatchByChildPart,
-                                            comp.Props.toolsObjectPatchByChildPart
-                                            ),
-                                        id,
-                                        internal_ToolsBoolAndPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_ToolsBoolOrPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_ToolsObjectPatchByOtherPart(
-                                            child,
-                                            attachmentProperties)
+                                            null),
+                                        id
                                         );
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }
@@ -206,16 +166,7 @@ namespace RW_ModularizationWeapon
                                 Tool newProp
                                     = ToolAfterAffect(
                                         cache,
-                                        id,
-                                        internal_ToolsBoolAndPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_ToolsBoolOrPatchByOtherPart(
-                                            child,
-                                            attachmentProperties),
-                                        internal_ToolsObjectPatchByOtherPart(
-                                            child,
-                                            attachmentProperties)
+                                        id
                                         );
                                 result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                             }

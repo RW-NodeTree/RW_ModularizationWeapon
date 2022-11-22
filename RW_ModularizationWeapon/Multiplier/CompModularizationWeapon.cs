@@ -34,6 +34,7 @@ namespace RW_ModularizationWeapon
 
                     if (current != null)
                     {
+                        double defaultValue = cache.DefaultValue;
                         cache *=
                             current.verbPropertiesOtherPartMultiplierAffectHorizon
                             .GetOrNewWhenNull(
@@ -45,11 +46,12 @@ namespace RW_ModularizationWeapon
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = properties.verbPropertiesMultiplierAffectHorizon.DefaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                        cache.DefaultValue = defaultValue * current.verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue;
+                        defaultValue = cache.DefaultValue;
                         if (currentComp != null && comp != currentComp)
                         {
                             cache *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
-                            cache.DefaultValue *= currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon;
+                            cache.DefaultValue = defaultValue * currentComp.Props.verbPropertiesOtherPartMultiplierAffectHorizon.DefaultValue;
                         }
                     }
 
@@ -93,6 +95,7 @@ namespace RW_ModularizationWeapon
 
                     if (current != null)
                     {
+                        double defaultValue = cache.DefaultValue;
                         cache *=
                             current.toolsOtherPartMultiplierAffectHorizon
                             .GetOrNewWhenNull(
@@ -104,11 +107,12 @@ namespace RW_ModularizationWeapon
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = properties.toolsMultiplierAffectHorizon.DefaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                        cache.DefaultValue = defaultValue * current.toolsOtherPartMultiplierAffectHorizonDefaultValue;
+                        defaultValue = cache.DefaultValue;
                         if (currentComp != null && comp != currentComp)
                         {
                             cache *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
-                            cache.DefaultValue *= currentComp.Props.toolsOtherPartMultiplierAffectHorizon;
+                            cache.DefaultValue = defaultValue * currentComp.Props.toolsOtherPartMultiplierAffectHorizon.DefaultValue;
                         }
                     }
 
@@ -169,7 +173,10 @@ namespace RW_ModularizationWeapon
             float result = 1;
             if (!statMultiplierCache.TryGetValue((statDef, part), out result))
             {
-                result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatFactorFromList(statDef);
+                result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatValueFromList(
+                    statDef,
+                    Props.statMultiplierDefaultValue
+                );
                 WeaponAttachmentProperties current = null;
                 CompModularizationWeapon currentComp = null;
                 for (int i = 0; i < container.Count; i++)
@@ -202,7 +209,12 @@ namespace RW_ModularizationWeapon
                                     statDef,
                                     current.statOtherPartMultiplierAffectHorizonDefaultValue
                                 ) ?? 1f)
-                                * (currentComp != comp ? (currentComp?.Props.statOtherPartMultiplierAffectHorizon ?? 1f) : 1f))
+                                * (currentComp != comp ? (
+                                    currentComp?.Props.statOtherPartMultiplierAffectHorizon.GetStatValueFromList(
+                                        statDef,
+                                        currentComp.Props.statOtherPartMultiplierAffectHorizonDefaultValue
+                                    ) ?? 1f
+                                ) : 1f))
                             );
                     }
                 }

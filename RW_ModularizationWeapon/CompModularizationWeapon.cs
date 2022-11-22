@@ -86,7 +86,7 @@ namespace RW_ModularizationWeapon
                     Type type = comp.GetType();
                     if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
                     CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                    if (properties != null && Props.compPropertiesAffectCompType.Contains(type))
+                    if (properties != null)
                     {
                         try
                         {
@@ -616,44 +616,82 @@ namespace RW_ModularizationWeapon
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
 
-            void CheckAndSetListDgit<T>(ref FieldReaderDgitList<T> list, float defaultValue)
+
+            void CheckAndSetDgitList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
                 list = list ?? new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
-                list.DefaultValue = defaultValue;
+                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
-            void CheckAndSetListBool<T>(ref FieldReaderBoolList<T> list, bool defaultValue)
+            void CheckAndSetBoolList<T>(ref FieldReaderBoolList<T> list, bool defaultValue)
             {
                 list = list ?? new FieldReaderBoolList<T>();
                 list.RemoveAll(f => f == null);
-                list.DefaultValue = defaultValue;
+                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
-            CheckAndSetListDgit(ref verbPropertiesOffseter, 0);
-            CheckAndSetListDgit(ref toolsOffseter, 0);
+            void CheckAndSetFiltList<T>(ref FieldReaderFiltList<T> list, bool defaultValue)
+            {
+                list = list ?? new FieldReaderFiltList<T>();
+                list.RemoveAll(f => f == null);
+                if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
+            }
 
-            CheckAndSetListDgit(ref verbPropertiesMultiplier, 1);
-            CheckAndSetListDgit(ref toolsMultiplier, 1);
+            void CheckAndSetInstList<T>(ref FieldReaderInstList<T> list)
+            {
+                list = list ?? new FieldReaderInstList<T>();
+                list.RemoveAll(f => f == null);
+            }
 
-            verbPropertiesObjectPatch = verbPropertiesObjectPatch ?? new List<FieldReaderInst<VerbProperties>>();
-            verbPropertiesObjectPatch.RemoveAll(f => f == null);
-            toolsObjectPatch = toolsObjectPatch ?? new List<FieldReaderInst<Tool>>();
-            toolsObjectPatch.RemoveAll(f => f == null);
+            void CheckAndSetStatList(ref List<StatModifier> list)
+            {
+                list = list ?? new List<StatModifier>();
+                list.RemoveAll(f => f == null);
+            }
 
-            CheckAndSetListBool(ref verbPropertiesBoolAndPatch, true);
-            CheckAndSetListBool(ref toolsBoolAndPatch, true);
+            CheckAndSetDgitList(ref verbPropertiesOffseter, 0);
+            CheckAndSetDgitList(ref toolsOffseter, 0);
+            CheckAndSetDgitList(ref compPropertiesOffseter, 0);
+            CheckAndSetDgitList(ref verbPropertiesOtherPartOffseterAffectHorizon, 1);
+            CheckAndSetDgitList(ref toolsOtherPartOffseterAffectHorizon, 1);
 
-            CheckAndSetListBool(ref verbPropertiesBoolOrPatch, false);
-            CheckAndSetListBool(ref toolsBoolOrPatch, false);
+            CheckAndSetDgitList(ref verbPropertiesMultiplier, 1);
+            CheckAndSetDgitList(ref toolsMultiplier, 1);
+            CheckAndSetDgitList(ref compPropertiesMultiplier, 1);
+            CheckAndSetDgitList(ref verbPropertiesOtherPartMultiplierAffectHorizon, 1);
+            CheckAndSetDgitList(ref toolsOtherPartMultiplierAffectHorizon, 1);
+
+            CheckAndSetBoolList(ref verbPropertiesBoolAndPatch, true);
+            CheckAndSetBoolList(ref toolsBoolAndPatch, true);
+            CheckAndSetBoolList(ref compPropertiesBoolAndPatch, true);
+            CheckAndSetBoolList(ref verbPropertiesBoolAndPatchByOtherPart, true);
+            CheckAndSetBoolList(ref toolsBoolAndPatchByOtherPart, true);
+
+            CheckAndSetBoolList(ref verbPropertiesBoolOrPatch, false);
+            CheckAndSetBoolList(ref toolsBoolOrPatch, false);
+            CheckAndSetBoolList(ref compPropertiesBoolOrPatch, false);
+            CheckAndSetBoolList(ref verbPropertiesBoolOrPatchByOtherPart, true);
+            CheckAndSetBoolList(ref toolsBoolOrPatchByOtherPart, true);
+
+            CheckAndSetInstList(ref verbPropertiesObjectPatch);
+            CheckAndSetInstList(ref toolsObjectPatch);
+            CheckAndSetInstList(ref compPropertiesObjectPatch);
+            CheckAndSetFiltList(ref verbPropertiesObjectPatchByOtherPart, true);
+            CheckAndSetFiltList(ref toolsObjectPatchByOtherPart, true);
+
+            CheckAndSetStatList(ref statOffset);
+            CheckAndSetStatList(ref statMultiplier);
+            CheckAndSetStatList(ref statOtherPartOffseterAffectHorizon);
+            CheckAndSetStatList(ref statOtherPartMultiplierAffectHorizon);
 
             parentDef.weaponTags = parentDef.weaponTags ?? new List<string>();
 
             disallowedOtherPart = disallowedOtherPart ?? new ThingFilter();
             disallowedOtherPart.ResolveReferences();
 
-            compPropertiesAffectCompType = compPropertiesAffectCompType ?? new List<Type>();
-            compPropertiesAffectCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
+            //compPropertiesAffectCompType = compPropertiesAffectCompType ?? new List<Type>();
+            //compPropertiesAffectCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
 
             compPropertiesCreateInstanceCompType = compPropertiesCreateInstanceCompType ?? new List<Type>();
             compPropertiesCreateInstanceCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
@@ -939,8 +977,8 @@ namespace RW_ModularizationWeapon
                         stringBuilder.AppendLine($"    {stat.stat.LabelCap} : (k-1)x{stat.value}+1");
                     }
 
-                    stringBuilder.AppendLine(CheckAndMark(verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart, "verbPropertiesObjectPatchByChildPart".Translate()));
-                    stringBuilder.AppendLine(CheckAndMark(toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart, "toolsObjectPatchByChildPart".Translate()));
+                    //stringBuilder.AppendLine(CheckAndMark(verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart, "verbPropertiesObjectPatchByChildPart".Translate()));
+                    //stringBuilder.AppendLine(CheckAndMark(toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart, "toolsObjectPatchByChildPart".Translate()));
                 }
 
                 List<Dialog_InfoCard.Hyperlink> hyperlinks = new List<Dialog_InfoCard.Hyperlink>(properties.filter.AllowedDefCount);
@@ -988,76 +1026,74 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
+
+
         #region Offset
+        #region Parent
         public FieldReaderDgitList<VerbProperties> verbPropertiesOffseter = new FieldReaderDgitList<VerbProperties>();
 
 
         public FieldReaderDgitList<Tool> toolsOffseter = new FieldReaderDgitList<Tool>();
 
 
-        public List<StatModifier> statOffset = new List<StatModifier>();
-
-
         public FieldReaderDgitList<CompProperties> compPropertiesOffseter = new FieldReaderDgitList<CompProperties>();
 
 
-        //public FieldReaderDgitList<CompProperties>> ThingCompOffseter = new FieldReaderDgitList<CompProperties>>();
+        public List<StatModifier> statOffset = new List<StatModifier>();
 
-        public float verbPropertiesOtherPartOffseterAffectHorizon = 1;
 
-        public float toolsOtherPartOffseterAffectHorizon = 1;
-
-        public float statOtherPartOffseterAffectHorizon = 1;
+        public float statOffsetDefaultValue = 1;
         #endregion
 
 
+        #region OtherPart
+        public FieldReaderDgitList<VerbProperties> verbPropertiesOtherPartOffseterAffectHorizon = new FieldReaderDgitList<VerbProperties>();
+
+        public FieldReaderDgitList<Tool> toolsOtherPartOffseterAffectHorizon = new FieldReaderDgitList<Tool>();
+
+        public List<StatModifier> statOtherPartOffseterAffectHorizon = new List<StatModifier>();
+
+        public float statOtherPartOffseterAffectHorizonDefaultValue = 1;
+        #endregion
+        #endregion
+
+
+
+
         #region Multiplier
+        #region Parent
         public FieldReaderDgitList<VerbProperties> verbPropertiesMultiplier = new FieldReaderDgitList<VerbProperties>();
 
 
         public FieldReaderDgitList<Tool> toolsMultiplier = new FieldReaderDgitList<Tool>();
 
 
-        public List<StatModifier> statMultiplier = new List<StatModifier>();
-
-
         public FieldReaderDgitList<CompProperties> compPropertiesMultiplier = new FieldReaderDgitList<CompProperties>();
 
 
-        //public FieldReaderDgitList<CompProperties>> ThingCompMultiplier = new FieldReaderDgitList<CompProperties>>();
+        public List<StatModifier> statMultiplier = new List<StatModifier>();
 
-        public float verbPropertiesOtherPartMultiplierAffectHorizon = 1;
 
-        public float toolsOtherPartMultiplierAffectHorizon = 1;
-
-        public float statOtherPartMultiplierAffectHorizon = 1;
+        public float statMultiplierDefaultValue = 1;
         #endregion
 
 
-        #region Patchs
-        public List<FieldReaderInst<VerbProperties>> verbPropertiesObjectPatch = new List<FieldReaderInst<VerbProperties>>();
+        #region OtherPart
+        public FieldReaderDgitList<VerbProperties> verbPropertiesOtherPartMultiplierAffectHorizon = new FieldReaderDgitList<VerbProperties>();
 
+        public FieldReaderDgitList<Tool> toolsOtherPartMultiplierAffectHorizon = new FieldReaderDgitList<Tool>();
 
-        public List<FieldReaderInst<Tool>> toolsObjectPatch = new List<FieldReaderInst<Tool>>();
+        public List<StatModifier> statOtherPartMultiplierAffectHorizon = new List<StatModifier>();
 
-
-        public List<FieldReaderInst<CompProperties>> compPropertiesObjectPatch = new List<FieldReaderInst<CompProperties>>();
-
-
-        public bool verbPropertiesObjectPatchByChildPart = true;
-
-
-        public bool toolsObjectPatchByChildPart = true;
-
-
-        public bool verbPropertiesObjectPatchByOtherPart = false;
-
-
-        public bool toolsObjectPatchByOtherPart = false;
+        public float statOtherPartMultiplierAffectHorizonDefaultValue = 1;
+        #endregion
+        #endregion
 
 
 
 
+        #region AndPatchs
+        #region Parent
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatch = new FieldReaderBoolList<VerbProperties>();
 
 
@@ -1065,22 +1101,21 @@ namespace RW_ModularizationWeapon
 
 
         public FieldReaderBoolList<CompProperties> compPropertiesBoolAndPatch = new FieldReaderBoolList<CompProperties>();
+        #endregion
 
 
-        public bool verbPropertiesBoolAndPatchByChildPart = true;
+        #region OtherPart
+        public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatchByOtherPart = new FieldReaderBoolList<VerbProperties>();
 
-
-        public bool toolsBoolAndPatchByChildPart = true;
-
-
-        public bool verbPropertiesBoolAndPatchByOtherPart = false;
-
-
-        public bool toolsBoolAndPatchByOtherPart = false;
+        public FieldReaderBoolList<Tool> toolsBoolAndPatchByOtherPart = new FieldReaderBoolList<Tool>();
+        #endregion
+        #endregion
 
 
 
 
+        #region OrPatchs
+        #region Parent
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatch = new FieldReaderBoolList<VerbProperties>();
 
 
@@ -1088,25 +1123,42 @@ namespace RW_ModularizationWeapon
 
 
         public FieldReaderBoolList<CompProperties> compPropertiesBoolOrPatch = new FieldReaderBoolList<CompProperties>();
-
-
-        public bool verbPropertiesBoolOrPatchByChildPart = true;
-
-
-        public bool toolsBoolOrPatchByChildPart = true;
-
-
-        public bool verbPropertiesBoolOrPatchByOtherPart = false;
-
-
-        public bool toolsBoolOrPatchByOtherPart = false;
         #endregion
 
 
+        #region OtherPart
+        public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatchByOtherPart = new FieldReaderBoolList<VerbProperties>();
+
+        public FieldReaderBoolList<Tool> toolsBoolOrPatchByOtherPart = new FieldReaderBoolList<Tool>();
+        #endregion
+        #endregion
+
+
+
+
+        #region InstPatchs
+        #region Parent
+        public FieldReaderInstList<VerbProperties> verbPropertiesObjectPatch = new FieldReaderInstList<VerbProperties>();
+
+
+        public FieldReaderInstList<Tool> toolsObjectPatch = new FieldReaderInstList<Tool>();
+
+
+        public FieldReaderInstList<CompProperties> compPropertiesObjectPatch = new FieldReaderInstList<CompProperties>();
+        #endregion
+
+
+        #region OtherPart
+        public FieldReaderFiltList<VerbProperties> verbPropertiesObjectPatchByOtherPart = new FieldReaderFiltList<VerbProperties>();
+
+        public FieldReaderFiltList<Tool> toolsObjectPatchByOtherPart = new FieldReaderFiltList<Tool>();
+        #endregion
+        #endregion
+
+
+
+
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
-
-
-        public List<Type> compPropertiesAffectCompType = new List<Type>();
 
 
         public List<Type> compPropertiesCreateInstanceCompType = new List<Type>();
