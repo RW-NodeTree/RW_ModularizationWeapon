@@ -432,7 +432,7 @@ namespace RW_ModularizationWeapon
                 Type type = comp.GetType();
                 if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
                 CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                if(properties != null && Props.compPropertiesAffectCompType.Contains(type))
+                if(properties != null)
                 {
                     try
                     {
@@ -915,36 +915,30 @@ namespace RW_ModularizationWeapon
                     }
 
                     stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
-                    if (verbPropertiesObjectPatchByChildPart && properties.verbPropertiesObjectPatchByChildPart)
+                    VerbPropertiesObjectPatch = childComp.VerbPropertiesObjectPatch(null);
+                    if (comp != null)
                     {
-                        VerbPropertiesObjectPatch = childComp.VerbPropertiesObjectPatch(null);
-                        if (comp != null)
+                        foreach (FieldReaderInst<VerbProperties> fieldReader in childComp.Props.verbPropertiesObjectPatch)
                         {
-                            foreach (FieldReaderInst<VerbProperties> fieldReader in childComp.Props.verbPropertiesObjectPatch)
-                            {
-                                int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
-                                if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
-                                else VerbPropertiesObjectPatch[index] |= fieldReader;
-                            }
+                            int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                            if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
+                            else VerbPropertiesObjectPatch[index] |= fieldReader;
                         }
-                        listAllInst(VerbPropertiesObjectPatch, "", "", true);
                     }
+                    listAllInst(VerbPropertiesObjectPatch, "", "", true);
 
                     stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
-                    if (toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart)
+                    ToolsObjectPatch = childComp.ToolsObjectPatch(null);
+                    if (comp != null)
                     {
-                        ToolsObjectPatch = childComp.ToolsObjectPatch(null);
-                        if (comp != null)
+                        foreach (FieldReaderInst<Tool> fieldReader in childComp.Props.toolsObjectPatch)
                         {
-                            foreach (FieldReaderInst<Tool> fieldReader in childComp.Props.toolsObjectPatch)
-                            {
-                                int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
-                                if (index < 0) ToolsObjectPatch.Add(fieldReader);
-                                else ToolsObjectPatch[index] |= fieldReader;
-                            }
+                            int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                            if (index < 0) ToolsObjectPatch.Add(fieldReader);
+                            else ToolsObjectPatch[index] |= fieldReader;
                         }
-                        listAllInst(ToolsObjectPatch, "", "", true);
                     }
+                    listAllInst(ToolsObjectPatch, "", "", true);
                 }
                 else
                 {
