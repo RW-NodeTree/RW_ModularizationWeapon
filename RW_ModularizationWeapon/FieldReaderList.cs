@@ -1237,13 +1237,21 @@ namespace RW_ModularizationWeapon
                 result = new FieldReaderDgitList<T>(a);
                 b = b ?? new FieldReaderFiltList<T>();
 
-                foreach (FieldReaderFilt<T> filt in b)
+                if(b.Count > 0)
                 {
-                    if (!filt.HasDefaultValue && b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
-                    for (int i = 0; i < result.Count; i++)
+                    foreach (FieldReaderFilt<T> filt in b)
                     {
-                        result[i] &= filt;
+                        FieldReaderFilt<T> copy = new FieldReaderFilt<T>(filt);
+                        if (!copy.HasDefaultValue && b.HasDefaultValue) copy.DefaultValue = b.DefaultValue;
+                        for (int i = 0; i < result.Count; i++)
+                        {
+                            result[i] &= copy;
+                        }
                     }
+                }
+                else if(!b.DefaultValue)
+                {
+                    result.Clear();
                 }
             }
             return result;
@@ -1258,13 +1266,21 @@ namespace RW_ModularizationWeapon
                 result = new FieldReaderBoolList<T>(a);
                 b = b ?? new FieldReaderFiltList<T>();
 
-                foreach (FieldReaderFilt<T> filt in b)
+                if (b.Count > 0)
                 {
-                    if (!filt.HasDefaultValue && b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
-                    for (int i = 0; i < result.Count; i++)
+                    foreach (FieldReaderFilt<T> filt in b)
                     {
-                        result[i] &= filt;
+                        FieldReaderFilt<T> copy = new FieldReaderFilt<T>(filt);
+                        if (!copy.HasDefaultValue && b.HasDefaultValue) copy.DefaultValue = b.DefaultValue;
+                        for (int i = 0; i < result.Count; i++)
+                        {
+                            result[i] &= copy;
+                        }
                     }
+                }
+                else if (!b.DefaultValue)
+                {
+                    result.Clear();
                 }
             }
             return result;
@@ -1279,13 +1295,21 @@ namespace RW_ModularizationWeapon
                 result = new FieldReaderInstList<T>(a);
                 b = b ?? new FieldReaderFiltList<T>();
 
-                foreach (FieldReaderFilt<T> filt in b)
+                if (b.Count > 0)
                 {
-                    if (!filt.HasDefaultValue && b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
-                    for (int i = 0; i < result.Count; i++)
+                    foreach (FieldReaderFilt<T> filt in b)
                     {
-                        result[i] &= filt;
+                        FieldReaderFilt<T> copy = new FieldReaderFilt<T>(filt);
+                        if (!copy.HasDefaultValue && b.HasDefaultValue) copy.DefaultValue = b.DefaultValue;
+                        for (int i = 0; i < result.Count; i++)
+                        {
+                            result[i] &= copy;
+                        }
                     }
+                }
+                else if (!b.DefaultValue)
+                {
+                    result.Clear();
                 }
             }
             return result;
