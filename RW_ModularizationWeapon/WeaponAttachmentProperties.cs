@@ -38,7 +38,10 @@ namespace RW_ModularizationWeapon
             filter.ResolveReferences();
 
             randomThingDefWeights = randomThingDefWeights ?? new List<ThingDefCountClass>();
-            randomThingDefWeights.RemoveAll(x => x.thingDef == null || !filter.Allows(x.thingDef));
+            randomThingDefWeights.RemoveAll(x => x == null || x.thingDef == null || !filter.Allows(x.thingDef));
+
+            allowedExtraCompType = allowedExtraCompType ?? new List<Type>();
+            allowedExtraCompType.RemoveAll(x => x == null);
 
 
             #region innerMethod

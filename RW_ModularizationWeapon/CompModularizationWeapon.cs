@@ -94,7 +94,8 @@ namespace RW_ModularizationWeapon
                         {
                             if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
                             comp.parent = parent;
-                            comp.Initialize(CompPropertiesAfterAffect(properties));
+                            if (Props.compPropertiesInitializeCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                            else comp.props = CompPropertiesAfterAffect(properties);
                             parent.AllComps[i] = comp;
                         }
                         catch (Exception ex)
@@ -110,7 +111,8 @@ namespace RW_ModularizationWeapon
                     {
                         ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
                         comp.parent = parent;
-                        comp.Initialize(CompPropertiesAfterAffect(prop));
+                        if (Props.compPropertiesInitializeCompType.Contains(prop.compClass)) comp.Initialize(CompPropertiesAfterAffect(prop));
+                        else comp.props = CompPropertiesAfterAffect(prop);
                         parent.AllComps.Add(comp);
                     }
                 }
@@ -483,7 +485,8 @@ namespace RW_ModularizationWeapon
                     {
                         if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
                         comp.parent = parent;
-                        comp.Initialize(CompPropertiesAfterAffect(properties));
+                        if (Props.compPropertiesInitializeCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                        else comp.props = CompPropertiesAfterAffect(properties);
                         parent.AllComps[i] = comp;
                     }
                     catch (Exception ex)
@@ -499,7 +502,8 @@ namespace RW_ModularizationWeapon
                 {
                     ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
                     comp.parent = parent;
-                    comp.Initialize(CompPropertiesAfterAffect(prop));
+                    if (Props.compPropertiesInitializeCompType.Contains(prop.compClass)) comp.Initialize(CompPropertiesAfterAffect(prop));
+                    else comp.props = CompPropertiesAfterAffect(prop);
                     parent.AllComps.Add(comp);
                 }
             }
@@ -757,6 +761,12 @@ namespace RW_ModularizationWeapon
 
             compPropertiesCreateInstanceCompType = compPropertiesCreateInstanceCompType ?? new List<Type>();
             compPropertiesCreateInstanceCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
+
+            compPropertiesInitializeCompType = compPropertiesInitializeCompType ?? new List<Type>();
+            compPropertiesInitializeCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
+
+            compGetGizmosExtraAllowedCompType = compGetGizmosExtraAllowedCompType ?? new List<Type>();
+            compGetGizmosExtraAllowedCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
         }
 
 
@@ -1221,6 +1231,9 @@ namespace RW_ModularizationWeapon
 
 
         public List<Type> compPropertiesCreateInstanceCompType = new List<Type>();
+
+
+        public List<Type> compPropertiesInitializeCompType = new List<Type>();
 
 
         public List<Type> compGetGizmosExtraAllowedCompType = new List<Type>();
