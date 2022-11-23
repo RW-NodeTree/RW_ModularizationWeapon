@@ -94,7 +94,7 @@ namespace RW_ModularizationWeapon
                         {
                             if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
                             comp.parent = parent;
-                            if (Props.compPropertiesInitializeCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
                             else comp.props = CompPropertiesAfterAffect(properties);
                             parent.AllComps[i] = comp;
                         }
@@ -111,8 +111,7 @@ namespace RW_ModularizationWeapon
                     {
                         ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
                         comp.parent = parent;
-                        if (Props.compPropertiesInitializeCompType.Contains(prop.compClass)) comp.Initialize(CompPropertiesAfterAffect(prop));
-                        else comp.props = CompPropertiesAfterAffect(prop);
+                        comp.Initialize(CompPropertiesAfterAffect(prop));
                         parent.AllComps.Add(comp);
                     }
                 }
@@ -485,9 +484,10 @@ namespace RW_ModularizationWeapon
                     {
                         if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
                         comp.parent = parent;
-                        if (Props.compPropertiesInitializeCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                        if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
                         else comp.props = CompPropertiesAfterAffect(properties);
                         parent.AllComps[i] = comp;
+                        //comp.props.LogAllField();
                     }
                     catch (Exception ex)
                     {
@@ -502,9 +502,9 @@ namespace RW_ModularizationWeapon
                 {
                     ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
                     comp.parent = parent;
-                    if (Props.compPropertiesInitializeCompType.Contains(prop.compClass)) comp.Initialize(CompPropertiesAfterAffect(prop));
-                    else comp.props = CompPropertiesAfterAffect(prop);
+                    comp.Initialize(CompPropertiesAfterAffect(prop));
                     parent.AllComps.Add(comp);
+                    //comp.props.LogAllField();
                 }
             }
 
@@ -1108,7 +1108,7 @@ namespace RW_ModularizationWeapon
         public List<StatModifier> statOffset = new List<StatModifier>();
 
 
-        public float statOffsetDefaultValue = 1;
+        public float statOffsetDefaultValue = 0;
         #endregion
 
 

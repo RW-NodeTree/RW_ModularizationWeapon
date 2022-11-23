@@ -112,7 +112,7 @@ namespace RW_ModularizationWeapon
 
         protected override float PostStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetValueUnfinalized");
+            //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_GetValueUnfinalized -> {result}");
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing != parent)
@@ -145,7 +145,7 @@ namespace RW_ModularizationWeapon
 
         protected override float PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue");
+            //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue -> {result}");
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
@@ -182,7 +182,7 @@ namespace RW_ModularizationWeapon
 
         protected override float PostStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyPostProcess, float result, Dictionary<string, object> forPostRead)
         {
-            //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_FinalizeValue");
+            //Log.Message($"{StatWorker_stat(statWorker)} : PostStatWorker_FinalizeValue -> {result}");
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)

@@ -582,6 +582,7 @@ namespace RW_ModularizationWeapon
             if (other != null)
             {
                 datas = Gen.MemberwiseClone(other.datas);
+                fields.AddRange(other.fields);
                 UsedType = other.UsedType;
             }
         }
@@ -676,7 +677,7 @@ namespace RW_ModularizationWeapon
 
         public override void Clear() => fields.Clear();
 
-        public override FieldReader<T, object> Clone() => new FieldReaderInst<T>();
+        public override FieldReader<T, object> Clone() => new FieldReaderInst<T>(this);
 
         public override void UsedTypeUpdate()
         {

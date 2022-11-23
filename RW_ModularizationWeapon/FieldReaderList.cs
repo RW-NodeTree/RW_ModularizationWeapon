@@ -1239,7 +1239,7 @@ namespace RW_ModularizationWeapon
 
                 foreach (FieldReaderFilt<T> filt in b)
                 {
-                    if (!filt.HasDefaultValue && !b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
+                    if (!filt.HasDefaultValue && b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
                     for (int i = 0; i < result.Count; i++)
                     {
                         result[i] &= filt;
@@ -1260,7 +1260,7 @@ namespace RW_ModularizationWeapon
 
                 foreach (FieldReaderFilt<T> filt in b)
                 {
-                    if (!filt.HasDefaultValue && !b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
+                    if (!filt.HasDefaultValue && b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
                     for (int i = 0; i < result.Count; i++)
                     {
                         result[i] &= filt;
@@ -1281,7 +1281,7 @@ namespace RW_ModularizationWeapon
 
                 foreach (FieldReaderFilt<T> filt in b)
                 {
-                    if (!filt.HasDefaultValue && !b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
+                    if (!filt.HasDefaultValue && b.HasDefaultValue) filt.DefaultValue = b.DefaultValue;
                     for (int i = 0; i < result.Count; i++)
                     {
                         result[i] &= filt;

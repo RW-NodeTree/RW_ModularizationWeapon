@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Verse;
 
 namespace RW_ModularizationWeapon.Tools
 {
@@ -17,6 +19,18 @@ namespace RW_ModularizationWeapon.Tools
                 dictonary.Add(key, result);
             }
             return result;
+        }
+        public static void LogAllField(this object obj)
+        {
+            StringBuilder result = new StringBuilder();
+            result.AppendLine($"{obj} :");
+            if (obj != null)
+            {
+                result.AppendLine($"Hash : {obj.GetHashCode()}");
+                foreach (FieldInfo field in obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+                    result.AppendLine($"{field.Name} : {field.GetValue(obj)}");
+            }
+            Log.Message(result.ToString());
         }
     }
 }
