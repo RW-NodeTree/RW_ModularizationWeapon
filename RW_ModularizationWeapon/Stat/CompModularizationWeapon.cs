@@ -48,8 +48,8 @@ namespace RW_ModularizationWeapon
             {
                 //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
                 List<Verb> verbs = eq.AllVerbs;
-                List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && !parent.def.Verbs.Contains(x.verbProps) select x.verbProps).ToList();
-                List<Tool> cachedTools = (from x in verbs where x.tool != null && !parent.def.tools.Contains(x.tool) select x.tool).ToList();
+                List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && x.verbProps != null select x.verbProps).ToList();
+                List<Tool> cachedTools = (from x in verbs where x.tool != null select x.tool).ToList();
 
                 ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
                 Stack<List<VerbProperties>> stackVerb = (Stack<List<VerbProperties>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_verbs", () => new Stack<List<VerbProperties>>());
@@ -63,7 +63,7 @@ namespace RW_ModularizationWeapon
             }
             Stack<List<CompProperties>> stackComp = (Stack<List<CompProperties>>)forPostRead.GetOrNewWhenNull("CompModularizationWeapon_comps", () => new Stack<List<CompProperties>>());
             stackComp.Push(parent.def.comps);
-            parent.def.comps = (from x in parent.AllComps select x.props).ToList();
+            parent.def.comps = (from x in parent.AllComps where x.props != null select x.props).ToList();
         }
 
 
