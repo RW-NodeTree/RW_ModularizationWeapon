@@ -432,6 +432,8 @@ namespace RW_ModularizationWeapon
                 compProperties &= x;
                 compProperties |= x;
             });
+
+            if (Props.compPropertiesResoveCrosseReferenceType.Contains(compProperties.compClass)) compProperties.ResolveReferences(parent.def);
             return compProperties;
         }
 
@@ -757,8 +759,8 @@ namespace RW_ModularizationWeapon
             disallowedOtherPart = disallowedOtherPart ?? new ThingFilter();
             disallowedOtherPart.ResolveReferences();
 
-            //compPropertiesAffectCompType = compPropertiesAffectCompType ?? new List<Type>();
-            //compPropertiesAffectCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
+            compPropertiesResoveCrosseReferenceType = compPropertiesResoveCrosseReferenceType ?? new List<Type>();
+            compPropertiesResoveCrosseReferenceType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
 
             compPropertiesCreateInstanceCompType = compPropertiesCreateInstanceCompType ?? new List<Type>();
             compPropertiesCreateInstanceCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
@@ -1229,6 +1231,9 @@ namespace RW_ModularizationWeapon
 
 
         public List<CompProperties> extraComp = new List<CompProperties>();
+
+
+        public List<Type> compPropertiesResoveCrosseReferenceType = new List<Type>();
 
 
         public List<Type> compPropertiesCreateInstanceCompType = new List<Type>();

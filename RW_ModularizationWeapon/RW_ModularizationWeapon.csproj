@@ -45,7 +45,7 @@
     </Reference>
     <Reference Include="RW_NodeTree, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\SteamLibrary\steamapps\common\RimWorld\Mods\RW_NodeTree\1.4\Assemblies\RW_NodeTree.dll</HintPath>
+      <HintPath>D:\SteamLibrary\steamapps\common\RimWorld\Mods\RW_NodeTree\1.3\Assemblies\RW_NodeTree.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -275,7 +275,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set ver=1.4
+    <PostBuildEvent>set ver=1.3
 rmdir "%25RW_HOME%25\Mods\$(ProjectName)\%25ver%25" /s/q
 mkdir "%25RW_HOME%25\Mods\$(ProjectName)\%25ver%25"
 xcopy "$(ProjectDir)\PackUp" "%25RW_HOME%25\Mods\$(ProjectName)" /e/s/q/y
