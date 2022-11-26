@@ -71,6 +71,7 @@ namespace RW_ModularizationWeapon
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
             if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
+                targetPartsWithId = targetPartsWithId ?? new Dictionary<string, LocalTargetInfo>();
                 NodeProccesser.UpdateNode();
                 NodeContainer container = ChildNodes;
                 foreach(Thing thing in container.Values)
