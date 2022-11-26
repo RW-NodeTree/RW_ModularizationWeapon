@@ -68,12 +68,19 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseVerbProperties(child, attachmentProperties))
                 {
+                    CompModularizationWeapon comp = child;
                     IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, child);
                     List<VerbProperties> verbProperties = verbOwner?.VerbProperties ?? child?.def.Verbs;
+                    if(verbProperties == null && comp != null && child.def.Verbs != null)
+                    {
+                        Dictionary<string, object> cache = new Dictionary<string, object>();
+                        comp.NodeProccesser.PreIVerbOwner_GetVerbProperties(ownerType, cache);
+                        verbProperties = comp.NodeProccesser.PostIVerbOwner_GetVerbProperties(ownerType, child.def.Verbs, cache);
+                    }
+                    verbProperties = verbProperties ?? child?.def.Verbs;
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
-                        CompModularizationWeapon comp = child;
                         if (comp != null && verbOwner == null)
                         {
                             for (int j = 0; j < verbProperties.Count; j++)
@@ -137,12 +144,19 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseTools(child, attachmentProperties))
                 {
+                    CompModularizationWeapon comp = child;
                     IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, child);
-                    List<Tool> tools = verbOwner?.Tools ?? child?.def.tools;
+                    List<Tool> tools = verbOwner?.Tools;
+                    if (tools == null && comp != null && child.def.tools != null)
+                    {
+                        Dictionary<string, object> cache = new Dictionary<string, object>();
+                        comp.NodeProccesser.PreIVerbOwner_GetTools(ownerType, cache);
+                        tools = comp.NodeProccesser.PostIVerbOwner_GetTools(ownerType, child.def.tools, cache);
+                    }
+                    tools = tools ?? child?.def.tools;
                     if (tools != null)
                     {
                         result.Capacity += tools.Count;
-                        CompModularizationWeapon comp = child;
                         if (comp != null && verbOwner == null)
                         {
                             for (int j = 0; j < tools.Count; j++)
