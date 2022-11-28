@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon
                 {
                     materialCache = new Material(ShaderDatabase.Cutout);
                     Texture2D texture = (!UITexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(UITexPath) : BaseContent.BadTex;
-                    materialCache.mainTexture = texture;
+                    materialCache.mainTexture = texture ?? BaseContent.BadTex;
                 }
                 return materialCache;
             }

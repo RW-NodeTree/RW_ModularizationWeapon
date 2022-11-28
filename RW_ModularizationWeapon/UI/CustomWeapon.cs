@@ -280,7 +280,14 @@ namespace RW_ModularizationWeapon.UI
                                 selThing.holdingOwner = null;
                                 comp.NodeProccesser.ResetRenderedTexture();
                             }
-                            Widgets.ThingIcon(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), selThing);
+                            try
+                            {
+                                Widgets.ThingIcon(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), selThing);
+                            }
+                            catch(Exception ex)
+                            {
+                                Log.Error(ex.ToString());
+                            }
                             if (comp_targetModeParent != null)
                             {
                                 selThing.holdingOwner = comp_targetModeParent.ChildNodes;

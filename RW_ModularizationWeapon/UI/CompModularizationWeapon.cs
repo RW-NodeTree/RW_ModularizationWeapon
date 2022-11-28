@@ -74,21 +74,35 @@ namespace RW_ModularizationWeapon
                 {
                     if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                     {
-                        if (Selected?.Contains((id, this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
-                        else if (GetChildTreeViewOpend(id)) Widgets.DrawHighlightSelected(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));
-                        Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));//hover
+                        try
+                        {
+                            if (Selected?.Contains((id, this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                            else if (GetChildTreeViewOpend(id)) Widgets.DrawHighlightSelected(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));
+                            Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));//hover
+                        }
+                        catch(Exception ex)
+                        {
+                            Log.Error(ex.ToString());
+                        }
                     }
 
                     bool opend = GetChildTreeViewOpend(id);
 
                     if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                     {
-                        if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                        try
                         {
-                            opend = !opend;
-                            if (opend) openEvent?.Invoke(id, thing, this);
-                            else closeEvent?.Invoke(id, thing, this);
-                            SetChildTreeViewOpend(id, opend);
+                            if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                            {
+                                opend = !opend;
+                                if (opend) openEvent?.Invoke(id, thing, this);
+                                else closeEvent?.Invoke(id, thing, this);
+                                SetChildTreeViewOpend(id, opend);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            Log.Error(ex.ToString());
                         }
                     }
                     if (thing != null)
@@ -103,7 +117,14 @@ namespace RW_ModularizationWeapon
                                 thing.holdingOwner = null;
                                 comp.NodeProccesser.ResetRenderedTexture();
                             }
-                            Widgets.ThingIcon(new Rect(currentPos.x + 1, currentPos.y + 1, BlockHeight - 1, BlockHeight - 2), thing);
+                            try
+                            {
+                                Widgets.ThingIcon(new Rect(currentPos.x + 1, currentPos.y + 1, BlockHeight - 1, BlockHeight - 2), thing);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex.ToString());
+                            }
                             if (comp_targetModeParent != null)
                             {
                                 thing.holdingOwner = comp_targetModeParent.ChildNodes;
@@ -113,7 +134,14 @@ namespace RW_ModularizationWeapon
 
                             if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
                             {
-                                iconEvent?.Invoke(id, thing, this);
+                                try
+                                {
+                                    iconEvent?.Invoke(id, thing, this);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Log.Error(ex.ToString());
+                                }
                             }
                         }
                         if (!(comp?.Props.attachmentProperties).NullOrEmpty())
@@ -135,14 +163,28 @@ namespace RW_ModularizationWeapon
                         }
                         else if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight && Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
                         {
-                            openEvent?.Invoke(id, thing, this);
+                            try
+                            {
+                                openEvent?.Invoke(id, thing, this);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex.ToString());
+                            }
                         }
                     }
                     else if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
                     {
-                        Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight), properties.UITexture, 1);
-                        Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight), properties.Name);
-                        if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight))) iconEvent?.Invoke(id, thing, this);
+                        try
+                        {
+                            Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight), properties.UITexture, 1);
+                            Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight), properties.Name);
+                            if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight))) iconEvent?.Invoke(id, thing, this);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex.ToString());
+                        }
                     }
                     currentPos.y += BlockHeight;
                 }
