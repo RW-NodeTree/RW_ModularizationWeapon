@@ -191,12 +191,12 @@ namespace RW_ModularizationWeapon
 
         protected override void Removed(NodeContainer container, string id)
         {
-            NodeProccesser.NeedUpdate = true;
             if (CachedHoldingOwner != null && parent.holdingOwner == null)
             {
                 parent.holdingOwner = CachedHoldingOwner;
                 CachedHoldingOwner = null;
             }
+            NodeProccesser.NeedUpdate = true;
             UsingTargetPart = ShowTargetPart;
             //Log.Message($"container Removed {container.Comp} :" +
             //    $"\nthis = {this};" +
