@@ -506,6 +506,13 @@ namespace RW_ModularizationWeapon
                 }
             }
 
+
+            if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
+            {
+                //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
+                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+            }
+
             return false;
         }
 

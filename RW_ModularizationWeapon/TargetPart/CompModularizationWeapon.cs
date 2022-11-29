@@ -151,11 +151,6 @@ namespace RW_ModularizationWeapon
                 }
             }
 
-            if(PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
-            {
-                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null,new object[] { parent });
-            }
-
             NodeProccesser?.UpdateNode();
         }
 
