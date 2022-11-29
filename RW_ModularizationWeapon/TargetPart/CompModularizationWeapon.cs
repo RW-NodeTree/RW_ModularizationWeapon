@@ -12,6 +12,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
+
         public bool ShowTargetPart
         {
             get
@@ -21,8 +22,7 @@ namespace RW_ModularizationWeapon
                 while (!result && current != null)
                 {
                     result = current.showTargetPart;
-                    if(current.UsingTargetPart) current = current.ParentPart;
-                    else current = (CompModularizationWeapon)(current.targetParentPart?.Owner as CompChildNodeProccesser)?.parent;
+                    current = current.ParentPart;
                 }
                 return result;
             }
@@ -44,13 +44,9 @@ namespace RW_ModularizationWeapon
                 if (usingTargetPart != value)
                 {
                     usingTargetPart = value;
-                    ThingOwner cacheOwner = parent.holdingOwner;
-                    parent.holdingOwner = targetParentPart ?? cacheOwner;
-                    targetParentPart = cacheOwner;
                     foreach (string id in NodeProccesser.RegiestedNodeId)
                     {
-                        LocalTargetInfo cache;
-                        if (targetPartsWithId.TryGetValue(id, out cache))
+                        if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo cache))
                         {
                             targetPartsWithId[id] = ChildNodes[id];
                             ChildNodes[id] = cache.Thing;
@@ -64,13 +60,13 @@ namespace RW_ModularizationWeapon
                             }
                         }
                     }
-                    NodeProccesser?.UpdateNode();
                 }
+                NodeProccesser?.UpdateNode();
             }
         }
 
 
-        public LocalTargetInfo OrginalPart(string id) => UsingTargetPart ? ((targetPartsWithId.TryGetValue(id)).Thing ?? ChildNodes[id]) : ChildNodes[id];
+        public LocalTargetInfo OrginalPart(string id) => UsingTargetPart ? (targetPartsWithId.TryGetValue(id).Thing ?? ChildNodes[id]) : ChildNodes[id];
 
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
@@ -84,8 +80,7 @@ namespace RW_ModularizationWeapon
                     if (!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, ChildNodes[id]);
                     ChildNodes[id] = targetInfo.Thing;
                     if (targetPartsWithId[id].Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
-                    NeedUpdate = true;
-                    NodeProccesser?.UpdateNode();
+                    //NodeProccesser?.UpdateNode();
                 }
                 else
                 {
@@ -151,6 +146,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            NodeProccesser?.UpdateNode();
         }
 
 
@@ -168,6 +164,40 @@ namespace RW_ModularizationWeapon
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+
+        protected override void Added(NodeContainer container, string id)
+        {
+            if (CachedHoldingOwner == null && parent.holdingOwner != container)
+            {
+                CachedHoldingOwner = parent.holdingOwner;
+                parent.holdingOwner = container;
+            }
+            NodeProccesser.NeedUpdate = true;
+            UsingTargetPart = ShowTargetPart;
+            //Log.Message($"container add {container.Comp} :" +
+            //    $"\nthis = {this};" +
+            //    $"\nparent.ParentHolder = {parent.ParentHolder};" +
+            //    $"\nCachedHoldingOwner = {CachedHoldingOwner?.Owner};" +
+            //    $"\nNodeProccesser.NeedUpdate = {NodeProccesser.NeedUpdate}");
+        }
+
+
+        protected override void Removed(NodeContainer container, string id)
+        {
+            NodeProccesser.NeedUpdate = true;
+            if (CachedHoldingOwner != null && parent.holdingOwner == null)
+            {
+                parent.holdingOwner = CachedHoldingOwner;
+                CachedHoldingOwner = null;
+            }
+            UsingTargetPart = ShowTargetPart;
+            //Log.Message($"container Removed {container.Comp} :" +
+            //    $"\nthis = {this};" +
+            //    $"\nparent.ParentHolder = {parent.ParentHolder};" +
+            //    $"\nCachedHoldingOwner = {CachedHoldingOwner?.Owner};" +
+            //    $"\nNodeProccesser.NeedUpdate = {NodeProccesser.NeedUpdate}");
         }
     }
 }

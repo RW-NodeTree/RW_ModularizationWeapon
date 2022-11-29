@@ -73,15 +73,6 @@ namespace RW_ModularizationWeapon
             {
                 targetPartsWithId = targetPartsWithId ?? new Dictionary<string, LocalTargetInfo>();
                 NodeProccesser.UpdateNode();
-                NodeContainer container = ChildNodes;
-                foreach(Thing thing in container.Values)
-                {
-                    CompModularizationWeapon comp = thing;
-                    if(comp != null)
-                    {
-                        comp.targetParentPart = container;
-                    }
-                }
 
                 for (int i = 0; i < parent.AllComps.Count; i++)
                 {
@@ -284,7 +275,7 @@ namespace RW_ModularizationWeapon
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
             {
-                if(node == null) return properties.allowEmpty;
+                if (node == null) return properties.allowEmpty;
                 CompModularizationWeapon comp = node;
                 if(comp != null)
                 {
@@ -522,29 +513,6 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override void Added(NodeContainer container, string id)
-        {
-            //Log.Message($"container add {container.Comp}");
-            UsingTargetPart = true;
-            if (parent.holdingOwner != targetParentPart) parent.holdingOwner?.Remove(parent);
-            parent.holdingOwner = container;
-            UsingTargetPart = ShowTargetPart;
-            NodeProccesser.NeedUpdate = true;
-            NodeProccesser.UpdateNode();
-        }
-
-
-        protected override void Removed(NodeContainer container, string id)
-        {
-            //Log.Message($"container remove {container.Comp}");
-            UsingTargetPart = false;
-            targetParentPart = null;
-            UsingTargetPart = ShowTargetPart;
-            NodeProccesser.NeedUpdate = true;
-            NodeProccesser.UpdateNode();
-        }
-
-
         #region operator
         public static implicit operator Thing(CompModularizationWeapon node)
         {
@@ -562,7 +530,7 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
-        private ThingOwner targetParentPart = null;
+        private ThingOwner CachedHoldingOwner = null;
         private bool showTargetPart = false;
         private bool usingTargetPart = false;
 

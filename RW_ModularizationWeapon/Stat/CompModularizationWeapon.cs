@@ -406,9 +406,9 @@ namespace RW_ModularizationWeapon
                     Log.Error(ex.ToString());
                 }
 
-                foreach (StatDrawEntry entry in cache) yield return entry;
-
                 StatWorkerPostfix(forPostRead);
+
+                foreach (StatDrawEntry entry in cache) yield return entry;
             }
             else
             {
@@ -440,9 +440,9 @@ namespace RW_ModularizationWeapon
                     Log.Error(ex.ToString());
                 }
 
-                foreach (StatDrawEntry entry in cache) yield return entry;
-
                 StatWorkerPostfix(forPostRead);
+
+                foreach (StatDrawEntry entry in cache) yield return entry;
             }
             else
             {
