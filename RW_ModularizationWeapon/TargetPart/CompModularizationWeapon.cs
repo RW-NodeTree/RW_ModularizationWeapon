@@ -80,7 +80,7 @@ namespace RW_ModularizationWeapon
                     if (!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, ChildNodes[id]);
                     ChildNodes[id] = targetInfo.Thing;
                     if (targetPartsWithId[id].Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
-                    //NodeProccesser?.UpdateNode();
+                    NodeProccesser?.UpdateNode();
                 }
                 else
                 {
