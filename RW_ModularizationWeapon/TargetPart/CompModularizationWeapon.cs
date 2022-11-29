@@ -126,13 +126,17 @@ namespace RW_ModularizationWeapon
                 }
             }
 
-            if (CombatExtended_CompAmmoUser != null)
+            if (CombatExtended_CompAmmoUser != null &&
+                CombatExtended_CompAmmoUser_currentAmmoInt != null &&
+                CombatExtended_CompAmmoUser_CurMagCount_get != null &&
+                CombatExtended_CompAmmoUser_CurMagCount_set != null
+                )
             {
                 for (int i = 0; i < parent.AllComps.Count; i++)
                 {
                     ThingComp comp = parent.AllComps[i];
                     Type type = comp.GetType();
-                    if (type == CombatExtended_CompAmmoUser)
+                    if (CombatExtended_CompAmmoUser.IsAssignableFrom(type))
                     {
                         ThingDef def = CombatExtended_CompAmmoUser_currentAmmoInt(comp);
                         int count = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(comp, null);
@@ -146,6 +150,12 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+
+            if(PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
+            {
+                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null,new object[] { parent });
+            }
+
             NodeProccesser?.UpdateNode();
         }
 

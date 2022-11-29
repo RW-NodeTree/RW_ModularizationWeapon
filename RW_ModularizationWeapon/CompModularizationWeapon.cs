@@ -55,6 +55,10 @@ namespace RW_ModularizationWeapon
                 CombatExtended_CompAmmoUser_CurMagCount_get = CombatExtended_CompAmmoUser.GetMethod("get_CurMagCount", BindingFlags.Instance | BindingFlags.Public);
                 CombatExtended_CompAmmoUser_CurMagCount_set = CombatExtended_CompAmmoUser.GetMethod("set_CurMagCount", BindingFlags.Instance | BindingFlags.Public);
             }
+            if(PerformanceOptimizer_ComponentCache != null)
+            {
+                PerformanceOptimizer_ComponentCache_ResetCompCache = PerformanceOptimizer_ComponentCache.GetMethod("ResetCompCache", BindingFlags.Static | BindingFlags.Public);
+            }
         }
 
         public override void PostPostMake()
@@ -536,12 +540,15 @@ namespace RW_ModularizationWeapon
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
+        private static Type PerformanceOptimizer_ComponentCache = GenTypes.GetTypeInAnyAssembly("PerformanceOptimizer.ComponentCache");
         private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
         private static AccessTools.FieldRef<ThingDef, List<VerbProperties>> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>>("verbs");
         private static AccessTools.FieldRef<object, ThingDef> CombatExtended_CompAmmoUser_currentAmmoInt = null;
         //private static AccessTools.FieldRef<object, IList> CombatExtended_CompFireModes_availableAimModes = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_get = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_set = null;
+        private static MethodInfo PerformanceOptimizer_ComponentCache_ResetCompCache = null;
+
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
     }
