@@ -140,6 +140,7 @@ namespace RW_ModularizationWeapon
                                 if(command != null && type != typeof(CompModularizationWeapon))
                                 {
                                     command.defaultLabel = part.LabelCap + " : " + command.defaultLabel;
+                                    command.shrinkable = true;
                                 }
                                 yield return gizmo;
                             }
