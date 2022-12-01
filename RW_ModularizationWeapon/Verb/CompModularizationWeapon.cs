@@ -47,7 +47,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override List<VerbPropertiesRegiestInfo> PostIVerbOwner_GetVerbProperties(Type ownerType, List<VerbPropertiesRegiestInfo> result, Dictionary<string, object> forPostRead)
+        protected override List<VerbPropertiesRegiestInfo> FinalIVerbOwner_GetVerbProperties(Type ownerType, List<VerbPropertiesRegiestInfo> result, Dictionary<string, object> stats, Exception exception)
         {
             for (int i = 0; i < result.Count; i++)
             {
@@ -75,7 +75,7 @@ namespace RW_ModularizationWeapon
                     {
                         Dictionary<string, object> cache = new Dictionary<string, object>();
                         comp.NodeProccesser.PreIVerbOwner_GetVerbProperties(ownerType, cache);
-                        verbProperties = comp.NodeProccesser.PostIVerbOwner_GetVerbProperties(ownerType, child.def.Verbs, cache);
+                        verbProperties = comp.NodeProccesser.FinalIVerbOwner_GetVerbProperties(ownerType, child.def.Verbs, cache, exception);
                     }
                     verbProperties = verbProperties ?? child?.def.Verbs;
                     if (verbProperties != null)
@@ -123,7 +123,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override List<VerbToolRegiestInfo> PostIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> forPostRead)
+        protected override List<VerbToolRegiestInfo> FinalIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> stats, Exception exception)
         {
             for (int i = 0; i < result.Count; i++)
             {
@@ -151,7 +151,7 @@ namespace RW_ModularizationWeapon
                     {
                         Dictionary<string, object> cache = new Dictionary<string, object>();
                         comp.NodeProccesser.PreIVerbOwner_GetTools(ownerType, cache);
-                        tools = comp.NodeProccesser.PostIVerbOwner_GetTools(ownerType, child.def.tools, cache);
+                        tools = comp.NodeProccesser.FinalIVerbOwner_GetTools(ownerType, child.def.tools, cache, exception);
                     }
                     tools = tools ?? child?.def.tools;
                     if (tools != null)
