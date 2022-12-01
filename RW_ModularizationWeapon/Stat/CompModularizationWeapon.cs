@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Verse;
-using static UnityEngine.Random;
 
 namespace RW_ModularizationWeapon
 {
