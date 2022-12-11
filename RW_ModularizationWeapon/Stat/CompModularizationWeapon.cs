@@ -133,6 +133,10 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            else if(exception!= null)
+            {
+                Log.Error(exception.ToString());
+            }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
@@ -188,6 +192,10 @@ namespace RW_ModularizationWeapon
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
             {
+                if (exception != null)
+                {
+                    Log.Error(exception.ToString());
+                }
                 StatDef statDef = StatWorker_stat(statWorker);
                 if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
                 {
@@ -289,6 +297,10 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            else if (exception != null)
+            {
+                Log.Error(exception.ToString());
+            }
             if (!(statWorker is StatWorker_MeleeAverageDPS ||
                 statWorker is StatWorker_MeleeAverageArmorPenetration ||
                 statWorker is StatWorker_MarketValue ||
@@ -324,6 +336,10 @@ namespace RW_ModularizationWeapon
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
             {
+                if (exception != null)
+                {
+                    Log.Error(exception.ToString());
+                }
                 if (statWorker is StatWorker_MeleeAverageDPS ||
                     statWorker is StatWorker_MeleeAverageArmorPenetration ||
                     statWorker is StatWorker_MarketValue ||
@@ -459,11 +475,19 @@ namespace RW_ModularizationWeapon
 
         protected override float FinalStatWorker_StatOffsetFromGear(Thing gear, StatDef stat, float result, Dictionary<string, object> stats, Exception exception)
         {
+            if (exception != null)
+            {
+                Log.Error(exception.ToString());
+            }
             return result * GetStatMultiplier(stat, gear) + GetStatOffset(stat, gear);
         }
 
         protected override bool FinalStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object> stats, Exception exception)
         {
+            if (exception != null)
+            {
+                Log.Error(exception.ToString());
+            }
             return result || StatWorker.StatOffsetFromGear(gear, stat) != 0;
         }
     }
