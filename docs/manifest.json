@@ -24,19 +24,22 @@
           "hash": "uxnREY1FbiQXPgtJOjCOMIq4v+p45U3XO+HEwYGUWxo="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/Create_Attachment_Or_Weapon_Use_Attachments.md",
       "output": {
         ".html": {
           "relative_path": "articles/Create_Attachment_Or_Weapon_Use_Attachments.html",
-          "hash": "ZUUsrhHwjfFNbll9QaANCHmBPWY7iK948a8TXnhHrwQ="
+          "hash": "TZTgnOBAef/t0ADNNLzVkKt6zLE/HQ6f3+icZdXU+RU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -51,7 +54,7 @@
           "hash": "l4nYD+FkjjNLt2yyCqPbYqWRomcCnAp4X3bbL8nH034="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -394,7 +397,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 5,
-          "skipped_file_count": 5
+          "skipped_file_count": 4
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
