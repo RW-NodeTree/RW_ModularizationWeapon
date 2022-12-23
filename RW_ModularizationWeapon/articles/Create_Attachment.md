@@ -32,4 +32,4 @@
 
 **Now, we can set this part able attach to other part or weapon.**
 
-## Next: [Create Attachment Or Weapon Use Attachments](/Docs/Create_Attachment_Or_Weapon_Use_Attachments.md)
+## Next: [Create Attachment Or Weapon Use Attachments](Create_Attachment_Or_Weapon_Use_Attachments.md)

@@ -1,0 +1,633 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CustomWeapon
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CustomWeapon
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="RW_ModularizationWeapon.UI.CustomWeapon">
+  
+  
+  <h1 id="RW_ModularizationWeapon_UI_CustomWeapon" data-uid="RW_ModularizationWeapon.UI.CustomWeapon" class="text-break">Class CustomWeapon
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Verse.Window</span></div>
+    <div class="level2"><span class="xref">CustomWeapon</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Verse.Window.layer</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.optionalTitle</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.doCloseX</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.doCloseButton</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.closeOnAccept</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.closeOnCancel</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.forceCatchAcceptAndCancelEventEvenIfUnfocused</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.closeOnClickedOutside</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.forcePause</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.preventCameraMotion</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.preventDrawTutor</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.doWindowBackground</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.onlyOneOfTypeAllowed</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.absorbInputAroundWindow</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.resizeable</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.draggable</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.drawShadow</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.focusWhenOpened</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.shadowAlpha</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.soundAppear</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.soundClose</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.soundAmbient</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.silenceAmbientSound</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.grayOutIfOtherDialogOpen</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.commonSearchWidgetOffset</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.openMenuOnCancel</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.preventSave</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.drawInScreenshotMode</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.onlyDrawInDevMode</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.StandardMargin</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.FooterRowHeight</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.CloseButSize</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.QuickSearchSize</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.ID</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.windowRect</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.extraOnGUIProfilerLabelCached</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.WindowUpdate()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.ExtraOnGUI()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.PreOpen()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.PostOpen()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.OnCloseRequest()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.PreClose()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.PostClose()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.WindowOnGUI()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.LateWindowOnGUI(UnityEngine.Rect)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.CausesMessageBackground()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.SetInitialSizeAndPosition()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.OnCancelKeyPressed()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.OnAcceptKeyPressed()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.Notify_ResolutionChanged()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.Notify_CommonSearchChanged()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.Notify_ClickOutsideWindow()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.IsDebug</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.IsOpen</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.CommonSearchWidget</span>
+    </div>
+    <div>
+      <span class="xref">Verse.Window.CloseButtonText</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="RW_ModularizationWeapon.UI.html">RW_ModularizationWeapon.UI</a></h6>
+  <h6><strong>Assembly</strong>: RW_ModularizationWeapon.dll</h6>
+  <h5 id="RW_ModularizationWeapon_UI_CustomWeapon_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class CustomWeapon : Window</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon__ctor_Verse_Pawn_RW_ModularizationWeapon_CompCustomWeaponPort_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.%23ctor(Verse.Pawn%2CRW_ModularizationWeapon.CompCustomWeaponPort)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L19">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon__ctor_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.#ctor*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon__ctor_Verse_Pawn_RW_ModularizationWeapon_CompCustomWeaponPort_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.#ctor(Verse.Pawn,RW_ModularizationWeapon.CompCustomWeaponPort)">CustomWeapon(Pawn, CompCustomWeaponPort)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CustomWeapon(Pawn pawn, CompCustomWeaponPort creaftingTable)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Verse.Pawn</span></td>
+        <td><span class="parametername">pawn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.CompCustomWeaponPort.html">CompCustomWeaponPort</a></td>
+        <td><span class="parametername">creaftingTable</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_InfoTags.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.InfoTags%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L74">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_InfoTags_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.InfoTags*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_InfoTags" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.InfoTags">InfoTags</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StateInfoTags InfoTags { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.UI.StateInfoTags.html">StateInfoTags</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_InitialSize.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.InitialSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L35">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_InitialSize_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.InitialSize*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_InitialSize" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.InitialSize">InitialSize</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Vector2 InitialSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Vector2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Verse.Window.InitialSize</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_Margin.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.Margin%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L33">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_Margin_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.Margin*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_Margin" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.Margin">Margin</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override float Margin { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Verse.Window.Margin</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_SelectedPartForChange.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.SelectedPartForChange%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L44">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_SelectedPartForChange_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.SelectedPartForChange*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_SelectedPartForChange" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.SelectedPartForChange">SelectedPartForChange</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (string, CompModularizationWeapon) SelectedPartForChange { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="RW_ModularizationWeapon.CompModularizationWeapon.html">CompModularizationWeapon</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_SelectedThingForInfoCard.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.SelectedThingForInfoCard%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L63">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_SelectedThingForInfoCard_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.SelectedThingForInfoCard*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_SelectedThingForInfoCard" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.SelectedThingForInfoCard">SelectedThingForInfoCard</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Thing SelectedThingForInfoCard { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Verse.Thing</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_Close_System_Boolean_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.Close(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L371">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_Close_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.Close*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_Close_System_Boolean_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.Close(System.Boolean)">Close(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Close(bool doCloseSound = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">doCloseSound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Verse.Window.Close(System.Boolean)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_DoWindowContents_UnityEngine_Rect_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.DoWindowContents(UnityEngine.Rect)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L149">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_DoWindowContents_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.DoWindowContents*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_DoWindowContents_UnityEngine_Rect_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.DoWindowContents(UnityEngine.Rect)">DoWindowContents(Rect)</h4>
+  <div class="markdown level1 summary"><p>+-------+-------+-------+
+|               |       |
+|    weapon     |       |
+|    perview    |       |
+|               | info  |
++-------+-------+ card  |
+| tree  |target |       |
+| view  |picker |       |
+|       |       |       |
++-------+-------+-------+</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void DoWindowContents(Rect inRect)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Rect</span></td>
+        <td><span class="parametername">inRect</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Verse.Window.DoWindowContents(UnityEngine.Rect)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_ResetInfoTags.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L83">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_ResetInfoTags_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_ResetInfoTags" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags">ResetInfoTags()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ResetInfoTags()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon_ResetSelections.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L88">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_UI_CustomWeapon_ResetSelections_" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections*"></a>
+  <h4 id="RW_ModularizationWeapon_UI_CustomWeapon_ResetSelections" data-uid="RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections">ResetSelections()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ResetSelections()</code></pre>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="RW_ModularizationWeapon.Tools.ToolsFunction.html#RW_ModularizationWeapon_Tools_ToolsFunction_LogAllField_System_Object_">ToolsFunction.LogAllField(Object)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_UI_CustomWeapon.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.UI.CustomWeapon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/UI/CustomWeapon.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

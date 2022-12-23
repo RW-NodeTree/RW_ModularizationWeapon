@@ -1051,29 +1051,46 @@ namespace RW_ModularizationWeapon
             #endregion
         }
 
-
+        /// <summary>
+        /// If the part attach on other part, it will use this draw size
+        /// </summary>
         public Vector2 DrawSizeWhenAttach = Vector2.one;
 
 
         #region Condation
+        /// <summary>
+        /// if parent part install this part it will checking this value when switch to other part
+        /// </summary>
         public bool unchangeable = false;
 
-
+        /// <summary>
+        /// if it's **`true`**, this part and it's child part will not rendering when attach on a part
+        /// </summary>
         public bool notDrawInParent = false;
 
-
+        /// <summary>
+        /// if it's **`true`**, it will able to create on `ModifyWeapon` window
+        /// </summary>
         public bool allowCreateOnCraftingPort = false;
 
-
+        /// <summary>
+        /// if it's **`true`**, it will set random part by `WeaponAttachmentProperties.randomThingDefWeights` if it's not empty or by `WeaponAttachmentProperties.filter.AllowedThingDefs`
+        /// </summary>
         public bool setRandomPartWhenCreate = false;
 
-
+        /// <summary>
+        /// if it's **`true`**,the parent part will not able to read `IVerbOwner.VerbProperties` from this node
+        /// </summary>
         public bool notAllowParentUseVerbProperties = false;
 
-
+        /// <summary>
+        /// if it's **`true`**,the parent part will not able to read `IVerbOwner.Tools` from this node
+        /// </summary>
         public bool notAllowParentUseTools = false;
 
-
+        /// <summary>
+        /// if it's **`true`**, it will not draw attachment when it not attach on other part
+        /// </summary>
         public bool drawChildPartWhenOnGround = true;
         #endregion
 
@@ -1082,29 +1099,49 @@ namespace RW_ModularizationWeapon
 
         #region Offset
         #region Parent
+        /// <summary>
+        /// this value will doing some addition calcation with `IVerbOwner.VerbProperties` value of parent
+        /// </summary>
         public FieldReaderDgitList<VerbProperties> verbPropertiesOffseter = new FieldReaderDgitList<VerbProperties>();
 
-
+        /// <summary>
+        /// this value will doing some addition calcation with `IVerbOwner.Tools` value of parent
+        /// </summary>
         public FieldReaderDgitList<Tool> toolsOffseter = new FieldReaderDgitList<Tool>();
 
-
+        /// <summary>
+        /// this value will doing some addition calcation with `ThingDef.Comps` value of parent
+        /// </summary>
         public FieldReaderDgitList<CompProperties> compPropertiesOffseter = new FieldReaderDgitList<CompProperties>();
 
-
+        /// <summary>
+        /// this value will doing some addition calcation after `StatWorker.GetValue` returned of parent
+        /// </summary>
         public List<StatModifier> statOffset = new List<StatModifier>();
 
-
+        /// <summary>
+        /// the default value when `statOffset` not contains stat
+        /// </summary>
         public float statOffsetDefaultValue = 0;
         #endregion
 
 
         #region OtherPart
+        /// <summary>
+        /// this value define how strong will other part `verbPropertiesOffseter` affect `IVerbOwner.VerbProperties` value of this
+        /// </summary>
         public FieldReaderDgitList<VerbProperties> verbPropertiesOtherPartOffseterAffectHorizon = new FieldReaderDgitList<VerbProperties>();
-
+        /// <summary>
+        /// this value define how strong will other part `toolsOffseter` affect `IVerbOwner.Tools` value of this
+        /// </summary>
         public FieldReaderDgitList<Tool> toolsOtherPartOffseterAffectHorizon = new FieldReaderDgitList<Tool>();
-
+        /// <summary>
+        /// this value define how strong will other part `statOffset` affect `StatWorker.GetValue` value of this
+        /// </summary>
         public List<StatModifier> statOtherPartOffseterAffectHorizon = new List<StatModifier>();
-
+        /// <summary>
+        /// the default value when `statOtherPartOffseterAffectHorizon` not contains stat
+        /// </summary>
         public float statOtherPartOffseterAffectHorizonDefaultValue = 1;
         #endregion
         #endregion
@@ -1114,29 +1151,49 @@ namespace RW_ModularizationWeapon
 
         #region Multiplier
         #region Parent
+        /// <summary>
+        /// this value will doing some multiplier calcation with `IVerbOwner.VerbProperties` value of parent
+        /// </summary>
         public FieldReaderDgitList<VerbProperties> verbPropertiesMultiplier = new FieldReaderDgitList<VerbProperties>();
 
-
+        /// <summary>
+        /// this value will doing some multiplier calcation with `IVerbOwner.Tools` value of parent
+        /// </summary>
         public FieldReaderDgitList<Tool> toolsMultiplier = new FieldReaderDgitList<Tool>();
 
-
+        /// <summary>
+        /// this value will doing some multiplier calcation with `ThingDef.Comps` value of parent
+        /// </summary>
         public FieldReaderDgitList<CompProperties> compPropertiesMultiplier = new FieldReaderDgitList<CompProperties>();
 
-
+        /// <summary>
+        /// this value will doing some multiplier calcation with `StatWorker.GetValue` value of parent
+        /// </summary>
         public List<StatModifier> statMultiplier = new List<StatModifier>();
 
-
+        /// <summary>
+        /// the default value when `statMultiplier` not contains stat
+        /// </summary>
         public float statMultiplierDefaultValue = 1;
         #endregion
 
 
         #region OtherPart
+        /// <summary>
+        /// this value define how strong will other part `verbPropertiesMultiplier` affect `IVerbOwner.VerbProperties` value of this
+        /// </summary>
         public FieldReaderDgitList<VerbProperties> verbPropertiesOtherPartMultiplierAffectHorizon = new FieldReaderDgitList<VerbProperties>();
-
+        /// <summary>
+        /// this value define how strong will other part `toolsMultiplier` affect `IVerbOwner.Tools` value of this
+        /// </summary>
         public FieldReaderDgitList<Tool> toolsOtherPartMultiplierAffectHorizon = new FieldReaderDgitList<Tool>();
-
+        /// <summary>
+        /// this value define how strong will other part `statMultiplier` affect `StatWorker.GetValue` value of this
+        /// </summary>
         public List<StatModifier> statOtherPartMultiplierAffectHorizon = new List<StatModifier>();
-
+        /// <summary>
+        /// the default value when `statOtherPartMultiplierAffectHorizon` not contains stat
+        /// </summary>
         public float statOtherPartMultiplierAffectHorizonDefaultValue = 1;
         #endregion
         #endregion
@@ -1146,19 +1203,31 @@ namespace RW_ModularizationWeapon
 
         #region AndPatchs
         #region Parent
+        /// <summary>
+        /// this value will doing some boolean and calcation with `IVerbOwner.VerbProperties` value of parent
+        /// </summary>
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatch = new FieldReaderBoolList<VerbProperties>();
 
-
+        /// <summary>
+        /// this value will doing some boolean and calcation with `IVerbOwner.Tools` value of parent
+        /// </summary>
         public FieldReaderBoolList<Tool> toolsBoolAndPatch = new FieldReaderBoolList<Tool>();
 
-
+        /// <summary>
+        /// this value will doing some boolean and calcation with `ThingDef.Comps` value of parent
+        /// </summary>
         public FieldReaderBoolList<CompProperties> compPropertiesBoolAndPatch = new FieldReaderBoolList<CompProperties>();
         #endregion
 
 
         #region OtherPart
+        /// <summary>
+        /// this value will doing some boolean and calcation with `verbPropertiesBoolAndPatch` value of this
+        /// </summary>
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatchByOtherPart = new FieldReaderBoolList<VerbProperties>();
-
+        /// <summary>
+        /// this value will doing some boolean and calcation with `toolsBoolAndPatch` value of this
+        /// </summary>
         public FieldReaderBoolList<Tool> toolsBoolAndPatchByOtherPart = new FieldReaderBoolList<Tool>();
         #endregion
         #endregion
@@ -1168,19 +1237,31 @@ namespace RW_ModularizationWeapon
 
         #region OrPatchs
         #region Parent
+        /// <summary>
+        /// this value will doing some boolean or calcation with `IVerbOwner.VerbProperties` value of parent
+        /// </summary>
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatch = new FieldReaderBoolList<VerbProperties>();
 
-
+        /// <summary>
+        /// this value will doing some boolean or calcation with `IVerbOwner.Tools` value of parent
+        /// </summary>
         public FieldReaderBoolList<Tool> toolsBoolOrPatch = new FieldReaderBoolList<Tool>();
 
-
+        /// <summary>
+        /// this value will doing some boolean or calcation with `ThingDef.Comps` value of parent
+        /// </summary>
         public FieldReaderBoolList<CompProperties> compPropertiesBoolOrPatch = new FieldReaderBoolList<CompProperties>();
         #endregion
 
 
         #region OtherPart
+        /// <summary>
+        /// this value will doing some boolean and calcation with `verbPropertiesBoolOrPatch` value of this
+        /// </summary>
         public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatchByOtherPart = new FieldReaderBoolList<VerbProperties>();
-
+        /// <summary>
+        /// this value will doing some boolean and calcation with `toolsBoolOrPatchByOtherPart` value of this
+        /// </summary>
         public FieldReaderBoolList<Tool> toolsBoolOrPatchByOtherPart = new FieldReaderBoolList<Tool>();
         #endregion
         #endregion
@@ -1190,50 +1271,80 @@ namespace RW_ModularizationWeapon
 
         #region InstPatchs
         #region Parent
+        /// <summary>
+        /// this value will replace some parmerters in `IVerbOwner.VerbProperties` value of parent
+        /// </summary>
         public FieldReaderInstList<VerbProperties> verbPropertiesObjectPatch = new FieldReaderInstList<VerbProperties>();
 
-
+        /// <summary>
+        /// this value will replace some parmerters in `IVerbOwner.Tools` value of parent
+        /// </summary>
         public FieldReaderInstList<Tool> toolsObjectPatch = new FieldReaderInstList<Tool>();
 
-
+        /// <summary>
+        /// this value will replace some parmerters in `ThingDef.Comps` value of parent
+        /// </summary>
         public FieldReaderInstList<CompProperties> compPropertiesObjectPatch = new FieldReaderInstList<CompProperties>();
         #endregion
 
 
         #region OtherPart
+        /// <summary>
+        /// this value define witch parmerters is able to replace on `IVerbOwner.VerbProperties` of this
+        /// </summary>
         public FieldReaderFiltList<VerbProperties> verbPropertiesObjectPatchByOtherPart = new FieldReaderFiltList<VerbProperties>();
-
+        /// <summary>
+        /// this value define witch parmerters is able to replace on `IVerbOwner.Tools` of this
+        /// </summary>
         public FieldReaderFiltList<Tool> toolsObjectPatchByOtherPart = new FieldReaderFiltList<Tool>();
         #endregion
         #endregion
 
 
 
-
+        /// <summary>
+        /// attach points defintion
+        /// </summary>
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
 
-
+        /// <summary>
+        /// extra comp that will add to parent comps
+        /// </summary>
         public List<CompProperties> extraComp = new List<CompProperties>();
 
-
+        /// <summary>
+        /// the ThingComp type that will invoke `ResoveCrosseReference` method from `extraComp`
+        /// </summary>
         public List<Type> compPropertiesResoveCrosseReferenceType = new List<Type>();
 
-
+        /// <summary>
+        /// the ThingComp type that will invoke `CreateInstance` method from `extraComp`
+        /// </summary>
         public List<Type> compPropertiesCreateInstanceCompType = new List<Type>();
 
-
+        /// <summary>
+        /// the ThingComp type that will invoke `InitializeComp` method from `extraComp`
+        /// </summary>
         public List<Type> compPropertiesInitializeCompType = new List<Type>();
 
-
+        /// <summary>
+        /// the ThingComp type that will invoke `GetGizmosExtra` method after this comp invoke `GetGizmosExtra`
+        /// </summary>
         public List<Type> compGetGizmosExtraAllowedCompType = new List<Type>();
 
-
+        /// <summary>
+        /// define not allowed things on parent part
+        /// </summary>
         public ThingFilter disallowedOtherPart = new ThingFilter();
 
-
+        /// <summary>
+        /// special drawing texture when it attach on a part
+        /// </summary>
         public string PartTexPath = null;
 
-
+        /// <summary>
+        /// material cache of `PartTexPath`
+        /// </summary>
         private Material materialCache;
     }
 }

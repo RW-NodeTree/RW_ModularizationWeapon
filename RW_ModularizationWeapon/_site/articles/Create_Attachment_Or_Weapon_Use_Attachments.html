@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Create Weapon </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Create Weapon ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="create-weapon">Create Weapon</h1>
+
+<h2 id="before-we-start-you-must-know-how-to-create-attachmentdocscreateattachmentmd">Before we start you must know how to <strong><a href="/Docs/Create_Attachment.md">Create Attachment</a></strong>.</h2>
+<p><strong>Let&#39;s start create a weapon called <code>templateGun</code> :</strong></p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;Defs&gt;
+    &lt;!-- Or use parentName BaseMeleeWeapon_Sharp_Quality or BaseMeleeWeapon_Blunt_Quality for melee weapon, or not use any ParentName for simple attachment --&gt;
+    &lt;ThingDef ParentName=&quot;BaseHumanMakeableGun&quot;&gt;
+        &lt;defName&gt;templateGun&lt;/defName&gt;
+        ...
+        &lt;!-- your weapon verbs define --&gt;
+        &lt;verbs&gt;
+            ...
+            &lt;li&gt;
+                &lt;verbClass&gt;Verb_Shoot&lt;/verbClass&gt;
+                &lt;hasStandardCommand&gt;true&lt;/hasStandardCommand&gt;
+                &lt;defaultProjectile&gt;Bullet_AssaultRifle&lt;/defaultProjectile&gt;
+                &lt;warmupTime&gt;1.0&lt;/warmupTime&gt;
+                &lt;range&gt;30.9&lt;/range&gt;
+                &lt;ticksBetweenBurstShots&gt;10&lt;/ticksBetweenBurstShots&gt;
+                &lt;soundCast&gt;Shot_AssaultRifle&lt;/soundCast&gt;
+                &lt;soundCastTail&gt;GunTail_Medium&lt;/soundCastTail&gt;
+                &lt;muzzleFlashScale&gt;9&lt;/muzzleFlashScale&gt;
+            &lt;/li&gt;
+            ...
+        &lt;/verbs&gt;
+        ...
+        &lt;!-- your weapon melee define--&gt;
+        &lt;tools&gt;
+            ...
+            &lt;li&gt;
+                &lt;label&gt;stock&lt;/label&gt;
+                &lt;capacities&gt;
+                    &lt;li&gt;Blunt&lt;/li&gt;
+                &lt;/capacities&gt;
+                &lt;power&gt;9&lt;/power&gt;
+                &lt;cooldownTime&gt;2&lt;/cooldownTime&gt;
+            &lt;/li&gt;
+            ...
+        &lt;/tools&gt;
+        &lt;comps&gt;
+            ...
+            &lt;!-- node tree dependence --&gt;
+            &lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
+                &lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
+                &lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
+                &lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
+                &lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
+                &lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
+            &lt;/li&gt;
+            &lt;!-- weapon framework --&gt;
+            &lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
+                ...
+                &lt;!-- it will set random part when weapon not create by crafting --&gt;
+                &lt;setRandomPartWhenCreate&gt;true&lt;/setRandomPartWhenCreate&gt;
+                &lt;!-- declare the attach point for this weapon --&gt;
+                &lt;attachmentProperties&gt;
+                    ...
+                &lt;/attachmentProperties&gt;
+                ...
+            &lt;/li&gt;
+            ...
+        &lt;/comps&gt;
+    &lt;/ThingDef&gt;
+&lt;/Defs&gt;
+</code></pre><p><em>More parameters here: <a href="/Docs/RefDoc/CompProperties_ModularizationWeapon.md">Type : CompProperties_ModularizationWeapon</a></em></p>
+<p><strong>Then, set <code>attachmentProperties</code> to make weapon able to use attachment.</strong></p>
+<p><strong>Here is an example to make a attachment point for our previous attachment <code>templatePart</code></strong></p>
+<pre><code class="lang-xml">...
+&lt;li&gt;
+    &lt;!-- Indispensable parameter. it should able to use as xml node --&gt;
+    &lt;id&gt;templatePart&lt;/id&gt;
+    &lt;!-- the name of this attachment --&gt;
+    &lt;name&gt;template Part&lt;/name&gt;
+    &lt;!-- ICON of this attachment point --&gt;
+    &lt;UITexPath&gt;templatePart&lt;/UITexPath&gt;
+    &lt;!-- attachment drawing postion --&gt;
+    &lt;postion&gt;(0,0.1,0)&lt;/postion&gt;
+    &lt;!-- default part when create --&gt;
+    &lt;defultThing&gt;templatePart&lt;/defultThing&gt;
+    &lt;!-- if is true, this point can set to empty --&gt;
+    &lt;allowEmpty&gt;true&lt;/allowEmpty&gt;
+    &lt;!-- ThingFilter parameter, to set witch thing can attach on this point --&gt;
+    &lt;filter&gt;
+        &lt;thingDefs&gt;
+            ...
+            &lt;li&gt;templatePart&lt;/li&gt;
+            ...
+        &lt;/thingDefs&gt;
+    &lt;/filter&gt;
+    &lt;!-- ramdom attachment generate weights,  --&gt;
+    &lt;randomThingDefWeights&gt;
+        ...
+        &lt;!-- &lt;defname&gt;(intger)&lt;/defname&gt; --&gt;
+        &lt;templatePart&gt;1&lt;/templatePart&gt;
+        ...
+    &lt;/randomThingDefWeights&gt;
+    ...
+&lt;/li&gt;
+...
+</code></pre><p><em>More parameters here: <a href="/Docs/RefDoc/WeaponAttachmentProperties.md">Type : WeaponAttachmentProperties</a></em></p>
+<p><strong>And final, you will get a weapon or part that able to install an attachment called templatePart on attach point <code>template Part</code></strong></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/articles/Create_Attachment_Or_Weapon_Use_Attachments.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

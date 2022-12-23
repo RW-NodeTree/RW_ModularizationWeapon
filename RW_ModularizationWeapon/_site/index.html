@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>RW - Modularization Weapon </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="RW - Modularization Weapon ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<p><img src="images/Preview.png" alt="Preview" title="Preview"></p>
+<h1 id="rw---modularization-weapon">RW - Modularization Weapon</h1>
+<p><strong>A mod for the game Rimworld, base by RW_NodeTree.</strong></p>
+<p><strong>Allow to make the weapon consist by multi part</strong></p>
+<p>1 clone RW_NodeTree</p>
+<pre><code class="lang-bash">git clone https://github.com/RW-NodeTree/RW_NodeTree.git
+</code></pre><p>2 set environment variable <code>RW_HOME</code> to your <code>RimWorld root</code>. For example:</p>
+<pre><code class="lang-bash">export RW_HOME=&quot;D:\SteamLibrary\steamapps\common\RimWorld&quot;
+</code></pre><p>3 Replace all path perfix with <code>&quot;D:\SteamLibrary\steama/RW_ModularizationWeapon\common\RimWorld&quot;</code> to yuor <code>RimWorld root</code> in <code>RW_ModularizationWeapon/RW_ModularizationWeapon.csproj</code>. For example:</p>
+<p><strong>from</strong></p>
+<pre><code class="lang-xml">&lt;Reference Include=&quot;Assembly-CSharp&quot;&gt;
+    &lt;HintPath&gt;D:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll&lt;/HintPath&gt;
+&lt;/Reference&gt;
+</code></pre><p><strong>to</strong></p>
+<pre><code class="lang-xml">&lt;Reference Include=&quot;Assembly-CSharp&quot;&gt;
+    &lt;HintPath&gt;(Your RimWorld root)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll&lt;/HintPath&gt;
+&lt;/Reference&gt;
+</code></pre><p>4 Replace all path perfix with <code>&quot;D:/SteamLibrary/steamapps/workshop&quot;</code> yuor <code>RimWorld SteamLibrary WorkShop Root</code> in <code>RW_ModularizationWeapon/RW_ModularizationWeapon.csproj</code>.</p>
+<p><strong>from</strong></p>
+<pre><code class="lang-xml">&lt;Reference Include=&quot;0Harmony&quot;&gt;
+    &lt;HintPath&gt;D:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll&lt;/HintPath&gt;
+&lt;/Reference&gt;
+</code></pre><p><strong>to</strong></p>
+<pre><code class="lang-xml">&lt;Reference Include=&quot;0Harmony&quot;&gt;
+    &lt;HintPath&gt;(Your RimWorld SteamLibrary WorkShop Root)\294100\2009463077\Current\Assemblies\0Harmony.dll&lt;/HintPath&gt;
+&lt;/Reference&gt;
+</code></pre><p>5 Now you can compile. And mod will auto copy to your <code>RimWorld Mod Directory</code></p>
+<hr>
+<h2 id="base-usage">Base Usage</h2>
+<p>This mod allow create weapon with traditional method and modify with <code>Machining table</code> or other <code>Modify Port</code> set in the mod. And also, some port probably will not allow to modify some weapon, that depand with moder set.</p>
+<p>To modify weapon, select a colonist first, then right click <code>Modify Port</code> select <code>Start Modify Weapon</code>.</p>
+<!-- ## For Modder
+> - [Create Attachment](Docs/Create_Attachment.md)
+> - [Create Attachment Or Weapon Use Attachments](Docs/Create_Attachment_Or_Weapon_Use_Attachments.md)
+> - [Create Sub Weapon](Docs/Create_Sub_Weapon.md)
+ -->
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
