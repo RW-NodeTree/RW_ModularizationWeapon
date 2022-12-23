@@ -31,7 +31,7 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 </Reference>
 ```
 
-4 Replace all path perfix with `"D:\SteamLibrary\steamapps\workshop\content\294100"` /RW_ModularizationWeaponyuor `RimWorld SteamLibrary WorkShop Root` in `RW_ModularizationWeapon/RW_ModularizationWeapon.csproj`.
+4 Replace all path perfix with `"D:/SteamLibrary/steamapps/workshop"` yuor `RimWorld SteamLibrary WorkShop Root` in `RW_ModularizationWeapon/RW_ModularizationWeapon.csproj`.
 
 **from**
 
@@ -44,19 +44,20 @@ export RW_HOME="D:\SteamLibrary\steamapps\common\RimWorld"
 
 ``` xml
 <Reference Include="0Harmony">
-    <HintPath>(Your RimWorld SteamLibrary WorkShop Root)\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+    <HintPath>(Your RimWorld SteamLibrary WorkShop Root)\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
 </Reference>
 ```
 5 Now you can compile. And mod will auto copy to your `RimWorld Mod Directory`
 
 ---
-## Content :
-> - [Create Weapon](Docs/Create_Weapon.md)
-> - [Create Part](Docs/Create_Part.md)
-> - [Create Sub Weapon](Docs/Create_Sub_Weapon.md)
-
 ## Base Usage
 
 This mod allow create weapon with traditional method and modify with `Machining table` or other `Modify Port` set in the mod. And also, some port probably will not allow to modify some weapon, that depand with moder set.
 
 To modify weapon, select a colonist first, then right click `Modify Port` select `Start Modify Weapon`.
+
+## For Modder
+> - [Create Attachment](Docs/Create_Attachment.md)
+> - [Create Attachment Or Weapon Use Attachments](Docs/Create_Attachment_Or_Weapon_Use_Attachments.md)
+> - [Create Sub Weapon](Docs/Create_Sub_Weapon.md)
+
