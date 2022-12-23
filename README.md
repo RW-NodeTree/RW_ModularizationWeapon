@@ -56,8 +56,5 @@ This mod allow create weapon with traditional method and modify with `Machining 
 
 To modify weapon, select a colonist first, then right click `Modify Port` select `Start Modify Weapon`.
 
-## For Modder
-> - [Create Attachment](Docs/Create_Attachment.md)
-> - [Create Attachment Or Weapon Use Attachments](Docs/Create_Attachment_Or_Weapon_Use_Attachments.md)
-> - [Create Sub Weapon](Docs/Create_Sub_Weapon.md)
+## Checking More Detial On Our [Docs](https://rw-nodetree.github.io/RW_ModularizationWeapon/)
 
