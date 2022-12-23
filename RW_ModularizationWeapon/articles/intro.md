@@ -1,4 +1,4 @@
-![Preview](/images/Preview.png "Preview")
+![Preview](../images/Preview.png "Preview")
 # RW - Modularization Weapon
 **A mod for the game Rimworld, base by RW_NodeTree.**
 
