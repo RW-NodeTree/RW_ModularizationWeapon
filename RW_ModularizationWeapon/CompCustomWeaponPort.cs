@@ -10,6 +10,9 @@ using Verse.AI;
 
 namespace RW_ModularizationWeapon
 {
+    /// <summary>
+    /// `ThingComp` instance on thing for weapon modification
+    /// </summary>
     public class CompCustomWeaponPort : ThingComp
     {
         public CompProperties_CustomWeaponPort Props => (CompProperties_CustomWeaponPort)props;
@@ -92,7 +95,9 @@ namespace RW_ModularizationWeapon
         private Thing selestedWeapon = null;
     }
 
-
+    /// <summary>
+    /// `ThingComp` properties for type `CompCustomWeaponPort`
+    /// </summary>
     public class CompProperties_CustomWeaponPort : CompProperties
     {
         public CompProperties_CustomWeaponPort()
@@ -122,7 +127,9 @@ namespace RW_ModularizationWeapon
                 );
         }
 
-
+        /// <summary>
+        /// set witch weapon can modify of this port
+        /// </summary>
         public ThingFilter filter = new ThingFilter();
     }
 }

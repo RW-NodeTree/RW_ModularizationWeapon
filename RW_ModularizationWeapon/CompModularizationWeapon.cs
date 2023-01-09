@@ -561,9 +561,14 @@ namespace RW_ModularizationWeapon
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
     }
 
-
+    /// <summary>
+    /// this type is parmerters holder of the type `CompModularizationWeapon`, it define all parmerters that can write in XML.
+    /// </summary>
     public class CompProperties_ModularizationWeapon : CompProperties
     {
+        /// <summary>   
+        /// init `materialCache` and return it
+        /// </summary>
         public Material PartTexMaterial
         {
             get
@@ -581,7 +586,9 @@ namespace RW_ModularizationWeapon
             }
         }
 
-
+        /// <summary>
+        /// Texture of `PartTexMaterial`
+        /// </summary>
         public Texture2D PartTexture
         {
             get
@@ -596,7 +603,11 @@ namespace RW_ModularizationWeapon
             compClass = typeof(CompModularizationWeapon);
         }
 
-
+        /// <summary>
+        /// Config checking
+        /// </summary>
+        /// <param name="parentDef"></param>
+        /// <returns></returns>
         public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
         {
             foreach(string error in base.ConfigErrors(parentDef))
@@ -631,7 +642,11 @@ namespace RW_ModularizationWeapon
             }
         }
 
-
+        /// <summary>
+        /// get attachment properties by attachment id
+        /// </summary>
+        /// <param name="id">attachment id</param>
+        /// <returns>attachment properties</returns>
         public WeaponAttachmentProperties WeaponAttachmentPropertiesById(string id)
         {
             if(!id.NullOrEmpty())
@@ -644,7 +659,10 @@ namespace RW_ModularizationWeapon
             return null;
         }
 
-
+        /// <summary>
+        /// apply and preprocessing all properties of this comp
+        /// </summary>
+        /// <param name="parentDef">parent Def</param>
         public override void ResolveReferences(ThingDef parentDef)
         {
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
@@ -755,7 +773,11 @@ namespace RW_ModularizationWeapon
             compGetGizmosExtraAllowedCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
         }
 
-
+        /// <summary>
+        /// extra stat draw entry on info card
+        /// </summary>
+        /// <param name="req">request/param>
+        /// <returns>extra stat draw entry</returns>
         public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
         {
             CompModularizationWeapon comp = req.Thing;

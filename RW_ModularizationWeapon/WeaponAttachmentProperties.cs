@@ -9,6 +9,9 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
+    /// <summary>
+    /// Properties of attach point
+    /// </summary>
     public class WeaponAttachmentProperties
     {
         public Material UITexMaterial
@@ -178,37 +181,69 @@ namespace RW_ModularizationWeapon
             #endregion
         }
 
-
+        /// <summary>
+        /// attach point unique id
+        /// </summary>
         public string id;
-
+        /// <summary>
+        /// attach point name
+        /// </summary>
         public string name;
-
+        /// <summary>
+        /// what thing can attach on this attach point
+        /// </summary>
         public ThingFilter filter = new ThingFilter();
-
+        /// <summary>
+        /// defultThing when create part instance, if `CompProperties_ModularizationWeapon.setRandomPartWhenCreate` is `false` or create by crafting
+        /// </summary>
         public ThingDef defultThing = null;
-
+        /// <summary>
+        /// random part weight of this attach point
+        /// </summary>
         public List<ThingDefCountClass> randomThingDefWeights = new List<ThingDefCountClass>();
-
+        /// <summary>
+        /// attach point drawing postion
+        /// </summary>
         public Vector3 postion = Vector3.zero;
-        
+        /// <summary>
+        /// attach point drawing rotation(Euler)
+        /// </summary>
         public Vector3 rotation = Vector3.zero;
-
+        /// <summary>
+        /// attach point drawing scale
+        /// </summary>
         public Vector3 scale = Vector3.one;
-
+        /// <summary>
+        /// attach point ICON textrue path
+        /// </summary>
         public string UITexPath;
-
+        /// <summary>
+        /// if it's **`true`**, it's able to set empty part on this attach point
+        /// </summary>
         public bool allowEmpty;
-
+        /// <summary>
+        /// not allow this attach point set to other attachment
+        /// </summary>
         public bool unchangeable;
-
+        /// <summary>
+        /// if it's **`true`**, this attach point and it's child attach point will not rendering
+        /// </summary>
         public bool notDraw;
-
+        /// <summary>
+        /// if it's **`true`**,the parent part will not able to read `IVerbOwner.Tools` from this attach point
+        /// </summary>
         public bool notUseTools;
-
+        /// <summary>
+        /// if it's **`true`**,the parent part will not able to read `IVerbOwner.VerbProperties` from this attach point
+        /// </summary>
         public bool notUseVerbProperties;
-
+        /// <summary>
+        /// drawing weight of this attach point
+        /// </summary>
         public int drawWeight;
-
+        /// <summary>
+        /// allowed extra ThingComp type that will append on perent
+        /// </summary>
         public List<Type> allowedExtraCompType = new List<Type>();
 
 

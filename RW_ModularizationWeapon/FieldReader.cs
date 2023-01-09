@@ -17,11 +17,17 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
-
+    /// <summary>
+    /// abstract type for instance calculation
+    /// </summary>
+    /// <typeparam name="T">instance base type for calculation</typeparam>
+    /// <typeparam name="TV">instance properties base type for calculation</typeparam>
     public abstract class FieldReader<T, TV> : IDictionary<RuntimeFieldHandle, TV>
     {
         private Type type = typeof(T);
-
+        /// <summary>
+        /// current using type
+        /// </summary>
         public Type UsedType
         {
             get => type;
@@ -39,15 +45,27 @@ namespace RW_ModularizationWeapon
                 }
             }
         }
-
+        /// <summary>
+        /// default properties value, if this calculation instance containe field
+        /// </summary>
         public abstract TV DefaultValue { get; set; }
-
+        /// <summary>
+        /// check default value of this instance
+        /// </summary>
         public abstract bool HasDefaultValue { get; }
-
+        /// <summary>
+        /// value of instance propertie on specific field for calculation
+        /// </summary>
+        /// <param name="key">specific field</param>
+        /// <returns>specific field for calculation</returns>
         public abstract TV this[RuntimeFieldHandle key] { get; set; }
-
+        /// <summary>
+        /// field container, defined what field will calculation
+        /// </summary>
         public abstract ICollection<RuntimeFieldHandle> Keys { get; }
-
+        /// <summary>
+        /// value container, defined what values of each `Keys`
+        /// </summary>
         public abstract ICollection<TV> Values { get; }
 
         public abstract int Count { get; }
