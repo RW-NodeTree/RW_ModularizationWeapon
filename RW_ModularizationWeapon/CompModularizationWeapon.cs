@@ -807,7 +807,7 @@ namespace RW_ModularizationWeapon
             }
 
             int listAllInst<T>(
-                List<FieldReaderInst<T>> list,
+                List<FieldReaderInstance<T>> list,
                 string perfix,
                 string postfix,
                 bool snap = false
@@ -880,10 +880,10 @@ namespace RW_ModularizationWeapon
             stringBuilder.Clear();
             count = 0;
             stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
-            List<FieldReaderInst<VerbProperties>> VerbPropertiesObjectPatch = comp?.VerbPropertiesObjectPatch(null);
+            List<FieldReaderInstance<VerbProperties>> VerbPropertiesObjectPatch = comp?.VerbPropertiesObjectPatch(null);
             if(VerbPropertiesObjectPatch != null)
             {
-                foreach(FieldReaderInst<VerbProperties> fieldReader in verbPropertiesObjectPatch)
+                foreach(FieldReaderInstance<VerbProperties> fieldReader in verbPropertiesObjectPatch)
                 {
                     int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
                     if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
@@ -893,10 +893,10 @@ namespace RW_ModularizationWeapon
             }
 
             stringBuilder.AppendLine("toolsPatch".Translate().RawText + " :");
-            List<FieldReaderInst<Tool>> ToolsObjectPatch = comp?.ToolsObjectPatch(null);
+            List<FieldReaderInstance<Tool>> ToolsObjectPatch = comp?.ToolsObjectPatch(null);
             if (ToolsObjectPatch != null)
             {
-                foreach (FieldReaderInst<Tool> fieldReader in toolsObjectPatch)
+                foreach (FieldReaderInstance<Tool> fieldReader in toolsObjectPatch)
                 {
                     int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
                     if (index < 0) ToolsObjectPatch.Add(fieldReader);
@@ -998,7 +998,7 @@ namespace RW_ModularizationWeapon
                     VerbPropertiesObjectPatch = childComp.VerbPropertiesObjectPatch(null);
                     if (comp != null)
                     {
-                        foreach (FieldReaderInst<VerbProperties> fieldReader in childComp.Props.verbPropertiesObjectPatch)
+                        foreach (FieldReaderInstance<VerbProperties> fieldReader in childComp.Props.verbPropertiesObjectPatch)
                         {
                             int index = VerbPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
                             if (index < 0) VerbPropertiesObjectPatch.Add(fieldReader);
@@ -1011,7 +1011,7 @@ namespace RW_ModularizationWeapon
                     ToolsObjectPatch = childComp.ToolsObjectPatch(null);
                     if (comp != null)
                     {
-                        foreach (FieldReaderInst<Tool> fieldReader in childComp.Props.toolsObjectPatch)
+                        foreach (FieldReaderInstance<Tool> fieldReader in childComp.Props.toolsObjectPatch)
                         {
                             int index = ToolsObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
                             if (index < 0) ToolsObjectPatch.Add(fieldReader);

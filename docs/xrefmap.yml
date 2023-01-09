@@ -1568,42 +1568,42 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).Add
   nameWithType: FieldReader<T, TV>.Add
   nameWithType.vb: FieldReader(Of T, TV).Add
-- uid: RW_ModularizationWeapon.FieldReader`2.ClacValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`0)
-  name: ClacValue(Func<TV, TV, FieldInfo, TV>, T)
-  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_ClacValue_System_Func__1__1_System_Reflection_FieldInfo__1___0_
-  commentId: M:RW_ModularizationWeapon.FieldReader`2.ClacValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`0)
-  name.vb: ClacValue(Func(Of TV, TV, FieldInfo, TV), T)
-  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.ClacValue(System.Func<TV, TV, System.Reflection.FieldInfo, TV>, T)
-  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).ClacValue(System.Func(Of TV, TV, System.Reflection.FieldInfo, TV), T)
-  nameWithType: FieldReader<T, TV>.ClacValue(Func<TV, TV, FieldInfo, TV>, T)
-  nameWithType.vb: FieldReader(Of T, TV).ClacValue(Func(Of TV, TV, FieldInfo, TV), T)
-- uid: RW_ModularizationWeapon.FieldReader`2.ClacValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`1)
-  name: ClacValue(Func<TV, TV, FieldInfo, TV>, TV)
-  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_ClacValue_System_Func__1__1_System_Reflection_FieldInfo__1___1_
-  commentId: M:RW_ModularizationWeapon.FieldReader`2.ClacValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`1)
-  name.vb: ClacValue(Func(Of TV, TV, FieldInfo, TV), TV)
-  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.ClacValue(System.Func<TV, TV, System.Reflection.FieldInfo, TV>, TV)
-  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).ClacValue(System.Func(Of TV, TV, System.Reflection.FieldInfo, TV), TV)
-  nameWithType: FieldReader<T, TV>.ClacValue(Func<TV, TV, FieldInfo, TV>, TV)
-  nameWithType.vb: FieldReader(Of T, TV).ClacValue(Func(Of TV, TV, FieldInfo, TV), TV)
-- uid: RW_ModularizationWeapon.FieldReader`2.ClacValue*
-  name: ClacValue
-  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_ClacValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReader`2.ClacValue
+- uid: RW_ModularizationWeapon.FieldReader`2.CalcValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`0)
+  name: CalcValue(Func<TV, TV, FieldInfo, TV>, T)
+  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_CalcValue_System_Func__1__1_System_Reflection_FieldInfo__1___0_
+  commentId: M:RW_ModularizationWeapon.FieldReader`2.CalcValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`0)
+  name.vb: CalcValue(Func(Of TV, TV, FieldInfo, TV), T)
+  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.CalcValue(System.Func<TV, TV, System.Reflection.FieldInfo, TV>, T)
+  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).CalcValue(System.Func(Of TV, TV, System.Reflection.FieldInfo, TV), T)
+  nameWithType: FieldReader<T, TV>.CalcValue(Func<TV, TV, FieldInfo, TV>, T)
+  nameWithType.vb: FieldReader(Of T, TV).CalcValue(Func(Of TV, TV, FieldInfo, TV), T)
+- uid: RW_ModularizationWeapon.FieldReader`2.CalcValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`1)
+  name: CalcValue(Func<TV, TV, FieldInfo, TV>, TV)
+  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_CalcValue_System_Func__1__1_System_Reflection_FieldInfo__1___1_
+  commentId: M:RW_ModularizationWeapon.FieldReader`2.CalcValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`1)
+  name.vb: CalcValue(Func(Of TV, TV, FieldInfo, TV), TV)
+  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.CalcValue(System.Func<TV, TV, System.Reflection.FieldInfo, TV>, TV)
+  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).CalcValue(System.Func(Of TV, TV, System.Reflection.FieldInfo, TV), TV)
+  nameWithType: FieldReader<T, TV>.CalcValue(Func<TV, TV, FieldInfo, TV>, TV)
+  nameWithType.vb: FieldReader(Of T, TV).CalcValue(Func(Of TV, TV, FieldInfo, TV), TV)
+- uid: RW_ModularizationWeapon.FieldReader`2.CalcValue*
+  name: CalcValue
+  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_CalcValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReader`2.CalcValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.ClacValue
-  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).ClacValue
-  nameWithType: FieldReader<T, TV>.ClacValue
-  nameWithType.vb: FieldReader(Of T, TV).ClacValue
-- uid: RW_ModularizationWeapon.FieldReader`2.ClacValue``1(System.Func{`1,`1,System.Reflection.FieldInfo,`1},``0,``0)
-  name: ClacValue<TFR>(Func<TV, TV, FieldInfo, TV>, TFR, TFR)
-  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_ClacValue__1_System_Func__1__1_System_Reflection_FieldInfo__1____0___0_
-  commentId: M:RW_ModularizationWeapon.FieldReader`2.ClacValue``1(System.Func{`1,`1,System.Reflection.FieldInfo,`1},``0,``0)
-  name.vb: ClacValue(Of TFR)(Func(Of TV, TV, FieldInfo, TV), TFR, TFR)
-  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.ClacValue<TFR>(System.Func<TV, TV, System.Reflection.FieldInfo, TV>, TFR, TFR)
-  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).ClacValue(Of TFR)(System.Func(Of TV, TV, System.Reflection.FieldInfo, TV), TFR, TFR)
-  nameWithType: FieldReader<T, TV>.ClacValue<TFR>(Func<TV, TV, FieldInfo, TV>, TFR, TFR)
-  nameWithType.vb: FieldReader(Of T, TV).ClacValue(Of TFR)(Func(Of TV, TV, FieldInfo, TV), TFR, TFR)
+  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.CalcValue
+  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).CalcValue
+  nameWithType: FieldReader<T, TV>.CalcValue
+  nameWithType.vb: FieldReader(Of T, TV).CalcValue
+- uid: RW_ModularizationWeapon.FieldReader`2.CalcValue``1(System.Func{`1,`1,System.Reflection.FieldInfo,`1},``0,``0)
+  name: CalcValue<TFR>(Func<TV, TV, FieldInfo, TV>, TFR, TFR)
+  href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_CalcValue__1_System_Func__1__1_System_Reflection_FieldInfo__1____0___0_
+  commentId: M:RW_ModularizationWeapon.FieldReader`2.CalcValue``1(System.Func{`1,`1,System.Reflection.FieldInfo,`1},``0,``0)
+  name.vb: CalcValue(Of TFR)(Func(Of TV, TV, FieldInfo, TV), TFR, TFR)
+  fullName: RW_ModularizationWeapon.FieldReader<T, TV>.CalcValue<TFR>(System.Func<TV, TV, System.Reflection.FieldInfo, TV>, TFR, TFR)
+  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).CalcValue(Of TFR)(System.Func(Of TV, TV, System.Reflection.FieldInfo, TV), TFR, TFR)
+  nameWithType: FieldReader<T, TV>.CalcValue<TFR>(Func<TV, TV, FieldInfo, TV>, TFR, TFR)
+  nameWithType.vb: FieldReader(Of T, TV).CalcValue(Of TFR)(Func(Of TV, TV, FieldInfo, TV), TFR, TFR)
 - uid: RW_ModularizationWeapon.FieldReader`2.Clear
   name: Clear()
   href: api/RW_ModularizationWeapon.FieldReader-2.html#RW_ModularizationWeapon_FieldReader_2_Clear
@@ -1942,388 +1942,388 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV).Values
   nameWithType: FieldReader<T, TV>.Values
   nameWithType.vb: FieldReader(Of T, TV).Values
-- uid: RW_ModularizationWeapon.FieldReaderBool`1
-  name: FieldReaderBool<T>
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html
-  commentId: T:RW_ModularizationWeapon.FieldReaderBool`1
-  name.vb: FieldReaderBool(Of T)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T)
-  nameWithType: FieldReaderBool<T>
-  nameWithType.vb: FieldReaderBool(Of T)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.#ctor
-  name: FieldReaderBool()
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1__ctor
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.#ctor
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.FieldReaderBool()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).FieldReaderBool()
-  nameWithType: FieldReaderBool<T>.FieldReaderBool()
-  nameWithType.vb: FieldReaderBool(Of T).FieldReaderBool()
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.#ctor(RW_ModularizationWeapon.FieldReaderBool{`0})
-  name: FieldReaderBool(FieldReaderBool<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1__ctor_RW_ModularizationWeapon_FieldReaderBool__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.#ctor(RW_ModularizationWeapon.FieldReaderBool{`0})
-  name.vb: FieldReaderBool(FieldReaderBool(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.FieldReaderBool(RW_ModularizationWeapon.FieldReaderBool<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).FieldReaderBool(RW_ModularizationWeapon.FieldReaderBool(Of T))
-  nameWithType: FieldReaderBool<T>.FieldReaderBool(FieldReaderBool<T>)
-  nameWithType.vb: FieldReaderBool(Of T).FieldReaderBool(FieldReaderBool(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.#ctor*
-  name: FieldReaderBool
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1__ctor_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.#ctor
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1
+  name: FieldReaderBoolean<T>
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolean`1
+  name.vb: FieldReaderBoolean(Of T)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T)
+  nameWithType: FieldReaderBoolean<T>
+  nameWithType.vb: FieldReaderBoolean(Of T)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.#ctor
+  name: FieldReaderBoolean()
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1__ctor
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.#ctor
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.FieldReaderBoolean()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).FieldReaderBoolean()
+  nameWithType: FieldReaderBoolean<T>.FieldReaderBoolean()
+  nameWithType.vb: FieldReaderBoolean(Of T).FieldReaderBoolean()
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.#ctor(RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name: FieldReaderBoolean(FieldReaderBoolean<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1__ctor_RW_ModularizationWeapon_FieldReaderBoolean__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.#ctor(RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name.vb: FieldReaderBoolean(FieldReaderBoolean(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.FieldReaderBoolean(RW_ModularizationWeapon.FieldReaderBoolean<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).FieldReaderBoolean(RW_ModularizationWeapon.FieldReaderBoolean(Of T))
+  nameWithType: FieldReaderBoolean<T>.FieldReaderBoolean(FieldReaderBoolean<T>)
+  nameWithType.vb: FieldReaderBoolean(Of T).FieldReaderBoolean(FieldReaderBoolean(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.#ctor*
+  name: FieldReaderBoolean
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1__ctor_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.#ctor
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.FieldReaderBool
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).FieldReaderBool
-  nameWithType: FieldReaderBool<T>.FieldReaderBool
-  nameWithType.vb: FieldReaderBool(Of T).FieldReaderBool
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Add(System.RuntimeFieldHandle,System.Boolean)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.FieldReaderBoolean
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).FieldReaderBoolean
+  nameWithType: FieldReaderBoolean<T>.FieldReaderBoolean
+  nameWithType.vb: FieldReaderBoolean(Of T).FieldReaderBoolean
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Add(System.RuntimeFieldHandle,System.Boolean)
   name: Add(RuntimeFieldHandle, Boolean)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Add_System_RuntimeFieldHandle_System_Boolean_
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.Add(System.RuntimeFieldHandle,System.Boolean)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Add(System.RuntimeFieldHandle, System.Boolean)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Add(System.RuntimeFieldHandle, System.Boolean)
-  nameWithType: FieldReaderBool<T>.Add(RuntimeFieldHandle, Boolean)
-  nameWithType.vb: FieldReaderBool(Of T).Add(RuntimeFieldHandle, Boolean)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Add*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Add_System_RuntimeFieldHandle_System_Boolean_
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.Add(System.RuntimeFieldHandle,System.Boolean)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Add(System.RuntimeFieldHandle, System.Boolean)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Add(System.RuntimeFieldHandle, System.Boolean)
+  nameWithType: FieldReaderBoolean<T>.Add(RuntimeFieldHandle, Boolean)
+  nameWithType.vb: FieldReaderBoolean(Of T).Add(RuntimeFieldHandle, Boolean)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Add*
   name: Add
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Add_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Add
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Add_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Add
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Add
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Add
-  nameWithType: FieldReaderBool<T>.Add
-  nameWithType.vb: FieldReaderBool(Of T).Add
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Clear
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Add
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Add
+  nameWithType: FieldReaderBoolean<T>.Add
+  nameWithType.vb: FieldReaderBoolean(Of T).Add
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Clear
   name: Clear()
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Clear
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.Clear
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Clear()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Clear()
-  nameWithType: FieldReaderBool<T>.Clear()
-  nameWithType.vb: FieldReaderBool(Of T).Clear()
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Clear*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Clear
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.Clear
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Clear()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Clear()
+  nameWithType: FieldReaderBoolean<T>.Clear()
+  nameWithType.vb: FieldReaderBoolean(Of T).Clear()
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Clear*
   name: Clear
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Clear_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Clear
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Clear_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Clear
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Clear
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Clear
-  nameWithType: FieldReaderBool<T>.Clear
-  nameWithType.vb: FieldReaderBool(Of T).Clear
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Clone
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Clear
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Clear
+  nameWithType: FieldReaderBoolean<T>.Clear
+  nameWithType.vb: FieldReaderBoolean(Of T).Clear
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Clone
   name: Clone()
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Clone
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.Clone
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Clone()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Clone()
-  nameWithType: FieldReaderBool<T>.Clone()
-  nameWithType.vb: FieldReaderBool(Of T).Clone()
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Clone*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Clone
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.Clone
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Clone()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Clone()
+  nameWithType: FieldReaderBoolean<T>.Clone()
+  nameWithType.vb: FieldReaderBoolean(Of T).Clone()
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Clone*
   name: Clone
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Clone_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Clone
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Clone_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Clone
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Clone
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Clone
-  nameWithType: FieldReaderBool<T>.Clone
-  nameWithType.vb: FieldReaderBool(Of T).Clone
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.ContainsKey(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Clone
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Clone
+  nameWithType: FieldReaderBoolean<T>.Clone
+  nameWithType.vb: FieldReaderBoolean(Of T).Clone
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.ContainsKey(System.RuntimeFieldHandle)
   name: ContainsKey(RuntimeFieldHandle)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_ContainsKey_System_RuntimeFieldHandle_
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.ContainsKey(System.RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.ContainsKey(System.RuntimeFieldHandle)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).ContainsKey(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderBool<T>.ContainsKey(RuntimeFieldHandle)
-  nameWithType.vb: FieldReaderBool(Of T).ContainsKey(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.ContainsKey*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_ContainsKey_System_RuntimeFieldHandle_
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.ContainsKey(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.ContainsKey(System.RuntimeFieldHandle)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).ContainsKey(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderBoolean<T>.ContainsKey(RuntimeFieldHandle)
+  nameWithType.vb: FieldReaderBoolean(Of T).ContainsKey(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.ContainsKey*
   name: ContainsKey
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_ContainsKey_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.ContainsKey
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_ContainsKey_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.ContainsKey
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.ContainsKey
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).ContainsKey
-  nameWithType: FieldReaderBool<T>.ContainsKey
-  nameWithType.vb: FieldReaderBool(Of T).ContainsKey
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Count
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.ContainsKey
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).ContainsKey
+  nameWithType: FieldReaderBoolean<T>.ContainsKey
+  nameWithType.vb: FieldReaderBoolean(Of T).ContainsKey
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Count
   name: Count
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Count
-  commentId: P:RW_ModularizationWeapon.FieldReaderBool`1.Count
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Count
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Count
-  nameWithType: FieldReaderBool<T>.Count
-  nameWithType.vb: FieldReaderBool(Of T).Count
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Count*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Count
+  commentId: P:RW_ModularizationWeapon.FieldReaderBoolean`1.Count
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Count
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Count
+  nameWithType: FieldReaderBoolean<T>.Count
+  nameWithType.vb: FieldReaderBoolean(Of T).Count
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Count*
   name: Count
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Count_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Count
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Count_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Count
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Count
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Count
-  nameWithType: FieldReaderBool<T>.Count
-  nameWithType.vb: FieldReaderBool(Of T).Count
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.DefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Count
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Count
+  nameWithType: FieldReaderBoolean<T>.Count
+  nameWithType.vb: FieldReaderBoolean(Of T).Count
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.DefaultValue
   name: DefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_DefaultValue
-  commentId: P:RW_ModularizationWeapon.FieldReaderBool`1.DefaultValue
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.DefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).DefaultValue
-  nameWithType: FieldReaderBool<T>.DefaultValue
-  nameWithType.vb: FieldReaderBool(Of T).DefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.DefaultValue*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_DefaultValue
+  commentId: P:RW_ModularizationWeapon.FieldReaderBoolean`1.DefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.DefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).DefaultValue
+  nameWithType: FieldReaderBoolean<T>.DefaultValue
+  nameWithType.vb: FieldReaderBoolean(Of T).DefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.DefaultValue*
   name: DefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_DefaultValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.DefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_DefaultValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.DefaultValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.DefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).DefaultValue
-  nameWithType: FieldReaderBool<T>.DefaultValue
-  nameWithType.vb: FieldReaderBool(Of T).DefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.HasDefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.DefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).DefaultValue
+  nameWithType: FieldReaderBoolean<T>.DefaultValue
+  nameWithType.vb: FieldReaderBoolean(Of T).DefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.HasDefaultValue
   name: HasDefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_HasDefaultValue
-  commentId: P:RW_ModularizationWeapon.FieldReaderBool`1.HasDefaultValue
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.HasDefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).HasDefaultValue
-  nameWithType: FieldReaderBool<T>.HasDefaultValue
-  nameWithType.vb: FieldReaderBool(Of T).HasDefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.HasDefaultValue*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_HasDefaultValue
+  commentId: P:RW_ModularizationWeapon.FieldReaderBoolean`1.HasDefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.HasDefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).HasDefaultValue
+  nameWithType: FieldReaderBoolean<T>.HasDefaultValue
+  nameWithType.vb: FieldReaderBoolean(Of T).HasDefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.HasDefaultValue*
   name: HasDefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_HasDefaultValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.HasDefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_HasDefaultValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.HasDefaultValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.HasDefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).HasDefaultValue
-  nameWithType: FieldReaderBool<T>.HasDefaultValue
-  nameWithType.vb: FieldReaderBool(Of T).HasDefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Item(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.HasDefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).HasDefaultValue
+  nameWithType: FieldReaderBoolean<T>.HasDefaultValue
+  nameWithType.vb: FieldReaderBoolean(Of T).HasDefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Item(System.RuntimeFieldHandle)
   name: Item[RuntimeFieldHandle]
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Item_System_RuntimeFieldHandle_
-  commentId: P:RW_ModularizationWeapon.FieldReaderBool`1.Item(System.RuntimeFieldHandle)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Item_System_RuntimeFieldHandle_
+  commentId: P:RW_ModularizationWeapon.FieldReaderBoolean`1.Item(System.RuntimeFieldHandle)
   name.vb: Item(RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Item[System.RuntimeFieldHandle]
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Item(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderBool<T>.Item[RuntimeFieldHandle]
-  nameWithType.vb: FieldReaderBool(Of T).Item(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Item*
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Item[System.RuntimeFieldHandle]
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Item(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderBoolean<T>.Item[RuntimeFieldHandle]
+  nameWithType.vb: FieldReaderBoolean(Of T).Item(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Item*
   name: Item
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Item_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Item
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Item_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Item
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Item
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Item
-  nameWithType: FieldReaderBool<T>.Item
-  nameWithType.vb: FieldReaderBool(Of T).Item
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Keys
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Item
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Item
+  nameWithType: FieldReaderBoolean<T>.Item
+  nameWithType.vb: FieldReaderBoolean(Of T).Item
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Keys
   name: Keys
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Keys
-  commentId: P:RW_ModularizationWeapon.FieldReaderBool`1.Keys
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Keys
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Keys
-  nameWithType: FieldReaderBool<T>.Keys
-  nameWithType.vb: FieldReaderBool(Of T).Keys
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Keys*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Keys
+  commentId: P:RW_ModularizationWeapon.FieldReaderBoolean`1.Keys
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Keys
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Keys
+  nameWithType: FieldReaderBoolean<T>.Keys
+  nameWithType.vb: FieldReaderBoolean(Of T).Keys
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Keys*
   name: Keys
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Keys_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Keys
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Keys_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Keys
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Keys
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Keys
-  nameWithType: FieldReaderBool<T>.Keys
-  nameWithType.vb: FieldReaderBool(Of T).Keys
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Keys
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Keys
+  nameWithType: FieldReaderBoolean<T>.Keys
+  nameWithType.vb: FieldReaderBoolean(Of T).Keys
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
   name: LoadDataFromXmlCustom(XmlNode)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_LoadDataFromXmlCustom_System_Xml_XmlNode_
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).LoadDataFromXmlCustom(System.Xml.XmlNode)
-  nameWithType: FieldReaderBool<T>.LoadDataFromXmlCustom(XmlNode)
-  nameWithType.vb: FieldReaderBool(Of T).LoadDataFromXmlCustom(XmlNode)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.LoadDataFromXmlCustom*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_LoadDataFromXmlCustom_System_Xml_XmlNode_
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).LoadDataFromXmlCustom(System.Xml.XmlNode)
+  nameWithType: FieldReaderBoolean<T>.LoadDataFromXmlCustom(XmlNode)
+  nameWithType.vb: FieldReaderBoolean(Of T).LoadDataFromXmlCustom(XmlNode)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.LoadDataFromXmlCustom*
   name: LoadDataFromXmlCustom
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_LoadDataFromXmlCustom_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.LoadDataFromXmlCustom
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_LoadDataFromXmlCustom_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.LoadDataFromXmlCustom
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.LoadDataFromXmlCustom
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).LoadDataFromXmlCustom
-  nameWithType: FieldReaderBool<T>.LoadDataFromXmlCustom
-  nameWithType.vb: FieldReaderBool(Of T).LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderBool{`0})
-  name: BitwiseAnd(T, FieldReaderBool<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseAnd__0_RW_ModularizationWeapon_FieldReaderBool__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderBool{`0})
-  name.vb: BitwiseAnd(T, FieldReaderBool(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderBool<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderBool(Of T))
-  nameWithType: FieldReaderBool<T>.BitwiseAnd(T, FieldReaderBool<T>)
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseAnd(T, FieldReaderBool(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool{`0},RW_ModularizationWeapon.FieldReaderBool{`0})
-  name: BitwiseAnd(FieldReaderBool<T>, FieldReaderBool<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderBool__0__RW_ModularizationWeapon_FieldReaderBool__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool{`0},RW_ModularizationWeapon.FieldReaderBool{`0})
-  name.vb: BitwiseAnd(FieldReaderBool(Of T), FieldReaderBool(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool<T>, RW_ModularizationWeapon.FieldReaderBool<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool(Of T), RW_ModularizationWeapon.FieldReaderBool(Of T))
-  nameWithType: FieldReaderBool<T>.BitwiseAnd(FieldReaderBool<T>, FieldReaderBool<T>)
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseAnd(FieldReaderBool(Of T), FieldReaderBool(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool{`0},System.Boolean)
-  name: BitwiseAnd(FieldReaderBool<T>, Boolean)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderBool__0__System_Boolean_
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool{`0},System.Boolean)
-  name.vb: BitwiseAnd(FieldReaderBool(Of T), Boolean)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool<T>, System.Boolean)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool(Of T), System.Boolean)
-  nameWithType: FieldReaderBool<T>.BitwiseAnd(FieldReaderBool<T>, Boolean)
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseAnd(FieldReaderBool(Of T), Boolean)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd*
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.LoadDataFromXmlCustom
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).LoadDataFromXmlCustom
+  nameWithType: FieldReaderBoolean<T>.LoadDataFromXmlCustom
+  nameWithType.vb: FieldReaderBoolean(Of T).LoadDataFromXmlCustom
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name: BitwiseAnd(T, FieldReaderBoolean<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseAnd__0_RW_ModularizationWeapon_FieldReaderBoolean__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name.vb: BitwiseAnd(T, FieldReaderBoolean(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderBoolean<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderBoolean(Of T))
+  nameWithType: FieldReaderBoolean<T>.BitwiseAnd(T, FieldReaderBoolean<T>)
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseAnd(T, FieldReaderBoolean(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean{`0},RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name: BitwiseAnd(FieldReaderBoolean<T>, FieldReaderBoolean<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderBoolean__0__RW_ModularizationWeapon_FieldReaderBoolean__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean{`0},RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name.vb: BitwiseAnd(FieldReaderBoolean(Of T), FieldReaderBoolean(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean<T>, RW_ModularizationWeapon.FieldReaderBoolean<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean(Of T), RW_ModularizationWeapon.FieldReaderBoolean(Of T))
+  nameWithType: FieldReaderBoolean<T>.BitwiseAnd(FieldReaderBoolean<T>, FieldReaderBoolean<T>)
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseAnd(FieldReaderBoolean(Of T), FieldReaderBoolean(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean{`0},System.Boolean)
+  name: BitwiseAnd(FieldReaderBoolean<T>, Boolean)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderBoolean__0__System_Boolean_
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean{`0},System.Boolean)
+  name.vb: BitwiseAnd(FieldReaderBoolean(Of T), Boolean)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean<T>, System.Boolean)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean(Of T), System.Boolean)
+  nameWithType: FieldReaderBoolean<T>.BitwiseAnd(FieldReaderBoolean<T>, Boolean)
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseAnd(FieldReaderBoolean(Of T), Boolean)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd*
   name: BitwiseAnd
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseAnd_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseAnd
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseAnd_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseAnd
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseAnd
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseAnd
-  nameWithType: FieldReaderBool<T>.BitwiseAnd
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseAnd
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderBool{`0})
-  name: BitwiseOr(T, FieldReaderBool<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseOr__0_RW_ModularizationWeapon_FieldReaderBool__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderBool{`0})
-  name.vb: BitwiseOr(T, FieldReaderBool(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseOr(T, RW_ModularizationWeapon.FieldReaderBool<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseOr(T, RW_ModularizationWeapon.FieldReaderBool(Of T))
-  nameWithType: FieldReaderBool<T>.BitwiseOr(T, FieldReaderBool<T>)
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseOr(T, FieldReaderBool(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBool{`0},RW_ModularizationWeapon.FieldReaderBool{`0})
-  name: BitwiseOr(FieldReaderBool<T>, FieldReaderBool<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseOr_RW_ModularizationWeapon_FieldReaderBool__0__RW_ModularizationWeapon_FieldReaderBool__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBool{`0},RW_ModularizationWeapon.FieldReaderBool{`0})
-  name.vb: BitwiseOr(FieldReaderBool(Of T), FieldReaderBool(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseOr(RW_ModularizationWeapon.FieldReaderBool<T>, RW_ModularizationWeapon.FieldReaderBool<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseOr(RW_ModularizationWeapon.FieldReaderBool(Of T), RW_ModularizationWeapon.FieldReaderBool(Of T))
-  nameWithType: FieldReaderBool<T>.BitwiseOr(FieldReaderBool<T>, FieldReaderBool<T>)
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseOr(FieldReaderBool(Of T), FieldReaderBool(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBool{`0},System.Boolean)
-  name: BitwiseOr(FieldReaderBool<T>, Boolean)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseOr_RW_ModularizationWeapon_FieldReaderBool__0__System_Boolean_
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBool{`0},System.Boolean)
-  name.vb: BitwiseOr(FieldReaderBool(Of T), Boolean)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseOr(RW_ModularizationWeapon.FieldReaderBool<T>, System.Boolean)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseOr(RW_ModularizationWeapon.FieldReaderBool(Of T), System.Boolean)
-  nameWithType: FieldReaderBool<T>.BitwiseOr(FieldReaderBool<T>, Boolean)
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseOr(FieldReaderBool(Of T), Boolean)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr*
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseAnd
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseAnd
+  nameWithType: FieldReaderBoolean<T>.BitwiseAnd
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseAnd
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name: BitwiseOr(T, FieldReaderBoolean<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseOr__0_RW_ModularizationWeapon_FieldReaderBoolean__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name.vb: BitwiseOr(T, FieldReaderBoolean(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseOr(T, RW_ModularizationWeapon.FieldReaderBoolean<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseOr(T, RW_ModularizationWeapon.FieldReaderBoolean(Of T))
+  nameWithType: FieldReaderBoolean<T>.BitwiseOr(T, FieldReaderBoolean<T>)
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseOr(T, FieldReaderBoolean(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean{`0},RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name: BitwiseOr(FieldReaderBoolean<T>, FieldReaderBoolean<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseOr_RW_ModularizationWeapon_FieldReaderBoolean__0__RW_ModularizationWeapon_FieldReaderBoolean__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean{`0},RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name.vb: BitwiseOr(FieldReaderBoolean(Of T), FieldReaderBoolean(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean<T>, RW_ModularizationWeapon.FieldReaderBoolean<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean(Of T), RW_ModularizationWeapon.FieldReaderBoolean(Of T))
+  nameWithType: FieldReaderBoolean<T>.BitwiseOr(FieldReaderBoolean<T>, FieldReaderBoolean<T>)
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseOr(FieldReaderBoolean(Of T), FieldReaderBoolean(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean{`0},System.Boolean)
+  name: BitwiseOr(FieldReaderBoolean<T>, Boolean)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseOr_RW_ModularizationWeapon_FieldReaderBoolean__0__System_Boolean_
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean{`0},System.Boolean)
+  name.vb: BitwiseOr(FieldReaderBoolean(Of T), Boolean)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean<T>, System.Boolean)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseOr(RW_ModularizationWeapon.FieldReaderBoolean(Of T), System.Boolean)
+  nameWithType: FieldReaderBoolean<T>.BitwiseOr(FieldReaderBoolean<T>, Boolean)
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseOr(FieldReaderBoolean(Of T), Boolean)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr*
   name: BitwiseOr
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_BitwiseOr_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.op_BitwiseOr
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_BitwiseOr_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.op_BitwiseOr
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.BitwiseOr
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).BitwiseOr
-  nameWithType: FieldReaderBool<T>.BitwiseOr
-  nameWithType.vb: FieldReaderBool(Of T).BitwiseOr
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_LogicalNot(RW_ModularizationWeapon.FieldReaderBool{`0})
-  name: LogicalNot(FieldReaderBool<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_LogicalNot_RW_ModularizationWeapon_FieldReaderBool__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.op_LogicalNot(RW_ModularizationWeapon.FieldReaderBool{`0})
-  name.vb: LogicalNot(FieldReaderBool(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.LogicalNot(RW_ModularizationWeapon.FieldReaderBool<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).LogicalNot(RW_ModularizationWeapon.FieldReaderBool(Of T))
-  nameWithType: FieldReaderBool<T>.LogicalNot(FieldReaderBool<T>)
-  nameWithType.vb: FieldReaderBool(Of T).LogicalNot(FieldReaderBool(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.op_LogicalNot*
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.BitwiseOr
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).BitwiseOr
+  nameWithType: FieldReaderBoolean<T>.BitwiseOr
+  nameWithType.vb: FieldReaderBoolean(Of T).BitwiseOr
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_LogicalNot(RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name: LogicalNot(FieldReaderBoolean<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_LogicalNot_RW_ModularizationWeapon_FieldReaderBoolean__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.op_LogicalNot(RW_ModularizationWeapon.FieldReaderBoolean{`0})
+  name.vb: LogicalNot(FieldReaderBoolean(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.LogicalNot(RW_ModularizationWeapon.FieldReaderBoolean<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).LogicalNot(RW_ModularizationWeapon.FieldReaderBoolean(Of T))
+  nameWithType: FieldReaderBoolean<T>.LogicalNot(FieldReaderBoolean<T>)
+  nameWithType.vb: FieldReaderBoolean(Of T).LogicalNot(FieldReaderBoolean(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.op_LogicalNot*
   name: LogicalNot
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_op_LogicalNot_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.op_LogicalNot
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_op_LogicalNot_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.op_LogicalNot
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.LogicalNot
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).LogicalNot
-  nameWithType: FieldReaderBool<T>.LogicalNot
-  nameWithType.vb: FieldReaderBool(Of T).LogicalNot
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Remove(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.LogicalNot
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).LogicalNot
+  nameWithType: FieldReaderBoolean<T>.LogicalNot
+  nameWithType.vb: FieldReaderBoolean(Of T).LogicalNot
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Remove(System.RuntimeFieldHandle)
   name: Remove(RuntimeFieldHandle)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Remove_System_RuntimeFieldHandle_
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.Remove(System.RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Remove(System.RuntimeFieldHandle)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Remove(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderBool<T>.Remove(RuntimeFieldHandle)
-  nameWithType.vb: FieldReaderBool(Of T).Remove(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Remove*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Remove_System_RuntimeFieldHandle_
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.Remove(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Remove(System.RuntimeFieldHandle)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Remove(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderBoolean<T>.Remove(RuntimeFieldHandle)
+  nameWithType.vb: FieldReaderBoolean(Of T).Remove(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Remove*
   name: Remove
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Remove_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Remove
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Remove_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Remove
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Remove
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Remove
-  nameWithType: FieldReaderBool<T>.Remove
-  nameWithType.vb: FieldReaderBool(Of T).Remove
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.ToString
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Remove
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Remove
+  nameWithType: FieldReaderBoolean<T>.Remove
+  nameWithType.vb: FieldReaderBoolean(Of T).Remove
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.ToString
   name: ToString()
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_ToString
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.ToString
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.ToString()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).ToString()
-  nameWithType: FieldReaderBool<T>.ToString()
-  nameWithType.vb: FieldReaderBool(Of T).ToString()
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.ToString*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_ToString
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.ToString
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.ToString()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).ToString()
+  nameWithType: FieldReaderBoolean<T>.ToString()
+  nameWithType.vb: FieldReaderBoolean(Of T).ToString()
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.ToString*
   name: ToString
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_ToString_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.ToString
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_ToString_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.ToString
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.ToString
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).ToString
-  nameWithType: FieldReaderBool<T>.ToString
-  nameWithType.vb: FieldReaderBool(Of T).ToString
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.TryGetValue(System.RuntimeFieldHandle,System.Boolean@)
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.ToString
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).ToString
+  nameWithType: FieldReaderBoolean<T>.ToString
+  nameWithType.vb: FieldReaderBoolean(Of T).ToString
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.TryGetValue(System.RuntimeFieldHandle,System.Boolean@)
   name: TryGetValue(RuntimeFieldHandle, out Boolean)
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_TryGetValue_System_RuntimeFieldHandle_System_Boolean__
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.TryGetValue(System.RuntimeFieldHandle,System.Boolean@)
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_TryGetValue_System_RuntimeFieldHandle_System_Boolean__
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.TryGetValue(System.RuntimeFieldHandle,System.Boolean@)
   name.vb: TryGetValue(RuntimeFieldHandle, ByRef Boolean)
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.TryGetValue(System.RuntimeFieldHandle, out System.Boolean)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).TryGetValue(System.RuntimeFieldHandle, ByRef System.Boolean)
-  nameWithType: FieldReaderBool<T>.TryGetValue(RuntimeFieldHandle, out Boolean)
-  nameWithType.vb: FieldReaderBool(Of T).TryGetValue(RuntimeFieldHandle, ByRef Boolean)
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.TryGetValue*
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.TryGetValue(System.RuntimeFieldHandle, out System.Boolean)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).TryGetValue(System.RuntimeFieldHandle, ByRef System.Boolean)
+  nameWithType: FieldReaderBoolean<T>.TryGetValue(RuntimeFieldHandle, out Boolean)
+  nameWithType.vb: FieldReaderBoolean(Of T).TryGetValue(RuntimeFieldHandle, ByRef Boolean)
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.TryGetValue*
   name: TryGetValue
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_TryGetValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.TryGetValue
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_TryGetValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.TryGetValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.TryGetValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).TryGetValue
-  nameWithType: FieldReaderBool<T>.TryGetValue
-  nameWithType.vb: FieldReaderBool(Of T).TryGetValue
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.UsedTypeUpdate
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.TryGetValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).TryGetValue
+  nameWithType: FieldReaderBoolean<T>.TryGetValue
+  nameWithType.vb: FieldReaderBoolean(Of T).TryGetValue
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.UsedTypeUpdate
   name: UsedTypeUpdate()
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_UsedTypeUpdate
-  commentId: M:RW_ModularizationWeapon.FieldReaderBool`1.UsedTypeUpdate
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.UsedTypeUpdate()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).UsedTypeUpdate()
-  nameWithType: FieldReaderBool<T>.UsedTypeUpdate()
-  nameWithType.vb: FieldReaderBool(Of T).UsedTypeUpdate()
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.UsedTypeUpdate*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_UsedTypeUpdate
+  commentId: M:RW_ModularizationWeapon.FieldReaderBoolean`1.UsedTypeUpdate
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.UsedTypeUpdate()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).UsedTypeUpdate()
+  nameWithType: FieldReaderBoolean<T>.UsedTypeUpdate()
+  nameWithType.vb: FieldReaderBoolean(Of T).UsedTypeUpdate()
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.UsedTypeUpdate*
   name: UsedTypeUpdate
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_UsedTypeUpdate_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.UsedTypeUpdate
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_UsedTypeUpdate_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.UsedTypeUpdate
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.UsedTypeUpdate
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).UsedTypeUpdate
-  nameWithType: FieldReaderBool<T>.UsedTypeUpdate
-  nameWithType.vb: FieldReaderBool(Of T).UsedTypeUpdate
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Values
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.UsedTypeUpdate
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).UsedTypeUpdate
+  nameWithType: FieldReaderBoolean<T>.UsedTypeUpdate
+  nameWithType.vb: FieldReaderBoolean(Of T).UsedTypeUpdate
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Values
   name: Values
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Values
-  commentId: P:RW_ModularizationWeapon.FieldReaderBool`1.Values
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Values
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Values
-  nameWithType: FieldReaderBool<T>.Values
-  nameWithType.vb: FieldReaderBool(Of T).Values
-- uid: RW_ModularizationWeapon.FieldReaderBool`1.Values*
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Values
+  commentId: P:RW_ModularizationWeapon.FieldReaderBoolean`1.Values
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Values
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Values
+  nameWithType: FieldReaderBoolean<T>.Values
+  nameWithType.vb: FieldReaderBoolean(Of T).Values
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1.Values*
   name: Values
-  href: api/RW_ModularizationWeapon.FieldReaderBool-1.html#RW_ModularizationWeapon_FieldReaderBool_1_Values_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderBool`1.Values
+  href: api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_Values_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderBoolean`1.Values
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderBool<T>.Values
-  fullName.vb: RW_ModularizationWeapon.FieldReaderBool(Of T).Values
-  nameWithType: FieldReaderBool<T>.Values
-  nameWithType.vb: FieldReaderBool(Of T).Values
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>.Values
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T).Values
+  nameWithType: FieldReaderBoolean<T>.Values
+  nameWithType.vb: FieldReaderBoolean(Of T).Values
 - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
   name: FieldReaderBoolList<T>
   href: api/RW_ModularizationWeapon.FieldReaderBoolList-1.html
@@ -2517,478 +2517,6 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReaderBoolList(Of T).ToString
   nameWithType: FieldReaderBoolList<T>.ToString
   nameWithType.vb: FieldReaderBoolList(Of T).ToString
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1
-  name: FieldReaderDgit<T>
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html
-  commentId: T:RW_ModularizationWeapon.FieldReaderDgit`1
-  name.vb: FieldReaderDgit(Of T)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T)
-  nameWithType: FieldReaderDgit<T>
-  nameWithType.vb: FieldReaderDgit(Of T)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.#ctor
-  name: FieldReaderDgit()
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1__ctor
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.#ctor
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.FieldReaderDgit()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).FieldReaderDgit()
-  nameWithType: FieldReaderDgit<T>.FieldReaderDgit()
-  nameWithType.vb: FieldReaderDgit(Of T).FieldReaderDgit()
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.#ctor(RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: FieldReaderDgit(FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1__ctor_RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.#ctor(RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: FieldReaderDgit(FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.FieldReaderDgit(RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).FieldReaderDgit(RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.FieldReaderDgit(FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).FieldReaderDgit(FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.#ctor*
-  name: FieldReaderDgit
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1__ctor_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.#ctor
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.FieldReaderDgit
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).FieldReaderDgit
-  nameWithType: FieldReaderDgit<T>.FieldReaderDgit
-  nameWithType.vb: FieldReaderDgit(Of T).FieldReaderDgit
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Add(System.RuntimeFieldHandle,System.IConvertible)
-  name: Add(RuntimeFieldHandle, IConvertible)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Add_System_RuntimeFieldHandle_System_IConvertible_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.Add(System.RuntimeFieldHandle,System.IConvertible)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Add(System.RuntimeFieldHandle, System.IConvertible)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Add(System.RuntimeFieldHandle, System.IConvertible)
-  nameWithType: FieldReaderDgit<T>.Add(RuntimeFieldHandle, IConvertible)
-  nameWithType.vb: FieldReaderDgit(Of T).Add(RuntimeFieldHandle, IConvertible)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Add*
-  name: Add
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Add_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Add
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Add
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Add
-  nameWithType: FieldReaderDgit<T>.Add
-  nameWithType.vb: FieldReaderDgit(Of T).Add
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Clear
-  name: Clear()
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Clear
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.Clear
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Clear()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Clear()
-  nameWithType: FieldReaderDgit<T>.Clear()
-  nameWithType.vb: FieldReaderDgit(Of T).Clear()
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Clear*
-  name: Clear
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Clear_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Clear
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Clear
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Clear
-  nameWithType: FieldReaderDgit<T>.Clear
-  nameWithType.vb: FieldReaderDgit(Of T).Clear
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Clone
-  name: Clone()
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Clone
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.Clone
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Clone()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Clone()
-  nameWithType: FieldReaderDgit<T>.Clone()
-  nameWithType.vb: FieldReaderDgit(Of T).Clone()
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Clone*
-  name: Clone
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Clone_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Clone
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Clone
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Clone
-  nameWithType: FieldReaderDgit<T>.Clone
-  nameWithType.vb: FieldReaderDgit(Of T).Clone
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.ContainsKey(System.RuntimeFieldHandle)
-  name: ContainsKey(RuntimeFieldHandle)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_ContainsKey_System_RuntimeFieldHandle_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.ContainsKey(System.RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.ContainsKey(System.RuntimeFieldHandle)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).ContainsKey(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderDgit<T>.ContainsKey(RuntimeFieldHandle)
-  nameWithType.vb: FieldReaderDgit(Of T).ContainsKey(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.ContainsKey*
-  name: ContainsKey
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_ContainsKey_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.ContainsKey
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.ContainsKey
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).ContainsKey
-  nameWithType: FieldReaderDgit<T>.ContainsKey
-  nameWithType.vb: FieldReaderDgit(Of T).ContainsKey
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Count
-  name: Count
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Count
-  commentId: P:RW_ModularizationWeapon.FieldReaderDgit`1.Count
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Count
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Count
-  nameWithType: FieldReaderDgit<T>.Count
-  nameWithType.vb: FieldReaderDgit(Of T).Count
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Count*
-  name: Count
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Count_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Count
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Count
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Count
-  nameWithType: FieldReaderDgit<T>.Count
-  nameWithType.vb: FieldReaderDgit(Of T).Count
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.DefaultValue
-  name: DefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_DefaultValue
-  commentId: P:RW_ModularizationWeapon.FieldReaderDgit`1.DefaultValue
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.DefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).DefaultValue
-  nameWithType: FieldReaderDgit<T>.DefaultValue
-  nameWithType.vb: FieldReaderDgit(Of T).DefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.DefaultValue*
-  name: DefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_DefaultValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.DefaultValue
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.DefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).DefaultValue
-  nameWithType: FieldReaderDgit<T>.DefaultValue
-  nameWithType.vb: FieldReaderDgit(Of T).DefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.HasDefaultValue
-  name: HasDefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_HasDefaultValue
-  commentId: P:RW_ModularizationWeapon.FieldReaderDgit`1.HasDefaultValue
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.HasDefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).HasDefaultValue
-  nameWithType: FieldReaderDgit<T>.HasDefaultValue
-  nameWithType.vb: FieldReaderDgit(Of T).HasDefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.HasDefaultValue*
-  name: HasDefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_HasDefaultValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.HasDefaultValue
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.HasDefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).HasDefaultValue
-  nameWithType: FieldReaderDgit<T>.HasDefaultValue
-  nameWithType.vb: FieldReaderDgit(Of T).HasDefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Item(System.RuntimeFieldHandle)
-  name: Item[RuntimeFieldHandle]
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Item_System_RuntimeFieldHandle_
-  commentId: P:RW_ModularizationWeapon.FieldReaderDgit`1.Item(System.RuntimeFieldHandle)
-  name.vb: Item(RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Item[System.RuntimeFieldHandle]
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Item(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderDgit<T>.Item[RuntimeFieldHandle]
-  nameWithType.vb: FieldReaderDgit(Of T).Item(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Item*
-  name: Item
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Item_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Item
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Item
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Item
-  nameWithType: FieldReaderDgit<T>.Item
-  nameWithType.vb: FieldReaderDgit(Of T).Item
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Keys
-  name: Keys
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Keys
-  commentId: P:RW_ModularizationWeapon.FieldReaderDgit`1.Keys
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Keys
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Keys
-  nameWithType: FieldReaderDgit<T>.Keys
-  nameWithType.vb: FieldReaderDgit(Of T).Keys
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Keys*
-  name: Keys
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Keys_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Keys
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Keys
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Keys
-  nameWithType: FieldReaderDgit<T>.Keys
-  nameWithType.vb: FieldReaderDgit(Of T).Keys
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  name: LoadDataFromXmlCustom(XmlNode)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_LoadDataFromXmlCustom_System_Xml_XmlNode_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).LoadDataFromXmlCustom(System.Xml.XmlNode)
-  nameWithType: FieldReaderDgit<T>.LoadDataFromXmlCustom(XmlNode)
-  nameWithType.vb: FieldReaderDgit(Of T).LoadDataFromXmlCustom(XmlNode)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.LoadDataFromXmlCustom*
-  name: LoadDataFromXmlCustom
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_LoadDataFromXmlCustom_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.LoadDataFromXmlCustom
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.LoadDataFromXmlCustom
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).LoadDataFromXmlCustom
-  nameWithType: FieldReaderDgit<T>.LoadDataFromXmlCustom
-  nameWithType.vb: FieldReaderDgit(Of T).LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Addition(T, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Addition__0_RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Addition(T, FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Addition(T, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Addition(T, RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Addition(T, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Addition(T, FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Addition(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Addition_RW_ModularizationWeapon_FieldReaderDgit__0__RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Addition(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Addition(RW_ModularizationWeapon.FieldReaderDgit<T>, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Addition(RW_ModularizationWeapon.FieldReaderDgit(Of T), RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Addition(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Addition(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name: Addition(FieldReaderDgit<T>, Double)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Addition_RW_ModularizationWeapon_FieldReaderDgit__0__System_Double_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name.vb: Addition(FieldReaderDgit(Of T), Double)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Addition(RW_ModularizationWeapon.FieldReaderDgit<T>, System.Double)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Addition(RW_ModularizationWeapon.FieldReaderDgit(Of T), System.Double)
-  nameWithType: FieldReaderDgit<T>.Addition(FieldReaderDgit<T>, Double)
-  nameWithType.vb: FieldReaderDgit(Of T).Addition(FieldReaderDgit(Of T), Double)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition*
-  name: Addition
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Addition_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.op_Addition
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Addition
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Addition
-  nameWithType: FieldReaderDgit<T>.Addition
-  nameWithType.vb: FieldReaderDgit(Of T).Addition
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Division(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Division(T, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Division__0_RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Division(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Division(T, FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Division(T, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Division(T, RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Division(T, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Division(T, FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Division(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Division(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Division_RW_ModularizationWeapon_FieldReaderDgit__0__RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Division(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Division(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Division(RW_ModularizationWeapon.FieldReaderDgit<T>, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Division(RW_ModularizationWeapon.FieldReaderDgit(Of T), RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Division(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Division(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Division(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name: Division(FieldReaderDgit<T>, Double)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Division_RW_ModularizationWeapon_FieldReaderDgit__0__System_Double_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Division(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name.vb: Division(FieldReaderDgit(Of T), Double)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Division(RW_ModularizationWeapon.FieldReaderDgit<T>, System.Double)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Division(RW_ModularizationWeapon.FieldReaderDgit(Of T), System.Double)
-  nameWithType: FieldReaderDgit<T>.Division(FieldReaderDgit<T>, Double)
-  nameWithType.vb: FieldReaderDgit(Of T).Division(FieldReaderDgit(Of T), Double)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Division*
-  name: Division
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Division_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.op_Division
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Division
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Division
-  nameWithType: FieldReaderDgit<T>.Division
-  nameWithType.vb: FieldReaderDgit(Of T).Division
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Modulus(T, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Modulus__0_RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Modulus(T, FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Modulus(T, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Modulus(T, RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Modulus(T, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Modulus(T, FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Modulus(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Modulus_RW_ModularizationWeapon_FieldReaderDgit__0__RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Modulus(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Modulus(RW_ModularizationWeapon.FieldReaderDgit<T>, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Modulus(RW_ModularizationWeapon.FieldReaderDgit(Of T), RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Modulus(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Modulus(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name: Modulus(FieldReaderDgit<T>, Double)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Modulus_RW_ModularizationWeapon_FieldReaderDgit__0__System_Double_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name.vb: Modulus(FieldReaderDgit(Of T), Double)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Modulus(RW_ModularizationWeapon.FieldReaderDgit<T>, System.Double)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Modulus(RW_ModularizationWeapon.FieldReaderDgit(Of T), System.Double)
-  nameWithType: FieldReaderDgit<T>.Modulus(FieldReaderDgit<T>, Double)
-  nameWithType.vb: FieldReaderDgit(Of T).Modulus(FieldReaderDgit(Of T), Double)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus*
-  name: Modulus
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Modulus_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.op_Modulus
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Modulus
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Modulus
-  nameWithType: FieldReaderDgit<T>.Modulus
-  nameWithType.vb: FieldReaderDgit(Of T).Modulus
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Multiply(T, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Multiply__0_RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Multiply(T, FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Multiply(T, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Multiply(T, RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Multiply(T, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Multiply(T, FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Multiply(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Multiply_RW_ModularizationWeapon_FieldReaderDgit__0__RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Multiply(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Multiply(RW_ModularizationWeapon.FieldReaderDgit<T>, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Multiply(RW_ModularizationWeapon.FieldReaderDgit(Of T), RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Multiply(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Multiply(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name: Multiply(FieldReaderDgit<T>, Double)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Multiply_RW_ModularizationWeapon_FieldReaderDgit__0__System_Double_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name.vb: Multiply(FieldReaderDgit(Of T), Double)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Multiply(RW_ModularizationWeapon.FieldReaderDgit<T>, System.Double)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Multiply(RW_ModularizationWeapon.FieldReaderDgit(Of T), System.Double)
-  nameWithType: FieldReaderDgit<T>.Multiply(FieldReaderDgit<T>, Double)
-  nameWithType.vb: FieldReaderDgit(Of T).Multiply(FieldReaderDgit(Of T), Double)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply*
-  name: Multiply
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Multiply_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.op_Multiply
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Multiply
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Multiply
-  nameWithType: FieldReaderDgit<T>.Multiply
-  nameWithType.vb: FieldReaderDgit(Of T).Multiply
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Subtraction(T, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Subtraction__0_RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction(`0,RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Subtraction(T, FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Subtraction(T, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Subtraction(T, RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Subtraction(T, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Subtraction(T, FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name: Subtraction(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Subtraction_RW_ModularizationWeapon_FieldReaderDgit__0__RW_ModularizationWeapon_FieldReaderDgit__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderDgit{`0})
-  name.vb: Subtraction(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Subtraction(RW_ModularizationWeapon.FieldReaderDgit<T>, RW_ModularizationWeapon.FieldReaderDgit<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Subtraction(RW_ModularizationWeapon.FieldReaderDgit(Of T), RW_ModularizationWeapon.FieldReaderDgit(Of T))
-  nameWithType: FieldReaderDgit<T>.Subtraction(FieldReaderDgit<T>, FieldReaderDgit<T>)
-  nameWithType.vb: FieldReaderDgit(Of T).Subtraction(FieldReaderDgit(Of T), FieldReaderDgit(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name: Subtraction(FieldReaderDgit<T>, Double)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Subtraction_RW_ModularizationWeapon_FieldReaderDgit__0__System_Double_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDgit{`0},System.Double)
-  name.vb: Subtraction(FieldReaderDgit(Of T), Double)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Subtraction(RW_ModularizationWeapon.FieldReaderDgit<T>, System.Double)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Subtraction(RW_ModularizationWeapon.FieldReaderDgit(Of T), System.Double)
-  nameWithType: FieldReaderDgit<T>.Subtraction(FieldReaderDgit<T>, Double)
-  nameWithType.vb: FieldReaderDgit(Of T).Subtraction(FieldReaderDgit(Of T), Double)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction*
-  name: Subtraction
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_op_Subtraction_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.op_Subtraction
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Subtraction
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Subtraction
-  nameWithType: FieldReaderDgit<T>.Subtraction
-  nameWithType.vb: FieldReaderDgit(Of T).Subtraction
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Remove(System.RuntimeFieldHandle)
-  name: Remove(RuntimeFieldHandle)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Remove_System_RuntimeFieldHandle_
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.Remove(System.RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Remove(System.RuntimeFieldHandle)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Remove(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderDgit<T>.Remove(RuntimeFieldHandle)
-  nameWithType.vb: FieldReaderDgit(Of T).Remove(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Remove*
-  name: Remove
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Remove_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Remove
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Remove
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Remove
-  nameWithType: FieldReaderDgit<T>.Remove
-  nameWithType.vb: FieldReaderDgit(Of T).Remove
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.ToString
-  name: ToString()
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_ToString
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.ToString
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.ToString()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).ToString()
-  nameWithType: FieldReaderDgit<T>.ToString()
-  nameWithType.vb: FieldReaderDgit(Of T).ToString()
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.ToString*
-  name: ToString
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_ToString_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.ToString
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.ToString
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).ToString
-  nameWithType: FieldReaderDgit<T>.ToString
-  nameWithType.vb: FieldReaderDgit(Of T).ToString
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.TryGetValue(System.RuntimeFieldHandle,System.IConvertible@)
-  name: TryGetValue(RuntimeFieldHandle, out IConvertible)
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_TryGetValue_System_RuntimeFieldHandle_System_IConvertible__
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.TryGetValue(System.RuntimeFieldHandle,System.IConvertible@)
-  name.vb: TryGetValue(RuntimeFieldHandle, ByRef IConvertible)
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.TryGetValue(System.RuntimeFieldHandle, out System.IConvertible)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).TryGetValue(System.RuntimeFieldHandle, ByRef System.IConvertible)
-  nameWithType: FieldReaderDgit<T>.TryGetValue(RuntimeFieldHandle, out IConvertible)
-  nameWithType.vb: FieldReaderDgit(Of T).TryGetValue(RuntimeFieldHandle, ByRef IConvertible)
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.TryGetValue*
-  name: TryGetValue
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_TryGetValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.TryGetValue
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.TryGetValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).TryGetValue
-  nameWithType: FieldReaderDgit<T>.TryGetValue
-  nameWithType.vb: FieldReaderDgit(Of T).TryGetValue
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.UsedTypeUpdate
-  name: UsedTypeUpdate()
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_UsedTypeUpdate
-  commentId: M:RW_ModularizationWeapon.FieldReaderDgit`1.UsedTypeUpdate
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.UsedTypeUpdate()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).UsedTypeUpdate()
-  nameWithType: FieldReaderDgit<T>.UsedTypeUpdate()
-  nameWithType.vb: FieldReaderDgit(Of T).UsedTypeUpdate()
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.UsedTypeUpdate*
-  name: UsedTypeUpdate
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_UsedTypeUpdate_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.UsedTypeUpdate
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.UsedTypeUpdate
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).UsedTypeUpdate
-  nameWithType: FieldReaderDgit<T>.UsedTypeUpdate
-  nameWithType.vb: FieldReaderDgit(Of T).UsedTypeUpdate
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Values
-  name: Values
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Values
-  commentId: P:RW_ModularizationWeapon.FieldReaderDgit`1.Values
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Values
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Values
-  nameWithType: FieldReaderDgit<T>.Values
-  nameWithType.vb: FieldReaderDgit(Of T).Values
-- uid: RW_ModularizationWeapon.FieldReaderDgit`1.Values*
-  name: Values
-  href: api/RW_ModularizationWeapon.FieldReaderDgit-1.html#RW_ModularizationWeapon_FieldReaderDgit_1_Values_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderDgit`1.Values
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderDgit<T>.Values
-  fullName.vb: RW_ModularizationWeapon.FieldReaderDgit(Of T).Values
-  nameWithType: FieldReaderDgit<T>.Values
-  nameWithType.vb: FieldReaderDgit(Of T).Values
 - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
   name: FieldReaderDgitList<T>
   href: api/RW_ModularizationWeapon.FieldReaderDgitList-1.html
@@ -3272,6 +2800,478 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReaderDgitList(Of T).ToString
   nameWithType: FieldReaderDgitList<T>.ToString
   nameWithType.vb: FieldReaderDgitList(Of T).ToString
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1
+  name: FieldReaderDigit<T>
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html
+  commentId: T:RW_ModularizationWeapon.FieldReaderDigit`1
+  name.vb: FieldReaderDigit(Of T)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T)
+  nameWithType: FieldReaderDigit<T>
+  nameWithType.vb: FieldReaderDigit(Of T)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.#ctor
+  name: FieldReaderDigit()
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1__ctor
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.#ctor
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.FieldReaderDigit()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).FieldReaderDigit()
+  nameWithType: FieldReaderDigit<T>.FieldReaderDigit()
+  nameWithType.vb: FieldReaderDigit(Of T).FieldReaderDigit()
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.#ctor(RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: FieldReaderDigit(FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1__ctor_RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.#ctor(RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: FieldReaderDigit(FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.FieldReaderDigit(RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).FieldReaderDigit(RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.FieldReaderDigit(FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).FieldReaderDigit(FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.#ctor*
+  name: FieldReaderDigit
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1__ctor_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.#ctor
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.FieldReaderDigit
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).FieldReaderDigit
+  nameWithType: FieldReaderDigit<T>.FieldReaderDigit
+  nameWithType.vb: FieldReaderDigit(Of T).FieldReaderDigit
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Add(System.RuntimeFieldHandle,System.IConvertible)
+  name: Add(RuntimeFieldHandle, IConvertible)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Add_System_RuntimeFieldHandle_System_IConvertible_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.Add(System.RuntimeFieldHandle,System.IConvertible)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Add(System.RuntimeFieldHandle, System.IConvertible)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Add(System.RuntimeFieldHandle, System.IConvertible)
+  nameWithType: FieldReaderDigit<T>.Add(RuntimeFieldHandle, IConvertible)
+  nameWithType.vb: FieldReaderDigit(Of T).Add(RuntimeFieldHandle, IConvertible)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Add*
+  name: Add
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Add_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Add
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Add
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Add
+  nameWithType: FieldReaderDigit<T>.Add
+  nameWithType.vb: FieldReaderDigit(Of T).Add
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Clear
+  name: Clear()
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Clear
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.Clear
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Clear()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Clear()
+  nameWithType: FieldReaderDigit<T>.Clear()
+  nameWithType.vb: FieldReaderDigit(Of T).Clear()
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Clear*
+  name: Clear
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Clear_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Clear
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Clear
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Clear
+  nameWithType: FieldReaderDigit<T>.Clear
+  nameWithType.vb: FieldReaderDigit(Of T).Clear
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Clone
+  name: Clone()
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Clone
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.Clone
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Clone()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Clone()
+  nameWithType: FieldReaderDigit<T>.Clone()
+  nameWithType.vb: FieldReaderDigit(Of T).Clone()
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Clone*
+  name: Clone
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Clone_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Clone
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Clone
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Clone
+  nameWithType: FieldReaderDigit<T>.Clone
+  nameWithType.vb: FieldReaderDigit(Of T).Clone
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.ContainsKey(System.RuntimeFieldHandle)
+  name: ContainsKey(RuntimeFieldHandle)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_ContainsKey_System_RuntimeFieldHandle_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.ContainsKey(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.ContainsKey(System.RuntimeFieldHandle)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).ContainsKey(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderDigit<T>.ContainsKey(RuntimeFieldHandle)
+  nameWithType.vb: FieldReaderDigit(Of T).ContainsKey(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.ContainsKey*
+  name: ContainsKey
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_ContainsKey_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.ContainsKey
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.ContainsKey
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).ContainsKey
+  nameWithType: FieldReaderDigit<T>.ContainsKey
+  nameWithType.vb: FieldReaderDigit(Of T).ContainsKey
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Count
+  name: Count
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Count
+  commentId: P:RW_ModularizationWeapon.FieldReaderDigit`1.Count
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Count
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Count
+  nameWithType: FieldReaderDigit<T>.Count
+  nameWithType.vb: FieldReaderDigit(Of T).Count
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Count*
+  name: Count
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Count_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Count
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Count
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Count
+  nameWithType: FieldReaderDigit<T>.Count
+  nameWithType.vb: FieldReaderDigit(Of T).Count
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.DefaultValue
+  name: DefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_DefaultValue
+  commentId: P:RW_ModularizationWeapon.FieldReaderDigit`1.DefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.DefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).DefaultValue
+  nameWithType: FieldReaderDigit<T>.DefaultValue
+  nameWithType.vb: FieldReaderDigit(Of T).DefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.DefaultValue*
+  name: DefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_DefaultValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.DefaultValue
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.DefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).DefaultValue
+  nameWithType: FieldReaderDigit<T>.DefaultValue
+  nameWithType.vb: FieldReaderDigit(Of T).DefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.HasDefaultValue
+  name: HasDefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_HasDefaultValue
+  commentId: P:RW_ModularizationWeapon.FieldReaderDigit`1.HasDefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.HasDefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).HasDefaultValue
+  nameWithType: FieldReaderDigit<T>.HasDefaultValue
+  nameWithType.vb: FieldReaderDigit(Of T).HasDefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.HasDefaultValue*
+  name: HasDefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_HasDefaultValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.HasDefaultValue
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.HasDefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).HasDefaultValue
+  nameWithType: FieldReaderDigit<T>.HasDefaultValue
+  nameWithType.vb: FieldReaderDigit(Of T).HasDefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Item(System.RuntimeFieldHandle)
+  name: Item[RuntimeFieldHandle]
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Item_System_RuntimeFieldHandle_
+  commentId: P:RW_ModularizationWeapon.FieldReaderDigit`1.Item(System.RuntimeFieldHandle)
+  name.vb: Item(RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Item[System.RuntimeFieldHandle]
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Item(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderDigit<T>.Item[RuntimeFieldHandle]
+  nameWithType.vb: FieldReaderDigit(Of T).Item(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Item*
+  name: Item
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Item_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Item
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Item
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Item
+  nameWithType: FieldReaderDigit<T>.Item
+  nameWithType.vb: FieldReaderDigit(Of T).Item
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Keys
+  name: Keys
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Keys
+  commentId: P:RW_ModularizationWeapon.FieldReaderDigit`1.Keys
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Keys
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Keys
+  nameWithType: FieldReaderDigit<T>.Keys
+  nameWithType.vb: FieldReaderDigit(Of T).Keys
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Keys*
+  name: Keys
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Keys_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Keys
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Keys
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Keys
+  nameWithType: FieldReaderDigit<T>.Keys
+  nameWithType.vb: FieldReaderDigit(Of T).Keys
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  name: LoadDataFromXmlCustom(XmlNode)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_LoadDataFromXmlCustom_System_Xml_XmlNode_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).LoadDataFromXmlCustom(System.Xml.XmlNode)
+  nameWithType: FieldReaderDigit<T>.LoadDataFromXmlCustom(XmlNode)
+  nameWithType.vb: FieldReaderDigit(Of T).LoadDataFromXmlCustom(XmlNode)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.LoadDataFromXmlCustom*
+  name: LoadDataFromXmlCustom
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_LoadDataFromXmlCustom_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.LoadDataFromXmlCustom
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.LoadDataFromXmlCustom
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).LoadDataFromXmlCustom
+  nameWithType: FieldReaderDigit<T>.LoadDataFromXmlCustom
+  nameWithType.vb: FieldReaderDigit(Of T).LoadDataFromXmlCustom
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Addition(T, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Addition__0_RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Addition(T, FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Addition(T, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Addition(T, RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Addition(T, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Addition(T, FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Addition(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Addition_RW_ModularizationWeapon_FieldReaderDigit__0__RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Addition(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Addition(RW_ModularizationWeapon.FieldReaderDigit<T>, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Addition(RW_ModularizationWeapon.FieldReaderDigit(Of T), RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Addition(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Addition(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name: Addition(FieldReaderDigit<T>, Double)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Addition_RW_ModularizationWeapon_FieldReaderDigit__0__System_Double_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name.vb: Addition(FieldReaderDigit(Of T), Double)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Addition(RW_ModularizationWeapon.FieldReaderDigit<T>, System.Double)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Addition(RW_ModularizationWeapon.FieldReaderDigit(Of T), System.Double)
+  nameWithType: FieldReaderDigit<T>.Addition(FieldReaderDigit<T>, Double)
+  nameWithType.vb: FieldReaderDigit(Of T).Addition(FieldReaderDigit(Of T), Double)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition*
+  name: Addition
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Addition_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.op_Addition
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Addition
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Addition
+  nameWithType: FieldReaderDigit<T>.Addition
+  nameWithType.vb: FieldReaderDigit(Of T).Addition
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Division(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Division(T, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Division__0_RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Division(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Division(T, FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Division(T, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Division(T, RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Division(T, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Division(T, FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Division(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Division(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Division_RW_ModularizationWeapon_FieldReaderDigit__0__RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Division(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Division(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Division(RW_ModularizationWeapon.FieldReaderDigit<T>, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Division(RW_ModularizationWeapon.FieldReaderDigit(Of T), RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Division(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Division(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Division(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name: Division(FieldReaderDigit<T>, Double)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Division_RW_ModularizationWeapon_FieldReaderDigit__0__System_Double_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Division(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name.vb: Division(FieldReaderDigit(Of T), Double)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Division(RW_ModularizationWeapon.FieldReaderDigit<T>, System.Double)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Division(RW_ModularizationWeapon.FieldReaderDigit(Of T), System.Double)
+  nameWithType: FieldReaderDigit<T>.Division(FieldReaderDigit<T>, Double)
+  nameWithType.vb: FieldReaderDigit(Of T).Division(FieldReaderDigit(Of T), Double)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Division*
+  name: Division
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Division_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.op_Division
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Division
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Division
+  nameWithType: FieldReaderDigit<T>.Division
+  nameWithType.vb: FieldReaderDigit(Of T).Division
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Modulus(T, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Modulus__0_RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Modulus(T, FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Modulus(T, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Modulus(T, RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Modulus(T, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Modulus(T, FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Modulus(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Modulus_RW_ModularizationWeapon_FieldReaderDigit__0__RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Modulus(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Modulus(RW_ModularizationWeapon.FieldReaderDigit<T>, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Modulus(RW_ModularizationWeapon.FieldReaderDigit(Of T), RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Modulus(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Modulus(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name: Modulus(FieldReaderDigit<T>, Double)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Modulus_RW_ModularizationWeapon_FieldReaderDigit__0__System_Double_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name.vb: Modulus(FieldReaderDigit(Of T), Double)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Modulus(RW_ModularizationWeapon.FieldReaderDigit<T>, System.Double)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Modulus(RW_ModularizationWeapon.FieldReaderDigit(Of T), System.Double)
+  nameWithType: FieldReaderDigit<T>.Modulus(FieldReaderDigit<T>, Double)
+  nameWithType.vb: FieldReaderDigit(Of T).Modulus(FieldReaderDigit(Of T), Double)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus*
+  name: Modulus
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Modulus_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.op_Modulus
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Modulus
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Modulus
+  nameWithType: FieldReaderDigit<T>.Modulus
+  nameWithType.vb: FieldReaderDigit(Of T).Modulus
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Multiply(T, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Multiply__0_RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Multiply(T, FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Multiply(T, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Multiply(T, RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Multiply(T, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Multiply(T, FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Multiply(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Multiply_RW_ModularizationWeapon_FieldReaderDigit__0__RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Multiply(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Multiply(RW_ModularizationWeapon.FieldReaderDigit<T>, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Multiply(RW_ModularizationWeapon.FieldReaderDigit(Of T), RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Multiply(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Multiply(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name: Multiply(FieldReaderDigit<T>, Double)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Multiply_RW_ModularizationWeapon_FieldReaderDigit__0__System_Double_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name.vb: Multiply(FieldReaderDigit(Of T), Double)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Multiply(RW_ModularizationWeapon.FieldReaderDigit<T>, System.Double)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Multiply(RW_ModularizationWeapon.FieldReaderDigit(Of T), System.Double)
+  nameWithType: FieldReaderDigit<T>.Multiply(FieldReaderDigit<T>, Double)
+  nameWithType.vb: FieldReaderDigit(Of T).Multiply(FieldReaderDigit(Of T), Double)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply*
+  name: Multiply
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Multiply_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.op_Multiply
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Multiply
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Multiply
+  nameWithType: FieldReaderDigit<T>.Multiply
+  nameWithType.vb: FieldReaderDigit(Of T).Multiply
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Subtraction(T, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Subtraction__0_RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction(`0,RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Subtraction(T, FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Subtraction(T, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Subtraction(T, RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Subtraction(T, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Subtraction(T, FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name: Subtraction(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Subtraction_RW_ModularizationWeapon_FieldReaderDigit__0__RW_ModularizationWeapon_FieldReaderDigit__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderDigit{`0})
+  name.vb: Subtraction(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Subtraction(RW_ModularizationWeapon.FieldReaderDigit<T>, RW_ModularizationWeapon.FieldReaderDigit<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Subtraction(RW_ModularizationWeapon.FieldReaderDigit(Of T), RW_ModularizationWeapon.FieldReaderDigit(Of T))
+  nameWithType: FieldReaderDigit<T>.Subtraction(FieldReaderDigit<T>, FieldReaderDigit<T>)
+  nameWithType.vb: FieldReaderDigit(Of T).Subtraction(FieldReaderDigit(Of T), FieldReaderDigit(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name: Subtraction(FieldReaderDigit<T>, Double)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Subtraction_RW_ModularizationWeapon_FieldReaderDigit__0__System_Double_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction(RW_ModularizationWeapon.FieldReaderDigit{`0},System.Double)
+  name.vb: Subtraction(FieldReaderDigit(Of T), Double)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Subtraction(RW_ModularizationWeapon.FieldReaderDigit<T>, System.Double)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Subtraction(RW_ModularizationWeapon.FieldReaderDigit(Of T), System.Double)
+  nameWithType: FieldReaderDigit<T>.Subtraction(FieldReaderDigit<T>, Double)
+  nameWithType.vb: FieldReaderDigit(Of T).Subtraction(FieldReaderDigit(Of T), Double)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction*
+  name: Subtraction
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_op_Subtraction_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.op_Subtraction
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Subtraction
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Subtraction
+  nameWithType: FieldReaderDigit<T>.Subtraction
+  nameWithType.vb: FieldReaderDigit(Of T).Subtraction
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Remove(System.RuntimeFieldHandle)
+  name: Remove(RuntimeFieldHandle)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Remove_System_RuntimeFieldHandle_
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.Remove(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Remove(System.RuntimeFieldHandle)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Remove(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderDigit<T>.Remove(RuntimeFieldHandle)
+  nameWithType.vb: FieldReaderDigit(Of T).Remove(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Remove*
+  name: Remove
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Remove_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Remove
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Remove
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Remove
+  nameWithType: FieldReaderDigit<T>.Remove
+  nameWithType.vb: FieldReaderDigit(Of T).Remove
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.ToString
+  name: ToString()
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_ToString
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.ToString
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.ToString()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).ToString()
+  nameWithType: FieldReaderDigit<T>.ToString()
+  nameWithType.vb: FieldReaderDigit(Of T).ToString()
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.ToString*
+  name: ToString
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_ToString_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.ToString
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.ToString
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).ToString
+  nameWithType: FieldReaderDigit<T>.ToString
+  nameWithType.vb: FieldReaderDigit(Of T).ToString
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.TryGetValue(System.RuntimeFieldHandle,System.IConvertible@)
+  name: TryGetValue(RuntimeFieldHandle, out IConvertible)
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_TryGetValue_System_RuntimeFieldHandle_System_IConvertible__
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.TryGetValue(System.RuntimeFieldHandle,System.IConvertible@)
+  name.vb: TryGetValue(RuntimeFieldHandle, ByRef IConvertible)
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.TryGetValue(System.RuntimeFieldHandle, out System.IConvertible)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).TryGetValue(System.RuntimeFieldHandle, ByRef System.IConvertible)
+  nameWithType: FieldReaderDigit<T>.TryGetValue(RuntimeFieldHandle, out IConvertible)
+  nameWithType.vb: FieldReaderDigit(Of T).TryGetValue(RuntimeFieldHandle, ByRef IConvertible)
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.TryGetValue*
+  name: TryGetValue
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_TryGetValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.TryGetValue
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.TryGetValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).TryGetValue
+  nameWithType: FieldReaderDigit<T>.TryGetValue
+  nameWithType.vb: FieldReaderDigit(Of T).TryGetValue
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.UsedTypeUpdate
+  name: UsedTypeUpdate()
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_UsedTypeUpdate
+  commentId: M:RW_ModularizationWeapon.FieldReaderDigit`1.UsedTypeUpdate
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.UsedTypeUpdate()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).UsedTypeUpdate()
+  nameWithType: FieldReaderDigit<T>.UsedTypeUpdate()
+  nameWithType.vb: FieldReaderDigit(Of T).UsedTypeUpdate()
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.UsedTypeUpdate*
+  name: UsedTypeUpdate
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_UsedTypeUpdate_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.UsedTypeUpdate
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.UsedTypeUpdate
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).UsedTypeUpdate
+  nameWithType: FieldReaderDigit<T>.UsedTypeUpdate
+  nameWithType.vb: FieldReaderDigit(Of T).UsedTypeUpdate
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Values
+  name: Values
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Values
+  commentId: P:RW_ModularizationWeapon.FieldReaderDigit`1.Values
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Values
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Values
+  nameWithType: FieldReaderDigit<T>.Values
+  nameWithType.vb: FieldReaderDigit(Of T).Values
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1.Values*
+  name: Values
+  href: api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_Values_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderDigit`1.Values
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>.Values
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T).Values
+  nameWithType: FieldReaderDigit<T>.Values
+  nameWithType.vb: FieldReaderDigit(Of T).Values
 - uid: RW_ModularizationWeapon.FieldReaderFilt`1
   name: FieldReaderFilt<T>
   href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html
@@ -3478,24 +3478,24 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).LoadDataFromXmlCustom
   nameWithType: FieldReaderFilt<T>.LoadDataFromXmlCustom
   nameWithType.vb: FieldReaderFilt(Of T).LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
-  name: BitwiseAnd(FieldReaderBool<T>, FieldReaderFilt<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderBool__0__RW_ModularizationWeapon_FieldReaderFilt__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
-  name.vb: BitwiseAnd(FieldReaderBool(Of T), FieldReaderFilt(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool<T>, RW_ModularizationWeapon.FieldReaderFilt<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderBool(Of T), RW_ModularizationWeapon.FieldReaderFilt(Of T))
-  nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderBool<T>, FieldReaderFilt<T>)
-  nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderBool(Of T), FieldReaderFilt(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
-  name: BitwiseAnd(FieldReaderDgit<T>, FieldReaderFilt<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderDgit__0__RW_ModularizationWeapon_FieldReaderFilt__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderDgit{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
-  name.vb: BitwiseAnd(FieldReaderDgit(Of T), FieldReaderFilt(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderDgit<T>, RW_ModularizationWeapon.FieldReaderFilt<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderDgit(Of T), RW_ModularizationWeapon.FieldReaderFilt(Of T))
-  nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderDgit<T>, FieldReaderFilt<T>)
-  nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderDgit(Of T), FieldReaderFilt(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
+  name: BitwiseAnd(FieldReaderBoolean<T>, FieldReaderFilt<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderBoolean__0__RW_ModularizationWeapon_FieldReaderFilt__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
+  name.vb: BitwiseAnd(FieldReaderBoolean(Of T), FieldReaderFilt(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean<T>, RW_ModularizationWeapon.FieldReaderFilt<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderBoolean(Of T), RW_ModularizationWeapon.FieldReaderFilt(Of T))
+  nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderBoolean<T>, FieldReaderFilt<T>)
+  nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderBoolean(Of T), FieldReaderFilt(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
+  name: BitwiseAnd(FieldReaderDigit<T>, FieldReaderFilt<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderDigit__0__RW_ModularizationWeapon_FieldReaderFilt__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderDigit{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
+  name.vb: BitwiseAnd(FieldReaderDigit(Of T), FieldReaderFilt(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderDigit<T>, RW_ModularizationWeapon.FieldReaderFilt<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderDigit(Of T), RW_ModularizationWeapon.FieldReaderFilt(Of T))
+  nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderDigit<T>, FieldReaderFilt<T>)
+  nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderDigit(Of T), FieldReaderFilt(Of T))
 - uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderFilt{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
   name: BitwiseAnd(FieldReaderFilt<T>, FieldReaderFilt<T>)
   href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderFilt__0__RW_ModularizationWeapon_FieldReaderFilt__0__
@@ -3514,15 +3514,15 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderFilt(Of T), System.Boolean)
   nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderFilt<T>, Boolean)
   nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderFilt(Of T), Boolean)
-- uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
-  name: BitwiseAnd(FieldReaderInst<T>, FieldReaderFilt<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderInst__0__RW_ModularizationWeapon_FieldReaderFilt__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
-  name.vb: BitwiseAnd(FieldReaderInst(Of T), FieldReaderFilt(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst<T>, RW_ModularizationWeapon.FieldReaderFilt<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst(Of T), RW_ModularizationWeapon.FieldReaderFilt(Of T))
-  nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderInst<T>, FieldReaderFilt<T>)
-  nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderInst(Of T), FieldReaderFilt(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
+  name: BitwiseAnd(FieldReaderInstance<T>, FieldReaderFilt<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderInstance__0__RW_ModularizationWeapon_FieldReaderFilt__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance{`0},RW_ModularizationWeapon.FieldReaderFilt{`0})
+  name.vb: BitwiseAnd(FieldReaderInstance(Of T), FieldReaderFilt(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance<T>, RW_ModularizationWeapon.FieldReaderFilt<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance(Of T), RW_ModularizationWeapon.FieldReaderFilt(Of T))
+  nameWithType: FieldReaderFilt<T>.BitwiseAnd(FieldReaderInstance<T>, FieldReaderFilt<T>)
+  nameWithType.vb: FieldReaderFilt(Of T).BitwiseAnd(FieldReaderInstance(Of T), FieldReaderFilt(Of T))
 - uid: RW_ModularizationWeapon.FieldReaderFilt`1.op_BitwiseAnd*
   name: BitwiseAnd
   href: api/RW_ModularizationWeapon.FieldReaderFilt-1.html#RW_ModularizationWeapon_FieldReaderFilt_1_op_BitwiseAnd_
@@ -3865,352 +3865,352 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReaderFiltList(Of T).ToString
   nameWithType: FieldReaderFiltList<T>.ToString
   nameWithType.vb: FieldReaderFiltList(Of T).ToString
-- uid: RW_ModularizationWeapon.FieldReaderInst`1
-  name: FieldReaderInst<T>
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html
-  commentId: T:RW_ModularizationWeapon.FieldReaderInst`1
-  name.vb: FieldReaderInst(Of T)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T)
-  nameWithType: FieldReaderInst<T>
-  nameWithType.vb: FieldReaderInst(Of T)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.#ctor
-  name: FieldReaderInst()
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1__ctor
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.#ctor
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.FieldReaderInst()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).FieldReaderInst()
-  nameWithType: FieldReaderInst<T>.FieldReaderInst()
-  nameWithType.vb: FieldReaderInst(Of T).FieldReaderInst()
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.#ctor(RW_ModularizationWeapon.FieldReaderInst{`0})
-  name: FieldReaderInst(FieldReaderInst<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1__ctor_RW_ModularizationWeapon_FieldReaderInst__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.#ctor(RW_ModularizationWeapon.FieldReaderInst{`0})
-  name.vb: FieldReaderInst(FieldReaderInst(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.FieldReaderInst(RW_ModularizationWeapon.FieldReaderInst<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).FieldReaderInst(RW_ModularizationWeapon.FieldReaderInst(Of T))
-  nameWithType: FieldReaderInst<T>.FieldReaderInst(FieldReaderInst<T>)
-  nameWithType.vb: FieldReaderInst(Of T).FieldReaderInst(FieldReaderInst(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.#ctor*
-  name: FieldReaderInst
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1__ctor_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.#ctor
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1
+  name: FieldReaderInstance<T>
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstance`1
+  name.vb: FieldReaderInstance(Of T)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T)
+  nameWithType: FieldReaderInstance<T>
+  nameWithType.vb: FieldReaderInstance(Of T)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.#ctor
+  name: FieldReaderInstance()
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1__ctor
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.#ctor
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.FieldReaderInstance()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).FieldReaderInstance()
+  nameWithType: FieldReaderInstance<T>.FieldReaderInstance()
+  nameWithType.vb: FieldReaderInstance(Of T).FieldReaderInstance()
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.#ctor(RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name: FieldReaderInstance(FieldReaderInstance<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1__ctor_RW_ModularizationWeapon_FieldReaderInstance__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.#ctor(RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name.vb: FieldReaderInstance(FieldReaderInstance(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.FieldReaderInstance(RW_ModularizationWeapon.FieldReaderInstance<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).FieldReaderInstance(RW_ModularizationWeapon.FieldReaderInstance(Of T))
+  nameWithType: FieldReaderInstance<T>.FieldReaderInstance(FieldReaderInstance<T>)
+  nameWithType.vb: FieldReaderInstance(Of T).FieldReaderInstance(FieldReaderInstance(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.#ctor*
+  name: FieldReaderInstance
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1__ctor_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.#ctor
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.FieldReaderInst
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).FieldReaderInst
-  nameWithType: FieldReaderInst<T>.FieldReaderInst
-  nameWithType.vb: FieldReaderInst(Of T).FieldReaderInst
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Add(System.RuntimeFieldHandle,System.Object)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.FieldReaderInstance
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).FieldReaderInstance
+  nameWithType: FieldReaderInstance<T>.FieldReaderInstance
+  nameWithType.vb: FieldReaderInstance(Of T).FieldReaderInstance
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Add(System.RuntimeFieldHandle,System.Object)
   name: Add(RuntimeFieldHandle, Object)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Add_System_RuntimeFieldHandle_System_Object_
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.Add(System.RuntimeFieldHandle,System.Object)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Add(System.RuntimeFieldHandle, System.Object)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Add(System.RuntimeFieldHandle, System.Object)
-  nameWithType: FieldReaderInst<T>.Add(RuntimeFieldHandle, Object)
-  nameWithType.vb: FieldReaderInst(Of T).Add(RuntimeFieldHandle, Object)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Add*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Add_System_RuntimeFieldHandle_System_Object_
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.Add(System.RuntimeFieldHandle,System.Object)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Add(System.RuntimeFieldHandle, System.Object)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Add(System.RuntimeFieldHandle, System.Object)
+  nameWithType: FieldReaderInstance<T>.Add(RuntimeFieldHandle, Object)
+  nameWithType.vb: FieldReaderInstance(Of T).Add(RuntimeFieldHandle, Object)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Add*
   name: Add
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Add_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Add
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Add_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Add
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Add
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Add
-  nameWithType: FieldReaderInst<T>.Add
-  nameWithType.vb: FieldReaderInst(Of T).Add
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Clear
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Add
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Add
+  nameWithType: FieldReaderInstance<T>.Add
+  nameWithType.vb: FieldReaderInstance(Of T).Add
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Clear
   name: Clear()
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Clear
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.Clear
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Clear()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Clear()
-  nameWithType: FieldReaderInst<T>.Clear()
-  nameWithType.vb: FieldReaderInst(Of T).Clear()
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Clear*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Clear
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.Clear
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Clear()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Clear()
+  nameWithType: FieldReaderInstance<T>.Clear()
+  nameWithType.vb: FieldReaderInstance(Of T).Clear()
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Clear*
   name: Clear
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Clear_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Clear
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Clear_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Clear
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Clear
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Clear
-  nameWithType: FieldReaderInst<T>.Clear
-  nameWithType.vb: FieldReaderInst(Of T).Clear
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Clone
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Clear
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Clear
+  nameWithType: FieldReaderInstance<T>.Clear
+  nameWithType.vb: FieldReaderInstance(Of T).Clear
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Clone
   name: Clone()
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Clone
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.Clone
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Clone()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Clone()
-  nameWithType: FieldReaderInst<T>.Clone()
-  nameWithType.vb: FieldReaderInst(Of T).Clone()
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Clone*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Clone
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.Clone
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Clone()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Clone()
+  nameWithType: FieldReaderInstance<T>.Clone()
+  nameWithType.vb: FieldReaderInstance(Of T).Clone()
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Clone*
   name: Clone
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Clone_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Clone
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Clone_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Clone
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Clone
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Clone
-  nameWithType: FieldReaderInst<T>.Clone
-  nameWithType.vb: FieldReaderInst(Of T).Clone
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.ContainsKey(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Clone
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Clone
+  nameWithType: FieldReaderInstance<T>.Clone
+  nameWithType.vb: FieldReaderInstance(Of T).Clone
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.ContainsKey(System.RuntimeFieldHandle)
   name: ContainsKey(RuntimeFieldHandle)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_ContainsKey_System_RuntimeFieldHandle_
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.ContainsKey(System.RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.ContainsKey(System.RuntimeFieldHandle)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).ContainsKey(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderInst<T>.ContainsKey(RuntimeFieldHandle)
-  nameWithType.vb: FieldReaderInst(Of T).ContainsKey(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.ContainsKey*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_ContainsKey_System_RuntimeFieldHandle_
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.ContainsKey(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.ContainsKey(System.RuntimeFieldHandle)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).ContainsKey(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderInstance<T>.ContainsKey(RuntimeFieldHandle)
+  nameWithType.vb: FieldReaderInstance(Of T).ContainsKey(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.ContainsKey*
   name: ContainsKey
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_ContainsKey_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.ContainsKey
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_ContainsKey_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.ContainsKey
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.ContainsKey
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).ContainsKey
-  nameWithType: FieldReaderInst<T>.ContainsKey
-  nameWithType.vb: FieldReaderInst(Of T).ContainsKey
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Count
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.ContainsKey
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).ContainsKey
+  nameWithType: FieldReaderInstance<T>.ContainsKey
+  nameWithType.vb: FieldReaderInstance(Of T).ContainsKey
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Count
   name: Count
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Count
-  commentId: P:RW_ModularizationWeapon.FieldReaderInst`1.Count
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Count
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Count
-  nameWithType: FieldReaderInst<T>.Count
-  nameWithType.vb: FieldReaderInst(Of T).Count
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Count*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Count
+  commentId: P:RW_ModularizationWeapon.FieldReaderInstance`1.Count
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Count
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Count
+  nameWithType: FieldReaderInstance<T>.Count
+  nameWithType.vb: FieldReaderInstance(Of T).Count
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Count*
   name: Count
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Count_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Count
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Count_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Count
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Count
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Count
-  nameWithType: FieldReaderInst<T>.Count
-  nameWithType.vb: FieldReaderInst(Of T).Count
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.DefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Count
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Count
+  nameWithType: FieldReaderInstance<T>.Count
+  nameWithType.vb: FieldReaderInstance(Of T).Count
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.DefaultValue
   name: DefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_DefaultValue
-  commentId: P:RW_ModularizationWeapon.FieldReaderInst`1.DefaultValue
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.DefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).DefaultValue
-  nameWithType: FieldReaderInst<T>.DefaultValue
-  nameWithType.vb: FieldReaderInst(Of T).DefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.DefaultValue*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_DefaultValue
+  commentId: P:RW_ModularizationWeapon.FieldReaderInstance`1.DefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.DefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).DefaultValue
+  nameWithType: FieldReaderInstance<T>.DefaultValue
+  nameWithType.vb: FieldReaderInstance(Of T).DefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.DefaultValue*
   name: DefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_DefaultValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.DefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_DefaultValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.DefaultValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.DefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).DefaultValue
-  nameWithType: FieldReaderInst<T>.DefaultValue
-  nameWithType.vb: FieldReaderInst(Of T).DefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.HasDefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.DefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).DefaultValue
+  nameWithType: FieldReaderInstance<T>.DefaultValue
+  nameWithType.vb: FieldReaderInstance(Of T).DefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.HasDefaultValue
   name: HasDefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_HasDefaultValue
-  commentId: P:RW_ModularizationWeapon.FieldReaderInst`1.HasDefaultValue
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.HasDefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).HasDefaultValue
-  nameWithType: FieldReaderInst<T>.HasDefaultValue
-  nameWithType.vb: FieldReaderInst(Of T).HasDefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.HasDefaultValue*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_HasDefaultValue
+  commentId: P:RW_ModularizationWeapon.FieldReaderInstance`1.HasDefaultValue
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.HasDefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).HasDefaultValue
+  nameWithType: FieldReaderInstance<T>.HasDefaultValue
+  nameWithType.vb: FieldReaderInstance(Of T).HasDefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.HasDefaultValue*
   name: HasDefaultValue
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_HasDefaultValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.HasDefaultValue
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_HasDefaultValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.HasDefaultValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.HasDefaultValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).HasDefaultValue
-  nameWithType: FieldReaderInst<T>.HasDefaultValue
-  nameWithType.vb: FieldReaderInst(Of T).HasDefaultValue
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Item(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.HasDefaultValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).HasDefaultValue
+  nameWithType: FieldReaderInstance<T>.HasDefaultValue
+  nameWithType.vb: FieldReaderInstance(Of T).HasDefaultValue
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Item(System.RuntimeFieldHandle)
   name: Item[RuntimeFieldHandle]
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Item_System_RuntimeFieldHandle_
-  commentId: P:RW_ModularizationWeapon.FieldReaderInst`1.Item(System.RuntimeFieldHandle)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Item_System_RuntimeFieldHandle_
+  commentId: P:RW_ModularizationWeapon.FieldReaderInstance`1.Item(System.RuntimeFieldHandle)
   name.vb: Item(RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Item[System.RuntimeFieldHandle]
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Item(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderInst<T>.Item[RuntimeFieldHandle]
-  nameWithType.vb: FieldReaderInst(Of T).Item(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Item*
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Item[System.RuntimeFieldHandle]
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Item(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderInstance<T>.Item[RuntimeFieldHandle]
+  nameWithType.vb: FieldReaderInstance(Of T).Item(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Item*
   name: Item
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Item_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Item
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Item_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Item
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Item
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Item
-  nameWithType: FieldReaderInst<T>.Item
-  nameWithType.vb: FieldReaderInst(Of T).Item
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Keys
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Item
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Item
+  nameWithType: FieldReaderInstance<T>.Item
+  nameWithType.vb: FieldReaderInstance(Of T).Item
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Keys
   name: Keys
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Keys
-  commentId: P:RW_ModularizationWeapon.FieldReaderInst`1.Keys
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Keys
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Keys
-  nameWithType: FieldReaderInst<T>.Keys
-  nameWithType.vb: FieldReaderInst(Of T).Keys
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Keys*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Keys
+  commentId: P:RW_ModularizationWeapon.FieldReaderInstance`1.Keys
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Keys
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Keys
+  nameWithType: FieldReaderInstance<T>.Keys
+  nameWithType.vb: FieldReaderInstance(Of T).Keys
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Keys*
   name: Keys
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Keys_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Keys
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Keys_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Keys
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Keys
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Keys
-  nameWithType: FieldReaderInst<T>.Keys
-  nameWithType.vb: FieldReaderInst(Of T).Keys
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Keys
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Keys
+  nameWithType: FieldReaderInstance<T>.Keys
+  nameWithType.vb: FieldReaderInstance(Of T).Keys
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
   name: LoadDataFromXmlCustom(XmlNode)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_LoadDataFromXmlCustom_System_Xml_XmlNode_
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.LoadDataFromXmlCustom(System.Xml.XmlNode)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).LoadDataFromXmlCustom(System.Xml.XmlNode)
-  nameWithType: FieldReaderInst<T>.LoadDataFromXmlCustom(XmlNode)
-  nameWithType.vb: FieldReaderInst(Of T).LoadDataFromXmlCustom(XmlNode)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.LoadDataFromXmlCustom*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_LoadDataFromXmlCustom_System_Xml_XmlNode_
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).LoadDataFromXmlCustom(System.Xml.XmlNode)
+  nameWithType: FieldReaderInstance<T>.LoadDataFromXmlCustom(XmlNode)
+  nameWithType.vb: FieldReaderInstance(Of T).LoadDataFromXmlCustom(XmlNode)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.LoadDataFromXmlCustom*
   name: LoadDataFromXmlCustom
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_LoadDataFromXmlCustom_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.LoadDataFromXmlCustom
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_LoadDataFromXmlCustom_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.LoadDataFromXmlCustom
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.LoadDataFromXmlCustom
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).LoadDataFromXmlCustom
-  nameWithType: FieldReaderInst<T>.LoadDataFromXmlCustom
-  nameWithType.vb: FieldReaderInst(Of T).LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderInst{`0})
-  name: BitwiseAnd(T, FieldReaderInst<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_op_BitwiseAnd__0_RW_ModularizationWeapon_FieldReaderInst__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderInst{`0})
-  name.vb: BitwiseAnd(T, FieldReaderInst(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderInst<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderInst(Of T))
-  nameWithType: FieldReaderInst<T>.BitwiseAnd(T, FieldReaderInst<T>)
-  nameWithType.vb: FieldReaderInst(Of T).BitwiseAnd(T, FieldReaderInst(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst{`0},RW_ModularizationWeapon.FieldReaderInst{`0})
-  name: BitwiseAnd(FieldReaderInst<T>, FieldReaderInst<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderInst__0__RW_ModularizationWeapon_FieldReaderInst__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst{`0},RW_ModularizationWeapon.FieldReaderInst{`0})
-  name.vb: BitwiseAnd(FieldReaderInst(Of T), FieldReaderInst(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst<T>, RW_ModularizationWeapon.FieldReaderInst<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderInst(Of T), RW_ModularizationWeapon.FieldReaderInst(Of T))
-  nameWithType: FieldReaderInst<T>.BitwiseAnd(FieldReaderInst<T>, FieldReaderInst<T>)
-  nameWithType.vb: FieldReaderInst(Of T).BitwiseAnd(FieldReaderInst(Of T), FieldReaderInst(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseAnd*
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.LoadDataFromXmlCustom
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).LoadDataFromXmlCustom
+  nameWithType: FieldReaderInstance<T>.LoadDataFromXmlCustom
+  nameWithType.vb: FieldReaderInstance(Of T).LoadDataFromXmlCustom
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name: BitwiseAnd(T, FieldReaderInstance<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_op_BitwiseAnd__0_RW_ModularizationWeapon_FieldReaderInstance__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseAnd(`0,RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name.vb: BitwiseAnd(T, FieldReaderInstance(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderInstance<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).BitwiseAnd(T, RW_ModularizationWeapon.FieldReaderInstance(Of T))
+  nameWithType: FieldReaderInstance<T>.BitwiseAnd(T, FieldReaderInstance<T>)
+  nameWithType.vb: FieldReaderInstance(Of T).BitwiseAnd(T, FieldReaderInstance(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance{`0},RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name: BitwiseAnd(FieldReaderInstance<T>, FieldReaderInstance<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_op_BitwiseAnd_RW_ModularizationWeapon_FieldReaderInstance__0__RW_ModularizationWeapon_FieldReaderInstance__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance{`0},RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name.vb: BitwiseAnd(FieldReaderInstance(Of T), FieldReaderInstance(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance<T>, RW_ModularizationWeapon.FieldReaderInstance<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).BitwiseAnd(RW_ModularizationWeapon.FieldReaderInstance(Of T), RW_ModularizationWeapon.FieldReaderInstance(Of T))
+  nameWithType: FieldReaderInstance<T>.BitwiseAnd(FieldReaderInstance<T>, FieldReaderInstance<T>)
+  nameWithType.vb: FieldReaderInstance(Of T).BitwiseAnd(FieldReaderInstance(Of T), FieldReaderInstance(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseAnd*
   name: BitwiseAnd
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_op_BitwiseAnd_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseAnd
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_op_BitwiseAnd_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseAnd
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.BitwiseAnd
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).BitwiseAnd
-  nameWithType: FieldReaderInst<T>.BitwiseAnd
-  nameWithType.vb: FieldReaderInst(Of T).BitwiseAnd
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderInst{`0})
-  name: BitwiseOr(T, FieldReaderInst<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_op_BitwiseOr__0_RW_ModularizationWeapon_FieldReaderInst__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderInst{`0})
-  name.vb: BitwiseOr(T, FieldReaderInst(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.BitwiseOr(T, RW_ModularizationWeapon.FieldReaderInst<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).BitwiseOr(T, RW_ModularizationWeapon.FieldReaderInst(Of T))
-  nameWithType: FieldReaderInst<T>.BitwiseOr(T, FieldReaderInst<T>)
-  nameWithType.vb: FieldReaderInst(Of T).BitwiseOr(T, FieldReaderInst(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderInst{`0},RW_ModularizationWeapon.FieldReaderInst{`0})
-  name: BitwiseOr(FieldReaderInst<T>, FieldReaderInst<T>)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_op_BitwiseOr_RW_ModularizationWeapon_FieldReaderInst__0__RW_ModularizationWeapon_FieldReaderInst__0__
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderInst{`0},RW_ModularizationWeapon.FieldReaderInst{`0})
-  name.vb: BitwiseOr(FieldReaderInst(Of T), FieldReaderInst(Of T))
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.BitwiseOr(RW_ModularizationWeapon.FieldReaderInst<T>, RW_ModularizationWeapon.FieldReaderInst<T>)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).BitwiseOr(RW_ModularizationWeapon.FieldReaderInst(Of T), RW_ModularizationWeapon.FieldReaderInst(Of T))
-  nameWithType: FieldReaderInst<T>.BitwiseOr(FieldReaderInst<T>, FieldReaderInst<T>)
-  nameWithType.vb: FieldReaderInst(Of T).BitwiseOr(FieldReaderInst(Of T), FieldReaderInst(Of T))
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseOr*
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.BitwiseAnd
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).BitwiseAnd
+  nameWithType: FieldReaderInstance<T>.BitwiseAnd
+  nameWithType.vb: FieldReaderInstance(Of T).BitwiseAnd
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name: BitwiseOr(T, FieldReaderInstance<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_op_BitwiseOr__0_RW_ModularizationWeapon_FieldReaderInstance__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseOr(`0,RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name.vb: BitwiseOr(T, FieldReaderInstance(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.BitwiseOr(T, RW_ModularizationWeapon.FieldReaderInstance<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).BitwiseOr(T, RW_ModularizationWeapon.FieldReaderInstance(Of T))
+  nameWithType: FieldReaderInstance<T>.BitwiseOr(T, FieldReaderInstance<T>)
+  nameWithType.vb: FieldReaderInstance(Of T).BitwiseOr(T, FieldReaderInstance(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderInstance{`0},RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name: BitwiseOr(FieldReaderInstance<T>, FieldReaderInstance<T>)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_op_BitwiseOr_RW_ModularizationWeapon_FieldReaderInstance__0__RW_ModularizationWeapon_FieldReaderInstance__0__
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseOr(RW_ModularizationWeapon.FieldReaderInstance{`0},RW_ModularizationWeapon.FieldReaderInstance{`0})
+  name.vb: BitwiseOr(FieldReaderInstance(Of T), FieldReaderInstance(Of T))
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.BitwiseOr(RW_ModularizationWeapon.FieldReaderInstance<T>, RW_ModularizationWeapon.FieldReaderInstance<T>)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).BitwiseOr(RW_ModularizationWeapon.FieldReaderInstance(Of T), RW_ModularizationWeapon.FieldReaderInstance(Of T))
+  nameWithType: FieldReaderInstance<T>.BitwiseOr(FieldReaderInstance<T>, FieldReaderInstance<T>)
+  nameWithType.vb: FieldReaderInstance(Of T).BitwiseOr(FieldReaderInstance(Of T), FieldReaderInstance(Of T))
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseOr*
   name: BitwiseOr
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_op_BitwiseOr_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.op_BitwiseOr
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_op_BitwiseOr_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.op_BitwiseOr
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.BitwiseOr
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).BitwiseOr
-  nameWithType: FieldReaderInst<T>.BitwiseOr
-  nameWithType.vb: FieldReaderInst(Of T).BitwiseOr
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Remove(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.BitwiseOr
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).BitwiseOr
+  nameWithType: FieldReaderInstance<T>.BitwiseOr
+  nameWithType.vb: FieldReaderInstance(Of T).BitwiseOr
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Remove(System.RuntimeFieldHandle)
   name: Remove(RuntimeFieldHandle)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Remove_System_RuntimeFieldHandle_
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.Remove(System.RuntimeFieldHandle)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Remove(System.RuntimeFieldHandle)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Remove(System.RuntimeFieldHandle)
-  nameWithType: FieldReaderInst<T>.Remove(RuntimeFieldHandle)
-  nameWithType.vb: FieldReaderInst(Of T).Remove(RuntimeFieldHandle)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Remove*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Remove_System_RuntimeFieldHandle_
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.Remove(System.RuntimeFieldHandle)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Remove(System.RuntimeFieldHandle)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Remove(System.RuntimeFieldHandle)
+  nameWithType: FieldReaderInstance<T>.Remove(RuntimeFieldHandle)
+  nameWithType.vb: FieldReaderInstance(Of T).Remove(RuntimeFieldHandle)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Remove*
   name: Remove
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Remove_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Remove
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Remove_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Remove
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Remove
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Remove
-  nameWithType: FieldReaderInst<T>.Remove
-  nameWithType.vb: FieldReaderInst(Of T).Remove
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.ToString
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Remove
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Remove
+  nameWithType: FieldReaderInstance<T>.Remove
+  nameWithType.vb: FieldReaderInstance(Of T).Remove
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.ToString
   name: ToString()
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_ToString
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.ToString
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.ToString()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).ToString()
-  nameWithType: FieldReaderInst<T>.ToString()
-  nameWithType.vb: FieldReaderInst(Of T).ToString()
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.ToString*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_ToString
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.ToString
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.ToString()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).ToString()
+  nameWithType: FieldReaderInstance<T>.ToString()
+  nameWithType.vb: FieldReaderInstance(Of T).ToString()
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.ToString*
   name: ToString
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_ToString_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.ToString
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_ToString_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.ToString
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.ToString
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).ToString
-  nameWithType: FieldReaderInst<T>.ToString
-  nameWithType.vb: FieldReaderInst(Of T).ToString
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.TryGetValue(System.RuntimeFieldHandle,System.Object@)
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.ToString
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).ToString
+  nameWithType: FieldReaderInstance<T>.ToString
+  nameWithType.vb: FieldReaderInstance(Of T).ToString
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.TryGetValue(System.RuntimeFieldHandle,System.Object@)
   name: TryGetValue(RuntimeFieldHandle, out Object)
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_TryGetValue_System_RuntimeFieldHandle_System_Object__
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.TryGetValue(System.RuntimeFieldHandle,System.Object@)
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_TryGetValue_System_RuntimeFieldHandle_System_Object__
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.TryGetValue(System.RuntimeFieldHandle,System.Object@)
   name.vb: TryGetValue(RuntimeFieldHandle, ByRef Object)
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.TryGetValue(System.RuntimeFieldHandle, out System.Object)
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).TryGetValue(System.RuntimeFieldHandle, ByRef System.Object)
-  nameWithType: FieldReaderInst<T>.TryGetValue(RuntimeFieldHandle, out Object)
-  nameWithType.vb: FieldReaderInst(Of T).TryGetValue(RuntimeFieldHandle, ByRef Object)
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.TryGetValue*
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.TryGetValue(System.RuntimeFieldHandle, out System.Object)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).TryGetValue(System.RuntimeFieldHandle, ByRef System.Object)
+  nameWithType: FieldReaderInstance<T>.TryGetValue(RuntimeFieldHandle, out Object)
+  nameWithType.vb: FieldReaderInstance(Of T).TryGetValue(RuntimeFieldHandle, ByRef Object)
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.TryGetValue*
   name: TryGetValue
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_TryGetValue_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.TryGetValue
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_TryGetValue_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.TryGetValue
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.TryGetValue
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).TryGetValue
-  nameWithType: FieldReaderInst<T>.TryGetValue
-  nameWithType.vb: FieldReaderInst(Of T).TryGetValue
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.UsedTypeUpdate
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.TryGetValue
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).TryGetValue
+  nameWithType: FieldReaderInstance<T>.TryGetValue
+  nameWithType.vb: FieldReaderInstance(Of T).TryGetValue
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.UsedTypeUpdate
   name: UsedTypeUpdate()
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_UsedTypeUpdate
-  commentId: M:RW_ModularizationWeapon.FieldReaderInst`1.UsedTypeUpdate
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.UsedTypeUpdate()
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).UsedTypeUpdate()
-  nameWithType: FieldReaderInst<T>.UsedTypeUpdate()
-  nameWithType.vb: FieldReaderInst(Of T).UsedTypeUpdate()
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.UsedTypeUpdate*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_UsedTypeUpdate
+  commentId: M:RW_ModularizationWeapon.FieldReaderInstance`1.UsedTypeUpdate
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.UsedTypeUpdate()
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).UsedTypeUpdate()
+  nameWithType: FieldReaderInstance<T>.UsedTypeUpdate()
+  nameWithType.vb: FieldReaderInstance(Of T).UsedTypeUpdate()
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.UsedTypeUpdate*
   name: UsedTypeUpdate
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_UsedTypeUpdate_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.UsedTypeUpdate
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_UsedTypeUpdate_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.UsedTypeUpdate
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.UsedTypeUpdate
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).UsedTypeUpdate
-  nameWithType: FieldReaderInst<T>.UsedTypeUpdate
-  nameWithType.vb: FieldReaderInst(Of T).UsedTypeUpdate
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Values
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.UsedTypeUpdate
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).UsedTypeUpdate
+  nameWithType: FieldReaderInstance<T>.UsedTypeUpdate
+  nameWithType.vb: FieldReaderInstance(Of T).UsedTypeUpdate
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Values
   name: Values
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Values
-  commentId: P:RW_ModularizationWeapon.FieldReaderInst`1.Values
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Values
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Values
-  nameWithType: FieldReaderInst<T>.Values
-  nameWithType.vb: FieldReaderInst(Of T).Values
-- uid: RW_ModularizationWeapon.FieldReaderInst`1.Values*
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Values
+  commentId: P:RW_ModularizationWeapon.FieldReaderInstance`1.Values
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Values
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Values
+  nameWithType: FieldReaderInstance<T>.Values
+  nameWithType.vb: FieldReaderInstance(Of T).Values
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1.Values*
   name: Values
-  href: api/RW_ModularizationWeapon.FieldReaderInst-1.html#RW_ModularizationWeapon_FieldReaderInst_1_Values_
-  commentId: Overload:RW_ModularizationWeapon.FieldReaderInst`1.Values
+  href: api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_Values_
+  commentId: Overload:RW_ModularizationWeapon.FieldReaderInstance`1.Values
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.FieldReaderInst<T>.Values
-  fullName.vb: RW_ModularizationWeapon.FieldReaderInst(Of T).Values
-  nameWithType: FieldReaderInst<T>.Values
-  nameWithType.vb: FieldReaderInst(Of T).Values
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>.Values
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T).Values
+  nameWithType: FieldReaderInstance<T>.Values
+  nameWithType.vb: FieldReaderInstance(Of T).Values
 - uid: RW_ModularizationWeapon.FieldReaderInstList`1
   name: FieldReaderInstList<T>
   href: api/RW_ModularizationWeapon.FieldReaderInstList-1.html
