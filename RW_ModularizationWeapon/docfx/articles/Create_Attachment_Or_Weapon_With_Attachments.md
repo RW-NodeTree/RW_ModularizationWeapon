@@ -65,7 +65,7 @@
 	</ThingDef>
 </Defs>
 ```
-*More parameters here: [Type : CompProperties_ModularizationWeapon](../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon)*
+*More parameters here: [Type : CompProperties_ModularizationWeapon](../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html)*
 
 **Then, set `attachmentProperties` to make weapon able to use attachment.**
 
@@ -105,7 +105,7 @@
 </li>
 ...
 ```
-*More parameters here: [Type : WeaponAttachmentProperties](../api/RW_ModularizationWeapon.WeaponAttachmentProperties)*
+*More parameters here: [Type : WeaponAttachmentProperties](../api/RW_ModularizationWeapon.WeaponAttachmentProperties.html)*
 
 **And final, you will get a weapon or part that able to install an attachment called templatePart on attach point `template Part`**
 

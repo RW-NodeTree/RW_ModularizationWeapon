@@ -134,16 +134,16 @@ namespace RW_ModularizationWeapon.UI
 
 
         /// <summary>
-        /// +-------+-------+-------+
-        /// |               |       |
-        /// |    weapon     |       |
-        /// |    perview    |       |
-        /// |               | info  |
-        /// +-------+-------+ card  |
-        /// | tree  |target |       |
-        /// | view  |picker |       |
-        /// |       |       |       |
-        /// +-------+-------+-------+
+        /// ╔═══════════════╤═══════╗
+        /// ║               │       ║
+        /// ║    weapon     │       ║
+        /// ║    perview    │       ║
+        /// ║               │ info  ║
+        /// ╟───────┬───────┤ card  ║
+        /// ║ tree  │target │       ║
+        /// ║ view  │picker │       ║
+        /// ║       │       │       ║
+        /// ╚═══════╧═══════╧═══════╝
         /// </summary>
         /// <param name="inRect"></param>
         public override void DoWindowContents(Rect inRect)
