@@ -1,5 +1,5 @@
 ![Preview](images/Preview.png "Preview")
-# RW - Modularization Weapon
+# RW - Weapon Modularization
 **A mod for the game Rimworld, base by RW_NodeTree.**
 
 **Allow to make the weapon consist by multi part**
