@@ -910,7 +910,7 @@ a code:hover {
 }
 
 .hljs-keyword {
-  color: rgb(86,156,214);
+  color: #00f;
 }
 
 .hljs-string {
@@ -1077,6 +1077,9 @@ div.embeddedvideo iframe {
   
   .sidefilter {
     background-color: #4b4b4b;
+  }
+  .hljs-keyword {
+    color: rgb(86,156,214);
   }
   .hljs-string {
     color: rgb(214, 157, 133);
