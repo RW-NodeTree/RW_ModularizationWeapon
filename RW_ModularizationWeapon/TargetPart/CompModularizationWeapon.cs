@@ -13,29 +13,7 @@ namespace RW_ModularizationWeapon
     public partial class CompModularizationWeapon
     {
 
-        public bool ShowTargetPart
-        {
-            get
-            {
-                bool result = false;
-                CompModularizationWeapon current = this;
-                while (!result && current != null)
-                {
-                    result = current.showTargetPart;
-                    current = current.ParentPart;
-                }
-                return result;
-            }
-            set
-            {
-                //Log.Message($"ShowTargetPart {parent} : {value}; org : {ShowTargetPart}");
-
-                showTargetPart = value;
-                UsingTargetPart = ShowTargetPart;
-            }
-        }
-
-        private bool UsingTargetPart
+        public bool UsingTargetPart
         {
             get => usingTargetPart;
             set
@@ -54,14 +32,10 @@ namespace RW_ModularizationWeapon
                         else
                         {
                             CompModularizationWeapon comp = ChildNodes[id];
-                            if (comp != null)
-                            {
-                                comp.UsingTargetPart = value;
-                            }
+                            if (comp != null) comp.UsingTargetPart = value;
                         }
                     }
                 }
-                NodeProccesser?.UpdateNode();
             }
         }
 
@@ -80,7 +54,7 @@ namespace RW_ModularizationWeapon
                     if (!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, ChildNodes[id]);
                     ChildNodes[id] = targetInfo.Thing;
                     if (targetPartsWithId[id].Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
-                    NodeProccesser?.UpdateNode();
+                    NodeProccesser.UpdateNode();
                 }
                 else
                 {
@@ -95,13 +69,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void ResetTargetPart()
-        {
-            targetPartsWithId.Clear();
-        }
-
-
-        public void ApplyTargetPart(IntVec3 pos, Map map)
+        public void ApplyTargetPart(IntVec3 pos, Map map, bool updateNode = true)
         {
             UsingTargetPart = false;
             foreach (KeyValuePair<string, LocalTargetInfo> data in targetPartsWithId)
@@ -109,20 +77,23 @@ namespace RW_ModularizationWeapon
                 Thing thing = ChildNodes[data.Key];
                 if (data.Value.HasThing && data.Value.Thing.Spawned) data.Value.Thing.DeSpawn();
                 ChildNodes[data.Key] = data.Value.Thing;
-                if (thing != null && map != null && ChildNodes[data.Key] != thing)
+                if (thing != null && ChildNodes[data.Key] != thing)
                 {
-                    GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
+                    if(map != null) GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
+
+                    ((CompChildNodeProccesser)thing)?.UpdateNode();
+
                 }
             }
 
-            ResetTargetPart();
+            targetPartsWithId.Clear();
 
             foreach (Thing item in ChildNodes.Values)
             {
                 CompModularizationWeapon comp = item;
                 if (comp != null)
                 {
-                    comp.ApplyTargetPart(pos, map);
+                    comp.ApplyTargetPart(pos, map,false);
                 }
             }
 
@@ -151,7 +122,7 @@ namespace RW_ModularizationWeapon
                 }
             }
 
-            NodeProccesser?.UpdateNode();
+            if(updateNode) NodeProccesser.UpdateNode();
         }
 
 
@@ -180,7 +151,7 @@ namespace RW_ModularizationWeapon
                 parent.holdingOwner = container;
             }
             NodeProccesser.NeedUpdate = true;
-            UsingTargetPart = ShowTargetPart;
+            UsingTargetPart = ParentPart?.UsingTargetPart ?? false;
             //Log.Message($"container add {container.Comp} :" +
             //    $"\nthis = {this};" +
             //    $"\nparent.ParentHolder = {parent.ParentHolder};" +
@@ -197,7 +168,7 @@ namespace RW_ModularizationWeapon
                 CachedHoldingOwner = null;
             }
             NodeProccesser.NeedUpdate = true;
-            UsingTargetPart = ShowTargetPart;
+            UsingTargetPart = ParentPart?.UsingTargetPart ?? false;
             //Log.Message($"container Removed {container.Comp} :" +
             //    $"\nthis = {this};" +
             //    $"\nparent.ParentHolder = {parent.ParentHolder};" +

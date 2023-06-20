@@ -13,6 +13,7 @@ using HarmonyLib;
 using RimWorld;
 using RimWorld.QuestGen;
 using RW_ModularizationWeapon.Tools;
+using RW_ModularizationWeapon.UI;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
@@ -151,12 +152,12 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override List<(Thing, string, List<RenderInfo>)> OverrideDrawSteep(List<(Thing, string, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
+        protected override List<(string, Thing, List<RenderInfo>)> OverrideDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
         {
             Matrix4x4 scale = Matrix4x4.identity;
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
-                (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
+                (string id, Thing part, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (id.NullOrEmpty() && part == parent)
                 {
@@ -169,7 +170,22 @@ namespace RW_ModularizationWeapon
                             RenderInfo info = renderInfos[j];
                             if (info.material == material)
                             {
-                                info.material = Props.PartTexMaterial ?? info.material;
+                                if (Props.PartTexture != null)
+                                {
+                                    MaterialRequest req;
+                                    if (MaterialPool.TryGetRequestForMat(material, out req)) req.mainTex = Props.PartTexture;
+                                    else req = new MaterialRequest()
+                                    {
+                                        renderQueue = material.renderQueue,
+                                        shader = material.shader,
+                                        color = material.color,
+                                        colorTwo = material.GetColor(ShaderPropertyIDs.ColorTwo),
+                                        mainTex = Props.PartTexture,
+                                        maskTex = material.GetTexture(ShaderPropertyIDs.MaskTex) as Texture2D,
+                                    };
+                                    info.material = MaterialPool.MatFrom(req);
+                                }
+
                                 scale.m00 = Props.DrawSizeWhenAttach.x / info.mesh.bounds.size.x;
                                 scale.m22 = Props.DrawSizeWhenAttach.y / info.mesh.bounds.size.z;
                                 renderInfos[j] = info;
@@ -182,7 +198,7 @@ namespace RW_ModularizationWeapon
             }
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
-                (Thing part, string id, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
+                (string id, Thing part, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if(id.NullOrEmpty() && part == parent)
                 {
@@ -260,13 +276,20 @@ namespace RW_ModularizationWeapon
                 {
                     renderInfos.Clear();
                 }
+
+                for (int j = 0; j < renderInfos.Count; j++)
+                {
+                    RenderInfo info = renderInfos[j];
+                    info.CanUseFastDrawingMode = true;
+                    renderInfos[j] = info;
+                }
             }
             nodeRenderingInfos.SortBy(x =>
             {
                 for (int i = 0; i < Props.attachmentProperties.Count; i++)
                 {
                     WeaponAttachmentProperties properties = Props.attachmentProperties[i];
-                    if (properties.id == x.Item2) return i + properties.drawWeight * Props.attachmentProperties.Count;
+                    if (properties.id == x.Item1) return i + properties.drawWeight * Props.attachmentProperties.Count;
                 }
                 return -1;
             });
@@ -468,55 +491,66 @@ namespace RW_ModularizationWeapon
         {
             statOffsetCache.Clear();
             statMultiplierCache.Clear();
-
-            parent.AllComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
-
-            for (int i = 0; i < parent.AllComps.Count; i++)
-            {
-                ThingComp comp = parent.AllComps[i];
-                Type type = comp.GetType();
-                if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
-                CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                if(properties != null)
-                {
-                    try
-                    {
-                        if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
-                        comp.parent = parent;
-                        if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
-                        else comp.props = CompPropertiesAfterAffect(properties);
-                        parent.AllComps[i] = comp;
-                        //comp.props.LogAllField();
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
-                    }
-                }
-            }
-
-            foreach (CompProperties prop in AllExtraCompProperties())
-            {
-                if(parent.AllComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
-                {
-                    ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
-                    comp.parent = parent;
-                    comp.Initialize(CompPropertiesAfterAffect(prop));
-                    parent.AllComps.Add(comp);
-                    //comp.props.LogAllField();
-                }
-            }
-
-
-            if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
-            {
-                //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
-                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
-            }
-
+            compsDirty = true;
+            if (CustomWeapon.drawing) NodeProccesser.NeedUpdate = true;
+            else CheckAndUpdateComps();
             return false;
         }
 
+
+
+        public void CheckAndUpdateComps()
+        {
+            if(compsDirty)
+            {
+                compsDirty = false;
+                List<ThingComp> allComps = parent.AllComps;
+                allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
+
+                for (int i = 0; i < allComps.Count; i++)
+                {
+                    ThingComp comp = allComps[i];
+                    Type type = comp.GetType();
+                    if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+                    CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+                    if (properties != null)
+                    {
+                        try
+                        {
+                            if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
+                            comp.parent = parent;
+                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                            else comp.props = CompPropertiesAfterAffect(properties);
+                            allComps[i] = comp;
+                            //comp.props.LogAllField();
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
+                        }
+                    }
+                }
+
+                foreach (CompProperties prop in AllExtraCompProperties())
+                {
+                    if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+                    {
+                        ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
+                        comp.parent = parent;
+                        comp.Initialize(CompPropertiesAfterAffect(prop));
+                        allComps.Add(comp);
+                        //comp.props.LogAllField();
+                    }
+                }
+
+
+                if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
+                {
+                    //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
+                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+                }
+            }
+        }
 
         protected override HashSet<string> RegiestedNodeId(HashSet<string> regiestedNodeId)
         {
@@ -543,8 +577,8 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
         private ThingOwner CachedHoldingOwner = null;
-        private bool showTargetPart = false;
         private bool usingTargetPart = false;
+        private bool compsDirty = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
@@ -566,25 +600,6 @@ namespace RW_ModularizationWeapon
     /// </summary>
     public class CompProperties_ModularizationWeapon : CompProperties
     {
-        /// <summary>   
-        /// init `materialCache` and return it
-        /// </summary>
-        public Material PartTexMaterial
-        {
-            get
-            {
-                if (materialCache == null)
-                {
-                    Texture2D texture = (!PartTexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(PartTexPath) : null;
-                    if(texture != null)
-                    {
-                        materialCache = new Material(ShaderDatabase.Cutout);
-                        materialCache.mainTexture = texture;
-                    }
-                }
-                return materialCache;
-            }
-        }
 
         /// <summary>
         /// Texture of `PartTexMaterial`
@@ -593,7 +608,8 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                return PartTexMaterial?.mainTexture as Texture2D;
+                if(partTexCache == null && !PartTexPath.NullOrEmpty()) partTexCache = ContentFinder<Texture2D>.Get(PartTexPath);
+                return partTexCache;
             }
         }
 
@@ -1367,6 +1383,6 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// material cache of `PartTexPath`
         /// </summary>
-        private Material materialCache;
+        private Texture2D partTexCache;
     }
 }

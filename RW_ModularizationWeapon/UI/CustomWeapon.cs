@@ -2,10 +2,13 @@
 using RW_NodeTree;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.LowLevel;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 using Verse;
 using Verse.AI;
@@ -71,21 +74,27 @@ namespace RW_ModularizationWeapon.UI
         }
 
 
-        public StateInfoTags InfoTags
+        private StateInfoTags InfoTags
         {
             get
             {
-                if(stateInfoTags == null && SelectedThingForInfoCard != null) stateInfoTags = new StateInfoTags(348, SelectedThingForInfoCard);
+                if (stateInfoTags == null && SelectedThingForInfoCard != null)
+                {
+                    drawing = false;
+                    creaftingTable.GetTargetCompModularizationWeapon()?.NodeProccesser.UpdateNode();
+                    drawing = true;
+                    stateInfoTags = new StateInfoTags(348, SelectedThingForInfoCard);
+                }
                 return stateInfoTags;
             }
         }
 
-        public void ResetInfoTags()
+        internal void ResetInfoTags()
         {
             stateInfoTags = null;
         }
 
-        public void ResetSelections()
+        internal void ResetSelections()
         {
             selections.Clear();
             (string id, CompModularizationWeapon parent) = SelectedPartForChange;
@@ -160,9 +169,18 @@ namespace RW_ModularizationWeapon.UI
             GUI.skin.verticalScrollbar.normal.background = TexUI.HighlightTex;
             GUI.skin.verticalScrollbarThumb.normal.background = TexUI.HighlightTex;
 
-
+            drawing = true;
+            //stopwatch.Restart();
+            //long[] spans = new long[5];
             // Widgets.Label(new Rect(0, 0, inRect.width, 36), "AssembleWeapon".Translate());
             CompModularizationWeapon weapon = creaftingTable.GetTargetCompModularizationWeapon();
+            if (weapon != null)
+            {
+                weapon.UsingTargetPart = true;
+                //spans[0] = stopwatch.ElapsedTicks;
+                weapon.NodeProccesser.UpdateNode();
+                //spans[1] = stopwatch.ElapsedTicks;
+            }
             //if (weapon == null)
             //{
             //    ThingDef Gun_Test_Modularization = DefDatabase<ThingDef>.GetNamed("Gun_Test_Modularization");
@@ -177,6 +195,13 @@ namespace RW_ModularizationWeapon.UI
             Widgets.DrawLineVertical(340, 480, inRect.height - 480);
             GUI.color = Color.white;
 
+
+
+            #region infoCard
+            drawing = false;
+            InfoTags?.Draw(new Rect(684, 0, 340, inRect.height - 48));
+            drawing = true;
+            #endregion
 
             #region weaponPerview
 
@@ -343,12 +368,7 @@ namespace RW_ModularizationWeapon.UI
             Widgets.EndScrollView();
             #endregion
 
-
-            #region infoCard
-            InfoTags?.Draw(new Rect(684, 0, 340, inRect.height - 48));
-            #endregion
-
-            if(Widgets.ButtonText(new Rect(684, inRect.height - 48, 340,48), "apply".Translate()))
+            if (Widgets.ButtonText(new Rect(684, inRect.height - 48, 340,48), "apply".Translate()))
             {
                 Close(false);
                 if(weapon != null)
@@ -360,6 +380,17 @@ namespace RW_ModularizationWeapon.UI
                     pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
                 }
             }
+            //spans[2] = stopwatch.ElapsedTicks;
+            if (weapon != null)
+            {
+                weapon.UsingTargetPart = false;
+                //spans[3] = stopwatch.ElapsedTicks;
+                weapon.NodeProccesser.UpdateNode();
+                //spans[4] = stopwatch.ElapsedTicks;
+            }
+            //Log.Message($"[{spans[0]},{spans[1]},{spans[2]},{spans[3]},{spans[4]}]");
+            //drawed = true;
+            drawing = false;
 
             GUI.skin.horizontalScrollbar.normal.background = horizontalScrollbar;
             GUI.skin.horizontalScrollbarThumb.normal.background = horizontalScrollbarThumb;
@@ -367,17 +398,8 @@ namespace RW_ModularizationWeapon.UI
             GUI.skin.verticalScrollbarThumb.normal.background = verticalScrollbarThumb;
         }
 
-
-        public override void Close(bool doCloseSound = true)
-        {
-            CompModularizationWeapon weapon = creaftingTable.GetTargetCompModularizationWeapon();
-            if (weapon != null)
-            {
-                weapon.ShowTargetPart = false;
-            }
-            base.Close(doCloseSound);
-        }
-
+        internal static bool drawing = false;
+        //private static readonly Stopwatch stopwatch = new Stopwatch();
         private static readonly Color32 _Border = new Color32(97, 108, 122, 255);
         private readonly Pawn pawn;
         private readonly CompCustomWeaponPort creaftingTable;

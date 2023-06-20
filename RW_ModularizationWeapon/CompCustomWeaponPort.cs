@@ -26,7 +26,6 @@ namespace RW_ModularizationWeapon
             else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
         }
 
-
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
 
@@ -60,10 +59,8 @@ namespace RW_ModularizationWeapon
         {
             if (selectedDef == null)
             {
-                if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
                 selestedWeapon = null;
                 customWeapon?.ResetInfoTags();
-                if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
             }
             else SetTarget(ThingMaker.MakeThing(selectedDef), customWeapon);
         }
@@ -71,7 +68,6 @@ namespace RW_ModularizationWeapon
 
         public void SetTarget(CompModularizationWeapon selectedWeapon, CustomWeapon customWeapon=null)
         {
-            if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = false;
             if (selectedWeapon == null)
             {
                 selestedWeapon = null;
@@ -82,7 +78,6 @@ namespace RW_ModularizationWeapon
                 this.selestedWeapon = selectedWeapon.parent;
                 customWeapon?.ResetInfoTags();
             }
-            if (customWeapon != null && (CompModularizationWeapon)this.selestedWeapon != null) ((CompModularizationWeapon)this.selestedWeapon).ShowTargetPart = true;
         }
 
         public LocalTargetInfo GetTarget() => selestedWeapon;

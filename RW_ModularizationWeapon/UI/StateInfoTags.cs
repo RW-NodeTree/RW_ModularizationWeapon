@@ -81,7 +81,7 @@ namespace RW_ModularizationWeapon.UI
             }
         }
 
-        public void Draw(Rect rect)
+        public void Draw(Rect rect, Action<int, StatRequest> clickedCallback = null, Action<int, StatRequest> mousedOverCallback = null)
         {
             if(statInfos != null)
             {
@@ -111,8 +111,9 @@ namespace RW_ModularizationWeapon.UI
                         delegate ()
                         {
                             open = !open;
+                            clickedCallback?.Invoke(i, statRequest);
                         },
-                        delegate () { },
+                        ()=> mousedOverCallback?.Invoke(i, statRequest),
                         scrollView,
                         new Rect(0, 0, 0, rect.height)
                     );

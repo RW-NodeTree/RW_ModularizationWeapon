@@ -94,12 +94,7 @@ namespace RW_ModularizationWeapon
         protected override bool PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyFinalProcess, Dictionary<string, object> stats)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_GetValueUnfinalized");
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerPerfix(stats);
+            StatWorkerPerfix(stats);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (before.Thing == req.Thing && req.Thing != parent)
@@ -137,12 +132,7 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(exception.ToString());
             }
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerFinalfix(stats);
+            StatWorkerFinalfix(stats);
             return result;
         }
 
@@ -150,12 +140,7 @@ namespace RW_ModularizationWeapon
         protected override bool PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyFinalProcess, ref float result, Dictionary<string, object> stats)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue -> {result}");
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerPerfix(stats);
+            StatWorkerPerfix(stats);
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing != parent)
@@ -245,12 +230,7 @@ namespace RW_ModularizationWeapon
                 //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
                 result = (float)cache;
             }
-            if (!(statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
-                statWorker is StatWorker_MarketValue ||
-                statWorker == StatDefOf.Mass.Worker)
-            )
-                StatWorkerFinalfix(stats);
+            StatWorkerFinalfix(stats);
             return result;
         }
 
