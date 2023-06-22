@@ -308,7 +308,7 @@ namespace RW_ModularizationWeapon
 
             RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
             Graphics.Blit(tar, renderTexture);
-            PostFXMat.SetFloat("_EdgeSize", NodeProccesser.Props.TextureSizeFactor);
+            PostFXMat.SetFloat("_EdgeSize", NodeProccesser.Props.TextureSizeFactor / 64f);
             Graphics.Blit(renderTexture, tar, PostFXMat);
             RenderTexture.ReleaseTemporary(renderTexture);
 
