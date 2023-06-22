@@ -1151,7 +1151,7 @@ namespace RW_ModularizationWeapon
         public bool drawChildPartWhenOnGround = true;
 
         /// <summary>
-        /// if it's **`true`**, it will not draw attachment when it not attach on other part
+        /// if it's **`true`**, it will draw outline if it's root part
         /// </summary>
         public bool drawOutlineOnRoot = true;
         #endregion
