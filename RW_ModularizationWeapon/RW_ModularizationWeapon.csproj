@@ -277,7 +277,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="PackUp\1.3\Asset\shaderpackagetest" />
+    <None Include="PackUp\1.3\Asset\shaderpackagetest.manifest" />
+    <None Include="PackUp\1.4\Asset\shaderpackagetest" />
+    <None Include="PackUp\1.4\Asset\shaderpackagetest.manifest" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set ver=1.4

@@ -35,8 +35,8 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                CompModularizationWeapon result = null;
-                CompModularizationWeapon current = this;
+                CompModularizationWeapon result = this;
+                CompModularizationWeapon current = ParentPart;
                 while (current != null)
                 {
                     result = current;
@@ -45,6 +45,8 @@ namespace RW_ModularizationWeapon
                 return result;
             }
         }
+
+        public override bool HasPostFX => ParentPart == null;
 
 
         static CompModularizationWeapon()
@@ -294,6 +296,22 @@ namespace RW_ModularizationWeapon
                 return -1;
             });
             return nodeRenderingInfos;
+        }
+
+
+        public override void PostFX(RenderTexture tar)
+        {
+            if(PostFXMat == null)
+            {
+                PostFXMat = new Material(ShaderDatabase.LoadShader("BuildEdge"));
+            }
+
+            RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
+            Graphics.Blit(tar, renderTexture);
+            PostFXMat.SetFloat("_EdgeSize", NodeProccesser.Props.TextureSizeFactor);
+            Graphics.Blit(renderTexture, tar, PostFXMat);
+            RenderTexture.ReleaseTemporary(renderTexture);
+
         }
 
 
@@ -590,6 +608,7 @@ namespace RW_ModularizationWeapon
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_get = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_set = null;
         private static MethodInfo PerformanceOptimizer_ComponentCache_ResetCompCache = null;
+        private static Material PostFXMat = null;
 
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
@@ -1130,6 +1149,11 @@ namespace RW_ModularizationWeapon
         /// if it's **`true`**, it will not draw attachment when it not attach on other part
         /// </summary>
         public bool drawChildPartWhenOnGround = true;
+
+        /// <summary>
+        /// if it's **`true`**, it will not draw attachment when it not attach on other part
+        /// </summary>
+        public bool drawOutlineOnRoot = true;
         #endregion
 
 
