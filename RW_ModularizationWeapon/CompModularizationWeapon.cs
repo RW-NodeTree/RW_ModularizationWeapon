@@ -46,7 +46,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public override bool HasPostFX => ParentPart == null;
+        public override bool HasPostFX => Props.drawOutlineOnRoot && ParentPart == null;
 
 
         static CompModularizationWeapon()
