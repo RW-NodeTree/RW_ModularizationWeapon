@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -303,7 +304,26 @@ namespace RW_ModularizationWeapon
         {
             if(PostFXMat == null)
             {
-                PostFXMat = new Material(ShaderDatabase.LoadShader("BuildEdge"));
+                List<ModContentPack> runningModsListForReading = LoadedModManager.RunningModsListForReading;
+                foreach (ModContentPack pack in runningModsListForReading)
+                {
+                    //Log.Message($"{pack.PackageId},{pack.assetBundles.loadedAssetBundles?.Count}");
+                    if (pack.PackageId.Equals("rwnodetree.rwweaponmodularization") && !pack.assetBundles.loadedAssetBundles.NullOrEmpty())
+                    {
+                        //Log.Message($"{pack.PackageId} found, try to load shader");
+                        foreach (AssetBundle assetBundle in pack.assetBundles.loadedAssetBundles)
+                        {
+                            //Log.Message("Loading shader");
+                            Shader shader = assetBundle.LoadAsset<Shader>("Assets/Data/Materials/RWNodeTree.RWWeaponModularization/BuildEdge.shader");
+                            if (shader != null)
+                            {
+                                PostFXMat = new Material(shader);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
             }
 
             RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
