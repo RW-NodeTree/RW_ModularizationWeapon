@@ -161,7 +161,6 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
                 (string id, Thing part, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (id.NullOrEmpty() && part == parent)
                 {
                     //Log.Message($"ParentProccesser : {ParentProccesser}");
