@@ -321,7 +321,7 @@ namespace RW_ModularizationWeapon
 
         protected override bool AllowNode(Thing node, string id = null)
         {
-            if(UsingTargetPart && ! setingTargetPart) return false;
+            if(UsingTargetPart && !setingTargetPart) return false;
             WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)

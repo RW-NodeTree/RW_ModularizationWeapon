@@ -22,12 +22,14 @@ namespace RW_ModularizationWeapon
                     target = targetPartsWithId[id];
                     if (target.HasThing && target.Thing.Spawned)
                     {
+                        LocalTargetInfo temp = target;
                         Toil toil = new Toil();
                         toil.initAction = delegate ()
                         {
+                            //Log.Message(temp.Thing.ToString());
                             Pawn actor = toil.actor;
                             Job job = actor.CurJob;
-                            job.SetTarget(hauledThingIndex, target);
+                            job.SetTarget(hauledThingIndex, temp);
                             job.count = 1;
                         };
                         yield return toil;

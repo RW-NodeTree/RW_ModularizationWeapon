@@ -58,7 +58,8 @@ namespace RW_ModularizationWeapon.AI
                     Job job = actor.CurJob;
                     foreach (LocalTargetInfo target in comp.AllTargetPart())
                     {
-                        if(target.HasThing && target.Thing.Spawned && !actor.Reserve(target, job, 1, 1))
+                        //Log.Message(target.ToString());
+                        if (target.HasThing && target.Thing.Spawned && !actor.Reserve(target, job, 1, 1))
                         {
                             this.EndJobWith(JobCondition.Incompletable);
                             return;
