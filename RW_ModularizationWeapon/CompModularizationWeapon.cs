@@ -322,6 +322,7 @@ namespace RW_ModularizationWeapon
 
         protected override bool AllowNode(Thing node, string id = null)
         {
+            if(UsingTargetPart && ! setingTargetPart) return false;
             WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
@@ -532,6 +533,8 @@ namespace RW_ModularizationWeapon
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
             if (IsUpdateUsingTargetPart)
             {
+                bool prevSetingTargetPart = setingTargetPart;
+                setingTargetPart = true;
                 if (eventInfo == this.usingTargetPart) return false;
                 foreach (string id in this.PartIDs)
                 {
@@ -554,6 +557,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
 
+                setingTargetPart = prevSetingTargetPart;
             }
             else
             {
@@ -718,6 +722,7 @@ namespace RW_ModularizationWeapon
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
         private bool usingTargetPart = false;
+        private bool setingTargetPart = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");

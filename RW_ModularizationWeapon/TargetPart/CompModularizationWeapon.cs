@@ -29,7 +29,6 @@ namespace RW_ModularizationWeapon
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
-
             if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
                 ThingOwner targetOwner = targetInfo.Thing?.holdingOwner;
@@ -39,6 +38,9 @@ namespace RW_ModularizationWeapon
                 //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
                 if (UsingTargetPart)
                 {
+                    bool prevSetingTargetPart = setingTargetPart;
+
+                    setingTargetPart = true;
                     if(!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, prevPart);
                     targetPartsHoldingOwnerWithId.SetOrAdd(id, targetOwner);
 
@@ -55,6 +57,8 @@ namespace RW_ModularizationWeapon
                         prevOwner?.TryAdd(prevPart, false);
                     }
                     NodeProccesser.UpdateNode();
+
+                    setingTargetPart = prevSetingTargetPart;
                 }
                 else
                 {
