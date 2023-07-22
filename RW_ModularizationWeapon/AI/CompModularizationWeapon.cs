@@ -14,7 +14,7 @@ namespace RW_ModularizationWeapon
     {
         internal IEnumerable<Toil> CarryTarget(TargetIndex craftingTable, TargetIndex hauledThingIndex)
         {
-            foreach (string id in NodeProccesser.RegiestedNodeId)
+            foreach (string id in PartIDs)
             {
                 LocalTargetInfo target = ChildNodes[id];
                 if (targetPartsWithId.ContainsKey(id))
@@ -75,7 +75,7 @@ namespace RW_ModularizationWeapon
 
         internal IEnumerable<LocalTargetInfo> AllTargetPart()
         {
-            foreach (string id in NodeProccesser.RegiestedNodeId)
+            foreach (string id in PartIDs)
             {
                 LocalTargetInfo target = ChildNodes[id];
                 if (targetPartsWithId.ContainsKey(id))

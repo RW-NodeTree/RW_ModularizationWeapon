@@ -28,7 +28,7 @@ namespace RW_ModularizationWeapon
                 string id = container[(uint)i];
                 CompModularizationWeapon comp = container[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if (comp != null && comp.Validity && id != childNodeIdForVerbProperties)
+                if (comp != null && properties != null && comp.Validity && id != childNodeIdForVerbProperties)
                 {
                     FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
 
@@ -171,7 +171,7 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer container = ChildNodes;
             float result = 1;
-            if (!statMultiplierCache.TryGetValue((statDef, part), out result))
+            if (!(this.UsingTargetPart ? statMultiplierCache_TargetPart : statMultiplierCache).TryGetValue((statDef, part), out result))
             {
                 result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatValueFromList(
                     statDef,
@@ -218,7 +218,7 @@ namespace RW_ModularizationWeapon
                             );
                     }
                 }
-                statMultiplierCache.Add((statDef, part), result);
+                (this.UsingTargetPart ? statMultiplierCache_TargetPart : statMultiplierCache).Add((statDef, part), result);
                 //Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
             }
             return result;

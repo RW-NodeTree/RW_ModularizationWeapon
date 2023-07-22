@@ -19,23 +19,7 @@ namespace RW_ModularizationWeapon
             set
             {
                 //Log.Message($"UsingTargetPart {parent} : {value}; org : {usingTargetPart}");
-                if (usingTargetPart != value)
-                {
-                    usingTargetPart = value;
-                    foreach (string id in NodeProccesser.RegiestedNodeId)
-                    {
-                        if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo cache))
-                        {
-                            targetPartsWithId[id] = ChildNodes[id];
-                            ChildNodes[id] = cache.Thing;
-                        }
-                        else
-                        {
-                            CompModularizationWeapon comp = ChildNodes[id];
-                            if (comp != null) comp.UsingTargetPart = value;
-                        }
-                    }
-                }
+                if (usingTargetPart != value) NodeProccesser.UpdateNode("UpdateUsingTargetPart", value);
             }
         }
 
@@ -45,23 +29,46 @@ namespace RW_ModularizationWeapon
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
+
             if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
-
-                //Log.Message($"SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
+                ThingOwner targetOwner = targetInfo.Thing?.holdingOwner;
+                ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
+                Thing prevPart = ChildNodes[id];
+                targetOwner?.Remove(targetInfo.Thing);
+                //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
                 if (UsingTargetPart)
                 {
-                    if (!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, ChildNodes[id]);
+                    if(!targetPartsWithId.ContainsKey(id)) targetPartsWithId.Add(id, prevPart);
+                    targetPartsHoldingOwnerWithId.SetOrAdd(id, targetOwner);
+
                     ChildNodes[id] = targetInfo.Thing;
-                    if (targetPartsWithId[id].Thing == targetInfo.Thing) targetPartsWithId.Remove(id);
+
+                    if ((targetPartsWithId.TryGetValue(id).Thing ?? prevPart) == targetInfo.Thing)
+                    {
+                        targetPartsWithId.Remove(id);
+                        targetPartsHoldingOwnerWithId.Remove(id);
+                    }
+                    if (prevPart != targetInfo.Thing)
+                    {
+                        ((CompChildNodeProccesser)prevPart)?.UpdateNode("UpdateUsingTargetPart", false);
+                        prevOwner?.TryAdd(prevPart, false);
+                    }
                     NodeProccesser.UpdateNode();
                 }
                 else
                 {
-                    if (targetInfo.Thing == ChildNodes[id])
+                    if (targetInfo.Thing == prevPart)
+                    {
                         targetPartsWithId.Remove(id);
-                    else if ((targetInfo.Thing?.Spawned ?? true))
-                        targetPartsWithId.SetOrAdd(id, targetInfo);
+                        targetPartsHoldingOwnerWithId.Remove(id);
+                    }
+                    else
+                    {
+                        targetPartsWithId.SetOrAdd(id, targetInfo.Thing);
+                        targetPartsHoldingOwnerWithId.SetOrAdd(id, targetOwner);
+                    }
+                    targetOwner?.TryAdd(targetInfo.Thing, false);
                 }
                 return true;
             }
@@ -80,13 +87,21 @@ namespace RW_ModularizationWeapon
                 if (thing != null && ChildNodes[data.Key] != thing)
                 {
                     if(map != null) GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
-
-                    ((CompChildNodeProccesser)thing)?.UpdateNode();
+                    CompChildNodeProccesser comp = thing;
+                    if(comp != null)
+                    {
+                        comp.NeedUpdate = true;
+                        comp.UpdateNode();
+                    }
 
                 }
             }
+            //NeedUpdate = true;
 
             targetPartsWithId.Clear();
+            targetPartsHoldingOwnerWithId.Clear();
+
+            //Log.Message($"{parent}->NeedUpdate : {NeedUpdate}");
 
             foreach (Thing item in ChildNodes.Values)
             {
@@ -128,7 +143,7 @@ namespace RW_ModularizationWeapon
 
         public IEnumerator<(string, Thing, WeaponAttachmentProperties)> GetEnumerator()
         {
-            foreach (string id in NodeProccesser.RegiestedNodeId)
+            foreach (string id in PartIDs)
             {
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (properties != null) yield return (id, ChildNodes[id], properties);
@@ -140,40 +155,6 @@ namespace RW_ModularizationWeapon
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-
-        protected override void Added(NodeContainer container, string id)
-        {
-            if (CachedHoldingOwner == null && parent.holdingOwner != container)
-            {
-                CachedHoldingOwner = parent.holdingOwner;
-                parent.holdingOwner = container;
-            }
-            NodeProccesser.NeedUpdate = true;
-            UsingTargetPart = ParentPart?.UsingTargetPart ?? false;
-            //Log.Message($"container add {container.Comp} :" +
-            //    $"\nthis = {this};" +
-            //    $"\nparent.ParentHolder = {parent.ParentHolder};" +
-            //    $"\nCachedHoldingOwner = {CachedHoldingOwner?.Owner};" +
-            //    $"\nNodeProccesser.NeedUpdate = {NodeProccesser.NeedUpdate}");
-        }
-
-
-        protected override void Removed(NodeContainer container, string id)
-        {
-            if (CachedHoldingOwner != null && parent.holdingOwner == null)
-            {
-                parent.holdingOwner = CachedHoldingOwner;
-                CachedHoldingOwner = null;
-            }
-            NodeProccesser.NeedUpdate = true;
-            UsingTargetPart = ParentPart?.UsingTargetPart ?? false;
-            //Log.Message($"container Removed {container.Comp} :" +
-            //    $"\nthis = {this};" +
-            //    $"\nparent.ParentHolder = {parent.ParentHolder};" +
-            //    $"\nCachedHoldingOwner = {CachedHoldingOwner?.Owner};" +
-            //    $"\nNodeProccesser.NeedUpdate = {NodeProccesser.NeedUpdate}");
         }
     }
 }

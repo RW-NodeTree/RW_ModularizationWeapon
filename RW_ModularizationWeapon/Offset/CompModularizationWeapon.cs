@@ -157,7 +157,7 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer container = ChildNodes;
             float result = 0;
-            if (!statOffsetCache.TryGetValue((statDef, part), out result))
+            if (!(this.UsingTargetPart ? statOffsetCache_TargetPart : statOffsetCache).TryGetValue((statDef, part), out result))
             {
                 result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatValueFromList(
                     statDef,
@@ -203,7 +203,7 @@ namespace RW_ModularizationWeapon
                             );
                     }
                 }
-                statOffsetCache.Add((statDef, part), result);
+                (this.UsingTargetPart ? statOffsetCache_TargetPart : statOffsetCache).Add((statDef, part), result);
                 //Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
             }
             return result;

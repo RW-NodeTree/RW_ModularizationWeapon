@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,6 +20,7 @@ using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
@@ -49,6 +51,20 @@ namespace RW_ModularizationWeapon
 
         public override bool HasPostFX => Props.drawOutlineOnRoot && ParentPart == null;
 
+        public HashSet<string> PartIDs
+        {
+            get
+            {
+                if(partIDs.Count == 0)
+                {
+                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                    {
+                        partIDs.Add(properties.id);
+                    }
+                }
+                return partIDs;
+            }
+        }
 
         static CompModularizationWeapon()
         {
@@ -76,47 +92,8 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
-            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
-            {
-                targetPartsWithId = targetPartsWithId ?? new Dictionary<string, LocalTargetInfo>();
-                NodeProccesser.UpdateNode();
-
-                for (int i = 0; i < parent.AllComps.Count; i++)
-                {
-                    ThingComp comp = parent.AllComps[i];
-                    Type type = comp.GetType();
-                    if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
-                    CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                    if (properties != null)
-                    {
-                        try
-                        {
-                            if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
-                            comp.parent = parent;
-                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
-                            else comp.props = CompPropertiesAfterAffect(properties);
-                            parent.AllComps[i] = comp;
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
-                        }
-                    }
-                }
-
-                foreach (CompProperties prop in AllExtraCompProperties())
-                {
-                    if (parent.AllComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
-                    {
-                        ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
-                        comp.parent = parent;
-                        comp.Initialize(CompPropertiesAfterAffect(prop));
-                        parent.AllComps.Add(comp);
-                    }
-                }
-                NodeProccesser.UpdateNode();
-            }
+            Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.Reference);
+            if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
         }
 
 
@@ -155,7 +132,13 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override List<(string, Thing, List<RenderInfo>)> OverrideDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic)
+        //protected override List<(string, Thing, List<RenderInfo>)> PreDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic, Dictionary<string, object> cachedDataToPostDrawSteep)
+        //{
+        //    return base.PreDrawSteep(nodeRenderingInfos, rot, graphic, cachedDataToPostDrawSteep);
+        //}
+
+
+        protected override List<(string, Thing, List<RenderInfo>)> PostDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic, Dictionary<string, object> cachedDataFromPerDrawSteep)
         {
             Matrix4x4 scale = Matrix4x4.identity;
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
@@ -202,7 +185,7 @@ namespace RW_ModularizationWeapon
             {
                 (string id, Thing part, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
-                if(id.NullOrEmpty() && part == parent)
+                if (id.NullOrEmpty() && part == parent)
                 {
                     if (ParentProccesser != null)
                     {
@@ -325,10 +308,13 @@ namespace RW_ModularizationWeapon
                 }
             }
 
+            if(PostFXCommandBuffer == null) PostFXCommandBuffer = new CommandBuffer();
+            PostFXCommandBuffer.Clear();
             RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
-            Graphics.Blit(tar, renderTexture);
+            PostFXCommandBuffer.Blit(tar, renderTexture);
             PostFXMat.SetFloat("_EdgeSize", NodeProccesser.Props.TextureSizeFactor / 64f);
-            Graphics.Blit(renderTexture, tar, PostFXMat);
+            PostFXCommandBuffer.Blit(renderTexture, tar, PostFXMat);
+            Graphics.ExecuteCommandBuffer(PostFXCommandBuffer);
             RenderTexture.ReleaseTemporary(renderTexture);
 
         }
@@ -502,7 +488,7 @@ namespace RW_ModularizationWeapon
             {
                 CompModularizationWeapon comp = container[i];
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(container[(uint)i]);
-                if(comp != null)
+                if(comp != null && properties != null)
                 {
                     result.AddRange(
                         from x 
@@ -524,77 +510,185 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool UpdateNode(CompChildNodeProccesser actionNode)
+        protected override bool PreUpdateNode(string eventName, object costomEventInfo, CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde)
         {
-            statOffsetCache.Clear();
-            statMultiplierCache.Clear();
-            compsDirty = true;
-            if (CustomWeapon.drawing) NodeProccesser.NeedUpdate = true;
-            else CheckAndUpdateComps();
+            bool eventInfo = (costomEventInfo as bool?) ?? this.usingTargetPart;
+            bool IsUpdateUsingTargetPart = eventName == "UpdateUsingTargetPart";
+
+            if (!IsUpdateUsingTargetPart || NeedUpdate)
+            {
+                cachedThingComps.Clear();
+                cachedCompProperties.Clear();
+                statOffsetCache.Clear();
+                statMultiplierCache.Clear();
+                statOffsetCache_TargetPart.Clear();
+                statMultiplierCache_TargetPart.Clear();
+                regiestedNodeVerbToolInfos.Clear();
+                regiestedNodeVerbPropertiesInfos.Clear();
+                regiestedNodeVerbToolInfos_TargetPart.Clear();
+                regiestedNodeVerbPropertiesInfos_TargetPart.Clear();
+            }
+
+            //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
+            if (IsUpdateUsingTargetPart)
+            {
+                if (eventInfo == this.usingTargetPart) return false;
+                foreach (string id in this.PartIDs)
+                {
+                    if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
+                    {
+                        Thing prev = ChildNodes[id];
+                        if (!targetPartsHoldingOwnerWithId.TryGetValue(id, out ThingOwner owner))
+                        {
+                            owner = usingTargetPart ? target.Thing?.holdingOwner : prev?.holdingOwner;
+                            targetPartsHoldingOwnerWithId.Add(id, owner);
+                        }
+
+                        //Log.Message($"{id} : {prev}; target : {target}; owner : {owner}");
+
+                        if (!usingTargetPart && target.Thing != null) owner?.Remove(target.Thing);
+                        targetPartsWithId[id] = prev;
+                        ChildNodes[id] = target.Thing;
+                        if (usingTargetPart && prev != null) owner?.TryAdd(prev, false);
+                        ((CompChildNodeProccesser)prev)?.UpdateNode("UpdateUsingTargetPart", false);
+                    }
+                }
+
+            }
+            else
+            {
+                foreach (Thing thing in ChildNodes.Values)
+                {
+                    CompChildNodeProccesser proccesser = thing;
+                    if (proccesser != null)
+                    {
+                        proccesser.NeedUpdate = true;
+                    }
+                }
+            }
             return false;
         }
 
 
-
-        public void CheckAndUpdateComps()
+        protected override bool PostUpdateNode(string eventName, object costomEventInfo, CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate)
         {
-            if(compsDirty)
+
+            bool eventInfo = (costomEventInfo as bool?) ?? this.usingTargetPart;
+            bool IsUpdateUsingTargetPart = eventName == "UpdateUsingTargetPart";
+
+            List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
+            List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
+            List<ThingComp> allComps = parent.AllComps;
+            NeedUpdate = false;
+            if (IsUpdateUsingTargetPart)
             {
-                compsDirty = false;
-                List<ThingComp> allComps = parent.AllComps;
-                allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
-
-                for (int i = 0; i < allComps.Count; i++)
+                if(usingTargetPart != eventInfo)
                 {
-                    ThingComp comp = allComps[i];
-                    Type type = comp.GetType();
-                    if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
-                    CompProperties properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                    if (properties != null)
-                    {
-                        try
-                        {
-                            if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
-                            comp.parent = parent;
-                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
-                            else comp.props = CompPropertiesAfterAffect(properties);
-                            allComps[i] = comp;
-                            //comp.props.LogAllField();
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
-                        }
-                    }
+                    this.usingTargetPart = eventInfo;
+                    this.cachedThingComps.Clear();
+                    this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
+                    allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
+                    this.cachedCompProperties.Clear();
+                    this.cachedCompProperties.AddRange(from x in allComps select x.props);
                 }
-
-                foreach (CompProperties prop in AllExtraCompProperties())
+                else
                 {
-                    if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
-                    {
-                        ThingComp comp = (ThingComp)Activator.CreateInstance(prop.compClass);
-                        comp.parent = parent;
-                        comp.Initialize(CompPropertiesAfterAffect(prop));
-                        allComps.Add(comp);
-                        //comp.props.LogAllField();
-                    }
-                }
-
-
-                if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
-                {
-                    //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
-                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+                    cachedThingComps.Clear();
+                    cachedCompProperties.Clear();
+                    //this.cachedThingComps.Clear();
+                    //this.cachedCompProperties.Clear();
+                    allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
                 }
             }
+            else
+            {
+                cachedThingComps.Clear();
+                cachedCompProperties.Clear();
+                //this.cachedThingComps.Clear();
+                //this.cachedCompProperties.Clear();
+                allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
+            }
+
+            List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
+
+            for (int i = 0; i < allComps.Count; i++)
+            {
+                ThingComp comp = allComps[i];
+                Type type = comp.GetType();
+                if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+                CompProperties properties = cachedCompProperties.FirstOrDefault(x => x.compClass == type);
+                bool useCache = properties != null;
+                if (!useCache) properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+                if (properties != null)
+                {
+                    try
+                    {
+                        if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
+                        comp.parent = parent;
+                        if(useCache)
+                        {
+                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
+                            else comp.props = properties;
+                        }
+                        //else
+                        //{
+                        //    if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                        //    else comp.props = CompPropertiesAfterAffect(properties);
+                        //}
+                        else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
+                        allComps[i] = comp;
+                        //comp.props.LogAllField();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
+                    }
+                }
+            }
+
+            foreach (CompProperties prop in AllExtraCompProperties())
+            {
+                if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+                {
+                    ThingComp comp = cachedThingComps.FirstOrDefault(x => x.GetType() == prop.compClass);
+                    if (comp == null)
+                    {
+                        comp = (ThingComp)Activator.CreateInstance(prop.compClass);
+                        cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(prop)), comp, true));
+                        //comp.Initialize(CompPropertiesAfterAffect(prop));
+                    }
+                    comp.parent = parent;
+                    allComps.Add(comp);
+                    //comp.props.LogAllField();
+                }
+            }
+
+            foreach ((Task<CompProperties>, ThingComp, bool) info in cachedTask)
+            {
+                if (info.Item2 != null)
+                {
+                    info.Item1.Wait();
+                    if (info.Item3) info.Item2.Initialize(info.Item1.Result);
+                    else info.Item2.props = info.Item1.Result;
+                }
+            }
+
+
+            if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
+            {
+                //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
+                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+            }
+            //Log.Message($"{eventName} : {costomEventInfo}");
+
+            return false;
         }
 
         protected override HashSet<string> RegiestedNodeId(HashSet<string> regiestedNodeId)
         {
-            foreach(WeaponAttachmentProperties properties in Props.attachmentProperties) regiestedNodeId.Add(properties.id);
+            regiestedNodeId.AddRange(PartIDs);
             return regiestedNodeId;
         }
-
 
         #region operator
         public static implicit operator Thing(CompModularizationWeapon node)
@@ -609,13 +703,21 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
+        private readonly HashSet<string> partIDs = new HashSet<string>();
+        private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
+        private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
-        private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>();
-        private ThingOwner CachedHoldingOwner = null;
+        private readonly Dictionary<(StatDef, Thing), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
+        private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
+        private readonly Dictionary<Type, List<VerbToolRegiestInfo>> regiestedNodeVerbToolInfos = new Dictionary<Type, List<VerbToolRegiestInfo>>();
+        private readonly Dictionary<Type, List<VerbPropertiesRegiestInfo>> regiestedNodeVerbPropertiesInfos = new Dictionary<Type, List<VerbPropertiesRegiestInfo>>();
+        private readonly Dictionary<Type, List<VerbToolRegiestInfo>> regiestedNodeVerbToolInfos_TargetPart = new Dictionary<Type, List<VerbToolRegiestInfo>>();
+        private readonly Dictionary<Type, List<VerbPropertiesRegiestInfo>> regiestedNodeVerbPropertiesInfos_TargetPart = new Dictionary<Type, List<VerbPropertiesRegiestInfo>>();
+        private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
+        private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
         private bool usingTargetPart = false;
-        private bool compsDirty = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
@@ -628,6 +730,7 @@ namespace RW_ModularizationWeapon
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_set = null;
         private static MethodInfo PerformanceOptimizer_ComponentCache_ResetCompCache = null;
         private static Material PostFXMat = null;
+        private static CommandBuffer PostFXCommandBuffer = null;
 
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
@@ -671,16 +774,16 @@ namespace RW_ModularizationWeapon
             for (int i = attachmentProperties.Count - 1; i >= 0; i--)
             {
                 WeaponAttachmentProperties properties = attachmentProperties[i];
-                if(properties == null)
+                if (properties == null)
                 {
                     attachmentProperties.RemoveAt(i);
                     yield return $"attachmentProperties[{i}] is null";
                     continue;
                 }
-                else if(!properties.id.IsVaildityKeyFormat())
+                else if (!properties.id.IsVaildityKeyFormat())
                 {
                     attachmentProperties.RemoveAt(i);
-                    yield return $"attachmentProperties[{i}].id is invaild key format";
+                    yield return $"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name";
                     continue;
                 }
                 for (int j = 0; j < i; j++)
@@ -705,7 +808,7 @@ namespace RW_ModularizationWeapon
         {
             if(!id.NullOrEmpty())
             {
-                foreach(WeaponAttachmentProperties properties in attachmentProperties)
+                foreach (WeaponAttachmentProperties properties in attachmentProperties)
                 {
                     if(properties.id == id) return properties;
                 }

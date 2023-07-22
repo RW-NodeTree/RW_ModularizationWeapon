@@ -269,9 +269,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PackUp\*" />
-    <Content Include="PackUp\*\*" />
-    <Content Include="PackUp\AssetBundles\shaderpackagetest" />
-    <Content Include="PackUp\AssetBundles\shaderpackagetest.manifest" />
+    <Content Include="PackUp\About\About.xml" />
+    <Content Include="PackUp\About\Preview.png" />
+    <Content Include="PackUp\About\Preview.psd" />
+    <Content Include="PackUp\About\PublishedFileId.txt" />
     <Content Include="PackUp\1.3\Defs\Jobs_Misc.xml" />
     <Content Include="PackUp\1.4\Defs\Jobs_Misc.xml" />
     <Content Include="PackUp\*\*\*\*" />
@@ -280,6 +281,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="PackUp\AssetBundles\shaderpackagetest" />
+    <None Include="PackUp\AssetBundles\shaderpackagetest.manifest" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -49,6 +49,8 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbPropertiesRegiestInfo> FinalIVerbOwner_GetVerbProperties(Type ownerType, List<VerbPropertiesRegiestInfo> result, Dictionary<string, object> stats, Exception exception)
         {
+            if ((this.UsingTargetPart ? regiestedNodeVerbPropertiesInfos_TargetPart : regiestedNodeVerbPropertiesInfos).TryGetValue(ownerType, out List<VerbPropertiesRegiestInfo> data)) return data;
+
             for (int i = 0; i < result.Count; i++)
             {
                 VerbPropertiesRegiestInfo prop = result[i];
@@ -119,12 +121,15 @@ namespace RW_ModularizationWeapon
             //    stringBuilder.AppendLine($"{i} : {result[i]}");
             //}
             //Log.Message(stringBuilder.ToString());
+            (this.UsingTargetPart ? regiestedNodeVerbPropertiesInfos_TargetPart : regiestedNodeVerbPropertiesInfos).Add(ownerType, result);
             return result;
         }
 
 
         protected override List<VerbToolRegiestInfo> FinalIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> stats, Exception exception)
         {
+            if ((this.UsingTargetPart ? regiestedNodeVerbToolInfos_TargetPart : regiestedNodeVerbToolInfos).TryGetValue(ownerType, out List<VerbToolRegiestInfo> data)) return data;
+
             for (int i = 0; i < result.Count; i++)
             {
                 VerbToolRegiestInfo prop = result[i];
@@ -194,6 +199,7 @@ namespace RW_ModularizationWeapon
             //    stringBuilder.AppendLine($"{i} : {result[i]}");
             //}
             //Log.Message(stringBuilder.ToString());
+            (this.UsingTargetPart ? regiestedNodeVerbToolInfos_TargetPart : regiestedNodeVerbToolInfos).Add(ownerType, result);
             return result;
         }
     }
