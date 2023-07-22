@@ -296,7 +296,7 @@ namespace RW_ModularizationWeapon
                         foreach (AssetBundle assetBundle in pack.assetBundles.loadedAssetBundles)
                         {
                             //Log.Message("Loading shader");
-                            Shader shader = assetBundle.LoadAsset<Shader>("Assets/Data/Materials/RWNodeTree.RWWeaponModularization/BuildEdge.shader");
+                            Shader shader = assetBundle.LoadAsset<Shader>(@"Assets\Data\Materials\RWNodeTree.RWWeaponModularization\OutLine.shader");
                             if (shader != null)
                             {
                                 PostFXMat = new Material(shader);
@@ -316,7 +316,6 @@ namespace RW_ModularizationWeapon
             PostFXCommandBuffer.Blit(renderTexture, tar, PostFXMat);
             Graphics.ExecuteCommandBuffer(PostFXCommandBuffer);
             RenderTexture.ReleaseTemporary(renderTexture);
-
         }
 
 
