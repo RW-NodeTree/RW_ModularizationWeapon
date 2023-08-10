@@ -23,7 +23,7 @@ namespace RW_ModularizationWeapon
                 if (eq != null && proccesser != null)
                 {
                     StatRequest cache = req;
-                    Verb verb = CompChildNodeProccesser.GetOriginalPrimaryVerbs(eq.VerbTracker);
+                    Verb verb = eq.VerbTracker.PrimaryVerb;
                     Thing thing = proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1;
                     //Log.Message($"{req.Thing} -> {verb} -> {thing}");
                     if (thing != null)
@@ -99,7 +99,7 @@ namespace RW_ModularizationWeapon
             req = RedirectoryReq(statWorker, req);
             if (before.Thing == req.Thing && req.Thing != parent)
             {
-                ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker,req,applyFinalProcess,stats);
+                ((CompModularizationWeapon)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker,req,applyFinalProcess,stats);
             }
             return true;
         }
@@ -114,7 +114,7 @@ namespace RW_ModularizationWeapon
             {
                 if (before.Thing == req.Thing)
                 {
-                    result = ((CompChildNodeProccesser)req.Thing)?.FinalStatWorker_GetValueUnfinalized(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
+                    result = ((CompModularizationWeapon)req.Thing)?.FinalStatWorker_GetValueUnfinalized(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
                 }
                 else
                 {
@@ -148,7 +148,7 @@ namespace RW_ModularizationWeapon
                 if (before.Thing == req.Thing)
                 {
                     //Log.Message($"{req.Thing} -> {req.Thing?.Spawned} -> {req.Thing?.Map} -> {req.Thing?.MapHeld} -> {req.Thing?.ParentHolder}");
-                    ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, ref result, stats);
+                    ((CompModularizationWeapon)req.Thing)?.PreStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, ref result, stats);
                     return true;
                     //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
                 }
@@ -203,10 +203,10 @@ namespace RW_ModularizationWeapon
                         VerbTracker verbTracker = parent.TryGetComp<CompEquippable>()?.VerbTracker;
                         if(verbTracker != null)
                         {
-                            List<Verb> verbList = CompChildNodeProccesser.GetOriginalAllVerbs(verbTracker);
+                            List<Verb> verbList = verbTracker.AllVerbs;
                             foreach(Verb verb in verbList)
                             {
-                                if(verb.verbProps.isPrimary && NodeProccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable),verb).Item1 == parent)
+                                if(verb.verbProps.isPrimary && NodeProccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1 == parent)
                                 {
                                     result = verb.verbProps.burstShotCount;
                                     break;
@@ -223,7 +223,7 @@ namespace RW_ModularizationWeapon
             }
             else if (before.Thing == req.Thing)
             {
-                result = ((CompChildNodeProccesser)req.Thing)?.FinalStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
+                result = ((CompModularizationWeapon)req.Thing)?.FinalStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
             }
             if (stats.TryGetValue("afterRedirectoryReq", out object cache))
             {
@@ -248,7 +248,7 @@ namespace RW_ModularizationWeapon
                 StatWorkerPerfix(stats);
             if (before.Thing == optionalReq.Thing && optionalReq.Thing != parent)
             {
-                ((CompChildNodeProccesser)optionalReq.Thing)?.PreStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, stats);
+                ((CompModularizationWeapon)optionalReq.Thing)?.PreStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, stats);
             }
             return true;
         }
@@ -263,7 +263,7 @@ namespace RW_ModularizationWeapon
             {
                 if (before.Thing == optionalReq.Thing)
                 {
-                    result = ((CompChildNodeProccesser)optionalReq.Thing)?.FinalStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, stats, exception) ?? result;
+                    result = ((CompModularizationWeapon)optionalReq.Thing)?.FinalStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, stats, exception) ?? result;
                 }
                 else
                 {
@@ -304,7 +304,7 @@ namespace RW_ModularizationWeapon
                 StatWorkerPerfix(stats);
             if (before.Thing == req.Thing && req.Thing != parent)
             {
-                ((CompChildNodeProccesser)req.Thing)?.PreStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, stats);
+                ((CompModularizationWeapon)req.Thing)?.PreStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, stats);
             }
             return true;
         }
@@ -342,7 +342,7 @@ namespace RW_ModularizationWeapon
             }
             else if (before.Thing == req.Thing)
             {
-                result = ((CompChildNodeProccesser)req.Thing)?.FinalStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, stats, exception) ?? result;
+                result = ((CompModularizationWeapon)req.Thing)?.FinalStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, stats, exception) ?? result;
             }
             else
             {
@@ -411,7 +411,7 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                result = ((CompChildNodeProccesser)req.Thing)?.PostThingDef_SpecialDisplayStats(def, req, result) ?? result;
+                result = ((CompModularizationWeapon)req.Thing)?.PostThingDef_SpecialDisplayStats(def, req, result) ?? result;
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
@@ -445,7 +445,7 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                result = ((CompChildNodeProccesser)thing)?.PostStatsReportUtility_StatsToDraw(thing, result) ?? result;
+                result = ((CompModularizationWeapon)thing)?.PostStatsReportUtility_StatsToDraw(thing, result) ?? result;
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;

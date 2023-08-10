@@ -21,9 +21,11 @@ using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace RW_ModularizationWeapon
 {
@@ -49,7 +51,6 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public override bool HasPostFX => Props.drawOutlineOnRoot && ParentPart == null;
 
         public HashSet<string> PartIDs
         {
@@ -84,8 +85,7 @@ namespace RW_ModularizationWeapon
         public override void PostPostMake()
         {
             if (Props.setRandomPartWhenCreate) LongEventHandler.ExecuteWhenFinished(SetPartToRandom);
-            else LongEventHandler.ExecuteWhenFinished(SetPartToDefault);
-            NodeProccesser.UpdateNode();
+            else LongEventHandler.ExecuteWhenFinished(() => SetPartToDefault());
         }
 
 
@@ -101,6 +101,8 @@ namespace RW_ModularizationWeapon
         {
             return Props.attachmentProperties.Count == 0;
         }
+
+        public override bool HasPostFX(bool textureMode) => textureMode || (Props.drawOutlineOnRoot && ParentPart == null);
 
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -141,6 +143,18 @@ namespace RW_ModularizationWeapon
         protected override List<(string, Thing, List<RenderInfo>)> PostDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic, Dictionary<string, object> cachedDataFromPerDrawSteep)
         {
             Matrix4x4 scale = Matrix4x4.identity;
+            MaterialRequest req;
+            Material material = graphic?.MatAt(rot, this.parent) ?? BaseContent.BadMat;
+            if (MaterialPool.TryGetRequestForMat(material, out req)) req.mainTex = (Props.PartTexture == BaseContent.BadTex) ? material.mainTexture : Props.PartTexture;
+            else req = new MaterialRequest()
+            {
+                renderQueue = material.renderQueue,
+                shader = material.shader,
+                color = material.color,
+                colorTwo = material.GetColor(ShaderPropertyIDs.ColorTwo),
+                mainTex = (Props.PartTexture == BaseContent.BadTex) ? material.mainTexture : Props.PartTexture,
+                maskTex = material.GetTexture(ShaderPropertyIDs.MaskTex) as Texture2D,
+            };
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
                 (string id, Thing part, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
@@ -149,28 +163,12 @@ namespace RW_ModularizationWeapon
                     //Log.Message($"ParentProccesser : {ParentProccesser}");
                     if (ParentProccesser != null)
                     {
-                        Material material = graphic?.MatAt(rot, this.parent);
                         for (int j = 0; j < renderInfos.Count; j++)
                         {
                             RenderInfo info = renderInfos[j];
                             if (info.material == material)
                             {
-                                if (Props.PartTexture != null)
-                                {
-                                    MaterialRequest req;
-                                    if (MaterialPool.TryGetRequestForMat(material, out req)) req.mainTex = Props.PartTexture;
-                                    else req = new MaterialRequest()
-                                    {
-                                        renderQueue = material.renderQueue,
-                                        shader = material.shader,
-                                        color = material.color,
-                                        colorTwo = material.GetColor(ShaderPropertyIDs.ColorTwo),
-                                        mainTex = Props.PartTexture,
-                                        maskTex = material.GetTexture(ShaderPropertyIDs.MaskTex) as Texture2D,
-                                    };
-                                    info.material = MaterialPool.MatFrom(req);
-                                }
-
+                                info.material = MaterialPool.MatFrom(req);
                                 scale.m00 = Props.DrawSizeWhenAttach.x / info.mesh.bounds.size.x;
                                 scale.m22 = Props.DrawSizeWhenAttach.y / info.mesh.bounds.size.z;
                                 renderInfos[j] = info;
@@ -196,21 +194,6 @@ namespace RW_ModularizationWeapon
 
                             for (int k = 0; k < matrix.Length; k++)
                             {
-                                matrix[k] = scale * matrix[k];
-                            }
-                        }
-                    }
-                }
-                else if (!internal_NotDraw(part, properties) && (ParentProccesser != null || Props.drawChildPartWhenOnGround))
-                {
-                    if (properties != null)
-                    {
-                        for (int j = 0; j < renderInfos.Count; j++)
-                        {
-                            RenderInfo info = renderInfos[j];
-                            Matrix4x4[] matrix = info.matrices;
-                            for (int k = 0; k < matrix.Length; k++)
-                            {
                                 Vector4 cache = matrix[k].GetRow(0);
                                 matrix[k].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
 
@@ -220,40 +203,42 @@ namespace RW_ModularizationWeapon
                                 cache = matrix[k].GetRow(2);
                                 matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
 
-                                matrix[k] = properties.Transfrom * scale * matrix[k];
+                                matrix[k] = scale * matrix[k];
+                            }
+                        }
 
+                        renderInfos.Capacity += Props.subRenderinfInfos.Count;
+                        foreach (PartSubDrawingInfo drawingInfo in Props.subRenderinfInfos)
+                        {
+                            req.mainTex = (drawingInfo.PartTexture == BaseContent.BadTex) ? material.mainTexture : drawingInfo.PartTexture;
+                            renderInfos.Add(new RenderInfo(MeshPool.plane10, 0, scale * drawingInfo.Transfrom, MaterialPool.MatFrom(req), 0));
+                        }
+                    }
+                }
+                else if (!internal_NotDraw(part, properties) && (ParentProccesser != null || Props.drawChildPartWhenOnGround))
+                {
+                    if(properties != null)
+                    {
+                        for (int j = 0; j < renderInfos.Count; j++)
+                        {
+                            bool needTransToIdentity = (CompChildNodeProccesser)part == null;
+                            Matrix4x4[] matrix = renderInfos[j].matrices;
+                            for (int k = 0; k < matrix.Length; k++)
+                            {
+                                if (needTransToIdentity)
+                                {
+                                    Vector4 cache = matrix[k].GetRow(0);
+                                    matrix[k].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
+
+                                    cache = matrix[k].GetRow(1);
+                                    matrix[k].SetRow(1, new Vector4(0, new Vector3(cache.x, cache.y, cache.z).magnitude, 0, cache.w));
+
+                                    cache = matrix[k].GetRow(2);
+                                    matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
+                                }
+                                matrix[k] = properties.Transfrom * scale * matrix[k];
                                 //matrix[k] = properties.Transfrom;
                             }
-                            info.mesh = MeshReindexed.GetOrNewWhenNull(info.mesh, () =>
-                            {
-                                if (MeshReindexed.ContainsValue(info.mesh))
-                                {
-                                    return info.mesh;
-                                }
-                                Mesh mesh = new Mesh();
-                                mesh.name = info.mesh.name + " Reindexed";
-
-                                List<Vector3> vert = new List<Vector3>(info.mesh.vertices);
-                                vert.AddRange(vert);
-                                mesh.vertices = vert.ToArray();
-
-                                List<Vector2> uv = new List<Vector2>(info.mesh.uv);
-                                uv.AddRange(uv);
-                                mesh.uv = uv.ToArray();
-
-                                List<int> trangles = new List<int>(info.mesh.GetTriangles(0));
-                                trangles.Capacity = 2 * trangles.Count;
-                                for (int k = trangles.Count - 1; k >= 0; k--)
-                                {
-                                    trangles.Add(trangles[k] + 4);
-                                }
-                                mesh.SetTriangles(trangles, 0);
-                                mesh.RecalculateNormals();
-                                mesh.RecalculateBounds();
-                                return mesh;
-                            });
-
-                            renderInfos[j] = info;
                         }
                     }
                 }
@@ -265,6 +250,7 @@ namespace RW_ModularizationWeapon
                 for (int j = 0; j < renderInfos.Count; j++)
                 {
                     RenderInfo info = renderInfos[j];
+                    info.mesh = ReindexedMesh(info.mesh);
                     info.CanUseFastDrawingMode = true;
                     renderInfos[j] = info;
                 }
@@ -321,7 +307,7 @@ namespace RW_ModularizationWeapon
 
         protected override bool AllowNode(Thing node, string id = null)
         {
-            if(UsingTargetPart && !setingTargetPart) return false;
+            if(!PartIDs.Contains(id)) return false;
             WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
@@ -355,8 +341,10 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void SetPartToDefault()
+        public void SetPartToDefault(bool deep = false)
         {
+            bool prevUsingTargetPart = UsingTargetPart;
+            UsingTargetPart = false;
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
                 ThingDef def = properties.defultThing;
@@ -364,19 +352,26 @@ namespace RW_ModularizationWeapon
                 {
                     Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
                     thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                    ChildNodes[properties.id] = thing;
+                    SetTargetPart(properties.id, thing);
                 }
-                else ChildNodes[properties.id] = null;
+                else SetTargetPart(properties.id, null);
             }
-            foreach (Thing thing in ChildNodes.Values)
+            if(deep)
             {
-                ((CompModularizationWeapon)thing)?.SetPartToDefault();
+                foreach (Thing thing in targetPartsWithId.Values)
+                {
+                    ((CompModularizationWeapon)thing)?.SetPartToDefault();
+                }
             }
+            else ApplyTargetPart(IntVec3.Zero, null);
+            UsingTargetPart = prevUsingTargetPart;
         }
 
 
         public void SetPartToRandom()
         {
+            bool prevUsingTargetPart = UsingTargetPart;
+            UsingTargetPart = false;
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
                 if(properties.randomThingDefWeights.NullOrEmpty())
@@ -389,8 +384,8 @@ namespace RW_ModularizationWeapon
                         {
                             Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
                             thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                            ChildNodes[properties.id] = thing;
-                            if (ChildNodes[properties.id] == thing) break;
+                            SetTargetPart(properties.id, thing);
+                            if (targetPartsWithId.TryGetValue(properties.id) == thing) break;
                         }
                         else break;
                     }
@@ -414,13 +409,20 @@ namespace RW_ModularizationWeapon
                         {
                             Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
                             thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                            ChildNodes[properties.id] = thing;
-                            if (ChildNodes[properties.id] == thing) break;
+                            SetTargetPart(properties.id, thing);
+                            if (targetPartsWithId.TryGetValue(properties.id) == thing) break;
                         }
                         else break;
                     }
                 }
             }
+
+            //foreach (Thing thing in targetPartsWithId.Values)
+            //{
+            //    ((CompModularizationWeapon)thing)?.SetPartToRandom();
+            //}
+            ApplyTargetPart(IntVec3.Zero, null);
+            UsingTargetPart = prevUsingTargetPart;
         }
 
 
@@ -428,17 +430,26 @@ namespace RW_ModularizationWeapon
         {
             if(invokeSource == RecipeInvokeSource.products)
             {
-                LongEventHandler.ExecuteWhenFinished(SetPartToDefault);
+                LongEventHandler.ExecuteWhenFinished(()=>
+                {
+                    SetPartToDefault(true);
+                    ApplyTargetPart(IntVec3.Zero, null);
+                });
             }
             else if(invokeSource == RecipeInvokeSource.ingredients)
             {
                 IEnumerable<Thing> Ingredients(IEnumerable<Thing> org)
                 {
-                    foreach(Thing ingredient in org) yield return ingredient;
+
+                    foreach (Thing ingredient in org) yield return ingredient;
                     foreach (string id in ChildNodes.Keys)
                     {
                         Thing part = ChildNodes[id];
-                        ChildNodes[id] = null;
+                        bool prevUsingTargetPart = UsingTargetPart;
+                        UsingTargetPart = false;
+                        SetTargetPart(id, null);
+                        ApplyTargetPart(IntVec3.Zero, null);
+                        UsingTargetPart = prevUsingTargetPart;
                         yield return part;
                     }
                 }
@@ -510,12 +521,14 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool PreUpdateNode(string eventName, object costomEventInfo, CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde)
+        protected override bool PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds)
         {
-            bool eventInfo = (costomEventInfo as bool?) ?? this.usingTargetPart;
-            bool IsUpdateUsingTargetPart = eventName == "UpdateUsingTargetPart";
+            foreach(KeyValuePair<string,Thing> keyValue in prveChilds)
+            {
+                ChildNodes[keyValue.Key] = keyValue.Value;
+            }
 
-            if (!IsUpdateUsingTargetPart || NeedUpdate)
+            if (!usingTargetPartChange || targetPartChanged)
             {
                 cachedThingComps.Clear();
                 cachedCompProperties.Clear();
@@ -530,11 +543,8 @@ namespace RW_ModularizationWeapon
             }
 
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
-            if (IsUpdateUsingTargetPart)
+            if (usingTargetPartChange)
             {
-                bool prevSetingTargetPart = setingTargetPart;
-                setingTargetPart = true;
-                if (eventInfo == this.usingTargetPart) return false;
                 foreach (string id in this.PartIDs)
                 {
                     if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
@@ -552,11 +562,14 @@ namespace RW_ModularizationWeapon
                         targetPartsWithId[id] = prev;
                         ChildNodes[id] = target.Thing;
                         if (usingTargetPart && prev != null) owner?.TryAdd(prev, false);
-                        ((CompChildNodeProccesser)prev)?.UpdateNode("UpdateUsingTargetPart", false);
+
+                        CompModularizationWeapon comp = prev;
+                        if (comp != null) comp.UsingTargetPart = false;
+
+                        comp = target.Thing;
+                        if (comp != null) comp.UsingTargetPart = !usingTargetPart;
                     }
                 }
-
-                setingTargetPart = prevSetingTargetPart;
             }
             else
             {
@@ -573,35 +586,20 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool PostUpdateNode(string eventName, object costomEventInfo, CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate)
+        protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
-
-            bool eventInfo = (costomEventInfo as bool?) ?? this.usingTargetPart;
-            bool IsUpdateUsingTargetPart = eventName == "UpdateUsingTargetPart";
 
             List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
             List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
             List<ThingComp> allComps = parent.AllComps;
-            NeedUpdate = false;
-            if (IsUpdateUsingTargetPart)
+            if (usingTargetPartChange)
             {
-                if(usingTargetPart != eventInfo)
-                {
-                    this.usingTargetPart = eventInfo;
-                    this.cachedThingComps.Clear();
-                    this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
-                    allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
-                    this.cachedCompProperties.Clear();
-                    this.cachedCompProperties.AddRange(from x in allComps select x.props);
-                }
-                else
-                {
-                    cachedThingComps.Clear();
-                    cachedCompProperties.Clear();
-                    //this.cachedThingComps.Clear();
-                    //this.cachedCompProperties.Clear();
-                    allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
-                }
+                this.usingTargetPart = !this.usingTargetPart;
+                this.cachedThingComps.Clear();
+                this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
+                allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
+                this.cachedCompProperties.Clear();
+                this.cachedCompProperties.AddRange(from x in allComps select x.props);
             }
             else
             {
@@ -628,7 +626,7 @@ namespace RW_ModularizationWeapon
                     {
                         if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
                         comp.parent = parent;
-                        if(useCache)
+                        if (useCache)
                         {
                             if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
                             else comp.props = properties;
@@ -683,14 +681,52 @@ namespace RW_ModularizationWeapon
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
             //Log.Message($"{eventName} : {costomEventInfo}");
-
+            targetPartChanged = false;
+            usingTargetPartChange = false;
             return false;
         }
 
-        protected override HashSet<string> RegiestedNodeId(HashSet<string> regiestedNodeId)
+
+        internal static Mesh ReindexedMesh(Mesh meshin)
         {
-            regiestedNodeId.AddRange(PartIDs);
-            return regiestedNodeId;
+            return MeshReindexed.GetOrNewWhenNull(meshin, () =>
+            {
+                if (MeshReindexed.ContainsValue(meshin))
+                {
+                    return meshin;
+                }
+                Mesh mesh = new Mesh();
+                mesh.name = meshin.name + " Reindexed";
+
+                List<Vector3> vert = new List<Vector3>(meshin.vertices);
+                vert.AddRange(vert);
+                mesh.vertices = vert.ToArray();
+
+                List<Vector2> uv = new List<Vector2>(meshin.uv);
+                uv.AddRange(uv);
+                mesh.uv = uv.ToArray();
+
+                List<int> trangles = new List<int>(meshin.GetTriangles(0));
+                trangles.Capacity = 2 * trangles.Count;
+                for (int k = trangles.Count - 1; k >= 0; k--)
+                {
+                    trangles.Add(trangles[k] + 4);
+                }
+                mesh.SetTriangles(trangles, 0);
+                mesh.RecalculateNormals();
+                mesh.RecalculateBounds();
+                return mesh;
+            });
+        }
+
+        public string UniqueVerbOwnerID()
+        {
+            return $"CompModularizationWeapon_VerbTracker_{parent}";
+        }
+
+        public bool VerbsStillUsableBy(Pawn p)
+        {
+            return true;
         }
 
         #region operator
@@ -721,7 +757,8 @@ namespace RW_ModularizationWeapon
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
         private bool usingTargetPart = false;
-        internal bool setingTargetPart = false;
+        private bool targetPartChanged = false;
+        private bool usingTargetPartChange = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
@@ -753,7 +790,7 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if(partTexCache == null && !PartTexPath.NullOrEmpty()) partTexCache = ContentFinder<Texture2D>.Get(PartTexPath);
+                if(partTexCache == null && !PartTexPath.NullOrEmpty()) partTexCache = ContentFinder<Texture2D>.Get(PartTexPath) ?? BaseContent.BadTex;
                 return partTexCache;
             }
         }
@@ -1494,6 +1531,11 @@ namespace RW_ModularizationWeapon
         /// attach points defintion
         /// </summary>
         public List<WeaponAttachmentProperties> attachmentProperties = new List<WeaponAttachmentProperties>();
+
+        /// <summary>
+        /// extra drawing info when it attach on a part
+        /// </summary>
+        public List<PartSubDrawingInfo> subRenderinfInfos = new List<PartSubDrawingInfo>();
 
         /// <summary>
         /// extra comp that will add to parent comps

@@ -97,9 +97,6 @@ namespace RW_ModularizationWeapon.UI
             (string id, CompModularizationWeapon parent) = SelectedPartForChange;
             if (parent != null && id != null)
             {
-
-                bool prevSetingTargetPart = parent.setingTargetPart;
-                parent.setingTargetPart = true;
                 Thing OrginalPart = parent.OrginalPart(id).Thing;
                 selections.Add((OrginalPart, OrginalPart?.def));
                 if (parent.NodeProccesser.AllowNode(null, id))
@@ -116,7 +113,6 @@ namespace RW_ModularizationWeapon.UI
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
                 );
-                parent.setingTargetPart = prevSetingTargetPart;
             }
             else
             {

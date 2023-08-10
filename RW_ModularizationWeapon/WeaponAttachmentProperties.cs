@@ -14,21 +14,15 @@ namespace RW_ModularizationWeapon
     /// </summary>
     public class WeaponAttachmentProperties
     {
-        public Material UITexMaterial
+
+        public Texture2D UITexture
         {
             get
             {
-                if(materialCache == null)
-                {
-                    materialCache = new Material(ShaderDatabase.Cutout);
-                    Texture2D texture = (!UITexPath.NullOrEmpty()) ? ContentFinder<Texture2D>.Get(UITexPath) : BaseContent.BadTex;
-                    materialCache.mainTexture = texture ?? BaseContent.BadTex;
-                }
-                return materialCache;
+                if(cachedUITex == null && !UITexPath.NullOrEmpty()) cachedUITex = ContentFinder<Texture2D>.Get(UITexPath) ?? BaseContent.BadTex;
+                return cachedUITex;
             }
         }
-
-        public Texture2D UITexture => UITexMaterial.mainTexture as Texture2D;
 
         public Matrix4x4 Transfrom => Matrix4x4.TRS(postion, Quaternion.Euler(rotation), scale);
 
@@ -370,6 +364,6 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        private Material materialCache;
+        private Texture2D cachedUITex = null;
     }
 }

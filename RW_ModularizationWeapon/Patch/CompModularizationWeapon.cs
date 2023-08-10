@@ -118,7 +118,7 @@ namespace RW_ModularizationWeapon
                 WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity)
                 {
-                    results |= comp.Props.compPropertiesObjectPatch & properties.compPropertiesObjectPatchByChildPart;
+                    results |= (comp.Props.compPropertiesObjectPatch | comp.CompPropertiesObjectPatch()) & properties.compPropertiesObjectPatchByChildPart;
                 }
             }
             return results;

@@ -47,19 +47,40 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override List<VerbPropertiesRegiestInfo> FinalIVerbOwner_GetVerbProperties(Type ownerType, List<VerbPropertiesRegiestInfo> result, Dictionary<string, object> stats, Exception exception)
+        protected override List<VerbPropertiesRegiestInfo> VerbPropertiesRegiestInfoUpadte(Type ownerType, List<VerbPropertiesRegiestInfo> result)
         {
             if ((this.UsingTargetPart ? regiestedNodeVerbPropertiesInfos_TargetPart : regiestedNodeVerbPropertiesInfos).TryGetValue(ownerType, out List<VerbPropertiesRegiestInfo> data)) return data;
 
-            for (int i = 0; i < result.Count; i++)
+            if (!parent.def.Verbs.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, parent) == null)
             {
-                VerbPropertiesRegiestInfo prop = result[i];
-                VerbProperties newProp = VerbPropertiesAfterAffect(
-                    prop.berforConvertProperties,
-                    null
+
+                result.Capacity += parent.def.Verbs.Count;
+                foreach (VerbProperties properties in parent.def.Verbs)
+                {
+                    VerbPropertiesRegiestInfo prop = new VerbPropertiesRegiestInfo
+                    (
+                        null,
+                        properties,
+                        VerbPropertiesAfterAffect(
+                            properties,
+                            null
+                        )
                     );
-                prop.afterConvertProperties = newProp;
-                result[i] = prop;
+                    result.Add(prop);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < result.Count; i++)
+                {
+                    VerbPropertiesRegiestInfo prop = result[i];
+                    VerbProperties newProp = VerbPropertiesAfterAffect(
+                        prop.berforConvertProperties,
+                        null
+                        );
+                    prop.afterConvertProperties = newProp;
+                    result[i] = prop;
+                }
             }
 
             NodeContainer container = ChildNodes;
@@ -71,51 +92,37 @@ namespace RW_ModularizationWeapon
                 if (!internal_NotUseVerbProperties(child, attachmentProperties))
                 {
                     CompModularizationWeapon comp = child;
-                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, child);
-                    List<VerbProperties> verbProperties = verbOwner?.VerbProperties ?? child?.def.Verbs;
-                    if(verbProperties == null && comp != null && child.def.Verbs != null)
+                    List<VerbPropertiesRegiestInfo> childInfos = comp?.NodeProccesser.GetRegiestedNodeVerbPropertiesInfos(ownerType);
+                    List<VerbProperties> verbProperties;
+                    if (childInfos != null)
                     {
-                        Dictionary<string, object> cache = new Dictionary<string, object>();
-                        comp.NodeProccesser.PreIVerbOwner_GetVerbProperties(ownerType, cache);
-                        verbProperties = comp.NodeProccesser.FinalIVerbOwner_GetVerbProperties(ownerType, child.def.Verbs, cache, exception);
+                        verbProperties = new List<VerbProperties>(childInfos.Count);
+                        foreach (VerbPropertiesRegiestInfo info in childInfos) verbProperties.Add(info.afterConvertProperties);
                     }
-                    verbProperties = verbProperties ?? child?.def.Verbs;
+                    else
+                    {
+                        verbProperties = child.def.Verbs ?? new List<VerbProperties>();
+                    }
                     if (verbProperties != null)
                     {
                         result.Capacity += verbProperties.Count;
-                        if (comp != null && verbOwner == null)
+                        for (int j = 0; j < verbProperties.Count; j++)
                         {
-                            for (int j = 0; j < verbProperties.Count; j++)
-                            {
-                                VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp
-                                    = VerbPropertiesAfterAffect(
-                                        comp.VerbPropertiesAfterAffect(
-                                            cache,
-                                            null
-                                            ),
-                                        id
-                                        );
-                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
-                            }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < verbProperties.Count; j++)
-                            {
-                                VerbProperties cache = verbProperties[j];
-                                VerbProperties newProp
-                                    = VerbPropertiesAfterAffect(
+                            VerbProperties cache = verbProperties[j];
+                            VerbProperties newProp
+                                = VerbPropertiesAfterAffect(
+                                    comp?.VerbPropertiesAfterAffect(
                                         cache,
-                                        id
-                                        );
-                                result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
-                            }
+                                        null
+                                        ) ?? cache,
+                                    id
+                                    );
+                            result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
                         }
                     }
                 }
             }
-            //StringBuilder stringBuilder = new StringBuilder();
+            //StringBuilder stringBuildchildNodeIdForVerbProperties: er = new StringBuilder();
             //for (int i = 0; i < result.Count; i++)
             //{
             //    stringBuilder.AppendLine($"{i} : {result[i]}");
@@ -125,20 +132,40 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-
-        protected override List<VerbToolRegiestInfo> FinalIVerbOwner_GetTools(Type ownerType, List<VerbToolRegiestInfo> result, Dictionary<string, object> stats, Exception exception)
+        protected override List<VerbToolRegiestInfo> VerbToolRegiestInfoUpdate(Type ownerType, List<VerbToolRegiestInfo> result)
         {
             if ((this.UsingTargetPart ? regiestedNodeVerbToolInfos_TargetPart : regiestedNodeVerbToolInfos).TryGetValue(ownerType, out List<VerbToolRegiestInfo> data)) return data;
 
-            for (int i = 0; i < result.Count; i++)
+
+            if (!parent.def.tools.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType,parent) == null)
             {
-                VerbToolRegiestInfo prop = result[i];
-                Tool newProp = ToolAfterAffect(
-                    prop.berforConvertTool,
-                    null
+                result.Capacity += parent.def.tools.Count;
+                foreach(Tool tool in parent.def.tools)
+                {
+                    VerbToolRegiestInfo prop = new VerbToolRegiestInfo
+                    (
+                        null,
+                        tool,
+                        ToolAfterAffect(
+                            tool,
+                            null
+                        )
                     );
-                prop.afterCobvertTool = newProp;
-                result[i] = prop;
+                    result.Add(prop);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < result.Count; i++)
+                {
+                    VerbToolRegiestInfo prop = result[i];
+                    Tool newProp = ToolAfterAffect(
+                        prop.berforConvertTool,
+                        null
+                        );
+                    prop.afterCobvertTool = newProp;
+                    result[i] = prop;
+                }
             }
 
             NodeContainer container = ChildNodes;
@@ -150,45 +177,33 @@ namespace RW_ModularizationWeapon
                 if (!internal_NotUseTools(child, attachmentProperties))
                 {
                     CompModularizationWeapon comp = child;
-                    IVerbOwner verbOwner = CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, child);
-                    List<Tool> tools = verbOwner?.Tools;
-                    if (tools == null && comp != null && child.def.tools != null)
+                    List<VerbToolRegiestInfo> childInfos = comp?.NodeProccesser.GetRegiestedNodeVerbToolInfos(ownerType);
+                    List<Tool> tools;
+                    if (childInfos != null)
                     {
-                        Dictionary<string, object> cache = new Dictionary<string, object>();
-                        comp.NodeProccesser.PreIVerbOwner_GetTools(ownerType, cache);
-                        tools = comp.NodeProccesser.FinalIVerbOwner_GetTools(ownerType, child.def.tools, cache, exception);
+                        tools = new List<Tool>(childInfos.Count);
+                        foreach (VerbToolRegiestInfo info in childInfos) tools.Add(info.afterCobvertTool);
                     }
-                    tools = tools ?? child?.def.tools;
+                    else
+                    {
+                        tools = child.def.tools ?? new List<Tool>();
+                    }
+
                     if (tools != null)
                     {
                         result.Capacity += tools.Count;
-                        if (comp != null && verbOwner == null)
+                        for (int j = 0; j < tools.Count; j++)
                         {
-                            for (int j = 0; j < tools.Count; j++)
-                            {
-                                Tool cache = tools[j];
-                                Tool newProp
-                                    = ToolAfterAffect(
-                                        comp.ToolAfterAffect(
-                                            cache,
-                                            null),
-                                        id
-                                        );
-                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
-                            }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < tools.Count; j++)
-                            {
-                                Tool cache = tools[j];
-                                Tool newProp
-                                    = ToolAfterAffect(
+                            Tool cache = tools[j];
+                            Tool newProp
+                                = ToolAfterAffect(
+                                    comp?.ToolAfterAffect(
                                         cache,
-                                        id
-                                        );
-                                result.Add(new VerbToolRegiestInfo(id, cache, newProp));
-                            }
+                                        null
+                                        ) ?? cache,
+                                    id
+                                    );
+                            result.Add(new VerbToolRegiestInfo(id, cache, newProp));
                         }
                     }
                 }
