@@ -15,19 +15,58 @@ namespace RW_ModularizationWeapon
 
         public bool UsingTargetPart
         {
-            get => usingTargetPart;
-            internal set
+            get
             {
-                //Log.Message($"UsingTargetPart {parent} : {value}; org : {usingTargetPart}");
-                if (usingTargetPart != value)
+                if(RootPart.usingTargetPart != usingTargetPart)
                 {
-                    usingTargetPartChange = true;
                     NeedUpdate = true;
                     NodeProccesser.UpdateNode();
+                }
+                return usingTargetPart;
+            }
+            set
+            {
+                //Log.Message($"UsingTargetPart {parent} : {value}; org : {usingTargetPart}");
+                while (UsingTargetPart != value)
+                {
+                    CompModularizationWeapon root = RootPart;
+                    if (root == this)
+                    {
+                        NeedUpdate = true;
+                        usingTargetPartChange = true;
+                        NodeProccesser.UpdateNode();
+                    }
+                    else root.UsingTargetPart = value;
                 }
             }
         }
 
+
+        private bool NotUpdateComp
+        {
+            get => notUpdateComp;
+            set
+            {
+                if(notUpdateComp = value)
+                {
+                    CompModularizationWeapon parent = ParentPart;
+                    if (parent != null) parent.NotUpdateComp = value;
+                }
+            }
+        }
+
+        private bool TargetPartChanged
+        {
+            get => targetPartChanged;
+            set
+            {
+                if (targetPartChanged = value)
+                {
+                    CompModularizationWeapon parent = ParentPart;
+                    if (parent != null) parent.TargetPartChanged = value;
+                }
+            }
+        }
 
         public LocalTargetInfo OrginalPart(string id)
         {
@@ -37,11 +76,14 @@ namespace RW_ModularizationWeapon
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
-            bool prevUsingTargetPart = UsingTargetPart;
+            bool result = false;
+            bool prveUsingTargetPart = UsingTargetPart;
             UsingTargetPart = false;
+            ThingOwner targetOwner = targetInfo.Thing?.holdingOwner;
+            if(targetOwner == ChildNodes) targetInfo.Thing.holdingOwner = null;
             if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             {
-                ThingOwner targetOwner = targetInfo.Thing?.holdingOwner;
+                if (targetOwner == ChildNodes) targetInfo.Thing.holdingOwner = targetOwner;
                 //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
                 Thing prevPart = ChildNodes[id];
                 //targetOwner?.Remove(targetInfo.Thing);
@@ -56,62 +98,32 @@ namespace RW_ModularizationWeapon
                     targetPartsWithId.SetOrAdd(id, targetInfo.Thing);
                     targetPartsHoldingOwnerWithId.SetOrAdd(id, targetOwner);
                 }
-                targetPartChanged = true;
+                TargetPartChanged = true;
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
-                UsingTargetPart = prevUsingTargetPart;
-                return true;
+                result = true;
             }
-            UsingTargetPart = prevUsingTargetPart;
-            return false;
+            UsingTargetPart = prveUsingTargetPart;
+            return result;
         }
 
 
         public void ApplyTargetPart(IntVec3 pos, Map map)
         {
+            if(RootPart != this)
+            {
+                RootPart.ApplyTargetPart(pos, map);
+                return;
+            }
             bool prevUsingTargetPart = UsingTargetPart;
+
+            NotUpdateComp = true;
             UsingTargetPart = false;
             targetPartsHoldingOwnerWithId.Clear();
-            foreach(Thing target in targetPartsWithId.Values)
+            foreach(Thing target in AllTargetPart())
             {
                 if (target != null && target.Spawned) target.DeSpawn();
             }
 
-            UsingTargetPart = true;
-
-            if(map != null)
-            {
-                foreach (Thing target in targetPartsWithId.Values)
-                {
-                    if (target != null && !target.Spawned) GenPlace.TryPlaceThing(target, pos, map, ThingPlaceMode.Near);
-                }
-            }
-
-
-            foreach (Thing item in ChildNodes.Values)
-            {
-                CompModularizationWeapon comp = item;
-                if (comp != null)
-                {
-                    comp.ApplyTargetPart(pos, map);
-                }
-            }
-            //NeedUpdate = true;
-            if (targetPartsWithId.Count > 0)
-            {
-                targetPartsHoldingOwnerWithId.Clear();
-                targetPartsWithId.Clear();
-
-                targetPartChanged = true;
-            }
-            UsingTargetPart = false;
-
-
-            //Log.Message($"{parent}->NeedUpdate : {NeedUpdate}");
-
-
-
-
-            //Log.Message($"{parent}->NeedUpdate : {NeedUpdate}");
 
             if (map != null &&
                 CombatExtended_CompAmmoUser != null &&
@@ -138,6 +150,47 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+
+            NotUpdateComp = true;
+            UsingTargetPart = true;
+
+            if (map != null)
+            {
+                foreach (Thing target in AllTargetPart())
+                {
+                    if (target != null && !target.Spawned) GenPlace.TryPlaceThing(target, pos, map, ThingPlaceMode.Near);
+                }
+            }
+
+
+
+            //NeedUpdate = true;
+
+            //notUpdateComp = true;
+            //UsingTargetPart = false;
+
+            //Log.Message($"{parent}->NeedUpdate : {NeedUpdate}");
+            void ClearTargetPart(CompModularizationWeapon values)
+            {
+                foreach (Thing part in values.ChildNodes.Values)
+                {
+                    CompModularizationWeapon comp = part;
+                    if(comp != null) ClearTargetPart(comp);
+                }
+                if (values.targetPartsWithId.Count > 0)
+                {
+                    values.targetPartsHoldingOwnerWithId.Clear();
+                    values.targetPartsWithId.Clear();
+
+                    values.TargetPartChanged = true;
+                }
+            }
+            ClearTargetPart(this);
+
+
+            //Log.Message($"{parent}->NeedUpdate : {NeedUpdate}");
+
+            NotUpdateComp = true;
             UsingTargetPart = prevUsingTargetPart;
         }
 

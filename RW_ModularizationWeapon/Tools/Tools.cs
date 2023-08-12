@@ -13,10 +13,13 @@ namespace RW_ModularizationWeapon.Tools
         public static TV GetOrNewWhenNull<TK,TV>(this Dictionary<TK,TV> dictonary,TK key, Func<TV> funcCreate)
         {
             TV result = default(TV);
-            if (dictonary != null && !dictonary.TryGetValue(key, out result))
+            lock (dictonary)
             {
-                result = funcCreate();
-                dictonary.Add(key, result);
+                if (dictonary != null && !dictonary.TryGetValue(key, out result))
+                {
+                    result = funcCreate();
+                    dictonary.Add(key, result);
+                }
             }
             return result;
         }

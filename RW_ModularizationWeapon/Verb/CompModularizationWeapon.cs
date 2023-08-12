@@ -49,41 +49,50 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbPropertiesRegiestInfo> VerbPropertiesRegiestInfoUpadte(Type ownerType, List<VerbPropertiesRegiestInfo> result)
         {
-            if ((this.UsingTargetPart ? regiestedNodeVerbPropertiesInfos_TargetPart : regiestedNodeVerbPropertiesInfos).TryGetValue(ownerType, out List<VerbPropertiesRegiestInfo> data)) return data;
-
+            NodeContainer container = ChildNodes;
+            List<Task<VerbPropertiesRegiestInfo>> tasks = new List<Task<VerbPropertiesRegiestInfo>>();
             if (!parent.def.Verbs.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, parent) == null)
             {
 
-                result.Capacity += parent.def.Verbs.Count;
+                //result.Capacity += parent.def.Verbs.Count;
+                tasks.Capacity += parent.def.Verbs.Count;
                 foreach (VerbProperties properties in parent.def.Verbs)
                 {
-                    VerbPropertiesRegiestInfo prop = new VerbPropertiesRegiestInfo
+                    VerbProperties boxed = properties;
+                    tasks.Add(Task.Run(() => new VerbPropertiesRegiestInfo
                     (
                         null,
-                        properties,
+                        boxed,
                         VerbPropertiesAfterAffect(
-                            properties,
+                            boxed,
                             null
                         )
-                    );
-                    result.Add(prop);
+                    )));
+                    //VerbPropertiesRegiestInfo prop = ;
+                    //result.Add(prop);
                 }
             }
             else
             {
+                tasks.Capacity += result.Count;
                 for (int i = 0; i < result.Count; i++)
                 {
                     VerbPropertiesRegiestInfo prop = result[i];
-                    VerbProperties newProp = VerbPropertiesAfterAffect(
+                    tasks.Add(Task.Run(() =>
+                    {
+                        prop.afterConvertProperties = VerbPropertiesAfterAffect(
                         prop.berforConvertProperties,
                         null
                         );
-                    prop.afterConvertProperties = newProp;
-                    result[i] = prop;
+                        return prop;
+                    }));
+                    //VerbProperties newProp = 
+                    //newProp;
+                    //result[i] = prop;
                 }
+                result.Clear();
             }
 
-            NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -105,19 +114,24 @@ namespace RW_ModularizationWeapon
                     }
                     if (verbProperties != null)
                     {
-                        result.Capacity += verbProperties.Count;
+                        //result.Capacity += verbProperties.Count;
+                        tasks.Capacity += verbProperties.Count;
                         for (int j = 0; j < verbProperties.Count; j++)
                         {
                             VerbProperties cache = verbProperties[j];
-                            VerbProperties newProp
-                                = VerbPropertiesAfterAffect(
-                                    comp?.VerbPropertiesAfterAffect(
-                                        cache,
-                                        null
-                                        ) ?? cache,
-                                    id
-                                    );
-                            result.Add(new VerbPropertiesRegiestInfo(id, cache, newProp));
+                            tasks.Add(Task.Run(() => new VerbPropertiesRegiestInfo
+                            (
+                                id,
+                                cache,
+                                VerbPropertiesAfterAffect(
+                                comp?.VerbPropertiesAfterAffect(
+                                    cache,
+                                    null
+                                    ) ?? cache,
+                                id
+                                )
+                            )));
+                            //result.Add();
                         }
                     }
                 }
@@ -128,21 +142,21 @@ namespace RW_ModularizationWeapon
             //    stringBuilder.AppendLine($"{i} : {result[i]}");
             //}
             //Log.Message(stringBuilder.ToString());
-            (this.UsingTargetPart ? regiestedNodeVerbPropertiesInfos_TargetPart : regiestedNodeVerbPropertiesInfos).Add(ownerType, result);
+            result.Capacity += tasks.Count;
+            foreach(Task<VerbPropertiesRegiestInfo> info in tasks) result.Add(info.Result);
             return result;
         }
 
         protected override List<VerbToolRegiestInfo> VerbToolRegiestInfoUpdate(Type ownerType, List<VerbToolRegiestInfo> result)
         {
-            if ((this.UsingTargetPart ? regiestedNodeVerbToolInfos_TargetPart : regiestedNodeVerbToolInfos).TryGetValue(ownerType, out List<VerbToolRegiestInfo> data)) return data;
-
-
+            NodeContainer container = ChildNodes;
+            List<Task<VerbToolRegiestInfo>> tasks = new List<Task<VerbToolRegiestInfo>>();
             if (!parent.def.tools.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType,parent) == null)
             {
-                result.Capacity += parent.def.tools.Count;
+                tasks.Capacity += parent.def.tools.Count;
                 foreach(Tool tool in parent.def.tools)
                 {
-                    VerbToolRegiestInfo prop = new VerbToolRegiestInfo
+                    tasks.Add(Task.Run(() => new VerbToolRegiestInfo
                     (
                         null,
                         tool,
@@ -150,25 +164,32 @@ namespace RW_ModularizationWeapon
                             tool,
                             null
                         )
-                    );
-                    result.Add(prop);
+                    )));
+                    //VerbToolRegiestInfo prop = ;
+                    //result.Add(prop);
                 }
             }
             else
             {
+                tasks.Capacity += result.Count;
                 for (int i = 0; i < result.Count; i++)
                 {
                     VerbToolRegiestInfo prop = result[i];
-                    Tool newProp = ToolAfterAffect(
-                        prop.berforConvertTool,
-                        null
-                        );
-                    prop.afterCobvertTool = newProp;
-                    result[i] = prop;
+                    tasks.Add(Task.Run(() =>
+                    {
+
+                        Tool newProp = ToolAfterAffect(
+                            prop.berforConvertTool,
+                            null
+                            );
+                        prop.afterCobvertTool = newProp;
+                        return prop;
+                    }));
+                    //result[i] = prop;
                 }
+                result.Clear();
             }
 
-            NodeContainer container = ChildNodes;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
@@ -191,19 +212,25 @@ namespace RW_ModularizationWeapon
 
                     if (tools != null)
                     {
-                        result.Capacity += tools.Count;
+                        tasks.Capacity += tools.Count;
                         for (int j = 0; j < tools.Count; j++)
                         {
                             Tool cache = tools[j];
-                            Tool newProp
-                                = ToolAfterAffect(
+                            tasks.Add(Task.Run(() => new VerbToolRegiestInfo
+                            (
+                                id,
+                                cache,
+                                ToolAfterAffect(
                                     comp?.ToolAfterAffect(
                                         cache,
                                         null
                                         ) ?? cache,
                                     id
-                                    );
-                            result.Add(new VerbToolRegiestInfo(id, cache, newProp));
+                                )
+                            )));
+                            //Tool newProp
+                            //    = ;
+                            //result.Add();
                         }
                     }
                 }
@@ -214,7 +241,9 @@ namespace RW_ModularizationWeapon
             //    stringBuilder.AppendLine($"{i} : {result[i]}");
             //}
             //Log.Message(stringBuilder.ToString());
-            (this.UsingTargetPart ? regiestedNodeVerbToolInfos_TargetPart : regiestedNodeVerbToolInfos).Add(ownerType, result);
+
+            result.Capacity += tasks.Count;
+            foreach (Task<VerbToolRegiestInfo> info in tasks) result.Add(info.Result);
             return result;
         }
     }

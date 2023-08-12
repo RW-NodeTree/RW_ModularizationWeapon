@@ -25,7 +25,6 @@ using UnityEngine.UIElements;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace RW_ModularizationWeapon
 {
@@ -85,7 +84,7 @@ namespace RW_ModularizationWeapon
         public override void PostPostMake()
         {
             if (Props.setRandomPartWhenCreate) LongEventHandler.ExecuteWhenFinished(SetPartToRandom);
-            else LongEventHandler.ExecuteWhenFinished(() => SetPartToDefault());
+            else LongEventHandler.ExecuteWhenFinished(SetPartToDefault);
         }
 
 
@@ -93,7 +92,22 @@ namespace RW_ModularizationWeapon
         {
             base.PostExposeData();
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.Reference);
-            if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
+            //if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
+        }
+
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            //base.PostSpawnSetup(respawningAfterLoad);
+            CompEquippable compEquippable = parent.TryGetComp<CompEquippable>();
+            if(compEquippable != null)
+            {
+                List<Verb> org = CompChildNodeProccesser.GetOriginalAllVerbs(compEquippable.VerbTracker);
+                foreach (Verb verb in compEquippable.AllVerbs)
+                {
+                    if(!org.Contains(verb)) verb.caster = null;
+                }
+            }
         }
 
 
@@ -341,7 +355,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void SetPartToDefault(bool deep = false)
+        public void SetPartToDefault()
         {
             bool prevUsingTargetPart = UsingTargetPart;
             UsingTargetPart = false;
@@ -356,14 +370,15 @@ namespace RW_ModularizationWeapon
                 }
                 else SetTargetPart(properties.id, null);
             }
-            if(deep)
+            foreach (Thing thing in targetPartsWithId.Values)
             {
-                foreach (Thing thing in targetPartsWithId.Values)
+                CompModularizationWeapon comp = thing;
+                if (comp?.Props.setRandomPartWhenCreate ?? false)
                 {
-                    ((CompModularizationWeapon)thing)?.SetPartToDefault();
+                    comp?.SetPartToDefault();
                 }
             }
-            else ApplyTargetPart(IntVec3.Zero, null);
+            ApplyTargetPart(IntVec3.Zero, null);
             UsingTargetPart = prevUsingTargetPart;
         }
 
@@ -417,10 +432,14 @@ namespace RW_ModularizationWeapon
                 }
             }
 
-            //foreach (Thing thing in targetPartsWithId.Values)
-            //{
-            //    ((CompModularizationWeapon)thing)?.SetPartToRandom();
-            //}
+            foreach (Thing thing in targetPartsWithId.Values)
+            {
+                CompModularizationWeapon comp = thing;
+                if (!(comp?.Props.setRandomPartWhenCreate ?? true))
+                {
+                    comp?.SetPartToRandom();
+                }
+            }
             ApplyTargetPart(IntVec3.Zero, null);
             UsingTargetPart = prevUsingTargetPart;
         }
@@ -430,11 +449,7 @@ namespace RW_ModularizationWeapon
         {
             if(invokeSource == RecipeInvokeSource.products)
             {
-                LongEventHandler.ExecuteWhenFinished(()=>
-                {
-                    SetPartToDefault(true);
-                    ApplyTargetPart(IntVec3.Zero, null);
-                });
+                SetPartToDefault();
             }
             else if(invokeSource == RecipeInvokeSource.ingredients)
             {
@@ -523,12 +538,12 @@ namespace RW_ModularizationWeapon
 
         protected override bool PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds)
         {
-            foreach(KeyValuePair<string,Thing> keyValue in prveChilds)
+            foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
 
-            if (!usingTargetPartChange || targetPartChanged)
+            if (!usingTargetPartChange || TargetPartChanged)
             {
                 cachedThingComps.Clear();
                 cachedCompProperties.Clear();
@@ -536,10 +551,6 @@ namespace RW_ModularizationWeapon
                 statMultiplierCache.Clear();
                 statOffsetCache_TargetPart.Clear();
                 statMultiplierCache_TargetPart.Clear();
-                regiestedNodeVerbToolInfos.Clear();
-                regiestedNodeVerbPropertiesInfos.Clear();
-                regiestedNodeVerbToolInfos_TargetPart.Clear();
-                regiestedNodeVerbPropertiesInfos_TargetPart.Clear();
             }
 
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
@@ -547,39 +558,53 @@ namespace RW_ModularizationWeapon
             {
                 foreach (string id in this.PartIDs)
                 {
-                    if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
+
+                    if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target)) continue;
+
+                    Thing prev = ChildNodes[id];
+                    if (!targetPartsHoldingOwnerWithId.TryGetValue(id, out ThingOwner owner) && !usingTargetPart)
                     {
-                        Thing prev = ChildNodes[id];
-                        if (!targetPartsHoldingOwnerWithId.TryGetValue(id, out ThingOwner owner))
-                        {
-                            owner = usingTargetPart ? target.Thing?.holdingOwner : prev?.holdingOwner;
-                            targetPartsHoldingOwnerWithId.Add(id, owner);
-                        }
-
-                        //Log.Message($"{id} : {prev}; target : {target}; owner : {owner}");
-
-                        if (!usingTargetPart && target.Thing != null) owner?.Remove(target.Thing);
-                        targetPartsWithId[id] = prev;
-                        ChildNodes[id] = target.Thing;
-                        if (usingTargetPart && prev != null) owner?.TryAdd(prev, false);
-
-                        CompModularizationWeapon comp = prev;
-                        if (comp != null) comp.UsingTargetPart = false;
-
-                        comp = target.Thing;
-                        if (comp != null) comp.UsingTargetPart = !usingTargetPart;
+                        owner = target.Thing?.holdingOwner;
+                        targetPartsHoldingOwnerWithId.Add(id, owner);
                     }
+
+                    //Log.Message($"{id} : {prev}; target : {target}; owner : {owner}");
+
+                    //Swap
+                    if (!usingTargetPart && target.Thing != null) owner?.Remove(target.Thing);
+                    targetPartsWithId[id] = prev;
+                    ChildNodes[id] = target.Thing;
+                    if (usingTargetPart && prev != null) owner?.TryAdd(prev, false);
+
+                    //Sync child swap state
+
+                    CompModularizationWeapon comp = prev;
+
+                    if (comp != null)
+                    {
+                        comp.notUpdateComp = false;
+                        comp.usingTargetPartChange = comp.usingTargetPart;
+                    }
+
+                    CompChildNodeProccesser proccesser = prev;
+                    if (proccesser != null) proccesser.NeedUpdate = true;
                 }
             }
-            else
+
+            foreach (Thing thing in ChildNodes.Values)
             {
-                foreach (Thing thing in ChildNodes.Values)
+                CompModularizationWeapon comp = thing;
+                if (comp != null)
                 {
-                    CompChildNodeProccesser proccesser = thing;
-                    if (proccesser != null)
-                    {
-                        proccesser.NeedUpdate = true;
-                    }
+                    comp.notUpdateComp = notUpdateComp;
+                    comp.usingTargetPartChange = 
+                        (usingTargetPartChange && comp.usingTargetPart == usingTargetPart) ||
+                        (!usingTargetPartChange && comp.usingTargetPart != usingTargetPart);
+                }
+                CompChildNodeProccesser proccesser = thing;
+                if (proccesser != null)
+                {
+                    proccesser.NeedUpdate = true;
                 }
             }
             return false;
@@ -592,6 +617,7 @@ namespace RW_ModularizationWeapon
             List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
             List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
             List<ThingComp> allComps = parent.AllComps;
+
             if (usingTargetPartChange)
             {
                 this.usingTargetPart = !this.usingTargetPart;
@@ -610,79 +636,87 @@ namespace RW_ModularizationWeapon
                 allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
             }
 
-            List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
+            if (NotUpdateComp) NeedUpdate = true;
+            else NeedUpdate = false;
 
-            for (int i = 0; i < allComps.Count; i++)
+            if (!NotUpdateComp || !TargetPartChanged)
             {
-                ThingComp comp = allComps[i];
-                Type type = comp.GetType();
-                if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
-                CompProperties properties = cachedCompProperties.FirstOrDefault(x => x.compClass == type);
-                bool useCache = properties != null;
-                if (!useCache) properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                if (properties != null)
+
+                List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
+
+                for (int i = 0; i < allComps.Count; i++)
                 {
-                    try
+                    ThingComp comp = allComps[i];
+                    Type type = comp.GetType();
+                    if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+                    CompProperties properties = cachedCompProperties.FirstOrDefault(x => x.compClass == type);
+                    bool useCache = properties != null;
+                    if (!useCache) properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+                    if (properties != null)
                     {
-                        if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
-                        comp.parent = parent;
-                        if (useCache)
+                        try
                         {
-                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
-                            else comp.props = properties;
+                            if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
+                            comp.parent = parent;
+                            if (useCache)
+                            {
+                                if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
+                                else comp.props = properties;
+                            }
+                            //else
+                            //{
+                            //    if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                            //    else comp.props = CompPropertiesAfterAffect(properties);
+                            //}
+                            else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
+                            allComps[i] = comp;
+                            //comp.props.LogAllField();
                         }
-                        //else
-                        //{
-                        //    if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
-                        //    else comp.props = CompPropertiesAfterAffect(properties);
-                        //}
-                        else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
-                        allComps[i] = comp;
+                        catch (Exception ex)
+                        {
+                            Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
+                        }
+                    }
+                }
+
+                foreach (CompProperties prop in AllExtraCompProperties())
+                {
+                    if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+                    {
+                        ThingComp comp = cachedThingComps.FirstOrDefault(x => x.GetType() == prop.compClass);
+                        if (comp == null)
+                        {
+                            comp = (ThingComp)Activator.CreateInstance(prop.compClass);
+                            cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(prop)), comp, true));
+                            //comp.Initialize(CompPropertiesAfterAffect(prop));
+                        }
+                        comp.parent = parent;
+                        allComps.Add(comp);
                         //comp.props.LogAllField();
                     }
-                    catch (Exception ex)
+                }
+
+                foreach ((Task<CompProperties>, ThingComp, bool) info in cachedTask)
+                {
+                    if (info.Item2 != null)
                     {
-                        Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
+                        //info.Item1.Wait();
+                        if (info.Item3) info.Item2.Initialize(info.Item1.Result);
+                        else info.Item2.props = info.Item1.Result;
                     }
                 }
-            }
 
-            foreach (CompProperties prop in AllExtraCompProperties())
-            {
-                if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+
+                if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
                 {
-                    ThingComp comp = cachedThingComps.FirstOrDefault(x => x.GetType() == prop.compClass);
-                    if (comp == null)
-                    {
-                        comp = (ThingComp)Activator.CreateInstance(prop.compClass);
-                        cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(prop)), comp, true));
-                        //comp.Initialize(CompPropertiesAfterAffect(prop));
-                    }
-                    comp.parent = parent;
-                    allComps.Add(comp);
-                    //comp.props.LogAllField();
+                    //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
+                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
                 }
-            }
-
-            foreach ((Task<CompProperties>, ThingComp, bool) info in cachedTask)
-            {
-                if (info.Item2 != null)
-                {
-                    info.Item1.Wait();
-                    if (info.Item3) info.Item2.Initialize(info.Item1.Result);
-                    else info.Item2.props = info.Item1.Result;
-                }
-            }
-
-
-            if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
-            {
-                //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
-                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+                TargetPartChanged = false;
             }
             //Log.Message($"{eventName} : {costomEventInfo}");
-            targetPartChanged = false;
             usingTargetPartChange = false;
+            NotUpdateComp = false;
             return false;
         }
 
@@ -750,12 +784,9 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
-        private readonly Dictionary<Type, List<VerbToolRegiestInfo>> regiestedNodeVerbToolInfos = new Dictionary<Type, List<VerbToolRegiestInfo>>();
-        private readonly Dictionary<Type, List<VerbPropertiesRegiestInfo>> regiestedNodeVerbPropertiesInfos = new Dictionary<Type, List<VerbPropertiesRegiestInfo>>();
-        private readonly Dictionary<Type, List<VerbToolRegiestInfo>> regiestedNodeVerbToolInfos_TargetPart = new Dictionary<Type, List<VerbToolRegiestInfo>>();
-        private readonly Dictionary<Type, List<VerbPropertiesRegiestInfo>> regiestedNodeVerbPropertiesInfos_TargetPart = new Dictionary<Type, List<VerbPropertiesRegiestInfo>>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
+        private bool notUpdateComp = false;
         private bool usingTargetPart = false;
         private bool targetPartChanged = false;
         private bool usingTargetPartChange = false;
