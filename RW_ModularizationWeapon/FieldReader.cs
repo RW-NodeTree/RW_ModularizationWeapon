@@ -181,19 +181,21 @@ namespace RW_ModularizationWeapon
 
             foreach (RuntimeFieldHandle field in a.Keys)
             {
-                if (result.UsedType.IsAssignableFrom(FieldInfo.GetFieldFromHandle(field).DeclaringType))
+                FieldInfo info = FieldInfo.GetFieldFromHandle(field);
+                if (result.UsedType.IsAssignableFrom(info.DeclaringType))
                 {
-                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], FieldInfo.GetFieldFromHandle(field)));
-                    else result.Add(field, calc(a[field], b.DefaultValue, FieldInfo.GetFieldFromHandle(field)));
+                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], info));
+                    else result.Add(field, calc(a[field], b.DefaultValue, info));
                 }
             }
 
             foreach (RuntimeFieldHandle field in b.Keys)
             {
-                if (result.UsedType.IsAssignableFrom(FieldInfo.GetFieldFromHandle(field).DeclaringType) && !result.ContainsKey(field))
+                FieldInfo info = FieldInfo.GetFieldFromHandle(field);
+                if (result.UsedType.IsAssignableFrom(info.DeclaringType) && !result.ContainsKey(field))
                 {
-                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], FieldInfo.GetFieldFromHandle(field)));
-                    else result.Add(field, calc(a.DefaultValue, b[field], FieldInfo.GetFieldFromHandle(field)));
+                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], info));
+                    else result.Add(field, calc(a.DefaultValue, b[field], info));
                 }
             }
             return result;
@@ -359,11 +361,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (va != null)
                     {
-                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) + vb.ToDouble(null));
-                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) + vb.ToDouble(null));
-                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) + vb.ToDouble(null));
-                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) + vb.ToDouble(null));
-                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) + vb.ToDouble(null);
+                        if (va is int) return (int)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va is float) return (float)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va is long) return (long)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va is sbyte) return (sbyte)(va.ToDouble(null) + vb.ToDouble(null));
+                        else if (va is double) return va.ToDouble(null) + vb.ToDouble(null);
                     }
                     return va;
                 }, a);
@@ -379,11 +381,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (va != null)
                     {
-                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) - vb.ToDouble(null));
-                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) - vb.ToDouble(null));
-                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) - vb.ToDouble(null));
-                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) - vb.ToDouble(null));
-                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) - vb.ToDouble(null);
+                        if (va is int) return (int)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va is float) return (float)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va is long) return (long)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va is sbyte) return (sbyte)(va.ToDouble(null) - vb.ToDouble(null));
+                        else if (va is double) return va.ToDouble(null) - vb.ToDouble(null);
                     }
                     return va;
                 }, a);
@@ -399,11 +401,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (va != null)
                     {
-                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) * vb.ToDouble(null));
-                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) * vb.ToDouble(null));
-                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) * vb.ToDouble(null));
-                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) * vb.ToDouble(null));
-                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) * vb.ToDouble(null);
+                        if (va is int) return (int)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va is float) return (float)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va is long) return (long)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va is sbyte) return (sbyte)(va.ToDouble(null) * vb.ToDouble(null));
+                        else if (va is double) return va.ToDouble(null) * vb.ToDouble(null);
                     }
                     return va;
                 }, a);
@@ -419,11 +421,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (va != null)
                     {
-                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) / vb.ToDouble(null));
-                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) / vb.ToDouble(null));
-                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) / vb.ToDouble(null));
-                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) / vb.ToDouble(null));
-                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) / vb.ToDouble(null);
+                        if (va is int) return (int)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va is float) return (float)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va is long) return (long)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va is sbyte) return (sbyte)(va.ToDouble(null) / vb.ToDouble(null));
+                        else if (va is double) return va.ToDouble(null) / vb.ToDouble(null);
                     }
                     return va;
                 }, a);
@@ -439,11 +441,11 @@ namespace RW_ModularizationWeapon
                 {
                     if (va != null)
                     {
-                        if (va.GetType() == typeof(int)) return (int)(va.ToDouble(null) % vb.ToDouble(null));
-                        else if (va.GetType() == typeof(float)) return (float)(va.ToDouble(null) % vb.ToDouble(null));
-                        else if (va.GetType() == typeof(long)) return (long)(va.ToDouble(null) % vb.ToDouble(null));
-                        else if (va.GetType() == typeof(sbyte)) return (sbyte)(va.ToDouble(null) % vb.ToDouble(null));
-                        else if (va.GetType() == typeof(double)) return va.ToDouble(null) % vb.ToDouble(null);
+                        if (va is int) return (int)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va is float) return (float)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va is long) return (long)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va is sbyte) return (sbyte)(va.ToDouble(null) % vb.ToDouble(null));
+                        else if (va is double) return va.ToDouble(null) % vb.ToDouble(null);
                     }
                     return va;
                 }, a);

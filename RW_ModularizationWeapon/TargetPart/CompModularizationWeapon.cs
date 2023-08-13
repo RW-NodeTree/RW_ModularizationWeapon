@@ -41,20 +41,6 @@ namespace RW_ModularizationWeapon
             }
         }
 
-
-        private bool NotUpdateComp
-        {
-            get => notUpdateComp;
-            set
-            {
-                if(notUpdateComp = value)
-                {
-                    CompModularizationWeapon parent = ParentPart;
-                    if (parent != null) parent.NotUpdateComp = value;
-                }
-            }
-        }
-
         private bool TargetPartChanged
         {
             get => targetPartChanged;
@@ -116,7 +102,6 @@ namespace RW_ModularizationWeapon
             }
             bool prevUsingTargetPart = UsingTargetPart;
 
-            NotUpdateComp = true;
             UsingTargetPart = false;
             targetPartsHoldingOwnerWithId.Clear();
             foreach(Thing target in AllTargetPart())
@@ -151,7 +136,6 @@ namespace RW_ModularizationWeapon
                 }
             }
 
-            NotUpdateComp = true;
             UsingTargetPart = true;
 
             if (map != null)
@@ -190,7 +174,6 @@ namespace RW_ModularizationWeapon
 
             //Log.Message($"{parent}->NeedUpdate : {NeedUpdate}");
 
-            NotUpdateComp = true;
             UsingTargetPart = prevUsingTargetPart;
         }
 

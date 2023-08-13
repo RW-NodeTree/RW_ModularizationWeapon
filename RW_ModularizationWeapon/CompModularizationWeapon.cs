@@ -579,12 +579,7 @@ namespace RW_ModularizationWeapon
                     //Sync child swap state
 
                     CompModularizationWeapon comp = prev;
-
-                    if (comp != null)
-                    {
-                        comp.notUpdateComp = false;
-                        comp.usingTargetPartChange = comp.usingTargetPart;
-                    }
+                    if (comp != null) comp.usingTargetPartChange = comp.usingTargetPart;
 
                     CompChildNodeProccesser proccesser = prev;
                     if (proccesser != null) proccesser.NeedUpdate = true;
@@ -596,7 +591,6 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = thing;
                 if (comp != null)
                 {
-                    comp.notUpdateComp = notUpdateComp;
                     comp.usingTargetPartChange = 
                         (usingTargetPartChange && comp.usingTargetPart == usingTargetPart) ||
                         (!usingTargetPartChange && comp.usingTargetPart != usingTargetPart);
@@ -636,87 +630,82 @@ namespace RW_ModularizationWeapon
                 allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
             }
 
-            if (NotUpdateComp) NeedUpdate = true;
-            else NeedUpdate = false;
+            NeedUpdate = false;
 
-            if (!NotUpdateComp || !TargetPartChanged)
+
+            List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
+
+            for (int i = 0; i < allComps.Count; i++)
             {
-
-                List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
-
-                for (int i = 0; i < allComps.Count; i++)
+                ThingComp comp = allComps[i];
+                Type type = comp.GetType();
+                if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+                CompProperties properties = cachedCompProperties.FirstOrDefault(x => x.compClass == type);
+                bool useCache = properties != null;
+                if (!useCache) properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+                if (properties != null)
                 {
-                    ThingComp comp = allComps[i];
-                    Type type = comp.GetType();
-                    if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
-                    CompProperties properties = cachedCompProperties.FirstOrDefault(x => x.compClass == type);
-                    bool useCache = properties != null;
-                    if (!useCache) properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
-                    if (properties != null)
+                    try
                     {
-                        try
-                        {
-                            if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
-                            comp.parent = parent;
-                            if (useCache)
-                            {
-                                if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
-                                else comp.props = properties;
-                            }
-                            //else
-                            //{
-                            //    if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
-                            //    else comp.props = CompPropertiesAfterAffect(properties);
-                            //}
-                            else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
-                            allComps[i] = comp;
-                            //comp.props.LogAllField();
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
-                        }
-                    }
-                }
-
-                foreach (CompProperties prop in AllExtraCompProperties())
-                {
-                    if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
-                    {
-                        ThingComp comp = cachedThingComps.FirstOrDefault(x => x.GetType() == prop.compClass);
-                        if (comp == null)
-                        {
-                            comp = (ThingComp)Activator.CreateInstance(prop.compClass);
-                            cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(prop)), comp, true));
-                            //comp.Initialize(CompPropertiesAfterAffect(prop));
-                        }
+                        if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
                         comp.parent = parent;
-                        allComps.Add(comp);
+                        if (useCache)
+                        {
+                            if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
+                            else comp.props = properties;
+                        }
+                        //else
+                        //{
+                        //    if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
+                        //    else comp.props = CompPropertiesAfterAffect(properties);
+                        //}
+                        else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
+                        allComps[i] = comp;
                         //comp.props.LogAllField();
                     }
-                }
-
-                foreach ((Task<CompProperties>, ThingComp, bool) info in cachedTask)
-                {
-                    if (info.Item2 != null)
+                    catch (Exception ex)
                     {
-                        //info.Item1.Wait();
-                        if (info.Item3) info.Item2.Initialize(info.Item1.Result);
-                        else info.Item2.props = info.Item1.Result;
+                        Log.Error("Could not instantiate or initialize a ThingComp: " + ex);
                     }
                 }
-
-
-                if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
-                {
-                    //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
-                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
-                }
-                TargetPartChanged = false;
             }
+
+            foreach (CompProperties prop in AllExtraCompProperties())
+            {
+                if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
+                {
+                    ThingComp comp = cachedThingComps.FirstOrDefault(x => x.GetType() == prop.compClass);
+                    if (comp == null)
+                    {
+                        comp = (ThingComp)Activator.CreateInstance(prop.compClass);
+                        cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(prop)), comp, true));
+                        //comp.Initialize(CompPropertiesAfterAffect(prop));
+                    }
+                    comp.parent = parent;
+                    allComps.Add(comp);
+                    //comp.props.LogAllField();
+                }
+            }
+
+            foreach ((Task<CompProperties>, ThingComp, bool) info in cachedTask)
+            {
+                if (info.Item2 != null)
+                {
+                    //info.Item1.Wait();
+                    if (info.Item3) info.Item2.Initialize(info.Item1.Result);
+                    else info.Item2.props = info.Item1.Result;
+                }
+            }
+
+
+            if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
+            {
+                //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
+                PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+            }
+            TargetPartChanged = false;
             //Log.Message($"{eventName} : {costomEventInfo}");
             usingTargetPartChange = false;
-            NotUpdateComp = false;
             return false;
         }
 
@@ -786,7 +775,6 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
-        private bool notUpdateComp = false;
         private bool usingTargetPart = false;
         private bool targetPartChanged = false;
         private bool usingTargetPartChange = false;
