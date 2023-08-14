@@ -96,21 +96,6 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            //base.PostSpawnSetup(respawningAfterLoad);
-            CompEquippable compEquippable = parent.TryGetComp<CompEquippable>();
-            if(compEquippable != null)
-            {
-                List<Verb> org = CompChildNodeProccesser.GetOriginalAllVerbs(compEquippable.VerbTracker);
-                foreach (Verb verb in compEquippable.AllVerbs)
-                {
-                    if(!org.Contains(verb)) verb.caster = null;
-                }
-            }
-        }
-
-
         public override bool AllowStackWith(Thing other)
         {
             return Props.attachmentProperties.Count == 0;
@@ -551,6 +536,10 @@ namespace RW_ModularizationWeapon
                 statMultiplierCache.Clear();
                 statOffsetCache_TargetPart.Clear();
                 statMultiplierCache_TargetPart.Clear();
+                toolsCache.Clear();
+                toolsCache_TargetPart.Clear();
+                verbPropertiesCache.Clear();
+                verbPropertiesCache_TargetPart.Clear();
             }
 
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
@@ -773,6 +762,10 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
+        private readonly Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>();
+        private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>();
+        private readonly Dictionary<Type, List<Tool>> toolsCache_TargetPart = new Dictionary<Type, List<Tool>>();
+        private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache_TargetPart = new Dictionary<Type, List<VerbProperties>>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
         private bool usingTargetPart = false;

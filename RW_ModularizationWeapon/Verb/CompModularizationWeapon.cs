@@ -1,4 +1,5 @@
-﻿using RW_NodeTree;
+﻿using RW_ModularizationWeapon.Tools;
+using RW_NodeTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,8 +50,10 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbPropertiesRegiestInfo> VerbPropertiesRegiestInfoUpadte(Type ownerType, List<VerbPropertiesRegiestInfo> result)
         {
+            int index = 0;
             NodeContainer container = ChildNodes;
             List<Task<VerbPropertiesRegiestInfo>> tasks = new List<Task<VerbPropertiesRegiestInfo>>();
+            List<VerbProperties> verbPropertiesCache = (UsingTargetPart ? verbPropertiesCache_TargetPart : this.verbPropertiesCache).GetOrNewWhenNull(ownerType, () => new List<VerbProperties>());
             if (!parent.def.Verbs.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, parent) == null)
             {
 
@@ -58,16 +61,18 @@ namespace RW_ModularizationWeapon
                 tasks.Capacity += parent.def.Verbs.Count;
                 foreach (VerbProperties properties in parent.def.Verbs)
                 {
+                    int i = index;
                     VerbProperties boxed = properties;
                     tasks.Add(Task.Run(() => new VerbPropertiesRegiestInfo
                     (
                         null,
                         boxed,
-                        VerbPropertiesAfterAffect(
+                        (i < verbPropertiesCache.Count) ? verbPropertiesCache[i] : VerbPropertiesAfterAffect(
                             boxed,
                             null
                         )
                     )));
+                    index++;
                     //VerbPropertiesRegiestInfo prop = ;
                     //result.Add(prop);
                 }
@@ -77,15 +82,17 @@ namespace RW_ModularizationWeapon
                 tasks.Capacity += result.Count;
                 for (int i = 0; i < result.Count; i++)
                 {
+                    int j = index;
                     VerbPropertiesRegiestInfo prop = result[i];
                     tasks.Add(Task.Run(() =>
                     {
-                        prop.afterConvertProperties = VerbPropertiesAfterAffect(
-                        prop.berforConvertProperties,
-                        null
+                        prop.afterConvertProperties = (j < verbPropertiesCache.Count) ? verbPropertiesCache[j] : VerbPropertiesAfterAffect(
+                            prop.berforConvertProperties,
+                            null
                         );
                         return prop;
                     }));
+                    index++;
                     //VerbProperties newProp = 
                     //newProp;
                     //result[i] = prop;
@@ -118,12 +125,14 @@ namespace RW_ModularizationWeapon
                         tasks.Capacity += verbProperties.Count;
                         for (int j = 0; j < verbProperties.Count; j++)
                         {
+
+                            int k = index;
                             VerbProperties cache = verbProperties[j];
                             tasks.Add(Task.Run(() => new VerbPropertiesRegiestInfo
                             (
                                 id,
                                 cache,
-                                VerbPropertiesAfterAffect(
+                                (k < verbPropertiesCache.Count) ? verbPropertiesCache[k] : VerbPropertiesAfterAffect(
                                 comp?.VerbPropertiesAfterAffect(
                                     cache,
                                     null
@@ -131,6 +140,7 @@ namespace RW_ModularizationWeapon
                                 id
                                 )
                             )));
+                            index++;
                             //result.Add();
                         }
                     }
@@ -144,27 +154,34 @@ namespace RW_ModularizationWeapon
             //Log.Message(stringBuilder.ToString());
             result.Capacity += tasks.Count;
             foreach(Task<VerbPropertiesRegiestInfo> info in tasks) result.Add(info.Result);
+            verbPropertiesCache.Clear();
+            verbPropertiesCache.Capacity = result.Capacity;
+            foreach (VerbPropertiesRegiestInfo info in result) verbPropertiesCache.Add(info.afterConvertProperties);
             return result;
         }
 
         protected override List<VerbToolRegiestInfo> VerbToolRegiestInfoUpdate(Type ownerType, List<VerbToolRegiestInfo> result)
         {
+            int index = 0;
             NodeContainer container = ChildNodes;
             List<Task<VerbToolRegiestInfo>> tasks = new List<Task<VerbToolRegiestInfo>>();
+            List<Tool> toolsCache = (UsingTargetPart ? toolsCache_TargetPart : this.toolsCache).GetOrNewWhenNull(ownerType, () => new List<Tool>());
             if (!parent.def.tools.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType,parent) == null)
             {
                 tasks.Capacity += parent.def.tools.Count;
                 foreach(Tool tool in parent.def.tools)
                 {
+                    int i = index;
                     tasks.Add(Task.Run(() => new VerbToolRegiestInfo
                     (
                         null,
                         tool,
-                        ToolAfterAffect(
+                        (i < toolsCache.Count) ? toolsCache[i] : ToolAfterAffect(
                             tool,
                             null
                         )
                     )));
+                    index++;
                     //VerbToolRegiestInfo prop = ;
                     //result.Add(prop);
                 }
@@ -174,17 +191,17 @@ namespace RW_ModularizationWeapon
                 tasks.Capacity += result.Count;
                 for (int i = 0; i < result.Count; i++)
                 {
+                    int j = index;
                     VerbToolRegiestInfo prop = result[i];
                     tasks.Add(Task.Run(() =>
                     {
-
-                        Tool newProp = ToolAfterAffect(
+                        prop.afterCobvertTool = (j < toolsCache.Count) ? toolsCache[j] : ToolAfterAffect(
                             prop.berforConvertTool,
                             null
                             );
-                        prop.afterCobvertTool = newProp;
                         return prop;
                     }));
+                    index++;
                     //result[i] = prop;
                 }
                 result.Clear();
@@ -215,12 +232,13 @@ namespace RW_ModularizationWeapon
                         tasks.Capacity += tools.Count;
                         for (int j = 0; j < tools.Count; j++)
                         {
+                            int k = index;
                             Tool cache = tools[j];
                             tasks.Add(Task.Run(() => new VerbToolRegiestInfo
                             (
                                 id,
                                 cache,
-                                ToolAfterAffect(
+                                (k < toolsCache.Count) ? toolsCache[k] : ToolAfterAffect(
                                     comp?.ToolAfterAffect(
                                         cache,
                                         null
@@ -228,6 +246,7 @@ namespace RW_ModularizationWeapon
                                     id
                                 )
                             )));
+                            index++;
                             //Tool newProp
                             //    = ;
                             //result.Add();
@@ -244,6 +263,9 @@ namespace RW_ModularizationWeapon
 
             result.Capacity += tasks.Count;
             foreach (Task<VerbToolRegiestInfo> info in tasks) result.Add(info.Result);
+            toolsCache.Clear();
+            toolsCache.Capacity = result.Capacity;
+            foreach (VerbToolRegiestInfo info in result) toolsCache.Add(info.afterCobvertTool);
             return result;
         }
     }
