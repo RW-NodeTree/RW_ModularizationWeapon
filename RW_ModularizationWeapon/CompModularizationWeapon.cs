@@ -749,7 +749,52 @@ namespace RW_ModularizationWeapon
 
         public static implicit operator CompModularizationWeapon(Thing thing)
         {
-            return thing?.TryGetComp<CompModularizationWeapon>();
+            List<ThingComp> comps = (thing as ThingWithComps)?.AllComps;
+            if (comps == null || comps.Count < 2 || ((CompChildNodeProccesser)thing) == null) return null;
+
+            CompNoCompMarker marker = comps[1] as CompNoCompMarker;
+            if (marker != null) return null;
+            CompModularizationWeapon result = comps[1] as CompModularizationWeapon;
+            int i = 2;
+            if (result != null) return result;
+            else
+            {
+                for (; i < comps.Count; i++)
+                {
+                    result = comps[i] as CompModularizationWeapon;
+                    if (result != null) break;
+                }
+            }
+            if (result != null)
+            {
+                comps.RemoveAt(i);
+                comps.Insert(1, result);
+            }
+            else
+            {
+                i = 2;
+                for (; i < comps.Count; i++)
+                {
+                    marker = comps[i] as CompNoCompMarker;
+                    if (marker != null) break;
+                }
+                if (marker != null)
+                {
+                    comps.RemoveAt(i);
+                    comps.Insert(1, marker);
+                }
+                else
+                {
+                    marker = new CompNoCompMarker();
+                    comps.Insert(1, marker);
+                }
+            }
+            return result;
+        }
+
+        internal class CompNoCompMarker : ThingComp
+        {
+
         }
         #endregion
 
