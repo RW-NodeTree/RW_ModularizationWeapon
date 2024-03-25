@@ -126,13 +126,14 @@ namespace RW_ModularizationWeapon.AI
                 {
                     Pawn actor = toil.actor;
                     Job job = actor.CurJob;
-                    comp.ApplyTargetPart(job.targetA.Cell, actor.Map);
                     if (!comp.parent.Spawned)
                     {
                         GenPlace.TryPlaceThing(comp.parent, TargetA.Cell, actor.Map, ThingPlaceMode.Near);
                     }
                     comp.parent.Position = TargetA.Cell;
-                    comp.NodeProccesser.UpdateNode();
+                    comp.SetChildPostion();
+                    comp.SwapTargetPart();
+                    comp.ClearTargetPart();
                 };
                 yield return toil
                     .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);

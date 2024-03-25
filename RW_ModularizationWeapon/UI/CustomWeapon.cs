@@ -97,9 +97,9 @@ namespace RW_ModularizationWeapon.UI
             (string id, CompModularizationWeapon parent) = SelectedPartForChange;
             if (parent != null && id != null)
             {
-                Thing OrginalPart = parent.OrginalPart(id).Thing;
+                Thing OrginalPart = targetMode ? parent.GetTargetPart(id).Thing : parent.ChildNodes[id];
                 selections.Add((OrginalPart, OrginalPart?.def));
-                if (parent.NodeProccesser.AllowNode(null, id))
+                if (parent.AllowPart(null, id))
                 {
                     if(OrginalPart != null) selections.Add((default(Thing), default(ThingDef)));
                 }
@@ -109,7 +109,7 @@ namespace RW_ModularizationWeapon.UI
                     in pawn.Map.listerThings.AllThings
                     where
                         (x?.Spawned ?? false) &&
-                        parent.NodeProccesser.AllowNode(x, id) &&
+                        parent.AllowPart(x, id) &&
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
                 );
@@ -170,14 +170,16 @@ namespace RW_ModularizationWeapon.UI
             //long[] spans = new long[5];
             // Widgets.Label(new Rect(0, 0, inRect.width, 36), "AssembleWeapon".Translate());
             CompModularizationWeapon weapon = creaftingTable.GetTargetCompModularizationWeapon();
-            if (weapon != null)
-            {
-                weapon.UsingTargetPart = true;
-                //spans[0] = stopwatch.ElapsedTicks;
-                //weapon.NodeProccesser.UpdateNode();
-                //spans[1] = stopwatch.ElapsedTicks;
-                //Log.Message($"weapon.UsingTargetPart : {weapon.UsingTargetPart}");
-            }
+            weapon?.SwapTargetPart();
+            targetMode = !targetMode;
+            //if (weapon != null)
+            //{
+            //    weapon.SwapTargetPart();
+            //spans[0] = stopwatch.ElapsedTicks;
+            //weapon.NodeProccesser.UpdateNode();
+            //spans[1] = stopwatch.ElapsedTicks;
+            //Log.Message($"weapon.UsingTargetPart : {weapon.UsingTargetPart}");
+            //}
             //if (weapon == null)
             //{
             //    ThingDef Gun_Test_Modularization = DefDatabase<ThingDef>.GetNamed("Gun_Test_Modularization");
@@ -317,7 +319,11 @@ namespace RW_ModularizationWeapon.UI
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))
                             {
+                                weapon?.SwapTargetPart();
+                                targetMode = !targetMode;
                                 partForChange.SetTargetPart(idForChange, selThing);
+                                weapon?.SwapTargetPart();
+                                targetMode = !targetMode;
                                 ResetInfoTags();
                             }
                         }
@@ -327,7 +333,11 @@ namespace RW_ModularizationWeapon.UI
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
                             if (Widgets.ButtonInvisible(rect))
                             {
+                                weapon?.SwapTargetPart();
+                                targetMode = !targetMode;
                                 partForChange.SetTargetPart(idForChange, null);
+                                weapon?.SwapTargetPart();
+                                targetMode = !targetMode;
                                 ResetInfoTags();
                             }
                         }
@@ -370,7 +380,8 @@ namespace RW_ModularizationWeapon.UI
                 Close(false);
                 if(weapon != null)
                 {
-                    weapon.UsingTargetPart = false;
+                    weapon.SwapTargetPart();
+                    targetMode = !targetMode;
                     //weapon.ApplyTargetPart(pawn.Position,pawn.Map);
                     //if (!weapon.parent.Spawned) GenPlace.TryPlaceThing(weapon.parent, pawn.Position, pawn.Map, ThingPlaceMode.Near);
                     Job job = new Job(DefDatabase<JobDef>.GetNamed("ModularizationWeapon_Apply"), creaftingTable.parent);
@@ -380,14 +391,17 @@ namespace RW_ModularizationWeapon.UI
                 goto ret;
             }
             //spans[2] = stopwatch.ElapsedTicks;
-            if (weapon != null)
-            {
-                weapon.UsingTargetPart = false;
-                //Log.Message($"weapon.UsingTargetPart : {weapon.UsingTargetPart}");
-                //spans[3] = stopwatch.ElapsedTicks;
-                //weapon.NodeProccesser.UpdateNode();
-                //spans[4] = stopwatch.ElapsedTicks;
-            }
+
+            weapon?.SwapTargetPart();
+            targetMode = !targetMode;
+            //if (weapon != null)
+            //{
+            //    weapon.SwapTargetPart();
+            //Log.Message($"weapon.UsingTargetPart : {weapon.UsingTargetPart}");
+            //spans[3] = stopwatch.ElapsedTicks;
+            //weapon.NodeProccesser.UpdateNode();
+            //spans[4] = stopwatch.ElapsedTicks;
+            //}
             //Log.Message($"[{spans[0]},{spans[1]},{spans[2]},{spans[3]},{spans[4]}]");
             //drawed = true;
             ret:;
@@ -405,5 +419,6 @@ namespace RW_ModularizationWeapon.UI
         private readonly List<(Thing,ThingDef)> selections = new List<(Thing, ThingDef)>();
         private Vector2[] ScrollViews = new Vector2[2];
         private StateInfoTags stateInfoTags = null;
+        private bool targetMode = false;
     }
 }

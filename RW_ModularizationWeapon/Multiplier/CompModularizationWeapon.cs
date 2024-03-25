@@ -171,7 +171,7 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer container = ChildNodes;
             float result = 1;
-            if (!(this.UsingTargetPart ? statMultiplierCache_TargetPart : statMultiplierCache).TryGetValue((statDef, part), out result))
+            if (!statMultiplierCache.TryGetValue((statDef, part), out result))
             {
                 result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatValueFromList(
                     statDef,
@@ -218,7 +218,7 @@ namespace RW_ModularizationWeapon
                             );
                     }
                 }
-                (this.UsingTargetPart ? statMultiplierCache_TargetPart : statMultiplierCache).Add((statDef, part), result);
+                statMultiplierCache.Add((statDef, part), result);
                 //Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
             }
             return result;

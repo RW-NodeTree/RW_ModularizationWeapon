@@ -53,7 +53,7 @@ namespace RW_ModularizationWeapon
             int index = 0;
             NodeContainer container = ChildNodes;
             List<Task<VerbPropertiesRegiestInfo>> tasks = new List<Task<VerbPropertiesRegiestInfo>>();
-            List<VerbProperties> verbPropertiesCache = (UsingTargetPart ? verbPropertiesCache_TargetPart : this.verbPropertiesCache).GetOrNewWhenNull(ownerType, () => new List<VerbProperties>());
+            List<VerbProperties> verbPropertiesCache = this.verbPropertiesCache.GetOrNewWhenNull(ownerType, () => new List<VerbProperties>());
             if (!parent.def.Verbs.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, parent) == null)
             {
 
@@ -165,7 +165,7 @@ namespace RW_ModularizationWeapon
             int index = 0;
             NodeContainer container = ChildNodes;
             List<Task<VerbToolRegiestInfo>> tasks = new List<Task<VerbToolRegiestInfo>>();
-            List<Tool> toolsCache = (UsingTargetPart ? toolsCache_TargetPart : this.toolsCache).GetOrNewWhenNull(ownerType, () => new List<Tool>());
+            List<Tool> toolsCache = this.toolsCache.GetOrNewWhenNull(ownerType, () => new List<Tool>());
             if (!parent.def.tools.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType,parent) == null)
             {
                 tasks.Capacity += parent.def.tools.Count;

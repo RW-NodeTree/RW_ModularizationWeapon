@@ -19,12 +19,15 @@ using RW_ModularizationWeapon.UI;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace RW_ModularizationWeapon
 {
@@ -304,16 +307,16 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool AllowNode(Thing node, string id = null)
+        public bool AllowPart(Thing part, string id = null)
         {
-            if(!PartIDs.Contains(id)) return false;
+            if (!PartIDs.Contains(id)) return false;
             WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
             {
-                if (node == null) return properties.allowEmpty;
-                CompModularizationWeapon comp = node;
-                if(comp != null)
+                if (part == null) return properties.allowEmpty;
+                CompModularizationWeapon comp = part;
+                if (comp != null)
                 {
                     for (int i = 0; i < ChildNodes.Count; i++)
                     {
@@ -326,24 +329,25 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < ChildNodes.Count; i++)
                 {
                     comp = ChildNodes[i];
-                    if(comp != null && comp.Props.disallowedOtherPart.Allows(node))
+                    if (comp != null && comp.Props.disallowedOtherPart.Allows(part))
                     {
                         return false;
                     }
                 }
                 //if (Prefs.DevMode) Log.Message($"properties.filter.AllowedDefCount : {properties.filter.AllowedDefCount}");
                 return
-                    properties.filter.Allows(node) &&
+                    properties.filter.Allows(part) &&
                     !internal_Unchangeable(ChildNodes[id], properties);
             }
             return false;
         }
 
 
+        protected override bool AllowNode(Thing node, string id = null) => AllowPart(node, id);
+
+
         public void SetPartToDefault()
         {
-            bool prevUsingTargetPart = UsingTargetPart;
-            UsingTargetPart = false;
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
                 ThingDef def = properties.defultThing;
@@ -354,6 +358,7 @@ namespace RW_ModularizationWeapon
                     SetTargetPart(properties.id, thing);
                 }
                 else SetTargetPart(properties.id, null);
+                ChildNodes[properties.id]?.Destroy();
             }
             foreach (Thing thing in targetPartsWithId.Values)
             {
@@ -363,15 +368,15 @@ namespace RW_ModularizationWeapon
                     comp?.SetPartToDefault();
                 }
             }
-            ApplyTargetPart(IntVec3.Zero, null);
-            UsingTargetPart = prevUsingTargetPart;
+            SwapTargetPart();
+            ClearTargetPart();
         }
 
 
         public void SetPartToRandom()
         {
-            bool prevUsingTargetPart = UsingTargetPart;
-            UsingTargetPart = false;
+
+            //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
             foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
             {
                 if(properties.randomThingDefWeights.NullOrEmpty())
@@ -383,9 +388,12 @@ namespace RW_ModularizationWeapon
                         if (def != null)
                         {
                             Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                            SetTargetPart(properties.id, thing);
-                            if (targetPartsWithId.TryGetValue(properties.id) == thing) break;
+                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
+                            if (SetTargetPart(properties.id, thing))
+                            {
+                                ChildNodes[properties.id]?.Destroy();
+                                break;
+                            }
                         }
                         else break;
                     }
@@ -408,25 +416,21 @@ namespace RW_ModularizationWeapon
                         if (def != null)
                         {
                             Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                            SetTargetPart(properties.id, thing);
-                            if (targetPartsWithId.TryGetValue(properties.id) == thing) break;
+                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
+                            if (SetTargetPart(properties.id, thing))
+                            {
+                                ChildNodes[properties.id]?.Destroy();
+                                break;
+                            }
                         }
                         else break;
                     }
                 }
+                //Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
             }
-
-            foreach (Thing thing in targetPartsWithId.Values)
-            {
-                CompModularizationWeapon comp = thing;
-                if (!(comp?.Props.setRandomPartWhenCreate ?? true))
-                {
-                    comp?.SetPartToRandom();
-                }
-            }
-            ApplyTargetPart(IntVec3.Zero, null);
-            UsingTargetPart = prevUsingTargetPart;
+            //Console.WriteLine($"====================================   {parent}.SetPartToRandom End   ====================================");
+            SwapTargetPart();
+            ClearTargetPart();
         }
 
 
@@ -445,13 +449,11 @@ namespace RW_ModularizationWeapon
                     foreach (string id in ChildNodes.Keys)
                     {
                         Thing part = ChildNodes[id];
-                        bool prevUsingTargetPart = UsingTargetPart;
-                        UsingTargetPart = false;
                         SetTargetPart(id, null);
-                        ApplyTargetPart(IntVec3.Zero, null);
-                        UsingTargetPart = prevUsingTargetPart;
                         yield return part;
                     }
+                    SwapTargetPart();
+                    ClearTargetPart();
                 }
                 return Ingredients(result);
             }
@@ -520,6 +522,92 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
+        public void MarkTargetPartChanged()
+        {
+            targetPartChanged = true;
+
+            Map map = parent.MapHeld;
+            if (map != null &&
+                CombatExtended_CompAmmoUser != null &&
+                CombatExtended_CompAmmoUser_currentAmmoInt != null &&
+                CombatExtended_CompAmmoUser_CurMagCount_get != null &&
+                CombatExtended_CompAmmoUser_CurMagCount_set != null
+                )
+            {
+
+                ThingComp currentComp = cachedThingComps.Find(x => CombatExtended_CompAmmoUser.IsAssignableFrom(x.GetType()));
+                if (currentComp != null)
+                {
+                    ThingDef def = CombatExtended_CompAmmoUser_currentAmmoInt(currentComp);
+                    int count = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(currentComp, null);
+                    if (def != null && count > 0)
+                    {
+                        Thing thing = ThingMaker.MakeThing(def, null);
+                        thing.stackCount = count;
+                        CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(currentComp, new object[] { 0 });
+                        GenThing.TryDropAndSetForbidden(thing, parent.PositionHeld, map, ThingPlaceMode.Near, out _, false);
+                    }
+                }
+            }
+            cachedThingComps.Clear();
+            cachedCompProperties.Clear();
+            statOffsetCache_TargetPart.Clear();
+            statMultiplierCache_TargetPart.Clear();
+            toolsCache_TargetPart.Clear();
+            verbPropertiesCache_TargetPart.Clear();
+        }
+
+        /// <summary>
+        /// Active method for testing `targetPartChanged`
+        /// </summary>
+        /// <returns>`targetPartChanged` of target child</returns>
+        private bool CheckAndSetTargetCache()
+        {
+            bool result = false;
+            foreach (string id in this.PartIDs)
+                if ((((CompModularizationWeapon)GetTargetPart(id).Thing)?.CheckAndSetTargetCache() ?? false) || targetPartChanged)
+                    result = true;
+            if(result) MarkTargetPartChanged();
+            return result;
+        }
+
+
+        private bool CheckTargetVaild()
+        {
+            bool result = true;
+            foreach (string id in this.PartIDs)
+            {
+                if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
+                {
+                    if (target.HasThing && target.Thing.holdingOwner != null)
+                    {
+                        if (target.Thing.Spawned && parent.MapHeld != null && target.Thing.Map == parent.MapHeld) target.Thing.DeSpawn();
+                        else
+                        {
+                            targetPartChanged = true;
+                            targetPartsWithId.Remove(id);
+                            result = false;
+                            continue;
+                        }
+                    }
+                    if (NodeProccesser.AllowNode(target.Thing, id))
+                    {
+                        result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
+                    }
+                    else
+                    {
+                        targetPartChanged = true;
+                        targetPartsWithId.Remove(id);
+                        result = false;
+                    }
+                }
+                else
+                {
+                    result = (((CompModularizationWeapon)ChildNodes[id])?.CheckTargetVaild() ?? true) && result;
+                }
+            }
+            return result;
+        }
 
         protected override bool PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds)
         {
@@ -527,69 +615,43 @@ namespace RW_ModularizationWeapon
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
-
-            if (!usingTargetPartChange || TargetPartChanged)
-            {
-                cachedThingComps.Clear();
-                cachedCompProperties.Clear();
-                statOffsetCache.Clear();
-                statMultiplierCache.Clear();
-                statOffsetCache_TargetPart.Clear();
-                statMultiplierCache_TargetPart.Clear();
-                toolsCache.Clear();
-                toolsCache_TargetPart.Clear();
-                verbPropertiesCache.Clear();
-                verbPropertiesCache_TargetPart.Clear();
-            }
-
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
-            if (usingTargetPartChange)
+            if (RootPart == this)
             {
-                foreach (string id in this.PartIDs)
-                {
-
-                    if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target)) continue;
-
-                    Thing prev = ChildNodes[id];
-                    if (!targetPartsHoldingOwnerWithId.TryGetValue(id, out ThingOwner owner) && !usingTargetPart)
-                    {
-                        owner = target.Thing?.holdingOwner;
-                        targetPartsHoldingOwnerWithId.Add(id, owner);
-                    }
-
-                    //Log.Message($"{id} : {prev}; target : {target}; owner : {owner}");
-
-                    //Swap
-                    if (!usingTargetPart && target.Thing != null) owner?.Remove(target.Thing);
-                    targetPartsWithId[id] = prev;
-                    ChildNodes[id] = target.Thing;
-                    if (usingTargetPart && prev != null) owner?.TryAdd(prev, false);
-
-                    //Sync child swap state
-
-                    CompModularizationWeapon comp = prev;
-                    if (comp != null) comp.usingTargetPartChange = comp.usingTargetPart;
-
-                    CompChildNodeProccesser proccesser = prev;
-                    if (proccesser != null) proccesser.NeedUpdate = true;
-                }
+                while (!CheckTargetVaild()) continue;
+                CheckAndSetTargetCache();
             }
-
-            foreach (Thing thing in ChildNodes.Values)
+            //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
+            foreach (string id in this.PartIDs)
             {
-                CompModularizationWeapon comp = thing;
-                if (comp != null)
+                //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
+                CompChildNodeProccesser proccesser;
+                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                 {
-                    comp.usingTargetPartChange = 
-                        (usingTargetPartChange && comp.usingTargetPart == usingTargetPart) ||
-                        (!usingTargetPartChange && comp.usingTargetPart != usingTargetPart);
+                    proccesser = ChildNodes[id];
+                    if (proccesser != null) proccesser.NeedUpdate = true;
+                    continue;
                 }
-                CompChildNodeProccesser proccesser = thing;
+
+                Thing prev = ChildNodes[id];
+                ChildNodes[id] = target.Thing;
+                targetPartsWithId[id] = prev;
+
+                //Sync child swap state
+
+                proccesser = prev;
                 if (proccesser != null)
                 {
-                    proccesser.NeedUpdate = true;
+                    proccesser.ResetVerbs();
+                    proccesser.ResetRenderedTexture();
                 }
+
+                proccesser = target.Thing;
+                if (proccesser != null) proccesser.NeedUpdate = true;
             }
+
+            //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
+            targetPartChanged = false;
             return false;
         }
 
@@ -600,28 +662,38 @@ namespace RW_ModularizationWeapon
             List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
             List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
             List<ThingComp> allComps = parent.AllComps;
+            this.cachedThingComps.Clear();
+            this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
+            allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
+            this.cachedCompProperties.Clear();
+            this.cachedCompProperties.AddRange(from x in allComps select x.props);
 
-            if (usingTargetPartChange)
-            {
-                this.usingTargetPart = !this.usingTargetPart;
-                this.cachedThingComps.Clear();
-                this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
-                allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
-                this.cachedCompProperties.Clear();
-                this.cachedCompProperties.AddRange(from x in allComps select x.props);
-            }
-            else
-            {
-                cachedThingComps.Clear();
-                cachedCompProperties.Clear();
-                //this.cachedThingComps.Clear();
-                //this.cachedCompProperties.Clear();
-                allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
-            }
+            Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
+            this.statOffsetCache.Clear();
+            this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
+            this.statOffsetCache_TargetPart.Clear();
+            this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
+
+            Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
+            this.statMultiplierCache.Clear();
+            this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
+            this.statMultiplierCache_TargetPart.Clear();
+            this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
+
+            Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>(this.toolsCache);
+            this.toolsCache.Clear();
+            this.toolsCache.AddRange(this.toolsCache_TargetPart);
+            this.toolsCache_TargetPart.Clear();
+            this.toolsCache_TargetPart.AddRange(toolsCache);
+
+            Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache);
+            this.verbPropertiesCache.Clear();
+            this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
+            this.verbPropertiesCache_TargetPart.Clear();
+            this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+
 
             NeedUpdate = false;
-
-
             List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
 
             for (int i = 0; i < allComps.Count; i++)
@@ -636,8 +708,16 @@ namespace RW_ModularizationWeapon
                 {
                     try
                     {
-                        if (Props.compPropertiesCreateInstanceCompType.Contains(type)) comp = (ThingComp)Activator.CreateInstance(type);
-                        comp.parent = parent;
+                        if (Props.compPropertiesCreateInstanceCompType.Contains(type))
+                        {
+                            if(this.cachedThingComps.Find(x=>x.GetType() == type) == null)
+                            {
+                                this.cachedThingComps.Add(comp);
+                                this.cachedCompProperties.RemoveAll(x => x.compClass == type);
+                            }
+                            comp = (ThingComp)Activator.CreateInstance(type);
+                            comp.parent = parent;
+                        }
                         if (useCache)
                         {
                             if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
@@ -692,11 +772,51 @@ namespace RW_ModularizationWeapon
                 //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
-            TargetPartChanged = false;
-            //Log.Message($"{eventName} : {costomEventInfo}");
-            usingTargetPartChange = false;
+
+            Map map = parent.MapHeld;
+            if(map != null)
+            {
+                foreach (LocalTargetInfo info in targetPartsWithId.Values)
+                {
+                    if(info.HasThing)
+                    {
+                        int index = map.cellIndices.CellToIndex(info.Thing.Position);
+                        if (index < map.cellIndices.NumGridCells && index >= 0)
+                        {
+                            info.Thing.SpawnSetup(map, false);
+                        }
+                    }
+                }
+            }
             return false;
         }
+
+
+        private void Private_SetChildPostion()
+        {
+            IntVec3 pos = parent.PositionHeld;
+            foreach (Thing thing in ChildNodes.Values)
+            {
+                thing.Position = pos;
+                ((CompModularizationWeapon)thing)?.Private_SetChildPostion();
+            }
+        }
+
+
+        public void SetChildPostion() => RootPart.Private_SetChildPostion();
+
+
+        private void Private_SetChildPostionInvalid()
+        {
+            foreach (Thing thing in ChildNodes.Values)
+            {
+                thing.Position = IntVec3.Invalid;
+                ((CompModularizationWeapon)thing)?.Private_SetChildPostionInvalid();
+            }
+        }
+
+
+        public void SetChildPostionInvalid() => RootPart.Private_SetChildPostionInvalid();
 
 
         internal static Mesh ReindexedMesh(Mesh meshin)
@@ -812,10 +932,7 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<Type, List<Tool>> toolsCache_TargetPart = new Dictionary<Type, List<Tool>>();
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache_TargetPart = new Dictionary<Type, List<VerbProperties>>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
-        private Dictionary<string, ThingOwner> targetPartsHoldingOwnerWithId = new Dictionary<string, ThingOwner>();
-        private bool usingTargetPart = false;
         private bool targetPartChanged = false;
-        private bool usingTargetPartChange = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
@@ -856,6 +973,8 @@ namespace RW_ModularizationWeapon
         public CompProperties_ModularizationWeapon()
         {
             compClass = typeof(CompModularizationWeapon);
+            if (CombatExtended_CompAmmoUser != null) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompAmmoUser);
+            if (CombatExtended_CompFireModes != null) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompFireModes);
         }
 
         /// <summary>
@@ -1633,5 +1752,8 @@ namespace RW_ModularizationWeapon
         /// material cache of `PartTexPath`
         /// </summary>
         private Texture2D partTexCache;
+
+        private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
+        private static Type CombatExtended_CompFireModes = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompFireModes");
     }
 }
