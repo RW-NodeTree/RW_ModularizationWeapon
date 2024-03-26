@@ -69,6 +69,19 @@ namespace RW_ModularizationWeapon
             }
         }
 
+        public bool Occupyed 
+        {
+            get
+            {
+                if (Props.attachmentProperties.Count <= 0) return false;
+                return occupyed;
+            }
+            set
+            {
+                if (Props.attachmentProperties.Count > 0) occupyed = value;
+            }
+        }
+
         static CompModularizationWeapon()
         {
             if(CombatExtended_CompAmmoUser != null)
@@ -86,8 +99,8 @@ namespace RW_ModularizationWeapon
 
         public override void PostPostMake()
         {
-            if (Props.setRandomPartWhenCreate) LongEventHandler.ExecuteWhenFinished(SetPartToRandom);
-            else LongEventHandler.ExecuteWhenFinished(SetPartToDefault);
+            if (Props.setRandomPartWhenCreate) SetPartToRandom();
+            else SetPartToDefault();
         }
 
 
@@ -95,6 +108,14 @@ namespace RW_ModularizationWeapon
         {
             base.PostExposeData();
             Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
+            if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            {
+                foreach(LocalTargetInfo targetInfo in targetPartsWithId.Values)
+                {
+                    CompModularizationWeapon part = targetInfo.Thing;
+                    if (part != null) part.Occupyed = true;
+                }
+            }
             //if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
         }
 
@@ -307,9 +328,10 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool AllowPart(Thing part, string id = null)
+        public bool AllowPart(Thing part, string id = null, bool checkOccupy = true)
         {
             if (!PartIDs.Contains(id)) return false;
+            if (part == ChildNodes[id]) return true;
             WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
@@ -318,6 +340,7 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = part;
                 if (comp != null)
                 {
+                    if (checkOccupy && comp.Occupyed) return false;
                     for (int i = 0; i < ChildNodes.Count; i++)
                     {
                         if (comp.Props.disallowedOtherPart.Allows(ChildNodes[i]))
@@ -343,7 +366,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool AllowNode(Thing node, string id = null) => AllowPart(node, id);
+        protected override bool AllowNode(Thing node, string id = null) => AllowPart(node, id,false);
 
 
         public void SetPartToDefault()
@@ -368,8 +391,11 @@ namespace RW_ModularizationWeapon
                     comp?.SetPartToDefault();
                 }
             }
-            SwapTargetPart();
-            ClearTargetPart();
+            if (!Occupyed)
+            {
+                SwapTargetPart();
+                ClearTargetPart();
+            }
         }
 
 
@@ -428,9 +454,20 @@ namespace RW_ModularizationWeapon
                 }
                 //Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
             }
+            foreach (Thing thing in targetPartsWithId.Values)
+            {
+                CompModularizationWeapon comp = thing;
+                if (comp?.Props.setRandomPartWhenCreate ?? false)
+                {
+                    comp?.SetPartToRandom();
+                }
+            }
             //Console.WriteLine($"====================================   {parent}.SetPartToRandom End   ====================================");
-            SwapTargetPart();
-            ClearTargetPart();
+            if (!Occupyed)
+            {
+                SwapTargetPart();
+                ClearTargetPart();
+            }
         }
 
 
@@ -522,9 +559,8 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public void MarkTargetPartChanged()
+        private void MarkTargetPartChanged()
         {
-            targetPartChanged = true;
 
             Map map = parent.MapHeld;
             if (map != null &&
@@ -563,12 +599,11 @@ namespace RW_ModularizationWeapon
         /// <returns>`targetPartChanged` of target child</returns>
         private bool CheckAndSetTargetCache()
         {
-            bool result = false;
             foreach (string id in this.PartIDs)
-                if ((((CompModularizationWeapon)GetTargetPart(id).Thing)?.CheckAndSetTargetCache() ?? false) || targetPartChanged)
-                    result = true;
-            if(result) MarkTargetPartChanged();
-            return result;
+                if (((CompModularizationWeapon)GetTargetPart(id).Thing)?.CheckAndSetTargetCache() ?? false)
+                    targetPartChanged = true;
+            if (targetPartChanged) MarkTargetPartChanged();
+            return targetPartChanged;
         }
 
 
@@ -584,8 +619,7 @@ namespace RW_ModularizationWeapon
                         if (target.Thing.Spawned && parent.MapHeld != null && target.Thing.Map == parent.MapHeld) target.Thing.DeSpawn();
                         else
                         {
-                            targetPartChanged = true;
-                            targetPartsWithId.Remove(id);
+                            SetTargetPart(id, ChildNodes[id]);
                             result = false;
                             continue;
                         }
@@ -596,8 +630,7 @@ namespace RW_ModularizationWeapon
                     }
                     else
                     {
-                        targetPartChanged = true;
-                        targetPartsWithId.Remove(id);
+                        SetTargetPart(id, ChildNodes[id]);
                         result = false;
                     }
                 }
@@ -615,12 +648,14 @@ namespace RW_ModularizationWeapon
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
+            CompModularizationWeapon root = RootPart;
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
-            if (RootPart == this)
+            if (root == this)
             {
                 while (!CheckTargetVaild()) continue;
                 CheckAndSetTargetCache();
             }
+            if (root.Occupyed) return false;
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             foreach (string id in this.PartIDs)
             {
@@ -635,7 +670,7 @@ namespace RW_ModularizationWeapon
 
                 Thing prev = ChildNodes[id];
                 ChildNodes[id] = target.Thing;
-                targetPartsWithId[id] = prev;
+                SetTargetPart(id, prev);
 
                 //Sync child swap state
 
@@ -658,7 +693,7 @@ namespace RW_ModularizationWeapon
 
         protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
-
+            if (RootPart.Occupyed) return false;
             List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
             List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
             List<ThingComp> allComps = parent.AllComps;
@@ -933,6 +968,7 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache_TargetPart = new Dictionary<Type, List<VerbProperties>>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private bool targetPartChanged = false;
+        private bool occupyed = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");

@@ -19,14 +19,23 @@ namespace RW_ModularizationWeapon
             //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
             if (id != null && AllowPart(targetInfo.Thing, id))
             {
+
                 //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
                 Thing prevPart = ChildNodes[id];
                 //targetOwner?.Remove(targetInfo.Thing);
                 //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
+                CompModularizationWeapon
+                part = GetTargetPart(id).Thing;
+                if (part != null) part.Occupyed = false;
                 if (targetInfo.Thing == prevPart) targetPartsWithId.Remove(id);
-                else targetPartsWithId.SetOrAdd(id, targetInfo);
+                else
+                {
+                    targetPartsWithId.SetOrAdd(id, targetInfo);
+                    part = targetInfo.Thing;
+                    if (part != null) part.Occupyed = true;
+                }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
-                MarkTargetPartChanged();
+                targetPartChanged = true;
                 return true;
             }
             return false;
@@ -40,8 +49,11 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            RootNode.NeedUpdate = true;
-            NodeProccesser.UpdateNode();
+            if(RootPart == this && !Occupyed)
+            {
+                NeedUpdate = true;
+                NodeProccesser.UpdateNode();
+            }
         }
 
         private void Private_ClearTargetPart()
@@ -56,8 +68,8 @@ namespace RW_ModularizationWeapon
             }
             if (targetPartsWithId.Count > 0)
             {
-                targetPartsWithId.Clear();
-                MarkTargetPartChanged();
+                List<string> ids = new List<string>(targetPartsWithId.Keys);
+                foreach(string id in ids) SetTargetPart(id, ChildNodes[id]);
             }
         }
         public void ClearTargetPart() => RootPart.Private_ClearTargetPart();

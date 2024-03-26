@@ -54,8 +54,9 @@ namespace RW_ModularizationWeapon
                         {
                             Pawn actor = toil.actor;
                             Job job = actor.CurJob;
-                            targetPartsWithId[id] = job.GetTarget(hauledThingIndex);
-                            targetPartsWithId[id].Thing.Position = job.GetTarget(craftingTable).Cell;
+                            target = job.GetTarget(hauledThingIndex);
+                            SetTargetPart(id, target);
+                            target.Thing.Position = job.GetTarget(craftingTable).Cell;
                             actor.Reserve(targetPartsWithId[id], job, 1, 1);
                         };
                         yield return toil;
