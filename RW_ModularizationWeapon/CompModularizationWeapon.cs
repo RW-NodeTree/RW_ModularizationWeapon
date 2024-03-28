@@ -371,28 +371,28 @@ namespace RW_ModularizationWeapon
 
         public void SetPartToDefault()
         {
-            foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+            if (AllowSwap)
             {
-                ThingDef def = properties.defultThing;
-                if (def != null)
+                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
-                    Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                    thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                    SetTargetPart(properties.id, thing);
+                    ThingDef def = properties.defultThing;
+                    if (def != null)
+                    {
+                        Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                        thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
+                        SetTargetPart(properties.id, thing);
+                    }
+                    else SetTargetPart(properties.id, null);
+                    ChildNodes[properties.id]?.Destroy();
                 }
-                else SetTargetPart(properties.id, null);
-                ChildNodes[properties.id]?.Destroy();
-            }
-            foreach (Thing thing in targetPartsWithId.Values)
-            {
-                CompModularizationWeapon comp = thing;
-                if (comp?.Props.setRandomPartWhenCreate ?? false)
+                foreach (Thing thing in targetPartsWithId.Values)
                 {
-                    comp?.SetPartToDefault();
+                    CompModularizationWeapon comp = thing;
+                    if (comp?.Props.setRandomPartWhenCreate ?? false)
+                    {
+                        comp?.SetPartToDefault();
+                    }
                 }
-            }
-            if (!Occupyed)
-            {
                 SwapTargetPart();
                 ClearTargetPart();
             }
@@ -402,69 +402,69 @@ namespace RW_ModularizationWeapon
         public void SetPartToRandom()
         {
 
-            //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
-            foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
-            {
-                if(properties.randomThingDefWeights.NullOrEmpty())
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        int j = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
-                        ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
-                        if (def != null)
-                        {
-                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
-                            if (SetTargetPart(properties.id, thing))
-                            {
-                                ChildNodes[properties.id]?.Destroy();
-                                break;
-                            }
-                        }
-                        else break;
-                    }
-                }
-                else
-                {
-                    float count = 0;
-                    properties.randomThingDefWeights.ForEach(x => count += x.count);
-                    for (int i = 0; i < 3; i++)
-                    {
-                        float j = Rand.Range(0, count);
-                        float k = 0;
-                        ThingDef def = null;
-                        foreach(ThingDefCountClass weight in properties.randomThingDefWeights)
-                        {
-                            float next = k + weight.count;
-                            if (k <= j && next >= j) def = weight.thingDef;
-                            k = next;
-                        }
-                        if (def != null)
-                        {
-                            Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                            thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
-                            if (SetTargetPart(properties.id, thing))
-                            {
-                                ChildNodes[properties.id]?.Destroy();
-                                break;
-                            }
-                        }
-                        else break;
-                    }
-                }
-                //Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
-            }
-            foreach (Thing thing in targetPartsWithId.Values)
-            {
-                CompModularizationWeapon comp = thing;
-                if (comp?.Props.setRandomPartWhenCreate ?? false)
-                {
-                    comp?.SetPartToRandom();
-                }
-            }
             //Console.WriteLine($"====================================   {parent}.SetPartToRandom End   ====================================");
-            if (!Occupyed)
+            if (AllowSwap)
             {
+                //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
+                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                {
+                    if (properties.randomThingDefWeights.NullOrEmpty())
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int j = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + 1) : properties.filter.AllowedDefCount);
+                            ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
+                            if (def != null)
+                            {
+                                Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                                thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
+                                if (SetTargetPart(properties.id, thing))
+                                {
+                                    ChildNodes[properties.id]?.Destroy();
+                                    break;
+                                }
+                            }
+                            else break;
+                        }
+                    }
+                    else
+                    {
+                        float count = 0;
+                        properties.randomThingDefWeights.ForEach(x => count += x.count);
+                        for (int i = 0; i < 3; i++)
+                        {
+                            float j = Rand.Range(0, count);
+                            float k = 0;
+                            ThingDef def = null;
+                            foreach (ThingDefCountClass weight in properties.randomThingDefWeights)
+                            {
+                                float next = k + weight.count;
+                                if (k <= j && next >= j) def = weight.thingDef;
+                                k = next;
+                            }
+                            if (def != null)
+                            {
+                                Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
+                                thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
+                                if (SetTargetPart(properties.id, thing))
+                                {
+                                    ChildNodes[properties.id]?.Destroy();
+                                    break;
+                                }
+                            }
+                            else break;
+                        }
+                    }
+                    //Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
+                }
+                foreach (Thing thing in targetPartsWithId.Values)
+                {
+                    CompModularizationWeapon comp = thing;
+                    if (comp?.Props.setRandomPartWhenCreate ?? false)
+                    {
+                        comp?.SetPartToRandom();
+                    }
+                }
                 SwapTargetPart();
                 ClearTargetPart();
             }
@@ -477,7 +477,7 @@ namespace RW_ModularizationWeapon
             {
                 SetPartToDefault();
             }
-            else if(invokeSource == RecipeInvokeSource.ingredients)
+            else if(invokeSource == RecipeInvokeSource.ingredients && AllowSwap)
             {
                 IEnumerable<Thing> Ingredients(IEnumerable<Thing> org)
                 {
@@ -607,7 +607,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        private bool CheckTargetVaild()
+        private bool CheckTargetVaild(bool deSpawn)
         {
             bool result = true;
             foreach (string id in this.PartIDs)
@@ -616,7 +616,10 @@ namespace RW_ModularizationWeapon
                 {
                     if (target.HasThing && target.Thing.holdingOwner != null)
                     {
-                        if (target.Thing.Spawned && parent.MapHeld != null && target.Thing.Map == parent.MapHeld) target.Thing.DeSpawn();
+                        if (target.Thing.Spawned && parent.MapHeld != null && target.Thing.Map == parent.MapHeld)
+                        {
+                            if (deSpawn) target.Thing.DeSpawn();
+                        }
                         else
                         {
                             SetTargetPart(id, ChildNodes[id]);
@@ -626,7 +629,7 @@ namespace RW_ModularizationWeapon
                     }
                     if (NodeProccesser.AllowNode(target.Thing, id))
                     {
-                        result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
+                        result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild(deSpawn) ?? true) && result;
                     }
                     else
                     {
@@ -636,7 +639,7 @@ namespace RW_ModularizationWeapon
                 }
                 else
                 {
-                    result = (((CompModularizationWeapon)ChildNodes[id])?.CheckTargetVaild() ?? true) && result;
+                    result = (((CompModularizationWeapon)ChildNodes[id])?.CheckTargetVaild(deSpawn) ?? true) && result;
                 }
             }
             return result;
@@ -649,13 +652,14 @@ namespace RW_ModularizationWeapon
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
             CompModularizationWeapon root = RootPart;
+            bool occupyed = root.Occupyed;
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
             if (root == this)
             {
-                while (!CheckTargetVaild()) continue;
+                while (!CheckTargetVaild(!occupyed)) continue;
                 CheckAndSetTargetCache();
             }
-            if (root.Occupyed) return false;
+            if (occupyed) return false;
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             foreach (string id in this.PartIDs)
             {

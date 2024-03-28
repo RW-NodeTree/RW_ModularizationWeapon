@@ -51,6 +51,7 @@ namespace RW_ModularizationWeapon.AI
             CompModularizationWeapon comp = TargetB.Thing;
             if (comp != null)
             {
+                if (!comp.AllowSwap) this.EndJobWith(JobCondition.Incompletable);
                 Toil toil = new Toil();
                 toil.initAction = delegate ()
                 {

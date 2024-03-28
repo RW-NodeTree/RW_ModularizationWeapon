@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using Verse;
 
 namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
+        public bool AllowSwap { get => this.RootPart == this && !this.Occupyed; }
+
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
@@ -49,7 +52,7 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            if(RootPart == this && !Occupyed)
+            if(AllowSwap)
             {
                 NeedUpdate = true;
                 NodeProccesser.UpdateNode();

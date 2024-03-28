@@ -121,7 +121,7 @@ namespace RW_ModularizationWeapon.UI
                     in pawn.Map.listerThings.AllThings
                     where
                         (x?.Spawned ?? false) &&
-                        ((CompModularizationWeapon)x) != null &&
+                        (((CompModularizationWeapon)x)?.AllowSwap ?? false) &&
                         creaftingTable.Props.filter.Allows(x) &&
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
