@@ -68,47 +68,64 @@ namespace RW_ModularizationWeapon
             Text.WordWrap = false;
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.MiddleLeft;
+            bool isSub = DrawPos.x > 0;
+            bool colorSelecter = false;
+            float halfBlockHeight = BlockHeight / 2;
+            float lastY = currentPos.y;
             foreach ((string id, Thing thing, WeaponAttachmentProperties properties) in this)
             {
                 if (id != null)
                 {
-                    if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
+                    bool opend = GetChildTreeViewOpend(id);
+                    bool inRenderingRange = currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight;
+                    float next = currentPos.y;
+                    CompModularizationWeapon comp = thing;
+                    if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
-                        try
+                        if (opend)
                         {
-                            if (Selected?.Contains((id, this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
-                            else if (GetChildTreeViewOpend(id)) Widgets.DrawHighlightSelected(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));
-                            Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));//hover
-                        }
-                        catch(Exception ex)
-                        {
-                            Log.Error(ex.ToString());
+                            next += comp.DrawChildTreeView(
+                                currentPos + Vector2.one * BlockHeight,
+                                ScrollPos,
+                                BlockHeight,
+                                ContainerWidth - BlockHeight,
+                                ContainerHeight,
+                                openEvent,
+                                closeEvent,
+                                iconEvent,
+                                Selected
+                            );
                         }
                     }
-
-                    bool opend = GetChildTreeViewOpend(id);
-
-                    if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
+                    else SetChildTreeViewOpend(id, false);
+                    if (inRenderingRange)
                     {
-                        try
+                        Color color = GUI.color;
+                        if (isSub)
                         {
-                            if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                            GUI.color = Widgets.SeparatorLineColor;
+                            Widgets.DrawLineHorizontal(currentPos.x - halfBlockHeight, currentPos.y + halfBlockHeight, halfBlockHeight);
+                            if(currentPos == DrawPos)
+                                Widgets.DrawLineVertical(currentPos.x - halfBlockHeight, lastY, halfBlockHeight);
+                            else
+                                Widgets.DrawLineVertical(currentPos.x - halfBlockHeight, lastY + halfBlockHeight, currentPos.y - lastY);
+                        }
+                        if (Selected?.Contains((id, this)) ?? false) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        else if (opend) Widgets.DrawBoxSolidWithOutline(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), new Color32(255, 239, 127, 45), new Color32(255, 239, 127, 68));
+                        else
+                        {
+                            if (colorSelecter) Widgets.DrawBoxSolid(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), Widgets.SeparatorLineColor * new Color(0.75f, 0.75f, 0.75f, 1f));
+                            else Widgets.DrawBoxSolid(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight), Widgets.SeparatorLineColor * new Color(0.5f, 0.5f, 0.5f, 1f));
+                            if (isSub)
                             {
-                                opend = !opend;
-                                if (opend) openEvent?.Invoke(id, thing, this);
-                                else closeEvent?.Invoke(id, thing, this);
-                                SetChildTreeViewOpend(id, opend);
+                                GUI.color = Widgets.SeparatorLineColor;
+                                Widgets.DrawLineVertical(currentPos.x, currentPos.y, BlockHeight);
                             }
                         }
-                        catch(Exception ex)
-                        {
-                            Log.Error(ex.ToString());
-                        }
-                    }
-                    if (thing != null)
-                    {
-                        CompModularizationWeapon comp = thing;
-                        if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
+                        Widgets.DrawHighlightIfMouseover(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight));//hover
+                        GUI.color = color;
+
+                        if (thing != null)
                         {
                             ThingStyleDef styleDef = thing.StyleDef;
                             CompChildNodeProccesser comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.ParentProccesser : null;
@@ -120,6 +137,7 @@ namespace RW_ModularizationWeapon
                             try
                             {
                                 Widgets.ThingIcon(new Rect(currentPos.x + 1, currentPos.y + 1, BlockHeight - 1, BlockHeight - 2), thing);
+                                Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y + 1, ContainerWidth - BlockHeight - 1, BlockHeight - 2), $"{properties.Name} : {thing.Label}");
                             }
                             catch (Exception ex)
                             {
@@ -130,63 +148,38 @@ namespace RW_ModularizationWeapon
                                 thing.holdingOwner = comp_targetModeParent.ChildNodes;
                                 comp.NodeProccesser.ResetRenderedTexture();
                             }
-                            Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y + 1, ContainerWidth - BlockHeight - 1, BlockHeight - 2), $"{properties.Name} : {thing.Label}");
-
-                            if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight)))
-                            {
-                                try
-                                {
-                                    iconEvent?.Invoke(id, thing, this);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Log.Error(ex.ToString());
-                                }
-                            }
                         }
-                        if (!(comp?.Props.attachmentProperties).NullOrEmpty())
-                        {
-                            if (opend)
-                            {
-                                currentPos.y += comp.DrawChildTreeView(
-                                    currentPos + Vector2.one * BlockHeight,
-                                    ScrollPos,
-                                    BlockHeight,
-                                    ContainerWidth - BlockHeight,
-                                    ContainerHeight,
-                                    openEvent,
-                                    closeEvent,
-                                    iconEvent,
-                                    Selected
-                                );
-                            }
-                        }
-                        else if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight && Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                        else
                         {
                             try
                             {
-                                openEvent?.Invoke(id, thing, this);
+                                Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight), properties.UITexture, 1);
+                                Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight), properties.Name);
                             }
                             catch (Exception ex)
                             {
                                 Log.Error(ex.ToString());
                             }
                         }
-                    }
-                    else if (currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight)
-                    {
                         try
                         {
-                            Widgets.DrawTextureFitted(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight), properties.UITexture, 1);
-                            Widgets.Label(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight), properties.Name);
-                            if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, ContainerWidth, BlockHeight))) iconEvent?.Invoke(id, thing, this);
+                            if (Widgets.ButtonInvisible(new Rect(currentPos.x, currentPos.y, BlockHeight, BlockHeight))) iconEvent?.Invoke(id, thing, this);
+                            if (Widgets.ButtonInvisible(new Rect(currentPos.x + BlockHeight, currentPos.y, ContainerWidth - BlockHeight, BlockHeight)))
+                            {
+                                opend = !opend;
+                                if (opend) openEvent?.Invoke(id, thing, this);
+                                else closeEvent?.Invoke(id, thing, this);
+                                SetChildTreeViewOpend(id, opend);
+                            }
                         }
                         catch (Exception ex)
                         {
                             Log.Error(ex.ToString());
                         }
                     }
-                    currentPos.y += BlockHeight;
+                    lastY = currentPos.y;
+                    currentPos.y = next + BlockHeight;
+                    colorSelecter = !colorSelecter;
                 }
             }
             Text.WordWrap = cacheWordWrap;
