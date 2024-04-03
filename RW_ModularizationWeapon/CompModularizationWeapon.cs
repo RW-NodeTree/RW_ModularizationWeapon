@@ -165,8 +165,9 @@ namespace RW_ModularizationWeapon
 
         protected override List<(string, Thing, List<RenderInfo>)> PostDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic, Dictionary<string, object> cachedDataFromPerDrawSteep)
         {
-            Matrix4x4 scale = Matrix4x4.identity;
             MaterialRequest req;
+            Matrix4x4 scale = Matrix4x4.identity;
+            uint texScale = NodeProccesser.Props.TextureSizeFactor;
             Material material = graphic?.MatAt(rot, this.parent) ?? BaseContent.BadMat;
             if (MaterialPool.TryGetRequestForMat(material, out req)) req.mainTex = (Props.PartTexture == BaseContent.BadTex) ? material.mainTexture : Props.PartTexture;
             else req = new MaterialRequest()
@@ -242,6 +243,13 @@ namespace RW_ModularizationWeapon
                 {
                     if(properties != null)
                     {
+                        Matrix4x4 transfrom = properties.Transfrom;
+                        if (properties.postionInPixelSize)
+                        {
+                            transfrom.m03 *= texScale;
+                            transfrom.m13 *= texScale;
+                            transfrom.m23 *= texScale;
+                        }
                         for (int j = 0; j < renderInfos.Count; j++)
                         {
                             bool needTransToIdentity = (CompChildNodeProccesser)part == null;
@@ -259,7 +267,7 @@ namespace RW_ModularizationWeapon
                                     cache = matrix[k].GetRow(2);
                                     matrix[k].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
                                 }
-                                matrix[k] = properties.Transfrom * scale * matrix[k];
+                                matrix[k] = transfrom * scale * matrix[k];
                                 //matrix[k] = properties.Transfrom;
                             }
                         }

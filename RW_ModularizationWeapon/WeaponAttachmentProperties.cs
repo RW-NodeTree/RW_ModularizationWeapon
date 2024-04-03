@@ -232,6 +232,10 @@ namespace RW_ModularizationWeapon
         /// </summary>
         public bool notUseVerbProperties;
         /// <summary>
+        /// if is's **`true`**,the randering postion of this part will offset by the pixel scale
+        /// </summary>
+        public bool postionInPixelSize;
+        /// <summary>
         /// drawing weight of this attach point
         /// </summary>
         public int drawWeight;
