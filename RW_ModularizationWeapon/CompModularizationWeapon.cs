@@ -19,15 +19,9 @@ using RW_ModularizationWeapon.UI;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 using Verse;
-using Verse.AI;
-using Verse.Noise;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace RW_ModularizationWeapon
 {

@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using RimWorld;
+﻿using RimWorld;
 using RW_ModularizationWeapon.Tools;
 using RW_NodeTree;
 using System;

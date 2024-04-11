@@ -2,15 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using Verse.Noise;
 using Verse;
 using RimWorld.Planet;
 using System.Reflection;
-using static HarmonyLib.Code;
-using static Verse.Dialog_InfoCard;
 
 namespace RW_ModularizationWeapon.UI
 {
