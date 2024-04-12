@@ -572,7 +572,7 @@ namespace RW_ModularizationWeapon
                 CombatExtended_CompAmmoUser_CurMagCount_set != null
                 )
             {
-                Console.WriteLine(parent.PositionHeld);
+                //Console.WriteLine(parent.PositionHeld);
                 ThingComp currentComp = cachedThingComps.Find(x => CombatExtended_CompAmmoUser.IsAssignableFrom(x.GetType()));
                 if (currentComp != null)
                 {
