@@ -572,7 +572,7 @@ namespace RW_ModularizationWeapon
                 CombatExtended_CompAmmoUser_CurMagCount_set != null
                 )
             {
-
+                Console.WriteLine(parent.PositionHeld);
                 ThingComp currentComp = cachedThingComps.Find(x => CombatExtended_CompAmmoUser.IsAssignableFrom(x.GetType()));
                 if (currentComp != null)
                 {
@@ -700,14 +700,6 @@ namespace RW_ModularizationWeapon
         protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
             if (RootPart.Occupyed) return false;
-            List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
-            List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
-            List<ThingComp> allComps = parent.AllComps;
-            this.cachedThingComps.Clear();
-            this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
-            allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
-            this.cachedCompProperties.Clear();
-            this.cachedCompProperties.AddRange(from x in allComps select x.props);
 
             Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
             this.statOffsetCache.Clear();
@@ -736,25 +728,41 @@ namespace RW_ModularizationWeapon
 
             NeedUpdate = false;
             List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
-
+            
+            List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
+            List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
+            List<ThingComp> allComps = parent.AllComps;
+            this.cachedThingComps.Clear();
+            this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
+            allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
+            this.cachedCompProperties.Clear();
+            this.cachedCompProperties.AddRange(from x in allComps select x.props);
             for (int i = 0; i < allComps.Count; i++)
             {
                 ThingComp comp = allComps[i];
                 Type type = comp.GetType();
                 if (type == typeof(CompChildNodeProccesser) || type == typeof(CompModularizationWeapon)) continue;
+
                 CompProperties properties = cachedCompProperties.FirstOrDefault(x => x.compClass == type);
                 bool useCache = properties != null;
                 if (!useCache) properties = parent.def.comps.FirstOrDefault(x => x.compClass == type);
+
                 if (properties != null)
                 {
                     try
                     {
                         if (Props.compPropertiesCreateInstanceCompType.Contains(type))
                         {
-                            if(this.cachedThingComps.Find(x=>x.GetType() == type) == null)
+                            if (this.cachedThingComps.Find(x => x.GetType() == type) == null)
                             {
                                 this.cachedThingComps.Add(comp);
                                 this.cachedCompProperties.RemoveAll(x => x.compClass == type);
+                            }
+                            comp = cachedThingComps.Find(x => x.GetType() == type);
+                            if(comp != null)
+                            {
+                                allComps[i] = comp;
+                                continue;
                             }
                             comp = (ThingComp)Activator.CreateInstance(type);
                             comp.parent = parent;
@@ -771,7 +779,6 @@ namespace RW_ModularizationWeapon
                         //}
                         else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
                         allComps[i] = comp;
-                        //comp.props.LogAllField();
                     }
                     catch (Exception ex)
                     {
@@ -1015,8 +1022,6 @@ namespace RW_ModularizationWeapon
         public CompProperties_ModularizationWeapon()
         {
             compClass = typeof(CompModularizationWeapon);
-            if (CombatExtended_CompAmmoUser != null) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompAmmoUser);
-            if (CombatExtended_CompFireModes != null) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompFireModes);
         }
 
         /// <summary>
@@ -1081,6 +1086,8 @@ namespace RW_ModularizationWeapon
         /// <param name="parentDef">parent Def</param>
         public override void ResolveReferences(ThingDef parentDef)
         {
+            if (CombatExtended_CompAmmoUser != null && !compPropertiesCreateInstanceCompType.Contains(CombatExtended_CompAmmoUser)) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompAmmoUser);
+            if (CombatExtended_CompFireModes != null && !compPropertiesCreateInstanceCompType.Contains(CombatExtended_CompFireModes)) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompFireModes);
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
                 properties.ResolveReferences();
