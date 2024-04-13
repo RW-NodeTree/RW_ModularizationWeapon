@@ -1,0 +1,1166 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FieldReader&lt;T, TV&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FieldReader&lt;T, TV&gt;
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="RW_ModularizationWeapon.FieldReader`2">
+  
+  
+  <h1 id="RW_ModularizationWeapon_FieldReader_2" data-uid="RW_ModularizationWeapon.FieldReader`2" class="text-break">Class FieldReader&lt;T, TV&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>abstract type for instance calculation</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">FieldReader&lt;T, TV&gt;</span></div>
+      <div class="level2"><a class="xref" href="RW_ModularizationWeapon.FieldReaderBoolean-1.html">FieldReaderBoolean&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="RW_ModularizationWeapon.FieldReaderDigit-1.html">FieldReaderDigit&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="RW_ModularizationWeapon.FieldReaderFilt-1.html">FieldReaderFilt&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="RW_ModularizationWeapon.FieldReaderInstance-1.html">FieldReaderInstance&lt;T&gt;</a></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;</div>
+    <div><span class="xref">System.Collections.Generic.ICollection</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;&gt;</div>
+    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;&gt;</div>
+    <div><span class="xref">System.Collections.IEnumerable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="RW_ModularizationWeapon.html">RW_ModularizationWeapon</a></h6>
+  <h6><strong>Assembly</strong>: RW_ModularizationWeapon.dll</h6>
+  <h5 id="RW_ModularizationWeapon_FieldReader_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class FieldReader&lt;T, TV&gt; : IDictionary&lt;RuntimeFieldHandle, TV&gt;, ICollection&lt;KeyValuePair&lt;RuntimeFieldHandle, TV&gt;&gt;, IEnumerable&lt;KeyValuePair&lt;RuntimeFieldHandle, TV&gt;&gt;, IEnumerable</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>instance base type for calculation</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TV</span></td>
+        <td><p>instance properties base type for calculation</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Count.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Count%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L65">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Count_" data-uid="RW_ModularizationWeapon.FieldReader`2.Count*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Count" data-uid="RW_ModularizationWeapon.FieldReader`2.Count">Count</h4>
+  <div class="markdown level1 summary"><p>defined values count</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_DefaultValue.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.DefaultValue%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L43">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_DefaultValue_" data-uid="RW_ModularizationWeapon.FieldReader`2.DefaultValue*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_DefaultValue" data-uid="RW_ModularizationWeapon.FieldReader`2.DefaultValue">DefaultValue</h4>
+  <div class="markdown level1 summary"><p>default properties value, if this calculation instance containe field</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract TV DefaultValue { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TV</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_HasDefaultValue.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.HasDefaultValue%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L47">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_HasDefaultValue_" data-uid="RW_ModularizationWeapon.FieldReader`2.HasDefaultValue*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_HasDefaultValue" data-uid="RW_ModularizationWeapon.FieldReader`2.HasDefaultValue">HasDefaultValue</h4>
+  <div class="markdown level1 summary"><p>check default value of this instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool HasDefaultValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_IsReadOnly.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.IsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L67">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_IsReadOnly_" data-uid="RW_ModularizationWeapon.FieldReader`2.IsReadOnly*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_IsReadOnly" data-uid="RW_ModularizationWeapon.FieldReader`2.IsReadOnly">IsReadOnly</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsReadOnly { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Item_System_RuntimeFieldHandle_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Item(System.RuntimeFieldHandle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L53">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Item_" data-uid="RW_ModularizationWeapon.FieldReader`2.Item*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Item_System_RuntimeFieldHandle_" data-uid="RW_ModularizationWeapon.FieldReader`2.Item(System.RuntimeFieldHandle)">Item[RuntimeFieldHandle]</h4>
+  <div class="markdown level1 summary"><p>value of instance propertie on specific field for calculation</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract TV this[RuntimeFieldHandle key] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.RuntimeFieldHandle</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>specific field</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TV</span></td>
+        <td><p>specific field for calculation</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Keys.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Keys%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L57">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Keys_" data-uid="RW_ModularizationWeapon.FieldReader`2.Keys*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Keys" data-uid="RW_ModularizationWeapon.FieldReader`2.Keys">Keys</h4>
+  <div class="markdown level1 summary"><p>field container, defined what field will calculation</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract ICollection&lt;RuntimeFieldHandle&gt; Keys { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_UsedType.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.UsedType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L23">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_UsedType_" data-uid="RW_ModularizationWeapon.FieldReader`2.UsedType*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_UsedType" data-uid="RW_ModularizationWeapon.FieldReader`2.UsedType">UsedType</h4>
+  <div class="markdown level1 summary"><p>current using type</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Type UsedType { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Values.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Values%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L61">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Values_" data-uid="RW_ModularizationWeapon.FieldReader`2.Values*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Values" data-uid="RW_ModularizationWeapon.FieldReader`2.Values">Values</h4>
+  <div class="markdown level1 summary"><p>value container, defined what values of each <code>Keys</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract ICollection&lt;TV&gt; Values { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;TV&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Add_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1__.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Add(System.Collections.Generic.KeyValuePair%7BSystem.RuntimeFieldHandle%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L83">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Add_" data-uid="RW_ModularizationWeapon.FieldReader`2.Add*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Add_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1__" data-uid="RW_ModularizationWeapon.FieldReader`2.Add(System.Collections.Generic.KeyValuePair{System.RuntimeFieldHandle,`1})">Add(KeyValuePair&lt;RuntimeFieldHandle, TV&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Add(KeyValuePair&lt;RuntimeFieldHandle, TV&gt; item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;</td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Add_System_RuntimeFieldHandle__1_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Add(System.RuntimeFieldHandle%2C%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L69">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Add_" data-uid="RW_ModularizationWeapon.FieldReader`2.Add*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Add_System_RuntimeFieldHandle__1_" data-uid="RW_ModularizationWeapon.FieldReader`2.Add(System.RuntimeFieldHandle,`1)">Add(RuntimeFieldHandle, TV)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Add(RuntimeFieldHandle key, TV value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.RuntimeFieldHandle</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TV</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_CalcValue_System_Func__1__1_System_Reflection_FieldInfo__1___0_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.CalcValue(System.Func%7B%601%2C%601%2CSystem.Reflection.FieldInfo%2C%601%7D%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L133">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_CalcValue_" data-uid="RW_ModularizationWeapon.FieldReader`2.CalcValue*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_CalcValue_System_Func__1__1_System_Reflection_FieldInfo__1___0_" data-uid="RW_ModularizationWeapon.FieldReader`2.CalcValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`0)">CalcValue(Func&lt;TV, TV, FieldInfo, TV&gt;, T)</h4>
+  <div class="markdown level1 summary"><p>universal calculation, <code>FieldReader</code> with instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T CalcValue(Func&lt;TV, TV, FieldInfo, TV&gt; calc, T orginal)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TV, TV, <span class="xref">System.Reflection.FieldInfo</span>, TV&gt;</td>
+        <td><span class="parametername">calc</span></td>
+        <td><p>calculation function</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">orginal</span></td>
+        <td><p>instance for calculate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>instance after calculation</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_CalcValue_System_Func__1__1_System_Reflection_FieldInfo__1___1_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.CalcValue(System.Func%7B%601%2C%601%2CSystem.Reflection.FieldInfo%2C%601%7D%2C%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L114">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_CalcValue_" data-uid="RW_ModularizationWeapon.FieldReader`2.CalcValue*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_CalcValue_System_Func__1__1_System_Reflection_FieldInfo__1___1_" data-uid="RW_ModularizationWeapon.FieldReader`2.CalcValue(System.Func{`1,`1,System.Reflection.FieldInfo,`1},`1)">CalcValue(Func&lt;TV, TV, FieldInfo, TV&gt;, TV)</h4>
+  <div class="markdown level1 summary"><p>universal calculation, <code>FieldReader</code> with single value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FieldReader&lt;T, TV&gt; CalcValue(Func&lt;TV, TV, FieldInfo, TV&gt; calc, TV value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TV, TV, <span class="xref">System.Reflection.FieldInfo</span>, TV&gt;</td>
+        <td><span class="parametername">calc</span></td>
+        <td><p>calculation function</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TV</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>single value for calculate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.FieldReader-2.html">FieldReader</a>&lt;T, TV&gt;</td>
+        <td><p>after calculation <code>FieldReader</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_CalcValue__1_System_Func__1__1_System_Reflection_FieldInfo__1____0___0_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.CalcValue%60%601(System.Func%7B%601%2C%601%2CSystem.Reflection.FieldInfo%2C%601%7D%2C%60%600%2C%60%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L161">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_CalcValue_" data-uid="RW_ModularizationWeapon.FieldReader`2.CalcValue*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_CalcValue__1_System_Func__1__1_System_Reflection_FieldInfo__1____0___0_" data-uid="RW_ModularizationWeapon.FieldReader`2.CalcValue``1(System.Func{`1,`1,System.Reflection.FieldInfo,`1},``0,``0)">CalcValue&lt;TFR&gt;(Func&lt;TV, TV, FieldInfo, TV&gt;, TFR, TFR)</h4>
+  <div class="markdown level1 summary"><p>universal calculation, <code>FieldReader</code> with <code>FieldReader</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TFR CalcValue&lt;TFR&gt;(Func&lt;TV, TV, FieldInfo, TV&gt; calc, TFR a, TFR b)
+    where TFR : FieldReader&lt;T, TV&gt;, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TV, TV, <span class="xref">System.Reflection.FieldInfo</span>, TV&gt;</td>
+        <td><span class="parametername">calc</span></td>
+        <td><p>calculation function</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFR</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p><code>FieldReader</code> value a</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFR</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p><code>FieldReader</code> value b</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFR</span></td>
+        <td><p>after calculate <code>FieldReader</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFR</span></td>
+        <td><p>result type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Clear.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L71">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Clear_" data-uid="RW_ModularizationWeapon.FieldReader`2.Clear*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Clear" data-uid="RW_ModularizationWeapon.FieldReader`2.Clear">Clear()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Clear()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Clone.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Clone%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L79">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Clone_" data-uid="RW_ModularizationWeapon.FieldReader`2.Clone*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Clone" data-uid="RW_ModularizationWeapon.FieldReader`2.Clone">Clone()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract FieldReader&lt;T, TV&gt; Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.FieldReader-2.html">FieldReader</a>&lt;T, TV&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Contains_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1__.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Contains(System.Collections.Generic.KeyValuePair%7BSystem.RuntimeFieldHandle%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L85">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Contains_" data-uid="RW_ModularizationWeapon.FieldReader`2.Contains*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Contains_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1__" data-uid="RW_ModularizationWeapon.FieldReader`2.Contains(System.Collections.Generic.KeyValuePair{System.RuntimeFieldHandle,`1})">Contains(KeyValuePair&lt;RuntimeFieldHandle, TV&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(KeyValuePair&lt;RuntimeFieldHandle, TV&gt; item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;</td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_ContainsKey_System_RuntimeFieldHandle_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.ContainsKey(System.RuntimeFieldHandle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L73">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_ContainsKey_" data-uid="RW_ModularizationWeapon.FieldReader`2.ContainsKey*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_ContainsKey_System_RuntimeFieldHandle_" data-uid="RW_ModularizationWeapon.FieldReader`2.ContainsKey(System.RuntimeFieldHandle)">ContainsKey(RuntimeFieldHandle)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool ContainsKey(RuntimeFieldHandle key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.RuntimeFieldHandle</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_CopyTo_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1____System_Int32_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.CopyTo(System.Collections.Generic.KeyValuePair%7BSystem.RuntimeFieldHandle%2C%601%7D%5B%5D%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L87">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_CopyTo_" data-uid="RW_ModularizationWeapon.FieldReader`2.CopyTo*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_CopyTo_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1____System_Int32_" data-uid="RW_ModularizationWeapon.FieldReader`2.CopyTo(System.Collections.Generic.KeyValuePair{System.RuntimeFieldHandle,`1}[],System.Int32)">CopyTo(KeyValuePair&lt;RuntimeFieldHandle, TV&gt;[], Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(KeyValuePair&lt;RuntimeFieldHandle, TV&gt;[] array, int arrayIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;[]</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">arrayIndex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_GetEnumerator.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L96">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_GetEnumerator_" data-uid="RW_ModularizationWeapon.FieldReader`2.GetEnumerator*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_GetEnumerator" data-uid="RW_ModularizationWeapon.FieldReader`2.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;KeyValuePair&lt;RuntimeFieldHandle, TV&gt;&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerator</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_LoadDataFromXmlCustom_System_Xml_XmlNode_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.LoadDataFromXmlCustom(System.Xml.XmlNode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L197">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_LoadDataFromXmlCustom_" data-uid="RW_ModularizationWeapon.FieldReader`2.LoadDataFromXmlCustom*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_LoadDataFromXmlCustom_System_Xml_XmlNode_" data-uid="RW_ModularizationWeapon.FieldReader`2.LoadDataFromXmlCustom(System.Xml.XmlNode)">LoadDataFromXmlCustom(XmlNode)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void LoadDataFromXmlCustom(XmlNode xmlRoot)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Xml.XmlNode</span></td>
+        <td><span class="parametername">xmlRoot</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Remove_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1__.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Remove(System.Collections.Generic.KeyValuePair%7BSystem.RuntimeFieldHandle%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L101">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Remove_" data-uid="RW_ModularizationWeapon.FieldReader`2.Remove*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Remove_System_Collections_Generic_KeyValuePair_System_RuntimeFieldHandle__1__" data-uid="RW_ModularizationWeapon.FieldReader`2.Remove(System.Collections.Generic.KeyValuePair{System.RuntimeFieldHandle,`1})">Remove(KeyValuePair&lt;RuntimeFieldHandle, TV&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Remove(KeyValuePair&lt;RuntimeFieldHandle, TV&gt; item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<span class="xref">System.RuntimeFieldHandle</span>, TV&gt;</td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_Remove_System_RuntimeFieldHandle_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.Remove(System.RuntimeFieldHandle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L75">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_Remove_" data-uid="RW_ModularizationWeapon.FieldReader`2.Remove*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_Remove_System_RuntimeFieldHandle_" data-uid="RW_ModularizationWeapon.FieldReader`2.Remove(System.RuntimeFieldHandle)">Remove(RuntimeFieldHandle)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool Remove(RuntimeFieldHandle key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.RuntimeFieldHandle</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_TryGetValue_System_RuntimeFieldHandle__1__.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.TryGetValue(System.RuntimeFieldHandle%2C%601%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L77">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_TryGetValue_" data-uid="RW_ModularizationWeapon.FieldReader`2.TryGetValue*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_TryGetValue_System_RuntimeFieldHandle__1__" data-uid="RW_ModularizationWeapon.FieldReader`2.TryGetValue(System.RuntimeFieldHandle,`1@)">TryGetValue(RuntimeFieldHandle, out TV)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool TryGetValue(RuntimeFieldHandle key, out TV value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.RuntimeFieldHandle</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TV</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_UsedTypeUpdate.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.UsedTypeUpdate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L81">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_UsedTypeUpdate_" data-uid="RW_ModularizationWeapon.FieldReader`2.UsedTypeUpdate*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_UsedTypeUpdate" data-uid="RW_ModularizationWeapon.FieldReader`2.UsedTypeUpdate">UsedTypeUpdate()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void UsedTypeUpdate()</code></pre>
+  </div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2_System_Collections_IEnumerable_GetEnumerator.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602.System%23Collections%23IEnumerable%23GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L107">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_FieldReader_2_System_Collections_IEnumerable_GetEnumerator_" data-uid="RW_ModularizationWeapon.FieldReader`2.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="RW_ModularizationWeapon_FieldReader_2_System_Collections_IEnumerable_GetEnumerator" data-uid="RW_ModularizationWeapon.FieldReader`2.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerator</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.ICollection&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.IEnumerable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="RW_ModularizationWeapon.Tools.ToolsFunction.html#RW_ModularizationWeapon_Tools_ToolsFunction_LogAllField_System_Object_">ToolsFunction.LogAllField(Object)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_FieldReader_2.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.FieldReader%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/FieldReader.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

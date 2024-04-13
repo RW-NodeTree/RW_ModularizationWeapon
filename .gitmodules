@@ -1,0 +1,3 @@
+[submodule "lib/RW_NodeTree"]
+	path = lib/RW_NodeTree
+	url = https://github.com/RW-NodeTree/RW_NodeTree.git

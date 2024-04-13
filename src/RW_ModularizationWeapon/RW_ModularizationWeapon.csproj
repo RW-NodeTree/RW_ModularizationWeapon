@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RW_ModularizationWeapon</RootNamespace>
+    <AssemblyName>RW_ModularizationWeapon</AssemblyName>
+		<TargetFramework>net48</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Configurations>DebugV13;ReleaseV13;DebugV14;ReleaseV14;DebugV15;ReleaseV15</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'DebugV15' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseV13' or '$(Configuration)' == 'ReleaseV14' or '$(Configuration)' == 'ReleaseV15' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'">
+    <OutputPath>../../1.3/Assemblies</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'">
+    <OutputPath>../../1.4/Assemblies</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'">
+    <OutputPath>../../1.5/Assemblies</OutputPath>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'" Include="Krafs.Rimworld.Ref" Version="1.3.*" GeneratePathProperty="true" />
+		<PackageReference Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'" Include="Krafs.Rimworld.Ref" Version="1.4.*" GeneratePathProperty="true" />
+		<PackageReference Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'" Include="Krafs.Rimworld.Ref" Version="1.5.*" GeneratePathProperty="true" />
+		<PackageReference Include="Lib.Harmony" Version="2.*" ExcludeAssets="runtime" />
+		<Reference Include="RW_NodeTree">
+			<HintPath Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'" >../../lib/RW_NodeTree/1.3/Assemblies/RW_NodeTree.dll</HintPath>
+			<HintPath Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'" >../../lib/RW_NodeTree/1.4/Assemblies/RW_NodeTree.dll</HintPath>
+			<HintPath Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'" >../../lib/RW_NodeTree/1.5/Assemblies/RW_NodeTree.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+  <Import Project="../../packages/docfx.console.2.59.4/build/docfx.console.targets" Condition="Exists('../../packages/docfx.console.2.59.4/build/docfx.console.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('../../packages/docfx.console.2.59.4/build/docfx.console.targets')" Text="$([System.String]::Format('$(ErrorText)', '../../packages/docfx.console.2.59.4/build/docfx.console.targets'))" />
+  </Target>
+</Project>

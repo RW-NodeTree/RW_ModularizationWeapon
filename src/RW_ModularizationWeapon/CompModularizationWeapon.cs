@@ -726,7 +726,6 @@ namespace RW_ModularizationWeapon
             this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
 
 
-            NeedUpdate = false;
             List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
             
             List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
@@ -821,6 +820,7 @@ namespace RW_ModularizationWeapon
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
 
+            NeedUpdate = false;
             Map map = parent.MapHeld;
             if(map != null)
             {

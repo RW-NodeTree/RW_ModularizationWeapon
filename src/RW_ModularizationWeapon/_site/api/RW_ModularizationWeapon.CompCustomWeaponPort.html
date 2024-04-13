@@ -1,0 +1,515 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CompCustomWeaponPort
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CompCustomWeaponPort
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort">
+  
+  
+  <h1 id="RW_ModularizationWeapon_CompCustomWeaponPort" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort" class="text-break">Class CompCustomWeaponPort
+  </h1>
+  <div class="markdown level0 summary"><p><code>ThingComp</code> instance on thing for weapon modification</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Verse.ThingComp</span></div>
+    <div class="level2"><span class="xref">CompCustomWeaponPort</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Verse.ThingComp.parent</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.props</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Initialize(Verse.CompProperties)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.ReceiveCompSignal(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostSpawnSetup(System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostDeSpawn(Verse.Map)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostDestroy(Verse.DestroyMode, Verse.Map)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostPostMake()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompTick()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompTickRare()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompTickLong()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo, System.Single)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostDraw()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostDrawExtraSelectionOverlays()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PreAbsorbStack(Verse.Thing, System.Int32)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostSplitOff(Verse.Thing)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.TransformLabel(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompGetGizmosExtra()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompGetWornGizmosExtra()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.AllowStackWith(Verse.Thing)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompInspectStringExtra()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.GetDescriptionPart()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List&lt;Verse.Pawn&gt;)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PrePreTraded(RimWorld.TradeAction, Verse.Pawn, RimWorld.ITrader)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PrePostIngested(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostIngested(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef, System.Int32, RimWorld.Faction)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_LordDestroyed()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.DrawGUIOverlay()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.SpecialDisplayStats()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_Equipped(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_Unequipped(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">Verse.ThingComp.ParentHolder</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="RW_ModularizationWeapon.html">RW_ModularizationWeapon</a></h6>
+  <h6><strong>Assembly</strong>: RW_ModularizationWeapon.dll</h6>
+  <h5 id="RW_ModularizationWeapon_CompCustomWeaponPort_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class CompCustomWeaponPort : ThingComp</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_Props.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.Props%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L16">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_Props_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.Props*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_Props" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.Props">Props</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CompProperties_CustomWeaponPort Props { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html">CompProperties_CustomWeaponPort</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_CompFloatMenuOptions_Verse_Pawn_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions(Verse.Pawn)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L27">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_CompFloatMenuOptions_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_CompFloatMenuOptions_Verse_Pawn_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions(Verse.Pawn)">CompFloatMenuOptions(Pawn)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;FloatMenuOption&gt; CompFloatMenuOptions(Pawn selPawn)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Verse.Pawn</span></td>
+        <td><span class="parametername">selPawn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">Verse.FloatMenuOption</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_GetTarget.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L81">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_GetTarget_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_GetTarget" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget">GetTarget()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LocalTargetInfo GetTarget()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Verse.LocalTargetInfo</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_GetTargetCompModularizationWeapon.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L84">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_GetTargetCompModularizationWeapon_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_GetTargetCompModularizationWeapon" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon">GetTargetCompModularizationWeapon()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CompModularizationWeapon GetTargetCompModularizationWeapon()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.CompModularizationWeapon.html">CompModularizationWeapon</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_PostExposeData.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L19">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_PostExposeData_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_PostExposeData" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData">PostExposeData()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void PostExposeData()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Verse.ThingComp.PostExposeData()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_SetTarget_RW_ModularizationWeapon_CompModularizationWeapon_RW_ModularizationWeapon_UI_CustomWeapon_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(RW_ModularizationWeapon.CompModularizationWeapon%2CRW_ModularizationWeapon.UI.CustomWeapon)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L67">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_SetTarget_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_SetTarget_RW_ModularizationWeapon_CompModularizationWeapon_RW_ModularizationWeapon_UI_CustomWeapon_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(RW_ModularizationWeapon.CompModularizationWeapon,RW_ModularizationWeapon.UI.CustomWeapon)">SetTarget(CompModularizationWeapon, CustomWeapon)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTarget(CompModularizationWeapon selectedWeapon, CustomWeapon customWeapon = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.CompModularizationWeapon.html">CompModularizationWeapon</a></td>
+        <td><span class="parametername">selectedWeapon</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.UI.CustomWeapon.html">CustomWeapon</a></td>
+        <td><span class="parametername">customWeapon</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort_SetTarget_Verse_ThingDef_RW_ModularizationWeapon_UI_CustomWeapon_.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(Verse.ThingDef%2CRW_ModularizationWeapon.UI.CustomWeapon)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L56">View Source</a>
+  </span>
+  <a id="RW_ModularizationWeapon_CompCustomWeaponPort_SetTarget_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget*"></a>
+  <h4 id="RW_ModularizationWeapon_CompCustomWeaponPort_SetTarget_Verse_ThingDef_RW_ModularizationWeapon_UI_CustomWeapon_" data-uid="RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(Verse.ThingDef,RW_ModularizationWeapon.UI.CustomWeapon)">SetTarget(ThingDef, CustomWeapon)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTarget(ThingDef selectedDef, CustomWeapon customWeapon = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Verse.ThingDef</span></td>
+        <td><span class="parametername">selectedDef</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="RW_ModularizationWeapon.UI.CustomWeapon.html">CustomWeapon</a></td>
+        <td><span class="parametername">customWeapon</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="RW_ModularizationWeapon.Tools.ToolsFunction.html#RW_ModularizationWeapon_Tools_ToolsFunction_LogAllField_System_Object_">ToolsFunction.LogAllField(Object)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/new/master/apiSpec/new?filename=RW_ModularizationWeapon_CompCustomWeaponPort.md&amp;value=---%0Auid%3A%20RW_ModularizationWeapon.CompCustomWeaponPort%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/CompCustomWeaponPort.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
