@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Create Sub Weapon </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Create Sub Weapon ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="create-sub-weapon">Create Sub Weapon</h1>
+
+<p>Before we create sub weapon, we need create a parent weapon. So, let's start create a parent weapon basing on <code>templateGun</code> from chapter '<a href="Create_Attachment_Or_Weapon_With_Attachments.html">Create Attachment Or Weapon With Attachments</a>':</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;Defs&gt;
+    &lt;ThingDef ParentName=&quot;BaseHumanMakeableGun&quot;&gt;
+        &lt;defName&gt;templateGun&lt;/defName&gt;
+        ...
+        &lt;comps&gt;
+            ...
+            &lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
+                ...
+                &lt;!-- it will set random part when weapon not create by crafting --&gt;
+                &lt;setRandomPartWhenCreate&gt;true&lt;/setRandomPartWhenCreate&gt;
+                &lt;!-- declare the attach point for this weapon --&gt;
+                &lt;attachmentProperties&gt;
+                    ...
+                    &lt;li&gt;
+                        &lt;filter&gt;
+                            &lt;thingDefs&gt;
+                                ...
+                                &lt;li&gt;templateSubWeapon&lt;/li&gt;
+                                ...
+                            &lt;/thingDefs&gt;
+                        &lt;/filter&gt;
+                        &lt;!-- ramdom attachment generate weights,  --&gt;
+                        &lt;randomThingDefWeights&gt;
+                            ...
+                            &lt;!-- &lt;defname&gt;(intger)&lt;/defname&gt; --&gt;
+                            &lt;templateSubWeapon&gt;1&lt;/templateSubWeapon&gt;
+                            ...
+                        &lt;/randomThingDefWeights&gt;
+                        ...
+                    &lt;/li&gt;
+                    ...
+                &lt;/attachmentProperties&gt;
+                ...
+            &lt;/li&gt;
+            ...
+        &lt;/comps&gt;
+    &lt;/ThingDef&gt;
+&lt;/Defs&gt;
+</code></pre>
+<h3 id="the-notusetools-parameter">The <code>notUseTools</code> Parameter</h3>
+<p>When defining sub-weapons or attachments, it is important to ensure that the <code>notUseTools</code> parameter is not set to <code>true</code>. If this parameter set to <code>true</code>, would prevent the sub-weapon's tool properties (i.e., melee weapon attributes) from being correctly utilized by the main weapon (<code>templateGun</code> in this case).</p>
+<p>By keeping <code>notUseTools</code> as <code>false</code> (which is its default value), you ensure that the main weapon can correctly access and use the sub-weapon's melee attributes when needed.</p>
+<h3 id="example-of-attachmentproperties-with-notusetools">Example of <code>attachmentProperties</code> with <code>notUseTools</code></h3>
+<pre><code class="lang-xml">&lt;attachmentProperties&gt;
+    &lt;li&gt;
+        &lt;id&gt;templateSubWeapon&lt;/id&gt;
+        &lt;name&gt;template SubWeapon&lt;/name&gt;
+        &lt;!-- Other properties --&gt;
+        &lt;notUseTools&gt;false&lt;/notUseTools&gt; &lt;!-- Ensure this is set to false --&gt;
+        &lt;!-- Rest of the attachment properties --&gt;
+    &lt;/li&gt;
+&lt;/attachmentProperties&gt;
+</code></pre>
+<h2 id="the-notuseverbproperties-parameter">The <code>notUseVerbProperties</code> Parameter</h2>
+<p>Similarly, the <code>notUseVerbProperties</code> parameter is just as important as <code>notUseTools</code>. It determines whether the main weapon can utilize the sub-weapon's action properties (i.e., ranged weapon attributes). By default, <code>notUseVerbProperties</code> is also <code>false</code>, allowing for the seamless integration of sub-weapon properties into the main weapon.</p>
+<h3 id="example-of-attachmentproperties-with-notuseverbproperties">Example of <code>attachmentProperties</code> with <code>notUseVerbProperties</code></h3>
+<pre><code class="lang-xml">&lt;attachmentProperties&gt;
+    &lt;li&gt;
+        &lt;!-- Attachment properties --&gt;
+        &lt;notUseVerbProperties&gt;false&lt;/notUseVerbProperties&gt; &lt;!-- Ensure this is set to false --&gt;
+    &lt;/li&gt;
+&lt;/attachmentProperties&gt;
+</code></pre>
+<!-- ## Next: [Create Attachment Or Weapon With Attachments](Create_Attachment_Or_Weapon_With_Attachments.md) -->
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/src/RW_ModularizationWeapon/docfx/articles/Create_Sub_Weapon.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

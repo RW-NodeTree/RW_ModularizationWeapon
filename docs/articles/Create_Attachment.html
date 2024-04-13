@@ -69,34 +69,39 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="create-attachment">Create Attachment</h1>
 
-<p><strong>we need create the ThingDef like this :</strong></p>
+<p><strong>We need create the ThingDef like this :</strong></p>
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;Defs&gt;
     ...
-	&lt;ThingDef&gt;
-		&lt;defName&gt;templatePart&lt;/defName&gt;
+    &lt;ThingDef&gt;
+        &lt;defName&gt;templatePart&lt;/defName&gt;
         ...
-		&lt;comps&gt;
+        &lt;comps&gt;
             ...
             &lt;!-- node tree dependence --&gt;
-			&lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
-				&lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
-				&lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
-				&lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
-				&lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
-				&lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
-			&lt;/li&gt;
+            &lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
+                &lt;!-- Texture size factor --&gt;
+                &lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
+                &lt;!-- Texture filter mode --&gt;
+                &lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
+                &lt;!-- Exceedance factor --&gt;
+                &lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
+                &lt;!-- Exceedance offset --&gt;
+                &lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
+                &lt;!-- Force node ID control --&gt;
+                &lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
+            &lt;/li&gt;
             &lt;!-- weapon framework --&gt;
-			&lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
+            &lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
                 ...
-			&lt;/li&gt;
+            &lt;/li&gt;
             ...
-		&lt;/comps&gt;
-	&lt;/ThingDef&gt;
+        &lt;/comps&gt;
+    &lt;/ThingDef&gt;
 &lt;/Defs&gt;
 </code></pre>
-<p><strong>It will create attachment called <code>templatePart</code>.</strong></p>
-<p><strong>Now, we can set this part able attach to other part or weapon.</strong></p>
+<p>It will create attachment called <code>templatePart</code>.</p>
+<p>Now, we can set this part to be attachable to other parts or weapons.</p>
 <h2 id="next-create-attachment-or-weapon-with-attachments">Next: <a href="Create_Attachment_Or_Weapon_With_Attachments.html">Create Attachment Or Weapon With Attachments</a></h2>
 </article>
           </div>

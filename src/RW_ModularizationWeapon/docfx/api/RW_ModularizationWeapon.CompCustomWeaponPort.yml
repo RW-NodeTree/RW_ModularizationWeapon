@@ -36,7 +36,6 @@ items:
     content: 'public class CompCustomWeaponPort : ThingComp'
     content.vb: >-
       Public Class CompCustomWeaponPort
-
           Inherits ThingComp
   inheritance:
   - System.Object

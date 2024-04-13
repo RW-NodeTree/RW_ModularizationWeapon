@@ -59,7 +59,6 @@ items:
       description: instance properties base type for calculation
     content.vb: >-
       Public MustInherit Class FieldReader(Of T, TV)
-
           Implements IDictionary(Of RuntimeFieldHandle, TV), ICollection(Of KeyValuePair(Of RuntimeFieldHandle, TV)), IEnumerable(Of KeyValuePair(Of RuntimeFieldHandle, TV)), IEnumerable
   inheritance:
   - System.Object
@@ -1049,7 +1048,6 @@ items:
   syntax:
     content: >-
       public static TFR CalcValue<TFR>(Func<TV, TV, FieldInfo, TV> calc, TFR a, TFR b)
-
           where TFR : FieldReader<T, TV>, new()
     parameters:
     - id: calc

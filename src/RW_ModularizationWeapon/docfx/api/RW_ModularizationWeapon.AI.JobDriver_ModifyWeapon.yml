@@ -29,9 +29,7 @@ items:
     content: 'public class JobDriver_ModifyWeapon : JobDriver, IExposable, IJobEndable'
     content.vb: >-
       Public Class JobDriver_ModifyWeapon
-
           Inherits JobDriver
-
           Implements IExposable, IJobEndable
   inheritance:
   - System.Object

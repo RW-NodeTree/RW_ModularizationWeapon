@@ -56,9 +56,7 @@ items:
       description: instance base type for calculation
     content.vb: >-
       Public Class FieldReaderBoolean(Of T)
-
           Inherits FieldReader(Of T, Boolean)
-
           Implements IDictionary(Of RuntimeFieldHandle, Boolean), ICollection(Of KeyValuePair(Of RuntimeFieldHandle, Boolean)), IEnumerable(Of KeyValuePair(Of RuntimeFieldHandle, Boolean)), IEnumerable
   inheritance:
   - System.Object

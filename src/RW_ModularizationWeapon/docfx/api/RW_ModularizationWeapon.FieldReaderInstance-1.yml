@@ -53,9 +53,7 @@ items:
       description: instance base type for calculation
     content.vb: >-
       Public Class FieldReaderInstance(Of T)
-
           Inherits FieldReader(Of T, Object)
-
           Implements IDictionary(Of RuntimeFieldHandle, Object), ICollection(Of KeyValuePair(Of RuntimeFieldHandle, Object)), IEnumerable(Of KeyValuePair(Of RuntimeFieldHandle, Object)), IEnumerable
   inheritance:
   - System.Object

@@ -34,7 +34,6 @@ items:
     content: 'public class CompProperties_CustomWeaponPort : CompProperties'
     content.vb: >-
       Public Class CompProperties_CustomWeaponPort
-
           Inherits CompProperties
   inheritance:
   - System.Object

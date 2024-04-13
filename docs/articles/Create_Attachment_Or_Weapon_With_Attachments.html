@@ -69,108 +69,81 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="create-weapon">Create Weapon</h1>
 
-<h2 id="before-we-start-you-must-know-how-to-create-attachment">Before we start you must know how to <strong><a href="Create_Attachment.html">Create Attachment</a></strong>.</h2>
-<p><strong>Let's start create a weapon called <code>templateGun</code> :</strong></p>
-<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-&lt;Defs&gt;
-    &lt;!-- Or use parentName BaseMeleeWeapon_Sharp_Quality or BaseMeleeWeapon_Blunt_Quality for melee weapon, or not use any ParentName for simple attachment --&gt;
-	&lt;ThingDef ParentName=&quot;BaseHumanMakeableGun&quot;&gt;
-		&lt;defName&gt;templateGun&lt;/defName&gt;
-        ...
-        &lt;!-- your weapon verbs define --&gt;
-		&lt;verbs&gt;
-            ...
-			&lt;li&gt;
-				&lt;verbClass&gt;Verb_Shoot&lt;/verbClass&gt;
-				&lt;hasStandardCommand&gt;true&lt;/hasStandardCommand&gt;
-				&lt;defaultProjectile&gt;Bullet_AssaultRifle&lt;/defaultProjectile&gt;
-				&lt;warmupTime&gt;1.0&lt;/warmupTime&gt;
-				&lt;range&gt;30.9&lt;/range&gt;
-				&lt;ticksBetweenBurstShots&gt;10&lt;/ticksBetweenBurstShots&gt;
-				&lt;soundCast&gt;Shot_AssaultRifle&lt;/soundCast&gt;
-				&lt;soundCastTail&gt;GunTail_Medium&lt;/soundCastTail&gt;
-				&lt;muzzleFlashScale&gt;9&lt;/muzzleFlashScale&gt;
-			&lt;/li&gt;
-            ...
-		&lt;/verbs&gt;
-        ...
-        &lt;!-- your weapon melee define--&gt;
-		&lt;tools&gt;
-            ...
-			&lt;li&gt;
-				&lt;label&gt;stock&lt;/label&gt;
-				&lt;capacities&gt;
-					&lt;li&gt;Blunt&lt;/li&gt;
-				&lt;/capacities&gt;
-				&lt;power&gt;9&lt;/power&gt;
-				&lt;cooldownTime&gt;2&lt;/cooldownTime&gt;
-			&lt;/li&gt;
-            ...
-		&lt;/tools&gt;
-		&lt;comps&gt;
-            ...
+<h2 id="before-we-start-you-must-know-how-to-create-attachment">Before we start you must know how to <strong><a href="Create_Attachment.html">Create Attachment</a></strong></h2>
+<p>Before diving into the creation process, it's essential to understand how to create an attachment in the game's modding system.</p>
+<h2 id="step-1-crafting-the-templategun">Step 1: Crafting the <code>templateGun</code></h2>
+<p>Let's begin by crafting a weapon named <code>templateGun</code>. This weapon will serve as the base for our customizations and attachments.</p>
+<pre><code class="lang-xml">&lt;Defs&gt;
+    &lt;!-- Weapon Definition Starts Here --&gt;
+    &lt;ThingDef ParentName=&quot;BaseHumanMakeableGun&quot;&gt;
+        &lt;defName&gt;templateGun&lt;/defName&gt;
+        &lt;!-- Additional Properties --&gt;
+        &lt;comps&gt;
             &lt;!-- node tree dependence --&gt;
-			&lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
-				&lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
-				&lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
-				&lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
-				&lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
-				&lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
-			&lt;/li&gt;
+            &lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
+                &lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
+                &lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
+                &lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
+                &lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
+                &lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
+            &lt;/li&gt;
             &lt;!-- weapon framework --&gt;
-			&lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
-                ...
-                &lt;!-- it will set random part when weapon not create by crafting --&gt;
-				&lt;setRandomPartWhenCreate&gt;true&lt;/setRandomPartWhenCreate&gt;
-                &lt;!-- declare the attach point for this weapon --&gt;
-				&lt;attachmentProperties&gt;
-                    ...
-				&lt;/attachmentProperties&gt;
-                ...
-			&lt;/li&gt;
-            ...
-		&lt;/comps&gt;
-	&lt;/ThingDef&gt;
+            &lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
+                &lt;!-- Attachment Properties Will Be Defined Here --&gt;
+            &lt;/li&gt;
+        &lt;/comps&gt;
+        &lt;!-- More Properties --&gt;
+    &lt;/ThingDef&gt;
+    &lt;!-- Weapon Definition Ends Here --&gt;
 &lt;/Defs&gt;
 </code></pre>
-<p><em>More parameters here: <a href="../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html">Type : CompProperties_ModularizationWeapon</a></em></p>
-<p><strong>Then, set <code>attachmentProperties</code> to make weapon able to use attachment.</strong></p>
-<p><strong>Here is an example to make a attachment point for our previous attachment <code>templatePart</code></strong></p>
-<pre><code class="lang-xml">...
-&lt;li&gt;
-    &lt;!-- Indispensable parameter. it should able to use as xml node --&gt;
-    &lt;id&gt;templatePart&lt;/id&gt;
-    &lt;!-- the name of this attachment --&gt;
-    &lt;name&gt;template Part&lt;/name&gt;
-    &lt;!-- ICON of this attachment point --&gt;
-    &lt;UITexPath&gt;templatePart&lt;/UITexPath&gt;
-    &lt;!-- attachment drawing postion --&gt;
-    &lt;postion&gt;(0,0.1,0)&lt;/postion&gt;
-    &lt;!-- default part when create --&gt;
-    &lt;defultThing&gt;templatePart&lt;/defultThing&gt;
-    &lt;!-- if is true, this point can set to empty --&gt;
-    &lt;allowEmpty&gt;true&lt;/allowEmpty&gt;
-    &lt;!-- ThingFilter parameter, to set witch thing can attach on this point --&gt;
-    &lt;filter&gt;
-        &lt;thingDefs&gt;
-            ...
-            &lt;li&gt;templatePart&lt;/li&gt;
-            ...
-        &lt;/thingDefs&gt;
-    &lt;/filter&gt;
-    &lt;!-- ramdom attachment generate weights,  --&gt;
-    &lt;randomThingDefWeights&gt;
-        ...
-        &lt;!-- &lt;defname&gt;(intger)&lt;/defname&gt; --&gt;
-        &lt;templatePart&gt;1&lt;/templatePart&gt;
-        ...
-    &lt;/randomThingDefWeights&gt;
-    ...
-&lt;/li&gt;
-...
-</code></pre>
+<h2 id="step-2-configuring-attachment-properties">Step 2: Configuring Attachment Properties</h2>
+<p>This is where we define the <code>attachmentProperties</code> that allow our weapon to accept and utilize attachments.</p>
+<h3 id="attachment-properties-explained">Attachment Properties Explained</h3>
+<ul>
+<li><code>&lt;id&gt;</code>: A unique identifier for the attachment point.</li>
+<li><code>&lt;name&gt;</code>: The name of the attachment point, displayed in the game.</li>
+<li><code>&lt;position&gt;</code>: The in-world position offset of the attachment relative to the weapon.</li>
+<li><code>&lt;rotation&gt;</code>: The rotation offset in Euler angles for the attachment.</li>
+<li><code>&lt;scale&gt;</code>: The size scale of the attachment relative to its default size.</li>
+<li><code>&lt;defaultThing&gt;</code>: The default part that is attached to this point when the weapon is not crafted.</li>
+<li><code>&lt;allowEmpty&gt;</code>: A boolean that determines if the attachment point can be left empty.</li>
+<li><code>&lt;positionInPixelSize&gt;</code>: A flag to indicate if the position offset should be interpreted in pixels.</li>
+<li><code>&lt;filter&gt;</code>: A set of conditions that determine which items can be attached to this point.</li>
+<li><code>&lt;randomThingDefWeights&gt;</code>: A list of weights for random attachment generation.</li>
+</ul>
 <p><em>More parameters here: <a href="../api/RW_ModularizationWeapon.WeaponAttachmentProperties.html">Type : WeaponAttachmentProperties</a></em></p>
-<p><strong>And final, you will get a weapon or part that able to install an attachment called templatePart on attach point <code>template Part</code></strong></p>
+<h3 id="example-attachment-properties">Example Attachment Properties</h3>
+<pre><code class="lang-xml">&lt;comps&gt;
+    &lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
+        &lt;attachmentProperties&gt;
+            &lt;li&gt;
+                &lt;id&gt;templatePart&lt;/id&gt;
+                &lt;name&gt;template Part&lt;/name&gt;
+                &lt;position&gt;(0,0.1,0)&lt;/position&gt;
+                &lt;rotation&gt;(0,0,0)&lt;/rotation&gt;
+                &lt;scale&gt;(1,1,1)&lt;/scale&gt;
+                &lt;defaultThing&gt;templatePart&lt;/defaultThing&gt;
+                &lt;allowEmpty&gt;true&lt;/allowEmpty&gt;
+                &lt;positionInPixelSize&gt;false&lt;/positionInPixelSize&gt;
+                &lt;filter&gt;
+                    &lt;thingDefs&gt;
+                        &lt;li&gt;templatePart&lt;/li&gt;
+                        &lt;!-- More Attachment Definitions --&gt;
+                    &lt;/thingDefs&gt;
+                &lt;/filter&gt;
+                &lt;randomThingDefWeights&gt;
+                    &lt;templatePart&gt;1&lt;/templatePart&gt;
+                    &lt;!-- More Weight Definitions --&gt;
+                &lt;/randomThingDefWeights&gt;
+            &lt;/li&gt;
+            &lt;!-- More Attachment Points --&gt;
+        &lt;/attachmentProperties&gt;
+    &lt;/li&gt;
+&lt;/comps&gt;
+</code></pre>
+<p>By following the steps above, you will have a weapon or part that can install an attachment named <code>templatePart</code> at the attachment point <code>template Part</code>. This modular design allows for a high degree of customization and adaptability in the game.</p>
+<h2 id="next-create-sub-weapon">Next: <a href="Create_Sub_Weapon.html">Create Sub Weapon</a></h2>
 </article>
           </div>
           

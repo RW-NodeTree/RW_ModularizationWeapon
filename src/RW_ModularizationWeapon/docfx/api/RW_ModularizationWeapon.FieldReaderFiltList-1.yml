@@ -43,9 +43,7 @@ items:
     - id: T
     content.vb: >-
       Public Class FieldReaderFiltList(Of T)
-
           Inherits List(Of FieldReaderFilt(Of T))
-
           Implements IList(Of FieldReaderFilt(Of T)), ICollection(Of FieldReaderFilt(Of T)), IList, ICollection, IReadOnlyList(Of FieldReaderFilt(Of T)), IReadOnlyCollection(Of FieldReaderFilt(Of T)), IEnumerable(Of FieldReaderFilt(Of T)), IEnumerable
   inheritance:
   - System.Object

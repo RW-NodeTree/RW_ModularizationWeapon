@@ -42,9 +42,7 @@ items:
     - id: T
     content.vb: >-
       Public Class FieldReaderBoolList(Of T)
-
           Inherits List(Of FieldReaderBoolean(Of T))
-
           Implements IList(Of FieldReaderBoolean(Of T)), ICollection(Of FieldReaderBoolean(Of T)), IList, ICollection, IReadOnlyList(Of FieldReaderBoolean(Of T)), IReadOnlyCollection(Of FieldReaderBoolean(Of T)), IEnumerable(Of FieldReaderBoolean(Of T)), IEnumerable
   inheritance:
   - System.Object

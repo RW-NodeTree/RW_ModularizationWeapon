@@ -37,9 +37,7 @@ items:
     - id: T
     content.vb: >-
       Public Class FieldReaderInstList(Of T)
-
           Inherits List(Of FieldReaderInstance(Of T))
-
           Implements IList(Of FieldReaderInstance(Of T)), ICollection(Of FieldReaderInstance(Of T)), IList, ICollection, IReadOnlyList(Of FieldReaderInstance(Of T)), IReadOnlyCollection(Of FieldReaderInstance(Of T)), IEnumerable(Of FieldReaderInstance(Of T)), IEnumerable
   inheritance:
   - System.Object

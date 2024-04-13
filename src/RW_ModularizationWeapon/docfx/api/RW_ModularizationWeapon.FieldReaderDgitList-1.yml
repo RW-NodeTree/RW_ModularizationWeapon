@@ -50,9 +50,7 @@ items:
     - id: T
     content.vb: >-
       Public Class FieldReaderDgitList(Of T)
-
           Inherits List(Of FieldReaderDigit(Of T))
-
           Implements IList(Of FieldReaderDigit(Of T)), ICollection(Of FieldReaderDigit(Of T)), IList, ICollection, IReadOnlyList(Of FieldReaderDigit(Of T)), IReadOnlyCollection(Of FieldReaderDigit(Of T)), IEnumerable(Of FieldReaderDigit(Of T)), IEnumerable
   inheritance:
   - System.Object

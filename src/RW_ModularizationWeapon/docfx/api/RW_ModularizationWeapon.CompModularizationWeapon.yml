@@ -106,9 +106,7 @@ items:
       <StaticConstructorOnStartup>
 
       Public Class CompModularizationWeapon
-
           Inherits CompBasicNodeComp
-
           Implements IEnumerable(Of(String, Thing, WeaponAttachmentProperties)(Of String , Thing, WeaponAttachmentProperties)), IEnumerable
   inheritance:
   - System.Object

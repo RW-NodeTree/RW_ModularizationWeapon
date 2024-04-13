@@ -33,7 +33,6 @@ items:
     content: 'public class CustomWeapon : Window'
     content.vb: >-
       Public Class CustomWeapon
-
           Inherits Window
   inheritance:
   - System.Object

@@ -86,7 +86,6 @@ items:
     content: 'public class CompProperties_ModularizationWeapon : CompProperties'
     content.vb: >-
       Public Class CompProperties_ModularizationWeapon
-
           Inherits CompProperties
   inheritance:
   - System.Object
