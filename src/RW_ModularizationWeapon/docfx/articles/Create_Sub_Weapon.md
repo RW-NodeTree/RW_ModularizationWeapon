@@ -67,7 +67,7 @@ By keeping `notUseTools` as `false` (which is its default value), you ensure tha
 
 ## The `notUseVerbProperties` Parameter
 
-Similarly, the `notUseVerbProperties` parameter is just as important as `notUseTools`. It determines whether the main weapon can utilize the sub-weapon's action properties (i.e., ranged weapon attributes). By default, `notUseVerbProperties` is also `false`, allowing for the seamless integration of sub-weapon properties into the main weapon.
+Similarly, the `notUseVerbProperties` parameter is just as important as `notUseTools`. It determines whether the main weapon can utilize the sub-weapon's verb properties (i.e., ranged weapon attributes). By default, `notUseVerbProperties` is also `false`, allowing for the seamless integration of sub-weapon properties into the main weapon.
 
 ### Example of `attachmentProperties` with `notUseVerbProperties`
 
@@ -78,6 +78,44 @@ Similarly, the `notUseVerbProperties` parameter is just as important as `notUseT
         <notUseVerbProperties>false</notUseVerbProperties> <!-- Ensure this is set to false -->
     </li>
 </attachmentProperties>
+```
+
+Everyting prepare, time to create the sub weapon.
+
+The sub weapon is very similar with the parent weapon. The only different between the parent weapon is we need add some parameters to CompProperties.
+
+## The `notAllowParentUseTools` Parameter
+
+The `notAllowParentUseTools` parameter is a boolean flag that dictates whether a parent weapon should have access to the tool properties(i.e., melee weapon attributes) of its child components.  By default, this parameter is set to `false`. Setting this to `true` would restrict the parent weapon from utilizing the tool properties(i.e., melee weapon attributes).
+
+### Example of `CompProperties` with `notAllowParentUseTools`
+
+```xml
+<comps>
+    ...
+    <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+        <!-- Other properties -->
+        <notAllowParentUseTools>false</notAllowParentUseTools> <!-- Ensure this is set to false -->
+        <!-- Rest of the attachment properties -->
+    </li>
+</comps>
+```
+
+## The `notAllowParentUseVerbProperties` Parameter
+
+The `notAllowParentUseVerbProperties` parameter is a boolean flag that dictates whether a parent weapon should have access to the verb properties (i.e., ranged weapon attributes) of its child components.  By default, this parameter is set to `false`. Setting this to `true` would restrict the parent weapon from utilizing the verb properties (i.e., ranged weapon attributes).
+
+### Example of `CompProperties` with `notAllowParentUseVerbProperties`
+
+```xml
+<comps>
+    ...
+    <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
+        <!-- Other properties -->
+        <notAllowParentUseVerbProperties>false</notAllowParentUseVerbProperties> <!-- Ensure this is set to false -->
+        <!-- Rest of the attachment properties -->
+    </li>
+</comps>
 ```
 
 <!-- ## Next: [Create Attachment Or Weapon With Attachments](Create_Attachment_Or_Weapon_With_Attachments.md) -->

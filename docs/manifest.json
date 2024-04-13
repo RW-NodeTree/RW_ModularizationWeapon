@@ -312,7 +312,7 @@
           "hash": "0OU3wXTKRHYW7LZ6CIjW/NySPfY9looWj+KzFsGbO9M="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -327,7 +327,7 @@
           "hash": "cxnHnchuoJ065K7PjkwsOJn7I/AvFpaDBUkkJypL5tk="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -336,10 +336,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/Create_Sub_Weapon.html",
-          "hash": "/h+4e2OWnoGWLvC8S1FMkX12a5foZfPMlgCjrAo6PdQ="
+          "hash": "5rvVrieBR9PHRh5htdnfT0l5imSU8sHcQGxWyXLK9UM="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -351,7 +351,7 @@
           "hash": "/+gfCBmL8WO0w5ehFtmfSSJwtgsVkt2U+JmvlsuCa+k="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -415,7 +415,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 3
+          "skipped_file_count": 6
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
