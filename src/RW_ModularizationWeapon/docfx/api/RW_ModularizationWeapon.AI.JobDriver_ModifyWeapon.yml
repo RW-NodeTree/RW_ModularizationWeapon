@@ -1,0 +1,2155 @@
+### YamlMime:ManagedReference
+items:
+- uid: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon
+  commentId: T:RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon
+  id: JobDriver_ModifyWeapon
+  parent: RW_ModularizationWeapon.AI
+  children:
+  - RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils
+  - RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations(System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: JobDriver_ModifyWeapon
+  nameWithType: JobDriver_ModifyWeapon
+  fullName: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon
+  type: Class
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/AI/JobDriver_ModifyWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: JobDriver_ModifyWeapon
+    path: AI/JobDriver_ModifyWeapon.cs
+    startLine: 6
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.AI
+  syntax:
+    content: 'public class JobDriver_ModifyWeapon : JobDriver, IExposable, IJobEndable'
+    content.vb: >-
+      Public Class JobDriver_ModifyWeapon
+
+          Inherits JobDriver
+
+          Implements IExposable, IJobEndable
+  inheritance:
+  - System.Object
+  - Verse.AI.JobDriver
+  implements:
+  - Verse.IExposable
+  - Verse.AI.IJobEndable
+  inheritedMembers:
+  - Verse.AI.JobDriver.PlaceInInventoryDuration
+  - Verse.AI.JobDriver.pawn
+  - Verse.AI.JobDriver.job
+  - Verse.AI.JobDriver.globalFailConditions
+  - Verse.AI.JobDriver.globalFinishActions
+  - Verse.AI.JobDriver.ended
+  - Verse.AI.JobDriver.ticksLeftThisToil
+  - Verse.AI.JobDriver.startTick
+  - Verse.AI.JobDriver.rotateToFace
+  - Verse.AI.JobDriver.asleep
+  - Verse.AI.JobDriver.uninstallWorkLeft
+  - Verse.AI.JobDriver.collideWithPawns
+  - Verse.AI.JobDriver.locomotionUrgencySameAs
+  - Verse.AI.JobDriver.debugTicksSpentThisToil
+  - Verse.AI.JobDriver.GetReport
+  - Verse.AI.JobDriver.GetReportStringOverride
+  - Verse.AI.JobDriver.ReportStringProcessed(System.String)
+  - Verse.AI.JobDriver.SetInitialPosture
+  - Verse.AI.JobDriver.ExposeData
+  - Verse.AI.JobDriver.Cleanup(Verse.AI.JobCondition)
+  - Verse.AI.JobDriver.SetFinalizerJob(System.Func{Verse.AI.JobCondition,Verse.AI.Job})
+  - Verse.AI.JobDriver.GetFinalizerJob(Verse.AI.JobCondition)
+  - Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+  - Verse.AI.JobDriver.ClearToils
+  - Verse.AI.JobDriver.DriverTick
+  - Verse.AI.JobDriver.ReadyForNextToil
+  - Verse.AI.JobDriver.EndJobWith(Verse.AI.JobCondition)
+  - Verse.AI.JobDriver.TaleParameters
+  - Verse.AI.JobDriver.JumpToToil(Verse.AI.Toil)
+  - Verse.AI.JobDriver.Notify_Starting
+  - Verse.AI.JobDriver.Notify_PatherArrived
+  - Verse.AI.JobDriver.Notify_PatherFailed
+  - Verse.AI.JobDriver.Notify_StanceChanged
+  - Verse.AI.JobDriver.Notify_DamageTaken(Verse.DamageInfo)
+  - Verse.AI.JobDriver.GetActor
+  - Verse.AI.JobDriver.AddEndCondition(System.Func{Verse.AI.JobCondition})
+  - Verse.AI.JobDriver.AddFailCondition(System.Func{System.Boolean})
+  - Verse.AI.JobDriver.AddFinishAction(System.Action{Verse.AI.JobCondition})
+  - Verse.AI.JobDriver.ModifyCarriedThingDrawPos(UnityEngine.Vector3@,System.Boolean@)
+  - Verse.AI.JobDriver.DesiredSocialMode
+  - Verse.AI.JobDriver.IsContinuation(Verse.AI.Job)
+  - Verse.AI.JobDriver.IsSameJobAs(Verse.AI.Job)
+  - Verse.AI.JobDriver.ForcedLayingRotation
+  - Verse.AI.JobDriver.ForcedBodyOffset
+  - Verse.AI.JobDriver.CurToil
+  - Verse.AI.JobDriver.HaveCurToil
+  - Verse.AI.JobDriver.CurToilIndex
+  - Verse.AI.JobDriver.CurToilString
+  - Verse.AI.JobDriver.OnLastToil
+  - Verse.AI.JobDriver.ActiveSkill
+  - Verse.AI.JobDriver.HandlingFacing
+  - Verse.AI.JobDriver.PlayerInterruptable
+  - Verse.AI.JobDriver.TargetA
+  - Verse.AI.JobDriver.TargetB
+  - Verse.AI.JobDriver.TargetC
+  - Verse.AI.JobDriver.TargetThingA
+  - Verse.AI.JobDriver.TargetThingB
+  - Verse.AI.JobDriver.TargetThingC
+  - Verse.AI.JobDriver.TargetPawnA
+  - Verse.AI.JobDriver.TargetPawnB
+  - Verse.AI.JobDriver.TargetPawnC
+  - Verse.AI.JobDriver.TargetLocA
+  - Verse.AI.JobDriver.Map
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ToString
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations(System.Boolean)
+  commentId: M:RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations(System.Boolean)
+  id: TryMakePreToilReservations(System.Boolean)
+  parent: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon
+  langs:
+  - csharp
+  - vb
+  name: TryMakePreToilReservations(Boolean)
+  nameWithType: JobDriver_ModifyWeapon.TryMakePreToilReservations(Boolean)
+  fullName: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations(System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/AI/JobDriver_ModifyWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: TryMakePreToilReservations
+    path: AI/JobDriver_ModifyWeapon.cs
+    startLine: 8
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.AI
+  syntax:
+    content: public override bool TryMakePreToilReservations(bool errorOnFailed)
+    parameters:
+    - id: errorOnFailed
+      type: System.Boolean
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function TryMakePreToilReservations(errorOnFailed As Boolean) As Boolean
+  overridden: Verse.AI.JobDriver.TryMakePreToilReservations(System.Boolean)
+  overload: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils
+  commentId: M:RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils
+  id: MakeNewToils
+  parent: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon
+  langs:
+  - csharp
+  - vb
+  name: MakeNewToils()
+  nameWithType: JobDriver_ModifyWeapon.MakeNewToils()
+  fullName: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils()
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/AI/JobDriver_ModifyWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: MakeNewToils
+    path: AI/JobDriver_ModifyWeapon.cs
+    startLine: 25
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.AI
+  syntax:
+    content: protected override IEnumerable<Toil> MakeNewToils()
+    return:
+      type: System.Collections.Generic.IEnumerable{Verse.AI.Toil}
+    content.vb: Protected Overrides Function MakeNewToils As IEnumerable(Of Toil)
+  overridden: Verse.AI.JobDriver.MakeNewToils
+  overload: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils*
+  modifiers.csharp:
+  - protected
+  - override
+  modifiers.vb:
+  - Protected
+  - Overrides
+references:
+- uid: RW_ModularizationWeapon.AI
+  commentId: N:RW_ModularizationWeapon.AI
+  name: RW_ModularizationWeapon.AI
+  nameWithType: RW_ModularizationWeapon.AI
+  fullName: RW_ModularizationWeapon.AI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: Verse.AI.JobDriver
+  commentId: T:Verse.AI.JobDriver
+  parent: Verse.AI
+  isExternal: true
+  name: JobDriver
+  nameWithType: JobDriver
+  fullName: Verse.AI.JobDriver
+- uid: Verse.IExposable
+  commentId: T:Verse.IExposable
+  parent: Verse
+  isExternal: true
+  name: IExposable
+  nameWithType: IExposable
+  fullName: Verse.IExposable
+- uid: Verse.AI.IJobEndable
+  commentId: T:Verse.AI.IJobEndable
+  parent: Verse.AI
+  isExternal: true
+  name: IJobEndable
+  nameWithType: IJobEndable
+  fullName: Verse.AI.IJobEndable
+- uid: Verse.AI.JobDriver.PlaceInInventoryDuration
+  commentId: F:Verse.AI.JobDriver.PlaceInInventoryDuration
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: PlaceInInventoryDuration
+  nameWithType: JobDriver.PlaceInInventoryDuration
+  fullName: Verse.AI.JobDriver.PlaceInInventoryDuration
+- uid: Verse.AI.JobDriver.pawn
+  commentId: F:Verse.AI.JobDriver.pawn
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: pawn
+  nameWithType: JobDriver.pawn
+  fullName: Verse.AI.JobDriver.pawn
+- uid: Verse.AI.JobDriver.job
+  commentId: F:Verse.AI.JobDriver.job
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: job
+  nameWithType: JobDriver.job
+  fullName: Verse.AI.JobDriver.job
+- uid: Verse.AI.JobDriver.globalFailConditions
+  commentId: F:Verse.AI.JobDriver.globalFailConditions
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: globalFailConditions
+  nameWithType: JobDriver.globalFailConditions
+  fullName: Verse.AI.JobDriver.globalFailConditions
+- uid: Verse.AI.JobDriver.globalFinishActions
+  commentId: F:Verse.AI.JobDriver.globalFinishActions
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: globalFinishActions
+  nameWithType: JobDriver.globalFinishActions
+  fullName: Verse.AI.JobDriver.globalFinishActions
+- uid: Verse.AI.JobDriver.ended
+  commentId: F:Verse.AI.JobDriver.ended
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ended
+  nameWithType: JobDriver.ended
+  fullName: Verse.AI.JobDriver.ended
+- uid: Verse.AI.JobDriver.ticksLeftThisToil
+  commentId: F:Verse.AI.JobDriver.ticksLeftThisToil
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ticksLeftThisToil
+  nameWithType: JobDriver.ticksLeftThisToil
+  fullName: Verse.AI.JobDriver.ticksLeftThisToil
+- uid: Verse.AI.JobDriver.startTick
+  commentId: F:Verse.AI.JobDriver.startTick
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: startTick
+  nameWithType: JobDriver.startTick
+  fullName: Verse.AI.JobDriver.startTick
+- uid: Verse.AI.JobDriver.rotateToFace
+  commentId: F:Verse.AI.JobDriver.rotateToFace
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: rotateToFace
+  nameWithType: JobDriver.rotateToFace
+  fullName: Verse.AI.JobDriver.rotateToFace
+- uid: Verse.AI.JobDriver.asleep
+  commentId: F:Verse.AI.JobDriver.asleep
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: asleep
+  nameWithType: JobDriver.asleep
+  fullName: Verse.AI.JobDriver.asleep
+- uid: Verse.AI.JobDriver.uninstallWorkLeft
+  commentId: F:Verse.AI.JobDriver.uninstallWorkLeft
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: uninstallWorkLeft
+  nameWithType: JobDriver.uninstallWorkLeft
+  fullName: Verse.AI.JobDriver.uninstallWorkLeft
+- uid: Verse.AI.JobDriver.collideWithPawns
+  commentId: F:Verse.AI.JobDriver.collideWithPawns
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: collideWithPawns
+  nameWithType: JobDriver.collideWithPawns
+  fullName: Verse.AI.JobDriver.collideWithPawns
+- uid: Verse.AI.JobDriver.locomotionUrgencySameAs
+  commentId: F:Verse.AI.JobDriver.locomotionUrgencySameAs
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: locomotionUrgencySameAs
+  nameWithType: JobDriver.locomotionUrgencySameAs
+  fullName: Verse.AI.JobDriver.locomotionUrgencySameAs
+- uid: Verse.AI.JobDriver.debugTicksSpentThisToil
+  commentId: F:Verse.AI.JobDriver.debugTicksSpentThisToil
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: debugTicksSpentThisToil
+  nameWithType: JobDriver.debugTicksSpentThisToil
+  fullName: Verse.AI.JobDriver.debugTicksSpentThisToil
+- uid: Verse.AI.JobDriver.GetReport
+  commentId: M:Verse.AI.JobDriver.GetReport
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: GetReport()
+  nameWithType: JobDriver.GetReport()
+  fullName: Verse.AI.JobDriver.GetReport()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.GetReport
+    name: GetReport
+    nameWithType: JobDriver.GetReport
+    fullName: Verse.AI.JobDriver.GetReport
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.GetReport
+    name: GetReport
+    nameWithType: JobDriver.GetReport
+    fullName: Verse.AI.JobDriver.GetReport
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.GetReportStringOverride
+  commentId: M:Verse.AI.JobDriver.GetReportStringOverride
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: GetReportStringOverride()
+  nameWithType: JobDriver.GetReportStringOverride()
+  fullName: Verse.AI.JobDriver.GetReportStringOverride()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.GetReportStringOverride
+    name: GetReportStringOverride
+    nameWithType: JobDriver.GetReportStringOverride
+    fullName: Verse.AI.JobDriver.GetReportStringOverride
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.GetReportStringOverride
+    name: GetReportStringOverride
+    nameWithType: JobDriver.GetReportStringOverride
+    fullName: Verse.AI.JobDriver.GetReportStringOverride
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.ReportStringProcessed(System.String)
+  commentId: M:Verse.AI.JobDriver.ReportStringProcessed(System.String)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ReportStringProcessed(String)
+  nameWithType: JobDriver.ReportStringProcessed(String)
+  fullName: Verse.AI.JobDriver.ReportStringProcessed(System.String)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.ReportStringProcessed(System.String)
+    name: ReportStringProcessed
+    nameWithType: JobDriver.ReportStringProcessed
+    fullName: Verse.AI.JobDriver.ReportStringProcessed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.ReportStringProcessed(System.String)
+    name: ReportStringProcessed
+    nameWithType: JobDriver.ReportStringProcessed
+    fullName: Verse.AI.JobDriver.ReportStringProcessed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.SetInitialPosture
+  commentId: M:Verse.AI.JobDriver.SetInitialPosture
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: SetInitialPosture()
+  nameWithType: JobDriver.SetInitialPosture()
+  fullName: Verse.AI.JobDriver.SetInitialPosture()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.SetInitialPosture
+    name: SetInitialPosture
+    nameWithType: JobDriver.SetInitialPosture
+    fullName: Verse.AI.JobDriver.SetInitialPosture
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.SetInitialPosture
+    name: SetInitialPosture
+    nameWithType: JobDriver.SetInitialPosture
+    fullName: Verse.AI.JobDriver.SetInitialPosture
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.ExposeData
+  commentId: M:Verse.AI.JobDriver.ExposeData
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ExposeData()
+  nameWithType: JobDriver.ExposeData()
+  fullName: Verse.AI.JobDriver.ExposeData()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.ExposeData
+    name: ExposeData
+    nameWithType: JobDriver.ExposeData
+    fullName: Verse.AI.JobDriver.ExposeData
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.ExposeData
+    name: ExposeData
+    nameWithType: JobDriver.ExposeData
+    fullName: Verse.AI.JobDriver.ExposeData
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.Cleanup(Verse.AI.JobCondition)
+  commentId: M:Verse.AI.JobDriver.Cleanup(Verse.AI.JobCondition)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Cleanup(JobCondition)
+  nameWithType: JobDriver.Cleanup(JobCondition)
+  fullName: Verse.AI.JobDriver.Cleanup(Verse.AI.JobCondition)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.Cleanup(Verse.AI.JobCondition)
+    name: Cleanup
+    nameWithType: JobDriver.Cleanup
+    fullName: Verse.AI.JobDriver.Cleanup
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.Cleanup(Verse.AI.JobCondition)
+    name: Cleanup
+    nameWithType: JobDriver.Cleanup
+    fullName: Verse.AI.JobDriver.Cleanup
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.SetFinalizerJob(System.Func{Verse.AI.JobCondition,Verse.AI.Job})
+  commentId: M:Verse.AI.JobDriver.SetFinalizerJob(System.Func{Verse.AI.JobCondition,Verse.AI.Job})
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: SetFinalizerJob(Func<JobCondition, Job>)
+  nameWithType: JobDriver.SetFinalizerJob(Func<JobCondition, Job>)
+  fullName: Verse.AI.JobDriver.SetFinalizerJob(System.Func<Verse.AI.JobCondition, Verse.AI.Job>)
+  nameWithType.vb: JobDriver.SetFinalizerJob(Func(Of JobCondition, Job))
+  fullName.vb: Verse.AI.JobDriver.SetFinalizerJob(System.Func(Of Verse.AI.JobCondition, Verse.AI.Job))
+  name.vb: SetFinalizerJob(Func(Of JobCondition, Job))
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.SetFinalizerJob(System.Func{Verse.AI.JobCondition,Verse.AI.Job})
+    name: SetFinalizerJob
+    nameWithType: JobDriver.SetFinalizerJob
+    fullName: Verse.AI.JobDriver.SetFinalizerJob
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.AI.Job
+    name: Job
+    nameWithType: Job
+    fullName: Verse.AI.Job
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.SetFinalizerJob(System.Func{Verse.AI.JobCondition,Verse.AI.Job})
+    name: SetFinalizerJob
+    nameWithType: JobDriver.SetFinalizerJob
+    fullName: Verse.AI.JobDriver.SetFinalizerJob
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.AI.Job
+    name: Job
+    nameWithType: Job
+    fullName: Verse.AI.Job
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.GetFinalizerJob(Verse.AI.JobCondition)
+  commentId: M:Verse.AI.JobDriver.GetFinalizerJob(Verse.AI.JobCondition)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: GetFinalizerJob(JobCondition)
+  nameWithType: JobDriver.GetFinalizerJob(JobCondition)
+  fullName: Verse.AI.JobDriver.GetFinalizerJob(Verse.AI.JobCondition)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.GetFinalizerJob(Verse.AI.JobCondition)
+    name: GetFinalizerJob
+    nameWithType: JobDriver.GetFinalizerJob
+    fullName: Verse.AI.JobDriver.GetFinalizerJob
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.GetFinalizerJob(Verse.AI.JobCondition)
+    name: GetFinalizerJob
+    nameWithType: JobDriver.GetFinalizerJob
+    fullName: Verse.AI.JobDriver.GetFinalizerJob
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+  commentId: M:Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: CanBeginNowWhileLyingDown()
+  nameWithType: JobDriver.CanBeginNowWhileLyingDown()
+  fullName: Verse.AI.JobDriver.CanBeginNowWhileLyingDown()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+    name: CanBeginNowWhileLyingDown
+    nameWithType: JobDriver.CanBeginNowWhileLyingDown
+    fullName: Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+    name: CanBeginNowWhileLyingDown
+    nameWithType: JobDriver.CanBeginNowWhileLyingDown
+    fullName: Verse.AI.JobDriver.CanBeginNowWhileLyingDown
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.ClearToils
+  commentId: M:Verse.AI.JobDriver.ClearToils
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ClearToils()
+  nameWithType: JobDriver.ClearToils()
+  fullName: Verse.AI.JobDriver.ClearToils()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.ClearToils
+    name: ClearToils
+    nameWithType: JobDriver.ClearToils
+    fullName: Verse.AI.JobDriver.ClearToils
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.ClearToils
+    name: ClearToils
+    nameWithType: JobDriver.ClearToils
+    fullName: Verse.AI.JobDriver.ClearToils
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.DriverTick
+  commentId: M:Verse.AI.JobDriver.DriverTick
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: DriverTick()
+  nameWithType: JobDriver.DriverTick()
+  fullName: Verse.AI.JobDriver.DriverTick()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.DriverTick
+    name: DriverTick
+    nameWithType: JobDriver.DriverTick
+    fullName: Verse.AI.JobDriver.DriverTick
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.DriverTick
+    name: DriverTick
+    nameWithType: JobDriver.DriverTick
+    fullName: Verse.AI.JobDriver.DriverTick
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.ReadyForNextToil
+  commentId: M:Verse.AI.JobDriver.ReadyForNextToil
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ReadyForNextToil()
+  nameWithType: JobDriver.ReadyForNextToil()
+  fullName: Verse.AI.JobDriver.ReadyForNextToil()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.ReadyForNextToil
+    name: ReadyForNextToil
+    nameWithType: JobDriver.ReadyForNextToil
+    fullName: Verse.AI.JobDriver.ReadyForNextToil
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.ReadyForNextToil
+    name: ReadyForNextToil
+    nameWithType: JobDriver.ReadyForNextToil
+    fullName: Verse.AI.JobDriver.ReadyForNextToil
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.EndJobWith(Verse.AI.JobCondition)
+  commentId: M:Verse.AI.JobDriver.EndJobWith(Verse.AI.JobCondition)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: EndJobWith(JobCondition)
+  nameWithType: JobDriver.EndJobWith(JobCondition)
+  fullName: Verse.AI.JobDriver.EndJobWith(Verse.AI.JobCondition)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.EndJobWith(Verse.AI.JobCondition)
+    name: EndJobWith
+    nameWithType: JobDriver.EndJobWith
+    fullName: Verse.AI.JobDriver.EndJobWith
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.EndJobWith(Verse.AI.JobCondition)
+    name: EndJobWith
+    nameWithType: JobDriver.EndJobWith
+    fullName: Verse.AI.JobDriver.EndJobWith
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.TaleParameters
+  commentId: M:Verse.AI.JobDriver.TaleParameters
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TaleParameters()
+  nameWithType: JobDriver.TaleParameters()
+  fullName: Verse.AI.JobDriver.TaleParameters()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.TaleParameters
+    name: TaleParameters
+    nameWithType: JobDriver.TaleParameters
+    fullName: Verse.AI.JobDriver.TaleParameters
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.TaleParameters
+    name: TaleParameters
+    nameWithType: JobDriver.TaleParameters
+    fullName: Verse.AI.JobDriver.TaleParameters
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.JumpToToil(Verse.AI.Toil)
+  commentId: M:Verse.AI.JobDriver.JumpToToil(Verse.AI.Toil)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: JumpToToil(Toil)
+  nameWithType: JobDriver.JumpToToil(Toil)
+  fullName: Verse.AI.JobDriver.JumpToToil(Verse.AI.Toil)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.JumpToToil(Verse.AI.Toil)
+    name: JumpToToil
+    nameWithType: JobDriver.JumpToToil
+    fullName: Verse.AI.JobDriver.JumpToToil
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.Toil
+    name: Toil
+    nameWithType: Toil
+    fullName: Verse.AI.Toil
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.JumpToToil(Verse.AI.Toil)
+    name: JumpToToil
+    nameWithType: JobDriver.JumpToToil
+    fullName: Verse.AI.JobDriver.JumpToToil
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.Toil
+    name: Toil
+    nameWithType: Toil
+    fullName: Verse.AI.Toil
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.Notify_Starting
+  commentId: M:Verse.AI.JobDriver.Notify_Starting
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Notify_Starting()
+  nameWithType: JobDriver.Notify_Starting()
+  fullName: Verse.AI.JobDriver.Notify_Starting()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.Notify_Starting
+    name: Notify_Starting
+    nameWithType: JobDriver.Notify_Starting
+    fullName: Verse.AI.JobDriver.Notify_Starting
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.Notify_Starting
+    name: Notify_Starting
+    nameWithType: JobDriver.Notify_Starting
+    fullName: Verse.AI.JobDriver.Notify_Starting
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.Notify_PatherArrived
+  commentId: M:Verse.AI.JobDriver.Notify_PatherArrived
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Notify_PatherArrived()
+  nameWithType: JobDriver.Notify_PatherArrived()
+  fullName: Verse.AI.JobDriver.Notify_PatherArrived()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.Notify_PatherArrived
+    name: Notify_PatherArrived
+    nameWithType: JobDriver.Notify_PatherArrived
+    fullName: Verse.AI.JobDriver.Notify_PatherArrived
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.Notify_PatherArrived
+    name: Notify_PatherArrived
+    nameWithType: JobDriver.Notify_PatherArrived
+    fullName: Verse.AI.JobDriver.Notify_PatherArrived
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.Notify_PatherFailed
+  commentId: M:Verse.AI.JobDriver.Notify_PatherFailed
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Notify_PatherFailed()
+  nameWithType: JobDriver.Notify_PatherFailed()
+  fullName: Verse.AI.JobDriver.Notify_PatherFailed()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.Notify_PatherFailed
+    name: Notify_PatherFailed
+    nameWithType: JobDriver.Notify_PatherFailed
+    fullName: Verse.AI.JobDriver.Notify_PatherFailed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.Notify_PatherFailed
+    name: Notify_PatherFailed
+    nameWithType: JobDriver.Notify_PatherFailed
+    fullName: Verse.AI.JobDriver.Notify_PatherFailed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.Notify_StanceChanged
+  commentId: M:Verse.AI.JobDriver.Notify_StanceChanged
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Notify_StanceChanged()
+  nameWithType: JobDriver.Notify_StanceChanged()
+  fullName: Verse.AI.JobDriver.Notify_StanceChanged()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.Notify_StanceChanged
+    name: Notify_StanceChanged
+    nameWithType: JobDriver.Notify_StanceChanged
+    fullName: Verse.AI.JobDriver.Notify_StanceChanged
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.Notify_StanceChanged
+    name: Notify_StanceChanged
+    nameWithType: JobDriver.Notify_StanceChanged
+    fullName: Verse.AI.JobDriver.Notify_StanceChanged
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.Notify_DamageTaken(Verse.DamageInfo)
+  commentId: M:Verse.AI.JobDriver.Notify_DamageTaken(Verse.DamageInfo)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Notify_DamageTaken(DamageInfo)
+  nameWithType: JobDriver.Notify_DamageTaken(DamageInfo)
+  fullName: Verse.AI.JobDriver.Notify_DamageTaken(Verse.DamageInfo)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.Notify_DamageTaken(Verse.DamageInfo)
+    name: Notify_DamageTaken
+    nameWithType: JobDriver.Notify_DamageTaken
+    fullName: Verse.AI.JobDriver.Notify_DamageTaken
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.Notify_DamageTaken(Verse.DamageInfo)
+    name: Notify_DamageTaken
+    nameWithType: JobDriver.Notify_DamageTaken
+    fullName: Verse.AI.JobDriver.Notify_DamageTaken
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.GetActor
+  commentId: M:Verse.AI.JobDriver.GetActor
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: GetActor()
+  nameWithType: JobDriver.GetActor()
+  fullName: Verse.AI.JobDriver.GetActor()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.GetActor
+    name: GetActor
+    nameWithType: JobDriver.GetActor
+    fullName: Verse.AI.JobDriver.GetActor
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.GetActor
+    name: GetActor
+    nameWithType: JobDriver.GetActor
+    fullName: Verse.AI.JobDriver.GetActor
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.AddEndCondition(System.Func{Verse.AI.JobCondition})
+  commentId: M:Verse.AI.JobDriver.AddEndCondition(System.Func{Verse.AI.JobCondition})
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: AddEndCondition(Func<JobCondition>)
+  nameWithType: JobDriver.AddEndCondition(Func<JobCondition>)
+  fullName: Verse.AI.JobDriver.AddEndCondition(System.Func<Verse.AI.JobCondition>)
+  nameWithType.vb: JobDriver.AddEndCondition(Func(Of JobCondition))
+  fullName.vb: Verse.AI.JobDriver.AddEndCondition(System.Func(Of Verse.AI.JobCondition))
+  name.vb: AddEndCondition(Func(Of JobCondition))
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.AddEndCondition(System.Func{Verse.AI.JobCondition})
+    name: AddEndCondition
+    nameWithType: JobDriver.AddEndCondition
+    fullName: Verse.AI.JobDriver.AddEndCondition
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Func`1
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.AddEndCondition(System.Func{Verse.AI.JobCondition})
+    name: AddEndCondition
+    nameWithType: JobDriver.AddEndCondition
+    fullName: Verse.AI.JobDriver.AddEndCondition
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Func`1
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.AddFailCondition(System.Func{System.Boolean})
+  commentId: M:Verse.AI.JobDriver.AddFailCondition(System.Func{System.Boolean})
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: AddFailCondition(Func<Boolean>)
+  nameWithType: JobDriver.AddFailCondition(Func<Boolean>)
+  fullName: Verse.AI.JobDriver.AddFailCondition(System.Func<System.Boolean>)
+  nameWithType.vb: JobDriver.AddFailCondition(Func(Of Boolean))
+  fullName.vb: Verse.AI.JobDriver.AddFailCondition(System.Func(Of System.Boolean))
+  name.vb: AddFailCondition(Func(Of Boolean))
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.AddFailCondition(System.Func{System.Boolean})
+    name: AddFailCondition
+    nameWithType: JobDriver.AddFailCondition
+    fullName: Verse.AI.JobDriver.AddFailCondition
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Func`1
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.AddFailCondition(System.Func{System.Boolean})
+    name: AddFailCondition
+    nameWithType: JobDriver.AddFailCondition
+    fullName: Verse.AI.JobDriver.AddFailCondition
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Func`1
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.AddFinishAction(System.Action{Verse.AI.JobCondition})
+  commentId: M:Verse.AI.JobDriver.AddFinishAction(System.Action{Verse.AI.JobCondition})
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: AddFinishAction(Action<JobCondition>)
+  nameWithType: JobDriver.AddFinishAction(Action<JobCondition>)
+  fullName: Verse.AI.JobDriver.AddFinishAction(System.Action<Verse.AI.JobCondition>)
+  nameWithType.vb: JobDriver.AddFinishAction(Action(Of JobCondition))
+  fullName.vb: Verse.AI.JobDriver.AddFinishAction(System.Action(Of Verse.AI.JobCondition))
+  name.vb: AddFinishAction(Action(Of JobCondition))
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.AddFinishAction(System.Action{Verse.AI.JobCondition})
+    name: AddFinishAction
+    nameWithType: JobDriver.AddFinishAction
+    fullName: Verse.AI.JobDriver.AddFinishAction
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.AddFinishAction(System.Action{Verse.AI.JobCondition})
+    name: AddFinishAction
+    nameWithType: JobDriver.AddFinishAction
+    fullName: Verse.AI.JobDriver.AddFinishAction
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.AI.JobCondition
+    name: JobCondition
+    nameWithType: JobCondition
+    fullName: Verse.AI.JobCondition
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.ModifyCarriedThingDrawPos(UnityEngine.Vector3@,System.Boolean@)
+  commentId: M:Verse.AI.JobDriver.ModifyCarriedThingDrawPos(UnityEngine.Vector3@,System.Boolean@)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ModifyCarriedThingDrawPos(Vector3, Boolean)
+  nameWithType: JobDriver.ModifyCarriedThingDrawPos(Vector3, Boolean)
+  fullName: Verse.AI.JobDriver.ModifyCarriedThingDrawPos(UnityEngine.Vector3, System.Boolean)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.ModifyCarriedThingDrawPos(UnityEngine.Vector3@,System.Boolean@)
+    name: ModifyCarriedThingDrawPos
+    nameWithType: JobDriver.ModifyCarriedThingDrawPos
+    fullName: Verse.AI.JobDriver.ModifyCarriedThingDrawPos
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    nameWithType: Vector3
+    fullName: UnityEngine.Vector3
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.ModifyCarriedThingDrawPos(UnityEngine.Vector3@,System.Boolean@)
+    name: ModifyCarriedThingDrawPos
+    nameWithType: JobDriver.ModifyCarriedThingDrawPos
+    fullName: Verse.AI.JobDriver.ModifyCarriedThingDrawPos
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    nameWithType: Vector3
+    fullName: UnityEngine.Vector3
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.DesiredSocialMode
+  commentId: M:Verse.AI.JobDriver.DesiredSocialMode
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: DesiredSocialMode()
+  nameWithType: JobDriver.DesiredSocialMode()
+  fullName: Verse.AI.JobDriver.DesiredSocialMode()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.DesiredSocialMode
+    name: DesiredSocialMode
+    nameWithType: JobDriver.DesiredSocialMode
+    fullName: Verse.AI.JobDriver.DesiredSocialMode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.DesiredSocialMode
+    name: DesiredSocialMode
+    nameWithType: JobDriver.DesiredSocialMode
+    fullName: Verse.AI.JobDriver.DesiredSocialMode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.IsContinuation(Verse.AI.Job)
+  commentId: M:Verse.AI.JobDriver.IsContinuation(Verse.AI.Job)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: IsContinuation(Job)
+  nameWithType: JobDriver.IsContinuation(Job)
+  fullName: Verse.AI.JobDriver.IsContinuation(Verse.AI.Job)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.IsContinuation(Verse.AI.Job)
+    name: IsContinuation
+    nameWithType: JobDriver.IsContinuation
+    fullName: Verse.AI.JobDriver.IsContinuation
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.Job
+    name: Job
+    nameWithType: Job
+    fullName: Verse.AI.Job
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.IsContinuation(Verse.AI.Job)
+    name: IsContinuation
+    nameWithType: JobDriver.IsContinuation
+    fullName: Verse.AI.JobDriver.IsContinuation
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.Job
+    name: Job
+    nameWithType: Job
+    fullName: Verse.AI.Job
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.IsSameJobAs(Verse.AI.Job)
+  commentId: M:Verse.AI.JobDriver.IsSameJobAs(Verse.AI.Job)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: IsSameJobAs(Job)
+  nameWithType: JobDriver.IsSameJobAs(Job)
+  fullName: Verse.AI.JobDriver.IsSameJobAs(Verse.AI.Job)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.IsSameJobAs(Verse.AI.Job)
+    name: IsSameJobAs
+    nameWithType: JobDriver.IsSameJobAs
+    fullName: Verse.AI.JobDriver.IsSameJobAs
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.Job
+    name: Job
+    nameWithType: Job
+    fullName: Verse.AI.Job
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.IsSameJobAs(Verse.AI.Job)
+    name: IsSameJobAs
+    nameWithType: JobDriver.IsSameJobAs
+    fullName: Verse.AI.JobDriver.IsSameJobAs
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.AI.Job
+    name: Job
+    nameWithType: Job
+    fullName: Verse.AI.Job
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.AI.JobDriver.ForcedLayingRotation
+  commentId: P:Verse.AI.JobDriver.ForcedLayingRotation
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ForcedLayingRotation
+  nameWithType: JobDriver.ForcedLayingRotation
+  fullName: Verse.AI.JobDriver.ForcedLayingRotation
+- uid: Verse.AI.JobDriver.ForcedBodyOffset
+  commentId: P:Verse.AI.JobDriver.ForcedBodyOffset
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ForcedBodyOffset
+  nameWithType: JobDriver.ForcedBodyOffset
+  fullName: Verse.AI.JobDriver.ForcedBodyOffset
+- uid: Verse.AI.JobDriver.CurToil
+  commentId: P:Verse.AI.JobDriver.CurToil
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: CurToil
+  nameWithType: JobDriver.CurToil
+  fullName: Verse.AI.JobDriver.CurToil
+- uid: Verse.AI.JobDriver.HaveCurToil
+  commentId: P:Verse.AI.JobDriver.HaveCurToil
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: HaveCurToil
+  nameWithType: JobDriver.HaveCurToil
+  fullName: Verse.AI.JobDriver.HaveCurToil
+- uid: Verse.AI.JobDriver.CurToilIndex
+  commentId: P:Verse.AI.JobDriver.CurToilIndex
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: CurToilIndex
+  nameWithType: JobDriver.CurToilIndex
+  fullName: Verse.AI.JobDriver.CurToilIndex
+- uid: Verse.AI.JobDriver.CurToilString
+  commentId: P:Verse.AI.JobDriver.CurToilString
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: CurToilString
+  nameWithType: JobDriver.CurToilString
+  fullName: Verse.AI.JobDriver.CurToilString
+- uid: Verse.AI.JobDriver.OnLastToil
+  commentId: P:Verse.AI.JobDriver.OnLastToil
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: OnLastToil
+  nameWithType: JobDriver.OnLastToil
+  fullName: Verse.AI.JobDriver.OnLastToil
+- uid: Verse.AI.JobDriver.ActiveSkill
+  commentId: P:Verse.AI.JobDriver.ActiveSkill
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: ActiveSkill
+  nameWithType: JobDriver.ActiveSkill
+  fullName: Verse.AI.JobDriver.ActiveSkill
+- uid: Verse.AI.JobDriver.HandlingFacing
+  commentId: P:Verse.AI.JobDriver.HandlingFacing
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: HandlingFacing
+  nameWithType: JobDriver.HandlingFacing
+  fullName: Verse.AI.JobDriver.HandlingFacing
+- uid: Verse.AI.JobDriver.PlayerInterruptable
+  commentId: P:Verse.AI.JobDriver.PlayerInterruptable
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: PlayerInterruptable
+  nameWithType: JobDriver.PlayerInterruptable
+  fullName: Verse.AI.JobDriver.PlayerInterruptable
+- uid: Verse.AI.JobDriver.TargetA
+  commentId: P:Verse.AI.JobDriver.TargetA
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetA
+  nameWithType: JobDriver.TargetA
+  fullName: Verse.AI.JobDriver.TargetA
+- uid: Verse.AI.JobDriver.TargetB
+  commentId: P:Verse.AI.JobDriver.TargetB
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetB
+  nameWithType: JobDriver.TargetB
+  fullName: Verse.AI.JobDriver.TargetB
+- uid: Verse.AI.JobDriver.TargetC
+  commentId: P:Verse.AI.JobDriver.TargetC
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetC
+  nameWithType: JobDriver.TargetC
+  fullName: Verse.AI.JobDriver.TargetC
+- uid: Verse.AI.JobDriver.TargetThingA
+  commentId: P:Verse.AI.JobDriver.TargetThingA
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetThingA
+  nameWithType: JobDriver.TargetThingA
+  fullName: Verse.AI.JobDriver.TargetThingA
+- uid: Verse.AI.JobDriver.TargetThingB
+  commentId: P:Verse.AI.JobDriver.TargetThingB
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetThingB
+  nameWithType: JobDriver.TargetThingB
+  fullName: Verse.AI.JobDriver.TargetThingB
+- uid: Verse.AI.JobDriver.TargetThingC
+  commentId: P:Verse.AI.JobDriver.TargetThingC
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetThingC
+  nameWithType: JobDriver.TargetThingC
+  fullName: Verse.AI.JobDriver.TargetThingC
+- uid: Verse.AI.JobDriver.TargetPawnA
+  commentId: P:Verse.AI.JobDriver.TargetPawnA
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetPawnA
+  nameWithType: JobDriver.TargetPawnA
+  fullName: Verse.AI.JobDriver.TargetPawnA
+- uid: Verse.AI.JobDriver.TargetPawnB
+  commentId: P:Verse.AI.JobDriver.TargetPawnB
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetPawnB
+  nameWithType: JobDriver.TargetPawnB
+  fullName: Verse.AI.JobDriver.TargetPawnB
+- uid: Verse.AI.JobDriver.TargetPawnC
+  commentId: P:Verse.AI.JobDriver.TargetPawnC
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetPawnC
+  nameWithType: JobDriver.TargetPawnC
+  fullName: Verse.AI.JobDriver.TargetPawnC
+- uid: Verse.AI.JobDriver.TargetLocA
+  commentId: P:Verse.AI.JobDriver.TargetLocA
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TargetLocA
+  nameWithType: JobDriver.TargetLocA
+  fullName: Verse.AI.JobDriver.TargetLocA
+- uid: Verse.AI.JobDriver.Map
+  commentId: P:Verse.AI.JobDriver.Map
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: Map
+  nameWithType: JobDriver.Map
+  fullName: Verse.AI.JobDriver.Map
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  parent: RW_ModularizationWeapon.Tools.ToolsFunction
+  definition: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  name: LogAllField()
+  nameWithType: ToolsFunction.LogAllField()
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField()
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Verse.AI
+  commentId: N:Verse.AI
+  isExternal: true
+  name: Verse.AI
+  nameWithType: Verse.AI
+  fullName: Verse.AI
+- uid: Verse
+  commentId: N:Verse
+  isExternal: true
+  name: Verse
+  nameWithType: Verse
+  fullName: Verse
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  isExternal: true
+  name: LogAllField(Object)
+  nameWithType: ToolsFunction.LogAllField(Object)
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction
+  commentId: T:RW_ModularizationWeapon.Tools.ToolsFunction
+  parent: RW_ModularizationWeapon.Tools
+  name: ToolsFunction
+  nameWithType: ToolsFunction
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction
+- uid: RW_ModularizationWeapon.Tools
+  commentId: N:RW_ModularizationWeapon.Tools
+  name: RW_ModularizationWeapon.Tools
+  nameWithType: RW_ModularizationWeapon.Tools
+  fullName: RW_ModularizationWeapon.Tools
+- uid: Verse.AI.JobDriver.TryMakePreToilReservations(System.Boolean)
+  commentId: M:Verse.AI.JobDriver.TryMakePreToilReservations(System.Boolean)
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: TryMakePreToilReservations(Boolean)
+  nameWithType: JobDriver.TryMakePreToilReservations(Boolean)
+  fullName: Verse.AI.JobDriver.TryMakePreToilReservations(System.Boolean)
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.TryMakePreToilReservations(System.Boolean)
+    name: TryMakePreToilReservations
+    nameWithType: JobDriver.TryMakePreToilReservations
+    fullName: Verse.AI.JobDriver.TryMakePreToilReservations
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.TryMakePreToilReservations(System.Boolean)
+    name: TryMakePreToilReservations
+    nameWithType: JobDriver.TryMakePreToilReservations
+    fullName: Verse.AI.JobDriver.TryMakePreToilReservations
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations*
+  commentId: Overload:RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations
+  name: TryMakePreToilReservations
+  nameWithType: JobDriver_ModifyWeapon.TryMakePreToilReservations
+  fullName: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.TryMakePreToilReservations
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: Verse.AI.JobDriver.MakeNewToils
+  commentId: M:Verse.AI.JobDriver.MakeNewToils
+  parent: Verse.AI.JobDriver
+  isExternal: true
+  name: MakeNewToils()
+  nameWithType: JobDriver.MakeNewToils()
+  fullName: Verse.AI.JobDriver.MakeNewToils()
+  spec.csharp:
+  - uid: Verse.AI.JobDriver.MakeNewToils
+    name: MakeNewToils
+    nameWithType: JobDriver.MakeNewToils
+    fullName: Verse.AI.JobDriver.MakeNewToils
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.AI.JobDriver.MakeNewToils
+    name: MakeNewToils
+    nameWithType: JobDriver.MakeNewToils
+    fullName: Verse.AI.JobDriver.MakeNewToils
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils*
+  commentId: Overload:RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils
+  name: MakeNewToils
+  nameWithType: JobDriver_ModifyWeapon.MakeNewToils
+  fullName: RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.MakeNewToils
+- uid: System.Collections.Generic.IEnumerable{Verse.AI.Toil}
+  commentId: T:System.Collections.Generic.IEnumerable{Verse.AI.Toil}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<Toil>
+  nameWithType: IEnumerable<Toil>
+  fullName: System.Collections.Generic.IEnumerable<Verse.AI.Toil>
+  nameWithType.vb: IEnumerable(Of Toil)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Verse.AI.Toil)
+  name.vb: IEnumerable(Of Toil)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.AI.Toil
+    name: Toil
+    nameWithType: Toil
+    fullName: Verse.AI.Toil
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.AI.Toil
+    name: Toil
+    nameWithType: Toil
+    fullName: Verse.AI.Toil
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic

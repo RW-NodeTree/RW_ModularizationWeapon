@@ -1,0 +1,416 @@
+### YamlMime:ManagedReference
+items:
+- uid: RW_ModularizationWeapon
+  commentId: N:RW_ModularizationWeapon
+  id: RW_ModularizationWeapon
+  children:
+  - RW_ModularizationWeapon.CompCustomWeaponPort
+  - RW_ModularizationWeapon.CompModularizationWeapon
+  - RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  - RW_ModularizationWeapon.FieldReader`2
+  - RW_ModularizationWeapon.FieldReaderBoolean`1
+  - RW_ModularizationWeapon.FieldReaderBoolList`1
+  - RW_ModularizationWeapon.FieldReaderDgitList`1
+  - RW_ModularizationWeapon.FieldReaderDigit`1
+  - RW_ModularizationWeapon.FieldReaderFilt`1
+  - RW_ModularizationWeapon.FieldReaderFiltList`1
+  - RW_ModularizationWeapon.FieldReaderInstance`1
+  - RW_ModularizationWeapon.FieldReaderInstList`1
+  - RW_ModularizationWeapon.PartSubDrawingInfo
+  - RW_ModularizationWeapon.WeaponAttachmentProperties
+  langs:
+  - csharp
+  - vb
+  name: RW_ModularizationWeapon
+  nameWithType: RW_ModularizationWeapon
+  fullName: RW_ModularizationWeapon
+  type: Namespace
+  assemblies:
+  - RW_ModularizationWeapon
+references:
+- uid: RW_ModularizationWeapon.CompModularizationWeapon
+  commentId: T:RW_ModularizationWeapon.CompModularizationWeapon
+  parent: RW_ModularizationWeapon
+  name: CompModularizationWeapon
+  nameWithType: CompModularizationWeapon
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort
+  commentId: T:RW_ModularizationWeapon.CompCustomWeaponPort
+  parent: RW_ModularizationWeapon
+  name: CompCustomWeaponPort
+  nameWithType: CompCustomWeaponPort
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort
+- uid: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+  commentId: T:RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+  parent: RW_ModularizationWeapon
+  name: CompProperties_CustomWeaponPort
+  nameWithType: CompProperties_CustomWeaponPort
+  fullName: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  commentId: T:RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  parent: RW_ModularizationWeapon
+  name: CompProperties_ModularizationWeapon
+  nameWithType: CompProperties_ModularizationWeapon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+- uid: RW_ModularizationWeapon.FieldReader`2
+  commentId: T:RW_ModularizationWeapon.FieldReader`2
+  parent: RW_ModularizationWeapon
+  name: FieldReader<T, TV>
+  nameWithType: FieldReader<T, TV>
+  fullName: RW_ModularizationWeapon.FieldReader<T, TV>
+  nameWithType.vb: FieldReader(Of T, TV)
+  fullName.vb: RW_ModularizationWeapon.FieldReader(Of T, TV)
+  name.vb: FieldReader(Of T, TV)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReader`2
+    name: FieldReader
+    nameWithType: FieldReader
+    fullName: RW_ModularizationWeapon.FieldReader
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TV
+    nameWithType: TV
+    fullName: TV
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReader`2
+    name: FieldReader
+    nameWithType: FieldReader
+    fullName: RW_ModularizationWeapon.FieldReader
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TV
+    nameWithType: TV
+    fullName: TV
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderDigit`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderDigit`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderDigit<T>
+  nameWithType: FieldReaderDigit<T>
+  fullName: RW_ModularizationWeapon.FieldReaderDigit<T>
+  nameWithType.vb: FieldReaderDigit(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDigit(Of T)
+  name.vb: FieldReaderDigit(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderDigit`1
+    name: FieldReaderDigit
+    nameWithType: FieldReaderDigit
+    fullName: RW_ModularizationWeapon.FieldReaderDigit
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderDigit`1
+    name: FieldReaderDigit
+    nameWithType: FieldReaderDigit
+    fullName: RW_ModularizationWeapon.FieldReaderDigit
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderBoolean`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolean`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderBoolean<T>
+  nameWithType: FieldReaderBoolean<T>
+  fullName: RW_ModularizationWeapon.FieldReaderBoolean<T>
+  nameWithType.vb: FieldReaderBoolean(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolean(Of T)
+  name.vb: FieldReaderBoolean(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolean`1
+    name: FieldReaderBoolean
+    nameWithType: FieldReaderBoolean
+    fullName: RW_ModularizationWeapon.FieldReaderBoolean
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolean`1
+    name: FieldReaderBoolean
+    nameWithType: FieldReaderBoolean
+    fullName: RW_ModularizationWeapon.FieldReaderBoolean
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderInstance`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstance`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderInstance<T>
+  nameWithType: FieldReaderInstance<T>
+  fullName: RW_ModularizationWeapon.FieldReaderInstance<T>
+  nameWithType.vb: FieldReaderInstance(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstance(Of T)
+  name.vb: FieldReaderInstance(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderInstance`1
+    name: FieldReaderInstance
+    nameWithType: FieldReaderInstance
+    fullName: RW_ModularizationWeapon.FieldReaderInstance
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderInstance`1
+    name: FieldReaderInstance
+    nameWithType: FieldReaderInstance
+    fullName: RW_ModularizationWeapon.FieldReaderInstance
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderFilt`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderFilt`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderFilt<T>
+  nameWithType: FieldReaderFilt<T>
+  fullName: RW_ModularizationWeapon.FieldReaderFilt<T>
+  nameWithType.vb: FieldReaderFilt(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFilt(Of T)
+  name.vb: FieldReaderFilt(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderFilt`1
+    name: FieldReaderFilt
+    nameWithType: FieldReaderFilt
+    fullName: RW_ModularizationWeapon.FieldReaderFilt
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderFilt`1
+    name: FieldReaderFilt
+    nameWithType: FieldReaderFilt
+    fullName: RW_ModularizationWeapon.FieldReaderFilt
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderDgitList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderDgitList<T>
+  nameWithType: FieldReaderDgitList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderDgitList<T>
+  nameWithType.vb: FieldReaderDgitList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDgitList(Of T)
+  name.vb: FieldReaderDgitList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderBoolList<T>
+  nameWithType: FieldReaderBoolList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderBoolList<T>
+  nameWithType.vb: FieldReaderBoolList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolList(Of T)
+  name.vb: FieldReaderBoolList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderInstList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderInstList<T>
+  nameWithType: FieldReaderInstList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderInstList<T>
+  nameWithType.vb: FieldReaderInstList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstList(Of T)
+  name.vb: FieldReaderInstList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderFiltList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderFiltList<T>
+  nameWithType: FieldReaderFiltList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderFiltList<T>
+  nameWithType.vb: FieldReaderFiltList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFiltList(Of T)
+  name.vb: FieldReaderFiltList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo
+  commentId: T:RW_ModularizationWeapon.PartSubDrawingInfo
+  name: PartSubDrawingInfo
+  nameWithType: PartSubDrawingInfo
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties
+  commentId: T:RW_ModularizationWeapon.WeaponAttachmentProperties
+  parent: RW_ModularizationWeapon
+  name: WeaponAttachmentProperties
+  nameWithType: WeaponAttachmentProperties
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties
+- uid: RW_ModularizationWeapon
+  commentId: N:RW_ModularizationWeapon
+  name: RW_ModularizationWeapon
+  nameWithType: RW_ModularizationWeapon
+  fullName: RW_ModularizationWeapon

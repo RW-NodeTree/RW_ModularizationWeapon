@@ -44,7 +44,7 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="_site" />
+		<None Remove="_site/**" />
 		<None Remove="log.*" />
 		<None Remove="/**/bin/**" />
 		<None Remove="/**/obj/**" />
@@ -57,4 +57,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('../../packages/docfx.console.2.59.4/build/docfx.console.targets')" Text="$([System.String]::Format('$(ErrorText)', '../../packages/docfx.console.2.59.4/build/docfx.console.targets'))" />
   </Target>
+	<Target AfterTargets="PostBuildEvent" Name="PostBuild">
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.3/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.4/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.5/Assemblies/RW_NodeTree.dll" />
+	</Target>
 </Project>

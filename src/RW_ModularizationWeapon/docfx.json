@@ -4,12 +4,11 @@
       "src": [
         {
           "files": [
-            "**.csproj"
-          ],
-          "src": "F:\\c#\\RW_ModularizationWeapon\\src\\RW_ModularizationWeapon"
+            "*.csproj"
+          ]
         }
       ],
-      "dest": "api",
+      "dest": "docfx/api",
       "disableGitFeatures": false,
       "disableDefaultFilter": false
     }
@@ -20,7 +19,8 @@
         "files": [
           "api/**.yml",
           "api/index.md"
-        ]
+        ],
+        "src": "docfx"
       },
       {
         "files": [
@@ -28,14 +28,16 @@
           "articles/**/toc.yml",
           "toc.yml",
           "*.md"
-        ]
+        ],
+        "src": "docfx"
       }
     ],
     "resource": [
       {
         "files": [
           "images/**"
-        ]
+        ],
+        "src": "docfx"
       }
     ],
     "overwrite": [
@@ -45,15 +47,16 @@
         ],
         "exclude": [
           "obj/**",
-          "_site/**"
-        ]
+          "docs/**"
+        ],
+        "src": "docfx"
       }
     ],
-    "dest": "_site",
+    "dest": "../../docs",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "docfx/custom_template"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",

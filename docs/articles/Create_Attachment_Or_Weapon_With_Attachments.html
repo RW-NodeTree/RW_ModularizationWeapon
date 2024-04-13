@@ -69,70 +69,71 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="create-weapon">Create Weapon</h1>
 
-<h2 id="before-we-start-you-must-know-how-to-create-attachmentcreateattachmentmd">Before we start you must know how to <strong><a href="Create_Attachment.html">Create Attachment</a></strong>.</h2>
-<p><strong>Let&#39;s start create a weapon called <code>templateGun</code> :</strong></p>
+<h2 id="before-we-start-you-must-know-how-to-create-attachment">Before we start you must know how to <strong><a href="Create_Attachment.html">Create Attachment</a></strong>.</h2>
+<p><strong>Let's start create a weapon called <code>templateGun</code> :</strong></p>
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;Defs&gt;
     &lt;!-- Or use parentName BaseMeleeWeapon_Sharp_Quality or BaseMeleeWeapon_Blunt_Quality for melee weapon, or not use any ParentName for simple attachment --&gt;
-    &lt;ThingDef ParentName=&quot;BaseHumanMakeableGun&quot;&gt;
-        &lt;defName&gt;templateGun&lt;/defName&gt;
+	&lt;ThingDef ParentName=&quot;BaseHumanMakeableGun&quot;&gt;
+		&lt;defName&gt;templateGun&lt;/defName&gt;
         ...
         &lt;!-- your weapon verbs define --&gt;
-        &lt;verbs&gt;
+		&lt;verbs&gt;
             ...
-            &lt;li&gt;
-                &lt;verbClass&gt;Verb_Shoot&lt;/verbClass&gt;
-                &lt;hasStandardCommand&gt;true&lt;/hasStandardCommand&gt;
-                &lt;defaultProjectile&gt;Bullet_AssaultRifle&lt;/defaultProjectile&gt;
-                &lt;warmupTime&gt;1.0&lt;/warmupTime&gt;
-                &lt;range&gt;30.9&lt;/range&gt;
-                &lt;ticksBetweenBurstShots&gt;10&lt;/ticksBetweenBurstShots&gt;
-                &lt;soundCast&gt;Shot_AssaultRifle&lt;/soundCast&gt;
-                &lt;soundCastTail&gt;GunTail_Medium&lt;/soundCastTail&gt;
-                &lt;muzzleFlashScale&gt;9&lt;/muzzleFlashScale&gt;
-            &lt;/li&gt;
+			&lt;li&gt;
+				&lt;verbClass&gt;Verb_Shoot&lt;/verbClass&gt;
+				&lt;hasStandardCommand&gt;true&lt;/hasStandardCommand&gt;
+				&lt;defaultProjectile&gt;Bullet_AssaultRifle&lt;/defaultProjectile&gt;
+				&lt;warmupTime&gt;1.0&lt;/warmupTime&gt;
+				&lt;range&gt;30.9&lt;/range&gt;
+				&lt;ticksBetweenBurstShots&gt;10&lt;/ticksBetweenBurstShots&gt;
+				&lt;soundCast&gt;Shot_AssaultRifle&lt;/soundCast&gt;
+				&lt;soundCastTail&gt;GunTail_Medium&lt;/soundCastTail&gt;
+				&lt;muzzleFlashScale&gt;9&lt;/muzzleFlashScale&gt;
+			&lt;/li&gt;
             ...
-        &lt;/verbs&gt;
+		&lt;/verbs&gt;
         ...
         &lt;!-- your weapon melee define--&gt;
-        &lt;tools&gt;
+		&lt;tools&gt;
             ...
-            &lt;li&gt;
-                &lt;label&gt;stock&lt;/label&gt;
-                &lt;capacities&gt;
-                    &lt;li&gt;Blunt&lt;/li&gt;
-                &lt;/capacities&gt;
-                &lt;power&gt;9&lt;/power&gt;
-                &lt;cooldownTime&gt;2&lt;/cooldownTime&gt;
-            &lt;/li&gt;
+			&lt;li&gt;
+				&lt;label&gt;stock&lt;/label&gt;
+				&lt;capacities&gt;
+					&lt;li&gt;Blunt&lt;/li&gt;
+				&lt;/capacities&gt;
+				&lt;power&gt;9&lt;/power&gt;
+				&lt;cooldownTime&gt;2&lt;/cooldownTime&gt;
+			&lt;/li&gt;
             ...
-        &lt;/tools&gt;
-        &lt;comps&gt;
+		&lt;/tools&gt;
+		&lt;comps&gt;
             ...
             &lt;!-- node tree dependence --&gt;
-            &lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
-                &lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
-                &lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
-                &lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
-                &lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
-                &lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
-            &lt;/li&gt;
+			&lt;li Class=&quot;RW_NodeTree.CompProperties_ChildNodeProccesser&quot;&gt;
+				&lt;TextureSizeFactor&gt;256&lt;/TextureSizeFactor&gt;
+				&lt;TextureFilterMode&gt;Point&lt;/TextureFilterMode&gt;
+				&lt;ExceedanceFactor&gt;2&lt;/ExceedanceFactor&gt;
+				&lt;ExceedanceOffset&gt;1&lt;/ExceedanceOffset&gt;
+				&lt;ForceNodeIdControl&gt;true&lt;/ForceNodeIdControl&gt;
+			&lt;/li&gt;
             &lt;!-- weapon framework --&gt;
-            &lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
+			&lt;li Class=&quot;RW_ModularizationWeapon.CompProperties_ModularizationWeapon&quot;&gt;
                 ...
                 &lt;!-- it will set random part when weapon not create by crafting --&gt;
-                &lt;setRandomPartWhenCreate&gt;true&lt;/setRandomPartWhenCreate&gt;
+				&lt;setRandomPartWhenCreate&gt;true&lt;/setRandomPartWhenCreate&gt;
                 &lt;!-- declare the attach point for this weapon --&gt;
-                &lt;attachmentProperties&gt;
+				&lt;attachmentProperties&gt;
                     ...
-                &lt;/attachmentProperties&gt;
+				&lt;/attachmentProperties&gt;
                 ...
-            &lt;/li&gt;
+			&lt;/li&gt;
             ...
-        &lt;/comps&gt;
-    &lt;/ThingDef&gt;
+		&lt;/comps&gt;
+	&lt;/ThingDef&gt;
 &lt;/Defs&gt;
-</code></pre><p><em>More parameters here: <a href="../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html">Type : CompProperties_ModularizationWeapon</a></em></p>
+</code></pre>
+<p><em>More parameters here: <a href="../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html">Type : CompProperties_ModularizationWeapon</a></em></p>
 <p><strong>Then, set <code>attachmentProperties</code> to make weapon able to use attachment.</strong></p>
 <p><strong>Here is an example to make a attachment point for our previous attachment <code>templatePart</code></strong></p>
 <pre><code class="lang-xml">...
@@ -167,7 +168,8 @@
     ...
 &lt;/li&gt;
 ...
-</code></pre><p><em>More parameters here: <a href="../api/RW_ModularizationWeapon.WeaponAttachmentProperties.html">Type : WeaponAttachmentProperties</a></em></p>
+</code></pre>
+<p><em>More parameters here: <a href="../api/RW_ModularizationWeapon.WeaponAttachmentProperties.html">Type : WeaponAttachmentProperties</a></em></p>
 <p><strong>And final, you will get a weapon or part that able to install an attachment called templatePart on attach point <code>template Part</code></strong></p>
 </article>
           </div>
@@ -177,7 +179,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/docfx/articles/Create_Attachment_Or_Weapon_With_Attachments.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/src/RW_ModularizationWeapon/docfx/articles/Create_Attachment_Or_Weapon_With_Attachments.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

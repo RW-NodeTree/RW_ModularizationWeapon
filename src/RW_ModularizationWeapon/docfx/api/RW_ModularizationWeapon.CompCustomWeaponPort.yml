@@ -1,0 +1,3664 @@
+### YamlMime:ManagedReference
+items:
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort
+  commentId: T:RW_ModularizationWeapon.CompCustomWeaponPort
+  id: CompCustomWeaponPort
+  parent: RW_ModularizationWeapon
+  children:
+  - RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions(Verse.Pawn)
+  - RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget
+  - RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon
+  - RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData
+  - RW_ModularizationWeapon.CompCustomWeaponPort.Props
+  - RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(RW_ModularizationWeapon.CompModularizationWeapon,RW_ModularizationWeapon.UI.CustomWeapon)
+  - RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(Verse.ThingDef,RW_ModularizationWeapon.UI.CustomWeapon)
+  langs:
+  - csharp
+  - vb
+  name: CompCustomWeaponPort
+  nameWithType: CompCustomWeaponPort
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort
+  type: Class
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: CompCustomWeaponPort
+    path: CompCustomWeaponPort.cs
+    startLine: 13
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\n`ThingComp` instance on thing for weapon modification\n"
+  example: []
+  syntax:
+    content: 'public class CompCustomWeaponPort : ThingComp'
+    content.vb: >-
+      Public Class CompCustomWeaponPort
+
+          Inherits ThingComp
+  inheritance:
+  - System.Object
+  - Verse.ThingComp
+  inheritedMembers:
+  - Verse.ThingComp.parent
+  - Verse.ThingComp.props
+  - Verse.ThingComp.Initialize(Verse.CompProperties)
+  - Verse.ThingComp.ReceiveCompSignal(System.String)
+  - Verse.ThingComp.PostSpawnSetup(System.Boolean)
+  - Verse.ThingComp.PostDeSpawn(Verse.Map)
+  - Verse.ThingComp.PostDestroy(Verse.DestroyMode,Verse.Map)
+  - Verse.ThingComp.PostPostMake
+  - Verse.ThingComp.CompTick
+  - Verse.ThingComp.CompTickRare
+  - Verse.ThingComp.CompTickLong
+  - Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo@,System.Boolean@)
+  - Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo,System.Single)
+  - Verse.ThingComp.PostDraw
+  - Verse.ThingComp.PostDrawExtraSelectionOverlays
+  - Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)
+  - Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)
+  - Verse.ThingComp.PreAbsorbStack(Verse.Thing,System.Int32)
+  - Verse.ThingComp.PostSplitOff(Verse.Thing)
+  - Verse.ThingComp.TransformLabel(System.String)
+  - Verse.ThingComp.CompGetGizmosExtra
+  - Verse.ThingComp.CompGetWornGizmosExtra
+  - Verse.ThingComp.AllowStackWith(Verse.Thing)
+  - Verse.ThingComp.CompInspectStringExtra
+  - Verse.ThingComp.CompTipStringExtra
+  - Verse.ThingComp.GetDescriptionPart
+  - Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List{Verse.Pawn})
+  - Verse.ThingComp.PrePreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)
+  - Verse.ThingComp.PrePostIngested(Verse.Pawn)
+  - Verse.ThingComp.PostIngested(Verse.Pawn)
+  - Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef,System.Int32,RimWorld.Faction)
+  - Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)
+  - Verse.ThingComp.Notify_LordDestroyed
+  - Verse.ThingComp.Notify_MapRemoved
+  - Verse.ThingComp.DrawGUIOverlay
+  - Verse.ThingComp.SpecialDisplayStats
+  - Verse.ThingComp.Notify_Equipped(Verse.Pawn)
+  - Verse.ThingComp.Notify_Unequipped(Verse.Pawn)
+  - Verse.ThingComp.Notify_UsedVerb(Verse.Pawn,Verse.Verb)
+  - Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)
+  - Verse.ThingComp.Notify_Killed(Verse.Map,System.Nullable{Verse.DamageInfo})
+  - Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)
+  - Verse.ThingComp.Notify_WearerDied
+  - Verse.ThingComp.Notify_Downed
+  - Verse.ThingComp.Notify_Released
+  - Verse.ThingComp.Notify_DefsHotReloaded
+  - Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)
+  - Verse.ThingComp.Notify_AbandonedAtTile(System.Int32)
+  - Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List{Verse.Thing})
+  - Verse.ThingComp.Notify_Arrested(System.Boolean)
+  - Verse.ThingComp.Notify_PrisonBreakout
+  - Verse.ThingComp.GetAdditionalLeavings(Verse.Map,Verse.DestroyMode)
+  - Verse.ThingComp.GetAdditionalHarvestYield
+  - Verse.ThingComp.CompDrawWornExtras
+  - Verse.ThingComp.CompAllowVerbCast(Verse.Verb)
+  - Verse.ThingComp.CompPreventClaimingBy(RimWorld.Faction)
+  - Verse.ThingComp.CompForceDeconstructable
+  - Verse.ThingComp.CompGetSpecialApparelScoreOffset
+  - Verse.ThingComp.Notify_RecipeProduced(Verse.Pawn)
+  - Verse.ThingComp.Notify_DuplicatedFrom(Verse.Pawn)
+  - Verse.ThingComp.Notify_BecameVisible
+  - Verse.ThingComp.Notify_BecameInvisible
+  - Verse.ThingComp.Notify_ForcedVisible
+  - Verse.ThingComp.GetStatFactor(RimWorld.StatDef)
+  - Verse.ThingComp.GetStatOffset(RimWorld.StatDef)
+  - Verse.ThingComp.GetStatsExplanation(RimWorld.StatDef,System.Text.StringBuilder)
+  - Verse.ThingComp.CompRenderNodes
+  - Verse.ThingComp.ToString
+  - Verse.ThingComp.ParentHolder
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.Props
+  commentId: P:RW_ModularizationWeapon.CompCustomWeaponPort.Props
+  id: Props
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: Props
+  nameWithType: CompCustomWeaponPort.Props
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.Props
+  type: Property
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: Props
+    path: CompCustomWeaponPort.cs
+    startLine: 15
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public CompProperties_CustomWeaponPort Props { get; }
+    parameters: []
+    return:
+      type: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+    content.vb: Public ReadOnly Property Props As CompProperties_CustomWeaponPort
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.Props*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData
+  commentId: M:RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData
+  id: PostExposeData
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: PostExposeData()
+  nameWithType: CompCustomWeaponPort.PostExposeData()
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData()
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: PostExposeData
+    path: CompCustomWeaponPort.cs
+    startLine: 18
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public override void PostExposeData()
+    content.vb: Public Overrides Sub PostExposeData
+  overridden: Verse.ThingComp.PostExposeData
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions(Verse.Pawn)
+  commentId: M:RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions(Verse.Pawn)
+  id: CompFloatMenuOptions(Verse.Pawn)
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: CompFloatMenuOptions(Pawn)
+  nameWithType: CompCustomWeaponPort.CompFloatMenuOptions(Pawn)
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions(Verse.Pawn)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: CompFloatMenuOptions
+    path: CompCustomWeaponPort.cs
+    startLine: 26
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+    parameters:
+    - id: selPawn
+      type: Verse.Pawn
+    return:
+      type: System.Collections.Generic.IEnumerable{Verse.FloatMenuOption}
+    content.vb: Public Overrides Function CompFloatMenuOptions(selPawn As Pawn) As IEnumerable(Of FloatMenuOption)
+  overridden: Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(Verse.ThingDef,RW_ModularizationWeapon.UI.CustomWeapon)
+  commentId: M:RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(Verse.ThingDef,RW_ModularizationWeapon.UI.CustomWeapon)
+  id: SetTarget(Verse.ThingDef,RW_ModularizationWeapon.UI.CustomWeapon)
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: SetTarget(ThingDef, CustomWeapon)
+  nameWithType: CompCustomWeaponPort.SetTarget(ThingDef, CustomWeapon)
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(Verse.ThingDef, RW_ModularizationWeapon.UI.CustomWeapon)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: SetTarget
+    path: CompCustomWeaponPort.cs
+    startLine: 55
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public void SetTarget(ThingDef selectedDef, CustomWeapon customWeapon = null)
+    parameters:
+    - id: selectedDef
+      type: Verse.ThingDef
+    - id: customWeapon
+      type: RW_ModularizationWeapon.UI.CustomWeapon
+    content.vb: Public Sub SetTarget(selectedDef As ThingDef, customWeapon As CustomWeapon = Nothing)
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(RW_ModularizationWeapon.CompModularizationWeapon,RW_ModularizationWeapon.UI.CustomWeapon)
+  commentId: M:RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(RW_ModularizationWeapon.CompModularizationWeapon,RW_ModularizationWeapon.UI.CustomWeapon)
+  id: SetTarget(RW_ModularizationWeapon.CompModularizationWeapon,RW_ModularizationWeapon.UI.CustomWeapon)
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: SetTarget(CompModularizationWeapon, CustomWeapon)
+  nameWithType: CompCustomWeaponPort.SetTarget(CompModularizationWeapon, CustomWeapon)
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget(RW_ModularizationWeapon.CompModularizationWeapon, RW_ModularizationWeapon.UI.CustomWeapon)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: SetTarget
+    path: CompCustomWeaponPort.cs
+    startLine: 66
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public void SetTarget(CompModularizationWeapon selectedWeapon, CustomWeapon customWeapon = null)
+    parameters:
+    - id: selectedWeapon
+      type: RW_ModularizationWeapon.CompModularizationWeapon
+    - id: customWeapon
+      type: RW_ModularizationWeapon.UI.CustomWeapon
+    content.vb: Public Sub SetTarget(selectedWeapon As CompModularizationWeapon, customWeapon As CustomWeapon = Nothing)
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget
+  commentId: M:RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget
+  id: GetTarget
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: GetTarget()
+  nameWithType: CompCustomWeaponPort.GetTarget()
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget()
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: GetTarget
+    path: CompCustomWeaponPort.cs
+    startLine: 80
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public LocalTargetInfo GetTarget()
+    return:
+      type: Verse.LocalTargetInfo
+    content.vb: Public Function GetTarget As LocalTargetInfo
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon
+  commentId: M:RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon
+  id: GetTargetCompModularizationWeapon
+  parent: RW_ModularizationWeapon.CompCustomWeaponPort
+  langs:
+  - csharp
+  - vb
+  name: GetTargetCompModularizationWeapon()
+  nameWithType: CompCustomWeaponPort.GetTargetCompModularizationWeapon()
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon()
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompCustomWeaponPort.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: GetTargetCompModularizationWeapon
+    path: CompCustomWeaponPort.cs
+    startLine: 83
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public CompModularizationWeapon GetTargetCompModularizationWeapon()
+    return:
+      type: RW_ModularizationWeapon.CompModularizationWeapon
+    content.vb: Public Function GetTargetCompModularizationWeapon As CompModularizationWeapon
+  overload: RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: RW_ModularizationWeapon
+  commentId: N:RW_ModularizationWeapon
+  name: RW_ModularizationWeapon
+  nameWithType: RW_ModularizationWeapon
+  fullName: RW_ModularizationWeapon
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: Verse.ThingComp
+  commentId: T:Verse.ThingComp
+  parent: Verse
+  isExternal: true
+  name: ThingComp
+  nameWithType: ThingComp
+  fullName: Verse.ThingComp
+- uid: Verse.ThingComp.parent
+  commentId: F:Verse.ThingComp.parent
+  parent: Verse.ThingComp
+  isExternal: true
+  name: parent
+  nameWithType: ThingComp.parent
+  fullName: Verse.ThingComp.parent
+- uid: Verse.ThingComp.props
+  commentId: F:Verse.ThingComp.props
+  parent: Verse.ThingComp
+  isExternal: true
+  name: props
+  nameWithType: ThingComp.props
+  fullName: Verse.ThingComp.props
+- uid: Verse.ThingComp.Initialize(Verse.CompProperties)
+  commentId: M:Verse.ThingComp.Initialize(Verse.CompProperties)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Initialize(CompProperties)
+  nameWithType: ThingComp.Initialize(CompProperties)
+  fullName: Verse.ThingComp.Initialize(Verse.CompProperties)
+  spec.csharp:
+  - uid: Verse.ThingComp.Initialize(Verse.CompProperties)
+    name: Initialize
+    nameWithType: ThingComp.Initialize
+    fullName: Verse.ThingComp.Initialize
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Initialize(Verse.CompProperties)
+    name: Initialize
+    nameWithType: ThingComp.Initialize
+    fullName: Verse.ThingComp.Initialize
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.ReceiveCompSignal(System.String)
+  commentId: M:Verse.ThingComp.ReceiveCompSignal(System.String)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: ReceiveCompSignal(String)
+  nameWithType: ThingComp.ReceiveCompSignal(String)
+  fullName: Verse.ThingComp.ReceiveCompSignal(System.String)
+  spec.csharp:
+  - uid: Verse.ThingComp.ReceiveCompSignal(System.String)
+    name: ReceiveCompSignal
+    nameWithType: ThingComp.ReceiveCompSignal
+    fullName: Verse.ThingComp.ReceiveCompSignal
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.ReceiveCompSignal(System.String)
+    name: ReceiveCompSignal
+    nameWithType: ThingComp.ReceiveCompSignal
+    fullName: Verse.ThingComp.ReceiveCompSignal
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostSpawnSetup(System.Boolean)
+  commentId: M:Verse.ThingComp.PostSpawnSetup(System.Boolean)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostSpawnSetup(Boolean)
+  nameWithType: ThingComp.PostSpawnSetup(Boolean)
+  fullName: Verse.ThingComp.PostSpawnSetup(System.Boolean)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostSpawnSetup(System.Boolean)
+    name: PostSpawnSetup
+    nameWithType: ThingComp.PostSpawnSetup
+    fullName: Verse.ThingComp.PostSpawnSetup
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostSpawnSetup(System.Boolean)
+    name: PostSpawnSetup
+    nameWithType: ThingComp.PostSpawnSetup
+    fullName: Verse.ThingComp.PostSpawnSetup
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostDeSpawn(Verse.Map)
+  commentId: M:Verse.ThingComp.PostDeSpawn(Verse.Map)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostDeSpawn(Map)
+  nameWithType: ThingComp.PostDeSpawn(Map)
+  fullName: Verse.ThingComp.PostDeSpawn(Verse.Map)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostDeSpawn(Verse.Map)
+    name: PostDeSpawn
+    nameWithType: ThingComp.PostDeSpawn
+    fullName: Verse.ThingComp.PostDeSpawn
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostDeSpawn(Verse.Map)
+    name: PostDeSpawn
+    nameWithType: ThingComp.PostDeSpawn
+    fullName: Verse.ThingComp.PostDeSpawn
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostDestroy(Verse.DestroyMode,Verse.Map)
+  commentId: M:Verse.ThingComp.PostDestroy(Verse.DestroyMode,Verse.Map)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostDestroy(DestroyMode, Map)
+  nameWithType: ThingComp.PostDestroy(DestroyMode, Map)
+  fullName: Verse.ThingComp.PostDestroy(Verse.DestroyMode, Verse.Map)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostDestroy(Verse.DestroyMode,Verse.Map)
+    name: PostDestroy
+    nameWithType: ThingComp.PostDestroy
+    fullName: Verse.ThingComp.PostDestroy
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DestroyMode
+    name: DestroyMode
+    nameWithType: DestroyMode
+    fullName: Verse.DestroyMode
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostDestroy(Verse.DestroyMode,Verse.Map)
+    name: PostDestroy
+    nameWithType: ThingComp.PostDestroy
+    fullName: Verse.ThingComp.PostDestroy
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DestroyMode
+    name: DestroyMode
+    nameWithType: DestroyMode
+    fullName: Verse.DestroyMode
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostPostMake
+  commentId: M:Verse.ThingComp.PostPostMake
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostPostMake()
+  nameWithType: ThingComp.PostPostMake()
+  fullName: Verse.ThingComp.PostPostMake()
+  spec.csharp:
+  - uid: Verse.ThingComp.PostPostMake
+    name: PostPostMake
+    nameWithType: ThingComp.PostPostMake
+    fullName: Verse.ThingComp.PostPostMake
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostPostMake
+    name: PostPostMake
+    nameWithType: ThingComp.PostPostMake
+    fullName: Verse.ThingComp.PostPostMake
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompTick
+  commentId: M:Verse.ThingComp.CompTick
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompTick()
+  nameWithType: ThingComp.CompTick()
+  fullName: Verse.ThingComp.CompTick()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompTick
+    name: CompTick
+    nameWithType: ThingComp.CompTick
+    fullName: Verse.ThingComp.CompTick
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompTick
+    name: CompTick
+    nameWithType: ThingComp.CompTick
+    fullName: Verse.ThingComp.CompTick
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompTickRare
+  commentId: M:Verse.ThingComp.CompTickRare
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompTickRare()
+  nameWithType: ThingComp.CompTickRare()
+  fullName: Verse.ThingComp.CompTickRare()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompTickRare
+    name: CompTickRare
+    nameWithType: ThingComp.CompTickRare
+    fullName: Verse.ThingComp.CompTickRare
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompTickRare
+    name: CompTickRare
+    nameWithType: ThingComp.CompTickRare
+    fullName: Verse.ThingComp.CompTickRare
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompTickLong
+  commentId: M:Verse.ThingComp.CompTickLong
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompTickLong()
+  nameWithType: ThingComp.CompTickLong()
+  fullName: Verse.ThingComp.CompTickLong()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompTickLong
+    name: CompTickLong
+    nameWithType: ThingComp.CompTickLong
+    fullName: Verse.ThingComp.CompTickLong
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompTickLong
+    name: CompTickLong
+    nameWithType: ThingComp.CompTickLong
+    fullName: Verse.ThingComp.CompTickLong
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo@,System.Boolean@)
+  commentId: M:Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo@,System.Boolean@)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostPreApplyDamage(DamageInfo, Boolean)
+  nameWithType: ThingComp.PostPreApplyDamage(DamageInfo, Boolean)
+  fullName: Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo, System.Boolean)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo@,System.Boolean@)
+    name: PostPreApplyDamage
+    nameWithType: ThingComp.PostPreApplyDamage
+    fullName: Verse.ThingComp.PostPreApplyDamage
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostPreApplyDamage(Verse.DamageInfo@,System.Boolean@)
+    name: PostPreApplyDamage
+    nameWithType: ThingComp.PostPreApplyDamage
+    fullName: Verse.ThingComp.PostPreApplyDamage
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo,System.Single)
+  commentId: M:Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo,System.Single)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostPostApplyDamage(DamageInfo, Single)
+  nameWithType: ThingComp.PostPostApplyDamage(DamageInfo, Single)
+  fullName: Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo, System.Single)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo,System.Single)
+    name: PostPostApplyDamage
+    nameWithType: ThingComp.PostPostApplyDamage
+    fullName: Verse.ThingComp.PostPostApplyDamage
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostPostApplyDamage(Verse.DamageInfo,System.Single)
+    name: PostPostApplyDamage
+    nameWithType: ThingComp.PostPostApplyDamage
+    fullName: Verse.ThingComp.PostPostApplyDamage
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostDraw
+  commentId: M:Verse.ThingComp.PostDraw
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostDraw()
+  nameWithType: ThingComp.PostDraw()
+  fullName: Verse.ThingComp.PostDraw()
+  spec.csharp:
+  - uid: Verse.ThingComp.PostDraw
+    name: PostDraw
+    nameWithType: ThingComp.PostDraw
+    fullName: Verse.ThingComp.PostDraw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostDraw
+    name: PostDraw
+    nameWithType: ThingComp.PostDraw
+    fullName: Verse.ThingComp.PostDraw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostDrawExtraSelectionOverlays
+  commentId: M:Verse.ThingComp.PostDrawExtraSelectionOverlays
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostDrawExtraSelectionOverlays()
+  nameWithType: ThingComp.PostDrawExtraSelectionOverlays()
+  fullName: Verse.ThingComp.PostDrawExtraSelectionOverlays()
+  spec.csharp:
+  - uid: Verse.ThingComp.PostDrawExtraSelectionOverlays
+    name: PostDrawExtraSelectionOverlays
+    nameWithType: ThingComp.PostDrawExtraSelectionOverlays
+    fullName: Verse.ThingComp.PostDrawExtraSelectionOverlays
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostDrawExtraSelectionOverlays
+    name: PostDrawExtraSelectionOverlays
+    nameWithType: ThingComp.PostDrawExtraSelectionOverlays
+    fullName: Verse.ThingComp.PostDrawExtraSelectionOverlays
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)
+  commentId: M:Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostPrintOnto(SectionLayer)
+  nameWithType: ThingComp.PostPrintOnto(SectionLayer)
+  fullName: Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)
+    name: PostPrintOnto
+    nameWithType: ThingComp.PostPrintOnto
+    fullName: Verse.ThingComp.PostPrintOnto
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.SectionLayer
+    name: SectionLayer
+    nameWithType: SectionLayer
+    fullName: Verse.SectionLayer
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostPrintOnto(Verse.SectionLayer)
+    name: PostPrintOnto
+    nameWithType: ThingComp.PostPrintOnto
+    fullName: Verse.ThingComp.PostPrintOnto
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.SectionLayer
+    name: SectionLayer
+    nameWithType: SectionLayer
+    fullName: Verse.SectionLayer
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)
+  commentId: M:Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompPrintForPowerGrid(SectionLayer)
+  nameWithType: ThingComp.CompPrintForPowerGrid(SectionLayer)
+  fullName: Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)
+  spec.csharp:
+  - uid: Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)
+    name: CompPrintForPowerGrid
+    nameWithType: ThingComp.CompPrintForPowerGrid
+    fullName: Verse.ThingComp.CompPrintForPowerGrid
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.SectionLayer
+    name: SectionLayer
+    nameWithType: SectionLayer
+    fullName: Verse.SectionLayer
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompPrintForPowerGrid(Verse.SectionLayer)
+    name: CompPrintForPowerGrid
+    nameWithType: ThingComp.CompPrintForPowerGrid
+    fullName: Verse.ThingComp.CompPrintForPowerGrid
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.SectionLayer
+    name: SectionLayer
+    nameWithType: SectionLayer
+    fullName: Verse.SectionLayer
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PreAbsorbStack(Verse.Thing,System.Int32)
+  commentId: M:Verse.ThingComp.PreAbsorbStack(Verse.Thing,System.Int32)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PreAbsorbStack(Thing, Int32)
+  nameWithType: ThingComp.PreAbsorbStack(Thing, Int32)
+  fullName: Verse.ThingComp.PreAbsorbStack(Verse.Thing, System.Int32)
+  spec.csharp:
+  - uid: Verse.ThingComp.PreAbsorbStack(Verse.Thing,System.Int32)
+    name: PreAbsorbStack
+    nameWithType: ThingComp.PreAbsorbStack
+    fullName: Verse.ThingComp.PreAbsorbStack
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PreAbsorbStack(Verse.Thing,System.Int32)
+    name: PreAbsorbStack
+    nameWithType: ThingComp.PreAbsorbStack
+    fullName: Verse.ThingComp.PreAbsorbStack
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostSplitOff(Verse.Thing)
+  commentId: M:Verse.ThingComp.PostSplitOff(Verse.Thing)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostSplitOff(Thing)
+  nameWithType: ThingComp.PostSplitOff(Thing)
+  fullName: Verse.ThingComp.PostSplitOff(Verse.Thing)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostSplitOff(Verse.Thing)
+    name: PostSplitOff
+    nameWithType: ThingComp.PostSplitOff
+    fullName: Verse.ThingComp.PostSplitOff
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostSplitOff(Verse.Thing)
+    name: PostSplitOff
+    nameWithType: ThingComp.PostSplitOff
+    fullName: Verse.ThingComp.PostSplitOff
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.TransformLabel(System.String)
+  commentId: M:Verse.ThingComp.TransformLabel(System.String)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: TransformLabel(String)
+  nameWithType: ThingComp.TransformLabel(String)
+  fullName: Verse.ThingComp.TransformLabel(System.String)
+  spec.csharp:
+  - uid: Verse.ThingComp.TransformLabel(System.String)
+    name: TransformLabel
+    nameWithType: ThingComp.TransformLabel
+    fullName: Verse.ThingComp.TransformLabel
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.TransformLabel(System.String)
+    name: TransformLabel
+    nameWithType: ThingComp.TransformLabel
+    fullName: Verse.ThingComp.TransformLabel
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompGetGizmosExtra
+  commentId: M:Verse.ThingComp.CompGetGizmosExtra
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompGetGizmosExtra()
+  nameWithType: ThingComp.CompGetGizmosExtra()
+  fullName: Verse.ThingComp.CompGetGizmosExtra()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompGetGizmosExtra
+    name: CompGetGizmosExtra
+    nameWithType: ThingComp.CompGetGizmosExtra
+    fullName: Verse.ThingComp.CompGetGizmosExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompGetGizmosExtra
+    name: CompGetGizmosExtra
+    nameWithType: ThingComp.CompGetGizmosExtra
+    fullName: Verse.ThingComp.CompGetGizmosExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompGetWornGizmosExtra
+  commentId: M:Verse.ThingComp.CompGetWornGizmosExtra
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompGetWornGizmosExtra()
+  nameWithType: ThingComp.CompGetWornGizmosExtra()
+  fullName: Verse.ThingComp.CompGetWornGizmosExtra()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompGetWornGizmosExtra
+    name: CompGetWornGizmosExtra
+    nameWithType: ThingComp.CompGetWornGizmosExtra
+    fullName: Verse.ThingComp.CompGetWornGizmosExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompGetWornGizmosExtra
+    name: CompGetWornGizmosExtra
+    nameWithType: ThingComp.CompGetWornGizmosExtra
+    fullName: Verse.ThingComp.CompGetWornGizmosExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.AllowStackWith(Verse.Thing)
+  commentId: M:Verse.ThingComp.AllowStackWith(Verse.Thing)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: AllowStackWith(Thing)
+  nameWithType: ThingComp.AllowStackWith(Thing)
+  fullName: Verse.ThingComp.AllowStackWith(Verse.Thing)
+  spec.csharp:
+  - uid: Verse.ThingComp.AllowStackWith(Verse.Thing)
+    name: AllowStackWith
+    nameWithType: ThingComp.AllowStackWith
+    fullName: Verse.ThingComp.AllowStackWith
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.AllowStackWith(Verse.Thing)
+    name: AllowStackWith
+    nameWithType: ThingComp.AllowStackWith
+    fullName: Verse.ThingComp.AllowStackWith
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompInspectStringExtra
+  commentId: M:Verse.ThingComp.CompInspectStringExtra
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompInspectStringExtra()
+  nameWithType: ThingComp.CompInspectStringExtra()
+  fullName: Verse.ThingComp.CompInspectStringExtra()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompInspectStringExtra
+    name: CompInspectStringExtra
+    nameWithType: ThingComp.CompInspectStringExtra
+    fullName: Verse.ThingComp.CompInspectStringExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompInspectStringExtra
+    name: CompInspectStringExtra
+    nameWithType: ThingComp.CompInspectStringExtra
+    fullName: Verse.ThingComp.CompInspectStringExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompTipStringExtra
+  commentId: M:Verse.ThingComp.CompTipStringExtra
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompTipStringExtra()
+  nameWithType: ThingComp.CompTipStringExtra()
+  fullName: Verse.ThingComp.CompTipStringExtra()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompTipStringExtra
+    name: CompTipStringExtra
+    nameWithType: ThingComp.CompTipStringExtra
+    fullName: Verse.ThingComp.CompTipStringExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompTipStringExtra
+    name: CompTipStringExtra
+    nameWithType: ThingComp.CompTipStringExtra
+    fullName: Verse.ThingComp.CompTipStringExtra
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.GetDescriptionPart
+  commentId: M:Verse.ThingComp.GetDescriptionPart
+  parent: Verse.ThingComp
+  isExternal: true
+  name: GetDescriptionPart()
+  nameWithType: ThingComp.GetDescriptionPart()
+  fullName: Verse.ThingComp.GetDescriptionPart()
+  spec.csharp:
+  - uid: Verse.ThingComp.GetDescriptionPart
+    name: GetDescriptionPart
+    nameWithType: ThingComp.GetDescriptionPart
+    fullName: Verse.ThingComp.GetDescriptionPart
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.GetDescriptionPart
+    name: GetDescriptionPart
+    nameWithType: ThingComp.GetDescriptionPart
+    fullName: Verse.ThingComp.GetDescriptionPart
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List{Verse.Pawn})
+  commentId: M:Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List{Verse.Pawn})
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompMultiSelectFloatMenuOptions(List<Pawn>)
+  nameWithType: ThingComp.CompMultiSelectFloatMenuOptions(List<Pawn>)
+  fullName: Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List<Verse.Pawn>)
+  nameWithType.vb: ThingComp.CompMultiSelectFloatMenuOptions(List(Of Pawn))
+  fullName.vb: Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List(Of Verse.Pawn))
+  name.vb: CompMultiSelectFloatMenuOptions(List(Of Pawn))
+  spec.csharp:
+  - uid: Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List{Verse.Pawn})
+    name: CompMultiSelectFloatMenuOptions
+    nameWithType: ThingComp.CompMultiSelectFloatMenuOptions
+    fullName: Verse.ThingComp.CompMultiSelectFloatMenuOptions
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompMultiSelectFloatMenuOptions(System.Collections.Generic.List{Verse.Pawn})
+    name: CompMultiSelectFloatMenuOptions
+    nameWithType: ThingComp.CompMultiSelectFloatMenuOptions
+    fullName: Verse.ThingComp.CompMultiSelectFloatMenuOptions
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PrePreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)
+  commentId: M:Verse.ThingComp.PrePreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PrePreTraded(TradeAction, Pawn, ITrader)
+  nameWithType: ThingComp.PrePreTraded(TradeAction, Pawn, ITrader)
+  fullName: Verse.ThingComp.PrePreTraded(RimWorld.TradeAction, Verse.Pawn, RimWorld.ITrader)
+  spec.csharp:
+  - uid: Verse.ThingComp.PrePreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)
+    name: PrePreTraded
+    nameWithType: ThingComp.PrePreTraded
+    fullName: Verse.ThingComp.PrePreTraded
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.TradeAction
+    name: TradeAction
+    nameWithType: TradeAction
+    fullName: RimWorld.TradeAction
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: RimWorld.ITrader
+    name: ITrader
+    nameWithType: ITrader
+    fullName: RimWorld.ITrader
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PrePreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)
+    name: PrePreTraded
+    nameWithType: ThingComp.PrePreTraded
+    fullName: Verse.ThingComp.PrePreTraded
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.TradeAction
+    name: TradeAction
+    nameWithType: TradeAction
+    fullName: RimWorld.TradeAction
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: RimWorld.ITrader
+    name: ITrader
+    nameWithType: ITrader
+    fullName: RimWorld.ITrader
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PrePostIngested(Verse.Pawn)
+  commentId: M:Verse.ThingComp.PrePostIngested(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PrePostIngested(Pawn)
+  nameWithType: ThingComp.PrePostIngested(Pawn)
+  fullName: Verse.ThingComp.PrePostIngested(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.PrePostIngested(Verse.Pawn)
+    name: PrePostIngested
+    nameWithType: ThingComp.PrePostIngested
+    fullName: Verse.ThingComp.PrePostIngested
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PrePostIngested(Verse.Pawn)
+    name: PrePostIngested
+    nameWithType: ThingComp.PrePostIngested
+    fullName: Verse.ThingComp.PrePostIngested
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostIngested(Verse.Pawn)
+  commentId: M:Verse.ThingComp.PostIngested(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostIngested(Pawn)
+  nameWithType: ThingComp.PostIngested(Pawn)
+  fullName: Verse.ThingComp.PostIngested(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostIngested(Verse.Pawn)
+    name: PostIngested
+    nameWithType: ThingComp.PostIngested
+    fullName: Verse.ThingComp.PostIngested
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostIngested(Verse.Pawn)
+    name: PostIngested
+    nameWithType: ThingComp.PostIngested
+    fullName: Verse.ThingComp.PostIngested
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef,System.Int32,RimWorld.Faction)
+  commentId: M:Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef,System.Int32,RimWorld.Faction)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostPostGeneratedForTrader(TraderKindDef, Int32, Faction)
+  nameWithType: ThingComp.PostPostGeneratedForTrader(TraderKindDef, Int32, Faction)
+  fullName: Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef, System.Int32, RimWorld.Faction)
+  spec.csharp:
+  - uid: Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef,System.Int32,RimWorld.Faction)
+    name: PostPostGeneratedForTrader
+    nameWithType: ThingComp.PostPostGeneratedForTrader
+    fullName: Verse.ThingComp.PostPostGeneratedForTrader
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.TraderKindDef
+    name: TraderKindDef
+    nameWithType: TraderKindDef
+    fullName: RimWorld.TraderKindDef
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: RimWorld.Faction
+    name: Faction
+    nameWithType: Faction
+    fullName: RimWorld.Faction
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostPostGeneratedForTrader(RimWorld.TraderKindDef,System.Int32,RimWorld.Faction)
+    name: PostPostGeneratedForTrader
+    nameWithType: ThingComp.PostPostGeneratedForTrader
+    fullName: Verse.ThingComp.PostPostGeneratedForTrader
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.TraderKindDef
+    name: TraderKindDef
+    nameWithType: TraderKindDef
+    fullName: RimWorld.TraderKindDef
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: RimWorld.Faction
+    name: Faction
+    nameWithType: Faction
+    fullName: RimWorld.Faction
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)
+  commentId: M:Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_SignalReceived(Signal)
+  nameWithType: ThingComp.Notify_SignalReceived(Signal)
+  fullName: Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)
+    name: Notify_SignalReceived
+    nameWithType: ThingComp.Notify_SignalReceived
+    fullName: Verse.ThingComp.Notify_SignalReceived
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.Signal
+    name: Signal
+    nameWithType: Signal
+    fullName: RimWorld.Signal
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_SignalReceived(RimWorld.Signal)
+    name: Notify_SignalReceived
+    nameWithType: ThingComp.Notify_SignalReceived
+    fullName: Verse.ThingComp.Notify_SignalReceived
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.Signal
+    name: Signal
+    nameWithType: Signal
+    fullName: RimWorld.Signal
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_LordDestroyed
+  commentId: M:Verse.ThingComp.Notify_LordDestroyed
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_LordDestroyed()
+  nameWithType: ThingComp.Notify_LordDestroyed()
+  fullName: Verse.ThingComp.Notify_LordDestroyed()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_LordDestroyed
+    name: Notify_LordDestroyed
+    nameWithType: ThingComp.Notify_LordDestroyed
+    fullName: Verse.ThingComp.Notify_LordDestroyed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_LordDestroyed
+    name: Notify_LordDestroyed
+    nameWithType: ThingComp.Notify_LordDestroyed
+    fullName: Verse.ThingComp.Notify_LordDestroyed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_MapRemoved
+  commentId: M:Verse.ThingComp.Notify_MapRemoved
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_MapRemoved()
+  nameWithType: ThingComp.Notify_MapRemoved()
+  fullName: Verse.ThingComp.Notify_MapRemoved()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_MapRemoved
+    name: Notify_MapRemoved
+    nameWithType: ThingComp.Notify_MapRemoved
+    fullName: Verse.ThingComp.Notify_MapRemoved
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_MapRemoved
+    name: Notify_MapRemoved
+    nameWithType: ThingComp.Notify_MapRemoved
+    fullName: Verse.ThingComp.Notify_MapRemoved
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.DrawGUIOverlay
+  commentId: M:Verse.ThingComp.DrawGUIOverlay
+  parent: Verse.ThingComp
+  isExternal: true
+  name: DrawGUIOverlay()
+  nameWithType: ThingComp.DrawGUIOverlay()
+  fullName: Verse.ThingComp.DrawGUIOverlay()
+  spec.csharp:
+  - uid: Verse.ThingComp.DrawGUIOverlay
+    name: DrawGUIOverlay
+    nameWithType: ThingComp.DrawGUIOverlay
+    fullName: Verse.ThingComp.DrawGUIOverlay
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.DrawGUIOverlay
+    name: DrawGUIOverlay
+    nameWithType: ThingComp.DrawGUIOverlay
+    fullName: Verse.ThingComp.DrawGUIOverlay
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.SpecialDisplayStats
+  commentId: M:Verse.ThingComp.SpecialDisplayStats
+  parent: Verse.ThingComp
+  isExternal: true
+  name: SpecialDisplayStats()
+  nameWithType: ThingComp.SpecialDisplayStats()
+  fullName: Verse.ThingComp.SpecialDisplayStats()
+  spec.csharp:
+  - uid: Verse.ThingComp.SpecialDisplayStats
+    name: SpecialDisplayStats
+    nameWithType: ThingComp.SpecialDisplayStats
+    fullName: Verse.ThingComp.SpecialDisplayStats
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.SpecialDisplayStats
+    name: SpecialDisplayStats
+    nameWithType: ThingComp.SpecialDisplayStats
+    fullName: Verse.ThingComp.SpecialDisplayStats
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_Equipped(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_Equipped(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_Equipped(Pawn)
+  nameWithType: ThingComp.Notify_Equipped(Pawn)
+  fullName: Verse.ThingComp.Notify_Equipped(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_Equipped(Verse.Pawn)
+    name: Notify_Equipped
+    nameWithType: ThingComp.Notify_Equipped
+    fullName: Verse.ThingComp.Notify_Equipped
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_Equipped(Verse.Pawn)
+    name: Notify_Equipped
+    nameWithType: ThingComp.Notify_Equipped
+    fullName: Verse.ThingComp.Notify_Equipped
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_Unequipped(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_Unequipped(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_Unequipped(Pawn)
+  nameWithType: ThingComp.Notify_Unequipped(Pawn)
+  fullName: Verse.ThingComp.Notify_Unequipped(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_Unequipped(Verse.Pawn)
+    name: Notify_Unequipped
+    nameWithType: ThingComp.Notify_Unequipped
+    fullName: Verse.ThingComp.Notify_Unequipped
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_Unequipped(Verse.Pawn)
+    name: Notify_Unequipped
+    nameWithType: ThingComp.Notify_Unequipped
+    fullName: Verse.ThingComp.Notify_Unequipped
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_UsedVerb(Verse.Pawn,Verse.Verb)
+  commentId: M:Verse.ThingComp.Notify_UsedVerb(Verse.Pawn,Verse.Verb)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_UsedVerb(Pawn, Verb)
+  nameWithType: ThingComp.Notify_UsedVerb(Pawn, Verb)
+  fullName: Verse.ThingComp.Notify_UsedVerb(Verse.Pawn, Verse.Verb)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_UsedVerb(Verse.Pawn,Verse.Verb)
+    name: Notify_UsedVerb
+    nameWithType: ThingComp.Notify_UsedVerb
+    fullName: Verse.ThingComp.Notify_UsedVerb
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Verb
+    name: Verb
+    nameWithType: Verb
+    fullName: Verse.Verb
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_UsedVerb(Verse.Pawn,Verse.Verb)
+    name: Notify_UsedVerb
+    nameWithType: ThingComp.Notify_UsedVerb
+    fullName: Verse.ThingComp.Notify_UsedVerb
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Verb
+    name: Verb
+    nameWithType: Verb
+    fullName: Verse.Verb
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_UsedWeapon(Pawn)
+  nameWithType: ThingComp.Notify_UsedWeapon(Pawn)
+  fullName: Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)
+    name: Notify_UsedWeapon
+    nameWithType: ThingComp.Notify_UsedWeapon
+    fullName: Verse.ThingComp.Notify_UsedWeapon
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_UsedWeapon(Verse.Pawn)
+    name: Notify_UsedWeapon
+    nameWithType: ThingComp.Notify_UsedWeapon
+    fullName: Verse.ThingComp.Notify_UsedWeapon
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_Killed(Verse.Map,System.Nullable{Verse.DamageInfo})
+  commentId: M:Verse.ThingComp.Notify_Killed(Verse.Map,System.Nullable{Verse.DamageInfo})
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_Killed(Map, Nullable<DamageInfo>)
+  nameWithType: ThingComp.Notify_Killed(Map, Nullable<DamageInfo>)
+  fullName: Verse.ThingComp.Notify_Killed(Verse.Map, System.Nullable<Verse.DamageInfo>)
+  nameWithType.vb: ThingComp.Notify_Killed(Map, Nullable(Of DamageInfo))
+  fullName.vb: Verse.ThingComp.Notify_Killed(Verse.Map, System.Nullable(Of Verse.DamageInfo))
+  name.vb: Notify_Killed(Map, Nullable(Of DamageInfo))
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_Killed(Verse.Map,System.Nullable{Verse.DamageInfo})
+    name: Notify_Killed
+    nameWithType: ThingComp.Notify_Killed
+    fullName: Verse.ThingComp.Notify_Killed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_Killed(Verse.Map,System.Nullable{Verse.DamageInfo})
+    name: Notify_Killed
+    nameWithType: ThingComp.Notify_Killed
+    fullName: Verse.ThingComp.Notify_Killed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.DamageInfo
+    name: DamageInfo
+    nameWithType: DamageInfo
+    fullName: Verse.DamageInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_KilledPawn(Pawn)
+  nameWithType: ThingComp.Notify_KilledPawn(Pawn)
+  fullName: Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)
+    name: Notify_KilledPawn
+    nameWithType: ThingComp.Notify_KilledPawn
+    fullName: Verse.ThingComp.Notify_KilledPawn
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_KilledPawn(Verse.Pawn)
+    name: Notify_KilledPawn
+    nameWithType: ThingComp.Notify_KilledPawn
+    fullName: Verse.ThingComp.Notify_KilledPawn
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_WearerDied
+  commentId: M:Verse.ThingComp.Notify_WearerDied
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_WearerDied()
+  nameWithType: ThingComp.Notify_WearerDied()
+  fullName: Verse.ThingComp.Notify_WearerDied()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_WearerDied
+    name: Notify_WearerDied
+    nameWithType: ThingComp.Notify_WearerDied
+    fullName: Verse.ThingComp.Notify_WearerDied
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_WearerDied
+    name: Notify_WearerDied
+    nameWithType: ThingComp.Notify_WearerDied
+    fullName: Verse.ThingComp.Notify_WearerDied
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_Downed
+  commentId: M:Verse.ThingComp.Notify_Downed
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_Downed()
+  nameWithType: ThingComp.Notify_Downed()
+  fullName: Verse.ThingComp.Notify_Downed()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_Downed
+    name: Notify_Downed
+    nameWithType: ThingComp.Notify_Downed
+    fullName: Verse.ThingComp.Notify_Downed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_Downed
+    name: Notify_Downed
+    nameWithType: ThingComp.Notify_Downed
+    fullName: Verse.ThingComp.Notify_Downed
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_Released
+  commentId: M:Verse.ThingComp.Notify_Released
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_Released()
+  nameWithType: ThingComp.Notify_Released()
+  fullName: Verse.ThingComp.Notify_Released()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_Released
+    name: Notify_Released
+    nameWithType: ThingComp.Notify_Released
+    fullName: Verse.ThingComp.Notify_Released
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_Released
+    name: Notify_Released
+    nameWithType: ThingComp.Notify_Released
+    fullName: Verse.ThingComp.Notify_Released
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_DefsHotReloaded
+  commentId: M:Verse.ThingComp.Notify_DefsHotReloaded
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_DefsHotReloaded()
+  nameWithType: ThingComp.Notify_DefsHotReloaded()
+  fullName: Verse.ThingComp.Notify_DefsHotReloaded()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_DefsHotReloaded
+    name: Notify_DefsHotReloaded
+    nameWithType: ThingComp.Notify_DefsHotReloaded
+    fullName: Verse.ThingComp.Notify_DefsHotReloaded
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_DefsHotReloaded
+    name: Notify_DefsHotReloaded
+    nameWithType: ThingComp.Notify_DefsHotReloaded
+    fullName: Verse.ThingComp.Notify_DefsHotReloaded
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_AddBedThoughts(Pawn)
+  nameWithType: ThingComp.Notify_AddBedThoughts(Pawn)
+  fullName: Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)
+    name: Notify_AddBedThoughts
+    nameWithType: ThingComp.Notify_AddBedThoughts
+    fullName: Verse.ThingComp.Notify_AddBedThoughts
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_AddBedThoughts(Verse.Pawn)
+    name: Notify_AddBedThoughts
+    nameWithType: ThingComp.Notify_AddBedThoughts
+    fullName: Verse.ThingComp.Notify_AddBedThoughts
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_AbandonedAtTile(System.Int32)
+  commentId: M:Verse.ThingComp.Notify_AbandonedAtTile(System.Int32)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_AbandonedAtTile(Int32)
+  nameWithType: ThingComp.Notify_AbandonedAtTile(Int32)
+  fullName: Verse.ThingComp.Notify_AbandonedAtTile(System.Int32)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_AbandonedAtTile(System.Int32)
+    name: Notify_AbandonedAtTile
+    nameWithType: ThingComp.Notify_AbandonedAtTile
+    fullName: Verse.ThingComp.Notify_AbandonedAtTile
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_AbandonedAtTile(System.Int32)
+    name: Notify_AbandonedAtTile
+    nameWithType: ThingComp.Notify_AbandonedAtTile
+    fullName: Verse.ThingComp.Notify_AbandonedAtTile
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List{Verse.Thing})
+  commentId: M:Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List{Verse.Thing})
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_KilledLeavingsLeft(List<Thing>)
+  nameWithType: ThingComp.Notify_KilledLeavingsLeft(List<Thing>)
+  fullName: Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List<Verse.Thing>)
+  nameWithType.vb: ThingComp.Notify_KilledLeavingsLeft(List(Of Thing))
+  fullName.vb: Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List(Of Verse.Thing))
+  name.vb: Notify_KilledLeavingsLeft(List(Of Thing))
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List{Verse.Thing})
+    name: Notify_KilledLeavingsLeft
+    nameWithType: ThingComp.Notify_KilledLeavingsLeft
+    fullName: Verse.ThingComp.Notify_KilledLeavingsLeft
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_KilledLeavingsLeft(System.Collections.Generic.List{Verse.Thing})
+    name: Notify_KilledLeavingsLeft
+    nameWithType: ThingComp.Notify_KilledLeavingsLeft
+    fullName: Verse.ThingComp.Notify_KilledLeavingsLeft
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_Arrested(System.Boolean)
+  commentId: M:Verse.ThingComp.Notify_Arrested(System.Boolean)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_Arrested(Boolean)
+  nameWithType: ThingComp.Notify_Arrested(Boolean)
+  fullName: Verse.ThingComp.Notify_Arrested(System.Boolean)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_Arrested(System.Boolean)
+    name: Notify_Arrested
+    nameWithType: ThingComp.Notify_Arrested
+    fullName: Verse.ThingComp.Notify_Arrested
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_Arrested(System.Boolean)
+    name: Notify_Arrested
+    nameWithType: ThingComp.Notify_Arrested
+    fullName: Verse.ThingComp.Notify_Arrested
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_PrisonBreakout
+  commentId: M:Verse.ThingComp.Notify_PrisonBreakout
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_PrisonBreakout()
+  nameWithType: ThingComp.Notify_PrisonBreakout()
+  fullName: Verse.ThingComp.Notify_PrisonBreakout()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_PrisonBreakout
+    name: Notify_PrisonBreakout
+    nameWithType: ThingComp.Notify_PrisonBreakout
+    fullName: Verse.ThingComp.Notify_PrisonBreakout
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_PrisonBreakout
+    name: Notify_PrisonBreakout
+    nameWithType: ThingComp.Notify_PrisonBreakout
+    fullName: Verse.ThingComp.Notify_PrisonBreakout
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.GetAdditionalLeavings(Verse.Map,Verse.DestroyMode)
+  commentId: M:Verse.ThingComp.GetAdditionalLeavings(Verse.Map,Verse.DestroyMode)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: GetAdditionalLeavings(Map, DestroyMode)
+  nameWithType: ThingComp.GetAdditionalLeavings(Map, DestroyMode)
+  fullName: Verse.ThingComp.GetAdditionalLeavings(Verse.Map, Verse.DestroyMode)
+  spec.csharp:
+  - uid: Verse.ThingComp.GetAdditionalLeavings(Verse.Map,Verse.DestroyMode)
+    name: GetAdditionalLeavings
+    nameWithType: ThingComp.GetAdditionalLeavings
+    fullName: Verse.ThingComp.GetAdditionalLeavings
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.DestroyMode
+    name: DestroyMode
+    nameWithType: DestroyMode
+    fullName: Verse.DestroyMode
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.GetAdditionalLeavings(Verse.Map,Verse.DestroyMode)
+    name: GetAdditionalLeavings
+    nameWithType: ThingComp.GetAdditionalLeavings
+    fullName: Verse.ThingComp.GetAdditionalLeavings
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Map
+    name: Map
+    nameWithType: Map
+    fullName: Verse.Map
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.DestroyMode
+    name: DestroyMode
+    nameWithType: DestroyMode
+    fullName: Verse.DestroyMode
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.GetAdditionalHarvestYield
+  commentId: M:Verse.ThingComp.GetAdditionalHarvestYield
+  parent: Verse.ThingComp
+  isExternal: true
+  name: GetAdditionalHarvestYield()
+  nameWithType: ThingComp.GetAdditionalHarvestYield()
+  fullName: Verse.ThingComp.GetAdditionalHarvestYield()
+  spec.csharp:
+  - uid: Verse.ThingComp.GetAdditionalHarvestYield
+    name: GetAdditionalHarvestYield
+    nameWithType: ThingComp.GetAdditionalHarvestYield
+    fullName: Verse.ThingComp.GetAdditionalHarvestYield
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.GetAdditionalHarvestYield
+    name: GetAdditionalHarvestYield
+    nameWithType: ThingComp.GetAdditionalHarvestYield
+    fullName: Verse.ThingComp.GetAdditionalHarvestYield
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompDrawWornExtras
+  commentId: M:Verse.ThingComp.CompDrawWornExtras
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompDrawWornExtras()
+  nameWithType: ThingComp.CompDrawWornExtras()
+  fullName: Verse.ThingComp.CompDrawWornExtras()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompDrawWornExtras
+    name: CompDrawWornExtras
+    nameWithType: ThingComp.CompDrawWornExtras
+    fullName: Verse.ThingComp.CompDrawWornExtras
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompDrawWornExtras
+    name: CompDrawWornExtras
+    nameWithType: ThingComp.CompDrawWornExtras
+    fullName: Verse.ThingComp.CompDrawWornExtras
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompAllowVerbCast(Verse.Verb)
+  commentId: M:Verse.ThingComp.CompAllowVerbCast(Verse.Verb)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompAllowVerbCast(Verb)
+  nameWithType: ThingComp.CompAllowVerbCast(Verb)
+  fullName: Verse.ThingComp.CompAllowVerbCast(Verse.Verb)
+  spec.csharp:
+  - uid: Verse.ThingComp.CompAllowVerbCast(Verse.Verb)
+    name: CompAllowVerbCast
+    nameWithType: ThingComp.CompAllowVerbCast
+    fullName: Verse.ThingComp.CompAllowVerbCast
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Verb
+    name: Verb
+    nameWithType: Verb
+    fullName: Verse.Verb
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompAllowVerbCast(Verse.Verb)
+    name: CompAllowVerbCast
+    nameWithType: ThingComp.CompAllowVerbCast
+    fullName: Verse.ThingComp.CompAllowVerbCast
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Verb
+    name: Verb
+    nameWithType: Verb
+    fullName: Verse.Verb
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompPreventClaimingBy(RimWorld.Faction)
+  commentId: M:Verse.ThingComp.CompPreventClaimingBy(RimWorld.Faction)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompPreventClaimingBy(Faction)
+  nameWithType: ThingComp.CompPreventClaimingBy(Faction)
+  fullName: Verse.ThingComp.CompPreventClaimingBy(RimWorld.Faction)
+  spec.csharp:
+  - uid: Verse.ThingComp.CompPreventClaimingBy(RimWorld.Faction)
+    name: CompPreventClaimingBy
+    nameWithType: ThingComp.CompPreventClaimingBy
+    fullName: Verse.ThingComp.CompPreventClaimingBy
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.Faction
+    name: Faction
+    nameWithType: Faction
+    fullName: RimWorld.Faction
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompPreventClaimingBy(RimWorld.Faction)
+    name: CompPreventClaimingBy
+    nameWithType: ThingComp.CompPreventClaimingBy
+    fullName: Verse.ThingComp.CompPreventClaimingBy
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.Faction
+    name: Faction
+    nameWithType: Faction
+    fullName: RimWorld.Faction
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompForceDeconstructable
+  commentId: M:Verse.ThingComp.CompForceDeconstructable
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompForceDeconstructable()
+  nameWithType: ThingComp.CompForceDeconstructable()
+  fullName: Verse.ThingComp.CompForceDeconstructable()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompForceDeconstructable
+    name: CompForceDeconstructable
+    nameWithType: ThingComp.CompForceDeconstructable
+    fullName: Verse.ThingComp.CompForceDeconstructable
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompForceDeconstructable
+    name: CompForceDeconstructable
+    nameWithType: ThingComp.CompForceDeconstructable
+    fullName: Verse.ThingComp.CompForceDeconstructable
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompGetSpecialApparelScoreOffset
+  commentId: M:Verse.ThingComp.CompGetSpecialApparelScoreOffset
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompGetSpecialApparelScoreOffset()
+  nameWithType: ThingComp.CompGetSpecialApparelScoreOffset()
+  fullName: Verse.ThingComp.CompGetSpecialApparelScoreOffset()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompGetSpecialApparelScoreOffset
+    name: CompGetSpecialApparelScoreOffset
+    nameWithType: ThingComp.CompGetSpecialApparelScoreOffset
+    fullName: Verse.ThingComp.CompGetSpecialApparelScoreOffset
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompGetSpecialApparelScoreOffset
+    name: CompGetSpecialApparelScoreOffset
+    nameWithType: ThingComp.CompGetSpecialApparelScoreOffset
+    fullName: Verse.ThingComp.CompGetSpecialApparelScoreOffset
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_RecipeProduced(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_RecipeProduced(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_RecipeProduced(Pawn)
+  nameWithType: ThingComp.Notify_RecipeProduced(Pawn)
+  fullName: Verse.ThingComp.Notify_RecipeProduced(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_RecipeProduced(Verse.Pawn)
+    name: Notify_RecipeProduced
+    nameWithType: ThingComp.Notify_RecipeProduced
+    fullName: Verse.ThingComp.Notify_RecipeProduced
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_RecipeProduced(Verse.Pawn)
+    name: Notify_RecipeProduced
+    nameWithType: ThingComp.Notify_RecipeProduced
+    fullName: Verse.ThingComp.Notify_RecipeProduced
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_DuplicatedFrom(Verse.Pawn)
+  commentId: M:Verse.ThingComp.Notify_DuplicatedFrom(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_DuplicatedFrom(Pawn)
+  nameWithType: ThingComp.Notify_DuplicatedFrom(Pawn)
+  fullName: Verse.ThingComp.Notify_DuplicatedFrom(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_DuplicatedFrom(Verse.Pawn)
+    name: Notify_DuplicatedFrom
+    nameWithType: ThingComp.Notify_DuplicatedFrom
+    fullName: Verse.ThingComp.Notify_DuplicatedFrom
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_DuplicatedFrom(Verse.Pawn)
+    name: Notify_DuplicatedFrom
+    nameWithType: ThingComp.Notify_DuplicatedFrom
+    fullName: Verse.ThingComp.Notify_DuplicatedFrom
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_BecameVisible
+  commentId: M:Verse.ThingComp.Notify_BecameVisible
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_BecameVisible()
+  nameWithType: ThingComp.Notify_BecameVisible()
+  fullName: Verse.ThingComp.Notify_BecameVisible()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_BecameVisible
+    name: Notify_BecameVisible
+    nameWithType: ThingComp.Notify_BecameVisible
+    fullName: Verse.ThingComp.Notify_BecameVisible
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_BecameVisible
+    name: Notify_BecameVisible
+    nameWithType: ThingComp.Notify_BecameVisible
+    fullName: Verse.ThingComp.Notify_BecameVisible
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_BecameInvisible
+  commentId: M:Verse.ThingComp.Notify_BecameInvisible
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_BecameInvisible()
+  nameWithType: ThingComp.Notify_BecameInvisible()
+  fullName: Verse.ThingComp.Notify_BecameInvisible()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_BecameInvisible
+    name: Notify_BecameInvisible
+    nameWithType: ThingComp.Notify_BecameInvisible
+    fullName: Verse.ThingComp.Notify_BecameInvisible
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_BecameInvisible
+    name: Notify_BecameInvisible
+    nameWithType: ThingComp.Notify_BecameInvisible
+    fullName: Verse.ThingComp.Notify_BecameInvisible
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.Notify_ForcedVisible
+  commentId: M:Verse.ThingComp.Notify_ForcedVisible
+  parent: Verse.ThingComp
+  isExternal: true
+  name: Notify_ForcedVisible()
+  nameWithType: ThingComp.Notify_ForcedVisible()
+  fullName: Verse.ThingComp.Notify_ForcedVisible()
+  spec.csharp:
+  - uid: Verse.ThingComp.Notify_ForcedVisible
+    name: Notify_ForcedVisible
+    nameWithType: ThingComp.Notify_ForcedVisible
+    fullName: Verse.ThingComp.Notify_ForcedVisible
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.Notify_ForcedVisible
+    name: Notify_ForcedVisible
+    nameWithType: ThingComp.Notify_ForcedVisible
+    fullName: Verse.ThingComp.Notify_ForcedVisible
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.GetStatFactor(RimWorld.StatDef)
+  commentId: M:Verse.ThingComp.GetStatFactor(RimWorld.StatDef)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: GetStatFactor(StatDef)
+  nameWithType: ThingComp.GetStatFactor(StatDef)
+  fullName: Verse.ThingComp.GetStatFactor(RimWorld.StatDef)
+  spec.csharp:
+  - uid: Verse.ThingComp.GetStatFactor(RimWorld.StatDef)
+    name: GetStatFactor
+    nameWithType: ThingComp.GetStatFactor
+    fullName: Verse.ThingComp.GetStatFactor
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatDef
+    name: StatDef
+    nameWithType: StatDef
+    fullName: RimWorld.StatDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.GetStatFactor(RimWorld.StatDef)
+    name: GetStatFactor
+    nameWithType: ThingComp.GetStatFactor
+    fullName: Verse.ThingComp.GetStatFactor
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatDef
+    name: StatDef
+    nameWithType: StatDef
+    fullName: RimWorld.StatDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.GetStatOffset(RimWorld.StatDef)
+  commentId: M:Verse.ThingComp.GetStatOffset(RimWorld.StatDef)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: GetStatOffset(StatDef)
+  nameWithType: ThingComp.GetStatOffset(StatDef)
+  fullName: Verse.ThingComp.GetStatOffset(RimWorld.StatDef)
+  spec.csharp:
+  - uid: Verse.ThingComp.GetStatOffset(RimWorld.StatDef)
+    name: GetStatOffset
+    nameWithType: ThingComp.GetStatOffset
+    fullName: Verse.ThingComp.GetStatOffset
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatDef
+    name: StatDef
+    nameWithType: StatDef
+    fullName: RimWorld.StatDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.GetStatOffset(RimWorld.StatDef)
+    name: GetStatOffset
+    nameWithType: ThingComp.GetStatOffset
+    fullName: Verse.ThingComp.GetStatOffset
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatDef
+    name: StatDef
+    nameWithType: StatDef
+    fullName: RimWorld.StatDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.GetStatsExplanation(RimWorld.StatDef,System.Text.StringBuilder)
+  commentId: M:Verse.ThingComp.GetStatsExplanation(RimWorld.StatDef,System.Text.StringBuilder)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: GetStatsExplanation(StatDef, StringBuilder)
+  nameWithType: ThingComp.GetStatsExplanation(StatDef, StringBuilder)
+  fullName: Verse.ThingComp.GetStatsExplanation(RimWorld.StatDef, System.Text.StringBuilder)
+  spec.csharp:
+  - uid: Verse.ThingComp.GetStatsExplanation(RimWorld.StatDef,System.Text.StringBuilder)
+    name: GetStatsExplanation
+    nameWithType: ThingComp.GetStatsExplanation
+    fullName: Verse.ThingComp.GetStatsExplanation
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatDef
+    name: StatDef
+    nameWithType: StatDef
+    fullName: RimWorld.StatDef
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.GetStatsExplanation(RimWorld.StatDef,System.Text.StringBuilder)
+    name: GetStatsExplanation
+    nameWithType: ThingComp.GetStatsExplanation
+    fullName: Verse.ThingComp.GetStatsExplanation
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatDef
+    name: StatDef
+    nameWithType: StatDef
+    fullName: RimWorld.StatDef
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.CompRenderNodes
+  commentId: M:Verse.ThingComp.CompRenderNodes
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompRenderNodes()
+  nameWithType: ThingComp.CompRenderNodes()
+  fullName: Verse.ThingComp.CompRenderNodes()
+  spec.csharp:
+  - uid: Verse.ThingComp.CompRenderNodes
+    name: CompRenderNodes
+    nameWithType: ThingComp.CompRenderNodes
+    fullName: Verse.ThingComp.CompRenderNodes
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompRenderNodes
+    name: CompRenderNodes
+    nameWithType: ThingComp.CompRenderNodes
+    fullName: Verse.ThingComp.CompRenderNodes
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.ToString
+  commentId: M:Verse.ThingComp.ToString
+  parent: Verse.ThingComp
+  isExternal: true
+  name: ToString()
+  nameWithType: ThingComp.ToString()
+  fullName: Verse.ThingComp.ToString()
+  spec.csharp:
+  - uid: Verse.ThingComp.ToString
+    name: ToString
+    nameWithType: ThingComp.ToString
+    fullName: Verse.ThingComp.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.ToString
+    name: ToString
+    nameWithType: ThingComp.ToString
+    fullName: Verse.ThingComp.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingComp.ParentHolder
+  commentId: P:Verse.ThingComp.ParentHolder
+  parent: Verse.ThingComp
+  isExternal: true
+  name: ParentHolder
+  nameWithType: ThingComp.ParentHolder
+  fullName: Verse.ThingComp.ParentHolder
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  parent: RW_ModularizationWeapon.Tools.ToolsFunction
+  definition: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  name: LogAllField()
+  nameWithType: ToolsFunction.LogAllField()
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField()
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Verse
+  commentId: N:Verse
+  isExternal: true
+  name: Verse
+  nameWithType: Verse
+  fullName: Verse
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  isExternal: true
+  name: LogAllField(Object)
+  nameWithType: ToolsFunction.LogAllField(Object)
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction
+  commentId: T:RW_ModularizationWeapon.Tools.ToolsFunction
+  parent: RW_ModularizationWeapon.Tools
+  name: ToolsFunction
+  nameWithType: ToolsFunction
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction
+- uid: RW_ModularizationWeapon.Tools
+  commentId: N:RW_ModularizationWeapon.Tools
+  name: RW_ModularizationWeapon.Tools
+  nameWithType: RW_ModularizationWeapon.Tools
+  fullName: RW_ModularizationWeapon.Tools
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.Props*
+  commentId: Overload:RW_ModularizationWeapon.CompCustomWeaponPort.Props
+  name: Props
+  nameWithType: CompCustomWeaponPort.Props
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.Props
+- uid: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+  commentId: T:RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+  parent: RW_ModularizationWeapon
+  name: CompProperties_CustomWeaponPort
+  nameWithType: CompProperties_CustomWeaponPort
+  fullName: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
+- uid: Verse.ThingComp.PostExposeData
+  commentId: M:Verse.ThingComp.PostExposeData
+  parent: Verse.ThingComp
+  isExternal: true
+  name: PostExposeData()
+  nameWithType: ThingComp.PostExposeData()
+  fullName: Verse.ThingComp.PostExposeData()
+  spec.csharp:
+  - uid: Verse.ThingComp.PostExposeData
+    name: PostExposeData
+    nameWithType: ThingComp.PostExposeData
+    fullName: Verse.ThingComp.PostExposeData
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.PostExposeData
+    name: PostExposeData
+    nameWithType: ThingComp.PostExposeData
+    fullName: Verse.ThingComp.PostExposeData
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData*
+  commentId: Overload:RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData
+  name: PostExposeData
+  nameWithType: CompCustomWeaponPort.PostExposeData
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.PostExposeData
+- uid: Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)
+  commentId: M:Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)
+  parent: Verse.ThingComp
+  isExternal: true
+  name: CompFloatMenuOptions(Pawn)
+  nameWithType: ThingComp.CompFloatMenuOptions(Pawn)
+  fullName: Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)
+  spec.csharp:
+  - uid: Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)
+    name: CompFloatMenuOptions
+    nameWithType: ThingComp.CompFloatMenuOptions
+    fullName: Verse.ThingComp.CompFloatMenuOptions
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.ThingComp.CompFloatMenuOptions(Verse.Pawn)
+    name: CompFloatMenuOptions
+    nameWithType: ThingComp.CompFloatMenuOptions
+    fullName: Verse.ThingComp.CompFloatMenuOptions
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.Pawn
+    name: Pawn
+    nameWithType: Pawn
+    fullName: Verse.Pawn
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions*
+  commentId: Overload:RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions
+  name: CompFloatMenuOptions
+  nameWithType: CompCustomWeaponPort.CompFloatMenuOptions
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.CompFloatMenuOptions
+- uid: Verse.Pawn
+  commentId: T:Verse.Pawn
+  parent: Verse
+  isExternal: true
+  name: Pawn
+  nameWithType: Pawn
+  fullName: Verse.Pawn
+- uid: System.Collections.Generic.IEnumerable{Verse.FloatMenuOption}
+  commentId: T:System.Collections.Generic.IEnumerable{Verse.FloatMenuOption}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<FloatMenuOption>
+  nameWithType: IEnumerable<FloatMenuOption>
+  fullName: System.Collections.Generic.IEnumerable<Verse.FloatMenuOption>
+  nameWithType.vb: IEnumerable(Of FloatMenuOption)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Verse.FloatMenuOption)
+  name.vb: IEnumerable(Of FloatMenuOption)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.FloatMenuOption
+    name: FloatMenuOption
+    nameWithType: FloatMenuOption
+    fullName: Verse.FloatMenuOption
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.FloatMenuOption
+    name: FloatMenuOption
+    nameWithType: FloatMenuOption
+    fullName: Verse.FloatMenuOption
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget*
+  commentId: Overload:RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget
+  name: SetTarget
+  nameWithType: CompCustomWeaponPort.SetTarget
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.SetTarget
+- uid: Verse.ThingDef
+  commentId: T:Verse.ThingDef
+  parent: Verse
+  isExternal: true
+  name: ThingDef
+  nameWithType: ThingDef
+  fullName: Verse.ThingDef
+- uid: RW_ModularizationWeapon.UI.CustomWeapon
+  commentId: T:RW_ModularizationWeapon.UI.CustomWeapon
+  parent: RW_ModularizationWeapon.UI
+  name: CustomWeapon
+  nameWithType: CustomWeapon
+  fullName: RW_ModularizationWeapon.UI.CustomWeapon
+- uid: RW_ModularizationWeapon.UI
+  commentId: N:RW_ModularizationWeapon.UI
+  name: RW_ModularizationWeapon.UI
+  nameWithType: RW_ModularizationWeapon.UI
+  fullName: RW_ModularizationWeapon.UI
+- uid: RW_ModularizationWeapon.CompModularizationWeapon
+  commentId: T:RW_ModularizationWeapon.CompModularizationWeapon
+  parent: RW_ModularizationWeapon
+  name: CompModularizationWeapon
+  nameWithType: CompModularizationWeapon
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget*
+  commentId: Overload:RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget
+  name: GetTarget
+  nameWithType: CompCustomWeaponPort.GetTarget
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.GetTarget
+- uid: Verse.LocalTargetInfo
+  commentId: T:Verse.LocalTargetInfo
+  parent: Verse
+  isExternal: true
+  name: LocalTargetInfo
+  nameWithType: LocalTargetInfo
+  fullName: Verse.LocalTargetInfo
+- uid: RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon*
+  commentId: Overload:RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon
+  name: GetTargetCompModularizationWeapon
+  nameWithType: CompCustomWeaponPort.GetTargetCompModularizationWeapon
+  fullName: RW_ModularizationWeapon.CompCustomWeaponPort.GetTargetCompModularizationWeapon

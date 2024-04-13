@@ -1,0 +1,942 @@
+### YamlMime:ManagedReference
+items:
+- uid: RW_ModularizationWeapon.UI.StateInfoTags
+  commentId: T:RW_ModularizationWeapon.UI.StateInfoTags
+  id: StateInfoTags
+  parent: RW_ModularizationWeapon.UI
+  children:
+  - RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.Faction)
+  - RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.Planet.WorldObject)
+  - RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.RoyalTitleDef,RimWorld.Faction,Verse.Pawn)
+  - RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.Def,RimWorld.Precept_ThingStyle)
+  - RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.Thing,RimWorld.Precept_ThingStyle)
+  - RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.ThingDef,Verse.ThingDef,RimWorld.Precept_ThingStyle)
+  - RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect,System.Action{System.Int32,RimWorld.StatRequest},System.Action{System.Int32,RimWorld.StatRequest})
+  - RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags
+  nameWithType: StateInfoTags
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags
+  type: Class
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: StateInfoTags
+    path: UI/StateInfoTags.cs
+    startLine: 11
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public class StateInfoTags
+    content.vb: Public Class StateInfoTags
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ToString
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.Thing,RimWorld.Precept_ThingStyle)
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.Thing,RimWorld.Precept_ThingStyle)
+  id: '#ctor(System.Single,Verse.Thing,RimWorld.Precept_ThingStyle)'
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags(Single, Thing, Precept_ThingStyle)
+  nameWithType: StateInfoTags.StateInfoTags(Single, Thing, Precept_ThingStyle)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags(System.Single, Verse.Thing, RimWorld.Precept_ThingStyle)
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: UI/StateInfoTags.cs
+    startLine: 13
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public StateInfoTags(float InitDrawSize, Thing thing, Precept_ThingStyle precept = null)
+    parameters:
+    - id: InitDrawSize
+      type: System.Single
+    - id: thing
+      type: Verse.Thing
+    - id: precept
+      type: RimWorld.Precept_ThingStyle
+    content.vb: Public Sub New(InitDrawSize As Single, thing As Thing, precept As Precept_ThingStyle = Nothing)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.Def,RimWorld.Precept_ThingStyle)
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.Def,RimWorld.Precept_ThingStyle)
+  id: '#ctor(System.Single,Verse.Def,RimWorld.Precept_ThingStyle)'
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags(Single, Def, Precept_ThingStyle)
+  nameWithType: StateInfoTags.StateInfoTags(Single, Def, Precept_ThingStyle)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags(System.Single, Verse.Def, RimWorld.Precept_ThingStyle)
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: UI/StateInfoTags.cs
+    startLine: 22
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public StateInfoTags(float InitDrawSize, Def onlyDef, Precept_ThingStyle precept = null)
+    parameters:
+    - id: InitDrawSize
+      type: System.Single
+    - id: onlyDef
+      type: Verse.Def
+    - id: precept
+      type: RimWorld.Precept_ThingStyle
+    content.vb: Public Sub New(InitDrawSize As Single, onlyDef As Def, precept As Precept_ThingStyle = Nothing)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.ThingDef,Verse.ThingDef,RimWorld.Precept_ThingStyle)
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,Verse.ThingDef,Verse.ThingDef,RimWorld.Precept_ThingStyle)
+  id: '#ctor(System.Single,Verse.ThingDef,Verse.ThingDef,RimWorld.Precept_ThingStyle)'
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags(Single, ThingDef, ThingDef, Precept_ThingStyle)
+  nameWithType: StateInfoTags.StateInfoTags(Single, ThingDef, ThingDef, Precept_ThingStyle)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags(System.Single, Verse.ThingDef, Verse.ThingDef, RimWorld.Precept_ThingStyle)
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: UI/StateInfoTags.cs
+    startLine: 30
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public StateInfoTags(float InitDrawSize, ThingDef thingDef, ThingDef stuff, Precept_ThingStyle precept = null)
+    parameters:
+    - id: InitDrawSize
+      type: System.Single
+    - id: thingDef
+      type: Verse.ThingDef
+    - id: stuff
+      type: Verse.ThingDef
+    - id: precept
+      type: RimWorld.Precept_ThingStyle
+    content.vb: Public Sub New(InitDrawSize As Single, thingDef As ThingDef, stuff As ThingDef, precept As Precept_ThingStyle = Nothing)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.RoyalTitleDef,RimWorld.Faction,Verse.Pawn)
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.RoyalTitleDef,RimWorld.Faction,Verse.Pawn)
+  id: '#ctor(System.Single,RimWorld.RoyalTitleDef,RimWorld.Faction,Verse.Pawn)'
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags(Single, RoyalTitleDef, Faction, Pawn)
+  nameWithType: StateInfoTags.StateInfoTags(Single, RoyalTitleDef, Faction, Pawn)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags(System.Single, RimWorld.RoyalTitleDef, RimWorld.Faction, Verse.Pawn)
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: UI/StateInfoTags.cs
+    startLine: 38
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public StateInfoTags(float InitDrawSize, RoyalTitleDef titleDef, Faction faction, Pawn pawn = null)
+    parameters:
+    - id: InitDrawSize
+      type: System.Single
+    - id: titleDef
+      type: RimWorld.RoyalTitleDef
+    - id: faction
+      type: RimWorld.Faction
+    - id: pawn
+      type: Verse.Pawn
+    content.vb: Public Sub New(InitDrawSize As Single, titleDef As RoyalTitleDef, faction As Faction, pawn As Pawn = Nothing)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.Faction)
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.Faction)
+  id: '#ctor(System.Single,RimWorld.Faction)'
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags(Single, Faction)
+  nameWithType: StateInfoTags.StateInfoTags(Single, Faction)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags(System.Single, RimWorld.Faction)
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: UI/StateInfoTags.cs
+    startLine: 46
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public StateInfoTags(float InitDrawSize, Faction faction)
+    parameters:
+    - id: InitDrawSize
+      type: System.Single
+    - id: faction
+      type: RimWorld.Faction
+    content.vb: Public Sub New(InitDrawSize As Single, faction As Faction)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.Planet.WorldObject)
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.#ctor(System.Single,RimWorld.Planet.WorldObject)
+  id: '#ctor(System.Single,RimWorld.Planet.WorldObject)'
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: StateInfoTags(Single, WorldObject)
+  nameWithType: StateInfoTags.StateInfoTags(Single, WorldObject)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags(System.Single, RimWorld.Planet.WorldObject)
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: UI/StateInfoTags.cs
+    startLine: 54
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public StateInfoTags(float InitDrawSize, WorldObject worldObject)
+    parameters:
+    - id: InitDrawSize
+      type: System.Single
+    - id: worldObject
+      type: RimWorld.Planet.WorldObject
+    content.vb: Public Sub New(InitDrawSize As Single, worldObject As WorldObject)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos
+  id: UpdateStatInfos
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: UpdateStatInfos()
+  nameWithType: StateInfoTags.UpdateStatInfos()
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos()
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: UpdateStatInfos
+    path: UI/StateInfoTags.cs
+    startLine: 61
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public void UpdateStatInfos()
+    content.vb: Public Sub UpdateStatInfos
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect,System.Action{System.Int32,RimWorld.StatRequest},System.Action{System.Int32,RimWorld.StatRequest})
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect,System.Action{System.Int32,RimWorld.StatRequest},System.Action{System.Int32,RimWorld.StatRequest})
+  id: Draw(UnityEngine.Rect,System.Action{System.Int32,RimWorld.StatRequest},System.Action{System.Int32,RimWorld.StatRequest})
+  parent: RW_ModularizationWeapon.UI.StateInfoTags
+  langs:
+  - csharp
+  - vb
+  name: Draw(Rect, Action<Int32, StatRequest>, Action<Int32, StatRequest>)
+  nameWithType: StateInfoTags.Draw(Rect, Action<Int32, StatRequest>, Action<Int32, StatRequest>)
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect, System.Action<System.Int32, RimWorld.StatRequest>, System.Action<System.Int32, RimWorld.StatRequest>)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/UI/StateInfoTags.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: Draw
+    path: UI/StateInfoTags.cs
+    startLine: 78
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon.UI
+  syntax:
+    content: public void Draw(Rect rect, Action<int, StatRequest> clickedCallback = null, Action<int, StatRequest> mousedOverCallback = null)
+    parameters:
+    - id: rect
+      type: UnityEngine.Rect
+    - id: clickedCallback
+      type: System.Action{System.Int32,RimWorld.StatRequest}
+    - id: mousedOverCallback
+      type: System.Action{System.Int32,RimWorld.StatRequest}
+    content.vb: Public Sub Draw(rect As Rect, clickedCallback As Action(Of Integer, StatRequest) = Nothing, mousedOverCallback As Action(Of Integer, StatRequest) = Nothing)
+  overload: RW_ModularizationWeapon.UI.StateInfoTags.Draw*
+  nameWithType.vb: StateInfoTags.Draw(Rect, Action(Of Int32, StatRequest), Action(Of Int32, StatRequest))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect, System.Action(Of System.Int32, RimWorld.StatRequest), System.Action(Of System.Int32, RimWorld.StatRequest))
+  name.vb: Draw(Rect, Action(Of Int32, StatRequest), Action(Of Int32, StatRequest))
+references:
+- uid: RW_ModularizationWeapon.UI
+  commentId: N:RW_ModularizationWeapon.UI
+  name: RW_ModularizationWeapon.UI
+  nameWithType: RW_ModularizationWeapon.UI
+  fullName: RW_ModularizationWeapon.UI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  parent: RW_ModularizationWeapon.Tools.ToolsFunction
+  definition: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  name: LogAllField()
+  nameWithType: ToolsFunction.LogAllField()
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField()
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  isExternal: true
+  name: LogAllField(Object)
+  nameWithType: ToolsFunction.LogAllField(Object)
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction
+  commentId: T:RW_ModularizationWeapon.Tools.ToolsFunction
+  parent: RW_ModularizationWeapon.Tools
+  name: ToolsFunction
+  nameWithType: ToolsFunction
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction
+- uid: RW_ModularizationWeapon.Tools
+  commentId: N:RW_ModularizationWeapon.Tools
+  name: RW_ModularizationWeapon.Tools
+  nameWithType: RW_ModularizationWeapon.Tools
+  fullName: RW_ModularizationWeapon.Tools
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.#ctor*
+  commentId: Overload:RW_ModularizationWeapon.UI.StateInfoTags.#ctor
+  name: StateInfoTags
+  nameWithType: StateInfoTags.StateInfoTags
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: Single
+  nameWithType: Single
+  fullName: System.Single
+- uid: Verse.Thing
+  commentId: T:Verse.Thing
+  parent: Verse
+  isExternal: true
+  name: Thing
+  nameWithType: Thing
+  fullName: Verse.Thing
+- uid: RimWorld.Precept_ThingStyle
+  commentId: T:RimWorld.Precept_ThingStyle
+  parent: RimWorld
+  isExternal: true
+  name: Precept_ThingStyle
+  nameWithType: Precept_ThingStyle
+  fullName: RimWorld.Precept_ThingStyle
+- uid: Verse
+  commentId: N:Verse
+  isExternal: true
+  name: Verse
+  nameWithType: Verse
+  fullName: Verse
+- uid: RimWorld
+  commentId: N:RimWorld
+  isExternal: true
+  name: RimWorld
+  nameWithType: RimWorld
+  fullName: RimWorld
+- uid: Verse.Def
+  commentId: T:Verse.Def
+  parent: Verse
+  isExternal: true
+  name: Def
+  nameWithType: Def
+  fullName: Verse.Def
+- uid: Verse.ThingDef
+  commentId: T:Verse.ThingDef
+  parent: Verse
+  isExternal: true
+  name: ThingDef
+  nameWithType: ThingDef
+  fullName: Verse.ThingDef
+- uid: RimWorld.RoyalTitleDef
+  commentId: T:RimWorld.RoyalTitleDef
+  parent: RimWorld
+  isExternal: true
+  name: RoyalTitleDef
+  nameWithType: RoyalTitleDef
+  fullName: RimWorld.RoyalTitleDef
+- uid: RimWorld.Faction
+  commentId: T:RimWorld.Faction
+  parent: RimWorld
+  isExternal: true
+  name: Faction
+  nameWithType: Faction
+  fullName: RimWorld.Faction
+- uid: Verse.Pawn
+  commentId: T:Verse.Pawn
+  parent: Verse
+  isExternal: true
+  name: Pawn
+  nameWithType: Pawn
+  fullName: Verse.Pawn
+- uid: RimWorld.Planet.WorldObject
+  commentId: T:RimWorld.Planet.WorldObject
+  parent: RimWorld.Planet
+  isExternal: true
+  name: WorldObject
+  nameWithType: WorldObject
+  fullName: RimWorld.Planet.WorldObject
+- uid: RimWorld.Planet
+  commentId: N:RimWorld.Planet
+  isExternal: true
+  name: RimWorld.Planet
+  nameWithType: RimWorld.Planet
+  fullName: RimWorld.Planet
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos*
+  commentId: Overload:RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos
+  name: UpdateStatInfos
+  nameWithType: StateInfoTags.UpdateStatInfos
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.UpdateStatInfos
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.Draw*
+  commentId: Overload:RW_ModularizationWeapon.UI.StateInfoTags.Draw
+  name: Draw
+  nameWithType: StateInfoTags.Draw
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.Draw
+- uid: UnityEngine.Rect
+  commentId: T:UnityEngine.Rect
+  parent: UnityEngine
+  isExternal: true
+  name: Rect
+  nameWithType: Rect
+  fullName: UnityEngine.Rect
+- uid: System.Action{System.Int32,RimWorld.StatRequest}
+  commentId: T:System.Action{System.Int32,RimWorld.StatRequest}
+  parent: System
+  definition: System.Action`2
+  name: Action<Int32, StatRequest>
+  nameWithType: Action<Int32, StatRequest>
+  fullName: System.Action<System.Int32, RimWorld.StatRequest>
+  nameWithType.vb: Action(Of Int32, StatRequest)
+  fullName.vb: System.Action(Of System.Int32, RimWorld.StatRequest)
+  name.vb: Action(Of Int32, StatRequest)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: RimWorld.StatRequest
+    name: StatRequest
+    nameWithType: StatRequest
+    fullName: RimWorld.StatRequest
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: RimWorld.StatRequest
+    name: StatRequest
+    nameWithType: StatRequest
+    fullName: RimWorld.StatRequest
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: )
+    nameWithType: )
+    fullName: )

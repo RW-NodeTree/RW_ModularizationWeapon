@@ -141,19 +141,6 @@ references:
   commentId: T:RW_ModularizationWeapon.CompModularizationWeapon
   fullName: RW_ModularizationWeapon.CompModularizationWeapon
   nameWithType: CompModularizationWeapon
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.Added(RW_NodeTree.NodeContainer,System.String)
-  name: Added(NodeContainer, String)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Added_RW_NodeTree_NodeContainer_System_String_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.Added(RW_NodeTree.NodeContainer,System.String)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.Added(RW_NodeTree.NodeContainer, System.String)
-  nameWithType: CompModularizationWeapon.Added(NodeContainer, String)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.Added*
-  name: Added
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Added_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.Added
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.Added
-  nameWithType: CompModularizationWeapon.Added
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.AllExtraCompProperties
   name: AllExtraCompProperties()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllExtraCompProperties
@@ -180,6 +167,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowNode
   nameWithType: CompModularizationWeapon.AllowNode
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowPart(Verse.Thing,System.String,System.Boolean)
+  name: AllowPart(Thing, String, Boolean)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowPart_Verse_Thing_System_String_System_Boolean_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.AllowPart(Verse.Thing,System.String,System.Boolean)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowPart(Verse.Thing, System.String, System.Boolean)
+  nameWithType: CompModularizationWeapon.AllowPart(Thing, String, Boolean)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowPart*
+  name: AllowPart
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowPart_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.AllowPart
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowPart
+  nameWithType: CompModularizationWeapon.AllowPart
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowStackWith(Verse.Thing)
   name: AllowStackWith(Thing)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowStackWith_Verse_Thing_
@@ -193,19 +193,32 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowStackWith
   nameWithType: CompModularizationWeapon.AllowStackWith
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.ApplyTargetPart(Verse.IntVec3,Verse.Map)
-  name: ApplyTargetPart(IntVec3, Map)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ApplyTargetPart_Verse_IntVec3_Verse_Map_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.ApplyTargetPart(Verse.IntVec3,Verse.Map)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ApplyTargetPart(Verse.IntVec3, Verse.Map)
-  nameWithType: CompModularizationWeapon.ApplyTargetPart(IntVec3, Map)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.ApplyTargetPart*
-  name: ApplyTargetPart
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ApplyTargetPart_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.ApplyTargetPart
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
+  name: AllowSwap
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowSwap
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
+  nameWithType: CompModularizationWeapon.AllowSwap
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap*
+  name: AllowSwap
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowSwap_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ApplyTargetPart
-  nameWithType: CompModularizationWeapon.ApplyTargetPart
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
+  nameWithType: CompModularizationWeapon.AllowSwap
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart
+  name: ClearTargetPart()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ClearTargetPart
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart()
+  nameWithType: CompModularizationWeapon.ClearTargetPart()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart*
+  name: ClearTargetPart
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ClearTargetPart_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart
+  nameWithType: CompModularizationWeapon.ClearTargetPart
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.CompGetGizmosExtra
   name: CompGetGizmosExtra()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_CompGetGizmosExtra
@@ -300,38 +313,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.DrawChildTreeView
   nameWithType: CompModularizationWeapon.DrawChildTreeView
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools(System.Type,System.Collections.Generic.List{RW_NodeTree.VerbToolRegiestInfo},System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalIVerbOwner_GetTools(Type, List<VerbToolRegiestInfo>, Dictionary<String, Object>, Exception)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalIVerbOwner_GetTools_System_Type_System_Collections_Generic_List_RW_NodeTree_VerbToolRegiestInfo__System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools(System.Type,System.Collections.Generic.List{RW_NodeTree.VerbToolRegiestInfo},System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name.vb: FinalIVerbOwner_GetTools(Type, List(Of VerbToolRegiestInfo), Dictionary(Of String, Object), Exception)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools(System.Type, System.Collections.Generic.List<RW_NodeTree.VerbToolRegiestInfo>, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools(System.Type, System.Collections.Generic.List(Of RW_NodeTree.VerbToolRegiestInfo), System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalIVerbOwner_GetTools(Type, List<VerbToolRegiestInfo>, Dictionary<String, Object>, Exception)
-  nameWithType.vb: CompModularizationWeapon.FinalIVerbOwner_GetTools(Type, List(Of VerbToolRegiestInfo), Dictionary(Of String, Object), Exception)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools*
-  name: FinalIVerbOwner_GetTools
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalIVerbOwner_GetTools_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetTools
-  nameWithType: CompModularizationWeapon.FinalIVerbOwner_GetTools
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties(System.Type,System.Collections.Generic.List{RW_NodeTree.VerbPropertiesRegiestInfo},System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalIVerbOwner_GetVerbProperties(Type, List<VerbPropertiesRegiestInfo>, Dictionary<String, Object>, Exception)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalIVerbOwner_GetVerbProperties_System_Type_System_Collections_Generic_List_RW_NodeTree_VerbPropertiesRegiestInfo__System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties(System.Type,System.Collections.Generic.List{RW_NodeTree.VerbPropertiesRegiestInfo},System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name.vb: FinalIVerbOwner_GetVerbProperties(Type, List(Of VerbPropertiesRegiestInfo), Dictionary(Of String, Object), Exception)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties(System.Type, System.Collections.Generic.List<RW_NodeTree.VerbPropertiesRegiestInfo>, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties(System.Type, System.Collections.Generic.List(Of RW_NodeTree.VerbPropertiesRegiestInfo), System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties(Type, List<VerbPropertiesRegiestInfo>, Dictionary<String, Object>, Exception)
-  nameWithType.vb: CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties(Type, List(Of VerbPropertiesRegiestInfo), Dictionary(Of String, Object), Exception)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties*
-  name: FinalIVerbOwner_GetVerbProperties
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalIVerbOwner_GetVerbProperties_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties
-  nameWithType: CompModularizationWeapon.FinalIVerbOwner_GetVerbProperties
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name: FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary<String, Object>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_FinalizeValue_RimWorld_StatWorker_RimWorld_StatRequest_System_Boolean_System_Single_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
@@ -480,6 +461,32 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset
   nameWithType: CompModularizationWeapon.GetStatOffset
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.GetTargetPart(System.String)
+  name: GetTargetPart(String)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetTargetPart_System_String_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.GetTargetPart(System.String)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetTargetPart(System.String)
+  nameWithType: CompModularizationWeapon.GetTargetPart(String)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.GetTargetPart*
+  name: GetTargetPart
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetTargetPart_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.GetTargetPart
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetTargetPart
+  nameWithType: CompModularizationWeapon.GetTargetPart
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX(System.Boolean)
+  name: HasPostFX(Boolean)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_HasPostFX_System_Boolean_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX(System.Boolean)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX(System.Boolean)
+  nameWithType: CompModularizationWeapon.HasPostFX(Boolean)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX*
+  name: HasPostFX
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_HasPostFX_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX
+  nameWithType: CompModularizationWeapon.HasPostFX
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.NotDraw(System.String)
   name: NotDraw(String)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_NotDraw_System_String_
@@ -519,6 +526,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.NotUseVerbProperties
   nameWithType: CompModularizationWeapon.NotUseVerbProperties
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.Occupyed
+  name: Occupyed
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Occupyed
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.Occupyed
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.Occupyed
+  nameWithType: CompModularizationWeapon.Occupyed
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.Occupyed*
+  name: Occupyed
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Occupyed_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.Occupyed
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.Occupyed
+  nameWithType: CompModularizationWeapon.Occupyed
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.op_Implicit(RW_ModularizationWeapon.CompModularizationWeapon)~Verse.Thing
   name: Implicit(CompModularizationWeapon to Thing)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_op_Implicit_RW_ModularizationWeapon_CompModularizationWeapon__Verse_Thing
@@ -547,35 +567,6 @@ references:
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.Widening
   nameWithType: CompModularizationWeapon.Implicit
   nameWithType.vb: CompModularizationWeapon.Widening
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.OrginalPart(System.String)
-  name: OrginalPart(String)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_OrginalPart_System_String_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.OrginalPart(System.String)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.OrginalPart(System.String)
-  nameWithType: CompModularizationWeapon.OrginalPart(String)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.OrginalPart*
-  name: OrginalPart
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_OrginalPart_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.OrginalPart
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.OrginalPart
-  nameWithType: CompModularizationWeapon.OrginalPart
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep(System.Collections.Generic.List{System.ValueTuple{Verse.Thing,System.String,System.Collections.Generic.List{RW_NodeTree.Rendering.RenderInfo}}},Verse.Rot4,Verse.Graphic)
-  name: OverrideDrawSteep(List<(Thing, String, List<RenderInfo>)>, Rot4, Graphic)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_OverrideDrawSteep_System_Collections_Generic_List_System_ValueTuple_Verse_Thing_System_String_System_Collections_Generic_List_RW_NodeTree_Rendering_RenderInfo____Verse_Rot4_Verse_Graphic_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep(System.Collections.Generic.List{System.ValueTuple{Verse.Thing,System.String,System.Collections.Generic.List{RW_NodeTree.Rendering.RenderInfo}}},Verse.Rot4,Verse.Graphic)
-  name.vb: OverrideDrawSteep(List(Of (Thing, String, List(Of RenderInfo))(Of Thing, String, List(Of RenderInfo))), Rot4, Graphic)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep(System.Collections.Generic.List<System.ValueTuple<Verse.Thing, System.String, System.Collections.Generic.List<RW_NodeTree.Rendering.RenderInfo>>>, Verse.Rot4, Verse.Graphic)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep(System.Collections.Generic.List(Of System.ValueTuple(Of Verse.Thing, System.String, System.Collections.Generic.List(Of RW_NodeTree.Rendering.RenderInfo))), Verse.Rot4, Verse.Graphic)
-  nameWithType: CompModularizationWeapon.OverrideDrawSteep(List<(Thing, String, List<RenderInfo>)>, Rot4, Graphic)
-  nameWithType.vb: CompModularizationWeapon.OverrideDrawSteep(List(Of (Thing, String, List(Of RenderInfo))(Of Thing, String, List(Of RenderInfo))), Rot4, Graphic)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep*
-  name: OverrideDrawSteep
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_OverrideDrawSteep_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.OverrideDrawSteep
-  nameWithType: CompModularizationWeapon.OverrideDrawSteep
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.ParentPart
   name: ParentPart
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ParentPart
@@ -589,6 +580,35 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.ParentPart
   nameWithType: CompModularizationWeapon.ParentPart
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
+  name: PartIDs
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PartIDs
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
+  nameWithType: CompModularizationWeapon.PartIDs
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PartIDs*
+  name: PartIDs
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PartIDs_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
+  nameWithType: CompModularizationWeapon.PartIDs
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
+  name: PostDrawSteep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawSteep_System_Collections_Generic_List_System_ValueTuple_System_String_Verse_Thing_System_Collections_Generic_List_RenderInfo____Verse_Rot4_Verse_Graphic_System_Collections_Generic_Dictionary_System_String_System_Object__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
+  name.vb: PostDrawSteep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List<System.ValueTuple<System.String, Verse.Thing, System.Collections.Generic.List<RenderInfo>>>, Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary<System.String, System.Object>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List(Of System.ValueTuple(Of System.String, Verse.Thing, System.Collections.Generic.List(Of RenderInfo))), Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary(Of System.String, System.Object))
+  nameWithType: CompModularizationWeapon.PostDrawSteep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
+  nameWithType.vb: CompModularizationWeapon.PostDrawSteep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep*
+  name: PostDrawSteep
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawSteep_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep
+  nameWithType: CompModularizationWeapon.PostDrawSteep
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostExposeData
   name: PostExposeData()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostExposeData
@@ -602,13 +622,26 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostExposeData
   nameWithType: CompModularizationWeapon.PostExposeData
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List{Verse.Thing},Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,RW_NodeTree.RecipeInvokeSource,System.Collections.Generic.IEnumerable{Verse.Thing})
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostFX(UnityEngine.RenderTexture)
+  name: PostFX(RenderTexture)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostFX_UnityEngine_RenderTexture_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostFX(UnityEngine.RenderTexture)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostFX(UnityEngine.RenderTexture)
+  nameWithType: CompModularizationWeapon.PostFX(RenderTexture)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostFX*
+  name: PostFX
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostFX_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PostFX
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostFX
+  nameWithType: CompModularizationWeapon.PostFX
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List{Verse.Thing},Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,RecipeInvokeSource,System.Collections.Generic.IEnumerable{Verse.Thing})
   name: PostGenRecipe_MakeRecipeProducts(RecipeDef, Pawn, List<Thing>, Thing, IBillGiver, Precept_ThingStyle, RecipeInvokeSource, IEnumerable<Thing>)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostGenRecipe_MakeRecipeProducts_Verse_RecipeDef_Verse_Pawn_System_Collections_Generic_List_Verse_Thing__Verse_Thing_RimWorld_IBillGiver_RimWorld_Precept_ThingStyle_RW_NodeTree_RecipeInvokeSource_System_Collections_Generic_IEnumerable_Verse_Thing__
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List{Verse.Thing},Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,RW_NodeTree.RecipeInvokeSource,System.Collections.Generic.IEnumerable{Verse.Thing})
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostGenRecipe_MakeRecipeProducts_Verse_RecipeDef_Verse_Pawn_System_Collections_Generic_List_Verse_Thing__Verse_Thing_RimWorld_IBillGiver_RimWorld_Precept_ThingStyle_RecipeInvokeSource_System_Collections_Generic_IEnumerable_Verse_Thing__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List{Verse.Thing},Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,RecipeInvokeSource,System.Collections.Generic.IEnumerable{Verse.Thing})
   name.vb: PostGenRecipe_MakeRecipeProducts(RecipeDef, Pawn, List(Of Thing), Thing, IBillGiver, Precept_ThingStyle, RecipeInvokeSource, IEnumerable(Of Thing))
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef, Verse.Pawn, System.Collections.Generic.List<Verse.Thing>, Verse.Thing, RimWorld.IBillGiver, RimWorld.Precept_ThingStyle, RW_NodeTree.RecipeInvokeSource, System.Collections.Generic.IEnumerable<Verse.Thing>)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef, Verse.Pawn, System.Collections.Generic.List(Of Verse.Thing), Verse.Thing, RimWorld.IBillGiver, RimWorld.Precept_ThingStyle, RW_NodeTree.RecipeInvokeSource, System.Collections.Generic.IEnumerable(Of Verse.Thing))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef, Verse.Pawn, System.Collections.Generic.List<Verse.Thing>, Verse.Thing, RimWorld.IBillGiver, RimWorld.Precept_ThingStyle, RecipeInvokeSource, System.Collections.Generic.IEnumerable<Verse.Thing>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(Verse.RecipeDef, Verse.Pawn, System.Collections.Generic.List(Of Verse.Thing), Verse.Thing, RimWorld.IBillGiver, RimWorld.Precept_ThingStyle, RecipeInvokeSource, System.Collections.Generic.IEnumerable(Of Verse.Thing))
   nameWithType: CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(RecipeDef, Pawn, List<Thing>, Thing, IBillGiver, Precept_ThingStyle, RecipeInvokeSource, IEnumerable<Thing>)
   nameWithType.vb: CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts(RecipeDef, Pawn, List(Of Thing), Thing, IBillGiver, Precept_ThingStyle, RecipeInvokeSource, IEnumerable(Of Thing))
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostGenRecipe_MakeRecipeProducts*
@@ -695,6 +728,22 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostThingWithComps_PreApplyDamage
   nameWithType: CompModularizationWeapon.PostThingWithComps_PreApplyDamage
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
+  name: PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
+  name.vb: PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing))
+  nameWithType: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
+  nameWithType.vb: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode*
+  name: PostUpdateNode
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostUpdateNode_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode
+  nameWithType: CompModularizationWeapon.PostUpdateNode
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single@,System.Collections.Generic.Dictionary{System.String,System.Object})
   name: PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ref Single, Dictionary<String, Object>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreStatWorker_FinalizeValue_RimWorld_StatWorker_RimWorld_StatRequest_System_Boolean_System_Single__System_Collections_Generic_Dictionary_System_String_System_Object__
@@ -759,6 +808,22 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized
   nameWithType: CompModularizationWeapon.PreStatWorker_GetValueUnfinalized
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
+  name: PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
+  name.vb: PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing))
+  nameWithType: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
+  nameWithType.vb: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode*
+  name: PreUpdateNode
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreUpdateNode_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode
+  nameWithType: CompModularizationWeapon.PreUpdateNode
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.Props
   name: Props
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Props
@@ -772,48 +837,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.Props
   nameWithType: CompModularizationWeapon.Props
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId(System.Collections.Generic.HashSet{System.String})
-  name: RegiestedNodeId(HashSet<String>)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_RegiestedNodeId_System_Collections_Generic_HashSet_System_String__
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId(System.Collections.Generic.HashSet{System.String})
-  name.vb: RegiestedNodeId(HashSet(Of String))
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId(System.Collections.Generic.HashSet<System.String>)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId(System.Collections.Generic.HashSet(Of System.String))
-  nameWithType: CompModularizationWeapon.RegiestedNodeId(HashSet<String>)
-  nameWithType.vb: CompModularizationWeapon.RegiestedNodeId(HashSet(Of String))
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId*
-  name: RegiestedNodeId
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_RegiestedNodeId_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.RegiestedNodeId
-  nameWithType: CompModularizationWeapon.RegiestedNodeId
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.Removed(RW_NodeTree.NodeContainer,System.String)
-  name: Removed(NodeContainer, String)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Removed_RW_NodeTree_NodeContainer_System_String_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.Removed(RW_NodeTree.NodeContainer,System.String)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.Removed(RW_NodeTree.NodeContainer, System.String)
-  nameWithType: CompModularizationWeapon.Removed(NodeContainer, String)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.Removed*
-  name: Removed
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_Removed_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.Removed
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.Removed
-  nameWithType: CompModularizationWeapon.Removed
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.ResetTargetPart
-  name: ResetTargetPart()
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ResetTargetPart
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.ResetTargetPart
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ResetTargetPart()
-  nameWithType: CompModularizationWeapon.ResetTargetPart()
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.ResetTargetPart*
-  name: ResetTargetPart
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ResetTargetPart_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.ResetTargetPart
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ResetTargetPart
-  nameWithType: CompModularizationWeapon.ResetTargetPart
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.RootPart
   name: RootPart
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_RootPart
@@ -827,6 +850,32 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.RootPart
   nameWithType: CompModularizationWeapon.RootPart
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostion
+  name: SetChildPostion()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SetChildPostion
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostion
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostion()
+  nameWithType: CompModularizationWeapon.SetChildPostion()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostion*
+  name: SetChildPostion
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SetChildPostion_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostion
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostion
+  nameWithType: CompModularizationWeapon.SetChildPostion
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostionInvalid
+  name: SetChildPostionInvalid()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SetChildPostionInvalid
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostionInvalid
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostionInvalid()
+  nameWithType: CompModularizationWeapon.SetChildPostionInvalid()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostionInvalid*
+  name: SetChildPostionInvalid
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SetChildPostionInvalid_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostionInvalid
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.SetChildPostionInvalid
+  nameWithType: CompModularizationWeapon.SetChildPostionInvalid
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.SetChildTreeViewOpend(System.String,System.Boolean)
   name: SetChildTreeViewOpend(String, Boolean)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SetChildTreeViewOpend_System_String_System_Boolean_
@@ -879,19 +928,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.SetTargetPart
   nameWithType: CompModularizationWeapon.SetTargetPart
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.ShowTargetPart
-  name: ShowTargetPart
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ShowTargetPart
-  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.ShowTargetPart
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ShowTargetPart
-  nameWithType: CompModularizationWeapon.ShowTargetPart
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.ShowTargetPart*
-  name: ShowTargetPart
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ShowTargetPart_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.ShowTargetPart
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.SwapTargetPart
+  name: SwapTargetPart()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SwapTargetPart
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.SwapTargetPart
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.SwapTargetPart()
+  nameWithType: CompModularizationWeapon.SwapTargetPart()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.SwapTargetPart*
+  name: SwapTargetPart
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_SwapTargetPart_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.SwapTargetPart
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.ShowTargetPart
-  nameWithType: CompModularizationWeapon.ShowTargetPart
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.SwapTargetPart
+  nameWithType: CompModularizationWeapon.SwapTargetPart
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.System#Collections#IEnumerable#GetEnumerator
   name: IEnumerable.GetEnumerator()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_System_Collections_IEnumerable_GetEnumerator
@@ -1000,19 +1049,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.Unchangeable
   nameWithType: CompModularizationWeapon.Unchangeable
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateNode(RW_NodeTree.CompChildNodeProccesser)
-  name: UpdateNode(CompChildNodeProccesser)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateNode_RW_NodeTree_CompChildNodeProccesser_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UpdateNode(RW_NodeTree.CompChildNodeProccesser)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateNode(RW_NodeTree.CompChildNodeProccesser)
-  nameWithType: CompModularizationWeapon.UpdateNode(CompChildNodeProccesser)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateNode*
-  name: UpdateNode
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateNode_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UpdateNode
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID
+  name: UniqueVerbOwnerID()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UniqueVerbOwnerID
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID()
+  nameWithType: CompModularizationWeapon.UniqueVerbOwnerID()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID*
+  name: UniqueVerbOwnerID
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UniqueVerbOwnerID_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateNode
-  nameWithType: CompModularizationWeapon.UpdateNode
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID
+  nameWithType: CompModularizationWeapon.UniqueVerbOwnerID
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesBoolAndPatch(System.String)
   name: VerbPropertiesBoolAndPatch(String)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbPropertiesBoolAndPatch_System_String_
@@ -1078,6 +1127,51 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesOffseter
   nameWithType: CompModularizationWeapon.VerbPropertiesOffseter
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte(System.Type,System.Collections.Generic.List{VerbPropertiesRegiestInfo})
+  name: VerbPropertiesRegiestInfoUpadte(Type, List<VerbPropertiesRegiestInfo>)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbPropertiesRegiestInfoUpadte_System_Type_System_Collections_Generic_List_VerbPropertiesRegiestInfo__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte(System.Type,System.Collections.Generic.List{VerbPropertiesRegiestInfo})
+  name.vb: VerbPropertiesRegiestInfoUpadte(Type, List(Of VerbPropertiesRegiestInfo))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte(System.Type, System.Collections.Generic.List<VerbPropertiesRegiestInfo>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte(System.Type, System.Collections.Generic.List(Of VerbPropertiesRegiestInfo))
+  nameWithType: CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte(Type, List<VerbPropertiesRegiestInfo>)
+  nameWithType.vb: CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte(Type, List(Of VerbPropertiesRegiestInfo))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte*
+  name: VerbPropertiesRegiestInfoUpadte
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbPropertiesRegiestInfoUpadte_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte
+  nameWithType: CompModularizationWeapon.VerbPropertiesRegiestInfoUpadte
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbsStillUsableBy(Verse.Pawn)
+  name: VerbsStillUsableBy(Pawn)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbsStillUsableBy_Verse_Pawn_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.VerbsStillUsableBy(Verse.Pawn)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbsStillUsableBy(Verse.Pawn)
+  nameWithType: CompModularizationWeapon.VerbsStillUsableBy(Pawn)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbsStillUsableBy*
+  name: VerbsStillUsableBy
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbsStillUsableBy_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.VerbsStillUsableBy
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbsStillUsableBy
+  nameWithType: CompModularizationWeapon.VerbsStillUsableBy
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate(System.Type,System.Collections.Generic.List{VerbToolRegiestInfo})
+  name: VerbToolRegiestInfoUpdate(Type, List<VerbToolRegiestInfo>)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbToolRegiestInfoUpdate_System_Type_System_Collections_Generic_List_VerbToolRegiestInfo__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate(System.Type,System.Collections.Generic.List{VerbToolRegiestInfo})
+  name.vb: VerbToolRegiestInfoUpdate(Type, List(Of VerbToolRegiestInfo))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate(System.Type, System.Collections.Generic.List<VerbToolRegiestInfo>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate(System.Type, System.Collections.Generic.List(Of VerbToolRegiestInfo))
+  nameWithType: CompModularizationWeapon.VerbToolRegiestInfoUpdate(Type, List<VerbToolRegiestInfo>)
+  nameWithType.vb: CompModularizationWeapon.VerbToolRegiestInfoUpdate(Type, List(Of VerbToolRegiestInfo))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate*
+  name: VerbToolRegiestInfoUpdate
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbToolRegiestInfoUpdate_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate
+  nameWithType: CompModularizationWeapon.VerbToolRegiestInfoUpdate
 - uid: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
   name: CompProperties_CustomWeaponPort
   href: api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html
@@ -1252,6 +1346,12 @@ references:
   commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
   fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
   nameWithType: CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  name: drawOutlineOnRoot
+  href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_drawOutlineOnRoot
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  nameWithType: CompProperties_ModularizationWeapon.drawOutlineOnRoot
 - uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.DrawSizeWhenAttach
   name: DrawSizeWhenAttach
   href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_DrawSizeWhenAttach
@@ -1282,19 +1382,6 @@ references:
   commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notDrawInParent
   fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notDrawInParent
   nameWithType: CompProperties_ModularizationWeapon.notDrawInParent
-- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexMaterial
-  name: PartTexMaterial
-  href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_PartTexMaterial
-  commentId: P:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexMaterial
-  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexMaterial
-  nameWithType: CompProperties_ModularizationWeapon.PartTexMaterial
-- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexMaterial*
-  name: PartTexMaterial
-  href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_PartTexMaterial_
-  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexMaterial
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexMaterial
-  nameWithType: CompProperties_ModularizationWeapon.PartTexMaterial
 - uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexPath
   name: PartTexPath
   href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_PartTexPath
@@ -1394,6 +1481,12 @@ references:
   commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
   fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
   nameWithType: CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  name: subRenderinfInfos
+  href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_subRenderinfInfos
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  nameWithType: CompProperties_ModularizationWeapon.subRenderinfInfos
 - uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatch
   name: toolsBoolAndPatch
   href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_toolsBoolAndPatch
@@ -4334,6 +4427,62 @@ references:
   fullName.vb: RW_ModularizationWeapon.FieldReaderInstList(Of T).ToString
   nameWithType: FieldReaderInstList<T>.ToString
   nameWithType.vb: FieldReaderInstList(Of T).ToString
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo
+  name: PartSubDrawingInfo
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html
+  commentId: T:RW_ModularizationWeapon.PartSubDrawingInfo
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo
+  nameWithType: PartSubDrawingInfo
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.PartTexPath
+  name: PartTexPath
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_PartTexPath
+  commentId: F:RW_ModularizationWeapon.PartSubDrawingInfo.PartTexPath
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.PartTexPath
+  nameWithType: PartSubDrawingInfo.PartTexPath
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.PartTexture
+  name: PartTexture
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_PartTexture
+  commentId: P:RW_ModularizationWeapon.PartSubDrawingInfo.PartTexture
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.PartTexture
+  nameWithType: PartSubDrawingInfo.PartTexture
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.PartTexture*
+  name: PartTexture
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_PartTexture_
+  commentId: Overload:RW_ModularizationWeapon.PartSubDrawingInfo.PartTexture
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.PartTexture
+  nameWithType: PartSubDrawingInfo.PartTexture
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.postion
+  name: postion
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_postion
+  commentId: F:RW_ModularizationWeapon.PartSubDrawingInfo.postion
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.postion
+  nameWithType: PartSubDrawingInfo.postion
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.rotation
+  name: rotation
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_rotation
+  commentId: F:RW_ModularizationWeapon.PartSubDrawingInfo.rotation
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.rotation
+  nameWithType: PartSubDrawingInfo.rotation
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.scale
+  name: scale
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_scale
+  commentId: F:RW_ModularizationWeapon.PartSubDrawingInfo.scale
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.scale
+  nameWithType: PartSubDrawingInfo.scale
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.Transfrom
+  name: Transfrom
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_Transfrom
+  commentId: P:RW_ModularizationWeapon.PartSubDrawingInfo.Transfrom
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.Transfrom
+  nameWithType: PartSubDrawingInfo.Transfrom
+- uid: RW_ModularizationWeapon.PartSubDrawingInfo.Transfrom*
+  name: Transfrom
+  href: api/RW_ModularizationWeapon.PartSubDrawingInfo.html#RW_ModularizationWeapon_PartSubDrawingInfo_Transfrom_
+  commentId: Overload:RW_ModularizationWeapon.PartSubDrawingInfo.Transfrom
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.PartSubDrawingInfo.Transfrom
+  nameWithType: PartSubDrawingInfo.Transfrom
 - uid: RW_ModularizationWeapon.Tools
   name: RW_ModularizationWeapon.Tools
   href: api/RW_ModularizationWeapon.Tools.html
@@ -4400,19 +4549,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.UI.CustomWeapon.CustomWeapon
   nameWithType: CustomWeapon.CustomWeapon
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.Close(System.Boolean)
-  name: Close(Boolean)
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_Close_System_Boolean_
-  commentId: M:RW_ModularizationWeapon.UI.CustomWeapon.Close(System.Boolean)
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.Close(System.Boolean)
-  nameWithType: CustomWeapon.Close(Boolean)
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.Close*
-  name: Close
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_Close_
-  commentId: Overload:RW_ModularizationWeapon.UI.CustomWeapon.Close
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.Close
-  nameWithType: CustomWeapon.Close
 - uid: RW_ModularizationWeapon.UI.CustomWeapon.DoWindowContents(UnityEngine.Rect)
   name: DoWindowContents(Rect)
   href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_DoWindowContents_UnityEngine_Rect_
@@ -4426,19 +4562,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.UI.CustomWeapon.DoWindowContents
   nameWithType: CustomWeapon.DoWindowContents
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.InfoTags
-  name: InfoTags
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_InfoTags
-  commentId: P:RW_ModularizationWeapon.UI.CustomWeapon.InfoTags
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.InfoTags
-  nameWithType: CustomWeapon.InfoTags
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.InfoTags*
-  name: InfoTags
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_InfoTags_
-  commentId: Overload:RW_ModularizationWeapon.UI.CustomWeapon.InfoTags
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.InfoTags
-  nameWithType: CustomWeapon.InfoTags
 - uid: RW_ModularizationWeapon.UI.CustomWeapon.InitialSize
   name: InitialSize
   href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_InitialSize
@@ -4465,32 +4588,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.UI.CustomWeapon.Margin
   nameWithType: CustomWeapon.Margin
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags
-  name: ResetInfoTags()
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_ResetInfoTags
-  commentId: M:RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags()
-  nameWithType: CustomWeapon.ResetInfoTags()
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags*
-  name: ResetInfoTags
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_ResetInfoTags_
-  commentId: Overload:RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.ResetInfoTags
-  nameWithType: CustomWeapon.ResetInfoTags
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections
-  name: ResetSelections()
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_ResetSelections
-  commentId: M:RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections()
-  nameWithType: CustomWeapon.ResetSelections()
-- uid: RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections*
-  name: ResetSelections
-  href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_ResetSelections_
-  commentId: Overload:RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.UI.CustomWeapon.ResetSelections
-  nameWithType: CustomWeapon.ResetSelections
 - uid: RW_ModularizationWeapon.UI.CustomWeapon.SelectedPartForChange
   name: SelectedPartForChange
   href: api/RW_ModularizationWeapon.UI.CustomWeapon.html#RW_ModularizationWeapon_UI_CustomWeapon_SelectedPartForChange
@@ -4566,12 +4663,15 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.UI.StateInfoTags.StateInfoTags
   nameWithType: StateInfoTags.StateInfoTags
-- uid: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect)
-  name: Draw(Rect)
-  href: api/RW_ModularizationWeapon.UI.StateInfoTags.html#RW_ModularizationWeapon_UI_StateInfoTags_Draw_UnityEngine_Rect_
-  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect)
-  fullName: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect)
-  nameWithType: StateInfoTags.Draw(Rect)
+- uid: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect,System.Action{System.Int32,RimWorld.StatRequest},System.Action{System.Int32,RimWorld.StatRequest})
+  name: Draw(Rect, Action<Int32, StatRequest>, Action<Int32, StatRequest>)
+  href: api/RW_ModularizationWeapon.UI.StateInfoTags.html#RW_ModularizationWeapon_UI_StateInfoTags_Draw_UnityEngine_Rect_System_Action_System_Int32_RimWorld_StatRequest__System_Action_System_Int32_RimWorld_StatRequest__
+  commentId: M:RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect,System.Action{System.Int32,RimWorld.StatRequest},System.Action{System.Int32,RimWorld.StatRequest})
+  name.vb: Draw(Rect, Action(Of Int32, StatRequest), Action(Of Int32, StatRequest))
+  fullName: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect, System.Action<System.Int32, RimWorld.StatRequest>, System.Action<System.Int32, RimWorld.StatRequest>)
+  fullName.vb: RW_ModularizationWeapon.UI.StateInfoTags.Draw(UnityEngine.Rect, System.Action(Of System.Int32, RimWorld.StatRequest), System.Action(Of System.Int32, RimWorld.StatRequest))
+  nameWithType: StateInfoTags.Draw(Rect, Action<Int32, StatRequest>, Action<Int32, StatRequest>)
+  nameWithType.vb: StateInfoTags.Draw(Rect, Action(Of Int32, StatRequest), Action(Of Int32, StatRequest))
 - uid: RW_ModularizationWeapon.UI.StateInfoTags.Draw*
   name: Draw
   href: api/RW_ModularizationWeapon.UI.StateInfoTags.html#RW_ModularizationWeapon_UI_StateInfoTags_Draw_
@@ -4707,6 +4807,12 @@ references:
   commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.postion
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.postion
   nameWithType: WeaponAttachmentProperties.postion
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.postionInPixelSize
+  name: postionInPixelSize
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_postionInPixelSize
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.postionInPixelSize
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.postionInPixelSize
+  nameWithType: WeaponAttachmentProperties.postionInPixelSize
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.randomThingDefWeights
   name: randomThingDefWeights
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_randomThingDefWeights
@@ -4889,19 +4995,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom
   nameWithType: WeaponAttachmentProperties.Transfrom
-- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.UITexMaterial
-  name: UITexMaterial
-  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_UITexMaterial
-  commentId: P:RW_ModularizationWeapon.WeaponAttachmentProperties.UITexMaterial
-  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.UITexMaterial
-  nameWithType: WeaponAttachmentProperties.UITexMaterial
-- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.UITexMaterial*
-  name: UITexMaterial
-  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_UITexMaterial_
-  commentId: Overload:RW_ModularizationWeapon.WeaponAttachmentProperties.UITexMaterial
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.UITexMaterial
-  nameWithType: WeaponAttachmentProperties.UITexMaterial
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.UITexPath
   name: UITexPath
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_UITexPath

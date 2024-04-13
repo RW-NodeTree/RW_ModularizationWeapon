@@ -74,33 +74,40 @@
 <p><strong>Allow to make the weapon consist by multi part</strong></p>
 <p>1 clone RW_NodeTree</p>
 <pre><code class="lang-bash">git clone https://github.com/RW-NodeTree/RW_NodeTree.git
-</code></pre><p>2 set environment variable <code>RW_HOME</code> to your <code>RimWorld root</code>. For example:</p>
+</code></pre>
+<p>2 set environment variable <code>RW_HOME</code> to your <code>RimWorld root</code>. For example:</p>
 <pre><code class="lang-bash">export RW_HOME=&quot;D:\SteamLibrary\steamapps\common\RimWorld&quot;
-</code></pre><p>3 Replace all path perfix with <code>&quot;D:\SteamLibrary\steama/RW_ModularizationWeapon\common\RimWorld&quot;</code> to yuor <code>RimWorld root</code> in <code>RW_ModularizationWeapon/RW_ModularizationWeapon.csproj</code>. For example:</p>
+</code></pre>
+<p>3 Replace all path perfix with <code>&quot;D:\SteamLibrary\steama/RW_ModularizationWeapon\common\RimWorld&quot;</code> to yuor <code>RimWorld root</code> in <code>RW_ModularizationWeapon/RW_ModularizationWeapon.csproj</code>. For example:</p>
 <p><strong>from</strong></p>
 <pre><code class="lang-xml">&lt;Reference Include=&quot;Assembly-CSharp&quot;&gt;
     &lt;HintPath&gt;D:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll&lt;/HintPath&gt;
 &lt;/Reference&gt;
-</code></pre><p><strong>to</strong></p>
+</code></pre>
+<p><strong>to</strong></p>
 <pre><code class="lang-xml">&lt;Reference Include=&quot;Assembly-CSharp&quot;&gt;
     &lt;HintPath&gt;(Your RimWorld root)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll&lt;/HintPath&gt;
 &lt;/Reference&gt;
-</code></pre><p>4 Replace all path perfix with <code>&quot;D:/SteamLibrary/steamapps/workshop&quot;</code> yuor <code>RimWorld SteamLibrary WorkShop Root</code> in <code>RW_ModularizationWeapon/RW_ModularizationWeapon.csproj</code>.</p>
+</code></pre>
+<p>4 Replace all path perfix with <code>&quot;D:/SteamLibrary/steamapps/workshop&quot;</code> yuor <code>RimWorld SteamLibrary WorkShop Root</code> in <code>RW_ModularizationWeapon/RW_ModularizationWeapon.csproj</code>.</p>
 <p><strong>from</strong></p>
 <pre><code class="lang-xml">&lt;Reference Include=&quot;0Harmony&quot;&gt;
     &lt;HintPath&gt;D:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll&lt;/HintPath&gt;
 &lt;/Reference&gt;
-</code></pre><p><strong>to</strong></p>
+</code></pre>
+<p><strong>to</strong></p>
 <pre><code class="lang-xml">&lt;Reference Include=&quot;0Harmony&quot;&gt;
     &lt;HintPath&gt;(Your RimWorld SteamLibrary WorkShop Root)\294100\2009463077\Current\Assemblies\0Harmony.dll&lt;/HintPath&gt;
 &lt;/Reference&gt;
-</code></pre><p>5 Now you can compile. And mod will auto copy to your <code>RimWorld Mod Directory</code></p>
+</code></pre>
+<p>5 Now you can compile. And mod will auto copy to your <code>RimWorld Mod Directory</code></p>
 <hr>
 <h2 id="base-usage">Base Usage</h2>
 <p>This mod allow create weapon with traditional method and modify with <code>Machining table</code> or other <code>Modify Port</code> set in the mod. And also, some port probably will not allow to modify some weapon, that depand with moder set.</p>
 <p>To modify weapon, select a colonist first, then right click <code>Modify Port</code> select <code>Start Modify Weapon</code>.</p>
 <h2 id="for-modder">For Modder</h2>
-<blockquote><ul>
+<blockquote>
+<ul>
 <li><a href="Create_Attachment.html">Create Attachment</a></li>
 <li><a href="Create_Attachment_Or_Weapon_With_Attachments.html">Create Attachment Or Weapon With Attachments</a></li>
 <li><a href="Create_Sub_Weapon.md">Create Sub Weapon</a></li>
@@ -114,7 +121,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/RW_ModularizationWeapon/docfx/articles/intro.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/src/RW_ModularizationWeapon/docfx/articles/intro.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

@@ -1,0 +1,3845 @@
+### YamlMime:ManagedReference
+items:
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  commentId: T:RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  id: CompProperties_ModularizationWeapon
+  parent: RW_ModularizationWeapon
+  children:
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.#ctor
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.allowCreateOnCraftingPort
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.attachmentProperties
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compGetGizmosExtraAllowedCompType
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolAndPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolOrPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesCreateInstanceCompType
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesInitializeCompType
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesMultiplier
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesObjectPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesOffseter
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesResoveCrosseReferenceType
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors(Verse.ThingDef)
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.DrawSizeWhenAttach
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.extraComp
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseTools
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseVerbProperties
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notDrawInParent
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexPath
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences(Verse.ThingDef)
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.setRandomPartWhenCreate
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats(RimWorld.StatRequest)
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplier
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplierDefaultValue
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffset
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffsetDefaultValue
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizon
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizonDefaultValue
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizon
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatchByOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatchByOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsMultiplier
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatchByOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOffseter
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartMultiplierAffectHorizon
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartOffseterAffectHorizon
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.unchangeable
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatchByOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatchByOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesMultiplier
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatch
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatchByOtherPart
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOffseter
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartMultiplierAffectHorizon
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartOffseterAffectHorizon
+  - RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
+  langs:
+  - csharp
+  - vb
+  name: CompProperties_ModularizationWeapon
+  nameWithType: CompProperties_ModularizationWeapon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  type: Class
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: CompProperties_ModularizationWeapon
+    path: CompModularizationWeapon.cs
+    startLine: 1005
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis type is parmerters holder of the type `CompModularizationWeapon`, it define all parmerters that can write in XML.\n"
+  example: []
+  syntax:
+    content: 'public class CompProperties_ModularizationWeapon : CompProperties'
+    content.vb: >-
+      Public Class CompProperties_ModularizationWeapon
+
+          Inherits CompProperties
+  inheritance:
+  - System.Object
+  - Verse.CompProperties
+  inheritedMembers:
+  - Verse.CompProperties.compClass
+  - Verse.CompProperties.DrawGhost(Verse.IntVec3,Verse.Rot4,Verse.ThingDef,UnityEngine.Color,Verse.AltitudeLayer,Verse.Thing)
+  - Verse.CompProperties.PostLoadSpecial(Verse.ThingDef)
+  - Verse.CompProperties.Notify_PostUnlockedByResearch(Verse.ThingDef)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ToString
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture
+  commentId: P:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture
+  id: PartTexture
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: PartTexture
+  nameWithType: CompProperties_ModularizationWeapon.PartTexture
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture
+  type: Property
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: PartTexture
+    path: CompModularizationWeapon.cs
+    startLine: 1011
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nTexture of `PartTexMaterial`\n"
+  example: []
+  syntax:
+    content: public Texture2D PartTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property PartTexture As Texture2D
+  overload: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.#ctor
+  commentId: M:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.#ctor
+  id: '#ctor'
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: CompProperties_ModularizationWeapon()
+  nameWithType: CompProperties_ModularizationWeapon.CompProperties_ModularizationWeapon()
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.CompProperties_ModularizationWeapon()
+  type: Constructor
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: .ctor
+    path: CompModularizationWeapon.cs
+    startLine: 1021
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public CompProperties_ModularizationWeapon()
+    content.vb: Public Sub New
+  overload: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors(Verse.ThingDef)
+  commentId: M:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors(Verse.ThingDef)
+  id: ConfigErrors(Verse.ThingDef)
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: ConfigErrors(ThingDef)
+  nameWithType: CompProperties_ModularizationWeapon.ConfigErrors(ThingDef)
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors(Verse.ThingDef)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: ConfigErrors
+    path: CompModularizationWeapon.cs
+    startLine: 1031
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nConfig checking\n"
+  example: []
+  syntax:
+    content: public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
+    parameters:
+    - id: parentDef
+      type: Verse.ThingDef
+      description: ''
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+      description: ''
+    content.vb: Public Overrides Function ConfigErrors(parentDef As ThingDef) As IEnumerable(Of String)
+  overridden: Verse.CompProperties.ConfigErrors(Verse.ThingDef)
+  overload: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
+  commentId: M:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
+  id: WeaponAttachmentPropertiesById(System.String)
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: WeaponAttachmentPropertiesById(String)
+  nameWithType: CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById(String)
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: WeaponAttachmentPropertiesById
+    path: CompModularizationWeapon.cs
+    startLine: 1070
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nget attachment properties by attachment id\n"
+  example: []
+  syntax:
+    content: public WeaponAttachmentProperties WeaponAttachmentPropertiesById(string id)
+    parameters:
+    - id: id
+      type: System.String
+      description: attachment id
+    return:
+      type: RW_ModularizationWeapon.WeaponAttachmentProperties
+      description: attachment properties
+    content.vb: Public Function WeaponAttachmentPropertiesById(id As String) As WeaponAttachmentProperties
+  overload: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences(Verse.ThingDef)
+  commentId: M:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences(Verse.ThingDef)
+  id: ResolveReferences(Verse.ThingDef)
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: ResolveReferences(ThingDef)
+  nameWithType: CompProperties_ModularizationWeapon.ResolveReferences(ThingDef)
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences(Verse.ThingDef)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: ResolveReferences
+    path: CompModularizationWeapon.cs
+    startLine: 1086
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\napply and preprocessing all properties of this comp\n"
+  example: []
+  syntax:
+    content: public override void ResolveReferences(ThingDef parentDef)
+    parameters:
+    - id: parentDef
+      type: Verse.ThingDef
+      description: parent Def
+    content.vb: Public Overrides Sub ResolveReferences(parentDef As ThingDef)
+  overridden: Verse.CompProperties.ResolveReferences(Verse.ThingDef)
+  overload: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats(RimWorld.StatRequest)
+  commentId: M:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats(RimWorld.StatRequest)
+  id: SpecialDisplayStats(RimWorld.StatRequest)
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: SpecialDisplayStats(StatRequest)
+  nameWithType: CompProperties_ModularizationWeapon.SpecialDisplayStats(StatRequest)
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats(RimWorld.StatRequest)
+  type: Method
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: SpecialDisplayStats
+    path: CompModularizationWeapon.cs
+    startLine: 1203
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  syntax:
+    content: public override IEnumerable<StatDrawEntry> SpecialDisplayStats(StatRequest req)
+    parameters:
+    - id: req
+      type: RimWorld.StatRequest
+    return:
+      type: System.Collections.Generic.IEnumerable{RimWorld.StatDrawEntry}
+    content.vb: Public Overrides Function SpecialDisplayStats(req As StatRequest) As IEnumerable(Of StatDrawEntry)
+  overridden: Verse.CompProperties.SpecialDisplayStats(RimWorld.StatRequest)
+  overload: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.DrawSizeWhenAttach
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.DrawSizeWhenAttach
+  id: DrawSizeWhenAttach
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: DrawSizeWhenAttach
+  nameWithType: CompProperties_ModularizationWeapon.DrawSizeWhenAttach
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.DrawSizeWhenAttach
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: DrawSizeWhenAttach
+    path: CompModularizationWeapon.cs
+    startLine: 1501
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nIf the part attach on other part, it will use this draw size\n"
+  example: []
+  syntax:
+    content: public Vector2 DrawSizeWhenAttach
+    return:
+      type: UnityEngine.Vector2
+    content.vb: Public DrawSizeWhenAttach As Vector2
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.unchangeable
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.unchangeable
+  id: unchangeable
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: unchangeable
+  nameWithType: CompProperties_ModularizationWeapon.unchangeable
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.unchangeable
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: unchangeable
+    path: CompModularizationWeapon.cs
+    startLine: 1508
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif parent part install this part it will checking this value when switch to other part\n"
+  example: []
+  syntax:
+    content: public bool unchangeable
+    return:
+      type: System.Boolean
+    content.vb: Public unchangeable As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notDrawInParent
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notDrawInParent
+  id: notDrawInParent
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: notDrawInParent
+  nameWithType: CompProperties_ModularizationWeapon.notDrawInParent
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notDrawInParent
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: notDrawInParent
+    path: CompModularizationWeapon.cs
+    startLine: 1513
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**, this part and it&apos;s child part will not rendering when attach on a part\n"
+  example: []
+  syntax:
+    content: public bool notDrawInParent
+    return:
+      type: System.Boolean
+    content.vb: Public notDrawInParent As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.allowCreateOnCraftingPort
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.allowCreateOnCraftingPort
+  id: allowCreateOnCraftingPort
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: allowCreateOnCraftingPort
+  nameWithType: CompProperties_ModularizationWeapon.allowCreateOnCraftingPort
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.allowCreateOnCraftingPort
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: allowCreateOnCraftingPort
+    path: CompModularizationWeapon.cs
+    startLine: 1518
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**, it will able to create on `ModifyWeapon` window\n"
+  example: []
+  syntax:
+    content: public bool allowCreateOnCraftingPort
+    return:
+      type: System.Boolean
+    content.vb: Public allowCreateOnCraftingPort As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.setRandomPartWhenCreate
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.setRandomPartWhenCreate
+  id: setRandomPartWhenCreate
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: setRandomPartWhenCreate
+  nameWithType: CompProperties_ModularizationWeapon.setRandomPartWhenCreate
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.setRandomPartWhenCreate
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: setRandomPartWhenCreate
+    path: CompModularizationWeapon.cs
+    startLine: 1523
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**, it will set random part by `WeaponAttachmentProperties.randomThingDefWeights` if it&apos;s not empty or by `WeaponAttachmentProperties.filter.AllowedThingDefs`\n"
+  example: []
+  syntax:
+    content: public bool setRandomPartWhenCreate
+    return:
+      type: System.Boolean
+    content.vb: Public setRandomPartWhenCreate As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseVerbProperties
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseVerbProperties
+  id: notAllowParentUseVerbProperties
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: notAllowParentUseVerbProperties
+  nameWithType: CompProperties_ModularizationWeapon.notAllowParentUseVerbProperties
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseVerbProperties
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: notAllowParentUseVerbProperties
+    path: CompModularizationWeapon.cs
+    startLine: 1528
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**,the parent part will not able to read `IVerbOwner.VerbProperties` from this node\n"
+  example: []
+  syntax:
+    content: public bool notAllowParentUseVerbProperties
+    return:
+      type: System.Boolean
+    content.vb: Public notAllowParentUseVerbProperties As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseTools
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseTools
+  id: notAllowParentUseTools
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: notAllowParentUseTools
+  nameWithType: CompProperties_ModularizationWeapon.notAllowParentUseTools
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.notAllowParentUseTools
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: notAllowParentUseTools
+    path: CompModularizationWeapon.cs
+    startLine: 1533
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**,the parent part will not able to read `IVerbOwner.Tools` from this node\n"
+  example: []
+  syntax:
+    content: public bool notAllowParentUseTools
+    return:
+      type: System.Boolean
+    content.vb: Public notAllowParentUseTools As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
+  id: drawChildPartWhenOnGround
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: drawChildPartWhenOnGround
+  nameWithType: CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: drawChildPartWhenOnGround
+    path: CompModularizationWeapon.cs
+    startLine: 1538
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**, it will not draw attachment when it not attach on other part\n"
+  example: []
+  syntax:
+    content: public bool drawChildPartWhenOnGround
+    return:
+      type: System.Boolean
+    content.vb: Public drawChildPartWhenOnGround As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  id: drawOutlineOnRoot
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: drawOutlineOnRoot
+  nameWithType: CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawOutlineOnRoot
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: drawOutlineOnRoot
+    path: CompModularizationWeapon.cs
+    startLine: 1543
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nif it&apos;s **`true`**, it will draw outline if it&apos;s root part\n"
+  example: []
+  syntax:
+    content: public bool drawOutlineOnRoot
+    return:
+      type: System.Boolean
+    content.vb: Public drawOutlineOnRoot As Boolean
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOffseter
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOffseter
+  id: verbPropertiesOffseter
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesOffseter
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesOffseter
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOffseter
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesOffseter
+    path: CompModularizationWeapon.cs
+    startLine: 1554
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some addition calcation with `IVerbOwner.VerbProperties` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<VerbProperties> verbPropertiesOffseter
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesOffseter As FieldReaderDgitList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOffseter
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOffseter
+  id: toolsOffseter
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsOffseter
+  nameWithType: CompProperties_ModularizationWeapon.toolsOffseter
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOffseter
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsOffseter
+    path: CompModularizationWeapon.cs
+    startLine: 1559
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some addition calcation with `IVerbOwner.Tools` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<Tool> toolsOffseter
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.Tool}
+    content.vb: Public toolsOffseter As FieldReaderDgitList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesOffseter
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesOffseter
+  id: compPropertiesOffseter
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesOffseter
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesOffseter
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesOffseter
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesOffseter
+    path: CompModularizationWeapon.cs
+    startLine: 1564
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some addition calcation with `ThingDef.Comps` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<CompProperties> compPropertiesOffseter
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.CompProperties}
+    content.vb: Public compPropertiesOffseter As FieldReaderDgitList(Of CompProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffset
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffset
+  id: statOffset
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statOffset
+  nameWithType: CompProperties_ModularizationWeapon.statOffset
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffset
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statOffset
+    path: CompModularizationWeapon.cs
+    startLine: 1569
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some addition calcation after `StatWorker.GetValue` returned of parent\n"
+  example: []
+  syntax:
+    content: public List<StatModifier> statOffset
+    return:
+      type: System.Collections.Generic.List{RimWorld.StatModifier}
+    content.vb: Public statOffset As List(Of StatModifier)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffsetDefaultValue
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffsetDefaultValue
+  id: statOffsetDefaultValue
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statOffsetDefaultValue
+  nameWithType: CompProperties_ModularizationWeapon.statOffsetDefaultValue
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOffsetDefaultValue
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statOffsetDefaultValue
+    path: CompModularizationWeapon.cs
+    startLine: 1574
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe default value when `statOffset` not contains stat\n"
+  example: []
+  syntax:
+    content: public float statOffsetDefaultValue
+    return:
+      type: System.Single
+    content.vb: Public statOffsetDefaultValue As Single
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartOffseterAffectHorizon
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartOffseterAffectHorizon
+  id: verbPropertiesOtherPartOffseterAffectHorizon
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesOtherPartOffseterAffectHorizon
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesOtherPartOffseterAffectHorizon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartOffseterAffectHorizon
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesOtherPartOffseterAffectHorizon
+    path: CompModularizationWeapon.cs
+    startLine: 1582
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define how strong will other part `verbPropertiesOffseter` affect `IVerbOwner.VerbProperties` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<VerbProperties> verbPropertiesOtherPartOffseterAffectHorizon
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesOtherPartOffseterAffectHorizon As FieldReaderDgitList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartOffseterAffectHorizon
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartOffseterAffectHorizon
+  id: toolsOtherPartOffseterAffectHorizon
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsOtherPartOffseterAffectHorizon
+  nameWithType: CompProperties_ModularizationWeapon.toolsOtherPartOffseterAffectHorizon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartOffseterAffectHorizon
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsOtherPartOffseterAffectHorizon
+    path: CompModularizationWeapon.cs
+    startLine: 1586
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define how strong will other part `toolsOffseter` affect `IVerbOwner.Tools` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<Tool> toolsOtherPartOffseterAffectHorizon
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.Tool}
+    content.vb: Public toolsOtherPartOffseterAffectHorizon As FieldReaderDgitList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizon
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizon
+  id: statOtherPartOffseterAffectHorizon
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statOtherPartOffseterAffectHorizon
+  nameWithType: CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizon
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statOtherPartOffseterAffectHorizon
+    path: CompModularizationWeapon.cs
+    startLine: 1590
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define how strong will other part `statOffset` affect `StatWorker.GetValue` value of this\n"
+  example: []
+  syntax:
+    content: public List<StatModifier> statOtherPartOffseterAffectHorizon
+    return:
+      type: System.Collections.Generic.List{RimWorld.StatModifier}
+    content.vb: Public statOtherPartOffseterAffectHorizon As List(Of StatModifier)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
+  id: statOtherPartOffseterAffectHorizonDefaultValue
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statOtherPartOffseterAffectHorizonDefaultValue
+  nameWithType: CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartOffseterAffectHorizonDefaultValue
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statOtherPartOffseterAffectHorizonDefaultValue
+    path: CompModularizationWeapon.cs
+    startLine: 1594
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe default value when `statOtherPartOffseterAffectHorizon` not contains stat\n"
+  example: []
+  syntax:
+    content: public float statOtherPartOffseterAffectHorizonDefaultValue
+    return:
+      type: System.Single
+    content.vb: Public statOtherPartOffseterAffectHorizonDefaultValue As Single
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesMultiplier
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesMultiplier
+  id: verbPropertiesMultiplier
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesMultiplier
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesMultiplier
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesMultiplier
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesMultiplier
+    path: CompModularizationWeapon.cs
+    startLine: 1606
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some multiplier calcation with `IVerbOwner.VerbProperties` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<VerbProperties> verbPropertiesMultiplier
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesMultiplier As FieldReaderDgitList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsMultiplier
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsMultiplier
+  id: toolsMultiplier
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsMultiplier
+  nameWithType: CompProperties_ModularizationWeapon.toolsMultiplier
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsMultiplier
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsMultiplier
+    path: CompModularizationWeapon.cs
+    startLine: 1611
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some multiplier calcation with `IVerbOwner.Tools` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<Tool> toolsMultiplier
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.Tool}
+    content.vb: Public toolsMultiplier As FieldReaderDgitList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesMultiplier
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesMultiplier
+  id: compPropertiesMultiplier
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesMultiplier
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesMultiplier
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesMultiplier
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesMultiplier
+    path: CompModularizationWeapon.cs
+    startLine: 1616
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some multiplier calcation with `ThingDef.Comps` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<CompProperties> compPropertiesMultiplier
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.CompProperties}
+    content.vb: Public compPropertiesMultiplier As FieldReaderDgitList(Of CompProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplier
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplier
+  id: statMultiplier
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statMultiplier
+  nameWithType: CompProperties_ModularizationWeapon.statMultiplier
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplier
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statMultiplier
+    path: CompModularizationWeapon.cs
+    startLine: 1621
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some multiplier calcation with `StatWorker.GetValue` value of parent\n"
+  example: []
+  syntax:
+    content: public List<StatModifier> statMultiplier
+    return:
+      type: System.Collections.Generic.List{RimWorld.StatModifier}
+    content.vb: Public statMultiplier As List(Of StatModifier)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplierDefaultValue
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplierDefaultValue
+  id: statMultiplierDefaultValue
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statMultiplierDefaultValue
+  nameWithType: CompProperties_ModularizationWeapon.statMultiplierDefaultValue
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statMultiplierDefaultValue
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statMultiplierDefaultValue
+    path: CompModularizationWeapon.cs
+    startLine: 1626
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe default value when `statMultiplier` not contains stat\n"
+  example: []
+  syntax:
+    content: public float statMultiplierDefaultValue
+    return:
+      type: System.Single
+    content.vb: Public statMultiplierDefaultValue As Single
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartMultiplierAffectHorizon
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartMultiplierAffectHorizon
+  id: verbPropertiesOtherPartMultiplierAffectHorizon
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesOtherPartMultiplierAffectHorizon
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesOtherPartMultiplierAffectHorizon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesOtherPartMultiplierAffectHorizon
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesOtherPartMultiplierAffectHorizon
+    path: CompModularizationWeapon.cs
+    startLine: 1634
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define how strong will other part `verbPropertiesMultiplier` affect `IVerbOwner.VerbProperties` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<VerbProperties> verbPropertiesOtherPartMultiplierAffectHorizon
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesOtherPartMultiplierAffectHorizon As FieldReaderDgitList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartMultiplierAffectHorizon
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartMultiplierAffectHorizon
+  id: toolsOtherPartMultiplierAffectHorizon
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsOtherPartMultiplierAffectHorizon
+  nameWithType: CompProperties_ModularizationWeapon.toolsOtherPartMultiplierAffectHorizon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsOtherPartMultiplierAffectHorizon
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsOtherPartMultiplierAffectHorizon
+    path: CompModularizationWeapon.cs
+    startLine: 1638
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define how strong will other part `toolsMultiplier` affect `IVerbOwner.Tools` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderDgitList<Tool> toolsOtherPartMultiplierAffectHorizon
+    return:
+      type: RW_ModularizationWeapon.FieldReaderDgitList{Verse.Tool}
+    content.vb: Public toolsOtherPartMultiplierAffectHorizon As FieldReaderDgitList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizon
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizon
+  id: statOtherPartMultiplierAffectHorizon
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statOtherPartMultiplierAffectHorizon
+  nameWithType: CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizon
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statOtherPartMultiplierAffectHorizon
+    path: CompModularizationWeapon.cs
+    startLine: 1642
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define how strong will other part `statMultiplier` affect `StatWorker.GetValue` value of this\n"
+  example: []
+  syntax:
+    content: public List<StatModifier> statOtherPartMultiplierAffectHorizon
+    return:
+      type: System.Collections.Generic.List{RimWorld.StatModifier}
+    content.vb: Public statOtherPartMultiplierAffectHorizon As List(Of StatModifier)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizonDefaultValue
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizonDefaultValue
+  id: statOtherPartMultiplierAffectHorizonDefaultValue
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: statOtherPartMultiplierAffectHorizonDefaultValue
+  nameWithType: CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizonDefaultValue
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.statOtherPartMultiplierAffectHorizonDefaultValue
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: statOtherPartMultiplierAffectHorizonDefaultValue
+    path: CompModularizationWeapon.cs
+    startLine: 1646
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe default value when `statOtherPartMultiplierAffectHorizon` not contains stat\n"
+  example: []
+  syntax:
+    content: public float statOtherPartMultiplierAffectHorizonDefaultValue
+    return:
+      type: System.Single
+    content.vb: Public statOtherPartMultiplierAffectHorizonDefaultValue As Single
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatch
+  id: verbPropertiesBoolAndPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesBoolAndPatch
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesBoolAndPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1658
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `IVerbOwner.VerbProperties` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesBoolAndPatch As FieldReaderBoolList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatch
+  id: toolsBoolAndPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsBoolAndPatch
+  nameWithType: CompProperties_ModularizationWeapon.toolsBoolAndPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsBoolAndPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1663
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `IVerbOwner.Tools` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<Tool> toolsBoolAndPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.Tool}
+    content.vb: Public toolsBoolAndPatch As FieldReaderBoolList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolAndPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolAndPatch
+  id: compPropertiesBoolAndPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesBoolAndPatch
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesBoolAndPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolAndPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesBoolAndPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1668
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `ThingDef.Comps` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<CompProperties> compPropertiesBoolAndPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.CompProperties}
+    content.vb: Public compPropertiesBoolAndPatch As FieldReaderBoolList(Of CompProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatchByOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatchByOtherPart
+  id: verbPropertiesBoolAndPatchByOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesBoolAndPatchByOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatchByOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolAndPatchByOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesBoolAndPatchByOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1676
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `verbPropertiesBoolAndPatch` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<VerbProperties> verbPropertiesBoolAndPatchByOtherPart
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesBoolAndPatchByOtherPart As FieldReaderBoolList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatchByOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatchByOtherPart
+  id: toolsBoolAndPatchByOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsBoolAndPatchByOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.toolsBoolAndPatchByOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolAndPatchByOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsBoolAndPatchByOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1680
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `toolsBoolAndPatch` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<Tool> toolsBoolAndPatchByOtherPart
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.Tool}
+    content.vb: Public toolsBoolAndPatchByOtherPart As FieldReaderBoolList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatch
+  id: verbPropertiesBoolOrPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesBoolOrPatch
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesBoolOrPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1692
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean or calcation with `IVerbOwner.VerbProperties` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesBoolOrPatch As FieldReaderBoolList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatch
+  id: toolsBoolOrPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsBoolOrPatch
+  nameWithType: CompProperties_ModularizationWeapon.toolsBoolOrPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsBoolOrPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1697
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean or calcation with `IVerbOwner.Tools` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<Tool> toolsBoolOrPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.Tool}
+    content.vb: Public toolsBoolOrPatch As FieldReaderBoolList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolOrPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolOrPatch
+  id: compPropertiesBoolOrPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesBoolOrPatch
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesBoolOrPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesBoolOrPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesBoolOrPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1702
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean or calcation with `ThingDef.Comps` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<CompProperties> compPropertiesBoolOrPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.CompProperties}
+    content.vb: Public compPropertiesBoolOrPatch As FieldReaderBoolList(Of CompProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatchByOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatchByOtherPart
+  id: verbPropertiesBoolOrPatchByOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesBoolOrPatchByOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatchByOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesBoolOrPatchByOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesBoolOrPatchByOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1710
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `verbPropertiesBoolOrPatch` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<VerbProperties> verbPropertiesBoolOrPatchByOtherPart
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesBoolOrPatchByOtherPart As FieldReaderBoolList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatchByOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatchByOtherPart
+  id: toolsBoolOrPatchByOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsBoolOrPatchByOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.toolsBoolOrPatchByOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsBoolOrPatchByOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsBoolOrPatchByOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1714
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will doing some boolean and calcation with `toolsBoolOrPatchByOtherPart` value of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderBoolList<Tool> toolsBoolOrPatchByOtherPart
+    return:
+      type: RW_ModularizationWeapon.FieldReaderBoolList{Verse.Tool}
+    content.vb: Public toolsBoolOrPatchByOtherPart As FieldReaderBoolList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatch
+  id: verbPropertiesObjectPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesObjectPatch
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesObjectPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesObjectPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1726
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will replace some parmerters in `IVerbOwner.VerbProperties` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderInstList<VerbProperties> verbPropertiesObjectPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderInstList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesObjectPatch As FieldReaderInstList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatch
+  id: toolsObjectPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsObjectPatch
+  nameWithType: CompProperties_ModularizationWeapon.toolsObjectPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsObjectPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1731
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will replace some parmerters in `IVerbOwner.Tools` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderInstList<Tool> toolsObjectPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderInstList{Verse.Tool}
+    content.vb: Public toolsObjectPatch As FieldReaderInstList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesObjectPatch
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesObjectPatch
+  id: compPropertiesObjectPatch
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesObjectPatch
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesObjectPatch
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesObjectPatch
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesObjectPatch
+    path: CompModularizationWeapon.cs
+    startLine: 1736
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value will replace some parmerters in `ThingDef.Comps` value of parent\n"
+  example: []
+  syntax:
+    content: public FieldReaderInstList<CompProperties> compPropertiesObjectPatch
+    return:
+      type: RW_ModularizationWeapon.FieldReaderInstList{Verse.CompProperties}
+    content.vb: Public compPropertiesObjectPatch As FieldReaderInstList(Of CompProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatchByOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatchByOtherPart
+  id: verbPropertiesObjectPatchByOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: verbPropertiesObjectPatchByOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.verbPropertiesObjectPatchByOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.verbPropertiesObjectPatchByOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: verbPropertiesObjectPatchByOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1744
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define witch parmerters is able to replace on `IVerbOwner.VerbProperties` of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderFiltList<VerbProperties> verbPropertiesObjectPatchByOtherPart
+    return:
+      type: RW_ModularizationWeapon.FieldReaderFiltList{Verse.VerbProperties}
+    content.vb: Public verbPropertiesObjectPatchByOtherPart As FieldReaderFiltList(Of VerbProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatchByOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatchByOtherPart
+  id: toolsObjectPatchByOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: toolsObjectPatchByOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.toolsObjectPatchByOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.toolsObjectPatchByOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: toolsObjectPatchByOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1748
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthis value define witch parmerters is able to replace on `IVerbOwner.Tools` of this\n"
+  example: []
+  syntax:
+    content: public FieldReaderFiltList<Tool> toolsObjectPatchByOtherPart
+    return:
+      type: RW_ModularizationWeapon.FieldReaderFiltList{Verse.Tool}
+    content.vb: Public toolsObjectPatchByOtherPart As FieldReaderFiltList(Of Tool)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.attachmentProperties
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.attachmentProperties
+  id: attachmentProperties
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: attachmentProperties
+  nameWithType: CompProperties_ModularizationWeapon.attachmentProperties
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.attachmentProperties
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: attachmentProperties
+    path: CompModularizationWeapon.cs
+    startLine: 1757
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nattach points defintion\n"
+  example: []
+  syntax:
+    content: public List<WeaponAttachmentProperties> attachmentProperties
+    return:
+      type: System.Collections.Generic.List{RW_ModularizationWeapon.WeaponAttachmentProperties}
+    content.vb: Public attachmentProperties As List(Of WeaponAttachmentProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  id: subRenderinfInfos
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: subRenderinfInfos
+  nameWithType: CompProperties_ModularizationWeapon.subRenderinfInfos
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.subRenderinfInfos
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: subRenderinfInfos
+    path: CompModularizationWeapon.cs
+    startLine: 1762
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nextra drawing info when it attach on a part\n"
+  example: []
+  syntax:
+    content: public List<PartSubDrawingInfo> subRenderinfInfos
+    return:
+      type: System.Collections.Generic.List{RW_ModularizationWeapon.PartSubDrawingInfo}
+    content.vb: Public subRenderinfInfos As List(Of PartSubDrawingInfo)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.extraComp
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.extraComp
+  id: extraComp
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: extraComp
+  nameWithType: CompProperties_ModularizationWeapon.extraComp
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.extraComp
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: extraComp
+    path: CompModularizationWeapon.cs
+    startLine: 1767
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nextra comp that will add to parent comps\n"
+  example: []
+  syntax:
+    content: public List<CompProperties> extraComp
+    return:
+      type: System.Collections.Generic.List{Verse.CompProperties}
+    content.vb: Public extraComp As List(Of CompProperties)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesResoveCrosseReferenceType
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesResoveCrosseReferenceType
+  id: compPropertiesResoveCrosseReferenceType
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesResoveCrosseReferenceType
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesResoveCrosseReferenceType
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesResoveCrosseReferenceType
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesResoveCrosseReferenceType
+    path: CompModularizationWeapon.cs
+    startLine: 1772
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe ThingComp type that will invoke `ResoveCrosseReference` method from `extraComp`\n"
+  example: []
+  syntax:
+    content: public List<Type> compPropertiesResoveCrosseReferenceType
+    return:
+      type: System.Collections.Generic.List{System.Type}
+    content.vb: Public compPropertiesResoveCrosseReferenceType As List(Of Type)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesCreateInstanceCompType
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesCreateInstanceCompType
+  id: compPropertiesCreateInstanceCompType
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesCreateInstanceCompType
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesCreateInstanceCompType
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesCreateInstanceCompType
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesCreateInstanceCompType
+    path: CompModularizationWeapon.cs
+    startLine: 1777
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe ThingComp type that will invoke `CreateInstance` method from `extraComp`\n"
+  example: []
+  syntax:
+    content: public List<Type> compPropertiesCreateInstanceCompType
+    return:
+      type: System.Collections.Generic.List{System.Type}
+    content.vb: Public compPropertiesCreateInstanceCompType As List(Of Type)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesInitializeCompType
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesInitializeCompType
+  id: compPropertiesInitializeCompType
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compPropertiesInitializeCompType
+  nameWithType: CompProperties_ModularizationWeapon.compPropertiesInitializeCompType
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compPropertiesInitializeCompType
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compPropertiesInitializeCompType
+    path: CompModularizationWeapon.cs
+    startLine: 1782
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe ThingComp type that will invoke `InitializeComp` method from `extraComp`\n"
+  example: []
+  syntax:
+    content: public List<Type> compPropertiesInitializeCompType
+    return:
+      type: System.Collections.Generic.List{System.Type}
+    content.vb: Public compPropertiesInitializeCompType As List(Of Type)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compGetGizmosExtraAllowedCompType
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compGetGizmosExtraAllowedCompType
+  id: compGetGizmosExtraAllowedCompType
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: compGetGizmosExtraAllowedCompType
+  nameWithType: CompProperties_ModularizationWeapon.compGetGizmosExtraAllowedCompType
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.compGetGizmosExtraAllowedCompType
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: compGetGizmosExtraAllowedCompType
+    path: CompModularizationWeapon.cs
+    startLine: 1787
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nthe ThingComp type that will invoke `GetGizmosExtra` method after this comp invoke `GetGizmosExtra`\n"
+  example: []
+  syntax:
+    content: public List<Type> compGetGizmosExtraAllowedCompType
+    return:
+      type: System.Collections.Generic.List{System.Type}
+    content.vb: Public compGetGizmosExtraAllowedCompType As List(Of Type)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
+  id: disallowedOtherPart
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: disallowedOtherPart
+  nameWithType: CompProperties_ModularizationWeapon.disallowedOtherPart
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: disallowedOtherPart
+    path: CompModularizationWeapon.cs
+    startLine: 1792
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\ndefine not allowed things on parent part\n"
+  example: []
+  syntax:
+    content: public ThingFilter disallowedOtherPart
+    return:
+      type: Verse.ThingFilter
+    content.vb: Public disallowedOtherPart As ThingFilter
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexPath
+  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexPath
+  id: PartTexPath
+  parent: RW_ModularizationWeapon.CompProperties_ModularizationWeapon
+  langs:
+  - csharp
+  - vb
+  name: PartTexPath
+  nameWithType: CompProperties_ModularizationWeapon.PartTexPath
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexPath
+  type: Field
+  source:
+    remote:
+      path: src/RW_ModularizationWeapon/CompModularizationWeapon.cs
+      branch: master
+      repo: https://github.com/RW-NodeTree/RW_ModularizationWeapon.git
+    id: PartTexPath
+    path: CompModularizationWeapon.cs
+    startLine: 1797
+  assemblies:
+  - RW_ModularizationWeapon
+  namespace: RW_ModularizationWeapon
+  summary: "\nspecial drawing texture when it attach on a part\n"
+  example: []
+  syntax:
+    content: public string PartTexPath
+    return:
+      type: System.String
+    content.vb: Public PartTexPath As String
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: RW_ModularizationWeapon
+  commentId: N:RW_ModularizationWeapon
+  name: RW_ModularizationWeapon
+  nameWithType: RW_ModularizationWeapon
+  fullName: RW_ModularizationWeapon
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: Verse.CompProperties
+  commentId: T:Verse.CompProperties
+  parent: Verse
+  isExternal: true
+  name: CompProperties
+  nameWithType: CompProperties
+  fullName: Verse.CompProperties
+- uid: Verse.CompProperties.compClass
+  commentId: F:Verse.CompProperties.compClass
+  parent: Verse.CompProperties
+  isExternal: true
+  name: compClass
+  nameWithType: CompProperties.compClass
+  fullName: Verse.CompProperties.compClass
+- uid: Verse.CompProperties.DrawGhost(Verse.IntVec3,Verse.Rot4,Verse.ThingDef,UnityEngine.Color,Verse.AltitudeLayer,Verse.Thing)
+  commentId: M:Verse.CompProperties.DrawGhost(Verse.IntVec3,Verse.Rot4,Verse.ThingDef,UnityEngine.Color,Verse.AltitudeLayer,Verse.Thing)
+  parent: Verse.CompProperties
+  isExternal: true
+  name: DrawGhost(IntVec3, Rot4, ThingDef, Color, AltitudeLayer, Thing)
+  nameWithType: CompProperties.DrawGhost(IntVec3, Rot4, ThingDef, Color, AltitudeLayer, Thing)
+  fullName: Verse.CompProperties.DrawGhost(Verse.IntVec3, Verse.Rot4, Verse.ThingDef, UnityEngine.Color, Verse.AltitudeLayer, Verse.Thing)
+  spec.csharp:
+  - uid: Verse.CompProperties.DrawGhost(Verse.IntVec3,Verse.Rot4,Verse.ThingDef,UnityEngine.Color,Verse.AltitudeLayer,Verse.Thing)
+    name: DrawGhost
+    nameWithType: CompProperties.DrawGhost
+    fullName: Verse.CompProperties.DrawGhost
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.IntVec3
+    name: IntVec3
+    nameWithType: IntVec3
+    fullName: Verse.IntVec3
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Rot4
+    name: Rot4
+    nameWithType: Rot4
+    fullName: Verse.Rot4
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: UnityEngine.Color
+    name: Color
+    nameWithType: Color
+    fullName: UnityEngine.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.AltitudeLayer
+    name: AltitudeLayer
+    nameWithType: AltitudeLayer
+    fullName: Verse.AltitudeLayer
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.CompProperties.DrawGhost(Verse.IntVec3,Verse.Rot4,Verse.ThingDef,UnityEngine.Color,Verse.AltitudeLayer,Verse.Thing)
+    name: DrawGhost
+    nameWithType: CompProperties.DrawGhost
+    fullName: Verse.CompProperties.DrawGhost
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.IntVec3
+    name: IntVec3
+    nameWithType: IntVec3
+    fullName: Verse.IntVec3
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Rot4
+    name: Rot4
+    nameWithType: Rot4
+    fullName: Verse.Rot4
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: UnityEngine.Color
+    name: Color
+    nameWithType: Color
+    fullName: UnityEngine.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.AltitudeLayer
+    name: AltitudeLayer
+    nameWithType: AltitudeLayer
+    fullName: Verse.AltitudeLayer
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Verse.Thing
+    name: Thing
+    nameWithType: Thing
+    fullName: Verse.Thing
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.CompProperties.PostLoadSpecial(Verse.ThingDef)
+  commentId: M:Verse.CompProperties.PostLoadSpecial(Verse.ThingDef)
+  parent: Verse.CompProperties
+  isExternal: true
+  name: PostLoadSpecial(ThingDef)
+  nameWithType: CompProperties.PostLoadSpecial(ThingDef)
+  fullName: Verse.CompProperties.PostLoadSpecial(Verse.ThingDef)
+  spec.csharp:
+  - uid: Verse.CompProperties.PostLoadSpecial(Verse.ThingDef)
+    name: PostLoadSpecial
+    nameWithType: CompProperties.PostLoadSpecial
+    fullName: Verse.CompProperties.PostLoadSpecial
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.CompProperties.PostLoadSpecial(Verse.ThingDef)
+    name: PostLoadSpecial
+    nameWithType: CompProperties.PostLoadSpecial
+    fullName: Verse.CompProperties.PostLoadSpecial
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.CompProperties.Notify_PostUnlockedByResearch(Verse.ThingDef)
+  commentId: M:Verse.CompProperties.Notify_PostUnlockedByResearch(Verse.ThingDef)
+  parent: Verse.CompProperties
+  isExternal: true
+  name: Notify_PostUnlockedByResearch(ThingDef)
+  nameWithType: CompProperties.Notify_PostUnlockedByResearch(ThingDef)
+  fullName: Verse.CompProperties.Notify_PostUnlockedByResearch(Verse.ThingDef)
+  spec.csharp:
+  - uid: Verse.CompProperties.Notify_PostUnlockedByResearch(Verse.ThingDef)
+    name: Notify_PostUnlockedByResearch
+    nameWithType: CompProperties.Notify_PostUnlockedByResearch
+    fullName: Verse.CompProperties.Notify_PostUnlockedByResearch
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.CompProperties.Notify_PostUnlockedByResearch(Verse.ThingDef)
+    name: Notify_PostUnlockedByResearch
+    nameWithType: CompProperties.Notify_PostUnlockedByResearch
+    fullName: Verse.CompProperties.Notify_PostUnlockedByResearch
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  parent: RW_ModularizationWeapon.Tools.ToolsFunction
+  definition: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  name: LogAllField()
+  nameWithType: ToolsFunction.LogAllField()
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField()
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Verse
+  commentId: N:Verse
+  isExternal: true
+  name: Verse
+  nameWithType: Verse
+  fullName: Verse
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  commentId: M:RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  isExternal: true
+  name: LogAllField(Object)
+  nameWithType: ToolsFunction.LogAllField(Object)
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField(System.Object)
+    name: LogAllField
+    nameWithType: ToolsFunction.LogAllField
+    fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction
+  commentId: T:RW_ModularizationWeapon.Tools.ToolsFunction
+  parent: RW_ModularizationWeapon.Tools
+  name: ToolsFunction
+  nameWithType: ToolsFunction
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction
+- uid: RW_ModularizationWeapon.Tools
+  commentId: N:RW_ModularizationWeapon.Tools
+  name: RW_ModularizationWeapon.Tools
+  nameWithType: RW_ModularizationWeapon.Tools
+  fullName: RW_ModularizationWeapon.Tools
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture*
+  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture
+  name: PartTexture
+  nameWithType: CompProperties_ModularizationWeapon.PartTexture
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.PartTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.#ctor*
+  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.#ctor
+  name: CompProperties_ModularizationWeapon
+  nameWithType: CompProperties_ModularizationWeapon.CompProperties_ModularizationWeapon
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.CompProperties_ModularizationWeapon
+- uid: Verse.CompProperties.ConfigErrors(Verse.ThingDef)
+  commentId: M:Verse.CompProperties.ConfigErrors(Verse.ThingDef)
+  parent: Verse.CompProperties
+  isExternal: true
+  name: ConfigErrors(ThingDef)
+  nameWithType: CompProperties.ConfigErrors(ThingDef)
+  fullName: Verse.CompProperties.ConfigErrors(Verse.ThingDef)
+  spec.csharp:
+  - uid: Verse.CompProperties.ConfigErrors(Verse.ThingDef)
+    name: ConfigErrors
+    nameWithType: CompProperties.ConfigErrors
+    fullName: Verse.CompProperties.ConfigErrors
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.CompProperties.ConfigErrors(Verse.ThingDef)
+    name: ConfigErrors
+    nameWithType: CompProperties.ConfigErrors
+    fullName: Verse.CompProperties.ConfigErrors
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors*
+  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors
+  name: ConfigErrors
+  nameWithType: CompProperties_ModularizationWeapon.ConfigErrors
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors
+- uid: Verse.ThingDef
+  commentId: T:Verse.ThingDef
+  parent: Verse
+  isExternal: true
+  name: ThingDef
+  nameWithType: ThingDef
+  fullName: Verse.ThingDef
+- uid: System.Collections.Generic.IEnumerable{System.String}
+  commentId: T:System.Collections.Generic.IEnumerable{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<String>
+  nameWithType: IEnumerable<String>
+  fullName: System.Collections.Generic.IEnumerable<System.String>
+  nameWithType.vb: IEnumerable(Of String)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of System.String)
+  name.vb: IEnumerable(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById*
+  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById
+  name: WeaponAttachmentPropertiesById
+  nameWithType: CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.WeaponAttachmentPropertiesById
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties
+  commentId: T:RW_ModularizationWeapon.WeaponAttachmentProperties
+  parent: RW_ModularizationWeapon
+  name: WeaponAttachmentProperties
+  nameWithType: WeaponAttachmentProperties
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties
+- uid: Verse.CompProperties.ResolveReferences(Verse.ThingDef)
+  commentId: M:Verse.CompProperties.ResolveReferences(Verse.ThingDef)
+  parent: Verse.CompProperties
+  isExternal: true
+  name: ResolveReferences(ThingDef)
+  nameWithType: CompProperties.ResolveReferences(ThingDef)
+  fullName: Verse.CompProperties.ResolveReferences(Verse.ThingDef)
+  spec.csharp:
+  - uid: Verse.CompProperties.ResolveReferences(Verse.ThingDef)
+    name: ResolveReferences
+    nameWithType: CompProperties.ResolveReferences
+    fullName: Verse.CompProperties.ResolveReferences
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.CompProperties.ResolveReferences(Verse.ThingDef)
+    name: ResolveReferences
+    nameWithType: CompProperties.ResolveReferences
+    fullName: Verse.CompProperties.ResolveReferences
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Verse.ThingDef
+    name: ThingDef
+    nameWithType: ThingDef
+    fullName: Verse.ThingDef
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences*
+  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences
+  name: ResolveReferences
+  nameWithType: CompProperties_ModularizationWeapon.ResolveReferences
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ResolveReferences
+- uid: Verse.CompProperties.SpecialDisplayStats(RimWorld.StatRequest)
+  commentId: M:Verse.CompProperties.SpecialDisplayStats(RimWorld.StatRequest)
+  parent: Verse.CompProperties
+  isExternal: true
+  name: SpecialDisplayStats(StatRequest)
+  nameWithType: CompProperties.SpecialDisplayStats(StatRequest)
+  fullName: Verse.CompProperties.SpecialDisplayStats(RimWorld.StatRequest)
+  spec.csharp:
+  - uid: Verse.CompProperties.SpecialDisplayStats(RimWorld.StatRequest)
+    name: SpecialDisplayStats
+    nameWithType: CompProperties.SpecialDisplayStats
+    fullName: Verse.CompProperties.SpecialDisplayStats
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatRequest
+    name: StatRequest
+    nameWithType: StatRequest
+    fullName: RimWorld.StatRequest
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Verse.CompProperties.SpecialDisplayStats(RimWorld.StatRequest)
+    name: SpecialDisplayStats
+    nameWithType: CompProperties.SpecialDisplayStats
+    fullName: Verse.CompProperties.SpecialDisplayStats
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: RimWorld.StatRequest
+    name: StatRequest
+    nameWithType: StatRequest
+    fullName: RimWorld.StatRequest
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats*
+  commentId: Overload:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats
+  name: SpecialDisplayStats
+  nameWithType: CompProperties_ModularizationWeapon.SpecialDisplayStats
+  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.SpecialDisplayStats
+- uid: RimWorld.StatRequest
+  commentId: T:RimWorld.StatRequest
+  parent: RimWorld
+  isExternal: true
+  name: StatRequest
+  nameWithType: StatRequest
+  fullName: RimWorld.StatRequest
+- uid: System.Collections.Generic.IEnumerable{RimWorld.StatDrawEntry}
+  commentId: T:System.Collections.Generic.IEnumerable{RimWorld.StatDrawEntry}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<StatDrawEntry>
+  nameWithType: IEnumerable<StatDrawEntry>
+  fullName: System.Collections.Generic.IEnumerable<RimWorld.StatDrawEntry>
+  nameWithType.vb: IEnumerable(Of StatDrawEntry)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of RimWorld.StatDrawEntry)
+  name.vb: IEnumerable(Of StatDrawEntry)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: RimWorld.StatDrawEntry
+    name: StatDrawEntry
+    nameWithType: StatDrawEntry
+    fullName: RimWorld.StatDrawEntry
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: RimWorld.StatDrawEntry
+    name: StatDrawEntry
+    nameWithType: StatDrawEntry
+    fullName: RimWorld.StatDrawEntry
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RimWorld
+  commentId: N:RimWorld
+  isExternal: true
+  name: RimWorld
+  nameWithType: RimWorld
+  fullName: RimWorld
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: RW_ModularizationWeapon.FieldReaderDgitList{Verse.VerbProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderDgitList{Verse.VerbProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderDgitList`1
+  name: FieldReaderDgitList<VerbProperties>
+  nameWithType: FieldReaderDgitList<VerbProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderDgitList<Verse.VerbProperties>
+  nameWithType.vb: FieldReaderDgitList(Of VerbProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDgitList(Of Verse.VerbProperties)
+  name.vb: FieldReaderDgitList(Of VerbProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderDgitList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderDgitList<T>
+  nameWithType: FieldReaderDgitList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderDgitList<T>
+  nameWithType.vb: FieldReaderDgitList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDgitList(Of T)
+  name.vb: FieldReaderDgitList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderDgitList{Verse.Tool}
+  commentId: T:RW_ModularizationWeapon.FieldReaderDgitList{Verse.Tool}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderDgitList`1
+  name: FieldReaderDgitList<Tool>
+  nameWithType: FieldReaderDgitList<Tool>
+  fullName: RW_ModularizationWeapon.FieldReaderDgitList<Verse.Tool>
+  nameWithType.vb: FieldReaderDgitList(Of Tool)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDgitList(Of Verse.Tool)
+  name.vb: FieldReaderDgitList(Of Tool)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderDgitList{Verse.CompProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderDgitList{Verse.CompProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderDgitList`1
+  name: FieldReaderDgitList<CompProperties>
+  nameWithType: FieldReaderDgitList<CompProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderDgitList<Verse.CompProperties>
+  nameWithType.vb: FieldReaderDgitList(Of CompProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderDgitList(Of Verse.CompProperties)
+  name.vb: FieldReaderDgitList(Of CompProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderDgitList`1
+    name: FieldReaderDgitList
+    nameWithType: FieldReaderDgitList
+    fullName: RW_ModularizationWeapon.FieldReaderDgitList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List{RimWorld.StatModifier}
+  commentId: T:System.Collections.Generic.List{RimWorld.StatModifier}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<StatModifier>
+  nameWithType: List<StatModifier>
+  fullName: System.Collections.Generic.List<RimWorld.StatModifier>
+  nameWithType.vb: List(Of StatModifier)
+  fullName.vb: System.Collections.Generic.List(Of RimWorld.StatModifier)
+  name.vb: List(Of StatModifier)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: RimWorld.StatModifier
+    name: StatModifier
+    nameWithType: StatModifier
+    fullName: RimWorld.StatModifier
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: RimWorld.StatModifier
+    name: StatModifier
+    nameWithType: StatModifier
+    fullName: RimWorld.StatModifier
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: Single
+  nameWithType: Single
+  fullName: System.Single
+- uid: RW_ModularizationWeapon.FieldReaderBoolList{Verse.VerbProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolList{Verse.VerbProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderBoolList`1
+  name: FieldReaderBoolList<VerbProperties>
+  nameWithType: FieldReaderBoolList<VerbProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderBoolList<Verse.VerbProperties>
+  nameWithType.vb: FieldReaderBoolList(Of VerbProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolList(Of Verse.VerbProperties)
+  name.vb: FieldReaderBoolList(Of VerbProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderBoolList<T>
+  nameWithType: FieldReaderBoolList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderBoolList<T>
+  nameWithType.vb: FieldReaderBoolList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolList(Of T)
+  name.vb: FieldReaderBoolList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderBoolList{Verse.Tool}
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolList{Verse.Tool}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderBoolList`1
+  name: FieldReaderBoolList<Tool>
+  nameWithType: FieldReaderBoolList<Tool>
+  fullName: RW_ModularizationWeapon.FieldReaderBoolList<Verse.Tool>
+  nameWithType.vb: FieldReaderBoolList(Of Tool)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolList(Of Verse.Tool)
+  name.vb: FieldReaderBoolList(Of Tool)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderBoolList{Verse.CompProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderBoolList{Verse.CompProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderBoolList`1
+  name: FieldReaderBoolList<CompProperties>
+  nameWithType: FieldReaderBoolList<CompProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderBoolList<Verse.CompProperties>
+  nameWithType.vb: FieldReaderBoolList(Of CompProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderBoolList(Of Verse.CompProperties)
+  name.vb: FieldReaderBoolList(Of CompProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderBoolList`1
+    name: FieldReaderBoolList
+    nameWithType: FieldReaderBoolList
+    fullName: RW_ModularizationWeapon.FieldReaderBoolList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderInstList{Verse.VerbProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstList{Verse.VerbProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderInstList`1
+  name: FieldReaderInstList<VerbProperties>
+  nameWithType: FieldReaderInstList<VerbProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderInstList<Verse.VerbProperties>
+  nameWithType.vb: FieldReaderInstList(Of VerbProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstList(Of Verse.VerbProperties)
+  name.vb: FieldReaderInstList(Of VerbProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderInstList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderInstList<T>
+  nameWithType: FieldReaderInstList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderInstList<T>
+  nameWithType.vb: FieldReaderInstList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstList(Of T)
+  name.vb: FieldReaderInstList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderInstList{Verse.Tool}
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstList{Verse.Tool}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderInstList`1
+  name: FieldReaderInstList<Tool>
+  nameWithType: FieldReaderInstList<Tool>
+  fullName: RW_ModularizationWeapon.FieldReaderInstList<Verse.Tool>
+  nameWithType.vb: FieldReaderInstList(Of Tool)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstList(Of Verse.Tool)
+  name.vb: FieldReaderInstList(Of Tool)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderInstList{Verse.CompProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderInstList{Verse.CompProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderInstList`1
+  name: FieldReaderInstList<CompProperties>
+  nameWithType: FieldReaderInstList<CompProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderInstList<Verse.CompProperties>
+  nameWithType.vb: FieldReaderInstList(Of CompProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderInstList(Of Verse.CompProperties)
+  name.vb: FieldReaderInstList(Of CompProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderInstList`1
+    name: FieldReaderInstList
+    nameWithType: FieldReaderInstList
+    fullName: RW_ModularizationWeapon.FieldReaderInstList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderFiltList{Verse.VerbProperties}
+  commentId: T:RW_ModularizationWeapon.FieldReaderFiltList{Verse.VerbProperties}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderFiltList`1
+  name: FieldReaderFiltList<VerbProperties>
+  nameWithType: FieldReaderFiltList<VerbProperties>
+  fullName: RW_ModularizationWeapon.FieldReaderFiltList<Verse.VerbProperties>
+  nameWithType.vb: FieldReaderFiltList(Of VerbProperties)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFiltList(Of Verse.VerbProperties)
+  name.vb: FieldReaderFiltList(Of VerbProperties)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.VerbProperties
+    name: VerbProperties
+    nameWithType: VerbProperties
+    fullName: Verse.VerbProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+  commentId: T:RW_ModularizationWeapon.FieldReaderFiltList`1
+  parent: RW_ModularizationWeapon
+  name: FieldReaderFiltList<T>
+  nameWithType: FieldReaderFiltList<T>
+  fullName: RW_ModularizationWeapon.FieldReaderFiltList<T>
+  nameWithType.vb: FieldReaderFiltList(Of T)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFiltList(Of T)
+  name.vb: FieldReaderFiltList(Of T)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: RW_ModularizationWeapon.FieldReaderFiltList{Verse.Tool}
+  commentId: T:RW_ModularizationWeapon.FieldReaderFiltList{Verse.Tool}
+  parent: RW_ModularizationWeapon
+  definition: RW_ModularizationWeapon.FieldReaderFiltList`1
+  name: FieldReaderFiltList<Tool>
+  nameWithType: FieldReaderFiltList<Tool>
+  fullName: RW_ModularizationWeapon.FieldReaderFiltList<Verse.Tool>
+  nameWithType.vb: FieldReaderFiltList(Of Tool)
+  fullName.vb: RW_ModularizationWeapon.FieldReaderFiltList(Of Verse.Tool)
+  name.vb: FieldReaderFiltList(Of Tool)
+  spec.csharp:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: RW_ModularizationWeapon.FieldReaderFiltList`1
+    name: FieldReaderFiltList
+    nameWithType: FieldReaderFiltList
+    fullName: RW_ModularizationWeapon.FieldReaderFiltList
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.Tool
+    name: Tool
+    nameWithType: Tool
+    fullName: Verse.Tool
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List{RW_ModularizationWeapon.WeaponAttachmentProperties}
+  commentId: T:System.Collections.Generic.List{RW_ModularizationWeapon.WeaponAttachmentProperties}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<WeaponAttachmentProperties>
+  nameWithType: List<WeaponAttachmentProperties>
+  fullName: System.Collections.Generic.List<RW_ModularizationWeapon.WeaponAttachmentProperties>
+  nameWithType.vb: List(Of WeaponAttachmentProperties)
+  fullName.vb: System.Collections.Generic.List(Of RW_ModularizationWeapon.WeaponAttachmentProperties)
+  name.vb: List(Of WeaponAttachmentProperties)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: RW_ModularizationWeapon.WeaponAttachmentProperties
+    name: WeaponAttachmentProperties
+    nameWithType: WeaponAttachmentProperties
+    fullName: RW_ModularizationWeapon.WeaponAttachmentProperties
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: RW_ModularizationWeapon.WeaponAttachmentProperties
+    name: WeaponAttachmentProperties
+    nameWithType: WeaponAttachmentProperties
+    fullName: RW_ModularizationWeapon.WeaponAttachmentProperties
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List{RW_ModularizationWeapon.PartSubDrawingInfo}
+  commentId: T:System.Collections.Generic.List{RW_ModularizationWeapon.PartSubDrawingInfo}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<PartSubDrawingInfo>
+  nameWithType: List<PartSubDrawingInfo>
+  fullName: System.Collections.Generic.List<RW_ModularizationWeapon.PartSubDrawingInfo>
+  nameWithType.vb: List(Of PartSubDrawingInfo)
+  fullName.vb: System.Collections.Generic.List(Of RW_ModularizationWeapon.PartSubDrawingInfo)
+  name.vb: List(Of PartSubDrawingInfo)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: RW_ModularizationWeapon.PartSubDrawingInfo
+    name: PartSubDrawingInfo
+    nameWithType: PartSubDrawingInfo
+    fullName: RW_ModularizationWeapon.PartSubDrawingInfo
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: RW_ModularizationWeapon.PartSubDrawingInfo
+    name: PartSubDrawingInfo
+    nameWithType: PartSubDrawingInfo
+    fullName: RW_ModularizationWeapon.PartSubDrawingInfo
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List{Verse.CompProperties}
+  commentId: T:System.Collections.Generic.List{Verse.CompProperties}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<CompProperties>
+  nameWithType: List<CompProperties>
+  fullName: System.Collections.Generic.List<Verse.CompProperties>
+  nameWithType.vb: List(Of CompProperties)
+  fullName.vb: System.Collections.Generic.List(Of Verse.CompProperties)
+  name.vb: List(Of CompProperties)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Verse.CompProperties
+    name: CompProperties
+    nameWithType: CompProperties
+    fullName: Verse.CompProperties
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List{System.Type}
+  commentId: T:System.Collections.Generic.List{System.Type}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Type>
+  nameWithType: List<Type>
+  fullName: System.Collections.Generic.List<System.Type>
+  nameWithType.vb: List(Of Type)
+  fullName.vb: System.Collections.Generic.List(Of System.Type)
+  name.vb: List(Of Type)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Type
+    name: Type
+    nameWithType: Type
+    fullName: System.Type
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Type
+    name: Type
+    nameWithType: Type
+    fullName: System.Type
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Verse.ThingFilter
+  commentId: T:Verse.ThingFilter
+  parent: Verse
+  isExternal: true
+  name: ThingFilter
+  nameWithType: ThingFilter
+  fullName: Verse.ThingFilter

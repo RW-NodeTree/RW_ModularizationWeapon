@@ -1,27 +1,315 @@
 {
   "homepages": [],
-  "source_base_path": "F:/c#/RW_ModularizationWeapon/RW_ModularizationWeapon/docfx",
+  "source_base_path": "F:/c#/RW_ModularizationWeapon/src/RW_ModularizationWeapon",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.html",
+          "hash": "+XrkrBD4+by0uPbx2ifrwps8NlCe/RWwGE8fdWNYuWE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.AI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.AI.html",
+          "hash": "Ai85QMlqK+X6u8BWvue/W3w/t3KdYs09lISXGxgW0oM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.CompCustomWeaponPort.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.CompCustomWeaponPort.html",
+          "hash": "sFx7TDy9DRD1vwsxsO0ibVuBwXZRAy29K4g1GRbOrJg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.CompModularizationWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.CompModularizationWeapon.html",
+          "hash": "I9zEq2b4HiI0ul8pqI31Uh9V5jWIawb9CcAZaV6DWGU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html",
+          "hash": "s52H0Ima2wanZmA5H3sRJG+Bcr6fzJhivuGCOK6rXTs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
+          "hash": "8u5EhrqvZk+ijuzaTYmYvz5laqMju7a6V7bL45QR1dU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReader-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReader-2.html",
+          "hash": "Dv2nErz90SM1WTYa1jXRMNt1xCQdZFkFIamh6urvQVM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderBoolList-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderBoolList-1.html",
+          "hash": "l5MBhEjlnQv+agHHqhsAoINJWTcXK2nOUT5JE3/HT5I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderBoolean-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderBoolean-1.html",
+          "hash": "CjBbYZypFKMoN/yIGJWp9fDEpUYFlXW46PjWv0fE3bQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderDgitList-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderDgitList-1.html",
+          "hash": "Jihu/yUrFqEldBUIDluy8VDOd/lKnRQdExMrRXJE8Ws="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderDigit-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderDigit-1.html",
+          "hash": "qYxIUbxy7cFY7nPnM7RjcFjD/AeDs+iyzrIqk5Ywxt0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderFilt-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderFilt-1.html",
+          "hash": "UfvyJK/peLWn4snVv6q44LYM6zYo9CANbKJaD+2aHSc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderFiltList-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderFiltList-1.html",
+          "hash": "FwTOyOUs7I5LCot5Tjg7Tc/6RmxrtYrUyQjH0HuGgDo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderInstList-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderInstList-1.html",
+          "hash": "KB9MtfughGS6oChhBY5zgbgT/1djztarDX7mBZCdnbU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.FieldReaderInstance-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.FieldReaderInstance-1.html",
+          "hash": "+gJzJfiujyLLBcCZKSeIOfFIhAKLQ4YRySi20NZQgAI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.PartSubDrawingInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.PartSubDrawingInfo.html",
+          "hash": "sBQzYEgMasVl0d/ANvvY4DXy3hrPwUcEzMZ7Fdih25c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.Tools.ToolsFunction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.Tools.ToolsFunction.html",
+          "hash": "7owUjOVBn/v6SPKa2keoavWKQASrB2HfD23P4Gqg8lo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.Tools.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.Tools.html",
+          "hash": "bhdjkFzP6w9cZFFzZiHAuvo76UWWjsmvYoMTFb7GIg0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.UI.CustomWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.UI.CustomWeapon.html",
+          "hash": "06YBuMZs5dALwckUp7d5/1lYmMNSxNnPoLJRb3ZcbVg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.UI.StateInfoTags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.UI.StateInfoTags.html",
+          "hash": "1HAxsJVpWKtEzMCngJyHYxS3fXGefmch8/sduv8zpNs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.UI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.UI.html",
+          "hash": "FAOKe9RroXVzQWvLdbz9EPzKBnu0/vOOuo3LTNqSdHE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.WeaponAttachmentProperties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.WeaponAttachmentProperties.html",
+          "hash": "nOHebEa7Rd6VtgpAOhxeR8S265r1rZAmdnCnqaUvSMo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.html",
+          "hash": "pLEuPZ+LGuCKxjWb1jrHp19UWnO+WTr0/UVuoD2vfgQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
-      "source_relative_path": "api/index.md",
+      "source_relative_path": "docfx/api/index.md",
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "p+FZnNUNiHGFx4tze6PtdOVuey1cyhg6oRDE3eV+pEk="
+          "hash": "uPiXm452mqpGlZ/tv+SlJaL/jiAxSqv0bP+udH97S84="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docfx/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "bUinFWNger6qyZsdslVIqMlj71G9y36dLZ+ZgVjfZk4="
+        }
+      },
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "articles/Create_Attachment.md",
+      "source_relative_path": "docfx/articles/Create_Attachment.md",
       "output": {
         ".html": {
           "relative_path": "articles/Create_Attachment.html",
-          "hash": "78l/YO7y7t5OdetSsVmCrO9cahv5iRuqhHufH3gnm3g="
+          "hash": "B+1enbRI2gGcjNvGrPlmf6+HwIIJi9YyNuYzIbU7Zhg="
         }
       },
       "is_incremental": false,
@@ -32,11 +320,11 @@
         "InvalidFileLink"
       ],
       "type": "Conceptual",
-      "source_relative_path": "articles/Create_Attachment_Or_Weapon_With_Attachments.md",
+      "source_relative_path": "docfx/articles/Create_Attachment_Or_Weapon_With_Attachments.md",
       "output": {
         ".html": {
           "relative_path": "articles/Create_Attachment_Or_Weapon_With_Attachments.html",
-          "hash": "Gun4gTR/xXpY4pSG2ta4E6e6kPSoaSJ0ztKLplos25o="
+          "hash": "rs5ajF0DBx/Dl9hlMBoxrSz6Pu8q7yssauChEdHZBkk="
         }
       },
       "is_incremental": false,
@@ -47,11 +335,11 @@
         "InvalidFileLink"
       ],
       "type": "Conceptual",
-      "source_relative_path": "articles/intro.md",
+      "source_relative_path": "docfx/articles/intro.md",
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "N1uqDU5FR0FFpIHbxoIIb+xO7JFGR9XtLWijVkP0xUo="
+          "hash": "jovZyhwOSKLAyZBaRwtDMQ3TCXlAHqjRiCXwBBRI1nc="
         }
       },
       "is_incremental": false,
@@ -62,7 +350,7 @@
         "InvalidFileLink"
       ],
       "type": "Toc",
-      "source_relative_path": "articles/toc.md",
+      "source_relative_path": "docfx/articles/toc.md",
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
@@ -74,7 +362,7 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/Preview.png",
+      "source_relative_path": "docfx/images/Preview.png",
       "output": {
         "resource": {
           "relative_path": "images/Preview.png"
@@ -85,287 +373,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "index.md",
+      "source_relative_path": "docfx/index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "8qqgHk2+xe8gPWyMU80HUQ5iNQplGSDpHs01tH3kb44="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.html",
-          "hash": "din5TVuwmlNnhZxrUzBq/03UKgOvAZaqkDt44cZxkdg="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.AI.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.AI.html",
-          "hash": "Ai85QMlqK+X6u8BWvue/W3w/t3KdYs09lISXGxgW0oM="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.CompCustomWeaponPort.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.CompCustomWeaponPort.html",
-          "hash": "7e9ECOwGsevYRq1zlMVDgirVPlG0DjZfyXF5m+hhE+k="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.CompModularizationWeapon.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.CompModularizationWeapon.html",
-          "hash": "a0QzZyFWnd+3EmAa/bMfXegGcZX7dn8OJE+A3BA487A="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html",
-          "hash": "2b1o9Idz7/e/HwU7rV8tdIwrxfCHFlkcENvQSAhvcYk="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "2P5CbGtXT8kc/wdl6O8yexYyJ3OeDdyO//IN8BlKlK8="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReader-2.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReader-2.html",
-          "hash": "OJiKpGPOrbDG4uowPIf8MN7iT/aQTQcM5oPtb2d/f5o="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderBoolList-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderBoolList-1.html",
-          "hash": "XqAc/I29sKDn2odCYRywx3MSflFG7ZIzO//GOSt13FE="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderBoolean-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderBoolean-1.html",
-          "hash": "kWou4xBSMScK9+6o1AHeqPfph3/OrzZiyGGKREkzeNQ="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderDgitList-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderDgitList-1.html",
-          "hash": "G4clewK9ueeQoxIAp0SP9QUNdf2+WDcYU3q7m89REEI="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderDigit-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderDigit-1.html",
-          "hash": "WcsrhsZNS0ynGaG9nT4WJtY/OyBOrg6EoquoTC1L3VA="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderFilt-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderFilt-1.html",
-          "hash": "0MbQWxum9eUHRKZ71gFkyA+lNatpASbj/LiAhGRyZj8="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderFiltList-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderFiltList-1.html",
-          "hash": "NK4flb6noYgfJlz8IBa7XOnWsWFZbqirYdxjiyAICI8="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderInstList-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderInstList-1.html",
-          "hash": "ycBih06SBydOTpjEaIWIgJ9jooIYOEEXKksc1jBUYzY="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.FieldReaderInstance-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.FieldReaderInstance-1.html",
-          "hash": "SLi/slszg0KU097hR8witTHM8zW7yBFdHaH9Hw1Ok4U="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.Tools.ToolsFunction.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.Tools.ToolsFunction.html",
-          "hash": "3/d8inB+v3k/mt0QaHUN48nN0DpfDkbiRA5JgD5f7T8="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.Tools.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.Tools.html",
-          "hash": "bhdjkFzP6w9cZFFzZiHAuvo76UWWjsmvYoMTFb7GIg0="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.UI.CustomWeapon.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.UI.CustomWeapon.html",
-          "hash": "bEAEPDQubYmKxSVwxWku9r4+0dajAkXEMZ9gpaheTug="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.UI.StateInfoTags.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.UI.StateInfoTags.html",
-          "hash": "ptoCFA7Wvz5RvivFBJ60/JhK7qDv5C5UodlKyNgNcBw="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.UI.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.UI.html",
-          "hash": "FAOKe9RroXVzQWvLdbz9EPzKBnu0/vOOuo3LTNqSdHE="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.WeaponAttachmentProperties.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.WeaponAttachmentProperties.html",
-          "hash": "BuUE/LnSRdLtDW4PgiQNQTbgPxLsJZnrFonP5IcXViw="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/RW_ModularizationWeapon.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/RW_ModularizationWeapon.html",
-          "hash": "rMhFhh7fuX2fYOXIxqM5BWQ/Yte3rV30cbEe5ib8KOw="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "obj/api/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/toc.html",
-          "hash": "K0Z0H0sG9NXThI4haD4tedTNR3oA0WFATOzGCzVfXYg="
+          "hash": "CrbaYuszIfsSD7pTPHLey8ukgkTDgOWcQ8I/V5EjxSA="
         }
       },
       "is_incremental": false,
@@ -373,11 +385,11 @@
     },
     {
       "type": "Toc",
-      "source_relative_path": "toc.yml",
+      "source_relative_path": "docfx/toc.yml",
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "Oa9PuD4E1hvZnCkVjUgzNBX6S00Zo5YilamTERTZo54="
+          "hash": "OQkoabF5PI0Fzp7zr5XUfa8Q8sLbiY8aVq1yi+eVqgY="
         }
       },
       "is_incremental": false,
@@ -397,13 +409,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 5,
-          "skipped_file_count": 4
+          "skipped_file_count": 5
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 22,
-          "skipped_file_count": 22
+          "total_file_count": 23,
+          "skipped_file_count": 23
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,

@@ -1,0 +1,28 @@
+### YamlMime:ManagedReference
+items:
+- uid: RW_ModularizationWeapon.Tools
+  commentId: N:RW_ModularizationWeapon.Tools
+  id: RW_ModularizationWeapon.Tools
+  children:
+  - RW_ModularizationWeapon.Tools.ToolsFunction
+  langs:
+  - csharp
+  - vb
+  name: RW_ModularizationWeapon.Tools
+  nameWithType: RW_ModularizationWeapon.Tools
+  fullName: RW_ModularizationWeapon.Tools
+  type: Namespace
+  assemblies:
+  - RW_ModularizationWeapon
+references:
+- uid: RW_ModularizationWeapon.Tools.ToolsFunction
+  commentId: T:RW_ModularizationWeapon.Tools.ToolsFunction
+  parent: RW_ModularizationWeapon.Tools
+  name: ToolsFunction
+  nameWithType: ToolsFunction
+  fullName: RW_ModularizationWeapon.Tools.ToolsFunction
+- uid: RW_ModularizationWeapon.Tools
+  commentId: N:RW_ModularizationWeapon.Tools
+  name: RW_ModularizationWeapon.Tools
+  nameWithType: RW_ModularizationWeapon.Tools
+  fullName: RW_ModularizationWeapon.Tools
