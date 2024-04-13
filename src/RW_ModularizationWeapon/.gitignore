@@ -8,3 +8,7 @@
 /**/obj/
 _site
 log.*
+*.yml
+.manifest
+_site/**
+./docfx.json

@@ -6,7 +6,7 @@
           "files": [
             "**.csproj"
           ],
-          "src": "F:\\c#\\RW_ModularizationWeapon\\RW_ModularizationWeapon"
+          "src": "F:\\c#\\RW_ModularizationWeapon\\src\\RW_ModularizationWeapon"
         }
       ],
       "dest": "api",

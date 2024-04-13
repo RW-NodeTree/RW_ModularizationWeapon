@@ -1,1 +1,1 @@
-docfx RW_ModularizationWeapon/docfx/docfx.json --serve
+docfx src/RW_ModularizationWeapon/docfx/docfx.json --serve

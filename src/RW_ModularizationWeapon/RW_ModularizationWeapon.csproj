@@ -43,6 +43,13 @@
 			<HintPath Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'" >../../lib/RW_NodeTree/1.5/Assemblies/RW_NodeTree.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+	<ItemGroup>
+		<None Remove="_site" />
+		<None Remove="log.*" />
+		<None Remove="/**/bin/**" />
+		<None Remove="/**/obj/**" />
+	</ItemGroup>
+  <!-- DocFX -->
   <Import Project="../../packages/docfx.console.2.59.4/build/docfx.console.targets" Condition="Exists('../../packages/docfx.console.2.59.4/build/docfx.console.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
