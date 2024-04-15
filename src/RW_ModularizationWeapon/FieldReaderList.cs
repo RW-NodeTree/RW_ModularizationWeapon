@@ -25,6 +25,20 @@ namespace RW_ModularizationWeapon
 
         public bool HasDefaultValue => defaultValue.HasValue;
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Default="default_value">
+        ///    <li Reader-Class="c# type1" Default="default_value1">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///    <li Reader-Class="c# type2" Default="default_value2">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
 
@@ -37,14 +51,6 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-
-            /**
-            <xx Default="default_value">
-                <xx Class="c# type" Default="default_value">
-                    <member_name_of_type>value</member_name_of_type>
-                </xx>
-            </xx>
-            **/
             try
             {
                 AddRange((List<FieldReaderDigit<T>>)DirectXmlToObject.GetObjectFromXmlMethod(typeof(List<FieldReaderDigit<T>>))(xmlRoot, true));
@@ -572,6 +578,20 @@ namespace RW_ModularizationWeapon
 
         public bool HasDefaultValue => defaultValue.HasValue;
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Default="default_value">
+        ///    <li Reader-Class="c# type1" Default="default_value1">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///    <li Reader-Class="c# type2" Default="default_value2">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
 
@@ -584,14 +604,6 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-
-            /**
-            <xx Default="default_value">
-                <xx Class="c# type" Default="default_value">
-                    <member_name_of_type>value</member_name_of_type>
-                </xx>
-            </xx>
-            **/
             try
             {
                 AddRange((List<FieldReaderBoolean<T>>)DirectXmlToObject.GetObjectFromXmlMethod(typeof(List<FieldReaderBoolean<T>>))(xmlRoot, true));
@@ -831,16 +843,22 @@ namespace RW_ModularizationWeapon
 
         public FieldReaderInstList(FieldReaderInstList<T> other) : base(other) { }
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx>
+        ///    <li Class="c# type1">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///    <li Class="c# type2">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-
-            /**
-            <xx Default="default_value">
-                <xx Class="c# type" Default="default_value">
-                    <member_name_of_type>value</member_name_of_type>
-                </xx>
-            </xx>
-            **/
             try
             {
                 AddRange((List<FieldReaderInstance<T>>)DirectXmlToObject.GetObjectFromXmlMethod(typeof(List<FieldReaderInstance<T>>))(xmlRoot, true));
@@ -1029,6 +1047,20 @@ namespace RW_ModularizationWeapon
 
         public bool HasDefaultValue => defaultValue.HasValue;
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Default="default_value">
+        ///    <li Reader-Class="c# type1" Default="default_value1">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///    <li Reader-Class="c# type2" Default="default_value2">
+        ///        <member_name_of_type>value</member_name_of_type>
+        ///    </li>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
 
@@ -1041,14 +1073,6 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-
-            /**
-            <xx Default="default_value">
-                <xx Class="c# type" Default="default_value">
-                    <member_name_of_type>value</member_name_of_type>
-                </xx>
-            </xx>
-            **/
             try
             {
                 AddRange((List<FieldReaderFilt<T>>)DirectXmlToObject.GetObjectFromXmlMethod(typeof(List<FieldReaderFilt<T>>))(xmlRoot, true));

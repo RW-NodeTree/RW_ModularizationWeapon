@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.html",
-          "hash": "+XrkrBD4+by0uPbx2ifrwps8NlCe/RWwGE8fdWNYuWE="
+          "hash": "8SzlHwkx3bVajBokQfbM8k05IkzyVL2WPBtB3P+0XF0="
         }
       },
       "is_incremental": true,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompCustomWeaponPort.html",
-          "hash": "sFx7TDy9DRD1vwsxsO0ibVuBwXZRAy29K4g1GRbOrJg="
+          "hash": "2/SCxukFpLg0/wRLISLSFNnOTuQfpiIKYg9ib/u1anA="
         }
       },
       "is_incremental": true,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html",
-          "hash": "s52H0Ima2wanZmA5H3sRJG+Bcr6fzJhivuGCOK6rXTs="
+          "hash": "aYRWDEu5jNqTffNyt5773FP05Cb5EqJeKV85zLxBwy0="
         }
       },
       "is_incremental": true,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "8u5EhrqvZk+ijuzaTYmYvz5laqMju7a6V7bL45QR1dU="
+          "hash": "1ostz0zRc0Id6MlCd70vJUdYhL0s8E2b/hC6B2DBGns="
         }
       },
       "is_incremental": true,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReader-2.html",
-          "hash": "38UKtQsi9jPW0lP3snEkf8B+EHJavUWQQ+UJ0xAd3eo="
+          "hash": "Dv2nErz90SM1WTYa1jXRMNt1xCQdZFkFIamh6urvQVM="
         }
       },
       "is_incremental": true,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderBoolList-1.html",
-          "hash": "l5MBhEjlnQv+agHHqhsAoINJWTcXK2nOUT5JE3/HT5I="
+          "hash": "CS509ZL4J7zce0j9F7Vh9onYAbvm7Ld+DAAiBb+fFUU="
         }
       },
       "is_incremental": true,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderBoolean-1.html",
-          "hash": "CjBbYZypFKMoN/yIGJWp9fDEpUYFlXW46PjWv0fE3bQ="
+          "hash": "XusNDSzxaUTil4yLsrG3PFNEWIIfDCnEDtTizCZaqlQ="
         }
       },
       "is_incremental": true,
@@ -117,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderDgitList-1.html",
-          "hash": "Jihu/yUrFqEldBUIDluy8VDOd/lKnRQdExMrRXJE8Ws="
+          "hash": "KeEEml9mgw+QR6kvtXtD+qqFJL64lsm8ahhhVJqWbQI="
         }
       },
       "is_incremental": true,
@@ -129,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderDigit-1.html",
-          "hash": "qYxIUbxy7cFY7nPnM7RjcFjD/AeDs+iyzrIqk5Ywxt0="
+          "hash": "UbuECey0cLtxru+7/m0v0QRctN8x7tl3cnR7ZsMIEto="
         }
       },
       "is_incremental": true,
@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderFilt-1.html",
-          "hash": "UfvyJK/peLWn4snVv6q44LYM6zYo9CANbKJaD+2aHSc="
+          "hash": "MIpu7ETwppAskFtpDRM/fvyRWBbFjp3Vt2kOrXrKQ0Q="
         }
       },
       "is_incremental": true,
@@ -153,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderFiltList-1.html",
-          "hash": "FwTOyOUs7I5LCot5Tjg7Tc/6RmxrtYrUyQjH0HuGgDo="
+          "hash": "2xRWOMsZJ+oA+HF+G29X18ByV6edmpU9IuebI3N8cpM="
         }
       },
       "is_incremental": true,
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderInstList-1.html",
-          "hash": "KB9MtfughGS6oChhBY5zgbgT/1djztarDX7mBZCdnbU="
+          "hash": "7dGrX3XqCtvEXSJTj2tHLdbAcTOeq6y+jQk36znEQYs="
         }
       },
       "is_incremental": true,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReaderInstance-1.html",
-          "hash": "+gJzJfiujyLLBcCZKSeIOfFIhAKLQ4YRySi20NZQgAI="
+          "hash": "t4zVLTLyWfw5cDhJId6GdmLyNHBvT40vRjoRfZoFQrQ="
         }
       },
       "is_incremental": true,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.UI.CustomWeapon.html",
-          "hash": "06YBuMZs5dALwckUp7d5/1lYmMNSxNnPoLJRb3ZcbVg="
+          "hash": "0ErlmrrZ7ZlWnfw27O7ci3jNpg7FUYZcKazAYSS4WKs="
         }
       },
       "is_incremental": true,
@@ -304,6 +304,21 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "docfx/articles/Affect_Weapon_By_Attachment.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/Affect_Weapon_By_Attachment.html",
+          "hash": "sG3/mDHhgwea6iYBNGeupTcEp1fOzxdyiRxqxZpyuIs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "docfx/articles/Create_Attachment.md",
       "output": {
@@ -324,7 +339,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/Create_Attachment_Or_Weapon_With_Attachments.html",
-          "hash": "cxnHnchuoJ065K7PjkwsOJn7I/AvFpaDBUkkJypL5tk="
+          "hash": "8pWFlcBaS7dSZ3fQrUSQEtPtn/hb8JGk3mPjarZjfVE="
         }
       },
       "is_incremental": true,
@@ -336,7 +351,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/Create_Sub_Weapon.html",
-          "hash": "5rvVrieBR9PHRh5htdnfT0l5imSU8sHcQGxWyXLK9UM="
+          "hash": "kqhC7wi7YLopVUIATMj0D26d7WYaBs+/d68//pP/WXc="
         }
       },
       "is_incremental": true,
@@ -360,7 +375,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "GLSkezSEmhVfJwwfOp8AShCEqJts4hENIT4lLoPxJWU="
+          "hash": "9Qi3aP3Afu21RQa6RA7uOchObkhaNoOxKZ27Jx2MdXw="
         }
       },
       "is_incremental": false,
@@ -414,8 +429,8 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 6,
-          "skipped_file_count": 6
+          "total_file_count": 7,
+          "skipped_file_count": 7
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,

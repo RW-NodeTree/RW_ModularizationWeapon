@@ -1,5 +1,5 @@
 # Create Weapon
-## Before we start you must know how to **[Create Attachment](Create_Attachment.md)**
+## Before we start you must know **[previous chapter](Create_Attachment.md)**
 
 Before diving into the creation process, it's essential to understand how to create an attachment in the game's modding system.
 

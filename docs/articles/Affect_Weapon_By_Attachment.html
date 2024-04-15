@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Affect Weapon By Attachment </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Affect Weapon By Attachment ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="affect-weapon-by-attachment">Affect Weapon By Attachment</h1>
+
+<h2 id="before-we-start-you-must-know-previous-chapter">Before we start you must know <strong><a href="Create_Attachment.html">previous chapter</a></strong></h2>
+<p>To affect the weapon performent, we need set some <strong>multiplier</strong> or <strong>offseter</strong> value in comp. Here are some common seting for attachment:</p>
+<h2 id="stat">Stat</h2>
+<p><strong>final = original * Multiplier + Offest</strong></p>
+<h3 id="offest">Offest</h3>
+<ul>
+<li><code>statOffset</code>: Alters <code>StatWorker.GetValue</code> results with addition.</li>
+<li><code>statOffsetDefaultValue</code>: Default value for <code>statOffset</code> when no stat is</li>
+</ul>
+<h3 id="multiplier">Multiplier</h3>
+<ul>
+<li><code>statMultiplier</code>: Multiplies <code>StatWorker.GetValue</code> results.</li>
+<li><code>statMultiplierDefaultValue</code>: Default value for <code>statMultiplier</code> when no stat is provided.</li>
+</ul>
+<h3 id="usage-example">Usage Example</h3>
+<pre><code class="lang-xml">&lt;statOffset&gt;
+    &lt;!-- Just write as statBases --&gt;
+    &lt;AccuracyTouch&gt;0.8&lt;/AccuracyTouch&gt;&lt;!-- Parent weapon AccuracyTouch +0.8  --&gt;
+    &lt;AccuracyShort&gt;0.9&lt;/AccuracyShort&gt;&lt;!-- Parent weapon AccuracyShort +0.9  --&gt;
+&lt;/statOffset&gt;
+&lt;statOffsetDefaultValue&gt;0.1&lt;/statOffsetDefaultValue&gt;&lt;!-- let other stat value +0.1 --&gt;
+&lt;statMultiplier&gt;
+    &lt;!-- Just write as statBases --&gt;
+    &lt;AccuracyMedium&gt;1.1&lt;/AccuracyMedium&gt;&lt;!-- Parent weapon AccuracyMedium *1.1  --&gt;
+    &lt;AccuracyLong&gt;1.1&lt;/AccuracyLong&gt;&lt;!-- Parent weapon AccuracyLong *1.1  --&gt;
+&lt;/statMultiplier&gt;
+&lt;statMultiplierDefaultValue&gt;0.9&lt;/statMultiplierDefaultValue&gt;&lt;!-- let other stat value *0.9 --&gt;
+</code></pre>
+<h2 id="verbproperties-and-tools">VerbProperties And Tools</h2>
+<p><strong>finalNumber = originalNumber * Multiplier + Offest</strong></p>
+<p><strong>finalBoolean = originalBoolean &amp;&amp; AndPatchs || OrPatchs</strong></p>
+<p><strong>finaleObject = InstPatchs ?? finaleObject</strong></p>
+<hr>
+<h3 id="offest-1">Offest</h3>
+<ul>
+<li><p><code>verbPropertiesOffseter</code>: Modifies <code>IVerbOwner.VerbProperties</code> values with addition.</p>
+</li>
+<li><p><code>toolsOffseter</code>: Modifies <code>IVerbOwner.Tools</code> values with addition.</p>
+</li>
+</ul>
+<h3 id="multiplier-1">Multiplier</h3>
+<ul>
+<li><p><code>verbPropertiesOtherPartOffseterAffectHorizon</code>: Defines the impact of other parts' <code>verbPropertiesOffseter</code> on <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsMultiplier</code>: Applies multiplier calculations to <code>IVerbOwner.Tools</code> values.</p>
+</li>
+</ul>
+<p><em><a href="../api/RW_ModularizationWeapon.FieldReaderDgitList-1.html#RW_ModularizationWeapon_FieldReaderDgitList_1_LoadDataFromXmlCustom_System_Xml_XmlNode_">Type : FieldReaderDgitList&lt;T&gt;</a></em></p>
+<p><em><a href="../api/RW_ModularizationWeapon.FieldReaderDigit-1.html#RW_ModularizationWeapon_FieldReaderDigit_1_LoadDataFromXmlCustom_System_Xml_XmlNode_">Type : FieldReaderDigit&lt;T&gt;</a></em></p>
+<hr>
+<h3 id="andpatchs">AndPatchs</h3>
+<ul>
+<li><p><code>verbPropertiesBoolAndPatch</code>: Performs boolean and calculations with <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsBoolAndPatch</code>: Performs boolean and calculations with <code>IVerbOwner.Tools</code>.</p>
+</li>
+</ul>
+<h3 id="orpatchs">OrPatchs</h3>
+<ul>
+<li><p><code>verbPropertiesBoolOrPatch</code>: Performs boolean OR calculations with <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsBoolOrPatch</code>: Performs boolean OR calculations with <code>IVerbOwner.Tools</code>.</p>
+</li>
+</ul>
+<p><em><a href="../api/RW_ModularizationWeapon.FieldReaderBoolList-1.html#RW_ModularizationWeapon_FieldReaderBoolList_1_LoadDataFromXmlCustom_System_Xml_XmlNode_">Type : FieldReaderBoolList&lt;T&gt;</a></em></p>
+<p><em><a href="../api/RW_ModularizationWeapon.FieldReaderBoolean-1.html#RW_ModularizationWeapon_FieldReaderBoolean_1_LoadDataFromXmlCustom_System_Xml_XmlNode_">Type : FieldReaderBoolean&lt;T&gt;</a></em></p>
+<hr>
+<h3 id="instpatchs">InstPatchs</h3>
+<ul>
+<li><p><code>verbPropertiesObjectPatch</code>: Replaces parameters in <code>IVerbOwner.VerbProperties</code> from the parent.</p>
+</li>
+<li><p><code>toolsObjectPatch</code>: Replaces parameters in <code>IVerbOwner.Tools</code> from the parent.</p>
+</li>
+</ul>
+<p><em><a href="../api/RW_ModularizationWeapon.FieldReaderInstList-1.html#RW_ModularizationWeapon_FieldReaderInstList_1_LoadDataFromXmlCustom_System_Xml_XmlNode_">Type : FieldReaderInstList&lt;T&gt;</a></em></p>
+<p><em><a href="../api/RW_ModularizationWeapon.FieldReaderInstance-1.html#RW_ModularizationWeapon_FieldReaderInstance_1_LoadDataFromXmlCustom_System_Xml_XmlNode_">Type : FieldReaderInstance&lt;T&gt;</a></em></p>
+<hr>
+<h3 id="usage-example-1">Usage Example</h3>
+<pre><code class="lang-xml">&lt;!-- Adjusts the starting values for verb properties with a slight margin --&gt;
+&lt;verbPropertiesOffseter Default=&quot;0.2&quot;&gt;
+    &lt;!-- General default, set to a baseline zero --&gt;
+    &lt;li Default=&quot;0&quot;&gt;
+        &lt;!-- Basic setup for actions, like a 0.5-second prep before getting started --&gt;
+        &lt;warmupTime&gt;0.5&lt;/warmupTime&gt;
+    &lt;/li&gt;
+    &lt;!-- Special case for CombatExtended weapons, increase 0.5 recoil amount --&gt;
+    &lt;li Reader-Class=&quot;CombatExtended.VerbPropertiesCE&quot;&gt;
+        &lt;recoilAmount&gt;0.5&lt;/recoilAmount&gt;
+    &lt;/li&gt;
+&lt;/verbPropertiesOffseter&gt;
+
+&lt;!-- Gives a moderate boost to verb properties --&gt;
+&lt;verbPropertiesMultiplier Default=&quot;1.1&quot;&gt;
+    &lt;li Default=&quot;1&quot;&gt;
+        &lt;!-- A bit more time to get ready, bumped up by 20% --&gt;
+        &lt;warmupTime&gt;1.2&lt;/warmupTime&gt;
+        &lt;!-- Range gets a modest increase, just a bit further than before --&gt;
+        &lt;range&gt;1.25&lt;/range&gt;
+    &lt;/li&gt;
+    &lt;li Reader-Class=&quot;CombatExtended.VerbPropertiesCE&quot;&gt;
+        &lt;!-- Indirect fire gets a slight edge, 20% more challenging --&gt;
+        &lt;indirectFirePenalty&gt;1.2&lt;/indirectFirePenalty&gt;
+        &lt;!-- Ammo consumption doubles up, making each shot count --&gt;
+        &lt;ammoConsumedPerShotCount&gt;2&lt;/ammoConsumedPerShotCount&gt;
+    &lt;/li&gt;
+&lt;/verbPropertiesMultiplier&gt;
+&lt;!-- replace value and instance --&gt;
+&lt;verbPropertiesObjectPatch&gt;
+    &lt;li&gt;
+        &lt;!-- dgital --&gt;
+        &lt;burstShotCount&gt;10&lt;/burstShotCount&gt;
+        &lt;!-- ThingDef --&gt;
+        &lt;defaultProjectile&gt;Bullet_AssaultRifleLongBarrel&lt;/defaultProjectile&gt;
+        &lt;!-- SoundDef --&gt;
+        &lt;soundCast&gt;Shot_Silenced&lt;/soundCast&gt;
+        &lt;!-- SoundDef, but set to null --&gt;
+        &lt;soundCastTail IsNull=&quot;true&quot;/&gt;
+    &lt;/li&gt;
+    &lt;li Reader-Class=&quot;CombatExtended.VerbPropertiesCE&quot;&gt;
+        &lt;!-- enum RecoilPattern --&gt;
+        &lt;recoilPattern&gt;Regular&lt;/recoilPattern&gt;
+    &lt;/li&gt;
+&lt;/verbPropertiesObjectPatch&gt;
+&lt;!-- for tool, other parameters like Multiplier,ObjectPatch are same as verbProperties version --&gt;
+&lt;toolsOffseter Default=&quot;0.1&quot;&gt;
+    &lt;!-- General default, set to a baseline zero --&gt;
+    &lt;li Default=&quot;0&quot;&gt;
+        &lt;!-- increase 2 attack power --&gt;
+        &lt;power&gt;2&lt;/power&gt;
+    &lt;/li&gt;
+    &lt;!-- Special case for CombatExtended weapons, increase 0.5 blunt armor penetration --&gt;
+    &lt;li Reader-Class=&quot;CombatExtended.ToolCE&quot;&gt;
+        &lt;armorPenetrationBlunt&gt;3&lt;/armorPenetrationBlunt&gt;
+    &lt;/li&gt;
+&lt;/toolsOffseter&gt;
+</code></pre>
+<h2 id="list-of-affecter">List Of Affecter</h2>
+<h3 id="offset">Offset</h3>
+<h4 id="parent-offsets">Parent Offsets</h4>
+<ul>
+<li><p><code>verbPropertiesOffseter</code>: Modifies <code>IVerbOwner.VerbProperties</code> values with addition.</p>
+</li>
+<li><p><code>toolsOffseter</code>: Modifies <code>IVerbOwner.Tools</code> values with addition.</p>
+</li>
+<li><p><code>compPropertiesOffseter</code>: Modifies <code>ThingDef.Comps</code> values with addition.</p>
+</li>
+<li><p><code>statOffset</code>: Alters <code>StatWorker.GetValue</code> results with addition.</p>
+</li>
+<li><p><code>statOffsetDefaultValue</code>: Default value for <code>statOffset</code> when no stat is provided.</p>
+</li>
+</ul>
+<h4 id="other-part-offsets">Other Part Offsets</h4>
+<ul>
+<li><p><code>verbPropertiesOtherPartOffseterAffectHorizon</code>: Defines the impact of other parts' <code>verbPropertiesOffseter</code> on <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsOtherPartOffseterAffectHorizon</code>: Defines the impact of other parts' <code>toolsOffseter</code> on <code>IVerbOwner.Tools</code>.</p>
+</li>
+<li><p><code>statOtherPartOffseterAffectHorizon</code>: Influences how other parts' <code>statOffset</code> affects <code>StatWorker.GetValue</code>.</p>
+</li>
+<li><p><code>statOtherPartOffseterAffectHorizonDefaultValue</code>: Default value for <code>statOtherPartOffseterAffectHorizon</code> when no stat is provided.</p>
+</li>
+</ul>
+<hr>
+<h3 id="multiplier-2">Multiplier</h3>
+<h4 id="parent-multipliers">Parent Multipliers</h4>
+<ul>
+<li><p><code>verbPropertiesMultiplier</code>: Applies multiplier calculations to <code>IVerbOwner.VerbProperties</code> values.</p>
+</li>
+<li><p><code>toolsMultiplier</code>: Applies multiplier calculations to <code>IVerbOwner.Tools</code> values.</p>
+</li>
+<li><p><code>compPropertiesMultiplier</code>: Applies multiplier calculations to <code>ThingDef.Comps</code> values.</p>
+</li>
+<li><p><code>statMultiplier</code>: Multiplies <code>StatWorker.GetValue</code> results.</p>
+</li>
+<li><p><code>statMultiplierDefaultValue</code>: Default value for <code>statMultiplier</code> when no stat is provided.</p>
+</li>
+</ul>
+<h4 id="other-part-multipliers">Other Part Multipliers</h4>
+<ul>
+<li><p><code>verbPropertiesOtherPartMultiplierAffectHorizon</code>: Determines how other parts' <code>verbPropertiesMultiplier</code> affects <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsOtherPartMultiplierAffectHorizon</code>: Determines how other parts' <code>toolsMultiplier</code> affects <code>IVerbOwner.Tools</code>.</p>
+</li>
+<li><p><code>statOtherPartMultiplierAffectHorizon</code>: Influences how other parts' <code>statMultiplier</code> affects <code>StatWorker.GetValue</code>.</p>
+</li>
+<li><p><code>statOtherPartMultiplierAffectHorizonDefaultValue</code>: Default value for <code>statOtherPartMultiplierAffectHorizon</code> when no stat is provided.</p>
+</li>
+</ul>
+<hr>
+<h3 id="andpatchs-1">AndPatchs</h3>
+<h4 id="parent-andpatchs">Parent AndPatchs</h4>
+<ul>
+<li><p><code>verbPropertiesBoolAndPatch</code>: Performs boolean and calculations with <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsBoolAndPatch</code>: Performs boolean and calculations with <code>IVerbOwner.Tools</code>.</p>
+</li>
+<li><p><code>compPropertiesBoolAndPatch</code>: Performs boolean and calculations with <code>ThingDef.Comps</code>.</p>
+</li>
+</ul>
+<h4 id="other-part-andpatchs">Other Part AndPatchs</h4>
+<ul>
+<li><p><code>verbPropertiesBoolAndPatchByOtherPart</code>: Performs boolean and calculations with this part's <code>verbPropertiesBoolAndPatch</code>.</p>
+</li>
+<li><p><code>toolsBoolAndPatchByOtherPart</code>: Performs boolean and calculations with this part's <code>toolsBoolAndPatch</code>.</p>
+</li>
+</ul>
+<hr>
+<h3 id="orpatchs-1">OrPatchs</h3>
+<h4 id="parent-orpatchs">Parent OrPatchs</h4>
+<ul>
+<li><p><code>verbPropertiesBoolOrPatch</code>: Performs boolean OR calculations with <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsBoolOrPatch</code>: Performs boolean OR calculations with <code>IVerbOwner.Tools</code>.</p>
+</li>
+<li><p><code>compPropertiesBoolOrPatch</code>: Performs boolean OR calculations with <code>ThingDef.Comps</code>.</p>
+</li>
+</ul>
+<h4 id="other-part-orpatchs">Other Part OrPatchs</h4>
+<ul>
+<li><p><code>verbPropertiesBoolOrPatchByOtherPart</code>: Performs boolean OR calculations with this part's <code>verbPropertiesBoolOrPatch</code>.</p>
+</li>
+<li><p><code>toolsBoolOrPatchByOtherPart</code>: Performs boolean OR calculations with this part's <code>toolsBoolOrPatch</code>.</p>
+</li>
+</ul>
+<hr>
+<h3 id="instpatchs-1">InstPatchs</h3>
+<h4 id="parent-instpatchs">Parent InstPatchs</h4>
+<ul>
+<li><p><code>verbPropertiesObjectPatch</code>: Replaces parameters in <code>IVerbOwner.VerbProperties</code> from the parent.</p>
+</li>
+<li><p><code>toolsObjectPatch</code>: Replaces parameters in <code>IVerbOwner.Tools</code> from the parent.</p>
+</li>
+<li><p><code>compPropertiesObjectPatch</code>: Replaces parameters in <code>ThingDef.Comps</code> from the parent.</p>
+</li>
+</ul>
+<h4 id="other-part-instpatchs">Other Part InstPatchs</h4>
+<ul>
+<li><p><code>verbPropertiesObjectPatchByOtherPart</code>: Defines which parameters can replace this part's <code>IVerbOwner.VerbProperties</code>.</p>
+</li>
+<li><p><code>toolsObjectPatchByOtherPart</code>: Defines which parameters can replace this part's <code>IVerbOwner.Tools</code>.</p>
+</li>
+</ul>
+<h3 id="all-parameters--type--compproperties_modularizationweapon"><em>All parameters : <a href="../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html">Type : CompProperties_ModularizationWeapon</a></em></h3>
+<!-- ## Next: [Create Attachment Or Weapon With Attachments](Create_Attachment_Or_Weapon_With_Attachments.md) -->
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/RW-NodeTree/RW_ModularizationWeapon/blob/master/src/RW_ModularizationWeapon/docfx/articles/Affect_Weapon_By_Attachment.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 # Create Sub Weapon
-
-Before we create sub weapon, we need create a parent weapon. So, let's start create a parent weapon basing on `templateGun` from chapter '[Create Attachment Or Weapon With Attachments](Create_Attachment_Or_Weapon_With_Attachments.md)':
+## Before we start you must know **[previous chapter](Create_Attachment_Or_Weapon_With_Attachments.md)**
+So, let's start with [`templateGun`](Create_Attachment_Or_Weapon_With_Attachments.md) and add a slot for our new sub weapon `templateSubWeapon`:
 
 ``` xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -118,4 +118,4 @@ The `notAllowParentUseVerbProperties` parameter is a boolean flag that dictates 
 </comps>
 ```
 
-<!-- ## Next: [Create Attachment Or Weapon With Attachments](Create_Attachment_Or_Weapon_With_Attachments.md) -->
+## Next: [Affect Weapon By Attachment](Affect_Weapon_By_Attachment.md)

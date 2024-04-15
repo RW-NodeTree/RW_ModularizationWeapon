@@ -253,6 +253,15 @@ namespace RW_ModularizationWeapon
             set => Add(key, value);
         }
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Reader-Class="c# type" Default="default_value">
+        ///   <member_name_of_type>value</member_name_of_type>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             base.LoadDataFromXmlCustom(xmlRoot);
@@ -265,12 +274,6 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-
-            /**
-            <xx Reader-Class="c# type" Default="default_value">
-                <member_name_of_type>value</member_name_of_type>
-            </xx>
-            **/
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
@@ -502,6 +505,15 @@ namespace RW_ModularizationWeapon
         }
 
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Reader-Class="c# type" Default="default_value">
+        ///   <member_name_of_type>value</member_name_of_type>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             base.LoadDataFromXmlCustom(xmlRoot);
@@ -514,12 +526,6 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-
-            /**
-            <xx Reader-Class="c# type" Default="default_value">
-                <member_name_of_type>value</member_name_of_type>
-            </xx>
-            **/
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
@@ -644,15 +650,19 @@ namespace RW_ModularizationWeapon
         }
 
 
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Reader-Class="c# type">
+        ///   <member_name_of_type>value</member_name_of_type>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             loading = true;
             base.LoadDataFromXmlCustom(xmlRoot);
-            /**
-            <xx Reader-Class="c# type">
-                <member_name_of_type>value</member_name_of_type>
-            </xx>
-            **/
             try
             {
                 datas = (T)DirectXmlToObject.GetObjectFromXmlMethod(UsedType)(xmlRoot, true);
@@ -799,6 +809,16 @@ namespace RW_ModularizationWeapon
         }
 
 
+
+        /// <summary>
+        /// Xml Usage Example
+        /// ```xml
+        ///<xx Reader-Class="c# type" Default="default_value">
+        ///   <member_name_of_type>value</member_name_of_type>
+        ///</xx>
+        /// ```
+        /// </summary>
+        /// <param name="xmlRoot"></param>
         public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
             base.LoadDataFromXmlCustom(xmlRoot);
@@ -811,12 +831,6 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(ex.ToString());
             }
-
-            /**
-            <xx Reader-Class="c# type" Default="default_value">
-                <member_name_of_type>value</member_name_of_type>
-            </xx>
-            **/
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 try
