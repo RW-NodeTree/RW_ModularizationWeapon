@@ -237,13 +237,7 @@ namespace RW_ModularizationWeapon
                 {
                     if(properties != null)
                     {
-                        Matrix4x4 transfrom = properties.Transfrom;
-                        if (properties.postionInPixelSize)
-                        {
-                            transfrom.m03 /= texScale;
-                            transfrom.m13 /= texScale;
-                            transfrom.m23 /= texScale;
-                        }
+                        Matrix4x4 transfrom = properties.Transfrom(texScale);
                         for (int j = 0; j < renderInfos.Count; j++)
                         {
                             bool needTransToIdentity = (CompChildNodeProccesser)part == null;

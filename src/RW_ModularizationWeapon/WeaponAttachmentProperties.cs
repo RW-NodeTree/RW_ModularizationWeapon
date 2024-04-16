@@ -20,10 +20,10 @@ namespace RW_ModularizationWeapon
                 return cachedUITex;
             }
         }
-
-        public Matrix4x4 Transfrom => Matrix4x4.TRS(postion, Quaternion.Euler(rotation), scale);
-
         public string Name => name ?? id;
+
+
+        public Matrix4x4 Transfrom(uint TextureSizeFactor) => Matrix4x4.TRS(postion / (postionInPixelSize ? TextureSizeFactor : 1), Quaternion.Euler(rotation), scale / (scaleInPixelSize ? TextureSizeFactor : 1));
 
 
         public void ResolveReferences()
@@ -232,6 +232,10 @@ namespace RW_ModularizationWeapon
         /// if is's **`true`**,the randering postion of this part will offset by the pixel scale
         /// </summary>
         public bool postionInPixelSize;
+        /// <summary>
+        /// if is's **`true`**,the randering scale of this part will calculat in pixel size
+        /// </summary>
+        public bool scaleInPixelSize;
         /// <summary>
         /// drawing weight of this attach point
         /// </summary>

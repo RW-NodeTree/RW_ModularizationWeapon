@@ -40,14 +40,25 @@ This is where we define the `attachmentProperties` that allow our weapon to acce
 ### Attachment Properties Explained
 
 - `<id>`: A unique identifier for the attachment point.
+
 - `<name>`: The name of the attachment point, displayed in the game.
+
 - `<position>`: The in-world position offset of the attachment relative to the weapon.
+
 - `<rotation>`: The rotation offset in Euler angles for the attachment.
+
 - `<scale>`: The size scale of the attachment relative to its default size.
+
 - `<defaultThing>`: The default part that is attached to this point when the weapon is not crafted.
+
 - `<allowEmpty>`: A boolean that determines if the attachment point can be left empty.
+
 - `<positionInPixelSize>`: A flag to indicate if the position offset should be interpreted in pixels.
+
+- `<scaleInPixelSize>`: A flag to indicate if the scale should be interpreted in pixels.
+
 - `<filter>`: A set of conditions that determine which items can be attached to this point.
+
 - `<randomThingDefWeights>`: A list of weights for random attachment generation.
 
 *More parameters here: [Type : WeaponAttachmentProperties](../api/RW_ModularizationWeapon.WeaponAttachmentProperties.html)*
