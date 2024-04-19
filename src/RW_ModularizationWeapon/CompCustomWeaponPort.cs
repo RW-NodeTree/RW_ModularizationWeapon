@@ -19,18 +19,30 @@ namespace RW_ModularizationWeapon
 
         public override void PostExposeData()
         {
-            if(Scribe.mode == LoadSaveMode.Saving)
+            switch (Scribe.mode)
             {
-                bool byref = selestedWeapon?.ParentHolder != null;
-                if(byref) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
-                else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
-            }
-            else
-            {
-                XmlNode xmlNode = Scribe.loader?.curXmlParent?["selestedWeapon"];
-                if (xmlNode == null) return;
-                if (xmlNode.ChildNodes.Count == 1 && xmlNode.FirstChild.NodeType == XmlNodeType.Text) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
-                else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+                case LoadSaveMode.Saving:
+                {
+                    bool byref = selestedWeapon?.ParentHolder != null;
+                    if(byref) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
+                    else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+                    break;
+                }
+                case LoadSaveMode.LoadingVars:
+                {
+                    XmlNode xmlNode = Scribe.loader?.curXmlParent?["selestedWeapon"];
+                    if (xmlNode == null) return;
+                    if (xmlNode.ChildNodes.Count == 1 && xmlNode.FirstChild.NodeType == XmlNodeType.Text) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
+                    else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+                    break;
+                }
+                default:
+                {
+                    if(selestedWeapon != null) Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+                    else Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
+                    break;
+                }
+
             }
         }
 
