@@ -3,6 +3,7 @@ using RW_ModularizationWeapon.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Verse;
 using Verse.AI;
 
@@ -18,10 +19,19 @@ namespace RW_ModularizationWeapon
 
         public override void PostExposeData()
         {
-            bool byref = selestedWeapon?.ParentHolder != null;
-            Scribe_Values.Look(ref byref, "byref");
-            if(byref) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
-            else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+            if(Scribe.mode == LoadSaveMode.Saving)
+            {
+                bool byref = selestedWeapon?.ParentHolder != null;
+                if(byref) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
+                else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+            }
+            else
+            {
+                XmlNode xmlNode = Scribe.loader?.curXmlParent?["selestedWeapon"];
+                if (xmlNode == null) return;
+                if (xmlNode.ChildNodes.Count == 1 && xmlNode.FirstChild.NodeType == XmlNodeType.Text) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
+                else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
+            }
         }
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
@@ -82,8 +92,6 @@ namespace RW_ModularizationWeapon
 
 
         public CompModularizationWeapon GetTargetCompModularizationWeapon() => selestedWeapon;
-
-
 
         private Thing selestedWeapon = null;
     }
