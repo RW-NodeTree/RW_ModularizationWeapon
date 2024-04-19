@@ -655,7 +655,7 @@ namespace RW_ModularizationWeapon
                 while (!CheckTargetVaild(!occupyed)) continue;
                 CheckAndSetTargetCache();
             }
-            if (occupyed) return false;
+            if (occupyed || !swap) return false;
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             foreach (string id in this.PartIDs)
             {
@@ -683,6 +683,9 @@ namespace RW_ModularizationWeapon
 
                 proccesser = target.Thing;
                 if (proccesser != null) proccesser.NeedUpdate = true;
+
+                CompModularizationWeapon comp = target.Thing;
+                if (comp != null) comp.swap = true;
             }
 
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
@@ -693,7 +696,7 @@ namespace RW_ModularizationWeapon
 
         protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
-            if (RootPart.Occupyed) return false;
+            if (RootPart.Occupyed || !swap) return false;
 
             Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
             this.statOffsetCache.Clear();
@@ -814,6 +817,7 @@ namespace RW_ModularizationWeapon
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
 
+            swap = false;
             NeedUpdate = false;
             Map map = parent.MapHeld;
             if(map != null)
@@ -976,6 +980,7 @@ namespace RW_ModularizationWeapon
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private bool targetPartChanged = false;
         private bool occupyed = false;
+        private bool swap = false;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");

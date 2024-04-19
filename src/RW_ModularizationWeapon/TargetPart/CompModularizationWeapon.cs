@@ -47,6 +47,7 @@ namespace RW_ModularizationWeapon
         {
             if(AllowSwap)
             {
+                swap = true;
                 NeedUpdate = true;
                 NodeProccesser.UpdateNode();
             }
