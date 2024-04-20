@@ -33,7 +33,7 @@ namespace RW_ModularizationWeapon
                                 jobDriver.JumpToToil(toil_JumpPoint);
                                 return;
                             }
-                            if (!actor.Reserve(parent, job, 1, 1))
+                            if (!actor.Reserve(temp, job, 1, 1))
                             {
                                 jobDriver.EndJobWith(JobCondition.Incompletable);
                                 return;
