@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RW_ModularizationWeapon.AI;
 using Verse;
 using Verse.AI;
 
@@ -6,17 +7,19 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        internal IEnumerable<Toil> CarryTarget(TargetIndex craftingTable, TargetIndex hauledThingIndex)
+        internal IEnumerable<Toil> CarryTarget(JobDriver_ModifyWeapon jobDriver, TargetIndex craftingTable, TargetIndex hauledThingIndex)
         {
+            if (jobDriver == null) yield break;
             foreach (string id in PartIDs)
             {
                 LocalTargetInfo target = ChildNodes[id];
                 if (targetPartsWithId.ContainsKey(id))
                 {
                     target = targetPartsWithId[id];
-                    if (target.HasThing && target.Thing.Spawned)
+                    if (target.HasThing)
                     {
                         LocalTargetInfo temp = target;
+                        Toil toil_JumpPoint = new Toil();
                         Toil toil = new Toil();
                         toil.initAction = delegate ()
                         {
@@ -25,6 +28,16 @@ namespace RW_ModularizationWeapon
                             Job job = actor.CurJob;
                             job.SetTarget(hauledThingIndex, temp);
                             job.count = 1;
+                            if(!temp.Thing.Spawned)
+                            {
+                                jobDriver.JumpToToil(toil_JumpPoint);
+                                return;
+                            }
+                            if (!actor.Reserve(parent, job, 1, 1))
+                            {
+                                jobDriver.EndJobWith(JobCondition.Incompletable);
+                                return;
+                            }
                         };
                         yield return toil;
 
@@ -43,17 +56,16 @@ namespace RW_ModularizationWeapon
                             Toils_Haul.PlaceCarriedThingInCellFacing(craftingTable)
                             .FailOnCannotTouch(craftingTable, PathEndMode.ClosestTouch);
 
-                        toil = new Toil();
-                        toil.initAction = delegate ()
+                        toil_JumpPoint.initAction = delegate ()
                         {
-                            Pawn actor = toil.actor;
+                            Pawn actor = toil_JumpPoint.actor;
                             Job job = actor.CurJob;
                             target = job.GetTarget(hauledThingIndex);
                             SetTargetPart(id, target);
                             target.Thing.Position = job.GetTarget(craftingTable).Cell;
                             actor.Reserve(targetPartsWithId[id], job, 1, 1);
                         };
-                        yield return toil;
+                        yield return toil_JumpPoint;
                     }
 
                 }
@@ -61,7 +73,7 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = target.Thing;
                 if (comp != null)
                 {
-                    foreach (Toil child in comp.CarryTarget(craftingTable, hauledThingIndex))
+                    foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
                     {
                         yield return child;
                     }

@@ -62,46 +62,49 @@ namespace RW_ModularizationWeapon.AI
                     }
                 };
                 yield return toil;
+                
+                Toil toil_JumpPoint = new Toil();
 
-                if(comp.parent.Spawned)
+                toil = new Toil();
+                toil.initAction = delegate ()
                 {
-                    toil = new Toil();
-                    toil.initAction = delegate ()
+                    Pawn actor = toil.actor;
+                    Job job = actor.CurJob;
+                    job.count = 1;
+                    if (!comp.parent.Spawned)
                     {
-                        Pawn actor = toil.actor;
-                        Job job = actor.CurJob;
-                        job.count = 1;
-                        if (!actor.Reserve(comp.parent, job, 1, 1))
-                        {
-                            this.EndJobWith(JobCondition.Incompletable);
-                            return;
-                        }
-                    };
-                    yield return toil;
-
-                    yield return
-                        Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch)
-                        .FailOnDestroyedNullOrForbidden(TargetIndex.B)
-                        .FailOnBurningImmobile(TargetIndex.B);
-                    yield return Toils_Haul.StartCarryThing(TargetIndex.B)
-                        .FailOnCannotTouch(TargetIndex.B, PathEndMode.ClosestTouch);
-                    yield return Toils_Haul.CarryHauledThingToCell(TargetIndex.A, PathEndMode.ClosestTouch)
-                        .FailOnDestroyedNullOrForbidden(TargetIndex.A)
-                        .FailOnBurningImmobile(TargetIndex.A);
-                    yield return Toils_Haul.PlaceCarriedThingInCellFacing(TargetIndex.A)
-                        .FailOnCannotTouch(TargetIndex.A, PathEndMode.ClosestTouch);
-
-                    toil = new Toil();
-                    toil.initAction = delegate ()
+                        JumpToToil(toil_JumpPoint);
+                        return;
+                    }
+                    if (!actor.Reserve(comp.parent, job, 1, 1))
                     {
-                        Pawn actor = toil.actor;
-                        Job job = actor.CurJob;
-                        TargetThingB.Position = TargetThingA.Position;
-                    };
-                    yield return toil;
-                }
+                        this.EndJobWith(JobCondition.Incompletable);
+                        return;
+                    }
+                };
+                yield return toil;
 
-                foreach (Toil forCarry in comp.CarryTarget(TargetIndex.A, TargetIndex.C))
+                yield return
+                    Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch)
+                    .FailOnDestroyedNullOrForbidden(TargetIndex.B)
+                    .FailOnBurningImmobile(TargetIndex.B);
+                yield return Toils_Haul.StartCarryThing(TargetIndex.B)
+                    .FailOnCannotTouch(TargetIndex.B, PathEndMode.ClosestTouch);
+                yield return Toils_Haul.CarryHauledThingToCell(TargetIndex.A, PathEndMode.ClosestTouch)
+                    .FailOnDestroyedNullOrForbidden(TargetIndex.A)
+                    .FailOnBurningImmobile(TargetIndex.A);
+                yield return Toils_Haul.PlaceCarriedThingInCellFacing(TargetIndex.A)
+                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.ClosestTouch);
+
+                toil_JumpPoint.initAction = delegate ()
+                {
+                    Pawn actor = toil_JumpPoint.actor;
+                    Job job = actor.CurJob;
+                    TargetThingB.Position = TargetThingA.Position;
+                };
+                yield return toil_JumpPoint;
+
+                foreach (Toil forCarry in comp.CarryTarget(this, TargetIndex.A, TargetIndex.C))
                 {
                     yield return forCarry;
                 }
