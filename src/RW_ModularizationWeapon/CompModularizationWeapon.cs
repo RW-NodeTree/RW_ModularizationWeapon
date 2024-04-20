@@ -101,11 +101,14 @@ namespace RW_ModularizationWeapon
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo);
+            Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
             if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
-                foreach(LocalTargetInfo targetInfo in targetPartsWithId.Values)
+                for(int i = 0; i < Math.Min(targetPartsWithId_IdWorkingList.Count, targetPartsWithId_TargetWorkingList.Count); i ++)
                 {
+                    string id = targetPartsWithId_IdWorkingList[i];
+                    LocalTargetInfo targetInfo = targetPartsWithId_TargetWorkingList[i];
+                    targetPartsWithId.SetOrAdd(id, targetInfo);
                     CompModularizationWeapon part = targetInfo.Thing;
                     if (part != null) part.Occupyed = true;
                 }
@@ -978,6 +981,8 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<Type, List<Tool>> toolsCache_TargetPart = new Dictionary<Type, List<Tool>>();
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache_TargetPart = new Dictionary<Type, List<VerbProperties>>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
+        private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
+        private List<string> targetPartsWithId_IdWorkingList = new List<string>();
         private bool targetPartChanged = false;
         private bool occupyed = false;
         private bool swap = false;
