@@ -42,6 +42,8 @@
 			<HintPath Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'">../../lib/RW_NodeTree/1.4/Assemblies/RW_NodeTree.dll</HintPath>
 			<HintPath Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'">../../lib/RW_NodeTree/1.5/Assemblies/RW_NodeTree.dll</HintPath>
 		</Reference>
+    <!-- DocFX -->
+		<PackageReference Include="docfx.console" Version="2.*" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="./docfx/api/*.yml" />
@@ -50,9 +52,6 @@
 		<None Remove="/**/obj/**" />
 		<None Remove="/**/.manifest" />
 	</ItemGroup>
-  <!-- DocFX -->
-  <Import Project="../../packages/docfx.console.2.59.4/build/docfx.console.targets" Condition="Exists('../../packages/docfx.console.2.59.4/build/docfx.console.targets')" />
-  <Target Condition="Exists('../../packages/docfx.console.2.59.4/build/docfx.console.targets')" Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" />
 	<Target AfterTargets="PostBuildEvent" Name="PostBuild">
 		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.3/Assemblies/RW_NodeTree.dll" />
 		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.4/Assemblies/RW_NodeTree.dll" />
