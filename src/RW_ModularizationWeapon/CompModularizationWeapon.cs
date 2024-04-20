@@ -699,43 +699,44 @@ namespace RW_ModularizationWeapon
 
         protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
-            if (RootPart.Occupyed || !swap) return false;
+            bool swaping = !RootPart.Occupyed && swap;
 
-            Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
+            Dictionary<(StatDef, Thing), float> statOffsetCache = swaping ? new Dictionary<(StatDef, Thing), float>(this.statOffsetCache) : new Dictionary<(StatDef, Thing), float>();
             this.statOffsetCache.Clear();
-            this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
+            if (swaping) this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
             this.statOffsetCache_TargetPart.Clear();
-            this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
+            if (swaping) this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
 
-            Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
+            Dictionary<(StatDef, Thing), float> statMultiplierCache = swaping ? new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache) : new Dictionary<(StatDef, Thing), float>();
             this.statMultiplierCache.Clear();
-            this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
+            if (swaping) this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
             this.statMultiplierCache_TargetPart.Clear();
-            this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
+            if (swaping) this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
 
-            Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>(this.toolsCache);
+            Dictionary<Type, List<Tool>> toolsCache = swaping ? new Dictionary<Type, List<Tool>>(this.toolsCache) : new Dictionary<Type, List<Tool>>();
             this.toolsCache.Clear();
-            this.toolsCache.AddRange(this.toolsCache_TargetPart);
+            if (swaping) this.toolsCache.AddRange(this.toolsCache_TargetPart);
             this.toolsCache_TargetPart.Clear();
-            this.toolsCache_TargetPart.AddRange(toolsCache);
+            if (swaping) this.toolsCache_TargetPart.AddRange(toolsCache);
 
-            Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache);
+            Dictionary<Type, List<VerbProperties>> verbPropertiesCache = swaping ? new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache) : new Dictionary<Type, List<VerbProperties>>();
             this.verbPropertiesCache.Clear();
-            this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
+            if (swaping) this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
             this.verbPropertiesCache_TargetPart.Clear();
-            this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+            if (swaping) this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
 
 
             List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
             
-            List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
-            List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
+            List<CompProperties> cachedCompProperties = swaping ? new List<CompProperties>(this.cachedCompProperties) : new List<CompProperties>();
+            List<ThingComp> cachedThingComps = swaping ? new List<ThingComp>(this.cachedThingComps) : new List<ThingComp>();
             List<ThingComp> allComps = parent.AllComps;
             this.cachedThingComps.Clear();
             this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
             allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
+            if (swaping) this.cachedThingComps.Clear();
             this.cachedCompProperties.Clear();
-            this.cachedCompProperties.AddRange(from x in allComps select x.props);
+            if (swaping) this.cachedCompProperties.AddRange(from x in allComps select x.props);
             for (int i = 0; i < allComps.Count; i++)
             {
                 ThingComp comp = allComps[i];
@@ -820,6 +821,7 @@ namespace RW_ModularizationWeapon
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
 
+            if (!swaping) return false;
             swap = false;
             NeedUpdate = false;
             Map map = parent.MapHeld;
