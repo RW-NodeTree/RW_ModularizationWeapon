@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RimWorld;
 using Verse;
 using Verse.AI;
 
@@ -135,7 +136,8 @@ namespace RW_ModularizationWeapon.AI
                     comp.SwapTargetPart();
                 };
                 yield return toil
-                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
+                    .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell)
+                    .PlaySoundAtEnd(SoundDefOf.Building_Complete);
             }
             else
             {
