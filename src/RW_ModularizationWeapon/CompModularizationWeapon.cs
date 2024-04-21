@@ -701,29 +701,36 @@ namespace RW_ModularizationWeapon
         {
             bool swaping = !RootPart.Occupyed && swap;
 
-            Dictionary<(StatDef, Thing), float> statOffsetCache = swaping ? new Dictionary<(StatDef, Thing), float>(this.statOffsetCache) : new Dictionary<(StatDef, Thing), float>();
-            this.statOffsetCache.Clear();
-            if (swaping) this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
-            this.statOffsetCache_TargetPart.Clear();
-            if (swaping) this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
-
-            Dictionary<(StatDef, Thing), float> statMultiplierCache = swaping ? new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache) : new Dictionary<(StatDef, Thing), float>();
-            this.statMultiplierCache.Clear();
-            if (swaping) this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
-            this.statMultiplierCache_TargetPart.Clear();
-            if (swaping) this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
-
-            Dictionary<Type, List<Tool>> toolsCache = swaping ? new Dictionary<Type, List<Tool>>(this.toolsCache) : new Dictionary<Type, List<Tool>>();
-            this.toolsCache.Clear();
-            if (swaping) this.toolsCache.AddRange(this.toolsCache_TargetPart);
-            this.toolsCache_TargetPart.Clear();
-            if (swaping) this.toolsCache_TargetPart.AddRange(toolsCache);
-
-            Dictionary<Type, List<VerbProperties>> verbPropertiesCache = swaping ? new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache) : new Dictionary<Type, List<VerbProperties>>();
-            this.verbPropertiesCache.Clear();
-            if (swaping) this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
-            this.verbPropertiesCache_TargetPart.Clear();
-            if (swaping) this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+            if (swaping)
+            {
+                Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
+                this.statOffsetCache.Clear();
+                this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
+                this.statOffsetCache_TargetPart.Clear();
+                this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
+                Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
+                this.statMultiplierCache.Clear();
+                this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
+                this.statMultiplierCache_TargetPart.Clear();
+                this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
+                Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>(this.toolsCache);
+                this.toolsCache.Clear();
+                this.toolsCache.AddRange(this.toolsCache_TargetPart);
+                this.toolsCache_TargetPart.Clear();
+                this.toolsCache_TargetPart.AddRange(toolsCache);
+                Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache);
+                this.verbPropertiesCache.Clear();
+                this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
+                this.verbPropertiesCache_TargetPart.Clear();
+                this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+            }
+            else
+            {
+                this.statOffsetCache.Clear();
+                this.statMultiplierCache.Clear();
+                this.toolsCache.Clear();
+                this.verbPropertiesCache.Clear();
+            }
 
 
             List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
@@ -731,12 +738,16 @@ namespace RW_ModularizationWeapon
             List<CompProperties> cachedCompProperties = swaping ? new List<CompProperties>(this.cachedCompProperties) : new List<CompProperties>();
             List<ThingComp> cachedThingComps = swaping ? new List<ThingComp>(this.cachedThingComps) : new List<ThingComp>();
             List<ThingComp> allComps = parent.AllComps;
-            this.cachedThingComps.Clear();
-            this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
-            allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
-            if (swaping) this.cachedThingComps.Clear();
-            this.cachedCompProperties.Clear();
-            if (swaping) this.cachedCompProperties.AddRange(from x in allComps select x.props);
+            List<ThingComp> allCompsCopy = new List<ThingComp>(allComps);
+            if (swaping)
+            {
+                this.cachedThingComps.Clear();
+                this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
+                allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
+                this.cachedCompProperties.Clear();
+                this.cachedCompProperties.AddRange(from x in allComps select x.props);
+            }
+            else allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
             for (int i = 0; i < allComps.Count; i++)
             {
                 ThingComp comp = allComps[i];
@@ -753,7 +764,7 @@ namespace RW_ModularizationWeapon
                     {
                         if (Props.compPropertiesCreateInstanceCompType.Contains(type))
                         {
-                            if (this.cachedThingComps.Find(x => x.GetType() == type) == null)
+                            if (swaping && this.cachedThingComps.Find(x => x.GetType() == type) == null)
                             {
                                 this.cachedThingComps.Add(comp);
                                 this.cachedCompProperties.RemoveAll(x => x.compClass == type);
@@ -821,7 +832,18 @@ namespace RW_ModularizationWeapon
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
 
-            if (!swaping) return false;
+            if (!swaping)
+            {
+                foreach (FieldInfo fieldInfo in Props.ThingCompCopiedMember)
+                {
+                    ThingComp src = allCompsCopy.Find(x => fieldInfo.DeclaringType.IsAssignableFrom(x.GetType()));
+                    ThingComp tar = allComps.Find(x => fieldInfo.DeclaringType.IsAssignableFrom(x.GetType()));
+                    if (src != null && tar != null) fieldInfo.SetValue(tar, fieldInfo.GetValue(src));
+                }
+
+
+                return false;
+            }
             swap = false;
             NeedUpdate = false;
             Map map = parent.MapHeld;
@@ -1025,6 +1047,37 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public List<FieldInfo> ThingCompCopiedMember
+        {
+            get
+            {
+                if(fieldInfosOfThingCompCopiedMember.NullOrEmpty())
+                {
+                    fieldInfosOfThingCompCopiedMember = new List<FieldInfo>(thingCompCopiedMember.Count);
+                    foreach(string str in thingCompCopiedMember)
+                    {
+                        if(str.NullOrEmpty()) continue;
+                        string[] splited = str.Split('.');
+                        string typeName = splited[0];
+                        for(int i = 1; i < splited.Length - 1; i++)
+                        {
+                            typeName += "."+splited[i];
+                        }
+                        try{
+                            FieldInfo fieldInfo = GenTypes.GetTypeInAnyAssembly(typeName)?.GetField(splited[splited.Length - 1],BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                            if(fieldInfo != null) fieldInfosOfThingCompCopiedMember.Add(fieldInfo);
+                        }
+                        catch
+                        {
+                            Log.Error($"Invaild field name : {str}, correct structor is (typeNameWithNameSpace).(FieldName)");
+                        }
+                    }
+                }
+                return fieldInfosOfThingCompCopiedMember;
+            }
+        }
+
+
         public CompProperties_ModularizationWeapon()
         {
             compClass = typeof(CompModularizationWeapon);
@@ -1092,8 +1145,23 @@ namespace RW_ModularizationWeapon
         /// <param name="parentDef">parent Def</param>
         public override void ResolveReferences(ThingDef parentDef)
         {
-            if (CombatExtended_CompAmmoUser != null && !compPropertiesCreateInstanceCompType.Contains(CombatExtended_CompAmmoUser)) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompAmmoUser);
-            if (CombatExtended_CompFireModes != null && !compPropertiesCreateInstanceCompType.Contains(CombatExtended_CompFireModes)) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompFireModes);
+            fieldInfosOfThingCompCopiedMember = null;
+            if (CombatExtended_CompAmmoUser != null)
+            {
+                if (!compPropertiesCreateInstanceCompType.Contains(CombatExtended_CompAmmoUser)) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompAmmoUser);
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompAmmoUser.curMagCountInt")) thingCompCopiedMember.Add("CombatExtended.CompAmmoUser.curMagCountInt");
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompAmmoUser.currentAmmoInt")) thingCompCopiedMember.Add("CombatExtended.CompAmmoUser.currentAmmoInt");
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompAmmoUser.selectedAmmo")) thingCompCopiedMember.Add("CombatExtended.CompAmmoUser.selectedAmmo");
+            }
+            if (CombatExtended_CompFireModes != null)
+            {
+                if (!compPropertiesCreateInstanceCompType.Contains(CombatExtended_CompFireModes)) compPropertiesCreateInstanceCompType.Add(CombatExtended_CompFireModes);
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompFireModes.currentFireModeInt")) thingCompCopiedMember.Add("CombatExtended.CompFireModes.currentFireModeInt");
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompFireModes.currentAimModeInt")) thingCompCopiedMember.Add("CombatExtended.CompFireModes.currentAimModeInt");
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompFireModes.targetMode")) thingCompCopiedMember.Add("CombatExtended.CompFireModes.targetMode");
+                if (!thingCompCopiedMember.Contains("CombatExtended.CompFireModes.newComp")) thingCompCopiedMember.Add("CombatExtended.CompFireModes.newComp");
+            }
+
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
                 properties.ResolveReferences();
@@ -1794,6 +1862,13 @@ namespace RW_ModularizationWeapon
         public List<Type> compGetGizmosExtraAllowedCompType = new List<Type>();
 
         /// <summary>
+        /// When node update without swaping. the member who will be copying decided by this field list.
+        /// <br/>
+        /// Menber of this list should writen in (Type).(FieldName)
+        /// </summary>
+        public List<string> thingCompCopiedMember = new List<string>();
+
+        /// <summary>
         /// define not allowed things on parent part
         /// </summary>
         public ThingFilter disallowedOtherPart = new ThingFilter();
@@ -1807,6 +1882,7 @@ namespace RW_ModularizationWeapon
         /// material cache of `PartTexPath`
         /// </summary>
         private Texture2D partTexCache;
+        private List<FieldInfo> fieldInfosOfThingCompCopiedMember;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_CompFireModes = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompFireModes");
