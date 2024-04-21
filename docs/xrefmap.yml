@@ -4875,6 +4875,42 @@ references:
   commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.scaleInPixelSize
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.scaleInPixelSize
   nameWithType: WeaponAttachmentProperties.scaleInPixelSize
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.specialPostionIndexList
+  name: specialPostionIndexList
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_specialPostionIndexList
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.specialPostionIndexList
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.specialPostionIndexList
+  nameWithType: WeaponAttachmentProperties.specialPostionIndexList
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.specialPostionList
+  name: specialPostionList
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_specialPostionList
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.specialPostionList
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.specialPostionList
+  nameWithType: WeaponAttachmentProperties.specialPostionList
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.specialRotationIndexList
+  name: specialRotationIndexList
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_specialRotationIndexList
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.specialRotationIndexList
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.specialRotationIndexList
+  nameWithType: WeaponAttachmentProperties.specialRotationIndexList
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.specialRotationList
+  name: specialRotationList
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_specialRotationList
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.specialRotationList
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.specialRotationList
+  nameWithType: WeaponAttachmentProperties.specialRotationList
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.specialScaleIndexList
+  name: specialScaleIndexList
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_specialScaleIndexList
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.specialScaleIndexList
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.specialScaleIndexList
+  nameWithType: WeaponAttachmentProperties.specialScaleIndexList
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.specialScaleList
+  name: specialScaleList
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_specialScaleList
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.specialScaleList
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.specialScaleList
+  nameWithType: WeaponAttachmentProperties.specialScaleList
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.statMultiplierAffectHorizon
   name: statMultiplierAffectHorizon
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_statMultiplierAffectHorizon
@@ -5013,12 +5049,12 @@ references:
   commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.toolsOtherPartOffseterAffectHorizonDefaultValue
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.toolsOtherPartOffseterAffectHorizonDefaultValue
   nameWithType: WeaponAttachmentProperties.toolsOtherPartOffseterAffectHorizonDefaultValue
-- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(System.UInt32)
-  name: Transfrom(UInt32)
-  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_Transfrom_System_UInt32_
-  commentId: M:RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(System.UInt32)
-  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(System.UInt32)
-  nameWithType: WeaponAttachmentProperties.Transfrom(UInt32)
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(Verse.ThingDef,System.UInt32)
+  name: Transfrom(ThingDef, UInt32)
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_Transfrom_Verse_ThingDef_System_UInt32_
+  commentId: M:RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(Verse.ThingDef,System.UInt32)
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(Verse.ThingDef, System.UInt32)
+  nameWithType: WeaponAttachmentProperties.Transfrom(ThingDef, UInt32)
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom*
   name: Transfrom
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_Transfrom_
