@@ -122,7 +122,7 @@ namespace RW_ModularizationWeapon
             return Props.attachmentProperties.Count == 0;
         }
 
-        public override bool HasPostFX(bool textureMode) => textureMode || (Props.drawOutlineOnRoot && ParentPart == null);
+        public override bool HasPostFX(bool textureMode) => Props.drawOutlineOnRoot && ParentPart == null;
 
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
