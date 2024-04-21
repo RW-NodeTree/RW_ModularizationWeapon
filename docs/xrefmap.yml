@@ -4838,6 +4838,12 @@ references:
   commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.randomThingDefWeights
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.randomThingDefWeights
   nameWithType: WeaponAttachmentProperties.randomThingDefWeights
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.randomToEmptyWeights
+  name: randomToEmptyWeights
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_randomToEmptyWeights
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.randomToEmptyWeights
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.randomToEmptyWeights
+  nameWithType: WeaponAttachmentProperties.randomToEmptyWeights
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.ResolveReferences
   name: ResolveReferences()
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_ResolveReferences

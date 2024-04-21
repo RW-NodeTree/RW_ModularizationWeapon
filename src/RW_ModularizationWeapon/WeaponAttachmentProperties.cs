@@ -193,6 +193,10 @@ namespace RW_ModularizationWeapon
         /// </summary>
         public List<ThingDefCountClass> randomThingDefWeights = new List<ThingDefCountClass>();
         /// <summary>
+        /// random to empty weight of this attach point
+        /// </summary>
+        public int randomToEmptyWeights = 0;
+        /// <summary>
         /// attach point drawing postion
         /// </summary>
         public Vector3 postion = Vector3.zero;
