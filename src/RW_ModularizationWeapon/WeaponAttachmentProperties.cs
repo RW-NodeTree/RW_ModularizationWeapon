@@ -251,17 +251,17 @@ namespace RW_ModularizationWeapon
         /// </summary>
         public List<Vector3> specialScaleList = new List<Vector3>();
         /// <summary>
-        /// the index list of specific attachement attach point drawing postion
+        /// the index list for specific attachement attach point drawing postion
         /// </summary>
         public List<ThingDefCountClass> specialPostionIndexList = new List<ThingDefCountClass>();
         
         /// <summary>
-        /// the index list of specific attachement attach point drawing rotation(Euler)
+        /// the index list for specific attachement attach point drawing rotation(Euler)
         /// </summary>
         public List<ThingDefCountClass> specialRotationIndexList = new List<ThingDefCountClass>();
         
         /// <summary>
-        /// the index list of specific attachement attach point drawing scale
+        /// the index list for specific attachement attach point drawing scale
         /// </summary>
         public List<ThingDefCountClass> specialScaleIndexList = new List<ThingDefCountClass>();
         /// <summary>
