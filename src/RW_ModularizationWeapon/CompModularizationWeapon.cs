@@ -411,7 +411,7 @@ namespace RW_ModularizationWeapon
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            int j = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + properties.randomToEmptyWeights) : properties.filter.AllowedDefCount);
+                            int j = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + properties.randomToEmptyWeight) : properties.filter.AllowedDefCount);
                             ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
                             if (def != null)
                             {
@@ -428,7 +428,7 @@ namespace RW_ModularizationWeapon
                     }
                     else
                     {
-                        float count = properties.allowEmpty ? properties.randomToEmptyWeights : 0;
+                        float count = properties.allowEmpty ? properties.randomToEmptyWeight : 0;
                         properties.randomThingDefWeights.ForEach(x => count += x.count);
                         for (int i = 0; i < 3; i++)
                         {
