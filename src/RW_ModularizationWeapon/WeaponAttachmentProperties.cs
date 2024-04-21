@@ -195,7 +195,7 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// random to empty weight of this attach point
         /// </summary>
-        public int randomToEmptyWeights = 0;
+        public int randomToEmptyWeights = 1;
         /// <summary>
         /// attach point drawing postion
         /// </summary>
