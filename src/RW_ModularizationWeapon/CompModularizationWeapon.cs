@@ -682,6 +682,7 @@ namespace RW_ModularizationWeapon
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
+            cachedAttachmentProperties.Clear();
             CompModularizationWeapon root = RootPart;
             bool occupyed = root.Occupyed;
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
