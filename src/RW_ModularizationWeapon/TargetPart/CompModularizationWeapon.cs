@@ -76,7 +76,7 @@ namespace RW_ModularizationWeapon
         {
             foreach (string id in PartIDs)
             {
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
                 if (properties != null) yield return (id, ChildNodes[id], properties);
             }
             yield break;

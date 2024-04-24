@@ -54,7 +54,7 @@ namespace RW_ModularizationWeapon
             {
                 if(partIDs.Count == 0)
                 {
-                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                    foreach (WeaponAttachmentProperties properties in AttachmentProperties)
                     {
                         partIDs.Add(properties.id);
                     }
@@ -67,12 +67,44 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if (Props.attachmentProperties.Count <= 0) return false;
+                if (AttachmentProperties.Count <= 0) return false;
                 return occupyed;
             }
             set
             {
-                if (Props.attachmentProperties.Count > 0) occupyed = value;
+                if (AttachmentProperties.Count > 0) occupyed = value;
+            }
+        }
+
+        public List<WeaponAttachmentProperties> AttachmentProperties
+        {
+            get
+            {
+                foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
+                {
+                    if(cachedAttachmentProperties.Find(x => x.id == properties.id) != null) continue;
+                    Thing thing = ChildNodes[properties.id];
+                    WeaponAttachmentProperties replaced = null;
+                    if(thing != null)
+                    {
+                        uint maxMach = 0;
+                        foreach(KeyValuePair<QueryGroup, WeaponAttachmentProperties> record in Props.attachmentPropertiesWithQuery)
+                        {
+                            if (record.Key != null && record.Value != null)
+                            {
+                                uint currentMach = record.Key.Mach(thing);
+                                if(currentMach > maxMach)
+                                {
+                                    replaced = record.Value;
+                                    maxMach = currentMach;
+                                }
+                            }
+                        }
+                    }
+                    cachedAttachmentProperties.Add(replaced ?? properties);
+                    cachedAttachmentProperties[cachedAttachmentProperties.Count - 1].id = properties.id;
+                }
+                return cachedAttachmentProperties;
             }
         }
 
@@ -119,7 +151,7 @@ namespace RW_ModularizationWeapon
 
         public override bool AllowStackWith(Thing other)
         {
-            return Props.attachmentProperties.Count == 0;
+            return AttachmentProperties.Count == 0;
         }
 
         public override bool HasPostFX(bool textureMode) => Props.drawOutlineOnRoot && (textureMode || ParentPart == null);
@@ -203,7 +235,7 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < nodeRenderingInfos.Count; i++)
             {
                 (string id, Thing part, List<RenderInfo> renderInfos) = nodeRenderingInfos[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
                 if (id.NullOrEmpty() && part == parent)
                 {
                     if (ParentProccesser != null)
@@ -240,7 +272,7 @@ namespace RW_ModularizationWeapon
                 {
                     if(properties != null)
                     {
-                        Matrix4x4 transfrom = properties.Transfrom(part.def,texScale);
+                        Matrix4x4 transfrom = properties.Transfrom(texScale);
                         for (int j = 0; j < renderInfos.Count; j++)
                         {
                             bool needTransToIdentity = (CompChildNodeProccesser)part == null;
@@ -279,10 +311,10 @@ namespace RW_ModularizationWeapon
             }
             nodeRenderingInfos.SortBy(x =>
             {
-                for (int i = 0; i < Props.attachmentProperties.Count; i++)
+                for (int i = 0; i < AttachmentProperties.Count; i++)
                 {
-                    WeaponAttachmentProperties properties = Props.attachmentProperties[i];
-                    if (properties.id == x.Item1) return i + properties.drawWeight * Props.attachmentProperties.Count;
+                    WeaponAttachmentProperties properties = AttachmentProperties[i];
+                    if (properties.id == x.Item1) return i + properties.drawWeight * AttachmentProperties.Count;
                 }
                 return -1;
             });
@@ -331,7 +363,7 @@ namespace RW_ModularizationWeapon
         {
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
-            WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(id);
+            WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
             if (properties != null)
             {
@@ -372,7 +404,7 @@ namespace RW_ModularizationWeapon
         {
             if (AllowSwap)
             {
-                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                foreach (WeaponAttachmentProperties properties in AttachmentProperties)
                 {
                     ThingDef def = properties.defultThing;
                     if (def != null)
@@ -405,7 +437,7 @@ namespace RW_ModularizationWeapon
             if (AllowSwap)
             {
                 //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
-                foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                foreach (WeaponAttachmentProperties properties in AttachmentProperties)
                 {
                     if (properties.randomThingDefWeights.NullOrEmpty())
                     {
@@ -536,7 +568,7 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < container.Count; i++)
             {
                 CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = Props.WeaponAttachmentPropertiesById(container[(uint)i]);
+                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(container[(uint)i]);
                 if(comp != null && properties != null)
                 {
                     result.AddRange(
@@ -933,6 +965,18 @@ namespace RW_ModularizationWeapon
         {
             return true;
         }
+        
+        public WeaponAttachmentProperties WeaponAttachmentPropertiesById(string id)
+        {
+            if(!id.NullOrEmpty())
+            {
+                foreach (WeaponAttachmentProperties properties in AttachmentProperties)
+                {
+                    if(properties.id == id) return properties;
+                }
+            }
+            return null;
+        }
 
         #region operator
         public static implicit operator Thing(CompModularizationWeapon node)
@@ -995,6 +1039,7 @@ namespace RW_ModularizationWeapon
         private readonly HashSet<string> partIDs = new HashSet<string>();
         private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
         private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
+        private readonly List<WeaponAttachmentProperties> cachedAttachmentProperties = new List<WeaponAttachmentProperties>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
@@ -1077,7 +1122,6 @@ namespace RW_ModularizationWeapon
             }
         }
 
-
         public CompProperties_ModularizationWeapon()
         {
             compClass = typeof(CompModularizationWeapon);
@@ -1090,6 +1134,7 @@ namespace RW_ModularizationWeapon
         /// <returns></returns>
         public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
         {
+            attachmentPropertiesWithQuery = new Dictionary<QueryGroup,WeaponAttachmentProperties>();
             foreach(string error in base.ConfigErrors(parentDef))
             {
                 yield return error;
@@ -1105,9 +1150,22 @@ namespace RW_ModularizationWeapon
                 }
                 else if (!properties.id.IsVaildityKeyFormat())
                 {
-                    attachmentProperties.RemoveAt(i);
-                    yield return $"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name";
-                    continue;
+                    bool faild = false;
+                    try
+                    {
+                        attachmentProperties.RemoveAt(i);
+                        QueryGroup query = new QueryGroup(properties.id);
+                        attachmentPropertiesWithQuery.Add(query,properties);
+                    }
+                    catch
+                    {
+                        faild = true;
+                    }
+                    if (faild)
+                    {
+                        yield return $"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name";
+                        continue;
+                    }
                 }
                 for (int j = 0; j < i; j++)
                 {
@@ -1883,6 +1941,7 @@ namespace RW_ModularizationWeapon
         /// </summary>
         private Texture2D partTexCache;
         private List<FieldInfo> fieldInfosOfThingCompCopiedMember;
+        internal Dictionary<QueryGroup,WeaponAttachmentProperties> attachmentPropertiesWithQuery;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_CompFireModes = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompFireModes");

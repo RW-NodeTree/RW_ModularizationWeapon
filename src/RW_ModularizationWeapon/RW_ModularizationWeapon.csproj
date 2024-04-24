@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RW_ModularizationWeapon</RootNamespace>
-    <AssemblyName>RW_ModularizationWeapon</AssemblyName>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>RW_ModularizationWeapon</RootNamespace>
+		<AssemblyName>RW_ModularizationWeapon</AssemblyName>
 		<TargetFramework>net48</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<Configurations>DebugV13;ReleaseV13;DebugV14;ReleaseV14;DebugV15;ReleaseV15</Configurations>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'DebugV15' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'DebugV15' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseV13' or '$(Configuration)' == 'ReleaseV14' or '$(Configuration)' == 'ReleaseV15' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'ReleaseV13' or '$(Configuration)' == 'ReleaseV14' or '$(Configuration)' == 'ReleaseV15' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'">
-    <OutputPath>../../1.3/Assemblies</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'">
-    <OutputPath>../../1.4/Assemblies</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'">
-    <OutputPath>../../1.5/Assemblies</OutputPath>
-  </PropertyGroup>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'">
+		<OutputPath>../../1.3/Assemblies</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'">
+		<OutputPath>../../1.4/Assemblies</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'">
+		<OutputPath>../../1.5/Assemblies</OutputPath>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'" Include="Krafs.Rimworld.Ref" Version="1.3.*" GeneratePathProperty="true" />
 		<PackageReference Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'" Include="Krafs.Rimworld.Ref" Version="1.4.*" GeneratePathProperty="true" />
@@ -58,7 +58,7 @@
 		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.5/Assemblies/RW_NodeTree.dll" />
 	</Target>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="git submodule update ../../" />
-    <Exec Command="dotnet build ../../lib/RW_NodeTree -c $(Configuration)" />
-  </Target>
+		<Exec Command="git submodule update ../../" />
+		<Exec Command="dotnet build ../../lib/RW_NodeTree -c $(Configuration)" />
+	</Target>
 </Project>

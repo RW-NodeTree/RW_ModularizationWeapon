@@ -23,24 +23,12 @@ namespace RW_ModularizationWeapon
         public string Name => name ?? id;
 
 
-        public Matrix4x4 Transfrom(ThingDef thingDef, uint TextureSizeFactor)
-        {
-            Matrix4x4 result = Matrix4x4.TRS(
+        public Matrix4x4 Transfrom(uint TextureSizeFactor)
+            => Matrix4x4.TRS(
                 postion / (postionInPixelSize ? TextureSizeFactor : 1),
                 Quaternion.Euler(rotation),
                 scale / (scaleInPixelSize ? TextureSizeFactor : 1)
             );
-            int specialPostionIndex = specialPostionIndexList.Find(x => x.thingDef == thingDef)?.count ?? -1;
-            int specialRotationIndex = specialRotationIndexList.Find(x => x.thingDef == thingDef)?.count ?? -1;
-            int specialScaleIndex = specialScaleIndexList.Find(x => x.thingDef == thingDef)?.count ?? -1;
-
-            result *= Matrix4x4.TRS(
-                specialPostionIndex >= 0 ? specialPostionList[specialPostionIndex] / (postionInPixelSize ? TextureSizeFactor : 1) : Vector3.zero,
-                Quaternion.Euler(specialRotationIndex >= 0 ? specialRotationList[specialRotationIndex] / (postionInPixelSize ? TextureSizeFactor : 1) : Vector3.zero),
-                specialScaleIndex >= 0 ? specialScaleList[specialScaleIndex] / (postionInPixelSize ? TextureSizeFactor : 1) : Vector3.one
-            );
-            return result;
-        }
 
 
         public void ResolveReferences()
@@ -50,19 +38,6 @@ namespace RW_ModularizationWeapon
 
             randomThingDefWeights = randomThingDefWeights ?? new List<ThingDefCountClass>();
             randomThingDefWeights.RemoveAll(x => x == null || x.thingDef == null || x.count < 0 || !filter.Allows(x.thingDef));
-
-            specialPostionList = specialPostionList ?? new List<Vector3>();
-            specialRotationList = specialRotationList ?? new List<Vector3>();
-            specialScaleList = specialScaleList ?? new List<Vector3>();
-
-            specialPostionIndexList = specialPostionIndexList ?? new List<ThingDefCountClass>();
-            specialPostionIndexList.RemoveAll(x => x == null || x.thingDef == null || x.count < 0 || x.count >= specialPostionList.Count || !filter.Allows(x.thingDef));
-
-            specialRotationIndexList = specialRotationIndexList ?? new List<ThingDefCountClass>();
-            specialRotationIndexList.RemoveAll(x => x == null || x.thingDef == null || x.count < 0 || x.count >= specialRotationList.Count || !filter.Allows(x.thingDef));
-
-            specialScaleIndexList = specialScaleIndexList ?? new List<ThingDefCountClass>();
-            specialScaleIndexList.RemoveAll(x => x == null || x.thingDef == null || x.count < 0 || x.count >= specialScaleList.Count || !filter.Allows(x.thingDef));
 
             allowedExtraCompType = allowedExtraCompType ?? new List<Type>();
             allowedExtraCompType.RemoveAll(x => x == null);
@@ -238,32 +213,6 @@ namespace RW_ModularizationWeapon
         /// attach point drawing scale
         /// </summary>
         public Vector3 scale = Vector3.one;
-        /// <summary>
-        /// the postion list indexed by `specialPostionIndexList`
-        /// </summary>
-        public List<Vector3> specialPostionList = new List<Vector3>();
-        /// <summary>
-        /// the rotation(Euler) list indexed by `specialRotationIndexList`
-        /// </summary>
-        public List<Vector3> specialRotationList = new List<Vector3>();
-        /// <summary>
-        /// the scale list indexed by `specialScaleIndexList`
-        /// </summary>
-        public List<Vector3> specialScaleList = new List<Vector3>();
-        /// <summary>
-        /// the index list for specific attachement attach point drawing postion
-        /// </summary>
-        public List<ThingDefCountClass> specialPostionIndexList = new List<ThingDefCountClass>();
-        
-        /// <summary>
-        /// the index list for specific attachement attach point drawing rotation(Euler)
-        /// </summary>
-        public List<ThingDefCountClass> specialRotationIndexList = new List<ThingDefCountClass>();
-        
-        /// <summary>
-        /// the index list for specific attachement attach point drawing scale
-        /// </summary>
-        public List<ThingDefCountClass> specialScaleIndexList = new List<ThingDefCountClass>();
         /// <summary>
         /// attach point ICON textrue path
         /// </summary>

@@ -322,7 +322,7 @@ namespace RW_ModularizationWeapon.UI
                         }
                         else if(selDef == null)
                         {
-                            Widgets.DrawTextureFitted(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), partForChange.Props.WeaponAttachmentPropertiesById(idForChange).UITexture, 1);
+                            Widgets.DrawTextureFitted(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), partForChange.WeaponAttachmentPropertiesById(idForChange).UITexture, 1);
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
                             if (Widgets.ButtonInvisible(rect))
                             {

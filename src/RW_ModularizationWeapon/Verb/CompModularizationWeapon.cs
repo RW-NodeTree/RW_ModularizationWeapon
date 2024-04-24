@@ -101,7 +101,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 Thing child = container[i];
-                WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties attachmentProperties = WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseVerbProperties(child, attachmentProperties))
                 {
                     CompModularizationWeapon comp = child;
@@ -208,7 +208,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 Thing child = container[i];
-                WeaponAttachmentProperties attachmentProperties = Props.WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties attachmentProperties = WeaponAttachmentPropertiesById(id);
                 if (!internal_NotUseTools(child, attachmentProperties))
                 {
                     CompModularizationWeapon comp = child;
