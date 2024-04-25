@@ -409,8 +409,9 @@ namespace RW_ModularizationWeapon
         {
             if (AllowSwap)
             {
-                foreach (WeaponAttachmentProperties properties in AttachmentProperties)
+                for (int i = 0; i < AttachmentProperties.Count; i++)
                 {
+                    WeaponAttachmentProperties properties = AttachmentProperties[i];
                     ThingDef def = properties.defultThing;
                     if (def != null)
                     {
@@ -442,8 +443,9 @@ namespace RW_ModularizationWeapon
             if (AllowSwap)
             {
                 //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
-                foreach (WeaponAttachmentProperties properties in AttachmentProperties)
+                for (int i1 = 0; i1 < AttachmentProperties.Count; i1++)
                 {
+                    WeaponAttachmentProperties properties = AttachmentProperties[i1];
                     if (properties.randomThingDefWeights.NullOrEmpty())
                     {
                         for (int i = 0; i < 3; i++)
@@ -975,9 +977,10 @@ namespace RW_ModularizationWeapon
         {
             if(!id.NullOrEmpty())
             {
-                foreach (WeaponAttachmentProperties properties in AttachmentProperties)
+                for (int i = 0; i < AttachmentProperties.Count; i++)
                 {
-                    if(properties.id == id) return properties;
+                    WeaponAttachmentProperties properties = AttachmentProperties[i];
+                    if (properties.id == id) return properties;
                 }
             }
             return null;
