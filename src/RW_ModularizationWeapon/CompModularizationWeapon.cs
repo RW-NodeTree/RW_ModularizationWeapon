@@ -992,51 +992,31 @@ namespace RW_ModularizationWeapon
         public static implicit operator CompModularizationWeapon(Thing thing)
         {
             List<ThingComp> comps = (thing as ThingWithComps)?.AllComps;
-            if (comps == null || comps.Count < 2 || ((CompChildNodeProccesser)thing) == null) return null;
-
-            CompNoCompMarker marker = comps[1] as CompNoCompMarker;
-            if (marker != null) return null;
-            CompModularizationWeapon result = comps[1] as CompModularizationWeapon;
-            int i = 2;
-            if (result != null) return result;
-            else
+            if (comps.NullOrEmpty()) return null;
+            CompModularizationWeapon result = null;
+            if (!compLoadingCache.TryGetValue(thing.def, out int index))
             {
+                int i = 0;
                 for (; i < comps.Count; i++)
                 {
                     result = comps[i] as CompModularizationWeapon;
                     if (result != null) break;
                 }
-            }
-            if (result != null)
-            {
-                comps.RemoveAt(i);
-                comps.Insert(1, result);
-            }
-            else
-            {
-                i = 2;
-                for (; i < comps.Count; i++)
+                if (result != null)
                 {
-                    marker = comps[i] as CompNoCompMarker;
-                    if (marker != null) break;
-                }
-                if (marker != null)
-                {
-                    comps.RemoveAt(i);
-                    comps.Insert(1, marker);
+                    index = i;
                 }
                 else
                 {
-                    marker = new CompNoCompMarker();
-                    comps.Insert(1, marker);
+                    index = -1;
                 }
+                compLoadingCache.Add(thing.def,index);
+            }
+            else if(index >= 0)
+            {
+                result = comps[index] as CompModularizationWeapon;
             }
             return result;
-        }
-
-        internal class CompNoCompMarker : ThingComp
-        {
-
         }
         #endregion
 
@@ -1077,6 +1057,7 @@ namespace RW_ModularizationWeapon
 
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
+        private readonly static Dictionary<ThingDef,int> compLoadingCache = new Dictionary<ThingDef,int>();
     }
 
     /// <summary>
