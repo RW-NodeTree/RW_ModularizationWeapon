@@ -32,7 +32,7 @@ namespace RW_ModularizationWeapon
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
-                UpdateTargetPartXmlTree();
+                if (!swap) UpdateTargetPartXmlTree();
                 return true;
             }
             return false;
@@ -46,14 +46,14 @@ namespace RW_ModularizationWeapon
 
         public void UpdateTargetPartXmlTree()
         {
-            if(occupiers != null)
+            if(occupiers != null && ParentPart != null)
             {
                 CompModularizationWeapon root = this;
-                CompModularizationWeapon current = occupiers;
+                CompModularizationWeapon current = occupiers ?? ParentPart;
                 while (current != null)
                 {
                     root = current;
-                    current = current.occupiers;
+                    current = current.occupiers ?? current.ParentPart;
                 }
                 root.UpdateTargetPartXmlTree();
                 return;
