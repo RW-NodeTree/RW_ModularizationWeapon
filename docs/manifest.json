@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompModularizationWeapon.html",
-          "hash": "Qc1OcgIBJ4C8hQ85Jekpzk5FDzjz5O6wgIhYY57jfX4="
+          "hash": "Kr51611qzMSb87lQGo/HB/EOmbI2952m9iFeueXlR8Y="
         }
       },
       "is_incremental": true,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "wo4adAGnnUdEVUdLQftDHrZe9Wkgv3UiGg/ZTzKVxSs="
+          "hash": "6px9lFolFukgJ/8BRA0UH0Xz+sZQ0Re4piqSa6X2VV8="
         }
       },
       "is_incremental": true,
@@ -185,11 +185,59 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.html",
+          "hash": "+YR3vL764SJoEZRoaOFNluBRdh6DGYITBpiJG55VofE="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "docfx/api/RW_ModularizationWeapon.PartSubDrawingInfo.yml",
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.PartSubDrawingInfo.html",
           "hash": "sBQzYEgMasVl0d/ANvvY4DXy3hrPwUcEzMZ7Fdih25c="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.Tools.QueryGroup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.Tools.QueryGroup.html",
+          "hash": "0HCCbeQwajh/V2/RTNWsxLwpgkz+r8nvvkhl6JTSiwM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.Tools.QueryLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.Tools.QueryLevel.html",
+          "hash": "esMjipWbYS3igqI60uLAe69vY3qe3S4Q7mx0nyjZDls="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docfx/api/RW_ModularizationWeapon.Tools.QuerySelecter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/RW_ModularizationWeapon.Tools.QuerySelecter.html",
+          "hash": "ftnW8UZAKJTmMZ39T00IYEvmdIWHl8rJqdZGgqt/1KE="
         }
       },
       "is_incremental": true,
@@ -213,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.Tools.html",
-          "hash": "bhdjkFzP6w9cZFFzZiHAuvo76UWWjsmvYoMTFb7GIg0="
+          "hash": "imNNjWWB+fV05scJ5nMXLLwjgeiW1lUCp2kL8bzm3iM="
         }
       },
       "is_incremental": true,
@@ -261,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.WeaponAttachmentProperties.html",
-          "hash": "9aL5GhAP3r25xdDfI2WSB0d95bDOLW0icLC0JcJ4Ma8="
+          "hash": "AyOx/wAwFbra+lutSeA+4iAvXPDygf10GYnnd83+svM="
         }
       },
       "is_incremental": true,
@@ -273,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.html",
-          "hash": "pLEuPZ+LGuCKxjWb1jrHp19UWnO+WTr0/UVuoD2vfgQ="
+          "hash": "hLYYIUxKYwTEF5tsiXWFolr4jURO8ZiF/EQ+vhYBbJA="
         }
       },
       "is_incremental": true,
@@ -297,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "bUinFWNger6qyZsdslVIqMlj71G9y36dLZ+ZgVjfZk4="
+          "hash": "DAjMiafogbwrZfAZQl8tjdy4vV/M6QymUPT4ZY2xxFA="
         }
       },
       "is_incremental": false,
@@ -435,8 +483,8 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 23,
-          "skipped_file_count": 23
+          "total_file_count": 27,
+          "skipped_file_count": 27
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,

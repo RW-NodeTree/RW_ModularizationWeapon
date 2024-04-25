@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using Verse;
 
 namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        public bool AllowSwap { get => this.RootPart == this && !this.Occupyed; }
+        public bool AllowSwap { get => this.RootPart == this && this.occupiers == null; }
 
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
@@ -20,18 +21,18 @@ namespace RW_ModularizationWeapon
                 Thing prevPart = ChildNodes[id];
                 //targetOwner?.Remove(targetInfo.Thing);
                 //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
-                CompModularizationWeapon
-                part = GetTargetPart(id).Thing;
-                if (part != null) part.Occupyed = false;
+                CompModularizationWeapon part = GetTargetPart(id).Thing;
+                if (part != null) part.occupiers = null;
                 if (targetInfo.Thing == prevPart) targetPartsWithId.Remove(id);
                 else
                 {
                     targetPartsWithId.SetOrAdd(id, targetInfo);
                     part = targetInfo.Thing;
-                    if (part != null) part.Occupyed = true;
+                    if (part != null) part.occupiers = this;
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
+                targetPartXmlNode = null;
                 return true;
             }
             return false;
@@ -41,6 +42,45 @@ namespace RW_ModularizationWeapon
         {
             if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = ChildNodes[id];
             return result;
+        }
+
+        public void UpdateTargetPartXmlTree()
+        {
+            if(occupiers != null)
+            {
+                CompModularizationWeapon root = this;
+                CompModularizationWeapon current = occupiers;
+                while (current != null)
+                {
+                    root = current;
+                    current = current.occupiers;
+                }
+                root.UpdateTargetPartXmlTree();
+                return;
+            }
+            XmlDocument xmlDocument = new XmlDocument();
+            XmlElement node = xmlDocument.CreateElement("root");
+            node.SetAttribute("defName", parent.def.defName);
+            xmlDocument.AppendChild(node);
+            AppendXmlNodeForTargetPart(node);
+        }
+
+        private void AppendXmlNodeForTargetPart(XmlElement node)
+        {
+            targetPartXmlNode = node;
+            cachedAttachmentProperties.Clear();
+            foreach(string id in PartIDs)
+            {
+                Thing target = GetTargetPart(id).Thing;
+                if(target != null)
+                {
+                    XmlElement child = node.OwnerDocument.CreateElement("id");
+                    child.SetAttribute("defName", parent.def.defName);
+                    node.AppendChild(child);
+                    CompModularizationWeapon comp = target;
+                    comp?.AppendXmlNodeForTargetPart(child);
+                }
+            }
         }
 
         public void SwapTargetPart()

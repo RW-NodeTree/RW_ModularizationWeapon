@@ -1,6 +1,8 @@
 ﻿using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Xml;
 using UnityEngine;
 using Verse;
 
@@ -379,5 +381,33 @@ namespace RW_ModularizationWeapon
 
 
         private Texture2D cachedUITex = null;
+    }
+
+    public class OptionalWeaponAttachmentProperties : WeaponAttachmentProperties
+    {
+        private List<FieldInfo> usedFields = new List<FieldInfo>(allFields.Length);
+        private static FieldInfo[] allFields = typeof(WeaponAttachmentProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
+        public List<FieldInfo> UsedFields => new List<FieldInfo>(usedFields);
+
+        public void LoadDataFromXmlCustom(XmlNode xmlRoot)
+        {
+            foreach(XmlNode node in xmlRoot.ChildNodes)
+            {
+                for (int i = 0; i < allFields.Length; i++)
+                {
+                    if(allFields[i].Name == node.Name)
+                    {
+                        usedFields.Add(allFields[i]);
+                        break;
+                    }
+                }
+            }
+            WeaponAttachmentProperties src = (WeaponAttachmentProperties)DirectXmlToObject.GetObjectFromXmlMethod(typeof(WeaponAttachmentProperties))(xmlRoot, true);
+            foreach(FieldInfo fieldInfo in usedFields)
+            {
+                fieldInfo.SetValue(this,fieldInfo.GetValue(src));
+            }
+            //Log.Message(ToString());
+        }
     }
 }

@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using HarmonyLib;
 using RimWorld;
-using RimWorld.QuestGen;
 using RW_ModularizationWeapon.Tools;
-using RW_ModularizationWeapon.UI;
 using RW_NodeTree;
 using RW_NodeTree.Rendering;
 using RW_NodeTree.Tools;
@@ -54,7 +46,7 @@ namespace RW_ModularizationWeapon
             {
                 if(partIDs.Count == 0)
                 {
-                    foreach (WeaponAttachmentProperties properties in AttachmentProperties)
+                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                     {
                         partIDs.Add(properties.id);
                     }
@@ -63,42 +55,55 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public bool Occupyed 
-        {
-            get
-            {
-                if (AttachmentProperties.Count <= 0) return false;
-                return occupyed;
-            }
-            set
-            {
-                if (AttachmentProperties.Count > 0) occupyed = value;
-            }
-        }
-
         public List<WeaponAttachmentProperties> AttachmentProperties
         {
             get
             {
+                if (targetPartXmlNode == null) UpdateTargetPartXmlTree();
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if(cachedAttachmentProperties.Find(x => x.id == properties.id) != null) continue;
                     Thing thing = ChildNodes[properties.id];
-                    WeaponAttachmentProperties replaced = null;
+                    Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                     if(thing != null)
                     {
-                        uint maxMach = 0;
                         foreach(KeyValuePair<QueryGroup, WeaponAttachmentProperties> record in Props.attachmentPropertiesWithQuery)
                         {
                             if (record.Key != null && record.Value != null)
                             {
-                                uint currentMach = record.Key.Mach(thing);
-                                if(currentMach > maxMach)
+                                uint currentMach = record.Key.Mach(targetPartXmlNode[properties.id]);
+                                if(currentMach > 0)
                                 {
-                                    replaced = record.Value;
-                                    maxMach = currentMach;
+                                    mached.SetOrAdd(currentMach, record.Value);
                                 }
                             }
+                        }
+                    }
+                    WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
+                    for (int i = mached.Count - 1; i >= 0; i--)
+                    {
+                        uint minMach = 0;
+                        WeaponAttachmentProperties attachmentProperties = null;
+                        foreach(KeyValuePair<uint, WeaponAttachmentProperties> record in mached)
+                        {
+                            if(minMach < record.Key || attachmentProperties == null)
+                            {
+                                minMach = record.Key;
+                                attachmentProperties = record.Value;
+                            }
+                        }
+                        if(attachmentProperties != null)
+                        {
+                            mached.Remove(minMach);
+                            OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
+                            if (optional != null)
+                            {
+                                foreach(FieldInfo fieldInfo in optional.UsedFields)
+                                {
+                                    fieldInfo.SetValue(replaced,fieldInfo.GetValue(optional));
+                                }
+                            }
+                            else replaced = Gen.MemberwiseClone(attachmentProperties);
                         }
                     }
                     cachedAttachmentProperties.Add(replaced ?? properties);
@@ -142,7 +147,7 @@ namespace RW_ModularizationWeapon
                     LocalTargetInfo targetInfo = targetPartsWithId_TargetWorkingList[i];
                     targetPartsWithId.SetOrAdd(id, targetInfo);
                     CompModularizationWeapon part = targetInfo.Thing;
-                    if (part != null) part.Occupyed = true;
+                    if (part != null) part.occupiers = this;
                 }
             }
             //if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
@@ -151,7 +156,7 @@ namespace RW_ModularizationWeapon
 
         public override bool AllowStackWith(Thing other)
         {
-            return AttachmentProperties.Count == 0;
+            return Props.attachmentProperties.Count == 0;
         }
 
         public override bool HasPostFX(bool textureMode) => Props.drawOutlineOnRoot && (textureMode || ParentPart == null);
@@ -371,7 +376,7 @@ namespace RW_ModularizationWeapon
                 CompModularizationWeapon comp = part;
                 if (comp != null)
                 {
-                    if (checkOccupy && comp.Occupyed) return false;
+                    if (checkOccupy && comp.occupiers != null) return false;
                     for (int i = 0; i < ChildNodes.Count; i++)
                     {
                         if (comp.Props.disallowedOtherPart.Allows(ChildNodes[i]))
@@ -682,9 +687,8 @@ namespace RW_ModularizationWeapon
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
-            cachedAttachmentProperties.Clear();
             CompModularizationWeapon root = RootPart;
-            bool occupyed = root.Occupyed;
+            bool occupyed = root.occupiers != null;
             //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
             if (root == this)
             {
@@ -732,7 +736,7 @@ namespace RW_ModularizationWeapon
 
         protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
-            bool swaping = !RootPart.Occupyed && swap;
+            bool swaping = RootPart.occupiers == null && swap;
 
             if (swaping)
             {
@@ -1053,9 +1057,10 @@ namespace RW_ModularizationWeapon
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
         private List<string> targetPartsWithId_IdWorkingList = new List<string>();
+        private XmlElement targetPartXmlNode = null;
         private bool targetPartChanged = false;
-        private bool occupyed = false;
         private bool swap = false;
+        internal CompModularizationWeapon occupiers = null;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
