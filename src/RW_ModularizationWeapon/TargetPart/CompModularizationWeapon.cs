@@ -32,7 +32,7 @@ namespace RW_ModularizationWeapon
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
-                targetPartXmlNode = null;
+                UpdateTargetPartXmlTree();
                 return true;
             }
             return false;
