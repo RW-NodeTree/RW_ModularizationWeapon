@@ -47,13 +47,7 @@ namespace RW_ModularizationWeapon
                         current = current.occupiers ?? current.ParentPart;
                     }
                 }
-                if(targetPartXmlNode == null) UpdateTargetPartXmlTree();
-                else
-                {
-                    targetPartXmlNode.RemoveAll();
-                    targetPartXmlNode.SetAttribute("defName", parent.def.defName);
-                    AppendXmlNodeForTargetPart(targetPartXmlNode);
-                }
+                UpdateTargetPartXmlTree();
                 return true;
             }
             return false;

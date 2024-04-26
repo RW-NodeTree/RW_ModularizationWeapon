@@ -1026,7 +1026,9 @@ namespace RW_ModularizationWeapon
         {
             List<ThingComp> comps = (thing as ThingWithComps)?.AllComps;
             if (comps.NullOrEmpty()) return null;
-            CompModularizationWeapon result = null;
+            CompModularizationWeapon result = comps[1] as CompModularizationWeapon;
+            if(result != null) return result;
+            retry:;
             if (!compLoadingCache.TryGetValue(thing.def, out int index))
             {
                 int i = 0;
@@ -1048,6 +1050,11 @@ namespace RW_ModularizationWeapon
             else if(index >= 0)
             {
                 result = comps[index] as CompModularizationWeapon;
+                if(result == null)
+                {
+                    compLoadingCache.Remove(thing.def);
+                    goto retry;
+                }
             }
             return result;
         }
@@ -1099,6 +1106,7 @@ namespace RW_ModularizationWeapon
     /// <summary>
     /// this type is parmerters holder of the type `CompModularizationWeapon`, it define all parmerters that can write in XML.
     /// </summary>
+    [StaticConstructorOnStartup]
     public class CompProperties_ModularizationWeapon : CompProperties
     {
 
@@ -1142,6 +1150,23 @@ namespace RW_ModularizationWeapon
                     }
                 }
                 return fieldInfosOfThingCompCopiedMember;
+            }
+        }
+
+        static CompProperties_ModularizationWeapon()
+        {
+            foreach(ThingDef def in DefDatabase<ThingDef>.AllDefs)
+            {
+                for(int i = 0; i < def.comps.Count; i++)
+                {
+                    CompProperties properties = def.comps[i];
+                    if(properties.compClass == typeof(CompModularizationWeapon))
+                    {
+                        def.comps.RemoveAt(i);
+                        def.comps.Insert(1,properties);
+                        break;
+                    }
+                }
             }
         }
 
