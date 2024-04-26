@@ -22,7 +22,7 @@ namespace RW_ModularizationWeapon
                 //targetOwner?.Remove(targetInfo.Thing);
                 //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
                 CompModularizationWeapon part = GetTargetPart(id).Thing;
-                if (part != null) 
+                if (part != null)
                 {
                     part.occupiers = null;
                     part.UpdateTargetPartXmlTree();
@@ -36,7 +36,22 @@ namespace RW_ModularizationWeapon
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
-                UpdateTargetPartXmlTree();
+                if (swap) return true;
+                if(occupiers != null && ParentPart != null)
+                {
+                    CompModularizationWeapon root = this;
+                    CompModularizationWeapon current = occupiers ?? ParentPart;
+                    while (current != null)
+                    {
+                        root.cachedAttachmentProperties.Clear();
+                        root = current;
+                        current = current.occupiers ?? current.ParentPart;
+                    }
+                }
+                targetPartXmlNode.RemoveAll();
+                targetPartXmlNode.SetAttribute("defName", parent.def.defName);
+                AppendXmlNodeForTargetPart(targetPartXmlNode);
+                // UpdateTargetPartXmlTree();
                 return true;
             }
             return false;
