@@ -12,10 +12,17 @@ namespace RW_ModularizationWeapon
             if (jobDriver == null) yield break;
             foreach (string id in PartIDs)
             {
-                LocalTargetInfo target = ChildNodes[id];
+                CompModularizationWeapon comp = ChildNodes[id];
+                if (comp != null)
+                {
+                    foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
+                    {
+                        yield return child;
+                    }
+                }
                 if (targetPartsWithId.ContainsKey(id))
                 {
-                    target = targetPartsWithId[id];
+                    LocalTargetInfo target = targetPartsWithId[id];
                     if (target.HasThing)
                     {
                         LocalTargetInfo temp = target;
@@ -68,14 +75,14 @@ namespace RW_ModularizationWeapon
                         yield return toil_JumpPoint;
                     }
 
-                }
 
-                CompModularizationWeapon comp = target.Thing;
-                if (comp != null)
-                {
-                    foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
+                    comp = target.Thing;
+                    if (comp != null)
                     {
-                        yield return child;
+                        foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
+                        {
+                            yield return child;
+                        }
                     }
                 }
 

@@ -714,6 +714,7 @@ namespace RW_ModularizationWeapon
             {
                 //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
                 CompChildNodeProccesser proccesser;
+                CompModularizationWeapon weaponComp;
                 if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                 {
                     proccesser = ChildNodes[id];
@@ -728,17 +729,16 @@ namespace RW_ModularizationWeapon
                 //Sync child swap state
 
                 proccesser = prev;
-                if (proccesser != null)
-                {
-                    proccesser.ResetVerbs();
-                    proccesser.ResetRenderedTexture();
-                }
+                if (proccesser != null) proccesser.NeedUpdate = true;
+
+                weaponComp = prev;
+                if (weaponComp != null) weaponComp.swap = true;
 
                 proccesser = target.Thing;
                 if (proccesser != null) proccesser.NeedUpdate = true;
 
-                CompModularizationWeapon comp = target.Thing;
-                if (comp != null) comp.swap = true;
+                weaponComp = target.Thing;
+                if (weaponComp != null) weaponComp.swap = true;
             }
 
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
