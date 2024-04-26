@@ -39,12 +39,10 @@ namespace RW_ModularizationWeapon
                 if (swap) return true;
                 if(occupiers != null && ParentPart != null)
                 {
-                    CompModularizationWeapon root = this;
                     CompModularizationWeapon current = occupiers ?? ParentPart;
                     while (current != null)
                     {
-                        root.cachedAttachmentProperties.Clear();
-                        root = current;
+                        current.cachedAttachmentProperties.Clear();
                         current = current.occupiers ?? current.ParentPart;
                     }
                 }
