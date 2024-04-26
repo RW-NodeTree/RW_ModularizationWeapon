@@ -648,6 +648,8 @@ namespace RW_ModularizationWeapon
         private bool CheckTargetVaild(bool deSpawn)
         {
             bool result = true;
+            bool swap = this.swap;
+            this.swap = false;
             foreach (string id in this.PartIDs)
             {
                 if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
@@ -680,6 +682,7 @@ namespace RW_ModularizationWeapon
                     result = (((CompModularizationWeapon)ChildNodes[id])?.CheckTargetVaild(deSpawn) ?? true) && result;
                 }
             }
+            this.swap = swap;
             return result;
         }
 
@@ -885,6 +888,7 @@ namespace RW_ModularizationWeapon
             }
             swap = false;
             NeedUpdate = false;
+            if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
             Map map = parent.MapHeld;
             if(map != null)
             {
