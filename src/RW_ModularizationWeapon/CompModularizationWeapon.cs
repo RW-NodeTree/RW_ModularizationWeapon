@@ -1025,7 +1025,7 @@ namespace RW_ModularizationWeapon
         public static implicit operator CompModularizationWeapon(Thing thing)
         {
             List<ThingComp> comps = (thing as ThingWithComps)?.AllComps;
-            if (comps.NullOrEmpty()) return null;
+            if (comps == null || comps.Count >= 2) return null;
             CompModularizationWeapon result = comps[1] as CompModularizationWeapon;
             if(result != null) return result;
             retry:;
