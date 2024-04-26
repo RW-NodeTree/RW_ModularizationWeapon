@@ -59,9 +59,9 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if (targetPartXmlNode == null) UpdateTargetPartXmlTree();
-                lock(attachmentPropertiesCache)
+                lock(attachmentPropertiesLock)
                 {
+                    if (targetPartXmlNode == null) UpdateTargetPartXmlTree();
                     foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                     {
                         if(attachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
@@ -319,10 +319,11 @@ namespace RW_ModularizationWeapon
             }
             nodeRenderingInfos.SortBy(x =>
             {
-                for (int i = 0; i < AttachmentProperties.Count; i++)
+                List<WeaponAttachmentProperties> props = AttachmentProperties;
+                for (int i = 0; i < props.Count; i++)
                 {
-                    WeaponAttachmentProperties properties = AttachmentProperties[i];
-                    if (properties.id == x.Item1) return i + properties.drawWeight * AttachmentProperties.Count;
+                    WeaponAttachmentProperties properties = props[i];
+                    if (properties.id == x.Item1) return i + properties.drawWeight * props.Count;
                 }
                 return -1;
             });
@@ -412,9 +413,10 @@ namespace RW_ModularizationWeapon
         {
             if (AllowSwap)
             {
-                for (int i = 0; i < AttachmentProperties.Count; i++)
+                List<WeaponAttachmentProperties> props = AttachmentProperties;
+                for (int i = 0; i < props.Count; i++)
                 {
-                    WeaponAttachmentProperties properties = AttachmentProperties[i];
+                    WeaponAttachmentProperties properties = props[i];
                     ThingDef def = properties.defultThing;
                     if (def != null)
                     {
@@ -445,16 +447,17 @@ namespace RW_ModularizationWeapon
             //Console.WriteLine($"====================================   {parent}.SetPartToRandom End   ====================================");
             if (AllowSwap)
             {
+                List<WeaponAttachmentProperties> props = AttachmentProperties;
                 //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
-                for (int i1 = 0; i1 < AttachmentProperties.Count; i1++)
+                for (int i = 0; i < props.Count; i++)
                 {
-                    WeaponAttachmentProperties properties = AttachmentProperties[i1];
+                    WeaponAttachmentProperties properties = props[i];
                     if (properties.randomThingDefWeights.NullOrEmpty())
                     {
-                        for (int i = 0; i < 3; i++)
+                        for (int j = 0; j < 3; j++)
                         {
-                            int j = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + properties.randomToEmptyWeight) : properties.filter.AllowedDefCount);
-                            ThingDef def = j < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[j] : null;
+                            int k = Rand.Range(0, properties.allowEmpty ? (properties.filter.AllowedDefCount + properties.randomToEmptyWeight) : properties.filter.AllowedDefCount);
+                            ThingDef def = k < properties.filter.AllowedDefCount ? properties.filter.AllowedThingDefs.ToList()[k] : null;
                             if (def != null)
                             {
                                 Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
@@ -472,16 +475,16 @@ namespace RW_ModularizationWeapon
                     {
                         float count = properties.allowEmpty ? properties.randomToEmptyWeight : 0;
                         properties.randomThingDefWeights.ForEach(x => count += x.count);
-                        for (int i = 0; i < 3; i++)
+                        for (int j = 0; j < 3; j++)
                         {
-                            float j = Rand.Range(0, count);
-                            float k = 0;
+                            float k = Rand.Range(0, count);
+                            float l = 0;
                             ThingDef def = null;
                             foreach (ThingDefCountClass weight in properties.randomThingDefWeights)
                             {
-                                float next = k + weight.count;
-                                if (k <= j && next >= j) def = weight.thingDef;
-                                k = next;
+                                float next = l + weight.count;
+                                if (l <= k && next >= k) def = weight.thingDef;
+                                l = next;
                             }
                             if (def != null)
                             {
@@ -997,9 +1000,10 @@ namespace RW_ModularizationWeapon
         {
             if(!id.NullOrEmpty())
             {
-                for (int i = 0; i < AttachmentProperties.Count; i++)
+                List<WeaponAttachmentProperties> props = AttachmentProperties;
+                for (int i = 0; i < props.Count; i++)
                 {
-                    WeaponAttachmentProperties properties = AttachmentProperties[i];
+                    WeaponAttachmentProperties properties = props[i];
                     if (properties.id == id) return properties;
                 }
             }
@@ -1079,6 +1083,7 @@ namespace RW_ModularizationWeapon
         private static MethodInfo PerformanceOptimizer_ComponentCache_ResetCompCache = null;
         private static Material PostFXMat = null;
         private static CommandBuffer PostFXCommandBuffer = null;
+        private static object attachmentPropertiesLock = new object();
 
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();

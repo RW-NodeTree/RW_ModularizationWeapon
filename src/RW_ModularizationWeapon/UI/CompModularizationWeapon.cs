@@ -32,7 +32,7 @@ namespace RW_ModularizationWeapon
                 if (id != null && GetChildTreeViewOpend(id))
                 {
                     CompModularizationWeapon comp = thing;
-                    if (!(comp?.AttachmentProperties).NullOrEmpty())
+                    if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
                         Vector2 childSize = comp.TreeViewDrawSize(BlockSize);
                         result.y += childSize.y;
@@ -75,7 +75,7 @@ namespace RW_ModularizationWeapon
                     bool inRenderingRange = currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight;
                     float next = currentPos.y;
                     CompModularizationWeapon comp = thing;
-                    if (!(comp?.AttachmentProperties).NullOrEmpty())
+                    if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
                         if (opend)
                         {
