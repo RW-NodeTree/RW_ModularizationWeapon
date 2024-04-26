@@ -1025,7 +1025,7 @@ namespace RW_ModularizationWeapon
         public static implicit operator CompModularizationWeapon(Thing thing)
         {
             List<ThingComp> comps = (thing as ThingWithComps)?.AllComps;
-            if (comps == null || comps.Count >= 2) return null;
+            if (comps == null || comps.Count < 2) return null;
             CompModularizationWeapon result = comps[1] as CompModularizationWeapon;
             if(result != null) return result;
             retry:;
@@ -1162,7 +1162,7 @@ namespace RW_ModularizationWeapon
         {
             foreach(ThingDef def in DefDatabase<ThingDef>.AllDefs)
             {
-                if (def.comps.Count >= 2) continue;
+                if (def.comps.Count < 2) continue;
                 for(int i = 0; i < def.comps.Count; i++)
                 {
                     CompProperties properties = def.comps[i];
