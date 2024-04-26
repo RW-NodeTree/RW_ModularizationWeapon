@@ -1157,6 +1157,7 @@ namespace RW_ModularizationWeapon
         {
             foreach(ThingDef def in DefDatabase<ThingDef>.AllDefs)
             {
+                if (def.comps.Count >= 2) continue;
                 for(int i = 0; i < def.comps.Count; i++)
                 {
                     CompProperties properties = def.comps[i];
