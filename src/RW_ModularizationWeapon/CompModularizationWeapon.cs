@@ -753,44 +753,50 @@ namespace RW_ModularizationWeapon
 
             if (swaping)
             {
-                Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
-                this.statOffsetCache.Clear();
-                this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
-                this.statOffsetCache_TargetPart.Clear();
-                this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
-                Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
-                this.statMultiplierCache.Clear();
-                this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
-                this.statMultiplierCache_TargetPart.Clear();
-                this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
-                Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>(this.toolsCache);
-                this.toolsCache.Clear();
-                this.toolsCache.AddRange(this.toolsCache_TargetPart);
-                this.toolsCache_TargetPart.Clear();
-                this.toolsCache_TargetPart.AddRange(toolsCache);
-                Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache);
-                this.verbPropertiesCache.Clear();
-                this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
-                this.verbPropertiesCache_TargetPart.Clear();
-                this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
-                List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>(this.attachmentPropertiesCache);
-                this.attachmentPropertiesCache.Clear();
-                this.attachmentPropertiesCache.AddRange(this.attachmentPropertiesCache_TargetPart);
-                this.attachmentPropertiesCache_TargetPart.Clear();
-                this.attachmentPropertiesCache_TargetPart.AddRange(attachmentPropertiesCache);
-                XmlElement targetPartXmlNode = this.targetPartXmlNode;
-                this.targetPartXmlNode = this.targetPartXmlNode_TargetPart;
-                this.targetPartXmlNode_TargetPart = targetPartXmlNode;
-
+                
+                lock(attachmentPropertiesLock)
+                {
+                    Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
+                    this.statOffsetCache.Clear();
+                    this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
+                    this.statOffsetCache_TargetPart.Clear();
+                    this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
+                    Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
+                    this.statMultiplierCache.Clear();
+                    this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
+                    this.statMultiplierCache_TargetPart.Clear();
+                    this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
+                    Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>(this.toolsCache);
+                    this.toolsCache.Clear();
+                    this.toolsCache.AddRange(this.toolsCache_TargetPart);
+                    this.toolsCache_TargetPart.Clear();
+                    this.toolsCache_TargetPart.AddRange(toolsCache);
+                    Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>(this.verbPropertiesCache);
+                    this.verbPropertiesCache.Clear();
+                    this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
+                    this.verbPropertiesCache_TargetPart.Clear();
+                    this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+                    List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>(this.attachmentPropertiesCache);
+                    this.attachmentPropertiesCache.Clear();
+                    this.attachmentPropertiesCache.AddRange(this.attachmentPropertiesCache_TargetPart);
+                    this.attachmentPropertiesCache_TargetPart.Clear();
+                    this.attachmentPropertiesCache_TargetPart.AddRange(attachmentPropertiesCache);
+                    XmlElement targetPartXmlNode = this.targetPartXmlNode;
+                    this.targetPartXmlNode = this.targetPartXmlNode_TargetPart;
+                    this.targetPartXmlNode_TargetPart = targetPartXmlNode;
+                }
             }
             else
             {
-                this.statOffsetCache.Clear();
-                this.statMultiplierCache.Clear();
-                this.toolsCache.Clear();
-                this.verbPropertiesCache.Clear();
-                this.attachmentPropertiesCache.Clear();
-                this.targetPartXmlNode = null;
+                lock(attachmentPropertiesLock)
+                {
+                    this.statOffsetCache.Clear();
+                    this.statMultiplierCache.Clear();
+                    this.toolsCache.Clear();
+                    this.verbPropertiesCache.Clear();
+                    this.attachmentPropertiesCache.Clear();
+                    this.targetPartXmlNode = null;
+                }
             }
 
 
