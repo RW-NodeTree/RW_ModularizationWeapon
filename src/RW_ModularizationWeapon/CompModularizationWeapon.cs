@@ -702,7 +702,7 @@ namespace RW_ModularizationWeapon
             }
             CompModularizationWeapon root = RootPart;
             bool occupyed = root.occupiers != null;
-            //Log.Message($"{parent} update -> {eventName} : {costomEventInfo}");
+            Log.Message($"{parent} swap: {swap}; occupiers: {occupiers?.parent}");
             if (root == this)
             {
                 while (!CheckTargetVaild(!occupyed)) continue;
