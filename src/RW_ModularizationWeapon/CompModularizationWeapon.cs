@@ -702,7 +702,7 @@ namespace RW_ModularizationWeapon
             }
             CompModularizationWeapon root = RootPart;
             bool occupyed = root.occupiers != null;
-            Log.Message($"{parent} swap: {swap}; occupiers: {occupiers?.parent}");
+            // Log.Message($"{parent} swap: {swap}; occupiers: {occupiers?.parent}");
             if (root == this)
             {
                 while (!CheckTargetVaild(!occupyed)) continue;
@@ -715,14 +715,18 @@ namespace RW_ModularizationWeapon
                 //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
                 CompChildNodeProccesser proccesser;
                 CompModularizationWeapon weaponComp;
+                Thing prev = ChildNodes[id];
                 if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                 {
-                    proccesser = ChildNodes[id];
+
+                    proccesser = prev;
                     if (proccesser != null) proccesser.NeedUpdate = true;
+
+                    weaponComp = prev;
+                    if (weaponComp != null) weaponComp.swap = true;
                     continue;
                 }
 
-                Thing prev = ChildNodes[id];
                 ChildNodes[id] = target.Thing;
                 SetTargetPart(id, prev);
 
