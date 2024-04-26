@@ -710,6 +710,7 @@ namespace RW_ModularizationWeapon
             }
             if (occupyed || !swap) return false;
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
+            Map map = parent.MapHeld;
             foreach (string id in this.PartIDs)
             {
                 //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
@@ -743,6 +744,15 @@ namespace RW_ModularizationWeapon
 
                 weaponComp = target.Thing;
                 if (weaponComp != null) weaponComp.swap = true;
+
+                if(map != null && prev != null)
+                {
+                    int index = map.cellIndices.CellToIndex(prev.Position);
+                    if (index < map.cellIndices.NumGridCells && index >= 0)
+                    {
+                        prev.SpawnSetup(map, false);
+                    }
+                }
             }
 
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
@@ -918,21 +928,6 @@ namespace RW_ModularizationWeapon
             swap = false;
             NeedUpdate = false;
             // if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
-            Map map = parent.MapHeld;
-            if(map != null)
-            {
-                foreach (LocalTargetInfo info in targetPartsWithId.Values)
-                {
-                    if(info.HasThing)
-                    {
-                        int index = map.cellIndices.CellToIndex(info.Thing.Position);
-                        if (index < map.cellIndices.NumGridCells && index >= 0)
-                        {
-                            info.Thing.SpawnSetup(map, false);
-                        }
-                    }
-                }
-            }
             return false;
         }
 
