@@ -62,7 +62,7 @@ namespace RW_ModularizationWeapon
                 if (targetPartXmlNode == null) UpdateTargetPartXmlTree();
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
-                    if(cachedAttachmentProperties.Find(x => x.id == properties.id) != null) continue;
+                    if(attachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                     if(thing != null)
@@ -106,10 +106,10 @@ namespace RW_ModularizationWeapon
                             else replaced = Gen.MemberwiseClone(attachmentProperties);
                         }
                     }
-                    cachedAttachmentProperties.Add(replaced ?? properties);
-                    cachedAttachmentProperties[cachedAttachmentProperties.Count - 1].id = properties.id;
+                    attachmentPropertiesCache.Add(replaced ?? properties);
+                    attachmentPropertiesCache[attachmentPropertiesCache.Count - 1].id = properties.id;
                 }
-                return cachedAttachmentProperties;
+                return attachmentPropertiesCache;
             }
         }
 
@@ -629,6 +629,8 @@ namespace RW_ModularizationWeapon
             statMultiplierCache_TargetPart.Clear();
             toolsCache_TargetPart.Clear();
             verbPropertiesCache_TargetPart.Clear();
+            attachmentPropertiesCache_TargetPart.Clear();
+            targetPartXmlNode_TargetPart = null;
         }
 
         /// <summary>
@@ -765,6 +767,15 @@ namespace RW_ModularizationWeapon
                 this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
                 this.verbPropertiesCache_TargetPart.Clear();
                 this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+                List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>(this.attachmentPropertiesCache);
+                this.attachmentPropertiesCache.Clear();
+                this.attachmentPropertiesCache.AddRange(this.attachmentPropertiesCache_TargetPart);
+                this.attachmentPropertiesCache_TargetPart.Clear();
+                this.attachmentPropertiesCache_TargetPart.AddRange(attachmentPropertiesCache);
+                XmlElement targetPartXmlNode = this.targetPartXmlNode;
+                this.targetPartXmlNode = this.targetPartXmlNode_TargetPart;
+                this.targetPartXmlNode_TargetPart = targetPartXmlNode;
+
             }
             else
             {
@@ -772,6 +783,8 @@ namespace RW_ModularizationWeapon
                 this.statMultiplierCache.Clear();
                 this.toolsCache.Clear();
                 this.verbPropertiesCache.Clear();
+                this.attachmentPropertiesCache.Clear();
+                this.targetPartXmlNode = null;
             }
 
 
@@ -888,7 +901,7 @@ namespace RW_ModularizationWeapon
             }
             swap = false;
             NeedUpdate = false;
-            if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
+            // if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
             Map map = parent.MapHeld;
             if(map != null)
             {
@@ -1031,8 +1044,9 @@ namespace RW_ModularizationWeapon
         private readonly HashSet<string> partIDs = new HashSet<string>();
         private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
         private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
-        private readonly List<WeaponAttachmentProperties> cachedAttachmentProperties = new List<WeaponAttachmentProperties>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
+        private readonly List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>();
+        private readonly List<WeaponAttachmentProperties> attachmentPropertiesCache_TargetPart = new List<WeaponAttachmentProperties>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
@@ -1045,6 +1059,7 @@ namespace RW_ModularizationWeapon
         private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
         private List<string> targetPartsWithId_IdWorkingList = new List<string>();
         private XmlElement targetPartXmlNode = null;
+        private XmlElement targetPartXmlNode_TargetPart = null;
         private bool targetPartChanged = false;
         private bool swap = false;
         internal CompModularizationWeapon occupiers = null;

@@ -42,7 +42,7 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon current = occupiers ?? ParentPart;
                     while (current != null)
                     {
-                        current.cachedAttachmentProperties.Clear();
+                        current.attachmentPropertiesCache.Clear();
                         current = current.occupiers ?? current.ParentPart;
                     }
                 }
@@ -86,7 +86,7 @@ namespace RW_ModularizationWeapon
         private void AppendXmlNodeForTargetPart(XmlElement node)
         {
             targetPartXmlNode = node;
-            cachedAttachmentProperties.Clear();
+            attachmentPropertiesCache.Clear();
             foreach(string id in PartIDs)
             {
                 Thing target = GetTargetPart(id).Thing;
