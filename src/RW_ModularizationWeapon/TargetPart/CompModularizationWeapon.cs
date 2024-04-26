@@ -14,18 +14,19 @@ namespace RW_ModularizationWeapon
         {
             //only allow thing not have parent or spawned?
             //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
-            if (id != null && GetTargetPart(id) != targetInfo && AllowPart(targetInfo.Thing, id))
+            LocalTargetInfo currentTargetInfo = GetTargetPart(id);
+            if (id != null && currentTargetInfo != targetInfo && AllowPart(targetInfo.Thing, id))
             {
 
                 //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
                 Thing prevPart = ChildNodes[id];
                 //targetOwner?.Remove(targetInfo.Thing);
                 //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
-                CompModularizationWeapon part = GetTargetPart(id).Thing;
+                CompModularizationWeapon part = currentTargetInfo.Thing;
                 if (part != null)
                 {
                     part.occupiers = null;
-                    part.UpdateTargetPartXmlTree();
+                    if (!swap) part.UpdateTargetPartXmlTree();
                 }
                 if (targetInfo.Thing == prevPart) targetPartsWithId.Remove(id);
                 else
@@ -36,7 +37,6 @@ namespace RW_ModularizationWeapon
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
-                if (swap) return true;
                 UpdateTargetPartXmlTree();
                 return true;
             }

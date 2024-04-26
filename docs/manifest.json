@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.html",
-          "hash": "l3hrwECd3aqvSQZAXtddPY12lBzc5jT3FAb4rrOhejA="
+          "hash": "Jz5fI8IBbWc5+KyDzVFmqpsi5ctd2wsCHhZnd4UicpQ="
         }
       },
       "is_incremental": true,
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompCustomWeaponPort.html",
-          "hash": "zU0cayNZ91yOdmka50Jvj6WE5LHIrr9kS+wQUeCN3E0="
+          "hash": "WMcrWZF1bCuioJiOEZJiYOmr8RHJl3QQRkbvb6Hpoaw="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -48,7 +48,7 @@
           "hash": "4lr/yewbW43yFsruwEc6r02fkurFQDL5oHfQ0oS2Cxg="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html",
-          "hash": "nXL3C8P6M4AhVhQqJ4RfREB1biiUymZOqHYoyp2FvDc="
+          "hash": "J7DAneRCngvW+4nN3eopWvnupLLtY9BXp8sMQAtAdv0="
         }
       },
       "is_incremental": true,
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "hk2+WslmzPrVHYbC0xzWkXzUz70+8dH66Ct3FAUpM48="
+          "hash": "bXJj/8T05S80pAqRK4/6B5/ruFvvtekCzTbDMT/tcQU="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReader-2.html",
-          "hash": "38UKtQsi9jPW0lP3snEkf8B+EHJavUWQQ+UJ0xAd3eo="
+          "hash": "Dv2nErz90SM1WTYa1jXRMNt1xCQdZFkFIamh6urvQVM="
         }
       },
       "is_incremental": true,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.UI.CustomWeapon.html",
-          "hash": "06YBuMZs5dALwckUp7d5/1lYmMNSxNnPoLJRb3ZcbVg="
+          "hash": "0ErlmrrZ7ZlWnfw27O7ci3jNpg7FUYZcKazAYSS4WKs="
         }
       },
       "is_incremental": true,
@@ -324,7 +324,7 @@
           "hash": "hLYYIUxKYwTEF5tsiXWFolr4jURO8ZiF/EQ+vhYBbJA="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -484,7 +484,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 27,
-          "skipped_file_count": 25
+          "skipped_file_count": 27
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
