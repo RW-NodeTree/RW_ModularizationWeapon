@@ -37,16 +37,6 @@ namespace RW_ModularizationWeapon
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
                 if (swap) return true;
-                if(occupiers != null && ParentPart != null)
-                {
-                    CompModularizationWeapon current = occupiers ?? ParentPart;
-                    while (current != null)
-                    {
-                        lock(attachmentPropertiesLock)
-                            current.attachmentPropertiesCache.Clear();
-                        current = current.occupiers ?? current.ParentPart;
-                    }
-                }
                 UpdateTargetPartXmlTree();
                 return true;
             }
