@@ -442,6 +442,7 @@ namespace RW_ModularizationWeapon
                 currentPartProperties.filter.Allows(part) &&
                 !internal_Unchangeable(ChildNodes[id], currentPartProperties);
             if (!result) return false;
+            if (swap) return result;
             result &=
                 targetPartProperties.filter.Allows(part) &&
                 !internal_Unchangeable(ChildNodes[id], targetPartProperties);
