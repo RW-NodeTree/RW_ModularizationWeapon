@@ -65,6 +65,7 @@ namespace RW_ModularizationWeapon
                     foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                     {
                         if(attachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
+                        Log.Message($"{parent} Miss {properties.id} properties, generating");
                         Thing thing = ChildNodes[properties.id];
                         Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                         if(thing != null)

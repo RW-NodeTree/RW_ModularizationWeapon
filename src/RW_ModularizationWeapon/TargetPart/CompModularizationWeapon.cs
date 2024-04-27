@@ -74,8 +74,6 @@ namespace RW_ModularizationWeapon
         private void AppendXmlNodeForTargetPart(XmlElement node)
         {
             targetPartXmlNode = node;
-            lock(attachmentPropertiesLock)
-                attachmentPropertiesCache.Clear();
             foreach(string id in PartIDs)
             {
                 Thing target = GetTargetPart(id).Thing;
@@ -88,6 +86,8 @@ namespace RW_ModularizationWeapon
                     comp?.AppendXmlNodeForTargetPart(child);
                 }
             }
+            lock(attachmentPropertiesLock)
+                attachmentPropertiesCache.Clear();
         }
 
         public void SwapTargetPart()

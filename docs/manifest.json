@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.AI.JobDriver_ModifyWeapon.html",
-          "hash": "Jz5fI8IBbWc5+KyDzVFmqpsi5ctd2wsCHhZnd4UicpQ="
+          "hash": "l3hrwECd3aqvSQZAXtddPY12lBzc5jT3FAb4rrOhejA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -24,7 +24,7 @@
           "hash": "Ai85QMlqK+X6u8BWvue/W3w/t3KdYs09lISXGxgW0oM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompCustomWeaponPort.html",
-          "hash": "WMcrWZF1bCuioJiOEZJiYOmr8RHJl3QQRkbvb6Hpoaw="
+          "hash": "zU0cayNZ91yOdmka50Jvj6WE5LHIrr9kS+wQUeCN3E0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompModularizationWeapon.html",
-          "hash": "4lr/yewbW43yFsruwEc6r02fkurFQDL5oHfQ0oS2Cxg="
+          "hash": "IMMb3OcjyXgwSfyt67rDnfkVImRq5zcPt7Rs19NANyM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -57,10 +57,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html",
-          "hash": "J7DAneRCngvW+4nN3eopWvnupLLtY9BXp8sMQAtAdv0="
+          "hash": "nXL3C8P6M4AhVhQqJ4RfREB1biiUymZOqHYoyp2FvDc="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "bXJj/8T05S80pAqRK4/6B5/ruFvvtekCzTbDMT/tcQU="
+          "hash": "TJIctePxjcIGBHOS7EM1M71mViJSdLMCMIfe8vEpU+4="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -81,10 +81,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.FieldReader-2.html",
-          "hash": "Dv2nErz90SM1WTYa1jXRMNt1xCQdZFkFIamh6urvQVM="
+          "hash": "38UKtQsi9jPW0lP3snEkf8B+EHJavUWQQ+UJ0xAd3eo="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -96,7 +96,7 @@
           "hash": "CS509ZL4J7zce0j9F7Vh9onYAbvm7Ld+DAAiBb+fFUU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -108,7 +108,7 @@
           "hash": "XusNDSzxaUTil4yLsrG3PFNEWIIfDCnEDtTizCZaqlQ="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -120,7 +120,7 @@
           "hash": "KeEEml9mgw+QR6kvtXtD+qqFJL64lsm8ahhhVJqWbQI="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -132,7 +132,7 @@
           "hash": "UbuECey0cLtxru+7/m0v0QRctN8x7tl3cnR7ZsMIEto="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -144,7 +144,7 @@
           "hash": "MIpu7ETwppAskFtpDRM/fvyRWBbFjp3Vt2kOrXrKQ0Q="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -156,7 +156,7 @@
           "hash": "2xRWOMsZJ+oA+HF+G29X18ByV6edmpU9IuebI3N8cpM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -168,7 +168,7 @@
           "hash": "7dGrX3XqCtvEXSJTj2tHLdbAcTOeq6y+jQk36znEQYs="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -180,7 +180,7 @@
           "hash": "t4zVLTLyWfw5cDhJId6GdmLyNHBvT40vRjoRfZoFQrQ="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -192,7 +192,7 @@
           "hash": "+YR3vL764SJoEZRoaOFNluBRdh6DGYITBpiJG55VofE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -273,10 +273,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.UI.CustomWeapon.html",
-          "hash": "0ErlmrrZ7ZlWnfw27O7ci3jNpg7FUYZcKazAYSS4WKs="
+          "hash": "06YBuMZs5dALwckUp7d5/1lYmMNSxNnPoLJRb3ZcbVg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -300,7 +300,7 @@
           "hash": "FAOKe9RroXVzQWvLdbz9EPzKBnu0/vOOuo3LTNqSdHE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -312,7 +312,7 @@
           "hash": "AyOx/wAwFbra+lutSeA+4iAvXPDygf10GYnnd83+svM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -324,7 +324,7 @@
           "hash": "hLYYIUxKYwTEF5tsiXWFolr4jURO8ZiF/EQ+vhYBbJA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -484,7 +484,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 27,
-          "skipped_file_count": 27
+          "skipped_file_count": 11
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
