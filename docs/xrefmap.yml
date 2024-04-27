@@ -206,19 +206,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
   nameWithType: CompModularizationWeapon.AllowSwap
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.AttachmentProperties
-  name: AttachmentProperties
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AttachmentProperties
-  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.AttachmentProperties
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AttachmentProperties
-  nameWithType: CompModularizationWeapon.AttachmentProperties
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.AttachmentProperties*
-  name: AttachmentProperties
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AttachmentProperties_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.AttachmentProperties
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AttachmentProperties
-  nameWithType: CompModularizationWeapon.AttachmentProperties
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart
   name: ClearTargetPart()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ClearTargetPart
@@ -310,6 +297,32 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.CompPropertiesOffseter
   nameWithType: CompModularizationWeapon.CompPropertiesOffseter
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartAttachmentProperties
+  name: CurrentPartAttachmentProperties
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_CurrentPartAttachmentProperties
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartAttachmentProperties
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartAttachmentProperties
+  nameWithType: CompModularizationWeapon.CurrentPartAttachmentProperties
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartAttachmentProperties*
+  name: CurrentPartAttachmentProperties
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_CurrentPartAttachmentProperties_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartAttachmentProperties
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartAttachmentProperties
+  nameWithType: CompModularizationWeapon.CurrentPartAttachmentProperties
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById(System.String)
+  name: CurrentPartWeaponAttachmentPropertiesById(String)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_CurrentPartWeaponAttachmentPropertiesById_System_String_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById(System.String)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById(System.String)
+  nameWithType: CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById(String)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById*
+  name: CurrentPartWeaponAttachmentPropertiesById
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_CurrentPartWeaponAttachmentPropertiesById_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById
+  nameWithType: CompModularizationWeapon.CurrentPartWeaponAttachmentPropertiesById
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.DrawChildTreeView(UnityEngine.Vector2,System.Single,System.Single,System.Single,System.Single,System.Action{System.String,Verse.Thing,RW_ModularizationWeapon.CompModularizationWeapon},System.Action{System.String,Verse.Thing,RW_ModularizationWeapon.CompModularizationWeapon},System.Action{System.String,Verse.Thing,RW_ModularizationWeapon.CompModularizationWeapon},System.Collections.Generic.HashSet{System.ValueTuple{System.String,RW_ModularizationWeapon.CompModularizationWeapon}})
   name: DrawChildTreeView(Vector2, Single, Single, Single, Single, Action<String, Thing, CompModularizationWeapon>, Action<String, Thing, CompModularizationWeapon>, Action<String, Thing, CompModularizationWeapon>, HashSet<(String, CompModularizationWeapon)>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_DrawChildTreeView_UnityEngine_Vector2_System_Single_System_Single_System_Single_System_Single_System_Action_System_String_Verse_Thing_RW_ModularizationWeapon_CompModularizationWeapon__System_Action_System_String_Verse_Thing_RW_ModularizationWeapon_CompModularizationWeapon__System_Action_System_String_Verse_Thing_RW_ModularizationWeapon_CompModularizationWeapon__System_Collections_Generic_HashSet_System_ValueTuple_System_String_RW_ModularizationWeapon_CompModularizationWeapon___
@@ -958,6 +971,32 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.System.Collections.IEnumerable.GetEnumerator
   nameWithType: CompModularizationWeapon.IEnumerable.GetEnumerator
   nameWithType.vb: CompModularizationWeapon.System.Collections.IEnumerable.GetEnumerator
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartAttachmentProperties
+  name: TargetPartAttachmentProperties
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_TargetPartAttachmentProperties
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.TargetPartAttachmentProperties
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartAttachmentProperties
+  nameWithType: CompModularizationWeapon.TargetPartAttachmentProperties
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartAttachmentProperties*
+  name: TargetPartAttachmentProperties
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_TargetPartAttachmentProperties_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.TargetPartAttachmentProperties
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartAttachmentProperties
+  nameWithType: CompModularizationWeapon.TargetPartAttachmentProperties
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById(System.String)
+  name: TargetPartWeaponAttachmentPropertiesById(String)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_TargetPartWeaponAttachmentPropertiesById_System_String_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById(System.String)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById(System.String)
+  nameWithType: CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById(String)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById*
+  name: TargetPartWeaponAttachmentPropertiesById
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_TargetPartWeaponAttachmentPropertiesById_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById
+  nameWithType: CompModularizationWeapon.TargetPartWeaponAttachmentPropertiesById
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.ToolsBoolAndPatch(System.String)
   name: ToolsBoolAndPatch(String)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ToolsBoolAndPatch_System_String_
@@ -1062,6 +1101,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID
   nameWithType: CompModularizationWeapon.UniqueVerbOwnerID
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
+  name: UpdateCurrentPartXmlTree()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateCurrentPartXmlTree
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree()
+  nameWithType: CompModularizationWeapon.UpdateCurrentPartXmlTree()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree*
+  name: UpdateCurrentPartXmlTree
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateCurrentPartXmlTree_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
+  nameWithType: CompModularizationWeapon.UpdateCurrentPartXmlTree
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree
   name: UpdateTargetPartXmlTree()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateTargetPartXmlTree
@@ -1185,19 +1237,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.VerbToolRegiestInfoUpdate
   nameWithType: CompModularizationWeapon.VerbToolRegiestInfoUpdate
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
-  name: WeaponAttachmentPropertiesById(String)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_WeaponAttachmentPropertiesById_System_String_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.WeaponAttachmentPropertiesById(System.String)
-  nameWithType: CompModularizationWeapon.WeaponAttachmentPropertiesById(String)
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.WeaponAttachmentPropertiesById*
-  name: WeaponAttachmentPropertiesById
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_WeaponAttachmentPropertiesById_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.WeaponAttachmentPropertiesById
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.WeaponAttachmentPropertiesById
-  nameWithType: CompModularizationWeapon.WeaponAttachmentPropertiesById
 - uid: RW_ModularizationWeapon.CompProperties_CustomWeaponPort
   name: CompProperties_CustomWeaponPort
   href: api/RW_ModularizationWeapon.CompProperties_CustomWeaponPort.html
@@ -1360,12 +1399,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.ConfigErrors
   nameWithType: CompProperties_ModularizationWeapon.ConfigErrors
-- uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
-  name: disallowedOtherPart
-  href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_disallowedOtherPart
-  commentId: F:RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
-  fullName: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.disallowedOtherPart
-  nameWithType: CompProperties_ModularizationWeapon.disallowedOtherPart
 - uid: RW_ModularizationWeapon.CompProperties_ModularizationWeapon.drawChildPartWhenOnGround
   name: drawChildPartWhenOnGround
   href: api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html#RW_ModularizationWeapon_CompProperties_ModularizationWeapon_drawChildPartWhenOnGround

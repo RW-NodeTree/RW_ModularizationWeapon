@@ -37,7 +37,7 @@ namespace RW_ModularizationWeapon
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
-                UpdateTargetPartXmlTree();
+                if (!swap) UpdateTargetPartXmlTree();
                 return true;
             }
             return false;
@@ -47,6 +47,39 @@ namespace RW_ModularizationWeapon
         {
             if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = ChildNodes[id];
             return result;
+        }
+
+        public void UpdateCurrentPartXmlTree()
+        {
+            CompModularizationWeapon root = RootPart;
+            if(root != null)
+            {
+                root.UpdateCurrentPartXmlTree();
+                return;
+            }
+            XmlDocument xmlDocument = new XmlDocument();
+            XmlElement node = xmlDocument.CreateElement("root");
+            node.SetAttribute("defName", parent.def.defName);
+            xmlDocument.AppendChild(node);
+            AppendXmlNodeForCurrentPart(node);
+        }
+
+        private void AppendXmlNodeForCurrentPart(XmlElement node)
+        {
+            currentPartXmlNode = node;
+            foreach(string id in PartIDs)
+            {
+                Thing target = ChildNodes[id];
+                if(target != null)
+                {
+                    XmlElement child = node.OwnerDocument.CreateElement("id");
+                    child.SetAttribute("defName", parent.def.defName);
+                    node.AppendChild(child);
+                    CompModularizationWeapon comp = target;
+                    comp?.AppendXmlNodeForCurrentPart(child);
+                }
+            }
+            currentPartAttachmentPropertiesCache.Clear();
         }
 
         public void UpdateTargetPartXmlTree()
@@ -63,7 +96,6 @@ namespace RW_ModularizationWeapon
                 root.UpdateTargetPartXmlTree();
                 return;
             }
-            if (swap) return;
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement node = xmlDocument.CreateElement("root");
             node.SetAttribute("defName", parent.def.defName);
@@ -86,8 +118,7 @@ namespace RW_ModularizationWeapon
                     comp?.AppendXmlNodeForTargetPart(child);
                 }
             }
-            lock(attachmentPropertiesLock)
-                attachmentPropertiesCache.Clear();
+            currentPartAttachmentPropertiesCache.Clear();
         }
 
         public void SwapTargetPart()
@@ -123,7 +154,7 @@ namespace RW_ModularizationWeapon
         {
             foreach (string id in PartIDs)
             {
-                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (properties != null) yield return (id, ChildNodes[id], properties);
             }
             yield break;

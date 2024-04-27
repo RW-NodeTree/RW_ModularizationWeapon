@@ -4,7 +4,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        public bool Unchangeable(string id) => internal_Unchangeable(ChildNodes[id], WeaponAttachmentPropertiesById(id));
+        public bool Unchangeable(string id) => internal_Unchangeable(ChildNodes[id], CurrentPartWeaponAttachmentPropertiesById(id));
         internal static bool internal_Unchangeable(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -24,7 +24,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool NotDraw(string id) => internal_NotDraw(ChildNodes[id], WeaponAttachmentPropertiesById(id));
+        public bool NotDraw(string id) => internal_NotDraw(ChildNodes[id], CurrentPartWeaponAttachmentPropertiesById(id));
         internal static bool internal_NotDraw(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -43,7 +43,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool NotUseTools(string id) => internal_NotUseTools(ChildNodes[id], WeaponAttachmentPropertiesById(id));
+        public bool NotUseTools(string id) => internal_NotUseTools(ChildNodes[id], CurrentPartWeaponAttachmentPropertiesById(id));
         internal static bool internal_NotUseTools(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)
@@ -62,7 +62,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public bool NotUseVerbProperties(string id) => internal_NotUseVerbProperties(ChildNodes[id], WeaponAttachmentPropertiesById(id));
+        public bool NotUseVerbProperties(string id) => internal_NotUseVerbProperties(ChildNodes[id], CurrentPartWeaponAttachmentPropertiesById(id));
         internal static bool internal_NotUseVerbProperties(Thing thing, WeaponAttachmentProperties properties)
         {
             if (thing != null && properties != null)

@@ -11,7 +11,7 @@ namespace RW_ModularizationWeapon
         public FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter(string childNodeIdForVerbProperties)
         {
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
-            WeaponAttachmentProperties current = WeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
             CompModularizationWeapon currentComp = ChildNodes[childNodeIdForVerbProperties];
             NodeContainer container = ChildNodes;
             results.DefaultValue = 0;
@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForVerbProperties)
                 {
                     FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesOffseterAffectHorizon;
@@ -68,7 +68,7 @@ namespace RW_ModularizationWeapon
         public FieldReaderDgitList<Tool> ToolsOffseter(string childNodeIdForTool)
         {
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
-            WeaponAttachmentProperties current = WeaponAttachmentPropertiesById(childNodeIdForTool);
+            WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
             CompModularizationWeapon currentComp = ChildNodes[childNodeIdForTool];
             NodeContainer container = ChildNodes;
             results.DefaultValue = 0;
@@ -76,7 +76,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForTool)
                 {
                     FieldReaderDgitList<Tool> cache = properties.toolsOffseterAffectHorizon;
@@ -130,7 +130,7 @@ namespace RW_ModularizationWeapon
             {
                 string id = container[(uint)i];
                 CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity)
                 {
                     FieldReaderDgitList<CompProperties> cache = properties.compPropertiesOffseterAffectHorizon * comp.Props.compPropertiesOffseter;
@@ -166,7 +166,7 @@ namespace RW_ModularizationWeapon
                     CompModularizationWeapon comp = container[i];
                     if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
                     {
-                        current = WeaponAttachmentPropertiesById(id);
+                        current = CurrentPartWeaponAttachmentPropertiesById(id);
                         currentComp = comp;
                         break;
                     }
@@ -176,7 +176,7 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     CompModularizationWeapon comp = container[i];
-                    WeaponAttachmentProperties properties = WeaponAttachmentPropertiesById(id);
+                    WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
                     if (comp != null && comp.Validity)
                     {
                         result += comp.GetStatOffset(statDef, part)
