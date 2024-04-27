@@ -982,6 +982,11 @@ namespace RW_ModularizationWeapon
                 thing.Position = pos;
                 ((CompModularizationWeapon)thing)?.Private_SetChildPostion();
             }
+            foreach (Thing thing in targetPartsWithId.Values)
+            {
+                thing.Position = pos;
+                ((CompModularizationWeapon)thing)?.Private_SetChildPostion();
+            }
         }
 
 
@@ -994,6 +999,11 @@ namespace RW_ModularizationWeapon
             {
                 thing.Position = IntVec3.Invalid;
                 ((CompModularizationWeapon)thing)?.Private_SetChildPostionInvalid();
+            }
+            foreach (Thing thing in targetPartsWithId.Values)
+            {
+                thing.Position = IntVec3.Invalid;
+                ((CompModularizationWeapon)thing)?.Private_SetChildPostion();
             }
         }
 
