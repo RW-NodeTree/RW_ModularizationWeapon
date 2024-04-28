@@ -443,8 +443,7 @@ namespace RW_ModularizationWeapon
                 !internal_Unchangeable(ChildNodes[id], currentPartProperties);
             if (!result) return false;
             result &=
-                targetPartProperties.filter.Allows(part) &&
-                !internal_Unchangeable(ChildNodes[id], targetPartProperties);
+                targetPartProperties.filter.Allows(part);
             return result;
         }
 
@@ -678,7 +677,7 @@ namespace RW_ModularizationWeapon
             statMultiplierCache_TargetPart.Clear();
             toolsCache_TargetPart.Clear();
             verbPropertiesCache_TargetPart.Clear();
-            if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
+            if (AllowSwap) UpdateTargetPartXmlTree();
         }
 
         /// <summary>
@@ -825,7 +824,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            if (RootPart == this && occupiers == null) SwapAttachmentPropertiesCacheAndXmlNode();
+            if (AllowSwap) SwapAttachmentPropertiesCacheAndXmlNode();
             _ = CurrentPartAttachmentProperties;
             _ = TargetPartAttachmentProperties;
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
