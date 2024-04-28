@@ -1374,25 +1374,23 @@ namespace RW_ModularizationWeapon
                 properties.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
                 properties.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
             }
+            
+            for (int i = attachmentProperties.Count - 1; i >= 0; i--)
+            {
+                WeaponAttachmentProperties properties = attachmentProperties[i];
+                if (!properties.id.IsVaildityKeyFormat())
+                {
+                    try{
+                        attachmentProperties.RemoveAt(i);
+                        QueryGroup query = new QueryGroup(properties.id);
+                        attachmentPropertiesWithQuery.Add(query,properties);
+                    }
+                    catch{
+                        Log.Error($"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name");
+                    }
+                }
+            }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
-
-            foreach (WeaponAttachmentProperties properties in attachmentPropertiesWithQuery.Values)
-            {
-                properties.ResolveReferences();
-            }
-            foreach (WeaponAttachmentProperties properties in attachmentPropertiesWithQuery.Values)
-            {
-                properties.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.verbPropertiesBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.toolsBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.verbPropertiesBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.toolsBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                properties.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-            }
 
 
             #region innerMethod
