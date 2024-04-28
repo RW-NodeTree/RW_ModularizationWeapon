@@ -442,7 +442,6 @@ namespace RW_ModularizationWeapon
                 currentPartProperties.filter.Allows(part) &&
                 !internal_Unchangeable(ChildNodes[id], currentPartProperties);
             if (!result) return false;
-            if (swap) return result;
             result &=
                 targetPartProperties.filter.Allows(part) &&
                 !internal_Unchangeable(ChildNodes[id], targetPartProperties);
@@ -450,7 +449,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool AllowNode(Thing node, string id = null) => AllowPart(node, id,false);
+        protected override bool AllowNode(Thing node, string id = null) => AllowPart(node, id, false);
 
 
         public void SetPartToDefault()
@@ -679,10 +678,7 @@ namespace RW_ModularizationWeapon
             statMultiplierCache_TargetPart.Clear();
             toolsCache_TargetPart.Clear();
             verbPropertiesCache_TargetPart.Clear();
-            currentPartAttachmentPropertiesCache.Clear();
-            currentPartXmlNode = null;
-            targetPartAttachmentPropertiesCache.Clear();
-            targetPartXmlNode = null;
+            if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
         }
 
         /// <summary>
@@ -740,6 +736,29 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
+
+        private void SwapAttachmentPropertiesCacheAndXmlNode()
+        {
+            List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
+            this.currentPartAttachmentPropertiesCache.Clear();
+            this.currentPartAttachmentPropertiesCache.AddRange(this.targetPartAttachmentPropertiesCache);
+            this.targetPartAttachmentPropertiesCache.Clear();
+            this.targetPartAttachmentPropertiesCache.AddRange(attachmentPropertiesCache);
+            XmlElement targetPartXmlNode = this.targetPartXmlNode;
+            this.targetPartXmlNode = this.currentPartXmlNode;
+            this.currentPartXmlNode = targetPartXmlNode;
+            foreach (Thing thing in ChildNodes.Values)
+            {
+                CompModularizationWeapon comp = thing;
+                comp?.SwapAttachmentPropertiesCacheAndXmlNode();
+            }
+            foreach (Thing thing in targetPartsWithId.Values)
+            {
+                CompModularizationWeapon comp = thing;
+                comp?.SwapAttachmentPropertiesCacheAndXmlNode();
+            }
+        }
+
         protected override bool PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds)
         {
             foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
@@ -754,7 +773,13 @@ namespace RW_ModularizationWeapon
                 while (!CheckTargetVaild(!occupyed)) continue;
                 CheckAndSetTargetCache();
             }
-            if (occupyed || !swap) return false;
+            if (occupyed || !swap)
+            {
+                if (root == this) UpdateCurrentPartXmlTree();
+                _ = CurrentPartAttachmentProperties;
+                _ = TargetPartAttachmentProperties;
+                return false;
+            }
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             Map map = parent.MapHeld;
             foreach (string id in this.PartIDs)
@@ -800,7 +825,9 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-
+            if (RootPart == this && occupiers == null) SwapAttachmentPropertiesCacheAndXmlNode();
+            _ = CurrentPartAttachmentProperties;
+            _ = TargetPartAttachmentProperties;
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
             targetPartChanged = false;
             return false;
@@ -834,14 +861,6 @@ namespace RW_ModularizationWeapon
                 this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
                 this.verbPropertiesCache_TargetPart.Clear();
                 this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
-                List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
-                this.currentPartAttachmentPropertiesCache.Clear();
-                this.currentPartAttachmentPropertiesCache.AddRange(this.targetPartAttachmentPropertiesCache);
-                this.targetPartAttachmentPropertiesCache.Clear();
-                this.targetPartAttachmentPropertiesCache.AddRange(attachmentPropertiesCache);
-                XmlElement targetPartXmlNode = this.targetPartXmlNode;
-                this.targetPartXmlNode = this.currentPartXmlNode;
-                this.currentPartXmlNode = targetPartXmlNode;
             }
             else
             {
@@ -849,8 +868,6 @@ namespace RW_ModularizationWeapon
                 this.statMultiplierCache.Clear();
                 this.toolsCache.Clear();
                 this.verbPropertiesCache.Clear();
-                this.currentPartAttachmentPropertiesCache.Clear();
-                this.currentPartXmlNode = null;
             }
 
 
@@ -869,9 +886,6 @@ namespace RW_ModularizationWeapon
                 this.cachedCompProperties.AddRange(from x in allComps select x.props);
             }
             else allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
-
-            _ = CurrentPartAttachmentProperties;
-            _ = TargetPartAttachmentProperties;
             for (int i = 0; i < allComps.Count; i++)
             {
                 ThingComp comp = allComps[i];

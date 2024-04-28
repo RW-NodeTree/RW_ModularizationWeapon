@@ -52,7 +52,7 @@ namespace RW_ModularizationWeapon
         public void UpdateCurrentPartXmlTree()
         {
             CompModularizationWeapon root = RootPart;
-            if(root != null)
+            if(root != this)
             {
                 root.UpdateCurrentPartXmlTree();
                 return;
