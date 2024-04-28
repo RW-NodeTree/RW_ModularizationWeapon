@@ -118,7 +118,7 @@ namespace RW_ModularizationWeapon
                     comp?.AppendXmlNodeForTargetPart(child);
                 }
             }
-            currentPartAttachmentPropertiesCache.Clear();
+            targetPartAttachmentPropertiesCache.Clear();
         }
 
         public void SwapTargetPart()

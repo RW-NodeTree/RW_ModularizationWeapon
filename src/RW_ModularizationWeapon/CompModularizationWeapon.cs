@@ -546,7 +546,7 @@ namespace RW_ModularizationWeapon
                             }
                         }
                     }
-                    Console.WriteLine($"{i} : {parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
+                    Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
                 foreach (Thing thing in targetPartsWithId.Values)
                 {
