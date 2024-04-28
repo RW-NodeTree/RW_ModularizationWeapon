@@ -487,7 +487,7 @@ namespace RW_ModularizationWeapon
             if (AllowSwap)
             {
                 List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
-                Console.WriteLine($"==================================== {parent}.SetPartToRandom Start, props count = {props.Count}   ====================================");
+                Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
                 for (int i = 0; i < props.Count; i++)
                 {
                     WeaponAttachmentProperties properties = props[i];
@@ -546,7 +546,7 @@ namespace RW_ModularizationWeapon
                             }
                         }
                     }
-                    Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
+                    Console.WriteLine($"{i} : {parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
                 foreach (Thing thing in targetPartsWithId.Values)
                 {
