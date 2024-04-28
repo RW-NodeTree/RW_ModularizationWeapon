@@ -541,7 +541,7 @@ namespace RW_ModularizationWeapon
                             else if(SetTargetPart(properties.id, null)) break;
                         }
                     }
-                    //Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
+                    Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
                 foreach (Thing thing in targetPartsWithId.Values)
                 {
