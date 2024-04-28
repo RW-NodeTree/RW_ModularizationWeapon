@@ -1,12 +1,57 @@
 using HarmonyLib;
 using RimWorld;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using Verse;
 
 namespace RW_ModularizationWeapon.Tools
 {
+    public class VNode : IEnumerable<VNode>
+    {
+        public VNode(string id, string defName, VNode parent = null)
+        {
+            this.id = id;
+            this.defName = defName;
+            this.parent = parent;
+            if (parent != null) parent[id] = this;
+        }
+
+        public VNode this[string id]
+        {
+            get
+            {
+                child.RemoveAll(x => x == null);
+                return child.Find(x => x.id == id);
+            }
+            private set
+            {
+                if (value == null) return;
+                int index = child.FindIndex(x => x.id == id);
+                if (index >= 0) child[index] = value;
+                else child.Add(value);
+            }
+        }
+
+        public readonly string id = null;
+        public readonly string defName = null;
+        public readonly VNode parent = null;
+        private readonly List<VNode> child = new List<VNode>();
+
+        public IEnumerator<VNode> GetEnumerator()
+        {
+            child.RemoveAll(x => x == null);
+            foreach (VNode node in child) yield return node;
+            yield break;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
     public class QueryGroup
     {
         public QueryGroup(){}
@@ -71,7 +116,7 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Mach(XmlElement node)
+        public uint Mach(VNode node)
         {
             uint result = 0;
             foreach(QueryLevel level in levels)
@@ -151,7 +196,7 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Mach(XmlElement node)
+        public uint Mach(VNode node)
         {
             uint result = 0;
             for(int i = selecters.Count - 1; i >= 0; i--)
@@ -160,7 +205,7 @@ namespace RW_ModularizationWeapon.Tools
                 uint mach = selecters[i].Mach(node);
                 if (mach == 0) return 0;
                 result += mach;
-                node = node.ParentNode as XmlElement;
+                node = node.parent;
             }
             return result;
         }
@@ -271,29 +316,24 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Mach(XmlElement node)
+        public uint Mach(VNode node)
         {
             if(node == null) return 0;
             uint result = notFlag ? 1u : 0;
             if(id != null)
             {
-                XmlElement parent = node.ParentNode as XmlElement;
-                if (parent?[id] == node && !notFlag) result++;
+                if (node.id == id && !notFlag) result++;
                 else return 0;
             }
             if(defName != null)
             {
-                if (node.Attributes["defName"].Value == defName && !notFlag) result++;
+                if (node.defName == defName && !notFlag) result++;
                 else return 0;
             }
             foreach(QueryGroup group in childenGroups)
             {
                 uint mach = 0;
-                foreach(XmlNode child in node.ChildNodes)
-                {
-                    XmlElement childElement = child as XmlElement;
-                    if(childElement != null) mach = Math.Max(mach,group.Mach(childElement));
-                }
+                foreach(VNode child in node) mach = Math.Max(mach,group.Mach(child));
                 if (notFlag)
                 {
                     if(mach > 0) return 0;

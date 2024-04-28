@@ -748,7 +748,7 @@ namespace RW_ModularizationWeapon
             this.currentPartAttachmentPropertiesCache.AddRange(this.targetPartAttachmentPropertiesCache);
             this.targetPartAttachmentPropertiesCache.Clear();
             this.targetPartAttachmentPropertiesCache.AddRange(attachmentPropertiesCache);
-            XmlElement targetPartXmlNode = this.targetPartXmlNode;
+            VNode targetPartXmlNode = this.targetPartXmlNode;
             this.targetPartXmlNode = this.currentPartXmlNode;
             this.currentPartXmlNode = targetPartXmlNode;
             foreach (Thing thing in ChildNodes.Values)
@@ -1167,8 +1167,8 @@ namespace RW_ModularizationWeapon
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
         private List<string> targetPartsWithId_IdWorkingList = new List<string>();
-        private XmlElement targetPartXmlNode = null;
-        private XmlElement currentPartXmlNode = null;
+        private VNode targetPartXmlNode = null;
+        private VNode currentPartXmlNode = null;
         private bool targetPartChanged = false;
         private bool swap = false;
         internal CompModularizationWeapon occupiers = null;

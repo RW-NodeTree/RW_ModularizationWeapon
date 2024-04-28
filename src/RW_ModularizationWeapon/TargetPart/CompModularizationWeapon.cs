@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using RW_ModularizationWeapon.Tools;
 using Verse;
 
 namespace RW_ModularizationWeapon
@@ -57,14 +58,11 @@ namespace RW_ModularizationWeapon
                 root.UpdateCurrentPartXmlTree();
                 return;
             }
-            XmlDocument xmlDocument = new XmlDocument();
-            XmlElement node = xmlDocument.CreateElement("root");
-            node.SetAttribute("defName", parent.def.defName);
-            xmlDocument.AppendChild(node);
+            VNode node = new VNode(null,parent.def.defName);
             AppendXmlNodeForCurrentPart(node);
         }
 
-        private void AppendXmlNodeForCurrentPart(XmlElement node)
+        private void AppendXmlNodeForCurrentPart(VNode node)
         {
             currentPartXmlNode = node;
             foreach(string id in PartIDs)
@@ -72,9 +70,7 @@ namespace RW_ModularizationWeapon
                 Thing target = ChildNodes[id];
                 if(target != null)
                 {
-                    XmlElement child = node.OwnerDocument.CreateElement("id");
-                    child.SetAttribute("defName", parent.def.defName);
-                    node.AppendChild(child);
+                    VNode child = new VNode(id,target.def.defName,node);
                     CompModularizationWeapon comp = target;
                     comp?.AppendXmlNodeForCurrentPart(child);
                 }
@@ -96,14 +92,11 @@ namespace RW_ModularizationWeapon
                 root.UpdateTargetPartXmlTree();
                 return;
             }
-            XmlDocument xmlDocument = new XmlDocument();
-            XmlElement node = xmlDocument.CreateElement("root");
-            node.SetAttribute("defName", parent.def.defName);
-            xmlDocument.AppendChild(node);
+            VNode node = new VNode(null,parent.def.defName);
             AppendXmlNodeForTargetPart(node);
         }
 
-        private void AppendXmlNodeForTargetPart(XmlElement node)
+        private void AppendXmlNodeForTargetPart(VNode node)
         {
             targetPartXmlNode = node;
             foreach(string id in PartIDs)
@@ -111,9 +104,7 @@ namespace RW_ModularizationWeapon
                 Thing target = GetTargetPart(id).Thing;
                 if(target != null)
                 {
-                    XmlElement child = node.OwnerDocument.CreateElement("id");
-                    child.SetAttribute("defName", parent.def.defName);
-                    node.AppendChild(child);
+                    VNode child = new VNode(id,target.def.defName,node);
                     CompModularizationWeapon comp = target;
                     comp?.AppendXmlNodeForTargetPart(child);
                 }

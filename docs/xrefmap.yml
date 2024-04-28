@@ -4663,12 +4663,12 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.QueryGroup.LoadDataFromXmlCustom
   nameWithType: QueryGroup.LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.Tools.QueryGroup.Mach(System.Xml.XmlElement)
-  name: Mach(XmlElement)
-  href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Mach_System_Xml_XmlElement_
-  commentId: M:RW_ModularizationWeapon.Tools.QueryGroup.Mach(System.Xml.XmlElement)
-  fullName: RW_ModularizationWeapon.Tools.QueryGroup.Mach(System.Xml.XmlElement)
-  nameWithType: QueryGroup.Mach(XmlElement)
+- uid: RW_ModularizationWeapon.Tools.QueryGroup.Mach(RW_ModularizationWeapon.Tools.VNode)
+  name: Mach(VNode)
+  href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Mach_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.QueryGroup.Mach(RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.QueryGroup.Mach(RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: QueryGroup.Mach(VNode)
 - uid: RW_ModularizationWeapon.Tools.QueryGroup.Mach*
   name: Mach
   href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Mach_
@@ -4740,12 +4740,12 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.QueryLevel.LoadDataFromXmlCustom
   nameWithType: QueryLevel.LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.Tools.QueryLevel.Mach(System.Xml.XmlElement)
-  name: Mach(XmlElement)
-  href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Mach_System_Xml_XmlElement_
-  commentId: M:RW_ModularizationWeapon.Tools.QueryLevel.Mach(System.Xml.XmlElement)
-  fullName: RW_ModularizationWeapon.Tools.QueryLevel.Mach(System.Xml.XmlElement)
-  nameWithType: QueryLevel.Mach(XmlElement)
+- uid: RW_ModularizationWeapon.Tools.QueryLevel.Mach(RW_ModularizationWeapon.Tools.VNode)
+  name: Mach(VNode)
+  href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Mach_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.QueryLevel.Mach(RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.QueryLevel.Mach(RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: QueryLevel.Mach(VNode)
 - uid: RW_ModularizationWeapon.Tools.QueryLevel.Mach*
   name: Mach
   href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Mach_
@@ -4830,12 +4830,12 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.QuerySelecter.LoadDataFromXmlCustom
   nameWithType: QuerySelecter.LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.Tools.QuerySelecter.Mach(System.Xml.XmlElement)
-  name: Mach(XmlElement)
-  href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Mach_System_Xml_XmlElement_
-  commentId: M:RW_ModularizationWeapon.Tools.QuerySelecter.Mach(System.Xml.XmlElement)
-  fullName: RW_ModularizationWeapon.Tools.QuerySelecter.Mach(System.Xml.XmlElement)
-  nameWithType: QuerySelecter.Mach(XmlElement)
+- uid: RW_ModularizationWeapon.Tools.QuerySelecter.Mach(RW_ModularizationWeapon.Tools.VNode)
+  name: Mach(VNode)
+  href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Mach_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.QuerySelecter.Mach(RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.QuerySelecter.Mach(RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: QuerySelecter.Mach(VNode)
 - uid: RW_ModularizationWeapon.Tools.QuerySelecter.Mach*
   name: Mach
   href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Mach_
@@ -4904,6 +4904,89 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.ToolsFunction.LogAllField
   nameWithType: ToolsFunction.LogAllField
+- uid: RW_ModularizationWeapon.Tools.VNode
+  name: VNode
+  href: api/RW_ModularizationWeapon.Tools.VNode.html
+  commentId: T:RW_ModularizationWeapon.Tools.VNode
+  fullName: RW_ModularizationWeapon.Tools.VNode
+  nameWithType: VNode
+- uid: RW_ModularizationWeapon.Tools.VNode.#ctor(System.String,System.String,RW_ModularizationWeapon.Tools.VNode)
+  name: VNode(String, String, VNode)
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode__ctor_System_String_System_String_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.VNode.#ctor(System.String,System.String,RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.VNode.VNode(System.String, System.String, RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: VNode.VNode(String, String, VNode)
+- uid: RW_ModularizationWeapon.Tools.VNode.#ctor*
+  name: VNode
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode__ctor_
+  commentId: Overload:RW_ModularizationWeapon.Tools.VNode.#ctor
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.Tools.VNode.VNode
+  nameWithType: VNode.VNode
+- uid: RW_ModularizationWeapon.Tools.VNode.defName
+  name: defName
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_defName
+  commentId: F:RW_ModularizationWeapon.Tools.VNode.defName
+  fullName: RW_ModularizationWeapon.Tools.VNode.defName
+  nameWithType: VNode.defName
+- uid: RW_ModularizationWeapon.Tools.VNode.GetEnumerator
+  name: GetEnumerator()
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_GetEnumerator
+  commentId: M:RW_ModularizationWeapon.Tools.VNode.GetEnumerator
+  fullName: RW_ModularizationWeapon.Tools.VNode.GetEnumerator()
+  nameWithType: VNode.GetEnumerator()
+- uid: RW_ModularizationWeapon.Tools.VNode.GetEnumerator*
+  name: GetEnumerator
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_GetEnumerator_
+  commentId: Overload:RW_ModularizationWeapon.Tools.VNode.GetEnumerator
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.Tools.VNode.GetEnumerator
+  nameWithType: VNode.GetEnumerator
+- uid: RW_ModularizationWeapon.Tools.VNode.id
+  name: id
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_id
+  commentId: F:RW_ModularizationWeapon.Tools.VNode.id
+  fullName: RW_ModularizationWeapon.Tools.VNode.id
+  nameWithType: VNode.id
+- uid: RW_ModularizationWeapon.Tools.VNode.Item(System.String)
+  name: Item[String]
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_Item_System_String_
+  commentId: P:RW_ModularizationWeapon.Tools.VNode.Item(System.String)
+  name.vb: Item(String)
+  fullName: RW_ModularizationWeapon.Tools.VNode.Item[System.String]
+  fullName.vb: RW_ModularizationWeapon.Tools.VNode.Item(System.String)
+  nameWithType: VNode.Item[String]
+  nameWithType.vb: VNode.Item(String)
+- uid: RW_ModularizationWeapon.Tools.VNode.Item*
+  name: Item
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_Item_
+  commentId: Overload:RW_ModularizationWeapon.Tools.VNode.Item
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.Tools.VNode.Item
+  nameWithType: VNode.Item
+- uid: RW_ModularizationWeapon.Tools.VNode.parent
+  name: parent
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_parent
+  commentId: F:RW_ModularizationWeapon.Tools.VNode.parent
+  fullName: RW_ModularizationWeapon.Tools.VNode.parent
+  nameWithType: VNode.parent
+- uid: RW_ModularizationWeapon.Tools.VNode.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:RW_ModularizationWeapon.Tools.VNode.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: RW_ModularizationWeapon.Tools.VNode.System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: VNode.IEnumerable.GetEnumerator()
+  nameWithType.vb: VNode.System.Collections.IEnumerable.GetEnumerator()
+- uid: RW_ModularizationWeapon.Tools.VNode.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/RW_ModularizationWeapon.Tools.VNode.html#RW_ModularizationWeapon_Tools_VNode_System_Collections_IEnumerable_GetEnumerator_
+  commentId: Overload:RW_ModularizationWeapon.Tools.VNode.System#Collections#IEnumerable#GetEnumerator
+  isSpec: "True"
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: RW_ModularizationWeapon.Tools.VNode.System.Collections.IEnumerable.GetEnumerator
+  nameWithType: VNode.IEnumerable.GetEnumerator
+  nameWithType.vb: VNode.System.Collections.IEnumerable.GetEnumerator
 - uid: RW_ModularizationWeapon.UI
   name: RW_ModularizationWeapon.UI
   href: api/RW_ModularizationWeapon.UI.html
