@@ -63,7 +63,7 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if(currentPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
-                    // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
+                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                     if(thing != null)
@@ -122,7 +122,7 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if(targetPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
-                    // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties, generating");
+                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties, generating");
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                     if(thing != null)
@@ -487,7 +487,7 @@ namespace RW_ModularizationWeapon
             if (AllowSwap)
             {
                 List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
-                Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
+                // Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
                 for (int i = 0; i < props.Count; i++)
                 {
                     WeaponAttachmentProperties properties = props[i];
@@ -546,7 +546,7 @@ namespace RW_ModularizationWeapon
                             }
                         }
                     }
-                    Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
+                    // Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
                 foreach (Thing thing in targetPartsWithId.Values)
                 {
