@@ -27,7 +27,7 @@ namespace RW_ModularizationWeapon
                 if (part != null)
                 {
                     part.occupiers = null;
-                    if (!swap) part.UpdateTargetPartXmlTree();
+                    if (!swap) part.UpdateTargetPartVNode();
                 }
                 if (targetInfo.Thing == prevPart) targetPartsWithId.Remove(id);
                 else
@@ -38,7 +38,7 @@ namespace RW_ModularizationWeapon
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
                 targetPartChanged = true;
-                if (!swap) UpdateTargetPartXmlTree();
+                if (!swap) UpdateTargetPartVNode();
                 return true;
             }
             return false;
@@ -50,19 +50,19 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        public void UpdateCurrentPartXmlTree()
+        public void UpdateCurrentPartVNode()
         {
             CompModularizationWeapon root = RootPart;
             if(root != this)
             {
-                root.UpdateCurrentPartXmlTree();
+                root.UpdateCurrentPartVNode();
                 return;
             }
             VNode node = new VNode(null,parent.def.defName);
-            AppendXmlNodeForCurrentPart(node);
+            AppendVNodeForCurrentPart(node);
         }
 
-        private void AppendXmlNodeForCurrentPart(VNode node)
+        private void AppendVNodeForCurrentPart(VNode node)
         {
             currentPartXmlNode = node;
             foreach(string id in PartIDs)
@@ -72,13 +72,13 @@ namespace RW_ModularizationWeapon
                 {
                     VNode child = new VNode(id,target.def.defName,node);
                     CompModularizationWeapon comp = target;
-                    comp?.AppendXmlNodeForCurrentPart(child);
+                    comp?.AppendVNodeForCurrentPart(child);
                 }
             }
             currentPartAttachmentPropertiesCache.Clear();
         }
 
-        public void UpdateTargetPartXmlTree()
+        public void UpdateTargetPartVNode()
         {
             if(occupiers != null && ParentPart != null)
             {
@@ -89,14 +89,14 @@ namespace RW_ModularizationWeapon
                     root = current;
                     current = current.occupiers ?? current.ParentPart;
                 }
-                root.UpdateTargetPartXmlTree();
+                root.UpdateTargetPartVNode();
                 return;
             }
             VNode node = new VNode(null,parent.def.defName);
-            AppendXmlNodeForTargetPart(node);
+            AppendVNodeForTargetPart(node);
         }
 
-        private void AppendXmlNodeForTargetPart(VNode node)
+        private void AppendVNodeForTargetPart(VNode node)
         {
             targetPartXmlNode = node;
             foreach(string id in PartIDs)
@@ -106,7 +106,7 @@ namespace RW_ModularizationWeapon
                 {
                     VNode child = new VNode(id,target.def.defName,node);
                     CompModularizationWeapon comp = target;
-                    comp?.AppendXmlNodeForTargetPart(child);
+                    comp?.AppendVNodeForTargetPart(child);
                 }
             }
             targetPartAttachmentPropertiesCache.Clear();

@@ -1101,32 +1101,32 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.UniqueVerbOwnerID
   nameWithType: CompModularizationWeapon.UniqueVerbOwnerID
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
-  name: UpdateCurrentPartXmlTree()
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateCurrentPartXmlTree
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree()
-  nameWithType: CompModularizationWeapon.UpdateCurrentPartXmlTree()
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree*
-  name: UpdateCurrentPartXmlTree
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateCurrentPartXmlTree_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartVNode
+  name: UpdateCurrentPartVNode()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateCurrentPartVNode
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartVNode
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartVNode()
+  nameWithType: CompModularizationWeapon.UpdateCurrentPartVNode()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartVNode*
+  name: UpdateCurrentPartVNode
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateCurrentPartVNode_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartVNode
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartXmlTree
-  nameWithType: CompModularizationWeapon.UpdateCurrentPartXmlTree
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree
-  name: UpdateTargetPartXmlTree()
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateTargetPartXmlTree
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree()
-  nameWithType: CompModularizationWeapon.UpdateTargetPartXmlTree()
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree*
-  name: UpdateTargetPartXmlTree
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateTargetPartXmlTree_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateCurrentPartVNode
+  nameWithType: CompModularizationWeapon.UpdateCurrentPartVNode
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartVNode
+  name: UpdateTargetPartVNode()
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateTargetPartVNode
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartVNode
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartVNode()
+  nameWithType: CompModularizationWeapon.UpdateTargetPartVNode()
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartVNode*
+  name: UpdateTargetPartVNode
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_UpdateTargetPartVNode_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartVNode
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartXmlTree
-  nameWithType: CompModularizationWeapon.UpdateTargetPartXmlTree
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.UpdateTargetPartVNode
+  nameWithType: CompModularizationWeapon.UpdateTargetPartVNode
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.VerbPropertiesBoolAndPatch(System.String)
   name: VerbPropertiesBoolAndPatch(String)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_VerbPropertiesBoolAndPatch_System_String_

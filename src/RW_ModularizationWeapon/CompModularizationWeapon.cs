@@ -59,57 +59,57 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if (currentPartXmlNode == null) UpdateCurrentPartXmlTree();
-                    foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
+                if (currentPartXmlNode == null) UpdateCurrentPartVNode();
+                foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
+                {
+                    if (currentPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
+                    // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
+                    Thing thing = ChildNodes[properties.id];
+                    Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
+                    if(thing != null)
                     {
-                        if (currentPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
-                        // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
-                        Thing thing = ChildNodes[properties.id];
-                        Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
-                        if(thing != null)
+                        foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                         {
-                            foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
+                            if (record.Item1 != null && record.Item2 != null)
                             {
-                                if (record.Item1 != null && record.Item2 != null)
+                                uint currentMach = record.Item1.Mach(currentPartXmlNode[properties.id]);
+                                if(currentMach > 0)
                                 {
-                                    uint currentMach = record.Item1.Mach(currentPartXmlNode[properties.id]);
-                                    if(currentMach > 0)
-                                    {
-                                        mached.SetOrAdd(currentMach, record.Item2);
-                                    }
+                                    mached.SetOrAdd(currentMach, record.Item2);
                                 }
                             }
                         }
-                        WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
-                        for (int i = mached.Count - 1; i >= 0; i--)
-                        {
-                            uint minMach = 0;
-                            WeaponAttachmentProperties attachmentProperties = null;
-                            foreach(KeyValuePair<uint, WeaponAttachmentProperties> record in mached)
-                            {
-                                if(minMach < record.Key || attachmentProperties == null)
-                                {
-                                    minMach = record.Key;
-                                    attachmentProperties = record.Value;
-                                }
-                            }
-                            if(attachmentProperties != null)
-                            {
-                                mached.Remove(minMach);
-                                OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
-                                if (optional != null)
-                                {
-                                    foreach(FieldInfo fieldInfo in optional.UsedFields)
-                                    {
-                                        fieldInfo.SetValue(replaced,fieldInfo.GetValue(optional));
-                                    }
-                                }
-                                else replaced = Gen.MemberwiseClone(attachmentProperties);
-                            }
-                        }
-                        currentPartAttachmentPropertiesCache.Add(replaced ?? properties);
-                        currentPartAttachmentPropertiesCache[currentPartAttachmentPropertiesCache.Count - 1].id = properties.id;
                     }
+                    WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
+                    for (int i = mached.Count - 1; i >= 0; i--)
+                    {
+                        uint minMach = 0;
+                        WeaponAttachmentProperties attachmentProperties = null;
+                        foreach(KeyValuePair<uint, WeaponAttachmentProperties> record in mached)
+                        {
+                            if(minMach < record.Key || attachmentProperties == null)
+                            {
+                                minMach = record.Key;
+                                attachmentProperties = record.Value;
+                            }
+                        }
+                        if(attachmentProperties != null)
+                        {
+                            mached.Remove(minMach);
+                            OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
+                            if (optional != null)
+                            {
+                                foreach(FieldInfo fieldInfo in optional.UsedFields)
+                                {
+                                    fieldInfo.SetValue(replaced,fieldInfo.GetValue(optional));
+                                }
+                            }
+                            else replaced = Gen.MemberwiseClone(attachmentProperties);
+                        }
+                    }
+                    currentPartAttachmentPropertiesCache.Add(replaced ?? properties);
+                    currentPartAttachmentPropertiesCache[currentPartAttachmentPropertiesCache.Count - 1].id = properties.id;
+                }
                 return currentPartAttachmentPropertiesCache;
             }
         }
@@ -118,7 +118,7 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if (targetPartXmlNode == null) UpdateTargetPartXmlTree();
+                if (targetPartXmlNode == null) UpdateTargetPartVNode();
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (targetPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
@@ -682,7 +682,7 @@ namespace RW_ModularizationWeapon
             statMultiplierCache_TargetPart.Clear();
             toolsCache_TargetPart.Clear();
             verbPropertiesCache_TargetPart.Clear();
-            if (AllowSwap) UpdateTargetPartXmlTree();
+            if (AllowSwap) UpdateTargetPartVNode();
         }
 
         /// <summary>
@@ -779,7 +779,7 @@ namespace RW_ModularizationWeapon
             }
             if (occupyed || !swap)
             {
-                if (root == this) UpdateCurrentPartXmlTree();
+                if (root == this) UpdateCurrentPartVNode();
                 _ = CurrentPartAttachmentProperties;
                 _ = TargetPartAttachmentProperties;
                 return false;
