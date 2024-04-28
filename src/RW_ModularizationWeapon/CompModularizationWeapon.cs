@@ -214,10 +214,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public override bool AllowStackWith(Thing other)
-        {
-            return Props.attachmentProperties.Count == 0;
-        }
+        public override bool AllowStackWith(Thing other) => Props.attachmentProperties.Count == 0;
 
         public override bool HasPostFX(bool textureMode) => Props.drawOutlineOnRoot && (textureMode || ParentPart == null);
 
