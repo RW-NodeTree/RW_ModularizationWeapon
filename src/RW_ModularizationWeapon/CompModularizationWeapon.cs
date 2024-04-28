@@ -1375,18 +1375,22 @@ namespace RW_ModularizationWeapon
                 properties.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
             }
             
-            for (int i = attachmentProperties.Count - 1; i >= 0; i--)
+            if (attachmentPropertiesWithQuery.NullOrEmpty())
             {
-                WeaponAttachmentProperties properties = attachmentProperties[i];
-                if (!properties.id.IsVaildityKeyFormat())
+                attachmentPropertiesWithQuery = new Dictionary<QueryGroup, WeaponAttachmentProperties>();
+                for (int i = attachmentProperties.Count - 1; i >= 0; i--)
                 {
-                    try{
-                        attachmentProperties.RemoveAt(i);
-                        QueryGroup query = new QueryGroup(properties.id);
-                        attachmentPropertiesWithQuery.Add(query,properties);
-                    }
-                    catch{
-                        Log.Error($"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name");
+                    WeaponAttachmentProperties properties = attachmentProperties[i];
+                    if (!properties.id.IsVaildityKeyFormat())
+                    {
+                        try{
+                            attachmentProperties.RemoveAt(i);
+                            QueryGroup query = new QueryGroup(properties.id);
+                            attachmentPropertiesWithQuery.Add(query,properties);
+                        }
+                        catch{
+                            Log.Error($"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name");
+                        }
                     }
                 }
             }

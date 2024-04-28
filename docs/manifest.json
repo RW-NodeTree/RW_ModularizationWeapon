@@ -48,7 +48,7 @@
           "hash": "bGiieDj229FJ73jK3yBHQE33dyKJVZMA8ru4CXgMD3M="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "Nugu7ksIBJqY4Fzv16XPlrdQByq51MXl0K7ljn2ve7o="
+          "hash": "2+KYRsx0qCM7Jw43OPgSaM8fIebKZOCPAUIUE50kgHw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -324,7 +324,7 @@
           "hash": "hLYYIUxKYwTEF5tsiXWFolr4jURO8ZiF/EQ+vhYBbJA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -484,7 +484,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 27,
-          "skipped_file_count": 27
+          "skipped_file_count": 26
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
