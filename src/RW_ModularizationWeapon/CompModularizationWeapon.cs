@@ -487,7 +487,7 @@ namespace RW_ModularizationWeapon
             if (AllowSwap)
             {
                 List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
-                //Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
+                Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
                 for (int i = 0; i < props.Count; i++)
                 {
                     WeaponAttachmentProperties properties = props[i];
@@ -507,7 +507,11 @@ namespace RW_ModularizationWeapon
                                     break;
                                 }
                             }
-                            else break;
+                            else if(SetTargetPart(properties.id, null))
+                            {
+                                ChildNodes[properties.id]?.Destroy();
+                                break;
+                            }
                         }
                     }
                     else
@@ -535,7 +539,11 @@ namespace RW_ModularizationWeapon
                                     break;
                                 }
                             }
-                            else if(SetTargetPart(properties.id, null)) break;
+                            else if(SetTargetPart(properties.id, null))
+                            {
+                                ChildNodes[properties.id]?.Destroy();
+                                break;
+                            }
                         }
                     }
                     Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
@@ -1368,6 +1376,24 @@ namespace RW_ModularizationWeapon
             }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
+            foreach (WeaponAttachmentProperties properties in attachmentPropertiesWithQuery.Values)
+            {
+                properties.ResolveReferences();
+            }
+            foreach (WeaponAttachmentProperties properties in attachmentPropertiesWithQuery.Values)
+            {
+                properties.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+            }
+
 
             #region innerMethod
             void CheckAndSetDgitList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
@@ -1625,7 +1651,7 @@ namespace RW_ModularizationWeapon
                 );
             //UnityEngine.GUIUtility.systemCopyBuffer = stringBuilder.ToString();
             #region child
-            foreach (WeaponAttachmentProperties properties in attachmentProperties)
+            foreach (WeaponAttachmentProperties properties in comp?.CurrentPartAttachmentProperties ?? attachmentProperties)
             {
 
                 Thing child = comp?.ChildNodes[properties.id];

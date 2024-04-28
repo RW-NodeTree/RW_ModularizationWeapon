@@ -36,7 +36,7 @@
           "hash": "zU0cayNZ91yOdmka50Jvj6WE5LHIrr9kS+wQUeCN3E0="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompModularizationWeapon.html",
-          "hash": "oUvqL2wCnQ4EVix7TkRL+JjHP5de/wLwnVas5O++DAc="
+          "hash": "bGiieDj229FJ73jK3yBHQE33dyKJVZMA8ru4CXgMD3M="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html",
-          "hash": "VfikcxxqTlL0flCz/IShd1xW27kAoWNVPmG9Cjo1rgY="
+          "hash": "Nugu7ksIBJqY4Fzv16XPlrdQByq51MXl0K7ljn2ve7o="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -324,7 +324,7 @@
           "hash": "hLYYIUxKYwTEF5tsiXWFolr4jURO8ZiF/EQ+vhYBbJA="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -484,7 +484,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 27,
-          "skipped_file_count": 25
+          "skipped_file_count": 27
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
