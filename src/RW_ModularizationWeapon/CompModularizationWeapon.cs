@@ -55,14 +55,14 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public List<WeaponAttachmentProperties> CurrentPartAttachmentProperties
+        public Dictionary<string, WeaponAttachmentProperties> CurrentPartAttachmentProperties
         {
             get
             {
                 if (currentPartXmlNode == null) UpdateCurrentPartVNode();
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
-                    if (currentPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
+                    if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
@@ -107,21 +107,21 @@ namespace RW_ModularizationWeapon
                             else replaced = Gen.MemberwiseClone(attachmentProperties);
                         }
                     }
-                    currentPartAttachmentPropertiesCache.Add(replaced ?? properties);
-                    currentPartAttachmentPropertiesCache[currentPartAttachmentPropertiesCache.Count - 1].id = properties.id;
+                    replaced.id = properties.id;
+                    currentPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
                 return currentPartAttachmentPropertiesCache;
             }
         }
 
-        public List<WeaponAttachmentProperties> TargetPartAttachmentProperties
+        public Dictionary<string, WeaponAttachmentProperties> TargetPartAttachmentProperties
         {
             get
             {
                 if (targetPartXmlNode == null) UpdateTargetPartVNode();
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
-                    if (targetPartAttachmentPropertiesCache.Find(x => x.id == properties.id) != null) continue;
+                    if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties, generating");
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
@@ -166,8 +166,8 @@ namespace RW_ModularizationWeapon
                             else replaced = Gen.MemberwiseClone(attachmentProperties);
                         }
                     }
-                    targetPartAttachmentPropertiesCache.Add(replaced ?? properties);
-                    targetPartAttachmentPropertiesCache[targetPartAttachmentPropertiesCache.Count - 1].id = properties.id;
+                    replaced.id = properties.id;
+                    targetPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
                 return targetPartAttachmentPropertiesCache;
             }
@@ -373,7 +373,7 @@ namespace RW_ModularizationWeapon
             }
             nodeRenderingInfos.SortBy(x =>
             {
-                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
+                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties.Values.ToList();
                 for (int i = 0; i < props.Count; i++)
                 {
                     WeaponAttachmentProperties properties = props[i];
@@ -452,7 +452,7 @@ namespace RW_ModularizationWeapon
         {
             if (AllowSwap)
             {
-                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
+                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties.Values.ToList();
                 for (int i = 0; i < props.Count; i++)
                 {
                     WeaponAttachmentProperties properties = props[i];
@@ -486,7 +486,7 @@ namespace RW_ModularizationWeapon
             //Console.WriteLine($"====================================   {parent}.SetPartToRandom End   ====================================");
             if (AllowSwap)
             {
-                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
+                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties.Values.ToList();
                 // Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
                 for (int i = 0; i < props.Count; i++)
                 {
@@ -743,7 +743,7 @@ namespace RW_ModularizationWeapon
 
         private void SwapAttachmentPropertiesCacheAndXmlNode()
         {
-            List<WeaponAttachmentProperties> attachmentPropertiesCache = new List<WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
+            Dictionary<string, WeaponAttachmentProperties> attachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
             this.currentPartAttachmentPropertiesCache.Clear();
             this.currentPartAttachmentPropertiesCache.AddRange(this.targetPartAttachmentPropertiesCache);
             this.targetPartAttachmentPropertiesCache.Clear();
@@ -1087,29 +1087,13 @@ namespace RW_ModularizationWeapon
         
         public WeaponAttachmentProperties CurrentPartWeaponAttachmentPropertiesById(string id)
         {
-            if(!id.NullOrEmpty())
-            {
-                List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties;
-                for (int i = 0; i < props.Count; i++)
-                {
-                    WeaponAttachmentProperties properties = props[i];
-                    if (properties.id == id) return properties;
-                }
-            }
+            if(!id.NullOrEmpty()) return CurrentPartAttachmentProperties.TryGetValue(id);
             return null;
         }
         
         public WeaponAttachmentProperties TargetPartWeaponAttachmentPropertiesById(string id)
         {
-            if(!id.NullOrEmpty())
-            {
-                List<WeaponAttachmentProperties> props = TargetPartAttachmentProperties;
-                for (int i = 0; i < props.Count; i++)
-                {
-                    WeaponAttachmentProperties properties = props[i];
-                    if (properties.id == id) return properties;
-                }
-            }
+            if(!id.NullOrEmpty()) TargetPartAttachmentProperties.TryGetValue(id);
             return null;
         }
 
@@ -1167,8 +1151,8 @@ namespace RW_ModularizationWeapon
         private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
         private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
-        private readonly List<WeaponAttachmentProperties> currentPartAttachmentPropertiesCache = new List<WeaponAttachmentProperties>();
-        private readonly List<WeaponAttachmentProperties> targetPartAttachmentPropertiesCache = new List<WeaponAttachmentProperties>();
+        private readonly Dictionary<string, WeaponAttachmentProperties> currentPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
+        private readonly Dictionary<string, WeaponAttachmentProperties> targetPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
@@ -1666,7 +1650,7 @@ namespace RW_ModularizationWeapon
                 );
             //UnityEngine.GUIUtility.systemCopyBuffer = stringBuilder.ToString();
             #region child
-            foreach (WeaponAttachmentProperties properties in comp?.CurrentPartAttachmentProperties ?? attachmentProperties)
+            foreach (WeaponAttachmentProperties properties in comp?.CurrentPartAttachmentProperties.Values.ToList() ?? attachmentProperties)
             {
 
                 Thing child = comp?.ChildNodes[properties.id];

@@ -20,29 +20,18 @@ namespace RW_ModularizationWeapon.Tools
 
         public VNode this[string id]
         {
-            get
-            {
-                child.RemoveAll(x => x == null);
-                return child.Find(x => x.id == id);
-            }
-            private set
-            {
-                if (value == null) return;
-                int index = child.FindIndex(x => x.id == id);
-                if (index >= 0) child[index] = value;
-                else child.Add(value);
-            }
+            get => child.TryGetValue(id);
+            private set => child.SetOrAdd(id, value);
         }
 
         public readonly string id = null;
         public readonly string defName = null;
         public readonly VNode parent = null;
-        private readonly List<VNode> child = new List<VNode>();
+        private readonly Dictionary<string, VNode> child = new Dictionary<string, VNode>();
 
         public IEnumerator<VNode> GetEnumerator()
         {
-            child.RemoveAll(x => x == null);
-            foreach (VNode node in child) yield return node;
+            foreach (VNode node in child.Values) yield return node;
             yield break;
         }
 
