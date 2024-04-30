@@ -63,7 +63,7 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
+                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties, generating");
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                     if(thing != null)
@@ -122,7 +122,7 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties, generating");
+                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties, generating");
                     Thing thing = ChildNodes[properties.id];
                     Dictionary<uint,WeaponAttachmentProperties> mached = new Dictionary<uint, WeaponAttachmentProperties>();
                     if(thing != null)
