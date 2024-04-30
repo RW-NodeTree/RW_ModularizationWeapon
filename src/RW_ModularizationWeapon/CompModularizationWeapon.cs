@@ -1093,7 +1093,7 @@ namespace RW_ModularizationWeapon
         
         public WeaponAttachmentProperties TargetPartWeaponAttachmentPropertiesById(string id)
         {
-            if(!id.NullOrEmpty()) TargetPartAttachmentProperties.TryGetValue(id);
+            if(!id.NullOrEmpty()) return TargetPartAttachmentProperties.TryGetValue(id);
             return null;
         }
 
