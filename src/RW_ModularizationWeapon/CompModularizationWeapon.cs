@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using HarmonyLib;
 using RimWorld;
 using RW_ModularizationWeapon.Tools;
@@ -693,8 +692,11 @@ namespace RW_ModularizationWeapon
         /// <returns>`targetPartChanged` of target child</returns>
         private bool CheckAndSetTargetCache()
         {
-            foreach (string id in this.PartIDs)
-                if (((CompModularizationWeapon)GetTargetPart(id).Thing)?.CheckAndSetTargetCache() ?? false)
+            foreach (Thing thing in ChildNodes.Values)
+                if (((CompModularizationWeapon)thing)?.CheckAndSetTargetCache() ?? false)
+                    targetPartChanged = true;
+            foreach (Thing thing in targetPartsWithId.Values)
+                if (((CompModularizationWeapon)thing)?.CheckAndSetTargetCache() ?? false)
                     targetPartChanged = true;
             if (targetPartChanged) MarkTargetPartChanged();
             return targetPartChanged;
@@ -705,6 +707,9 @@ namespace RW_ModularizationWeapon
         {
             bool result = true;
             CompChildNodeProccesser proccesser = NodeProccesser;
+            foreach (Thing thing in ChildNodes.Values)
+                if (!(((CompModularizationWeapon)thing)?.CheckTargetVaild(deSpawn) ?? true))
+                    result = false;
             foreach (string id in this.PartIDs)
             {
                 if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
@@ -866,11 +871,6 @@ namespace RW_ModularizationWeapon
             _ = CurrentPartAttachmentProperties;
             _ = TargetPartAttachmentProperties;
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
-            notUpdateTexture = !targetPartChanged && this.cachedGraphic_ChildNode != null;
-            Graphic_ChildNode cachedGraphic_ChildNode = this.cachedGraphic_ChildNode ?? new Graphic_ChildNode(NodeProccesser, parent.Graphic.GetGraphic_ChildNode().SubGraphic);
-            this.cachedGraphic_ChildNode = parent.Graphic.GetGraphic_ChildNode();
-            parent.Graphic.SetGraphic_ChildNode(cachedGraphic_ChildNode);
-            targetPartChanged = false;
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
             // lt = ct;
@@ -912,6 +912,13 @@ namespace RW_ModularizationWeapon
                 this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
                 this.verbPropertiesCache_TargetPart.Clear();
                 this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+                
+                notUpdateTexture = !targetPartChanged && this.cachedGraphic_ChildNode != null;
+                Graphic_ChildNode cachedGraphic_ChildNode = this.cachedGraphic_ChildNode ?? new Graphic_ChildNode(NodeProccesser, parent.Graphic.GetGraphic_ChildNode().SubGraphic);
+                this.cachedGraphic_ChildNode = parent.Graphic.GetGraphic_ChildNode();
+                parent.Graphic.SetGraphic_ChildNode(cachedGraphic_ChildNode);
+                _ = cachedGraphic_ChildNode.MatSingle;
+
             }
             else
             {
@@ -1072,6 +1079,7 @@ namespace RW_ModularizationWeapon
 
             swap = false;
             NeedUpdate = false;
+            targetPartChanged = false;
             // if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
             return;
         }
