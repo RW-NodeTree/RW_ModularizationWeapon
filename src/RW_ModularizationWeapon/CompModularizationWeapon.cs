@@ -779,7 +779,7 @@ namespace RW_ModularizationWeapon
             bool occupyed = root.occupiers != null;
             
             ct = stopWatch.ElapsedTicks;
-            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
+            Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
             lt = ct;
 
             if (root == this)
@@ -789,7 +789,7 @@ namespace RW_ModularizationWeapon
             }
 
             ct = stopWatch.ElapsedTicks;
-            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
+            Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
             lt = ct;
 
             if (occupyed || !swap)
@@ -799,14 +799,14 @@ namespace RW_ModularizationWeapon
                 _ = TargetPartAttachmentProperties;
                 
                 ct = stopWatch.ElapsedTicks;
-                Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+                Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
                 lt = ct;
 
                 return false;
             }
             
             ct = stopWatch.ElapsedTicks;
-            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+            Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
             lt = ct;
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             Map map = parent.MapHeld;
@@ -855,7 +855,7 @@ namespace RW_ModularizationWeapon
             }
 
             ct = stopWatch.ElapsedTicks;
-            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
+            Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
             lt = ct;
             if (AllowSwap) SwapAttachmentPropertiesCacheAndXmlNode();
             _ = CurrentPartAttachmentProperties;
@@ -864,7 +864,7 @@ namespace RW_ModularizationWeapon
             targetPartChanged = false;
             
             ct = stopWatch.ElapsedTicks;
-            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
+            Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
             lt = ct;
             return false;
         }
