@@ -64,7 +64,7 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForCurrentPart(VNode node)
         {
-            currentPartXmlNode = node;
+            currentPartVNode = node;
             foreach(string id in PartIDs)
             {
                 Thing target = ChildNodes[id];
@@ -98,7 +98,7 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForTargetPart(VNode node)
         {
-            targetPartXmlNode = node;
+            targetPartVNode = node;
             foreach(string id in PartIDs)
             {
                 Thing target = GetTargetPart(id).Thing;
