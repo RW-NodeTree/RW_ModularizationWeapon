@@ -914,6 +914,7 @@ namespace RW_ModularizationWeapon
                 this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
                 
                 notUpdateTexture = !targetPartChanged && this.cachedGraphic_ChildNode != null;
+                if (notUpdateTexture) NodeProccesser.ResetRenderedTexture();
                 Graphic_ChildNode cachedGraphic_ChildNode = this.cachedGraphic_ChildNode ?? new Graphic_ChildNode(NodeProccesser, parent.Graphic.GetGraphic_ChildNode().SubGraphic);
                 this.cachedGraphic_ChildNode = parent.Graphic.GetGraphic_ChildNode();
                 parent.Graphic.SetGraphic_ChildNode(cachedGraphic_ChildNode);
