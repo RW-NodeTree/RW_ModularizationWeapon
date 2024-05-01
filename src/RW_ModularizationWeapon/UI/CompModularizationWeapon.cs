@@ -75,6 +75,7 @@ namespace RW_ModularizationWeapon
                     bool inRenderingRange = currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight;
                     float next = currentPos.y;
                     CompModularizationWeapon comp = thing;
+                    CompChildNodeProccesser proccesser = thing;
                     if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
                         if (opend)
@@ -127,7 +128,7 @@ namespace RW_ModularizationWeapon
                             if (comp_targetModeParent != null)
                             {
                                 thing.holdingOwner = null;
-                                comp.NodeProccesser.ResetRenderedTexture();
+                                proccesser.ResetRenderedTexture();
                             }
                             try
                             {
@@ -141,7 +142,7 @@ namespace RW_ModularizationWeapon
                             if (comp_targetModeParent != null)
                             {
                                 thing.holdingOwner = comp_targetModeParent.ChildNodes;
-                                comp.NodeProccesser.ResetRenderedTexture();
+                                proccesser.ResetRenderedTexture();
                             }
                         }
                         else

@@ -204,9 +204,10 @@ namespace RW_ModularizationWeapon
                         if(verbTracker != null)
                         {
                             List<Verb> verbList = verbTracker.AllVerbs;
+                            CompChildNodeProccesser proccesser = NodeProccesser;
                             foreach(Verb verb in verbList)
                             {
-                                if(verb.verbProps.isPrimary && NodeProccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1 == parent)
+                                if(verb.verbProps.isPrimary && proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1 == parent)
                                 {
                                     result = verb.verbProps.burstShotCount;
                                     break;

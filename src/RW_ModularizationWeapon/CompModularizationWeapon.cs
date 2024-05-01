@@ -427,21 +427,22 @@ namespace RW_ModularizationWeapon
         {
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
+            CompModularizationWeapon comp = part;
+            if (checkOccupy && comp?.occupiers != null) return false; 
+            if (allowedPartCache.TryGetValue((id,part), out bool result)) return result;
             WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
             WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
             //if (Prefs.DevMode) Log.Message($"properties : {properties}");
-            bool result = currentPartProperties != null && targetPartProperties != null;
+            result = currentPartProperties != null && targetPartProperties != null;
             if (!result) return false;
             if (part == null) return currentPartProperties.allowEmpty && targetPartProperties.allowEmpty;
-            CompModularizationWeapon comp = part;
-            if(checkOccupy && comp?.occupiers != null) return false; 
 
             result &=
                 currentPartProperties.filter.Allows(part) &&
-                !internal_Unchangeable(ChildNodes[id], currentPartProperties);
-            if (!result) return false;
-            result &=
-                targetPartProperties.filter.Allows(part);
+                targetPartProperties.filter.Allows(part) &&
+                !internal_Unchangeable(ChildNodes[id], currentPartProperties) &&
+                !internal_Unchangeable(ChildNodes[id], targetPartProperties);
+            allowedPartCache.Add((id,part), result);
             return result;
         }
 
@@ -703,8 +704,7 @@ namespace RW_ModularizationWeapon
         private bool CheckTargetVaild(bool deSpawn)
         {
             bool result = true;
-            bool swap = this.swap;
-            this.swap = false;
+            CompChildNodeProccesser proccesser = NodeProccesser;
             foreach (string id in this.PartIDs)
             {
                 if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
@@ -718,17 +718,19 @@ namespace RW_ModularizationWeapon
                         else
                         {
                             SetTargetPart(id, ChildNodes[id]);
+                            ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                             result = false;
                             continue;
                         }
                     }
-                    if (NodeProccesser.AllowNode(target.Thing, id))
+                    if (proccesser.AllowNode(target.Thing, id))
                     {
                         result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild(deSpawn) ?? true) && result;
                     }
                     else
                     {
                         SetTargetPart(id, ChildNodes[id]);
+                        ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;
                     }
                 }
@@ -737,7 +739,7 @@ namespace RW_ModularizationWeapon
                     result = (((CompModularizationWeapon)ChildNodes[id])?.CheckTargetVaild(deSpawn) ?? true) && result;
                 }
             }
-            this.swap = swap;
+            if (!result) UpdateTargetPartVNode();
             return result;
         }
 
@@ -1230,6 +1232,7 @@ namespace RW_ModularizationWeapon
         private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
         private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
+        private readonly Dictionary<(string, Thing), bool> allowedPartCache = new Dictionary<(string, Thing), bool>();
         private readonly Dictionary<string, WeaponAttachmentProperties> currentPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
         private readonly Dictionary<string, WeaponAttachmentProperties> targetPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
@@ -1265,9 +1268,9 @@ namespace RW_ModularizationWeapon
 
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
-        private readonly static Dictionary<ThingDef,int> compLoadingCache = new Dictionary<ThingDef,int>();
+        private static readonly Dictionary<ThingDef,int> compLoadingCache = new Dictionary<ThingDef,int>();
         
-        // internal static Stopwatch stopWatch = new Stopwatch();
+        internal static readonly Stopwatch stopWatch = new Stopwatch();
     }
 
     /// <summary>

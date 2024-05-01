@@ -70,11 +70,12 @@ namespace RW_ModularizationWeapon
                 Thing target = ChildNodes[id];
                 if(target != null)
                 {
-                    VNode child = new VNode(id,target.def.defName,node);
+                    VNode child = new VNode(id, target.def.defName, node);
                     CompModularizationWeapon comp = target;
                     comp?.AppendVNodeForCurrentPart(child);
                 }
             }
+            allowedPartCache.Clear();
             currentPartAttachmentPropertiesCache.Clear();
         }
 
@@ -104,11 +105,12 @@ namespace RW_ModularizationWeapon
                 Thing target = GetTargetPart(id).Thing;
                 if(target != null)
                 {
-                    VNode child = new VNode(id,target.def.defName,node);
+                    VNode child = new VNode(id, target.def.defName, node);
                     CompModularizationWeapon comp = target;
                     comp?.AppendVNodeForTargetPart(child);
                 }
             }
+            allowedPartCache.Clear();
             targetPartAttachmentPropertiesCache.Clear();
         }
 

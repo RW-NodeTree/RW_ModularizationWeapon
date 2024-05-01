@@ -283,6 +283,7 @@ namespace RW_ModularizationWeapon.UI
                     (Thing selThing, ThingDef selDef) = selections[i];
 
                     CompModularizationWeapon comp = selThing;
+                    CompChildNodeProccesser proccesser = selThing;
                     if (partForChange != null && idForChange != null)
                     {
                         if (partForChange.ChildNodes[idForChange] == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
@@ -294,7 +295,7 @@ namespace RW_ModularizationWeapon.UI
                             if (comp_targetModeParent != null)
                             {
                                 selThing.holdingOwner = null;
-                                comp.NodeProccesser.ResetRenderedTexture();
+                                proccesser.ResetRenderedTexture();
                             }
                             try
                             {
@@ -307,7 +308,7 @@ namespace RW_ModularizationWeapon.UI
                             if (comp_targetModeParent != null)
                             {
                                 selThing.holdingOwner = comp_targetModeParent.ChildNodes;
-                                comp.NodeProccesser.ResetRenderedTexture();
+                                proccesser.ResetRenderedTexture();
                             }
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))
