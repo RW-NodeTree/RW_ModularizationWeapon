@@ -766,13 +766,14 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        protected override bool PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds)
+        protected override void PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
         {
             // if(stopWatch.IsRunning) stopWatch.Restart();
             // else stopWatch.Start();
             // long ct = 0;
             // long lt = 0;
-
+            blockEvent = false;
+            notUpdateTexture = false;
             foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
@@ -804,7 +805,7 @@ namespace RW_ModularizationWeapon
                 // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
                 // lt = ct;
 
-                return false;
+                return;
             }
             
             // ct = stopWatch.ElapsedTicks;
@@ -865,28 +866,32 @@ namespace RW_ModularizationWeapon
             _ = CurrentPartAttachmentProperties;
             _ = TargetPartAttachmentProperties;
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
+            notUpdateTexture = !targetPartChanged && this.cachedGraphic_ChildNode != null;
+            Graphic_ChildNode cachedGraphic_ChildNode = this.cachedGraphic_ChildNode ?? new Graphic_ChildNode(NodeProccesser, parent.Graphic.GetGraphic_ChildNode().SubGraphic);
+            this.cachedGraphic_ChildNode = parent.Graphic.GetGraphic_ChildNode();
+            parent.Graphic.SetGraphic_ChildNode(cachedGraphic_ChildNode);
             targetPartChanged = false;
-            
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
             // lt = ct;
 
-            return false;
+            return;
         }
 
 
-        protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
+        protected override void PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
         {
             // if(stopWatch.IsRunning) stopWatch.Restart();
             // else stopWatch.Start();
             // long ct = 0;
             // long lt = 0;
 
+            blockEvent = false;
+            notUpdateTexture = false;
             bool swaping = RootPart.occupiers == null && swap;
 
             if (swaping)
             {
-                
                 Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
                 this.statOffsetCache.Clear();
                 this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
@@ -1058,9 +1063,7 @@ namespace RW_ModularizationWeapon
                     ThingComp tar = allComps.Find(x => fieldInfo.DeclaringType.IsAssignableFrom(x.GetType()));
                     if (src != null && tar != null) fieldInfo.SetValue(tar, fieldInfo.GetValue(src));
                 }
-
-
-                return false;
+                return;
             }
             
             // ct = stopWatch.ElapsedTicks;
@@ -1070,7 +1073,7 @@ namespace RW_ModularizationWeapon
             swap = false;
             NeedUpdate = false;
             // if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
-            return false;
+            return;
         }
 
 
@@ -1228,6 +1231,15 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
+        internal CompModularizationWeapon occupiers = null;
+        private bool swap = false;
+        private bool targetPartChanged = false;
+        private VNode targetPartVNode = null;
+        private VNode currentPartVNode = null;
+        private Graphic_ChildNode cachedGraphic_ChildNode = null;
+        private List<string> targetPartsWithId_IdWorkingList = new List<string>();
+        private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
+        private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
         private readonly HashSet<string> partIDs = new HashSet<string>();
         private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
         private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
@@ -1243,14 +1255,6 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>();
         private readonly Dictionary<Type, List<Tool>> toolsCache_TargetPart = new Dictionary<Type, List<Tool>>();
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache_TargetPart = new Dictionary<Type, List<VerbProperties>>();
-        private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
-        private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
-        private List<string> targetPartsWithId_IdWorkingList = new List<string>();
-        private VNode targetPartVNode = null;
-        private VNode currentPartVNode = null;
-        private bool targetPartChanged = false;
-        private bool swap = false;
-        internal CompModularizationWeapon occupiers = null;
 
         private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
         private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");

@@ -741,15 +741,15 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostThingWithComps_PreApplyDamage
   nameWithType: CompModularizationWeapon.PostThingWithComps_PreApplyDamage
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
-  name: PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
-  name.vb: PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing))
-  nameWithType: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
-  nameWithType.vb: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
+  name: PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__System_Boolean__System_Boolean__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
+  name.vb: PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>, out System.Boolean, out System.Boolean)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing), ByRef System.Boolean, ByRef System.Boolean)
+  nameWithType: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  nameWithType.vb: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode*
   name: PostUpdateNode
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostUpdateNode_
@@ -821,15 +821,15 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized
   nameWithType: CompModularizationWeapon.PreStatWorker_GetValueUnfinalized
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
-  name: PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing})
-  name.vb: PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing))
-  nameWithType: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>)
-  nameWithType.vb: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
+  name: PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__System_Boolean__System_Boolean__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
+  name.vb: PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>, out System.Boolean, out System.Boolean)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing), ByRef System.Boolean, ByRef System.Boolean)
+  nameWithType: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  nameWithType.vb: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode*
   name: PreUpdateNode
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreUpdateNode_
