@@ -930,12 +930,12 @@ namespace RW_ModularizationWeapon
                 );
                 Task cachedThingCompsTask = Task.Run(
                     ()=>
-                    this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x)
+                    this.cachedThingComps.AddRange(from x in allCompsCopy where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x)
                 );
                 
                 Task cachedCompPropertiesTask = Task.Run(
                     ()=>
-                    this.cachedCompProperties.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) != null select x.props)
+                    this.cachedCompProperties.AddRange(from x in allCompsCopy where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) != null select x.props)
                 );
                 allCompsTask.Wait();
                 cachedThingCompsTask.Wait();
