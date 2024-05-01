@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -765,25 +766,48 @@ namespace RW_ModularizationWeapon
 
         protected override bool PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds)
         {
+            if(stopWatch.IsRunning) stopWatch.Restart();
+            else stopWatch.Start();
+            long ct = 0;
+            long lt = 0;
+
             foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
             CompModularizationWeapon root = RootPart;
             bool occupyed = root.occupiers != null;
-            // Log.Message($"{parent} swap: {swap}; occupiers: {occupiers?.parent}");
+            
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
+            lt = ct;
+
             if (root == this)
             {
                 while (!CheckTargetVaild(!occupyed)) continue;
                 CheckAndSetTargetCache();
             }
+
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
+            lt = ct;
+
             if (occupyed || !swap)
             {
                 if (root == this) UpdateCurrentPartVNode();
                 _ = CurrentPartAttachmentProperties;
                 _ = TargetPartAttachmentProperties;
+                
+                ct = stopWatch.ElapsedTicks;
+                Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+                lt = ct;
+
                 return false;
             }
+            
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+            lt = ct;
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             Map map = parent.MapHeld;
             foreach (string id in this.PartIDs)
@@ -829,17 +853,30 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
+            lt = ct;
             if (AllowSwap) SwapAttachmentPropertiesCacheAndXmlNode();
             _ = CurrentPartAttachmentProperties;
             _ = TargetPartAttachmentProperties;
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
             targetPartChanged = false;
+            
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
+            lt = ct;
             return false;
         }
 
 
         protected override bool PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds)
         {
+            if(stopWatch.IsRunning) stopWatch.Restart();
+            else stopWatch.Start();
+            long ct = 0;
+            long lt = 0;
+
             bool swaping = RootPart.occupiers == null && swap;
 
             if (swaping)
@@ -874,7 +911,9 @@ namespace RW_ModularizationWeapon
                 this.verbPropertiesCache.Clear();
             }
 
-
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
+            lt = ct;
             List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
             
             List<CompProperties> cachedCompProperties = swaping ? new List<CompProperties>(this.cachedCompProperties) : new List<CompProperties>();
@@ -890,6 +929,11 @@ namespace RW_ModularizationWeapon
                 this.cachedCompProperties.AddRange(from x in allComps select x.props);
             }
             else allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
+            
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
+            lt = ct;
+
             for (int i = 0; i < allComps.Count; i++)
             {
                 ThingComp comp = allComps[i];
@@ -940,6 +984,10 @@ namespace RW_ModularizationWeapon
                 }
             }
 
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+            lt = ct;
+
             foreach (CompProperties prop in AllExtraCompProperties())
             {
                 if (allComps.FirstOrDefault(x => x.GetType() == prop.compClass) == null)
@@ -957,6 +1005,11 @@ namespace RW_ModularizationWeapon
                 }
             }
 
+
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
+            lt = ct;
+
             foreach ((Task<CompProperties>, ThingComp, bool) info in cachedTask)
             {
                 if (info.Item2 != null)
@@ -973,6 +1026,10 @@ namespace RW_ModularizationWeapon
                 //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
                 PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
             }
+            
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
+            lt = ct;
 
             if (!swaping)
             {
@@ -986,6 +1043,11 @@ namespace RW_ModularizationWeapon
 
                 return false;
             }
+            
+            ct = stopWatch.ElapsedTicks;
+            Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 6 {ct}, dt = {ct - lt}");
+            lt = ct;
+
             swap = false;
             NeedUpdate = false;
             // if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
@@ -1186,6 +1248,8 @@ namespace RW_ModularizationWeapon
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
         private readonly static Dictionary<ThingDef,int> compLoadingCache = new Dictionary<ThingDef,int>();
+        
+        internal static Stopwatch stopWatch = new Stopwatch();
     }
 
     /// <summary>
