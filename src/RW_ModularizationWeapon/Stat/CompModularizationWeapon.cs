@@ -61,7 +61,8 @@ namespace RW_ModularizationWeapon
             }
             Stack<List<CompProperties>> stackComp = (Stack<List<CompProperties>>)stats.GetOrNewWhenNull("CompModularizationWeapon_comps", () => new Stack<List<CompProperties>>());
             stackComp.Push(parent.def.comps);
-            parent.def.comps = (from x in parent.AllComps where x.props != null select x.props).ToList();
+            List<ThingComp> allComps = parent.AllComps;
+            parent.def.comps = (from x in allComps where x.props != null select x.props).ToList();
         }
 
 

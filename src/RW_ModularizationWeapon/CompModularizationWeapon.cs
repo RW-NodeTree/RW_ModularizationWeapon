@@ -918,15 +918,28 @@ namespace RW_ModularizationWeapon
             
             List<CompProperties> cachedCompProperties = swaping ? new List<CompProperties>(this.cachedCompProperties) : new List<CompProperties>();
             List<ThingComp> cachedThingComps = swaping ? new List<ThingComp>(this.cachedThingComps) : new List<ThingComp>();
-            List<ThingComp> allComps = parent.AllComps;
+            List<ThingComp> allComps = ThingWithComps_comps(parent);
             List<ThingComp> allCompsCopy = new List<ThingComp>(allComps);
             if (swaping)
             {
                 this.cachedThingComps.Clear();
-                this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x);
-                allComps.RemoveAll(x => this.cachedThingComps.Contains(x));
                 this.cachedCompProperties.Clear();
-                this.cachedCompProperties.AddRange(from x in allComps select x.props);
+                Task allCompsTask = Task.Run(
+                    ()=>
+                    allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null)
+                );
+                Task cachedThingCompsTask = Task.Run(
+                    ()=>
+                    this.cachedThingComps.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null select x)
+                );
+                
+                Task cachedCompPropertiesTask = Task.Run(
+                    ()=>
+                    this.cachedCompProperties.AddRange(from x in allComps where parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) != null select x.props)
+                );
+                allCompsTask.Wait();
+                cachedThingCompsTask.Wait();
+                cachedCompPropertiesTask.Wait();
             }
             else allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
             
@@ -1237,6 +1250,7 @@ namespace RW_ModularizationWeapon
         private static Type PerformanceOptimizer_ComponentCache = GenTypes.GetTypeInAnyAssembly("PerformanceOptimizer.ComponentCache");
         private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
         private static AccessTools.FieldRef<ThingDef, List<VerbProperties>> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>>("verbs");
+        private static AccessTools.FieldRef<ThingWithComps, List<ThingComp>> ThingWithComps_comps = AccessTools.FieldRefAccess<ThingWithComps, List<ThingComp>>("comps");
         private static AccessTools.FieldRef<object, ThingDef> CombatExtended_CompAmmoUser_currentAmmoInt = null;
         //private static AccessTools.FieldRef<object, IList> CombatExtended_CompFireModes_availableAimModes = null;
         private static MethodInfo CombatExtended_CompAmmoUser_CurMagCount_get = null;
