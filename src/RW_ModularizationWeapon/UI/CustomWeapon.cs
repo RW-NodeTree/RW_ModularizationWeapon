@@ -315,7 +315,7 @@ namespace RW_ModularizationWeapon.UI
                                 weapon?.SwapTargetPart();
                                 targetMode = !targetMode;
                                 bool success = partForChange.SetTargetPart(idForChange, selThing);
-                                Log.Message($"partForChange.SetTargetPart({idForChange}, {selThing}) => {success}");
+                                // Log.Message($"partForChange.SetTargetPart({idForChange}, {selThing}) => {success}");
                                 weapon?.SwapTargetPart();
                                 targetMode = !targetMode;
                                 ResetInfoTags();
@@ -330,7 +330,7 @@ namespace RW_ModularizationWeapon.UI
                                 weapon?.SwapTargetPart();
                                 targetMode = !targetMode;
                                 bool success = partForChange.SetTargetPart(idForChange, null);
-                                Log.Message($"partForChange.SetTargetPart({idForChange}, null) => {success}");
+                                // Log.Message($"partForChange.SetTargetPart({idForChange}, null) => {success}");
                                 weapon?.SwapTargetPart();
                                 targetMode = !targetMode;
                                 ResetInfoTags();
