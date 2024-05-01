@@ -912,6 +912,14 @@ namespace RW_ModularizationWeapon
                 this.verbPropertiesCache.AddRange(this.verbPropertiesCache_TargetPart);
                 this.verbPropertiesCache_TargetPart.Clear();
                 this.verbPropertiesCache_TargetPart.AddRange(verbPropertiesCache);
+                
+                // notUpdateTexture = !targetPartChanged && this.cachedGraphic_ChildNode != null;
+                // if (notUpdateTexture) NodeProccesser.ResetRenderedTexture();
+                // Graphic_ChildNode cachedGraphic_ChildNode = this.cachedGraphic_ChildNode ?? new Graphic_ChildNode(NodeProccesser, parent.Graphic.GetGraphic_ChildNode().SubGraphic);
+                // this.cachedGraphic_ChildNode = parent.Graphic.GetGraphic_ChildNode();
+                // parent.Graphic.SetGraphic_ChildNode(cachedGraphic_ChildNode);
+                // _ = cachedGraphic_ChildNode.MatSingle;
+
             }
             else
             {
@@ -1055,16 +1063,7 @@ namespace RW_ModularizationWeapon
             // Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
             // lt = ct;
 
-            if (swaping)
-            {
-                notUpdateTexture = !targetPartChanged && this.cachedGraphic_ChildNode != null;
-                if (notUpdateTexture) NodeProccesser.ResetRenderedTexture();
-                Graphic_ChildNode cachedGraphic_ChildNode = this.cachedGraphic_ChildNode ?? new Graphic_ChildNode(NodeProccesser, parent.Graphic.GetGraphic_ChildNode().SubGraphic);
-                this.cachedGraphic_ChildNode = parent.Graphic.GetGraphic_ChildNode();
-                parent.Graphic.SetGraphic_ChildNode(cachedGraphic_ChildNode);
-                _ = cachedGraphic_ChildNode.MatSingle;
-            }
-            else
+            if (!swaping)
             {
                 foreach (FieldInfo fieldInfo in Props.ThingCompCopiedMember)
                 {
@@ -1074,6 +1073,7 @@ namespace RW_ModularizationWeapon
                 }
                 return;
             }
+            
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 6 {ct}, dt = {ct - lt}");
             // lt = ct;
@@ -1245,7 +1245,7 @@ namespace RW_ModularizationWeapon
         private bool targetPartChanged = false;
         private VNode targetPartVNode = null;
         private VNode currentPartVNode = null;
-        private Graphic_ChildNode cachedGraphic_ChildNode = null;
+        // private Graphic_ChildNode cachedGraphic_ChildNode = null;
         private List<string> targetPartsWithId_IdWorkingList = new List<string>();
         private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
