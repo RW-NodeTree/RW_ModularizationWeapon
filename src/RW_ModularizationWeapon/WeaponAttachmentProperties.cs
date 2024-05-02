@@ -418,7 +418,7 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            return $"{base.ToString()} UsedFieldsCount = {UsedFields.Count}";
+            return $"{base.ToString()}, UsedFieldsCount = {UsedFields.Count}";
         }
     }
 }
