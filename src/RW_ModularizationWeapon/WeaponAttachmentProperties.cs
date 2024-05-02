@@ -391,27 +391,19 @@ namespace RW_ModularizationWeapon
 
     public class OptionalWeaponAttachmentProperties : WeaponAttachmentProperties
     {
-        private List<FieldInfo> usedFields = new List<FieldInfo>(allFields.Length);
-        private static FieldInfo[] allFields = typeof(WeaponAttachmentProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
         public List<FieldInfo> UsedFields => new List<FieldInfo>(usedFields);
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            foreach(XmlNode node in xmlRoot.ChildNodes)
-            {
-                for (int i = 0; i < allFields.Length; i++)
-                {
-                    if(allFields[i].Name == node.Name)
-                    {
-                        usedFields.Add(allFields[i]);
-                        break;
-                    }
-                }
-            }
             WeaponAttachmentProperties src = (WeaponAttachmentProperties)DirectXmlToObject.GetObjectFromXmlMethod(typeof(WeaponAttachmentProperties))(xmlRoot, true);
-            foreach(FieldInfo fieldInfo in usedFields)
+            foreach (XmlNode node in xmlRoot.ChildNodes)
             {
-                fieldInfo.SetValue(this,fieldInfo.GetValue(src));
+                FieldInfo fieldInfo = typeof(WeaponAttachmentProperties).GetField(node.Name, BindingFlags.Instance | BindingFlags.Public);
+                if (fieldInfo != null)
+                {
+                    usedFields.Add(fieldInfo);
+                    fieldInfo.SetValue(this,fieldInfo.GetValue(src));
+                }
             }
             //Log.Message(ToString());
         }
@@ -420,5 +412,8 @@ namespace RW_ModularizationWeapon
         {
             return $"{base.ToString()}, UsedFieldsCount = {UsedFields.Count}";
         }
+
+        private readonly List<FieldInfo> usedFields = new List<FieldInfo>();
+        // private static FieldInfo[] allFields = typeof(WeaponAttachmentProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
     }
 }
