@@ -124,7 +124,7 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    Thing thing = ChildNodes[properties.id];
+                    Thing thing = GetTargetPart(properties.id).Thing;
                     Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     if(thing != null)
