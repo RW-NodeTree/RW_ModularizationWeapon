@@ -652,7 +652,6 @@ namespace RW_ModularizationWeapon
 
         private void MarkTargetPartChanged()
         {
-
             Map map = parent.MapHeld;
             if (map != null &&
                 CombatExtended_CompAmmoUser != null &&
@@ -684,12 +683,10 @@ namespace RW_ModularizationWeapon
             verbPropertiesCache_TargetPart.Clear();
         }
 
-        /// <summary>
-        /// Active method for testing `targetPartChanged`
-        /// </summary>
-        /// <returns>`targetPartChanged` of target child</returns>
+
         private bool CheckAndSetTargetCache()
         {
+            if (Props.attachmentProperties.Count <= 0) return targetPartChanged;
             foreach (Thing thing in ChildNodes.Values)
                 if (((CompModularizationWeapon)thing)?.CheckAndSetTargetCache() ?? false)
                     targetPartChanged = true;
@@ -704,6 +701,7 @@ namespace RW_ModularizationWeapon
         private bool CheckTargetVaild(bool deSpawn)
         {
             bool result = true;
+            if (Props.attachmentProperties.Count <= 0) return result;
             CompChildNodeProccesser proccesser = NodeProccesser;
             foreach (Thing thing in ChildNodes.Values)
                 if (!(((CompModularizationWeapon)thing)?.CheckTargetVaild(deSpawn) ?? true))
@@ -768,6 +766,7 @@ namespace RW_ModularizationWeapon
 
         private void InitAttachmentProperties()
         {
+            if (Props.attachmentProperties.Count <= 0) return;
             foreach (Thing thing in ChildNodes.Values)
             {
                 CompModularizationWeapon comp = thing;
@@ -785,6 +784,7 @@ namespace RW_ModularizationWeapon
 
         private void SwapStateCacheAndCompCache()
         {
+            if (Props.attachmentProperties.Count <= 0) return;
             foreach (Thing thing in ChildNodes.Values)
             {
                 CompModularizationWeapon comp = thing;
@@ -947,6 +947,7 @@ namespace RW_ModularizationWeapon
 
         private void UpdateStateCacheAndCompCache()
         {
+            if (Props.attachmentProperties.Count <= 0) return;
             foreach (Thing thing in ChildNodes.Values)
             {
                 CompModularizationWeapon comp = thing;
