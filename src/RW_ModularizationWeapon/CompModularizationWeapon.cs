@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HarmonyLib;
+using Mono.Unix;
 using RimWorld;
 using RW_ModularizationWeapon.Tools;
 using RW_NodeTree;
@@ -83,7 +84,7 @@ namespace RW_ModularizationWeapon
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
                     for (int i = mached.Count - 1; i >= 0; i--)
                     {
-                        uint minMach = 0;
+                        uint minMach = uint.MaxValue;
                         WeaponAttachmentProperties attachmentProperties = null;
                         foreach(KeyValuePair<WeaponAttachmentProperties, uint> record in mached)
                         {
@@ -143,7 +144,7 @@ namespace RW_ModularizationWeapon
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
                     for (int i = mached.Count - 1; i >= 0; i--)
                     {
-                        uint minMach = 0;
+                        uint minMach = uint.MaxValue;
                         WeaponAttachmentProperties attachmentProperties = null;
                         foreach(KeyValuePair<WeaponAttachmentProperties, uint> record in mached)
                         {
