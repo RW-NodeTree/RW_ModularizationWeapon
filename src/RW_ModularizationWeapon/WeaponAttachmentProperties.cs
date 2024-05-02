@@ -179,6 +179,12 @@ namespace RW_ModularizationWeapon
             #endregion
         }
 
+
+        public override string ToString()
+        {
+            return $"{Name} : AllowedDefCount = {filter.AllowedDefCount}";
+        }
+
         /// <summary>
         /// attach point unique id
         /// </summary>
@@ -408,6 +414,11 @@ namespace RW_ModularizationWeapon
                 fieldInfo.SetValue(this,fieldInfo.GetValue(src));
             }
             //Log.Message(ToString());
+        }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} UsedFieldsCount = {UsedFields.Count}";
         }
     }
 }

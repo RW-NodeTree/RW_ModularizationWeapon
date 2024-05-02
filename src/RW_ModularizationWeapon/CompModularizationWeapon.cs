@@ -1095,6 +1095,7 @@ namespace RW_ModularizationWeapon
             }
             else if (RootPart == this)
             {
+                SwapOrUpdateStateCacheAndCompCache();
                 UpdateCurrentPartVNode();
                 InitAttachmentProperties();
             }
