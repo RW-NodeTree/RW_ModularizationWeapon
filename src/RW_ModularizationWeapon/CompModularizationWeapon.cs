@@ -67,19 +67,16 @@ namespace RW_ModularizationWeapon
                     Thing thing = ChildNodes[properties.id];
                     Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
-                    if(thing != null)
+                    foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
-                        foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
+                        if (record.Item1 != null && record.Item2 != null)
                         {
-                            if (record.Item1 != null && record.Item2 != null)
+                            uint currentMach = record.Item1.Mach(currentPartVNode[properties.id]);
+                            if(currentMach > 0)
                             {
-                                uint currentMach = record.Item1.Mach(currentPartVNode[properties.id]);
-                                if(currentMach > 0)
-                                {
-                                    mached.Add(record.Item2, currentMach);
-                                }
-                                Log.Message($"{record.Item2.id} : {currentMach}");
+                                mached.Add(record.Item2, currentMach);
                             }
+                            Log.Message($"{record.Item2.id} : {currentMach}");
                         }
                     }
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
@@ -127,19 +124,16 @@ namespace RW_ModularizationWeapon
                     Thing thing = GetTargetPart(properties.id).Thing;
                     Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
-                    if(thing != null)
+                    foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
-                        foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
+                        if (record.Item1 != null && record.Item2 != null)
                         {
-                            if (record.Item1 != null && record.Item2 != null)
+                            uint currentMach = record.Item1.Mach(targetPartVNode[properties.id]);
+                            if(currentMach > 0)
                             {
-                                uint currentMach = record.Item1.Mach(targetPartVNode[properties.id]);
-                                if(currentMach > 0)
-                                {
-                                    mached.Add(record.Item2, currentMach);
-                                }
-                                Log.Message($"{record.Item2.id} : {currentMach}");
+                                mached.Add(record.Item2, currentMach);
                             }
+                            Log.Message($"{record.Item2.id} : {currentMach}");
                         }
                     }
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
