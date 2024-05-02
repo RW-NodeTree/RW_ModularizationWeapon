@@ -66,6 +66,7 @@ namespace RW_ModularizationWeapon
                     if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     Thing thing = ChildNodes[properties.id];
                     Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
+                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Cpunt = {Props.attachmentPropertiesWithQuery.Count}");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
@@ -122,7 +123,8 @@ namespace RW_ModularizationWeapon
                 {
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     Thing thing = GetTargetPart(properties.id).Thing;
-                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating");
+                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
+                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Cpunt = {Props.attachmentPropertiesWithQuery.Count}");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
@@ -911,11 +913,6 @@ namespace RW_ModularizationWeapon
                             if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(properties);
                             else comp.props = properties;
                         }
-                        //else
-                        //{
-                        //    if (Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)) comp.Initialize(CompPropertiesAfterAffect(properties));
-                        //    else comp.props = CompPropertiesAfterAffect(properties);
-                        //}
                         else cachedTask.Add((Task.Run(() => CompPropertiesAfterAffect(properties)), comp, Props.compPropertiesInitializeCompType.Contains(type) || Props.compPropertiesCreateInstanceCompType.Contains(type)));
                         allComps[i] = comp;
                     }
