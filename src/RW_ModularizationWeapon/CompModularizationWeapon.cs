@@ -680,7 +680,6 @@ namespace RW_ModularizationWeapon
             statMultiplierCache_TargetPart.Clear();
             toolsCache_TargetPart.Clear();
             verbPropertiesCache_TargetPart.Clear();
-            if (AllowSwap) UpdateTargetPartVNode();
         }
 
         /// <summary>
@@ -741,7 +740,7 @@ namespace RW_ModularizationWeapon
                     result = (((CompModularizationWeapon)ChildNodes[id])?.CheckTargetVaild(deSpawn) ?? true) && result;
                 }
             }
-            if (!result) UpdateTargetPartVNode();
+            if (!result && RootPart == this) UpdateTargetPartVNode();
             return result;
         }
 
@@ -1001,7 +1000,6 @@ namespace RW_ModularizationWeapon
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
             CompModularizationWeapon root = RootPart;
-            bool occupyed = root.occupiers != null;
             
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
@@ -1009,27 +1007,13 @@ namespace RW_ModularizationWeapon
 
             if (root == this)
             {
-                while (!CheckTargetVaild(!occupyed)) continue;
+                while (!CheckTargetVaild(root.occupiers == null)) continue;
                 CheckAndSetTargetCache();
             }
 
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
             // lt = ct;
-
-            if (occupyed || !swap)
-            {
-                if (root == this)
-                {
-                    UpdateCurrentPartVNode();
-                    InitAttachmentProperties();
-                }
-                // ct = stopWatch.ElapsedTicks;
-                // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
-                // lt = ct;
-
-                return;
-            }
             
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
@@ -1085,11 +1069,6 @@ namespace RW_ModularizationWeapon
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
             // lt = ct;
 
-            if (AllowSwap)
-            {
-                SwapAttachmentPropertiesCacheAndVNode();
-                InitAttachmentProperties();
-            }
             //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
@@ -1108,7 +1087,17 @@ namespace RW_ModularizationWeapon
 
             blockEvent = false;
             notUpdateTexture = false;
-            if (AllowSwap) SwapOrUpdateStateCacheAndCompCache();
+            if (AllowSwap)
+            {
+                SwapOrUpdateStateCacheAndCompCache();
+                SwapAttachmentPropertiesCacheAndVNode();
+                InitAttachmentProperties();
+            }
+            else if (RootPart == this)
+            {
+                UpdateCurrentPartVNode();
+                InitAttachmentProperties();
+            }
             swap = false;
             NeedUpdate = false;
             targetPartChanged = false;
