@@ -53,6 +53,7 @@ namespace RW_ModularizationWeapon
             {
                 yield return c;
             }
+            if ((selPawn.CombinedDisabledWorkTags & WorkTags.ManualDumb) != WorkTags.None) yield break;
             CompPowerTrader compPower = this.parent.TryGetComp<CompPowerTrader>();
             if (compPower != null)
             {

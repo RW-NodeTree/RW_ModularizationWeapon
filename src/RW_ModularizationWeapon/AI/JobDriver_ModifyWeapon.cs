@@ -26,7 +26,11 @@ namespace RW_ModularizationWeapon.AI
         }
         protected override IEnumerable<Toil> MakeNewToils()
         {
-
+            if ((this.pawn.CombinedDisabledWorkTags & WorkTags.ManualDumb) != WorkTags.None)
+            {
+                this.EndJobWith(JobCondition.Incompletable);
+                yield break;
+            }
             this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
             this.FailOnBurningImmobile(TargetIndex.A);
 
