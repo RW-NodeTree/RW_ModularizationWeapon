@@ -4524,6 +4524,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.LoadDataFromXmlCustom
   nameWithType: OptionalWeaponAttachmentProperties.LoadDataFromXmlCustom
+- uid: RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.ToString
+  name: ToString()
+  href: api/RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.html#RW_ModularizationWeapon_OptionalWeaponAttachmentProperties_ToString
+  commentId: M:RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.ToString
+  fullName: RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.ToString()
+  nameWithType: OptionalWeaponAttachmentProperties.ToString()
+- uid: RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.ToString*
+  name: ToString
+  href: api/RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.html#RW_ModularizationWeapon_OptionalWeaponAttachmentProperties_ToString_
+  commentId: Overload:RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.ToString
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.ToString
+  nameWithType: OptionalWeaponAttachmentProperties.ToString
 - uid: RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.UsedFields
   name: UsedFields
   href: api/RW_ModularizationWeapon.OptionalWeaponAttachmentProperties.html#RW_ModularizationWeapon_OptionalWeaponAttachmentProperties_UsedFields
@@ -5161,6 +5174,12 @@ references:
   commentId: T:RW_ModularizationWeapon.WeaponAttachmentProperties
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties
   nameWithType: WeaponAttachmentProperties
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.allFields
+  name: allFields
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_allFields
+  commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.allFields
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.allFields
+  nameWithType: WeaponAttachmentProperties.allFields
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.allowedExtraCompType
   name: allowedExtraCompType
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_allowedExtraCompType
@@ -5227,6 +5246,19 @@ references:
   commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.id
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.id
   nameWithType: WeaponAttachmentProperties.id
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  name: LoadDataFromXmlCustom(XmlNode)
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_LoadDataFromXmlCustom_System_Xml_XmlNode_
+  commentId: M:RW_ModularizationWeapon.WeaponAttachmentProperties.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.LoadDataFromXmlCustom(System.Xml.XmlNode)
+  nameWithType: WeaponAttachmentProperties.LoadDataFromXmlCustom(XmlNode)
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.LoadDataFromXmlCustom*
+  name: LoadDataFromXmlCustom
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_LoadDataFromXmlCustom_
+  commentId: Overload:RW_ModularizationWeapon.WeaponAttachmentProperties.LoadDataFromXmlCustom
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.LoadDataFromXmlCustom
+  nameWithType: WeaponAttachmentProperties.LoadDataFromXmlCustom
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.name
   name: name
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_name
@@ -5457,6 +5489,19 @@ references:
   commentId: F:RW_ModularizationWeapon.WeaponAttachmentProperties.toolsOtherPartOffseterAffectHorizonDefaultValue
   fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.toolsOtherPartOffseterAffectHorizonDefaultValue
   nameWithType: WeaponAttachmentProperties.toolsOtherPartOffseterAffectHorizonDefaultValue
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.ToString
+  name: ToString()
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_ToString
+  commentId: M:RW_ModularizationWeapon.WeaponAttachmentProperties.ToString
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.ToString()
+  nameWithType: WeaponAttachmentProperties.ToString()
+- uid: RW_ModularizationWeapon.WeaponAttachmentProperties.ToString*
+  name: ToString
+  href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_ToString_
+  commentId: Overload:RW_ModularizationWeapon.WeaponAttachmentProperties.ToString
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.WeaponAttachmentProperties.ToString
+  nameWithType: WeaponAttachmentProperties.ToString
 - uid: RW_ModularizationWeapon.WeaponAttachmentProperties.Transfrom(System.UInt32)
   name: Transfrom(UInt32)
   href: api/RW_ModularizationWeapon.WeaponAttachmentProperties.html#RW_ModularizationWeapon_WeaponAttachmentProperties_Transfrom_System_UInt32_

@@ -64,9 +64,9 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    Thing thing = ChildNodes[properties.id];
-                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
-                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
+                    // Thing thing = ChildNodes[properties.id];
+                    // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
+                    // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
@@ -77,7 +77,7 @@ namespace RW_ModularizationWeapon
                             {
                                 mached.Add(record.Item2, currentMach);
                             }
-                            Log.Message($"{record.Item2.id} : {currentMach}");
+                            // Log.Message($"{record.Item2.id} : {currentMach}");
                         }
                     }
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
@@ -122,9 +122,9 @@ namespace RW_ModularizationWeapon
                 foreach(WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    Thing thing = GetTargetPart(properties.id).Thing;
-                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
-                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
+                    // Thing thing = GetTargetPart(properties.id).Thing;
+                    // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
+                    // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
@@ -135,7 +135,7 @@ namespace RW_ModularizationWeapon
                             {
                                 mached.Add(record.Item2, currentMach);
                             }
-                            Log.Message($"{record.Item2.id} : {currentMach}");
+                            // Log.Message($"{record.Item2.id} : {currentMach}");
                         }
                     }
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
@@ -1532,10 +1532,10 @@ namespace RW_ModularizationWeapon
                     properties.Item2.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
                 }
             }
-            foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
-            {
-                Log.Message($"{parentDef} : ({properties.Item1}, {properties.Item2})");
-            }
+            // foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
+            // {
+            //     Log.Message($"{parentDef} : ({properties.Item1}, {properties.Item2})");
+            // }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
 
