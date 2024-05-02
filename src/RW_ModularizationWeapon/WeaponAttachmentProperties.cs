@@ -182,14 +182,42 @@ namespace RW_ModularizationWeapon
 
         public virtual void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
+            HashSet<string> hashSet = null;
+            if (xmlRoot.ChildNodes.Count > 1)
+            {
+                hashSet = new HashSet<string>();
+            }
             foreach(XmlNode node in xmlRoot.ChildNodes)
             {
+                if (node.NodeType != XmlNodeType.Element) continue;
+                if (hashSet != null && !hashSet.Add(node.Name))
+                {
+                    Log.Error(string.Concat("XML ", this.GetType(), " defines the same field twice: ", node.Name, ".\n\nField contents: ", node.InnerText, ".\n\nWhole XML:\n\n", xmlRoot.OuterXml));
+                }
                 for (int i = 0; i < allFields.Length; i++)
                 {
                     FieldInfo fieldInfo = allFields[i];
                     if (fieldInfo.Name == node.Name)
                     {
-                        fieldInfo.SetValue(this,DirectXmlToObject.GetObjectFromXmlMethod(fieldInfo.FieldType)(node, true));
+                        if (GenTypes.IsDef(fieldInfo.FieldType))
+                        {
+                            if (node.InnerText.NullOrEmpty()) continue;
+                            XmlAttribute MayRequire = node.Attributes["MayRequire"];
+                            XmlAttribute MayRequireAnyOf = node.Attributes["MayRequireAnyOf"];
+                            DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, fieldInfo, node.InnerText, MayRequire?.Value.ToLower(), MayRequireAnyOf?.Value.ToLower());
+                        }
+                        else
+                        {
+                            try
+                            {
+                                fieldInfo.SetValue(this,DirectXmlToObject.GetObjectFromXmlMethod(fieldInfo.FieldType)(node, true));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error("Exception loading from " + node.ToString() + ": " + ex.ToString());
+                                continue;
+                            }
+                        }
                         break;
                     }
                 }
@@ -408,10 +436,11 @@ namespace RW_ModularizationWeapon
 
     public class OptionalWeaponAttachmentProperties : WeaponAttachmentProperties
     {
-        public List<FieldInfo> UsedFields => new List<FieldInfo>(usedFields);
+        public HashSet<FieldInfo> UsedFields => new HashSet<FieldInfo>(usedFields);
 
         public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
+            base.LoadDataFromXmlCustom(xmlRoot);
             foreach(XmlNode node in xmlRoot.ChildNodes)
             {
                 for (int i = 0; i < allFields.Length; i++)
@@ -420,7 +449,6 @@ namespace RW_ModularizationWeapon
                     if (fieldInfo.Name == node.Name)
                     {
                         usedFields.Add(fieldInfo);
-                        fieldInfo.SetValue(this,DirectXmlToObject.GetObjectFromXmlMethod(fieldInfo.FieldType)(node, true));
                         break;
                     }
                 }
@@ -432,6 +460,6 @@ namespace RW_ModularizationWeapon
             return $"{base.ToString()}, UsedFieldsCount = {UsedFields.Count}";
         }
 
-        private List<FieldInfo> usedFields = new List<FieldInfo>(allFields.Length);
+        private HashSet<FieldInfo> usedFields = new HashSet<FieldInfo>(allFields.Length);
     }
 }
