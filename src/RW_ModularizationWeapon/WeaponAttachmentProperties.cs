@@ -180,6 +180,22 @@ namespace RW_ModularizationWeapon
         }
 
 
+        public virtual void LoadDataFromXmlCustom(XmlNode xmlRoot)
+        {
+            foreach(XmlNode node in xmlRoot.ChildNodes)
+            {
+                for (int i = 0; i < allFields.Length; i++)
+                {
+                    FieldInfo fieldInfo = allFields[i];
+                    if (fieldInfo.Name == node.Name)
+                    {
+                        fieldInfo.SetValue(this,DirectXmlToObject.GetObjectFromXmlMethod(fieldInfo.FieldType)(node, true));
+                        break;
+                    }
+                }
+            }
+        }
+
         public override string ToString()
         {
             return $"{Name} : AllowedDefCount = {filter.AllowedDefCount}";
@@ -387,25 +403,28 @@ namespace RW_ModularizationWeapon
 
 
         private Texture2D cachedUITex = null;
+        protected static FieldInfo[] allFields = typeof(WeaponAttachmentProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
     }
 
     public class OptionalWeaponAttachmentProperties : WeaponAttachmentProperties
     {
         public List<FieldInfo> UsedFields => new List<FieldInfo>(usedFields);
 
-        public void LoadDataFromXmlCustom(XmlNode xmlRoot)
+        public override void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            WeaponAttachmentProperties src = (WeaponAttachmentProperties)DirectXmlToObject.GetObjectFromXmlMethod(typeof(WeaponAttachmentProperties))(xmlRoot, true);
-            foreach (XmlNode node in xmlRoot.ChildNodes)
+            foreach(XmlNode node in xmlRoot.ChildNodes)
             {
-                FieldInfo fieldInfo = typeof(WeaponAttachmentProperties).GetField(node.Name, BindingFlags.Instance | BindingFlags.Public);
-                if (fieldInfo != null)
+                for (int i = 0; i < allFields.Length; i++)
                 {
-                    usedFields.Add(fieldInfo);
-                    fieldInfo.SetValue(this,fieldInfo.GetValue(src));
+                    FieldInfo fieldInfo = allFields[i];
+                    if (fieldInfo.Name == node.Name)
+                    {
+                        usedFields.Add(fieldInfo);
+                        fieldInfo.SetValue(this,DirectXmlToObject.GetObjectFromXmlMethod(fieldInfo.FieldType)(node, true));
+                        break;
+                    }
                 }
             }
-            //Log.Message(ToString());
         }
 
         public override string ToString()
@@ -413,7 +432,6 @@ namespace RW_ModularizationWeapon
             return $"{base.ToString()}, UsedFieldsCount = {UsedFields.Count}";
         }
 
-        private readonly List<FieldInfo> usedFields = new List<FieldInfo>();
-        // private static FieldInfo[] allFields = typeof(WeaponAttachmentProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
+        private List<FieldInfo> usedFields = new List<FieldInfo>(allFields.Length);
     }
 }
