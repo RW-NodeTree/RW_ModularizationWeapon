@@ -1531,7 +1531,7 @@ namespace RW_ModularizationWeapon
             }
             foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
             {
-                Log.Message(properties.Item1);
+                Log.Message($"{parentDef} : ({properties.Item1}, {properties.Item2})");
             }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
