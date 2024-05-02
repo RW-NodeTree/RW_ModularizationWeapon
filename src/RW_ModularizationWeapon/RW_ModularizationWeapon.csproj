@@ -43,7 +43,7 @@
 			<HintPath Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'">../../lib/RW_NodeTree/1.5/Assemblies/RW_NodeTree.dll</HintPath>
 		</Reference>
     <!-- DocFX -->
-		<PackageReference Include="docfx.console" Version="2.*" ExcludeAssets="runtime" />
+		<PackageReference Condition=" '$(Configuration)' == 'ReleaseV13' or '$(Configuration)' == 'ReleaseV14' or '$(Configuration)' == 'ReleaseV15'" Include="docfx.console" Version="2.*" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="./docfx/api/*.yml" />
