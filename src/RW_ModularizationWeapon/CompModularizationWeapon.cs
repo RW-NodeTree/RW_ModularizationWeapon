@@ -752,7 +752,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        private void SwapAttachmentPropertiesCacheAndXmlNode()
+        private void SwapAttachmentPropertiesCacheAndVNode()
         {
             Dictionary<string, WeaponAttachmentProperties> attachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
             this.currentPartAttachmentPropertiesCache.Clear();
@@ -765,132 +765,46 @@ namespace RW_ModularizationWeapon
             foreach (Thing thing in ChildNodes.Values)
             {
                 CompModularizationWeapon comp = thing;
-                comp?.SwapAttachmentPropertiesCacheAndXmlNode();
+                comp?.SwapAttachmentPropertiesCacheAndVNode();
             }
             foreach (Thing thing in targetPartsWithId.Values)
             {
                 CompModularizationWeapon comp = thing;
-                comp?.SwapAttachmentPropertiesCacheAndXmlNode();
+                comp?.SwapAttachmentPropertiesCacheAndVNode();
             }
         }
 
-        protected override void PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
+
+        private void InitAttachmentProperties()
         {
-            // if(stopWatch.IsRunning) stopWatch.Restart();
-            // else stopWatch.Start();
-            // long ct = 0;
-            // long lt = 0;
-            blockEvent = false;
-            notUpdateTexture = false;
-            foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
+            foreach (Thing thing in ChildNodes.Values)
             {
-                ChildNodes[keyValue.Key] = keyValue.Value;
+                CompModularizationWeapon comp = thing;
+                comp?.InitAttachmentProperties();
             }
-            CompModularizationWeapon root = RootPart;
-            bool occupyed = root.occupiers != null;
-            
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            if (root == this)
+            foreach (Thing thing in targetPartsWithId.Values)
             {
-                while (!CheckTargetVaild(!occupyed)) continue;
-                CheckAndSetTargetCache();
+                CompModularizationWeapon comp = thing;
+                comp?.InitAttachmentProperties();
             }
-
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            if (occupyed || !swap)
-            {
-                if (root == this) UpdateCurrentPartVNode();
-                _ = CurrentPartAttachmentProperties;
-                _ = TargetPartAttachmentProperties;
-                
-                // ct = stopWatch.ElapsedTicks;
-                // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
-                // lt = ct;
-
-                return;
-            }
-            
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
-            Map map = parent.MapHeld;
-            foreach (string id in this.PartIDs)
-            {
-                //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
-                CompChildNodeProccesser proccesser;
-                CompModularizationWeapon weaponComp;
-                Thing prev = ChildNodes[id];
-                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
-                {
-
-                    proccesser = prev;
-                    if (proccesser != null) proccesser.NeedUpdate = true;
-
-                    weaponComp = prev;
-                    if (weaponComp != null) weaponComp.swap = true;
-                    continue;
-                }
-
-                ChildNodes[id] = target.Thing;
-                SetTargetPart(id, prev);
-
-                //Sync child swap state
-
-                proccesser = prev;
-                if (proccesser != null) proccesser.NeedUpdate = true;
-
-                weaponComp = prev;
-                if (weaponComp != null) weaponComp.swap = true;
-
-                proccesser = target.Thing;
-                if (proccesser != null) proccesser.NeedUpdate = true;
-
-                weaponComp = target.Thing;
-                if (weaponComp != null) weaponComp.swap = true;
-
-                if(map != null && prev != null)
-                {
-                    int index = map.cellIndices.CellToIndex(prev.Position);
-                    if (index < map.cellIndices.NumGridCells && index >= 0)
-                    {
-                        prev.SpawnSetup(map, false);
-                    }
-                }
-            }
-
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            if (AllowSwap) SwapAttachmentPropertiesCacheAndXmlNode();
             _ = CurrentPartAttachmentProperties;
             _ = TargetPartAttachmentProperties;
-            //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            return;
         }
 
 
-        protected override void PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
+        private void SwapOrUpdateStateCacheAndCompCache()
         {
-            // if(stopWatch.IsRunning) stopWatch.Restart();
-            // else stopWatch.Start();
-            // long ct = 0;
-            // long lt = 0;
-
-            blockEvent = false;
-            notUpdateTexture = false;
+            foreach (Thing thing in ChildNodes.Values)
+            {
+                CompModularizationWeapon comp = thing;
+                comp?.SwapOrUpdateStateCacheAndCompCache();
+            }
+            foreach (Thing thing in targetPartsWithId.Values)
+            {
+                CompModularizationWeapon comp = thing;
+                comp?.SwapOrUpdateStateCacheAndCompCache();
+            }
+            
             bool swaping = RootPart.occupiers == null && swap;
 
             if (swaping)
@@ -1077,10 +991,130 @@ namespace RW_ModularizationWeapon
                 return;
             }
             
+        }
+
+
+        protected override void PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataToPostUpatde, Dictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
+        {
+            // if(stopWatch.IsRunning) stopWatch.Restart();
+            // else stopWatch.Start();
+            // long ct = 0;
+            // long lt = 0;
+            blockEvent = false;
+            notUpdateTexture = false;
+            foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
+            {
+                ChildNodes[keyValue.Key] = keyValue.Value;
+            }
+            CompModularizationWeapon root = RootPart;
+            bool occupyed = root.occupiers != null;
+            
             // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PostUpdate swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 6 {ct}, dt = {ct - lt}");
+            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
             // lt = ct;
 
+            if (root == this)
+            {
+                while (!CheckTargetVaild(!occupyed)) continue;
+                CheckAndSetTargetCache();
+            }
+
+            // ct = stopWatch.ElapsedTicks;
+            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
+            // lt = ct;
+
+            if (occupyed || !swap)
+            {
+                if (root == this)
+                {
+                    UpdateCurrentPartVNode();
+                    InitAttachmentProperties();
+                }
+                // ct = stopWatch.ElapsedTicks;
+                // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+                // lt = ct;
+
+                return;
+            }
+            
+            // ct = stopWatch.ElapsedTicks;
+            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
+            // lt = ct;
+
+            //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
+            Map map = parent.MapHeld;
+            foreach (string id in this.PartIDs)
+            {
+                //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
+                CompChildNodeProccesser proccesser;
+                CompModularizationWeapon weaponComp;
+                Thing prev = ChildNodes[id];
+                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
+                {
+
+                    proccesser = prev;
+                    if (proccesser != null) proccesser.NeedUpdate = true;
+
+                    weaponComp = prev;
+                    if (weaponComp != null) weaponComp.swap = true;
+                    continue;
+                }
+
+                ChildNodes[id] = target.Thing;
+                SetTargetPart(id, prev);
+
+                //Sync child swap state
+
+                proccesser = prev;
+                if (proccesser != null) proccesser.NeedUpdate = true;
+
+                weaponComp = prev;
+                if (weaponComp != null) weaponComp.swap = true;
+
+                proccesser = target.Thing;
+                if (proccesser != null) proccesser.NeedUpdate = true;
+
+                weaponComp = target.Thing;
+                if (weaponComp != null) weaponComp.swap = true;
+
+                if(map != null && prev != null)
+                {
+                    int index = map.cellIndices.CellToIndex(prev.Position);
+                    if (index < map.cellIndices.NumGridCells && index >= 0)
+                    {
+                        prev.SpawnSetup(map, false);
+                    }
+                }
+            }
+
+            // ct = stopWatch.ElapsedTicks;
+            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
+            // lt = ct;
+
+            if (AllowSwap)
+            {
+                SwapAttachmentPropertiesCacheAndVNode();
+                InitAttachmentProperties();
+            }
+            //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
+            // ct = stopWatch.ElapsedTicks;
+            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
+            // lt = ct;
+
+            return;
+        }
+
+
+        protected override void PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object> cachedDataFromPerUpdate, Dictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
+        {
+            // if(stopWatch.IsRunning) stopWatch.Restart();
+            // else stopWatch.Start();
+            // long ct = 0;
+            // long lt = 0;
+
+            blockEvent = false;
+            notUpdateTexture = false;
+            if (AllowSwap) SwapOrUpdateStateCacheAndCompCache();
             swap = false;
             NeedUpdate = false;
             targetPartChanged = false;
