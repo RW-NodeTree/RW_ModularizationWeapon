@@ -66,7 +66,7 @@ namespace RW_ModularizationWeapon
                     if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     Thing thing = ChildNodes[properties.id];
                     Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
-                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Cpunt = {Props.attachmentPropertiesWithQuery.Count}");
+                    Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
@@ -124,7 +124,7 @@ namespace RW_ModularizationWeapon
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     Thing thing = GetTargetPart(properties.id).Thing;
                     Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
-                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Cpunt = {Props.attachmentPropertiesWithQuery.Count}");
+                    Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
                     Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
@@ -1384,7 +1384,8 @@ namespace RW_ModularizationWeapon
         /// <returns></returns>
         public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
         {
-            attachmentPropertiesWithQuery = new List<(QueryGroup,WeaponAttachmentProperties)>();
+            bool needGennerateAttachmentPropertiesWithQuery = this.attachmentPropertiesWithQuery.NullOrEmpty();
+            if(needGennerateAttachmentPropertiesWithQuery) attachmentPropertiesWithQuery = new List<(QueryGroup,WeaponAttachmentProperties)>();
             foreach(string error in base.ConfigErrors(parentDef))
             {
                 yield return error;
@@ -1403,9 +1404,13 @@ namespace RW_ModularizationWeapon
                     bool faild = false;
                     try
                     {
-                        attachmentProperties.RemoveAt(i);
-                        QueryGroup query = new QueryGroup(properties.id);
-                        attachmentPropertiesWithQuery.Add((query,properties));
+                        if(needGennerateAttachmentPropertiesWithQuery)
+                        {
+                            attachmentProperties.RemoveAt(i);
+                            QueryGroup query = new QueryGroup(properties.id);
+                            attachmentPropertiesWithQuery.Add((query,properties));
+                        }
+                        else faild = true;
                     }
                     catch
                     {
