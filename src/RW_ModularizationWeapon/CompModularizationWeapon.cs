@@ -1492,6 +1492,30 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            else
+            {
+                foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
+                {
+                    properties.Item2.ResolveReferences();
+                }
+                foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
+                {
+                    properties.Item2.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.verbPropertiesBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.toolsBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.verbPropertiesBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.toolsBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                    properties.Item2.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                }
+            }
+            foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
+            {
+                Log.Message(properties.Item1);
+            }
             if (attachmentProperties.Count > 0) parentDef.stackLimit = 1;
 
 
