@@ -95,6 +95,7 @@ namespace RW_ModularizationWeapon
                         }
                         if(attachmentProperties != null)
                         {
+                            Log.Message($"{attachmentProperties.id} : {minMach}");
                             mached.Remove(attachmentProperties);
                             OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
                             if (optional != null)
@@ -154,6 +155,7 @@ namespace RW_ModularizationWeapon
                         }
                         if(attachmentProperties != null)
                         {
+                            Log.Message($"{attachmentProperties.id} : {minMach}");
                             mached.Remove(attachmentProperties);
                             OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
                             if (optional != null)
