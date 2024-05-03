@@ -26,13 +26,6 @@ namespace RW_ModularizationWeapon.AI
         }
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            if ((this.pawn.CombinedDisabledWorkTags & WorkTags.ManualDumb) != WorkTags.None)
-            {
-                this.EndJobWith(JobCondition.Incompletable);
-                yield break;
-            }
-            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
-            this.FailOnBurningImmobile(TargetIndex.A);
 
             CompCustomWeaponPort port = TargetA.Thing.TryGetComp<CompCustomWeaponPort>();
             if (port != null)
@@ -44,6 +37,9 @@ namespace RW_ModularizationWeapon.AI
                 this.EndJobWith(JobCondition.Incompletable);
                 yield break;
             }
+            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
+            this.FailOnBurningImmobile(TargetIndex.A);
+            this.FailOn(()=>pawn.WorkTagIsDisabled(WorkTags.ManualDumb) || !(port.parent.TryGetComp<CompPowerTrader>()?.PowerOn ?? true) || !(port.parent.TryGetComp<CompRefuelable>()?.HasFuel ?? true));
 
             this.FailOnDestroyedNullOrForbidden(TargetIndex.B);
             this.FailOnBurningImmobile(TargetIndex.B);

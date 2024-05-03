@@ -53,15 +53,10 @@ namespace RW_ModularizationWeapon
             {
                 yield return c;
             }
-            if ((selPawn.CombinedDisabledWorkTags & WorkTags.ManualDumb) != WorkTags.None) yield break;
-            CompPowerTrader compPower = this.parent.TryGetComp<CompPowerTrader>();
-            if (compPower != null)
-            {
-                if (!compPower.PowerOn)
-                {
-                    yield break;
-                }
-            }
+            string disable = null;
+            if (selPawn.WorkTagIsDisabled(WorkTags.ManualDumb)) disable = "CannotPrioritizeWorkGiverDisabled".Translate("StartModifyWeapon".Translate());
+            if (!(parent.TryGetComp<CompPowerTrader>()?.PowerOn ?? true)) disable = "NoPower".Translate("StartModifyWeapon".Translate());
+            if (!(parent.TryGetComp<CompRefuelable>()?.HasFuel ?? true)) disable = "NoFuel".Translate("StartModifyWeapon".Translate());
             if (selPawn.CanReserveAndReach(new LocalTargetInfo(this.parent), PathEndMode.Touch, Danger.Deadly, 1, -1, null, false))
             {
                 Action action = delegate ()
@@ -70,7 +65,7 @@ namespace RW_ModularizationWeapon
                     CustomWeapon window = new CustomWeapon(selPawn, this);
                     Find.WindowStack.Add(window);
                 };
-                FloatMenuOption option = new FloatMenuOption("StartModifyWeapon".Translate(), action, MenuOptionPriority.Default, null, null, 0f, null, null);
+                FloatMenuOption option = new FloatMenuOption(disable ?? "StartModifyWeapon".Translate(), disable == null ? action : null, MenuOptionPriority.Default, null, null, 0f, null, null);
                 yield return option;
             }
         }
