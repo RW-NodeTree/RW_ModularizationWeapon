@@ -54,7 +54,7 @@ namespace RW_ModularizationWeapon
                 yield return c;
             }
             string disable = null;
-            if (selPawn.WorkTagIsDisabled(WorkTags.ManualDumb)) disable = "CannotPrioritizeWorkGiverDisabled".Translate("StartModifyWeapon".Translate());
+            if (selPawn.WorkTagIsDisabled(WorkTags.ManualDumb)) disable = "CanNotDoingManualDumbWork".Translate("StartModifyWeapon".Translate());
             if (!(parent.TryGetComp<CompPowerTrader>()?.PowerOn ?? true)) disable = "NoPower".Translate("StartModifyWeapon".Translate());
             if (!(parent.TryGetComp<CompRefuelable>()?.HasFuel ?? true)) disable = "NoFuel".Translate("StartModifyWeapon".Translate());
             if (selPawn.CanReserveAndReach(new LocalTargetInfo(this.parent), PathEndMode.Touch, Danger.Deadly, 1, -1, null, false))

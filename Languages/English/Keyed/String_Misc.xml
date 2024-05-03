@@ -32,6 +32,7 @@
 	<statMultiplierAffectHorizon>Stat Value Multiplier Affect Horizon</statMultiplierAffectHorizon>
 	<AttachmentPoint>Attachment Point</AttachmentPoint>
 	<setEmpty>Set Empty</setEmpty>
+	<CanNotDoingManualDumbWork>{0}(Disabled : Manual Dumb Disabled)</CanNotDoingManualDumbWork>
 	<NoPower>{0}(Disabled : No Power)</NoPower>
 	<NoFuel>{0}(Disabled : No Fuel)</NoFuel>
 </LanguageData>

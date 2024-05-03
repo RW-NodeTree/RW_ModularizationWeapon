@@ -32,6 +32,7 @@
 	<statMultiplierAffectHorizon>状态值乘数影响水平</statMultiplierAffectHorizon>
 	<AttachmentPoint>部件附着点</AttachmentPoint>
 	<setEmpty>设为空</setEmpty>
+	<CanNotDoingManualDumbWork>{0}(禁用 : 无法从事简易工作)</CanNotDoingManualDumbWork>
 	<NoPower>{0}(禁用 : 无电源)</NoPower>
 	<NoFuel>{0}(禁用 : 无燃料)</NoFuel>
 </LanguageData>
