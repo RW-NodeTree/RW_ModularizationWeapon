@@ -725,23 +725,23 @@ namespace RW_ModularizationWeapon
             {
                 if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                 {
-                    Map mapOfTargetPart = target.Thing.Map;
+                    Map mapOfTargetPart = target.Thing?.Map;
                     if (target.HasThing && (mapOfTargetPart != null ? mapOfTargetPart != parent.MapHeld : target.Thing.holdingOwner != null))
                     {
-                        // Log.Message($"{id} : {target} invaildity target part because spawned");
+                        Log.Message($"{id} : {target} invaildity target part because spawned");
                         SetTargetPart(id, ChildNodes[id]);
                         ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;
                         continue;
                     }
-                    else if (target.HasThing && target.Thing.Spawned) target.Thing.DeSpawn();
+                    else if (target.HasThing && mapOfTargetPart != null) target.Thing.DeSpawn();
                     if (proccesser.AllowNode(target.Thing, id))
                     {
                         result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
                     }
                     else
                     {
-                        // Log.Message($"{id} : {target} invaildity target part because not allowed");
+                        Log.Message($"{id} : {target} invaildity target part because not allowed");
                         SetTargetPart(id, ChildNodes[id]);
                         ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;
