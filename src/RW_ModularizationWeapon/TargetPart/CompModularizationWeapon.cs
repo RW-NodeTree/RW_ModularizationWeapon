@@ -20,15 +20,16 @@ namespace RW_ModularizationWeapon
             {
 
                 //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
-                Thing prevPart = ChildNodes[id];
                 //targetOwner?.Remove(targetInfo.Thing);
                 //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
+                targetPartsWithId.TryGetValue(id, out currentTargetInfo);
                 CompModularizationWeapon part = currentTargetInfo.Thing;
                 if (part != null)
                 {
                     part.occupiers = null;
                     if (!swap) part.UpdateTargetPartVNode();
                 }
+                Thing prevPart = ChildNodes[id];
                 if (targetInfo.Thing == prevPart) targetPartsWithId.Remove(id);
                 else
                 {

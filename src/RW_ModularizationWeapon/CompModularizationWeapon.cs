@@ -1069,10 +1069,6 @@ namespace RW_ModularizationWeapon
             {
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
-            
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 1 {ct}, dt = {ct - lt}");
-            // lt = ct;
             if (Props.attachmentProperties.Count <= 0) return;
             if (RootPart == this && occupiers == null)
             {
@@ -1080,15 +1076,6 @@ namespace RW_ModularizationWeapon
                 CheckAndSetTargetCache();
             }
             if (!swap) return;
-
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 2 {ct}, dt = {ct - lt}");
-            // lt = ct;
-            
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 3 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
             //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
             Map map = parent.MapHeld;
             foreach (string id in this.PartIDs)
@@ -1137,11 +1124,6 @@ namespace RW_ModularizationWeapon
 
             // ct = stopWatch.ElapsedTicks;
             // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            //Console.WriteLine($"====================================   {parent}.PreUpdateNode End   ====================================");
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 5 {ct}, dt = {ct - lt}");
             // lt = ct;
 
             return;
