@@ -734,7 +734,7 @@ namespace RW_ModularizationWeapon
                         result = false;
                         continue;
                     }
-                    else if (target.HasThing && mapOfTargetPart != null) target.Thing.DeSpawn();
+                    if (target.HasThing && mapOfTargetPart != null) target.Thing.DeSpawn();
                     if (proccesser.AllowNode(target.Thing, id))
                     {
                         result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
@@ -1108,6 +1108,11 @@ namespace RW_ModularizationWeapon
                     continue;
                 }
 
+                if(target.HasThing && target.Thing.Spawned)
+                {
+                    target.Thing.DeSpawn();
+                }
+
                 ChildNodes[id] = target.Thing;
                 SetTargetPart(id, prev);
 
@@ -1119,6 +1124,12 @@ namespace RW_ModularizationWeapon
                 weaponComp = prev;
                 if (weaponComp != null) weaponComp.swap = true;
 
+                proccesser = target.Thing;
+                if (proccesser != null) proccesser.NeedUpdate = true;
+
+                weaponComp = target.Thing;
+                if (weaponComp != null) weaponComp.swap = true;
+
                 if(map != null && prev != null)
                 {
                     int index = map.cellIndices.CellToIndex(prev.Position);
@@ -1126,17 +1137,6 @@ namespace RW_ModularizationWeapon
                     {
                         prev.SpawnSetup(map, false);
                     }
-                }
-
-                proccesser = target.Thing;
-                if (proccesser != null) proccesser.NeedUpdate = true;
-
-                weaponComp = target.Thing;
-                if (weaponComp != null) weaponComp.swap = true;
-
-                if(target.HasThing && target.Thing.Spawned)
-                {
-                    target.Thing.DeSpawn();
                 }
             }
 
