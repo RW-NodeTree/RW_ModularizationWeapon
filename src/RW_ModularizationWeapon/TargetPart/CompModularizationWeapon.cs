@@ -8,7 +8,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        public bool AllowSwap { get => this.RootPart == this && this.occupiers == null; }
+        public bool IsSwapRoot { get => this.RootPart == this && this.occupiers == null; }
 
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
@@ -82,16 +82,10 @@ namespace RW_ModularizationWeapon
 
         public void UpdateTargetPartVNode()
         {
-            if(occupiers != null && ParentPart != null)
+            CompModularizationWeapon root = RootOccupierPart;
+            if(root != this)
             {
-                CompModularizationWeapon root = this;
-                CompModularizationWeapon current = occupiers ?? ParentPart;
-                while (current != null)
-                {
-                    root = current;
-                    current = current.occupiers ?? current.ParentPart;
-                }
-                root.UpdateTargetPartVNode();
+                root.UpdateCurrentPartVNode();
                 return;
             }
             VNode node = new VNode(null,parent.def.defName);
@@ -117,7 +111,7 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            if(AllowSwap)
+            if(IsSwapRoot)
             {
                 swap = true;
                 NeedUpdate = true;

@@ -40,6 +40,21 @@ namespace RW_ModularizationWeapon
             }
         }
 
+        public CompModularizationWeapon RootOccupierPart
+        {
+            get
+            {
+                CompModularizationWeapon result = this;
+                CompModularizationWeapon current = occupiers ?? ParentPart;
+                while (current != null)
+                {
+                    result = current;
+                    current = current.occupiers ?? current.ParentPart;
+                }
+                return result;
+            }
+        }
+
 
         public HashSet<string> PartIDs
         {
@@ -426,7 +441,7 @@ namespace RW_ModularizationWeapon
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
             CompModularizationWeapon comp = part;
-            if (checkOccupy && comp?.occupiers != null) return false; 
+            if (checkOccupy && comp?.occupiers != null && comp.occupiers != this) return false; 
             if (allowedPartCache.TryGetValue((id,part), out bool result)) return result;
             WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
             WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
@@ -450,7 +465,7 @@ namespace RW_ModularizationWeapon
 
         public void SetPartToDefault()
         {
-            if (AllowSwap)
+            if (IsSwapRoot)
             {
                 List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties.Values.ToList();
                 for (int i = 0; i < props.Count; i++)
@@ -484,7 +499,7 @@ namespace RW_ModularizationWeapon
         {
 
             //Console.WriteLine($"====================================   {parent}.SetPartToRandom End   ====================================");
-            if (AllowSwap)
+            if (IsSwapRoot)
             {
                 List<WeaponAttachmentProperties> props = CurrentPartAttachmentProperties.Values.ToList();
                 // Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
@@ -568,7 +583,7 @@ namespace RW_ModularizationWeapon
             {
                 SetPartToDefault();
             }
-            else if(invokeSource == RecipeInvokeSource.ingredients && AllowSwap)
+            else if(invokeSource == RecipeInvokeSource.ingredients && IsSwapRoot)
             {
                 IEnumerable<Thing> Ingredients(IEnumerable<Thing> org)
                 {
@@ -698,35 +713,28 @@ namespace RW_ModularizationWeapon
         }
 
 
-        private bool CheckTargetVaild(bool deSpawn)
+        private bool CheckTargetVaild()
         {
             bool result = true;
             if (Props.attachmentProperties.Count <= 0) return result;
             CompChildNodeProccesser proccesser = NodeProccesser;
             foreach (Thing thing in ChildNodes.Values)
-                if (!(((CompModularizationWeapon)thing)?.CheckTargetVaild(deSpawn) ?? true))
+                if (!(((CompModularizationWeapon)thing)?.CheckTargetVaild() ?? true))
                     result = false;
             foreach (string id in this.PartIDs)
             {
                 if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                 {
-                    if (target.HasThing && target.Thing.holdingOwner != null)
+                    if (target.HasThing && (target.Thing.Spawned ? target.Thing.Map != parent.MapHeld : target.Thing.holdingOwner != null))
                     {
-                        if (target.Thing.Spawned && parent.MapHeld != null && target.Thing.Map == parent.MapHeld)
-                        {
-                            if (deSpawn) target.Thing.DeSpawn();
-                        }
-                        else
-                        {
-                            SetTargetPart(id, ChildNodes[id]);
-                            ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
-                            result = false;
-                            continue;
-                        }
+                        SetTargetPart(id, ChildNodes[id]);
+                        ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
+                        result = false;
+                        continue;
                     }
                     if (proccesser.AllowNode(target.Thing, id))
                     {
-                        result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild(deSpawn) ?? true) && result;
+                        result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
                     }
                     else
                     {
@@ -736,7 +744,7 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            if (!result && RootPart == this && occupiers == null) UpdateTargetPartVNode();
+            if (!result && IsSwapRoot) UpdateTargetPartVNode();
             return result;
         }
 
@@ -1070,9 +1078,9 @@ namespace RW_ModularizationWeapon
                 ChildNodes[keyValue.Key] = keyValue.Value;
             }
             if (Props.attachmentProperties.Count <= 0) return;
-            if (RootPart == this && occupiers == null)
+            if (IsSwapRoot)
             {
-                while (!CheckTargetVaild(swap)) continue;
+                while (!CheckTargetVaild()) continue;
                 CheckAndSetTargetCache();
             }
             if (!swap) return;
@@ -1106,12 +1114,6 @@ namespace RW_ModularizationWeapon
                 weaponComp = prev;
                 if (weaponComp != null) weaponComp.swap = true;
 
-                proccesser = target.Thing;
-                if (proccesser != null) proccesser.NeedUpdate = true;
-
-                weaponComp = target.Thing;
-                if (weaponComp != null) weaponComp.swap = true;
-
                 if(map != null && prev != null)
                 {
                     int index = map.cellIndices.CellToIndex(prev.Position);
@@ -1119,6 +1121,17 @@ namespace RW_ModularizationWeapon
                     {
                         prev.SpawnSetup(map, false);
                     }
+                }
+
+                proccesser = target.Thing;
+                if (proccesser != null) proccesser.NeedUpdate = true;
+
+                weaponComp = target.Thing;
+                if (weaponComp != null) weaponComp.swap = true;
+
+                if(target.HasThing && target.Thing.Spawned)
+                {
+                    target.Thing.DeSpawn();
                 }
             }
 
@@ -1139,7 +1152,7 @@ namespace RW_ModularizationWeapon
 
             blockEvent = false;
             notUpdateTexture = false;
-            if (Props.attachmentProperties.Count > 0 && RootPart == this && occupiers == null)
+            if (Props.attachmentProperties.Count > 0 && IsSwapRoot)
             {
                 if (swap) SwapAttachmentPropertiesCacheAndVNode();
                 else UpdateCurrentPartVNode();
