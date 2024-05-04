@@ -728,7 +728,7 @@ namespace RW_ModularizationWeapon
                     Map mapOfTargetPart = target.Thing?.Map;
                     if (target.HasThing && (mapOfTargetPart != null ? mapOfTargetPart != parent.MapHeld : target.Thing.holdingOwner != null))
                     {
-                        Log.Message($"{id} : {target} invaildity target part because spawned, mapOfTargetPart = {mapOfTargetPart}, mapHeld = {parent.MapHeld}, holdingOwner = {target.Thing.holdingOwner}");
+                        // Log.Message($"{id} : {target} invaildity target part because spawned, mapOfTargetPart = {mapOfTargetPart}, mapHeld = {parent.MapHeld}, holdingOwner = {target.Thing.holdingOwner}");
                         SetTargetPart(id, ChildNodes[id]);
                         ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;
@@ -742,7 +742,7 @@ namespace RW_ModularizationWeapon
                     }
                     else
                     {
-                        Log.Message($"{id} : {target} invaildity target part because not allowed");
+                        // Log.Message($"{id} : {target} invaildity target part because not allowed");
                         SetTargetPart(id, ChildNodes[id]);
                         ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;

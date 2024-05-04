@@ -193,19 +193,6 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowStackWith
   nameWithType: CompModularizationWeapon.AllowStackWith
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
-  name: AllowSwap
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowSwap
-  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
-  nameWithType: CompModularizationWeapon.AllowSwap
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap*
-  name: AllowSwap
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_AllowSwap_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
-  isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.AllowSwap
-  nameWithType: CompModularizationWeapon.AllowSwap
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.ClearTargetPart
   name: ClearTargetPart()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_ClearTargetPart
@@ -513,6 +500,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.HasPostFX
   nameWithType: CompModularizationWeapon.HasPostFX
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.IsSwapRoot
+  name: IsSwapRoot
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_IsSwapRoot
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.IsSwapRoot
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.IsSwapRoot
+  nameWithType: CompModularizationWeapon.IsSwapRoot
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.IsSwapRoot*
+  name: IsSwapRoot
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_IsSwapRoot_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.IsSwapRoot
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.IsSwapRoot
+  nameWithType: CompModularizationWeapon.IsSwapRoot
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.NotDraw(System.String)
   name: NotDraw(String)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_NotDraw_System_String_
@@ -850,6 +850,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.Props
   nameWithType: CompModularizationWeapon.Props
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.RootOccupierPart
+  name: RootOccupierPart
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_RootOccupierPart
+  commentId: P:RW_ModularizationWeapon.CompModularizationWeapon.RootOccupierPart
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.RootOccupierPart
+  nameWithType: CompModularizationWeapon.RootOccupierPart
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.RootOccupierPart*
+  name: RootOccupierPart
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_RootOccupierPart_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.RootOccupierPart
+  isSpec: "True"
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.RootOccupierPart
+  nameWithType: CompModularizationWeapon.RootOccupierPart
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.RootPart
   name: RootPart
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_RootPart
