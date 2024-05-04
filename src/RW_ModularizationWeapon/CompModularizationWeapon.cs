@@ -441,7 +441,7 @@ namespace RW_ModularizationWeapon
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
             CompModularizationWeapon comp = part;
-            if (checkOccupy && comp?.occupiers != null) return false; 
+            if (checkOccupy && comp != null && comp.occupiers != null && comp.occupiers != this) return false; 
             if (allowedPartCache.TryGetValue((id,part), out bool result)) return result;
             WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
             WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
@@ -725,7 +725,8 @@ namespace RW_ModularizationWeapon
             {
                 if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                 {
-                    if (target.HasThing && (target.Thing.Spawned ? target.Thing.Map != parent.MapHeld : target.Thing.holdingOwner != null))
+                    Map mapOfTargetPart = target.Thing.Map;
+                    if (target.HasThing && (mapOfTargetPart != null ? mapOfTargetPart != parent.MapHeld : target.Thing.holdingOwner != null))
                     {
                         // Log.Message($"{id} : {target} invaildity target part because spawned");
                         SetTargetPart(id, ChildNodes[id]);
@@ -733,6 +734,7 @@ namespace RW_ModularizationWeapon
                         result = false;
                         continue;
                     }
+                    else if (target.HasThing && target.Thing.Spawned) target.Thing.DeSpawn();
                     if (proccesser.AllowNode(target.Thing, id))
                     {
                         result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
@@ -744,6 +746,7 @@ namespace RW_ModularizationWeapon
                         ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;
                     }
+                    if (target.HasThing && mapOfTargetPart != null && !target.Thing.Spawned) target.Thing.SpawnSetup(mapOfTargetPart, false);
                 }
             }
             if (!result && IsSwapRoot) UpdateTargetPartVNode();
