@@ -737,6 +737,7 @@ namespace RW_ModularizationWeapon
                     if (target.HasThing && mapOfTargetPart != null) target.Thing.DeSpawn();
                     if (proccesser.AllowNode(target.Thing, id))
                     {
+                        if (target.HasThing && mapOfTargetPart != null && !target.Thing.Spawned) target.Thing.SpawnSetup(mapOfTargetPart, false);
                         result = (((CompModularizationWeapon)target.Thing)?.CheckTargetVaild() ?? true) && result;
                     }
                     else
@@ -745,8 +746,8 @@ namespace RW_ModularizationWeapon
                         SetTargetPart(id, ChildNodes[id]);
                         ((CompModularizationWeapon)target.Thing)?.UpdateTargetPartVNode();
                         result = false;
+                        if (target.HasThing && mapOfTargetPart != null && !target.Thing.Spawned) target.Thing.SpawnSetup(mapOfTargetPart, false);
                     }
-                    if (target.HasThing && mapOfTargetPart != null && !target.Thing.Spawned) target.Thing.SpawnSetup(mapOfTargetPart, false);
                 }
             }
             if (!result && IsSwapRoot) UpdateTargetPartVNode();
