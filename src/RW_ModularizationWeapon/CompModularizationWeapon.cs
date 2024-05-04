@@ -441,7 +441,7 @@ namespace RW_ModularizationWeapon
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
             CompModularizationWeapon comp = part;
-            if (checkOccupy && comp != null && comp.occupiers != null && comp.occupiers != this) return false; 
+            if (checkOccupy && comp?.occupiers != null) return false; 
             if (allowedPartCache.TryGetValue((id,part), out bool result)) return result;
             WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
             WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
