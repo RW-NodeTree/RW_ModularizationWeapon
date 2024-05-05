@@ -230,7 +230,7 @@ namespace RW_ModularizationWeapon
 
         public override bool AllowStackWith(Thing other) => Props.attachmentProperties.Count == 0;
 
-        public override bool HasPostFX(bool textureMode) => Props.drawOutlineOnRoot && (textureMode || ParentPart == null);
+        public override bool HasPostFX(bool textureMode) => Props.outlineWidth > 0 && (textureMode || ParentPart == null);
 
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -429,7 +429,7 @@ namespace RW_ModularizationWeapon
             PostFXCommandBuffer.Clear();
             RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
             PostFXCommandBuffer.Blit(tar, renderTexture);
-            PostFXMat.SetFloat("_EdgeSize", NodeProccesser.Props.TextureSizeFactor / 64f);
+            PostFXMat.SetFloat("_EdgeSize", Props.outlineWidthInPixelSize ? Props.outlineWidth : NodeProccesser.Props.TextureSizeFactor * Props.outlineWidth);
             PostFXCommandBuffer.Blit(renderTexture, tar, PostFXMat);
             Graphics.ExecuteCommandBuffer(PostFXCommandBuffer);
             RenderTexture.ReleaseTemporary(renderTexture);
@@ -2037,9 +2037,14 @@ namespace RW_ModularizationWeapon
         public bool drawChildPartWhenOnGround = true;
 
         /// <summary>
-        /// if it's **`true`**, it will draw outline if it's root part
+        /// if it's **`true`**, the outline width scale of the root part will use pixel size
         /// </summary>
-        public bool drawOutlineOnRoot = true;
+        public bool outlineWidthInPixelSize = false;
+
+        /// <summary>
+        /// if it's **`not zero value`**, the outline of the root part will drawing by this width
+        /// </summary>
+        public float outlineWidth = 0.015625f;
         #endregion
 
 
