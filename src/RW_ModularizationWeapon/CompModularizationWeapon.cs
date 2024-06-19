@@ -414,7 +414,7 @@ namespace RW_ModularizationWeapon
                         {
                             //Log.Message("Loading shader");
                             Shader shader = assetBundle.LoadAsset<Shader>(@"Assets\Data\Materials\RWNodeTree.RWWeaponModularization\OutLine.shader");
-                            if (shader != null)
+                            if (shader != null && shader.isSupported)
                             {
                                 PostFXMat = new Material(shader);
                                 break;
