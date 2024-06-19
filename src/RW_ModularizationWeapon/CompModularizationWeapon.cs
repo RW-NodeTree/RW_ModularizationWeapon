@@ -412,11 +412,11 @@ namespace RW_ModularizationWeapon
                         //Log.Message($"{pack.PackageId} found, try to load shader");
                         foreach (AssetBundle assetBundle in pack.assetBundles.loadedAssetBundles)
                         {
-                            Log.Message($"Loading shader in {assetBundle.name}");
+                            // Log.Message($"Loading shader in {assetBundle.name}");
                             Shader shader = assetBundle.LoadAsset<Shader>(@"Assets\Data\Materials\RWNodeTree.RWWeaponModularization\OutLine.shader");
                             if (shader != null && shader.isSupported)
                             {
-                                Log.Message($"pass {assetBundle.name}.{shader.name}");
+                                // Log.Message($"pass {assetBundle.name}.{shader.name}");
                                 PostFXMat = new Material(shader);
                                 break;
                             }
