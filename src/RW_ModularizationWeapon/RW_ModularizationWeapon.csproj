@@ -10,15 +10,15 @@
 		<Configurations>DebugV13;ReleaseV13;DebugV14;ReleaseV14;DebugV15;ReleaseV15</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'DebugV15' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>portable</DebugType>
+		<Optimize>false</Optimize>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)' == 'ReleaseV13' or '$(Configuration)' == 'ReleaseV14' or '$(Configuration)' == 'ReleaseV15' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+		<Optimize>true</Optimize>
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
