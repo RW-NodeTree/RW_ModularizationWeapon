@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 222948153
+CRC: 2066022993
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c979b166f20001927b7fb78efb892106
+    Hash: 9058d303aa8cb4f49b24c10d992cd149
   TypeTreeHash:
     serializedVersion: 2
     Hash: 55d48f4ad9c3b13330b9eb5ee5686477
@@ -13,5 +13,5 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Data/Materials/RWNodeTree.RWWeaponModularization/OutLine.shader
+- Assets/Data/RWNodeTree.RWWeaponModularization/OutLine.shader
 Dependencies: []
