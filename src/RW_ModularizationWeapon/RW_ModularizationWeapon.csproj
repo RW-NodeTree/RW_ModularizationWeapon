@@ -48,9 +48,9 @@
 	<ItemGroup>
 		<None Remove="./docfx/api/*.yml" />
 		<None Remove="log.*" />
-		<None Remove="/**/bin/**" />
-		<None Remove="/**/obj/**" />
-		<None Remove="/**/.manifest" />
+		<None Remove="./**/bin/**" />
+		<None Remove="./**/obj/**" />
+		<None Remove="./**/.manifest" />
 	</ItemGroup>
 	<Target AfterTargets="PostBuildEvent" Name="PostBuild">
 		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.3/Assemblies/RW_NodeTree.dll" />

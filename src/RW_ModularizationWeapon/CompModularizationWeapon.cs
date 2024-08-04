@@ -477,20 +477,21 @@ namespace RW_ModularizationWeapon
                     {
                         Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
                         thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
-                        SetTargetPart(properties.id, thing);
+                        if (SetTargetPart(properties.id, thing))
+                        {
+                            ((CompModularizationWeapon)ChildNodes[properties.id])?.SetPartToRandom();
+                        }
                     }
-                    else SetTargetPart(properties.id, null);
-                    ChildNodes[properties.id]?.Destroy();
-                }
-                foreach (Thing thing in targetPartsWithId.Values)
-                {
-                    CompModularizationWeapon comp = thing;
-                    if (comp?.Props.setRandomPartWhenCreate ?? false)
+                    else if(SetTargetPart(properties.id, null))
                     {
-                        comp?.SetPartToDefault();
+                        ((CompModularizationWeapon)ChildNodes[properties.id])?.SetPartToRandom();
                     }
                 }
                 SwapTargetPart();
+                for (int i = 0; i < props.Count; i++)
+                {
+                    GetTargetPart(props[i].id).Thing?.Destroy();
+                }
                 ClearTargetPart();
             }
         }
@@ -506,6 +507,7 @@ namespace RW_ModularizationWeapon
                 // Console.WriteLine($"==================================== {parent}.SetPartToRandom Start   ====================================");
                 for (int i = 0; i < props.Count; i++)
                 {
+                    bool insertFlag = false;
                     WeaponAttachmentProperties properties = props[i];
                     if (properties.randomThingDefWeights.NullOrEmpty())
                     {
@@ -519,13 +521,13 @@ namespace RW_ModularizationWeapon
                                 thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
                                 if (SetTargetPart(properties.id, thing))
                                 {
-                                    ChildNodes[properties.id]?.Destroy();
+                                    insertFlag = true;
                                     break;
                                 }
                             }
                             else if(SetTargetPart(properties.id, null))
                             {
-                                ChildNodes[properties.id]?.Destroy();
+                                insertFlag = true;
                                 break;
                             }
                         }
@@ -551,28 +553,28 @@ namespace RW_ModularizationWeapon
                                 thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
                                 if (SetTargetPart(properties.id, thing))
                                 {
-                                    ChildNodes[properties.id]?.Destroy();
+                                    insertFlag = true;
                                     break;
                                 }
                             }
                             else if(SetTargetPart(properties.id, null))
                             {
-                                ChildNodes[properties.id]?.Destroy();
+                                insertFlag = true;
                                 break;
                             }
                         }
                     }
+                    if(!insertFlag)
+                    {
+                        ((CompModularizationWeapon)ChildNodes[properties.id])?.SetPartToRandom();
+                    }
                     // Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
-                foreach (Thing thing in targetPartsWithId.Values)
-                {
-                    CompModularizationWeapon comp = thing;
-                    if (comp?.Props.setRandomPartWhenCreate ?? false)
-                    {
-                        comp?.SetPartToRandom();
-                    }
-                }
                 SwapTargetPart();
+                for (int i = 0; i < props.Count; i++)
+                {
+                    GetTargetPart(props[i].id).Thing?.Destroy();
+                }
                 ClearTargetPart();
             }
         }
