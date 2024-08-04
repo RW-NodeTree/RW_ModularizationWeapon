@@ -1123,8 +1123,8 @@ namespace RW_ModularizationWeapon
                     target.Thing.DeSpawn();
                 }
 
-                ChildNodes[id] = target.Thing;
                 SetTargetPart(id, prev);
+                ChildNodes[id] = target.Thing;
 
                 //Sync child swap state
 

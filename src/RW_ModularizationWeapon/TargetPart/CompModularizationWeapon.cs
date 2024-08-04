@@ -30,7 +30,7 @@ namespace RW_ModularizationWeapon
                     if (!swap) part.UpdateTargetPartVNode();
                 }
                 Thing prevPart = ChildNodes[id];
-                if (targetInfo.Thing == prevPart) targetPartsWithId.Remove(id);
+                if (targetInfo.Thing == prevPart && !swap) targetPartsWithId.Remove(id);
                 else
                 {
                     targetPartsWithId.SetOrAdd(id, targetInfo);
