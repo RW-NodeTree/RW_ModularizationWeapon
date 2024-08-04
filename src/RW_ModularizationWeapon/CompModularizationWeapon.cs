@@ -481,6 +481,10 @@ namespace RW_ModularizationWeapon
                         {
                             ((CompModularizationWeapon)ChildNodes[properties.id])?.SetPartToRandom();
                         }
+                        else
+                        {
+                            thing.Destroy();
+                        }
                     }
                     else if(SetTargetPart(properties.id, null))
                     {
@@ -524,6 +528,7 @@ namespace RW_ModularizationWeapon
                                     insertFlag = true;
                                     break;
                                 }
+                                thing.Destroy();
                             }
                             else if(SetTargetPart(properties.id, null))
                             {
@@ -556,6 +561,7 @@ namespace RW_ModularizationWeapon
                                     insertFlag = true;
                                     break;
                                 }
+                                thing.Destroy();
                             }
                             else if(SetTargetPart(properties.id, null))
                             {
