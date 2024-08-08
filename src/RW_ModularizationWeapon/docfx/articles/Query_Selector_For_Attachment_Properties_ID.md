@@ -9,7 +9,57 @@ In our framework, you can define a query selector for the `<id>` of an item with
 <comps>
     <li Class="RW_ModularizationWeapon.CompProperties_ModularizationWeapon">
         <attachmentProperties>
-            <!-- Attachment properties list -->
+            <li>
+                <id>templatePart1</id>
+                <name>template Part</name>
+                <position>(0,0.1,0)</position>
+                <rotation>(0,0,0)</rotation>
+                <scale>(1,1,1)</scale>
+                <defaultThing>templatePartA</defaultThing>
+                <allowEmpty>true</allowEmpty>
+                <positionInPixelSize>false</positionInPixelSize>
+                <filter>
+                    <thingDefs>
+                        <li>templatePartA</li>
+                        <li>templatePartB</li>
+                        <li>templatePartC</li>
+                        <li>templatePartD</li>
+                        <!-- More Attachment Definitions -->
+                    </thingDefs>
+                </filter>
+                <randomThingDefWeights>
+                    <templatePartA>1</templatePartA>
+                    <templatePartB>1</templatePartB>
+                    <templatePartC>1</templatePartC>
+                    <!-- More Weight Definitions -->
+                </randomThingDefWeights>
+            </li>
+            <li>
+                <id>templatePart2</id>
+                <name>template Part</name>
+                <position>(0.1,0.1,0)</position>
+                <rotation>(0,0,0)</rotation>
+                <scale>(1,1,1)</scale>
+                <defaultThing>templatePartA</defaultThing>
+                <allowEmpty>true</allowEmpty>
+                <positionInPixelSize>false</positionInPixelSize>
+                <filter>
+                    <thingDefs>
+                        <li>templatePartA</li>
+                        <li>templatePartB</li>
+                        <li>templatePartC</li>
+                        <li>templatePartD</li>
+                        <!-- More Attachment Definitions -->
+                    </thingDefs>
+                </filter>
+                <randomThingDefWeights>
+                    <templatePartA>1</templatePartA>
+                    <templatePartB>1</templatePartB>
+                    <templatePartC>1</templatePartC>
+                    <!-- More Weight Definitions -->
+                </randomThingDefWeights>
+            </li>
+            <!-- More Attachment Points -->
         </attachmentProperties>
     </li>
 </comps>
@@ -26,7 +76,28 @@ Here's an example that modifies all properties of a matched attachment point:
             <!-- Previous Attachment Points -->
             <li>
                 <id>templatePart1:templatePartB</id>
-                <!-- Property modifications -->
+                <name>template Part</name>
+                <position>(0,0.1,0)</position>
+                <rotation>(0,45,0)</rotation>
+                <scale>(1,1,1)</scale>
+                <defaultThing>templatePartA</defaultThing>
+                <allowEmpty>true</allowEmpty>
+                <positionInPixelSize>false</positionInPixelSize>
+                <filter>
+                    <thingDefs>
+                        <li>templatePartA</li>
+                        <li>templatePartB</li>
+                        <li>templatePartC</li>
+                        <li>templatePartD</li>
+                        <!-- More Attachment Definitions -->
+                    </thingDefs>
+                </filter>
+                <randomThingDefWeights>
+                    <templatePartA>1</templatePartA>
+                    <templatePartB>1</templatePartB>
+                    <templatePartC>1</templatePartC>
+                    <!-- More Weight Definitions -->
+                </randomThingDefWeights>
             </li>
             <!-- More Attachment Points -->
         </attachmentProperties>
@@ -47,7 +118,7 @@ It's common to replace only a small part of an attachment point. In our framewor
             <!-- Previous Attachment Points -->
             <li Class="RW_ModularizationWeapon.OptionalWeaponAttachmentProperties">
                 <id>!templatePart1:templatePartC</id>
-                <!-- Property modifications -->
+                <rotation>(0,45,0)</rotation>
             </li>
             <!-- More Attachment Points -->
         </attachmentProperties>
@@ -68,7 +139,7 @@ To check the parent or child of the attachment node tree, you can use child and 
             <!-- Previous Attachment Points -->
             <li Class="RW_ModularizationWeapon.OptionalWeaponAttachmentProperties">
                 <id>templatePart1:templatePartD[:[templatePart2:templatePartB]/:/:]</id>
-                <!-- Property modifications -->
+                <rotation>(0,-45,0)</rotation>
             </li>
             <!-- More Attachment Points -->
         </attachmentProperties>
@@ -89,11 +160,12 @@ The query selector also has match scores to determine the order of replacements.
             <!-- Previous Attachment Points -->
             <li Class="RW_ModularizationWeapon.OptionalWeaponAttachmentProperties">
                 <id>templatePart1:templatePartD</id>
-                <!-- Property modifications -->
+                <rotation>(0,45,0)</rotation>
             </li>
             <li Class="RW_ModularizationWeapon.OptionalWeaponAttachmentProperties">
+                <!-- Check if templatePartD on templatePart1 has child Sth on templatePartD_Slot -->
                 <id>templatePart1:templatePartD[templatePartD_Slot:Sth]</id>
-                <!-- Property modifications -->
+                <rotation>(0,-45,0)</rotation>
             </li>
             <!-- More Attachment Points -->
         </attachmentProperties>
