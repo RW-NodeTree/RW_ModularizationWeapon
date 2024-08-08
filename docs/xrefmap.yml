@@ -4695,19 +4695,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.QueryGroup.LoadDataFromXmlCustom
   nameWithType: QueryGroup.LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.Tools.QueryGroup.Mach(RW_ModularizationWeapon.Tools.VNode)
-  name: Mach(VNode)
-  href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Mach_RW_ModularizationWeapon_Tools_VNode_
-  commentId: M:RW_ModularizationWeapon.Tools.QueryGroup.Mach(RW_ModularizationWeapon.Tools.VNode)
-  fullName: RW_ModularizationWeapon.Tools.QueryGroup.Mach(RW_ModularizationWeapon.Tools.VNode)
-  nameWithType: QueryGroup.Mach(VNode)
-- uid: RW_ModularizationWeapon.Tools.QueryGroup.Mach*
-  name: Mach
-  href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Mach_
-  commentId: Overload:RW_ModularizationWeapon.Tools.QueryGroup.Mach
+- uid: RW_ModularizationWeapon.Tools.QueryGroup.Match(RW_ModularizationWeapon.Tools.VNode)
+  name: Match(VNode)
+  href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Match_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.QueryGroup.Match(RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.QueryGroup.Match(RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: QueryGroup.Match(VNode)
+- uid: RW_ModularizationWeapon.Tools.QueryGroup.Match*
+  name: Match
+  href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_Match_
+  commentId: Overload:RW_ModularizationWeapon.Tools.QueryGroup.Match
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.Tools.QueryGroup.Mach
-  nameWithType: QueryGroup.Mach
+  fullName: RW_ModularizationWeapon.Tools.QueryGroup.Match
+  nameWithType: QueryGroup.Match
 - uid: RW_ModularizationWeapon.Tools.QueryGroup.ToString
   name: ToString()
   href: api/RW_ModularizationWeapon.Tools.QueryGroup.html#RW_ModularizationWeapon_Tools_QueryGroup_ToString
@@ -4772,19 +4772,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.QueryLevel.LoadDataFromXmlCustom
   nameWithType: QueryLevel.LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.Tools.QueryLevel.Mach(RW_ModularizationWeapon.Tools.VNode)
-  name: Mach(VNode)
-  href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Mach_RW_ModularizationWeapon_Tools_VNode_
-  commentId: M:RW_ModularizationWeapon.Tools.QueryLevel.Mach(RW_ModularizationWeapon.Tools.VNode)
-  fullName: RW_ModularizationWeapon.Tools.QueryLevel.Mach(RW_ModularizationWeapon.Tools.VNode)
-  nameWithType: QueryLevel.Mach(VNode)
-- uid: RW_ModularizationWeapon.Tools.QueryLevel.Mach*
-  name: Mach
-  href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Mach_
-  commentId: Overload:RW_ModularizationWeapon.Tools.QueryLevel.Mach
+- uid: RW_ModularizationWeapon.Tools.QueryLevel.Match(RW_ModularizationWeapon.Tools.VNode)
+  name: Match(VNode)
+  href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Match_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.QueryLevel.Match(RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.QueryLevel.Match(RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: QueryLevel.Match(VNode)
+- uid: RW_ModularizationWeapon.Tools.QueryLevel.Match*
+  name: Match
+  href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_Match_
+  commentId: Overload:RW_ModularizationWeapon.Tools.QueryLevel.Match
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.Tools.QueryLevel.Mach
-  nameWithType: QueryLevel.Mach
+  fullName: RW_ModularizationWeapon.Tools.QueryLevel.Match
+  nameWithType: QueryLevel.Match
 - uid: RW_ModularizationWeapon.Tools.QueryLevel.TargetId
   name: TargetId
   href: api/RW_ModularizationWeapon.Tools.QueryLevel.html#RW_ModularizationWeapon_Tools_QueryLevel_TargetId
@@ -4862,19 +4862,19 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.Tools.QuerySelecter.LoadDataFromXmlCustom
   nameWithType: QuerySelecter.LoadDataFromXmlCustom
-- uid: RW_ModularizationWeapon.Tools.QuerySelecter.Mach(RW_ModularizationWeapon.Tools.VNode)
-  name: Mach(VNode)
-  href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Mach_RW_ModularizationWeapon_Tools_VNode_
-  commentId: M:RW_ModularizationWeapon.Tools.QuerySelecter.Mach(RW_ModularizationWeapon.Tools.VNode)
-  fullName: RW_ModularizationWeapon.Tools.QuerySelecter.Mach(RW_ModularizationWeapon.Tools.VNode)
-  nameWithType: QuerySelecter.Mach(VNode)
-- uid: RW_ModularizationWeapon.Tools.QuerySelecter.Mach*
-  name: Mach
-  href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Mach_
-  commentId: Overload:RW_ModularizationWeapon.Tools.QuerySelecter.Mach
+- uid: RW_ModularizationWeapon.Tools.QuerySelecter.Match(RW_ModularizationWeapon.Tools.VNode)
+  name: Match(VNode)
+  href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Match_RW_ModularizationWeapon_Tools_VNode_
+  commentId: M:RW_ModularizationWeapon.Tools.QuerySelecter.Match(RW_ModularizationWeapon.Tools.VNode)
+  fullName: RW_ModularizationWeapon.Tools.QuerySelecter.Match(RW_ModularizationWeapon.Tools.VNode)
+  nameWithType: QuerySelecter.Match(VNode)
+- uid: RW_ModularizationWeapon.Tools.QuerySelecter.Match*
+  name: Match
+  href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_Match_
+  commentId: Overload:RW_ModularizationWeapon.Tools.QuerySelecter.Match
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.Tools.QuerySelecter.Mach
-  nameWithType: QuerySelecter.Mach
+  fullName: RW_ModularizationWeapon.Tools.QuerySelecter.Match
+  nameWithType: QuerySelecter.Match
 - uid: RW_ModularizationWeapon.Tools.QuerySelecter.TargetId
   name: TargetId
   href: api/RW_ModularizationWeapon.Tools.QuerySelecter.html#RW_ModularizationWeapon_Tools_QuerySelecter_TargetId

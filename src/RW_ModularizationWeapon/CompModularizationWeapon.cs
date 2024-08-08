@@ -82,35 +82,35 @@ namespace RW_ModularizationWeapon
                     // Thing thing = ChildNodes[properties.id];
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
-                    Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
+                    Dictionary<WeaponAttachmentProperties, uint> matched = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
                         if (record.Item1 != null && record.Item2 != null)
                         {
-                            uint currentMach = record.Item1.Mach(currentPartVNode[properties.id]);
-                            if(currentMach > 0)
+                            uint currentMatch = record.Item1.Match(currentPartVNode[properties.id]);
+                            if(currentMatch > 0)
                             {
-                                mached.Add(record.Item2, currentMach);
+                                matched.Add(record.Item2, currentMatch);
                             }
-                            // Log.Message($"{record.Item2.id} : {currentMach}");
+                            // Log.Message($"{record.Item2.id} : {currentMatch}");
                         }
                     }
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
-                    for (int i = mached.Count - 1; i >= 0; i--)
+                    for (int i = matched.Count - 1; i >= 0; i--)
                     {
-                        uint minMach = uint.MaxValue;
+                        uint minMatch = uint.MaxValue;
                         WeaponAttachmentProperties attachmentProperties = null;
-                        foreach(KeyValuePair<WeaponAttachmentProperties, uint> record in mached)
+                        foreach(KeyValuePair<WeaponAttachmentProperties, uint> record in matched)
                         {
-                            if(minMach < record.Value || attachmentProperties == null)
+                            if(minMatch < record.Value || attachmentProperties == null)
                             {
-                                minMach = record.Value;
+                                minMatch = record.Value;
                                 attachmentProperties = record.Key;
                             }
                         }
                         if(attachmentProperties != null)
                         {
-                            mached.Remove(attachmentProperties);
+                            matched.Remove(attachmentProperties);
                             OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
                             if (optional != null)
                             {
@@ -140,35 +140,35 @@ namespace RW_ModularizationWeapon
                     // Thing thing = GetTargetPart(properties.id).Thing;
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
-                    Dictionary<WeaponAttachmentProperties, uint> mached = new Dictionary<WeaponAttachmentProperties, uint>();
+                    Dictionary<WeaponAttachmentProperties, uint> matched = new Dictionary<WeaponAttachmentProperties, uint>();
                     foreach((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                     {
                         if (record.Item1 != null && record.Item2 != null)
                         {
-                            uint currentMach = record.Item1.Mach(targetPartVNode[properties.id]);
-                            if(currentMach > 0)
+                            uint currentMatch = record.Item1.Match(targetPartVNode[properties.id]);
+                            if(currentMatch > 0)
                             {
-                                mached.Add(record.Item2, currentMach);
+                                matched.Add(record.Item2, currentMatch);
                             }
-                            // Log.Message($"{record.Item2.id} : {currentMach}");
+                            // Log.Message($"{record.Item2.id} : {currentMatch}");
                         }
                     }
                     WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
-                    for (int i = mached.Count - 1; i >= 0; i--)
+                    for (int i = matched.Count - 1; i >= 0; i--)
                     {
-                        uint minMach = uint.MaxValue;
+                        uint minMatch = uint.MaxValue;
                         WeaponAttachmentProperties attachmentProperties = null;
-                        foreach(KeyValuePair<WeaponAttachmentProperties, uint> record in mached)
+                        foreach(KeyValuePair<WeaponAttachmentProperties, uint> record in matched)
                         {
-                            if(minMach < record.Value || attachmentProperties == null)
+                            if(minMatch < record.Value || attachmentProperties == null)
                             {
-                                minMach = record.Value;
+                                minMatch = record.Value;
                                 attachmentProperties = record.Key;
                             }
                         }
                         if(attachmentProperties != null)
                         {
-                            mached.Remove(attachmentProperties);
+                            matched.Remove(attachmentProperties);
                             OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
                             if (optional != null)
                             {

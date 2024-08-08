@@ -105,12 +105,12 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Mach(VNode node)
+        public uint Match(VNode node)
         {
             uint result = 0;
             foreach(QueryLevel level in levels)
             {
-                result = Math.Max(result,level.Mach(node));
+                result = Math.Max(result,level.Match(node));
             }
             return result;
         }
@@ -185,15 +185,15 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Mach(VNode node)
+        public uint Match(VNode node)
         {
             uint result = 0;
             for(int i = selecters.Count - 1; i >= 0; i--)
             {
                 if (node == null) return 0;
-                uint mach = selecters[i].Mach(node);
-                if (mach == 0) return 0;
-                result += mach;
+                uint match = selecters[i].Match(node);
+                if (match == 0) return 0;
+                result += match;
                 node = node.parent;
             }
             return result;
@@ -222,7 +222,6 @@ namespace RW_ModularizationWeapon.Tools
             get
             {
                 uint result = 0;
-                if (notFlag) result++;
                 if (id != null) result++;
                 if (defName != null) result++;
                 foreach (QueryGroup group in childenGroups) result += group.ConditionCount;
@@ -305,31 +304,42 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Mach(VNode node)
+        public uint Match(VNode node)
         {
             if(node == null) return 0;
-            uint result = notFlag ? 1u : 0;
-            if(id != null)
+            uint result = 0;
+            if(!id.NullOrEmpty())
             {
-                if (node.id == id && !notFlag) result++;
-                else return 0;
+                // by boolen logic: !(a&&b) = !a||!b
+                if(notFlag)
+                {
+                    if (node.id != id) result++;
+                }
+                else
+                {
+                    if (node.id == id) result++;
+                    else return 0;
+                }
             }
-            if(defName != null)
+            if(!defName.NullOrEmpty())
             {
-                if (node.defName == defName && !notFlag) result++;
-                else return 0;
+                if(notFlag)
+                {
+                    if (node.defName != defName) result++;
+                }
+                else
+                {
+                    if (node.defName == defName) result++;
+                    else return 0;
+                }
             }
             foreach(QueryGroup group in childenGroups)
             {
-                uint mach = 0;
-                foreach(VNode child in node) mach = Math.Max(mach,group.Mach(child));
-                if (notFlag)
-                {
-                    if(mach > 0) return 0;
-                    else mach = group.ConditionCount;
-                }
-                else if(mach == 0) return 0;
-                result += mach;
+                uint match = 0;
+                foreach(VNode child in node) match = Math.Max(match,group.Match(child));
+                if (notFlag) match = group.ConditionCount - match;
+                else if(match == 0) return 0;
+                result += match;
             }
             return result;
         }

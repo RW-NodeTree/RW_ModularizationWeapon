@@ -1,5 +1,5 @@
 # Affect Weapon By Attachment
-## Before we start you must know **[previous chapter](Create_Attachment.md)**
+## Before we start you must know **[previous chapter](Create_Sub_Weapon.md)**
 
 To affect the weapon performent, we need set some **multiplier** or **offseter** value in comp. Here are some common seting for attachment:
 
@@ -222,5 +222,5 @@ To affect the weapon performent, we need set some **multiplier** or **offseter**
 
 - `toolsObjectPatchByOtherPart`: Defines which parameters can replace this part's `IVerbOwner.Tools`.
 
-### *All parameters : [Type : CompProperties_ModularizationWeapon](../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html)*
-<!-- ## Next: [Create Attachment Or Weapon With Attachments](Create_Attachment_Or_Weapon_With_Attachments.md) -->
+*All parameters : [Type : CompProperties_ModularizationWeapon](../api/RW_ModularizationWeapon.CompProperties_ModularizationWeapon.html)*
+## Next: [Query Selector For Attachment Properties ID](Query_Selector_For_Attachment_Properties_ID.md)
