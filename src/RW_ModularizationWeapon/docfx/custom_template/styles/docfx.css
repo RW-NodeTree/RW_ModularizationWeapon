@@ -622,8 +622,8 @@ input#toc_filter_input {}
   position: relative;
   margin-top: 120px;
   margin-bottom: 115px;
-  left: 20px;
-  width: calc(100% - 20px - 20px);
+  left: 2.5em;
+  width: calc(100% - 2.5em - 2.5em);
 }
 
 
@@ -791,17 +791,17 @@ footer {
 }
 @media (min-width: 991px) {
   .article.clear-right {
-    width: calc(100% - 20px - 20px - max(30ch, 25%));
+    width: calc(100% - 2.5em - 2.5em - max(30ch, 25%));
   }
   .article.clear-left.clear-right {
-    left: 280px;
-    width: calc(100% - 280px - 20px - max(30ch, 25%));
+    left: calc(260px + 2.5em);
+    width: calc(100% - 260px - 2.5em - 2.5em - max(30ch, 25%));
   }
 }
 @media (min-width: 768px) {
   .article.clear-left {
-    left: 280px;
-    width: calc(100% - 280px - 20px);
+    left: calc(260px + 2.5em);
+    width: calc(100% - 260px - 2.5em - 2.5em);
   }
   #sidetoggle.collapse {
     display: block;
