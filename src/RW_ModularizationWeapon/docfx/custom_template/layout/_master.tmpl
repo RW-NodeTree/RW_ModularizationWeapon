@@ -24,27 +24,24 @@
       </div>
       {{/_enableSearch}}
       <div role="main" class="container body-content hide-when-search">
-      {{^_disableToc}}
-        {{>partials/toc}}
-        <div class="article row grid-right">
-      {{/_disableToc}}
-      {{#_disableToc}}
-        <div class="article row grid">
+        {{^_disableToc}}
+          {{>partials/toc}}
         {{/_disableToc}}
-          {{#_disableAffix}}
-          <div class="col-md-12">
-          {{/_disableAffix}}
-          {{^_disableAffix}}
-          <div class="col-md-10">
-          {{/_disableAffix}}
-            <article class="content wrap" id="_content" data-uid="{{uid}}">
-                {{!body}}
-            </article>
-          </div>
-          {{^_disableAffix}}
-          {{>partials/affix}}
-          {{/_disableAffix}}
+        <div class="article
+        {{^_disableToc}}
+          clear-left
+        {{/_disableToc}}
+        {{^_disableAffix}}
+          clear-right
+        {{/_disableAffix}}
+        ">
+          <article class="content wrap" id="_content" data-uid="{{uid}}">
+            {{!body}}
+          </article>
         </div>
+        {{^_disableAffix}}
+          {{>partials/affix}}
+        {{/_disableAffix}}
       </div>
       {{^_disableFooter}}
       {{>partials/footer}}

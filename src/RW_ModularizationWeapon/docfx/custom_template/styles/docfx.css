@@ -205,13 +205,15 @@ header {
 header .navbar {
   border-width: 0 0 1px;
   border-radius: 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .navbar-brand {
   font-size: inherit;
   padding: 0;
 }
 .navbar-collapse {
-  margin: 0 -15px;
+  margin: 0 0;
 }
 .subnav {
   min-height: 40px;
@@ -267,7 +269,7 @@ article section {
 }
 #autocollapse.collapsed .navbar-nav {
   float: none !important;
-  margin: 7.5px -15px;
+  margin: 7.5px -0;
 }
 #autocollapse.collapsed .navbar-nav > li {
   float: none;
@@ -617,17 +619,19 @@ input#toc_filter_input {}
   right: 5px;
 }
 .article {
+  position: relative;
   margin-top: 120px;
   margin-bottom: 115px;
+  left: 20px;
+  width: calc(100% - 20px - 20px);
 }
+
+
 
 #_content>a{
   margin-top: 105px;
 }
 
-.article.grid-right {
-  margin-left: 280px;
-}
 
 .inheritance hr {
   margin-top: 5px;
@@ -640,8 +644,8 @@ input#toc_filter_input {}
   margin-top: 50px;
   font-size: 12px;
   max-height: 100%;
-  width: 50ch;
-  /* overflow: hidden; */
+  width: max(30ch, 25%);
+  right: 0;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: thin;
@@ -662,7 +666,6 @@ input#toc_filter_input {}
 }
 .affix {
   position: relative;
-  height: 100%;
 }
 .sideaffix > div.contribution {
   margin-bottom: 20px;
@@ -783,10 +786,23 @@ footer {
 .footer {
   border-top: 1px solid #e7e7e7;
   background-color: #f8f8f8;
-  padding: 20px 0;
+  padding: 20px 20px;
   height: 70px;
 }
+@media (min-width: 991px) {
+  .article.clear-right {
+    width: calc(100% - 20px - 20px - max(30ch, 25%));
+  }
+  .article.clear-left.clear-right {
+    left: 280px;
+    width: calc(100% - 280px - 20px - max(30ch, 25%));
+  }
+}
 @media (min-width: 768px) {
+  .article.clear-left {
+    left: 280px;
+    width: calc(100% - 280px - 20px);
+  }
   #sidetoggle.collapse {
     display: block;
   }
@@ -815,8 +831,8 @@ footer {
   }
   .sidenav {
     padding: 15px 0;
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: 0;
+    margin-right: 0;
   }
   .sidefilter {
     position: static;
@@ -846,9 +862,6 @@ footer {
   
   .toc .level1 > li:after {
     display: none;
-  }
-  .article.grid-right {
-    margin-left: 0;
   }
   .grad-top,
   .grad-bottom {
@@ -976,10 +989,6 @@ div.embeddedvideo iframe {
 
 /* For printer */
 @media print{
-  .article.grid-right {
-    margin-top: 0px;
-    margin-left: 0px;
-  }
   .sideaffix {
     display: none;
   }
@@ -1061,7 +1070,7 @@ div.embeddedvideo iframe {
   
   .sidetoc {
     background-color: #2b2b2b;
-    border-left-color: #4b4b4b;
+    border-left-color: #2b2b2b;
     border-right-color: #4b4b4b;
   }
   
