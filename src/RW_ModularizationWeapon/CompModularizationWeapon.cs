@@ -127,7 +127,8 @@ namespace RW_ModularizationWeapon
                     replaced.id = properties.id;
                     currentPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
-                return new Dictionary<string, WeaponAttachmentProperties>(currentPartAttachmentPropertiesCache);
+                var result = new Dictionary<string, WeaponAttachmentProperties>(currentPartAttachmentPropertiesCache);
+                return result;
             }
         }
 
@@ -188,7 +189,8 @@ namespace RW_ModularizationWeapon
                     replaced.id = properties.id;
                     targetPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
-                return new Dictionary<string, WeaponAttachmentProperties>(targetPartAttachmentPropertiesCache);
+                var result = new Dictionary<string, WeaponAttachmentProperties>(targetPartAttachmentPropertiesCache);
+                return result;
             }
         }
 
