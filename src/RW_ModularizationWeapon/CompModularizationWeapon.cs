@@ -127,7 +127,7 @@ namespace RW_ModularizationWeapon
                     replaced.id = properties.id;
                     currentPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
-                return UnityData.IsInMainThread ? currentPartAttachmentPropertiesCache : new Dictionary<string, WeaponAttachmentProperties>(currentPartAttachmentPropertiesCache);
+                return new Dictionary<string, WeaponAttachmentProperties>(currentPartAttachmentPropertiesCache);
             }
         }
 
@@ -188,7 +188,7 @@ namespace RW_ModularizationWeapon
                     replaced.id = properties.id;
                     targetPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
-                return UnityData.IsInMainThread ? targetPartAttachmentPropertiesCache : new Dictionary<string, WeaponAttachmentProperties>(targetPartAttachmentPropertiesCache);
+                return new Dictionary<string, WeaponAttachmentProperties>(targetPartAttachmentPropertiesCache);
             }
         }
 
