@@ -72,7 +72,7 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenCurrentPartAttachmentProperties()
         {
-            if (UnityData.IsInMainThread)
+            lock (currentPartAttachmentPropertiesCache)
             {
                 if (currentPartVNode == null) UpdateCurrentPartVNode();
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
@@ -127,13 +127,13 @@ namespace RW_ModularizationWeapon
                     replaced.id = properties.id;
                     currentPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
+                return UnityData.IsInMainThread ? currentPartAttachmentPropertiesCache : new Dictionary<string, WeaponAttachmentProperties>(currentPartAttachmentPropertiesCache);
             }
-            return currentPartAttachmentPropertiesCache;
         }
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenTargetPartAttachmentProperties()
         {
-            if (UnityData.IsInMainThread)
+            lock (targetPartAttachmentPropertiesCache)
             {
                 if (targetPartVNode == null) UpdateTargetPartVNode();
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
@@ -188,8 +188,8 @@ namespace RW_ModularizationWeapon
                     replaced.id = properties.id;
                     targetPartAttachmentPropertiesCache.Add(properties.id, replaced);
                 }
+                return UnityData.IsInMainThread ? targetPartAttachmentPropertiesCache : new Dictionary<string, WeaponAttachmentProperties>(targetPartAttachmentPropertiesCache);
             }
-            return targetPartAttachmentPropertiesCache;
         }
 
         static CompModularizationWeapon()
