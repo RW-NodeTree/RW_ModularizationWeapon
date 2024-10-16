@@ -1276,14 +1276,20 @@ namespace RW_ModularizationWeapon
         
         public WeaponAttachmentProperties CurrentPartWeaponAttachmentPropertiesById(string id)
         {
-            if(!id.NullOrEmpty()) return GetOrGenCurrentPartAttachmentProperties().TryGetValue(id);
-            return null;
+            lock (currentPartAttachmentPropertiesCache)
+            {
+                if (!id.NullOrEmpty()) return GetOrGenCurrentPartAttachmentProperties().TryGetValue(id);
+                return null;
+            }
         }
         
         public WeaponAttachmentProperties TargetPartWeaponAttachmentPropertiesById(string id)
         {
-            if(!id.NullOrEmpty()) return GetOrGenTargetPartAttachmentProperties().TryGetValue(id);
-            return null;
+            lock (currentPartAttachmentPropertiesCache)
+            {
+                if (!id.NullOrEmpty()) return GetOrGenTargetPartAttachmentProperties().TryGetValue(id);
+                return null;
+            }
         }
 
         #region operator
