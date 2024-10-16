@@ -47,8 +47,8 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbPropertiesRegiestInfo> VerbPropertiesRegiestInfoUpadte(Type ownerType, List<VerbPropertiesRegiestInfo> result)
         {
-            _ = CurrentPartAttachmentProperties;
-            _ = TargetPartAttachmentProperties;
+            GetOrGenCurrentPartAttachmentProperties();
+            GetOrGenTargetPartAttachmentProperties();
             int index = 0;
             NodeContainer container = ChildNodes;
             List<Task<VerbPropertiesRegiestInfo>> tasks = new List<Task<VerbPropertiesRegiestInfo>>();
@@ -161,8 +161,8 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbToolRegiestInfo> VerbToolRegiestInfoUpdate(Type ownerType, List<VerbToolRegiestInfo> result)
         {
-            _ = CurrentPartAttachmentProperties;
-            _ = TargetPartAttachmentProperties;
+            GetOrGenCurrentPartAttachmentProperties();
+            GetOrGenTargetPartAttachmentProperties();
             int index = 0;
             NodeContainer container = ChildNodes;
             List<Task<VerbToolRegiestInfo>> tasks = new List<Task<VerbToolRegiestInfo>>();
