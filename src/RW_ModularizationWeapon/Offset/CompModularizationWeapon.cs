@@ -150,58 +150,61 @@ namespace RW_ModularizationWeapon
 
         public float GetStatOffset(StatDef statDef, Thing part)
         {
-            NodeContainer container = ChildNodes;
-            float result = 0;
-            if (!statOffsetCache.TryGetValue((statDef, part), out result))
+            lock (this)
             {
-                result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatValueFromList(
-                    statDef,
-                    Props.statOffsetDefaultValue
-                );
-                WeaponAttachmentProperties current = null;
-                CompModularizationWeapon currentComp = null;
-                for (int i = 0; i < container.Count; i++)
+                NodeContainer container = ChildNodes;
+                float result = 0;
+                if (!statOffsetCache.TryGetValue((statDef, part), out result))
                 {
-                    string id = container[(uint)i];
-                    CompModularizationWeapon comp = container[i];
-                    if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
+                    result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatValueFromList(
+                        statDef,
+                        Props.statOffsetDefaultValue
+                    );
+                    WeaponAttachmentProperties current = null;
+                    CompModularizationWeapon currentComp = null;
+                    for (int i = 0; i < container.Count; i++)
                     {
-                        current = CurrentPartWeaponAttachmentPropertiesById(id);
-                        currentComp = comp;
-                        break;
+                        string id = container[(uint)i];
+                        CompModularizationWeapon comp = container[i];
+                        if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
+                        {
+                            current = CurrentPartWeaponAttachmentPropertiesById(id);
+                            currentComp = comp;
+                            break;
+                        }
                     }
-                }
 
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    CompModularizationWeapon comp = container[i];
-                    WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                    if (comp != null && comp.Validity)
+                    for (int i = 0; i < container.Count; i++)
                     {
-                        result += comp.GetStatOffset(statDef, part)
-                            * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statOffsetAffectHorizon.GetStatValueFromList(
-                                    statDef,
-                                    properties.statOffsetAffectHorizonDefaultValue
-                                )
-                                * (current?.statOtherPartOffseterAffectHorizon
-                                .GetOrNewWhenNull(id, () => new List<StatModifier>())
-                                .GetStatValueFromList(
-                                    statDef,
-                                    current.statOtherPartOffseterAffectHorizonDefaultValue
-                                ) ?? 1)
-                                * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon.GetStatValueFromList(
+                        string id = container[(uint)i];
+                        CompModularizationWeapon comp = container[i];
+                        WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                        if (comp != null && comp.Validity)
+                        {
+                            result += comp.GetStatOffset(statDef, part)
+                                * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statOffsetAffectHorizon.GetStatValueFromList(
                                         statDef,
-                                        currentComp.Props.statOtherPartOffseterAffectHorizonDefaultValue
-                                    ) ?? 1
-                                ) : 1))
-                            );
+                                        properties.statOffsetAffectHorizonDefaultValue
+                                    )
+                                    * (current?.statOtherPartOffseterAffectHorizon
+                                    .GetOrNewWhenNull(id, () => new List<StatModifier>())
+                                    .GetStatValueFromList(
+                                        statDef,
+                                        current.statOtherPartOffseterAffectHorizonDefaultValue
+                                    ) ?? 1)
+                                    * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon.GetStatValueFromList(
+                                            statDef,
+                                            currentComp.Props.statOtherPartOffseterAffectHorizonDefaultValue
+                                        ) ?? 1
+                                    ) : 1))
+                                );
+                        }
                     }
+                    statOffsetCache.Add((statDef, part), result);
+                    //Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
                 }
-                statOffsetCache.Add((statDef, part), result);
-                //Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
+                return result;
             }
-            return result;
         }
     }
 }

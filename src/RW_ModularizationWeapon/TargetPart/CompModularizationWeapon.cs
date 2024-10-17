@@ -65,19 +65,22 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForCurrentPart(VNode node)
         {
-            currentPartVNode = node;
-            foreach(string id in PartIDs)
+            lock (this)
             {
-                Thing target = ChildNodes[id];
-                if(target != null)
+                currentPartVNode = node;
+                foreach(string id in PartIDs)
                 {
-                    VNode child = new VNode(id, target.def.defName, node);
-                    CompModularizationWeapon comp = target;
-                    comp?.AppendVNodeForCurrentPart(child);
+                    Thing target = ChildNodes[id];
+                    if(target != null)
+                    {
+                        VNode child = new VNode(id, target.def.defName, node);
+                        CompModularizationWeapon comp = target;
+                        comp?.AppendVNodeForCurrentPart(child);
+                    }
                 }
+                allowedPartCache.Clear();
+                currentPartAttachmentPropertiesCache.Clear();
             }
-            allowedPartCache.Clear();
-            currentPartAttachmentPropertiesCache.Clear();
         }
 
         public void UpdateTargetPartVNode()
@@ -94,19 +97,22 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForTargetPart(VNode node)
         {
-            targetPartVNode = node;
-            foreach(string id in PartIDs)
+            lock (this)
             {
-                Thing target = GetTargetPart(id).Thing;
-                if(target != null)
+                targetPartVNode = node;
+                foreach(string id in PartIDs)
                 {
-                    VNode child = new VNode(id, target.def.defName, node);
-                    CompModularizationWeapon comp = target;
-                    comp?.AppendVNodeForTargetPart(child);
+                    Thing target = GetTargetPart(id).Thing;
+                    if(target != null)
+                    {
+                        VNode child = new VNode(id, target.def.defName, node);
+                        CompModularizationWeapon comp = target;
+                        comp?.AppendVNodeForTargetPart(child);
+                    }
                 }
+                allowedPartCache.Clear();
+                targetPartAttachmentPropertiesCache.Clear();
             }
-            allowedPartCache.Clear();
-            targetPartAttachmentPropertiesCache.Clear();
         }
 
         public void SwapTargetPart()

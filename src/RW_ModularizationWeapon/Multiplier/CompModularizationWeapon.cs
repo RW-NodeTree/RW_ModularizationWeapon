@@ -164,59 +164,62 @@ namespace RW_ModularizationWeapon
 
         public float GetStatMultiplier(StatDef statDef, Thing part)
         {
-            NodeContainer container = ChildNodes;
-            float result = 1;
-            if (!statMultiplierCache.TryGetValue((statDef, part), out result))
+            lock (this)
             {
-                result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatValueFromList(
-                    statDef,
-                    Props.statMultiplierDefaultValue
-                );
-                WeaponAttachmentProperties current = null;
-                CompModularizationWeapon currentComp = null;
-                for (int i = 0; i < container.Count; i++)
+                NodeContainer container = ChildNodes;
+                float result = 1;
+                if (!statMultiplierCache.TryGetValue((statDef, part), out result))
                 {
-                    string id = container[(uint)i];
-                    CompModularizationWeapon comp = container[i];
-                    if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
+                    result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatValueFromList(
+                        statDef,
+                        Props.statMultiplierDefaultValue
+                    );
+                    WeaponAttachmentProperties current = null;
+                    CompModularizationWeapon currentComp = null;
+                    for (int i = 0; i < container.Count; i++)
                     {
-                        current = CurrentPartWeaponAttachmentPropertiesById(id);
-                        currentComp = comp;
-                        break;
+                        string id = container[(uint)i];
+                        CompModularizationWeapon comp = container[i];
+                        if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
+                        {
+                            current = CurrentPartWeaponAttachmentPropertiesById(id);
+                            currentComp = comp;
+                            break;
+                        }
                     }
-                }
-                for (int i = 0; i < container.Count; i++)
-                {
-                    string id = container[(uint)i];
-                    CompModularizationWeapon comp = container[i];
-                    WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                    if (comp != null && comp.Validity)
+                    for (int i = 0; i < container.Count; i++)
                     {
-                        result *= 1f + (comp.GetStatMultiplier(statDef, part) - 1f)
-                            * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statMultiplierAffectHorizon
-                                .GetStatValueFromList(
-                                    statDef,
-                                    properties.statMultiplierAffectHorizonDefaultValue
-                                )
-                                * (current?.statOtherPartMultiplierAffectHorizon
-                                .GetOrNewWhenNull(id, () => new List<StatModifier>())
-                                .GetStatValueFromList(
-                                    statDef,
-                                    current.statOtherPartMultiplierAffectHorizonDefaultValue
-                                ) ?? 1f)
-                                * (currentComp != comp ? (
-                                    currentComp?.Props.statOtherPartMultiplierAffectHorizon.GetStatValueFromList(
+                        string id = container[(uint)i];
+                        CompModularizationWeapon comp = container[i];
+                        WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                        if (comp != null && comp.Validity)
+                        {
+                            result *= 1f + (comp.GetStatMultiplier(statDef, part) - 1f)
+                                * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statMultiplierAffectHorizon
+                                    .GetStatValueFromList(
                                         statDef,
-                                        currentComp.Props.statOtherPartMultiplierAffectHorizonDefaultValue
-                                    ) ?? 1f
-                                ) : 1f))
-                            );
+                                        properties.statMultiplierAffectHorizonDefaultValue
+                                    )
+                                    * (current?.statOtherPartMultiplierAffectHorizon
+                                    .GetOrNewWhenNull(id, () => new List<StatModifier>())
+                                    .GetStatValueFromList(
+                                        statDef,
+                                        current.statOtherPartMultiplierAffectHorizonDefaultValue
+                                    ) ?? 1f)
+                                    * (currentComp != comp ? (
+                                        currentComp?.Props.statOtherPartMultiplierAffectHorizon.GetStatValueFromList(
+                                            statDef,
+                                            currentComp.Props.statOtherPartMultiplierAffectHorizonDefaultValue
+                                        ) ?? 1f
+                                    ) : 1f))
+                                );
+                        }
                     }
+                    statMultiplierCache.Add((statDef, part), result);
+                    //Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
                 }
-                statMultiplierCache.Add((statDef, part), result);
-                //Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result} \ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
+                return result;
             }
-            return result;
         }
         #endregion
     }
