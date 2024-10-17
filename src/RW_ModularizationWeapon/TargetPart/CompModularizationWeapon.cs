@@ -65,19 +65,22 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForCurrentPart(VNode node)
         {
-            currentPartVNode = node;
-            foreach(string id in PartIDs)
+            lock (currentPartAttachmentPropertiesCache)
             {
-                Thing target = ChildNodes[id];
-                if(target != null)
+                currentPartVNode = node;
+                foreach (string id in PartIDs)
                 {
-                    VNode child = new VNode(id, target.def.defName, node);
-                    CompModularizationWeapon comp = target;
-                    comp?.AppendVNodeForCurrentPart(child);
+                    Thing target = ChildNodes[id];
+                    if (target != null)
+                    {
+                        VNode child = new VNode(id, target.def.defName, node);
+                        CompModularizationWeapon comp = target;
+                        comp?.AppendVNodeForCurrentPart(child);
+                    }
                 }
+                allowedPartCache.Clear();
+                currentPartAttachmentPropertiesCache.Clear();
             }
-            allowedPartCache.Clear();
-            currentPartAttachmentPropertiesCache.Clear();
         }
 
         public void UpdateTargetPartVNode()
