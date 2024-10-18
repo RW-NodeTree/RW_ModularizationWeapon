@@ -65,7 +65,7 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForCurrentPart(VNode node)
         {
-            // lock (this)
+            lock (this)
             {
                 currentPartVNode = node;
                 foreach(string id in PartIDs)
@@ -97,7 +97,7 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForTargetPart(VNode node)
         {
-            // lock (this)
+            lock (this)
             {
                 targetPartVNode = node;
                 foreach(string id in PartIDs)

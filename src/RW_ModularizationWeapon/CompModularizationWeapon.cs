@@ -59,23 +59,20 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                lock (partIDs)
+                if (partIDs.Count == 0)
                 {
-                    if (partIDs.Count == 0)
+                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                     {
-                        foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
-                        {
-                            partIDs.Add(properties.id);
-                        }
+                        partIDs.Add(properties.id);
                     }
-                    return partIDs;
                 }
+                return partIDs;
             }
         }
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenCurrentPartAttachmentProperties()
         {
-            // lock (this)
+            lock (this)
             {
                 if (currentPartVNode == null) UpdateCurrentPartVNode();
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
@@ -136,7 +133,7 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenTargetPartAttachmentProperties()
         {
-            // lock (this)
+            lock (this)
             {
                 if (targetPartVNode == null) UpdateTargetPartVNode();
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
@@ -684,7 +681,7 @@ namespace RW_ModularizationWeapon
 
         private void MarkTargetPartChanged()
         {
-            // lock (this)
+            lock (this)
             {
                 Map map = parent.MapHeld;
                 if (map != null &&
