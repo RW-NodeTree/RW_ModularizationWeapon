@@ -59,7 +59,7 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                lock (this)
+                lock (partIDs)
                 {
                     if (partIDs.Count == 0)
                     {
