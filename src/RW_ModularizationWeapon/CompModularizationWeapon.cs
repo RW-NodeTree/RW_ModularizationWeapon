@@ -72,7 +72,7 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenCurrentPartAttachmentProperties()
         {
-            lock (this)
+            // lock (this)
             {
                 if (currentPartVNode == null) UpdateCurrentPartVNode();
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
@@ -133,7 +133,7 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenTargetPartAttachmentProperties()
         {
-            lock (this)
+            // lock (this)
             {
                 if (targetPartVNode == null) UpdateTargetPartVNode();
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
@@ -681,7 +681,7 @@ namespace RW_ModularizationWeapon
 
         private void MarkTargetPartChanged()
         {
-            lock (this)
+            // lock (this)
             {
                 Map map = parent.MapHeld;
                 if (map != null &&

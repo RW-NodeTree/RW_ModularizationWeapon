@@ -164,7 +164,7 @@ namespace RW_ModularizationWeapon
 
         public float GetStatMultiplier(StatDef statDef, Thing part)
         {
-            lock (this)
+            // lock (this)
             {
                 NodeContainer container = ChildNodes;
                 float result = 1;
