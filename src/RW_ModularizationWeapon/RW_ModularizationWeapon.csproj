@@ -53,15 +53,23 @@
 		<None Remove="./**/.manifest" />
 	</ItemGroup>
 	<Target AfterTargets="PostBuildEvent" Name="PostBuild">
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.3/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.4/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="rm -f ../../1.5/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="rm -f ../../1.3/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="rm -f ../../1.4/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="rm -f ../../1.5/Assemblies/RW_NodeTree.pdb" />
-	</Target>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="git submodule update ../../" />
-		<Exec Command="dotnet build ../../lib/RW_NodeTree -c $(Configuration)" />
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="powershell -c Remove-Item -Force ../../1.3/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="powershell -c Remove-Item -Force ../../1.4/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="powershell -c Remove-Item -Force ../../1.5/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="powershell -c Remove-Item -Force ../../1.3/Assemblies/RW_NodeTree.pdb" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="powershell -c Remove-Item -Force ../../1.4/Assemblies/RW_NodeTree.pdb" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="powershell -c Remove-Item -Force ../../1.5/Assemblies/RW_NodeTree.pdb" />
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="bash -c rm -f ../../1.3/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="bash -c rm -f ../../1.4/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="bash -c rm -f ../../1.5/Assemblies/RW_NodeTree.dll" />
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="bash -c rm -f ../../1.3/Assemblies/RW_NodeTree.pdb" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="bash -c rm -f ../../1.4/Assemblies/RW_NodeTree.pdb" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="bash -c rm -f ../../1.5/Assemblies/RW_NodeTree.pdb" />
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="del ../../1.3/Assemblies/RW_NodeTree.dll -f" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="del ../../1.4/Assemblies/RW_NodeTree.dll -f" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="del ../../1.5/Assemblies/RW_NodeTree.dll -f" />
+		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="del ../../1.3/Assemblies/RW_NodeTree.pdb -f" />
+		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="del ../../1.4/Assemblies/RW_NodeTree.pdb -f" />
+		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="del ../../1.5/Assemblies/RW_NodeTree.pdb -f" />
 	</Target>
 </Project>
