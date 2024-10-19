@@ -150,7 +150,7 @@ namespace RW_ModularizationWeapon
 
         public float GetStatOffset(StatDef statDef, Thing part)
         {
-            // lock (this)
+            lock (this)
             {
                 NodeContainer container = ChildNodes;
                 float result = 0;
