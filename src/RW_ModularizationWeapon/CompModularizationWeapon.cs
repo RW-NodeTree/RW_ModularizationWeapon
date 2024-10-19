@@ -59,14 +59,17 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if (partIDs.Count == 0)
+                lock (this)
                 {
-                    foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                    if (partIDs.Count == 0)
                     {
-                        partIDs.Add(properties.id);
+                        foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
+                        {
+                            partIDs.Add(properties.id);
+                        }
                     }
+                    return partIDs;
                 }
-                return partIDs;
             }
         }
 
@@ -448,21 +451,24 @@ namespace RW_ModularizationWeapon
             if (part == ChildNodes[id]) return true;
             CompModularizationWeapon comp = part;
             if (checkOccupy && comp != null && comp.occupiers != null && comp.occupiers != this) return false;
-            if (allowedPartCache.TryGetValue((id, part), out bool result)) return result;
-            WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
-            WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
-            //if (Prefs.DevMode) Log.Message($"properties : {properties}");
-            result = currentPartProperties != null && targetPartProperties != null;
-            if (!result) return false;
-            if (part == null) return currentPartProperties.allowEmpty && targetPartProperties.allowEmpty;
+            lock (this)
+            {
+                if (allowedPartCache.TryGetValue((id, part), out bool result)) return result;
+                WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
+                WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
+                //if (Prefs.DevMode) Log.Message($"properties : {properties}");
+                result = currentPartProperties != null && targetPartProperties != null;
+                if (!result) return false;
+                if (part == null) return currentPartProperties.allowEmpty && targetPartProperties.allowEmpty;
 
-            result &=
-                currentPartProperties.filter.Allows(part) &&
-                targetPartProperties.filter.Allows(part) &&
-                !internal_Unchangeable(ChildNodes[id], currentPartProperties) &&
-                !internal_Unchangeable(ChildNodes[id], targetPartProperties);
-            allowedPartCache.Add((id, part), result);
-            return result;
+                result &=
+                    currentPartProperties.filter.Allows(part) &&
+                    targetPartProperties.filter.Allows(part) &&
+                    !internal_Unchangeable(ChildNodes[id], currentPartProperties) &&
+                    !internal_Unchangeable(ChildNodes[id], targetPartProperties);
+                allowedPartCache.Add((id, part), result);
+                return result;
+            }
         }
 
 
@@ -1094,75 +1100,76 @@ namespace RW_ModularizationWeapon
             // else stopWatch.Start();
             // long ct = 0;
             // long lt = 0;
-            blockEvent = false;
-            notUpdateTexture = false;
-            foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
+            lock (this)
             {
-                ChildNodes[keyValue.Key] = keyValue.Value;
-            }
-            if (Props.attachmentProperties.Count <= 0) return;
-            if (IsSwapRoot)
-            {
-                while (!CheckTargetVaild()) continue;
-                CheckAndSetTargetCache();
-            }
-            if (!swap) return;
-            //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
-            Map map = parent.MapHeld;
-            foreach (string id in this.PartIDs)
-            {
-                //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
-                CompChildNodeProccesser proccesser;
-                CompModularizationWeapon weaponComp;
-                Thing prev = ChildNodes[id];
-                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
+                blockEvent = false;
+                notUpdateTexture = false;
+                foreach (KeyValuePair<string, Thing> keyValue in prveChilds)
                 {
+                    ChildNodes[keyValue.Key] = keyValue.Value;
+                }
+                if (Props.attachmentProperties.Count <= 0) return;
+                if (IsSwapRoot)
+                {
+                    while (!CheckTargetVaild()) continue;
+                    CheckAndSetTargetCache();
+                }
+                if (!swap) return;
+                //Console.WriteLine($"==================================== {parent}.PreUpdateNode Start   ====================================");
+                Map map = parent.MapHeld;
+                foreach (string id in this.PartIDs)
+                {
+                    //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
+                    CompChildNodeProccesser proccesser;
+                    CompModularizationWeapon weaponComp;
+                    Thing prev = ChildNodes[id];
+                    if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
+                    {
+
+                        proccesser = prev;
+                        if (proccesser != null) proccesser.NeedUpdate = true;
+
+                        weaponComp = prev;
+                        if (weaponComp != null) weaponComp.swap = true;
+                        continue;
+                    }
+
+                    if(target.HasThing && target.Thing.Spawned)
+                    {
+                        target.Thing.DeSpawn();
+                    }
+
+                    SetTargetPart(id, prev);
+                    ChildNodes[id] = target.Thing;
+
+                    //Sync child swap state
 
                     proccesser = prev;
                     if (proccesser != null) proccesser.NeedUpdate = true;
 
                     weaponComp = prev;
                     if (weaponComp != null) weaponComp.swap = true;
-                    continue;
-                }
 
-                if(target.HasThing && target.Thing.Spawned)
-                {
-                    target.Thing.DeSpawn();
-                }
+                    proccesser = target.Thing;
+                    if (proccesser != null) proccesser.NeedUpdate = true;
 
-                SetTargetPart(id, prev);
-                ChildNodes[id] = target.Thing;
+                    weaponComp = target.Thing;
+                    if (weaponComp != null) weaponComp.swap = true;
 
-                //Sync child swap state
-
-                proccesser = prev;
-                if (proccesser != null) proccesser.NeedUpdate = true;
-
-                weaponComp = prev;
-                if (weaponComp != null) weaponComp.swap = true;
-
-                proccesser = target.Thing;
-                if (proccesser != null) proccesser.NeedUpdate = true;
-
-                weaponComp = target.Thing;
-                if (weaponComp != null) weaponComp.swap = true;
-
-                if(map != null && prev != null)
-                {
-                    int index = map.cellIndices.CellToIndex(prev.Position);
-                    if (index < map.cellIndices.NumGridCells && index >= 0)
+                    if(map != null && prev != null)
                     {
-                        prev.SpawnSetup(map, false);
+                        int index = map.cellIndices.CellToIndex(prev.Position);
+                        if (index < map.cellIndices.NumGridCells && index >= 0)
+                        {
+                            prev.SpawnSetup(map, false);
+                        }
                     }
                 }
+
+                // ct = stopWatch.ElapsedTicks;
+                // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
+                // lt = ct;
             }
-
-            // ct = stopWatch.ElapsedTicks;
-            // Log.Message($"{parent}.PreUpdate  swap: {swap}; occupiers: {occupiers?.parent}; pass cpu ticks 4 {ct}, dt = {ct - lt}");
-            // lt = ct;
-
-            return;
         }
 
 
@@ -1173,21 +1180,22 @@ namespace RW_ModularizationWeapon
             // long ct = 0;
             // long lt = 0;
 
-            blockEvent = false;
-            notUpdateTexture = false;
-            if (Props.attachmentProperties.Count > 0 && IsSwapRoot)
+            lock (this)
             {
-                if (swap) SwapAttachmentPropertiesCacheAndVNode();
-                else UpdateCurrentPartVNode();
-                InitAttachmentProperties();
-                if (swap) SwapStateCacheAndCompCache();
-                else UpdateStateCacheAndCompCache();
+                blockEvent = false;
+                notUpdateTexture = false;
+                if (Props.attachmentProperties.Count > 0 && IsSwapRoot)
+                {
+                    if (swap) SwapAttachmentPropertiesCacheAndVNode();
+                    else UpdateCurrentPartVNode();
+                    InitAttachmentProperties();
+                    if (swap) SwapStateCacheAndCompCache();
+                    else UpdateStateCacheAndCompCache();
+                }
+                swap = false;
+                NeedUpdate = false;
+                targetPartChanged = false;
             }
-            swap = false;
-            NeedUpdate = false;
-            targetPartChanged = false;
-            // if (RootPart == this && occupiers == null) UpdateTargetPartXmlTree();
-            return;
         }
 
 
