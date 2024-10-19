@@ -8,41 +8,52 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        public bool IsSwapRoot { get => this.RootPart == this && this.occupiers == null; }
-
+        public bool IsSwapRoot
+        {
+            get
+            {
+                lock (this)
+                {
+                    return this.RootPart == this && this.occupiers == null;
+                }
+            }
+        }
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
-            //only allow thing not have parent or spawned?
-            //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
-            LocalTargetInfo currentTargetInfo = GetTargetPart(id);
-            if (id != null && currentTargetInfo != targetInfo && AllowPart(targetInfo.Thing, id))
+            lock (this)
             {
+                //only allow thing not have parent or spawned?
+                //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
+                LocalTargetInfo currentTargetInfo = GetTargetPart(id);
+                if (id != null && currentTargetInfo != targetInfo && AllowPart(targetInfo.Thing, id))
+                {
 
-                //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
-                //targetOwner?.Remove(targetInfo.Thing);
-                //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
-                targetPartsWithId.TryGetValue(id, out currentTargetInfo);
-                CompModularizationWeapon part = currentTargetInfo.Thing;
-                if (part != null)
-                {
-                    part.occupiers = null;
-                    if (!swap) part.UpdateTargetPartVNode();
+                    //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
+                    //targetOwner?.Remove(targetInfo.Thing);
+                    //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
+                    targetPartsWithId.TryGetValue(id, out currentTargetInfo);
+                    CompModularizationWeapon part = currentTargetInfo.Thing;
+                    if (part != null)
+                    {
+                        part.occupiers = null;
+                        if (!swap) part.UpdateTargetPartVNode();
+                    }
+                    Thing prevPart = ChildNodes[id];
+                    if (targetInfo.Thing == prevPart && !swap) targetPartsWithId.Remove(id);
+                    else
+                    {
+                        targetPartsWithId.SetOrAdd(id, targetInfo);
+                        part = targetInfo.Thing;
+                        if (part != null) part.occupiers = this;
+                    }
+                    //targetOwner?.TryAdd(targetInfo.Thing, false);
+                    targetPartChanged = true;
+                    if (!swap) UpdateTargetPartVNode();
+                    return true;
                 }
-                Thing prevPart = ChildNodes[id];
-                if (targetInfo.Thing == prevPart && !swap) targetPartsWithId.Remove(id);
-                else
-                {
-                    targetPartsWithId.SetOrAdd(id, targetInfo);
-                    part = targetInfo.Thing;
-                    if (part != null) part.occupiers = this;
-                }
-                //targetOwner?.TryAdd(targetInfo.Thing, false);
-                targetPartChanged = true;
-                if (!swap) UpdateTargetPartVNode();
-                return true;
+                return false;
             }
-            return false;
         }
 
         public LocalTargetInfo GetTargetPart(string id)
@@ -117,11 +128,14 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            if(IsSwapRoot)
+            lock (this)
             {
-                swap = true;
-                NeedUpdate = true;
-                NodeProccesser.UpdateNode();
+                if(IsSwapRoot)
+                {
+                    swap = true;
+                    NeedUpdate = true;
+                    NodeProccesser.UpdateNode();
+                }
             }
         }
 

@@ -687,38 +687,35 @@ namespace RW_ModularizationWeapon
 
         private void MarkTargetPartChanged()
         {
-            lock (this)
+            Map map = parent.MapHeld;
+            if (map != null &&
+                CombatExtended_CompAmmoUser != null &&
+                CombatExtended_CompAmmoUser_currentAmmoInt != null &&
+                CombatExtended_CompAmmoUser_CurMagCount_get != null &&
+                CombatExtended_CompAmmoUser_CurMagCount_set != null
+                )
             {
-                Map map = parent.MapHeld;
-                if (map != null &&
-                    CombatExtended_CompAmmoUser != null &&
-                    CombatExtended_CompAmmoUser_currentAmmoInt != null &&
-                    CombatExtended_CompAmmoUser_CurMagCount_get != null &&
-                    CombatExtended_CompAmmoUser_CurMagCount_set != null
-                    )
+                //Console.WriteLine(parent.PositionHeld);
+                ThingComp currentComp = cachedThingComps.Find(x => CombatExtended_CompAmmoUser.IsAssignableFrom(x.GetType()));
+                if (currentComp != null)
                 {
-                    //Console.WriteLine(parent.PositionHeld);
-                    ThingComp currentComp = cachedThingComps.Find(x => CombatExtended_CompAmmoUser.IsAssignableFrom(x.GetType()));
-                    if (currentComp != null)
+                    ThingDef def = CombatExtended_CompAmmoUser_currentAmmoInt(currentComp);
+                    int count = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(currentComp, null);
+                    if (def != null && count > 0)
                     {
-                        ThingDef def = CombatExtended_CompAmmoUser_currentAmmoInt(currentComp);
-                        int count = (int)CombatExtended_CompAmmoUser_CurMagCount_get.Invoke(currentComp, null);
-                        if (def != null && count > 0)
-                        {
-                            Thing thing = ThingMaker.MakeThing(def, null);
-                            thing.stackCount = count;
-                            CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(currentComp, new object[] { 0 });
-                            GenThing.TryDropAndSetForbidden(thing, parent.PositionHeld, map, ThingPlaceMode.Near, out _, false);
-                        }
+                        Thing thing = ThingMaker.MakeThing(def, null);
+                        thing.stackCount = count;
+                        CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(currentComp, new object[] { 0 });
+                        GenThing.TryDropAndSetForbidden(thing, parent.PositionHeld, map, ThingPlaceMode.Near, out _, false);
                     }
                 }
-                cachedThingComps.Clear();
-                cachedCompProperties.Clear();
-                statOffsetCache_TargetPart.Clear();
-                statMultiplierCache_TargetPart.Clear();
-                toolsCache_TargetPart.Clear();
-                verbPropertiesCache_TargetPart.Clear();
             }
+            cachedThingComps.Clear();
+            cachedCompProperties.Clear();
+            statOffsetCache_TargetPart.Clear();
+            statMultiplierCache_TargetPart.Clear();
+            toolsCache_TargetPart.Clear();
+            verbPropertiesCache_TargetPart.Clear();
         }
 
 
