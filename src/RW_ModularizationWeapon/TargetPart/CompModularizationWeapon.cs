@@ -103,7 +103,7 @@ namespace RW_ModularizationWeapon
             CompModularizationWeapon root = RootOccupierPart;
             if(root != this)
             {
-                root.UpdateCurrentPartVNode();
+                root.UpdateTargetPartVNode();
                 return;
             }
             VNode node = new VNode(null,parent.def.defName);
