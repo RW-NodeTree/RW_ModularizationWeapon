@@ -79,8 +79,8 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForCurrentPart(VNode node)
         {
-            lock (this)
             lock (currentPartAttachmentPropertiesCache)
+            lock (allowedPartCache)
             {
                 currentPartVNode = node;
                 foreach(string id in PartIDs)
@@ -112,8 +112,8 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForTargetPart(VNode node)
         {
-            lock (this)
             lock (targetPartAttachmentPropertiesCache)
+            lock (allowedPartCache)
             {
                 targetPartVNode = node;
                 foreach(string id in PartIDs)
@@ -168,12 +168,16 @@ namespace RW_ModularizationWeapon
 
         public IEnumerator<(string, Thing, WeaponAttachmentProperties)> GetEnumerator()
         {
-            foreach (string id in PartIDs)
+            List<(string, Thing, WeaponAttachmentProperties)> result = new List<(string, Thing, WeaponAttachmentProperties)>(PartIDs.Count);
+            lock (ChildNodes)
             {
-                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                if (properties != null) yield return (id, ChildNodes[id], properties);
+                foreach (string id in PartIDs)
+                {
+                    WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                    if (properties != null) result.Add((id, ChildNodes[id], properties));
+                }
             }
-            yield break;
+            return result.GetEnumerator();
         }
 
 

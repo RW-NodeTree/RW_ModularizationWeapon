@@ -47,7 +47,7 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbPropertiesRegiestInfo> VerbPropertiesRegiestInfoUpadte(Type ownerType, List<VerbPropertiesRegiestInfo> result)
         {
-            lock (this)
+            lock (verbPropertiesCache)
             {
                 GetOrGenCurrentPartAttachmentProperties();
                 GetOrGenTargetPartAttachmentProperties();
@@ -164,7 +164,7 @@ namespace RW_ModularizationWeapon
 
         protected override List<VerbToolRegiestInfo> VerbToolRegiestInfoUpdate(Type ownerType, List<VerbToolRegiestInfo> result)
         {
-            lock (this)
+            lock (toolsCache)
             {
                 GetOrGenCurrentPartAttachmentProperties();
                 GetOrGenTargetPartAttachmentProperties();
