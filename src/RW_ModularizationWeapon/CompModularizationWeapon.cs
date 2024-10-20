@@ -295,7 +295,7 @@ namespace RW_ModularizationWeapon
         //}
 
 
-        protected override List<(string, Thing, List<RenderInfo>)> PostDrawSteep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic, Dictionary<string, object> cachedDataFromPerDrawSteep)
+        protected override List<(string, Thing, List<RenderInfo>)> PostDrawStep(List<(string, Thing, List<RenderInfo>)> nodeRenderingInfos, Rot4 rot, Graphic graphic, Dictionary<string, object> cachedDataFromPerDrawSteep)
         {
             MaterialRequest req;
             Matrix4x4 scale = Matrix4x4.identity;

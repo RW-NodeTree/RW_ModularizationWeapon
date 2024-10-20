@@ -619,22 +619,22 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
   nameWithType: CompModularizationWeapon.PartIDs
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name: PostDrawSteep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawSteep_System_Collections_Generic_List_System_ValueTuple_System_String_Verse_Thing_System_Collections_Generic_List_RenderInfo____Verse_Rot4_Verse_Graphic_System_Collections_Generic_Dictionary_System_String_System_Object__
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name.vb: PostDrawSteep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List<System.ValueTuple<System.String, Verse.Thing, System.Collections.Generic.List<RenderInfo>>>, Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary<System.String, System.Object>)
-  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep(System.Collections.Generic.List(Of System.ValueTuple(Of System.String, Verse.Thing, System.Collections.Generic.List(Of RenderInfo))), Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary(Of System.String, System.Object))
-  nameWithType: CompModularizationWeapon.PostDrawSteep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
-  nameWithType.vb: CompModularizationWeapon.PostDrawSteep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep*
-  name: PostDrawSteep
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawSteep_
-  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
+  name: PostDrawStep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawStep_System_Collections_Generic_List_System_ValueTuple_System_String_Verse_Thing_System_Collections_Generic_List_RenderInfo____Verse_Rot4_Verse_Graphic_System_Collections_Generic_Dictionary_System_String_System_Object__
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
+  name.vb: PostDrawStep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List<System.ValueTuple<System.String, Verse.Thing, System.Collections.Generic.List<RenderInfo>>>, Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary<System.String, System.Object>)
+  fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List(Of System.ValueTuple(Of System.String, Verse.Thing, System.Collections.Generic.List(Of RenderInfo))), Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary(Of System.String, System.Object))
+  nameWithType: CompModularizationWeapon.PostDrawStep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
+  nameWithType.vb: CompModularizationWeapon.PostDrawStep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep*
+  name: PostDrawStep
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawStep_
+  commentId: Overload:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep
   isSpec: "True"
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawSteep
-  nameWithType: CompModularizationWeapon.PostDrawSteep
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep
+  nameWithType: CompModularizationWeapon.PostDrawStep
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostExposeData
   name: PostExposeData()
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostExposeData
