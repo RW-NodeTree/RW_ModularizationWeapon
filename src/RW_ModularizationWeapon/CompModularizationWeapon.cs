@@ -59,7 +59,7 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                lock (this)
+                lock (partIDs)
                 {
                     if (partIDs.Count == 0)
                     {
@@ -75,122 +75,134 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenCurrentPartAttachmentProperties()
         {
-            lock (this)
+            lock (currentPartAttachmentPropertiesCache)
             {
                 if (currentPartVNode == null) UpdateCurrentPartVNode();
+                List<Task<WeaponAttachmentProperties>> genTasks = new List<Task<WeaponAttachmentProperties>>(Props.attachmentProperties.Count);
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     // Thing thing = ChildNodes[properties.id];
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
-                    List<(WeaponAttachmentProperties, uint)> matched = new List<(WeaponAttachmentProperties, uint)>(Props.attachmentPropertiesWithQuery.Count);
-                    foreach ((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
+                    genTasks.Add(Task.Run(delegate()
                     {
-                        if (record.Item1 != null && record.Item2 != null)
+                        List<(WeaponAttachmentProperties, uint)> matched = new List<(WeaponAttachmentProperties, uint)>(Props.attachmentPropertiesWithQuery.Count);
+                        foreach ((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                         {
-                            uint currentMatch = record.Item1.Match(currentPartVNode[properties.id]);
-                            if (currentMatch > 0)
+                            if (record.Item1 != null && record.Item2 != null)
                             {
-                                matched.Add((record.Item2, currentMatch));
+                                uint currentMatch = record.Item1.Match(currentPartVNode[properties.id]);
+                                if (currentMatch > 0)
+                                {
+                                    matched.Add((record.Item2, currentMatch));
+                                }
+                                // Log.Message($"{record.Item2.id} : {currentMatch}");
                             }
-                            // Log.Message($"{record.Item2.id} : {currentMatch}");
                         }
-                    }
 
-                    for (int i = 0; i < matched.Count; i++)
-                    {
-                        var a = matched[i];
-                        for (int j = i + 1; j < matched.Count; j++)
+                        for (int i = 0; i < matched.Count; i++)
                         {
-                            var b = matched[j];
-                            if (a.Item2 > b.Item2)
+                            var a = matched[i];
+                            for (int j = i + 1; j < matched.Count; j++)
                             {
-                                matched[j] = a;
-                                matched[i] = b;
-                                a = b;
+                                var b = matched[j];
+                                if (a.Item2 > b.Item2)
+                                {
+                                    matched[j] = a;
+                                    matched[i] = b;
+                                    a = b;
+                                }
                             }
                         }
-                    }
 
-                    WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
-                    for (int i = 0; i < matched.Count; i++)
-                    {
-                        WeaponAttachmentProperties attachmentProperties = matched[i].Item1;
-                        OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
-                        if (optional != null)
+                        WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
+                        for (int i = 0; i < matched.Count; i++)
                         {
-                            foreach (FieldInfo fieldInfo in optional.UsedFields)
+                            WeaponAttachmentProperties attachmentProperties = matched[i].Item1;
+                            OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
+                            if (optional != null)
                             {
-                                fieldInfo.SetValue(replaced, fieldInfo.GetValue(optional));
+                                foreach (FieldInfo fieldInfo in optional.UsedFields)
+                                {
+                                    fieldInfo.SetValue(replaced, fieldInfo.GetValue(optional));
+                                }
                             }
+                            else replaced = Gen.MemberwiseClone(attachmentProperties);
                         }
-                        else replaced = Gen.MemberwiseClone(attachmentProperties);
-                    }
-                    replaced.id = properties.id;
-                    currentPartAttachmentPropertiesCache.Add(properties.id, replaced);
+                        replaced.id = properties.id;
+                        return replaced;
+                    }));
                 }
+                foreach(Task<WeaponAttachmentProperties> task in genTasks)
+                    currentPartAttachmentPropertiesCache.Add(task.Result.id, task.Result);
                 return currentPartAttachmentPropertiesCache;
             }
         }
 
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenTargetPartAttachmentProperties()
         {
-            lock (this)
+            lock (targetPartAttachmentPropertiesCache)
             {
                 if (targetPartVNode == null) UpdateTargetPartVNode();
+                List<Task<WeaponAttachmentProperties>> genTasks = new List<Task<WeaponAttachmentProperties>>(Props.attachmentProperties.Count);
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
                     // Thing thing = GetTargetPart(properties.id).Thing;
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
-                    List<(WeaponAttachmentProperties, uint)> matched = new List<(WeaponAttachmentProperties, uint)>(Props.attachmentPropertiesWithQuery.Count);
-                    foreach ((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
+                    genTasks.Add(Task.Run(delegate()
                     {
-                        if (record.Item1 != null && record.Item2 != null)
+                        List<(WeaponAttachmentProperties, uint)> matched = new List<(WeaponAttachmentProperties, uint)>(Props.attachmentPropertiesWithQuery.Count);
+                        foreach ((QueryGroup, WeaponAttachmentProperties) record in Props.attachmentPropertiesWithQuery)
                         {
-                            uint currentMatch = record.Item1.Match(targetPartVNode[properties.id]);
-                            if (currentMatch > 0)
+                            if (record.Item1 != null && record.Item2 != null)
                             {
-                                matched.Add((record.Item2, currentMatch));
+                                uint currentMatch = record.Item1.Match(targetPartVNode[properties.id]);
+                                if (currentMatch > 0)
+                                {
+                                    matched.Add((record.Item2, currentMatch));
+                                }
+                                // Log.Message($"{record.Item2.id} : {currentMatch}");
                             }
-                            // Log.Message($"{record.Item2.id} : {currentMatch}");
                         }
-                    }
 
-                    for (int i = 0; i < matched.Count; i++)
-                    {
-                        var a = matched[i];
-                        for (int j = i + 1; j < matched.Count; j++)
+                        for (int i = 0; i < matched.Count; i++)
                         {
-                            var b = matched[j];
-                            if (a.Item2 > b.Item2)
+                            var a = matched[i];
+                            for (int j = i + 1; j < matched.Count; j++)
                             {
-                                matched[j] = a;
-                                matched[i] = b;
-                                a = b;
+                                var b = matched[j];
+                                if (a.Item2 > b.Item2)
+                                {
+                                    matched[j] = a;
+                                    matched[i] = b;
+                                    a = b;
+                                }
                             }
                         }
-                    }
 
-                    WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
-                    for (int i = 0; i < matched.Count; i++)
-                    {
-                        WeaponAttachmentProperties attachmentProperties = matched[i].Item1;
-                        OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
-                        if (optional != null)
+                        WeaponAttachmentProperties replaced = Gen.MemberwiseClone(properties);
+                        for (int i = 0; i < matched.Count; i++)
                         {
-                            foreach (FieldInfo fieldInfo in optional.UsedFields)
+                            WeaponAttachmentProperties attachmentProperties = matched[i].Item1;
+                            OptionalWeaponAttachmentProperties optional = attachmentProperties as OptionalWeaponAttachmentProperties;
+                            if (optional != null)
                             {
-                                fieldInfo.SetValue(replaced, fieldInfo.GetValue(optional));
+                                foreach (FieldInfo fieldInfo in optional.UsedFields)
+                                {
+                                    fieldInfo.SetValue(replaced, fieldInfo.GetValue(optional));
+                                }
                             }
+                            else replaced = Gen.MemberwiseClone(attachmentProperties);
                         }
-                        else replaced = Gen.MemberwiseClone(attachmentProperties);
-                    }
-                    replaced.id = properties.id;
-                    targetPartAttachmentPropertiesCache.Add(properties.id, replaced);
+                        replaced.id = properties.id;
+                        return replaced;
+                    }));
                 }
+                foreach(Task<WeaponAttachmentProperties> task in genTasks)
+                    targetPartAttachmentPropertiesCache.Add(task.Result.id, task.Result);
                 return targetPartAttachmentPropertiesCache;
             }
         }
@@ -219,17 +231,20 @@ namespace RW_ModularizationWeapon
 
         public override void PostExposeData()
         {
-            base.PostExposeData();
-            Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
-            if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            lock (this)
             {
-                for(int i = 0; i < Math.Min(targetPartsWithId_IdWorkingList.Count, targetPartsWithId_TargetWorkingList.Count); i ++)
+                base.PostExposeData();
+                Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
+                if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
                 {
-                    string id = targetPartsWithId_IdWorkingList[i];
-                    LocalTargetInfo targetInfo = targetPartsWithId_TargetWorkingList[i];
-                    targetPartsWithId.SetOrAdd(id, targetInfo);
-                    CompModularizationWeapon part = targetInfo.Thing;
-                    if (part != null) part.occupiers = this;
+                    for(int i = 0; i < Math.Min(targetPartsWithId_IdWorkingList.Count, targetPartsWithId_TargetWorkingList.Count); i ++)
+                    {
+                        string id = targetPartsWithId_IdWorkingList[i];
+                        LocalTargetInfo targetInfo = targetPartsWithId_TargetWorkingList[i];
+                        targetPartsWithId.SetOrAdd(id, targetInfo);
+                        CompModularizationWeapon part = targetInfo.Thing;
+                        if (part != null) part.occupiers = this;
+                    }
                 }
             }
             //if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
@@ -449,10 +464,10 @@ namespace RW_ModularizationWeapon
         {
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
-            CompModularizationWeapon comp = part;
-            if (checkOccupy && comp != null && comp.occupiers != null && comp.occupiers != this) return false;
             lock (this)
             {
+                CompModularizationWeapon comp = part;
+                if (checkOccupy && comp != null && comp.occupiers != null && comp.occupiers != this) return false;
                 if (allowedPartCache.TryGetValue((id, part), out bool result)) return result;
                 WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
                 WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
@@ -777,23 +792,27 @@ namespace RW_ModularizationWeapon
 
         private void SwapAttachmentPropertiesCacheAndVNode()
         {
-            Dictionary<string, WeaponAttachmentProperties> attachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
-            this.currentPartAttachmentPropertiesCache.Clear();
-            this.currentPartAttachmentPropertiesCache.AddRange(this.targetPartAttachmentPropertiesCache);
-            this.targetPartAttachmentPropertiesCache.Clear();
-            this.targetPartAttachmentPropertiesCache.AddRange(attachmentPropertiesCache);
-            VNode targetPartXmlNode = this.targetPartVNode;
-            this.targetPartVNode = this.currentPartVNode;
-            this.currentPartVNode = targetPartXmlNode;
-            foreach (Thing thing in ChildNodes.Values)
+            lock (currentPartAttachmentPropertiesCache)
+            lock (targetPartAttachmentPropertiesCache)
             {
-                CompModularizationWeapon comp = thing;
-                comp?.SwapAttachmentPropertiesCacheAndVNode();
-            }
-            foreach (Thing thing in targetPartsWithId.Values)
-            {
-                CompModularizationWeapon comp = thing;
-                comp?.SwapAttachmentPropertiesCacheAndVNode();
+                Dictionary<string, WeaponAttachmentProperties> attachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>(this.currentPartAttachmentPropertiesCache);
+                this.currentPartAttachmentPropertiesCache.Clear();
+                this.currentPartAttachmentPropertiesCache.AddRange(this.targetPartAttachmentPropertiesCache);
+                this.targetPartAttachmentPropertiesCache.Clear();
+                this.targetPartAttachmentPropertiesCache.AddRange(attachmentPropertiesCache);
+                VNode targetPartXmlNode = this.targetPartVNode;
+                this.targetPartVNode = this.currentPartVNode;
+                this.currentPartVNode = targetPartXmlNode;
+                foreach (Thing thing in ChildNodes.Values)
+                {
+                    CompModularizationWeapon comp = thing;
+                    comp?.SwapAttachmentPropertiesCacheAndVNode();
+                }
+                foreach (Thing thing in targetPartsWithId.Values)
+                {
+                    CompModularizationWeapon comp = thing;
+                    comp?.SwapAttachmentPropertiesCacheAndVNode();
+                }
             }
         }
 
@@ -818,6 +837,7 @@ namespace RW_ModularizationWeapon
 
         private void SwapStateCacheAndCompCache()
         {
+                
             if (Props.attachmentProperties.Count <= 0) return;
             foreach (Thing thing in ChildNodes.Values)
             {
@@ -830,16 +850,23 @@ namespace RW_ModularizationWeapon
                 comp?.SwapStateCacheAndCompCache();
             }
 
-            Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
-            this.statOffsetCache.Clear();
-            this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
-            this.statOffsetCache_TargetPart.Clear();
-            this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
-            Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
-            this.statMultiplierCache.Clear();
-            this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
-            this.statMultiplierCache_TargetPart.Clear();
-            this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
+            lock (statOffsetCache)
+            {
+                Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
+                this.statOffsetCache.Clear();
+                this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
+                this.statOffsetCache_TargetPart.Clear();
+                this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
+            }
+
+            lock (statMultiplierCache)
+            {
+                Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
+                this.statMultiplierCache.Clear();
+                this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
+                this.statMultiplierCache_TargetPart.Clear();
+                this.statMultiplierCache_TargetPart.AddRange(statMultiplierCache);
+            }
             Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>(this.toolsCache);
             this.toolsCache.Clear();
             this.toolsCache.AddRange(this.toolsCache_TargetPart);
@@ -1198,21 +1225,24 @@ namespace RW_ModularizationWeapon
 
         private void Private_SetChildPostion(IntVec3? pos = null)
         {
-            if (pos == null) pos = parent.PositionHeld;
-            foreach (Thing thing in ChildNodes.Values)
+            lock (this)
             {
-                if(thing != null)
+                if (pos == null) pos = parent.PositionHeld;
+                foreach (Thing thing in ChildNodes.Values)
                 {
-                    thing.Position = pos.Value;
-                    ((CompModularizationWeapon)thing)?.Private_SetChildPostion(pos);
+                    if(thing != null)
+                    {
+                        thing.Position = pos.Value;
+                        ((CompModularizationWeapon)thing)?.Private_SetChildPostion(pos);
+                    }
                 }
-            }
-            foreach (Thing thing in targetPartsWithId.Values)
-            {
-                if(thing != null)
+                foreach (Thing thing in targetPartsWithId.Values)
                 {
-                    thing.Position = pos.Value;
-                    ((CompModularizationWeapon)thing)?.Private_SetChildPostion(pos);
+                    if(thing != null)
+                    {
+                        thing.Position = pos.Value;
+                        ((CompModularizationWeapon)thing)?.Private_SetChildPostion(pos);
+                    }
                 }
             }
         }
@@ -1223,21 +1253,24 @@ namespace RW_ModularizationWeapon
 
         private void Private_SetChildPostionInvalid(IntVec3? pos = null)
         {
-            if (pos == null) pos = parent.PositionHeld;
-            foreach (Thing thing in ChildNodes.Values)
+            lock (this)
             {
-                if(thing != null)
+                if (pos == null) pos = parent.PositionHeld;
+                foreach (Thing thing in ChildNodes.Values)
                 {
-                    thing.Position = pos.Value;
-                    ((CompModularizationWeapon)thing)?.Private_SetChildPostionInvalid(pos);
+                    if(thing != null)
+                    {
+                        thing.Position = pos.Value;
+                        ((CompModularizationWeapon)thing)?.Private_SetChildPostionInvalid(pos);
+                    }
                 }
-            }
-            foreach (Thing thing in targetPartsWithId.Values)
-            {
-                if(thing != null)
+                foreach (Thing thing in targetPartsWithId.Values)
                 {
-                    thing.Position = pos.Value;
-                    ((CompModularizationWeapon)thing)?.Private_SetChildPostionInvalid(pos);
+                    if(thing != null)
+                    {
+                        thing.Position = pos.Value;
+                        ((CompModularizationWeapon)thing)?.Private_SetChildPostionInvalid(pos);
+                    }
                 }
             }
         }

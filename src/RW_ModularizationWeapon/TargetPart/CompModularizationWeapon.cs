@@ -58,8 +58,11 @@ namespace RW_ModularizationWeapon
 
         public LocalTargetInfo GetTargetPart(string id)
         {
-            if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = ChildNodes[id];
-            return result;
+            lock (this)
+            {
+                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = ChildNodes[id];
+                return result;
+            }
         }
 
         public void UpdateCurrentPartVNode()
@@ -77,6 +80,7 @@ namespace RW_ModularizationWeapon
         private void AppendVNodeForCurrentPart(VNode node)
         {
             lock (this)
+            lock (currentPartAttachmentPropertiesCache)
             {
                 currentPartVNode = node;
                 foreach(string id in PartIDs)
@@ -109,6 +113,7 @@ namespace RW_ModularizationWeapon
         private void AppendVNodeForTargetPart(VNode node)
         {
             lock (this)
+            lock (targetPartAttachmentPropertiesCache)
             {
                 targetPartVNode = node;
                 foreach(string id in PartIDs)
@@ -141,18 +146,21 @@ namespace RW_ModularizationWeapon
 
         private void Private_ClearTargetPart()
         {
-            foreach (CompModularizationWeapon comp in ChildNodes.Values)
+            lock (this)
             {
-                comp?.Private_ClearTargetPart();
-            }
-            foreach (LocalTargetInfo info in targetPartsWithId.Values)
-            {
-                ((CompModularizationWeapon)info.Thing)?.Private_ClearTargetPart();
-            }
-            if (targetPartsWithId.Count > 0)
-            {
-                List<string> ids = new List<string>(targetPartsWithId.Keys);
-                foreach(string id in ids) SetTargetPart(id, ChildNodes[id]);
+                foreach (CompModularizationWeapon comp in ChildNodes.Values)
+                {
+                    comp?.Private_ClearTargetPart();
+                }
+                foreach (LocalTargetInfo info in targetPartsWithId.Values)
+                {
+                    ((CompModularizationWeapon)info.Thing)?.Private_ClearTargetPart();
+                }
+                if (targetPartsWithId.Count > 0)
+                {
+                    List<string> ids = new List<string>(targetPartsWithId.Keys);
+                    foreach(string id in ids) SetTargetPart(id, ChildNodes[id]);
+                }
             }
         }
         public void ClearTargetPart() => RootPart.Private_ClearTargetPart();
