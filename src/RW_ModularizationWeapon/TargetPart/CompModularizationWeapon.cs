@@ -80,7 +80,6 @@ namespace RW_ModularizationWeapon
         private void AppendVNodeForCurrentPart(VNode node)
         {
             lock (currentPartAttachmentPropertiesCache)
-            lock (allowedPartCache)
             {
                 currentPartVNode = node;
                 foreach(string id in PartIDs)
@@ -93,7 +92,6 @@ namespace RW_ModularizationWeapon
                         comp?.AppendVNodeForCurrentPart(child);
                     }
                 }
-                allowedPartCache.Clear();
                 currentPartAttachmentPropertiesCache.Clear();
             }
         }
@@ -113,7 +111,6 @@ namespace RW_ModularizationWeapon
         private void AppendVNodeForTargetPart(VNode node)
         {
             lock (targetPartAttachmentPropertiesCache)
-            lock (allowedPartCache)
             {
                 targetPartVNode = node;
                 foreach(string id in PartIDs)
@@ -126,7 +123,6 @@ namespace RW_ModularizationWeapon
                         comp?.AppendVNodeForTargetPart(child);
                     }
                 }
-                allowedPartCache.Clear();
                 targetPartAttachmentPropertiesCache.Clear();
             }
         }

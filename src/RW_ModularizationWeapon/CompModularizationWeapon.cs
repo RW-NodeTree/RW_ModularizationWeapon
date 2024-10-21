@@ -76,14 +76,12 @@ namespace RW_ModularizationWeapon
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenCurrentPartAttachmentProperties()
         {
             lock (currentPartAttachmentPropertiesCache)
-            lock (allowedPartCache)
             {
                 if (currentPartVNode == null) UpdateCurrentPartVNode();
                 List<Task<WeaponAttachmentProperties>> genTasks = new List<Task<WeaponAttachmentProperties>>(Props.attachmentProperties.Count);
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (currentPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    allowedPartCache.Clear();
                     // Thing thing = ChildNodes[properties.id];
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties for {thing}, generating");
                     // Log.Message($"{parent} Miss {properties.id} in CurrentPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
@@ -145,14 +143,12 @@ namespace RW_ModularizationWeapon
         public Dictionary<string, WeaponAttachmentProperties> GetOrGenTargetPartAttachmentProperties()
         {
             lock (targetPartAttachmentPropertiesCache)
-            lock (allowedPartCache)
             {
                 if (targetPartVNode == null) UpdateTargetPartVNode();
                 List<Task<WeaponAttachmentProperties>> genTasks = new List<Task<WeaponAttachmentProperties>>(Props.attachmentProperties.Count);
                 foreach (WeaponAttachmentProperties properties in Props.attachmentProperties)
                 {
                     if (targetPartAttachmentPropertiesCache.ContainsKey(properties.id)) continue;
-                    allowedPartCache.Clear();
                     // Thing thing = GetTargetPart(properties.id).Thing;
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties for {thing}, generating..");
                     // Log.Message($"{parent} Miss {properties.id} in TargetPartAttachmentProperties : Props.attachmentPropertiesWithQuery.Count = {Props.attachmentPropertiesWithQuery.Count}");
@@ -469,24 +465,21 @@ namespace RW_ModularizationWeapon
             if (!PartIDs.Contains(id)) return false;
             if (part == ChildNodes[id]) return true;
             lock (this)
-            lock (allowedPartCache)
             {
                 CompModularizationWeapon comp = part;
                 if (checkOccupy && comp != null && comp.occupiers != null && comp.occupiers != this) return false;
-                if (allowedPartCache.TryGetValue((id, part), out bool result)) return result;
                 WeaponAttachmentProperties currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id);
                 WeaponAttachmentProperties targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id);
                 //if (Prefs.DevMode) Log.Message($"properties : {properties}");
-                result = currentPartProperties != null && targetPartProperties != null;
+                bool result = currentPartProperties != null && targetPartProperties != null;
                 if (!result) return false;
                 if (part == null) return currentPartProperties.allowEmpty && targetPartProperties.allowEmpty;
 
                 result &=
-                    currentPartProperties.filter.Allows(part) &&
-                    targetPartProperties.filter.Allows(part) &&
+                    currentPartProperties.filter.Allows(part.def) &&
+                    targetPartProperties.filter.Allows(part.def) &&
                     !internal_Unchangeable(ChildNodes[id], currentPartProperties) &&
                     !internal_Unchangeable(ChildNodes[id], targetPartProperties);
-                allowedPartCache.Add((id, part), result);
                 return result;
             }
         }
@@ -1423,7 +1416,6 @@ namespace RW_ModularizationWeapon
         private readonly List<ThingComp> cachedThingComps = new List<ThingComp>();
         private readonly List<CompProperties> cachedCompProperties = new List<CompProperties>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
-        private readonly Dictionary<(string, Thing), bool> allowedPartCache = new Dictionary<(string, Thing), bool>();
         private readonly Dictionary<string, WeaponAttachmentProperties> currentPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
         private readonly Dictionary<string, WeaponAttachmentProperties> targetPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
         private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();

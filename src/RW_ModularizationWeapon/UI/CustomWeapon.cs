@@ -115,7 +115,7 @@ namespace RW_ModularizationWeapon.UI
                     where
                         (x?.Spawned ?? false) &&
                         (((CompModularizationWeapon)x)?.IsSwapRoot ?? false) &&
-                        creaftingTable.Props.filter.Allows(x) &&
+                        creaftingTable.Props.filter.Allows(x.def) &&
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
                 );

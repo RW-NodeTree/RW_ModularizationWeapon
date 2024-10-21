@@ -89,7 +89,7 @@ namespace RW_ModularizationWeapon
                 selestedWeapon = null;
                 customWeapon?.ResetInfoTags();
             }
-            else if (Props.filter.Allows(selectedWeapon))
+            else if (Props.filter.Allows(selectedWeapon.parent.def))
             {
                 this.selestedWeapon = selectedWeapon.parent;
                 customWeapon?.ResetInfoTags();

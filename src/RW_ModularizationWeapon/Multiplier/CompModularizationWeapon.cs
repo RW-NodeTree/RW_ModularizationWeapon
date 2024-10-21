@@ -168,9 +168,10 @@ namespace RW_ModularizationWeapon
             {
                 NodeContainer container = ChildNodes;
                 float result = 1;
+                if (container.IsChild(part) || part == parent) return 1;
                 if (!statMultiplierCache.TryGetValue((statDef, part), out result))
                 {
-                    result = (container.IsChild(part) || part == parent) ? 1 : Props.statMultiplier.GetStatValueFromList(
+                    result = Props.statMultiplier.GetStatValueFromList(
                         statDef,
                         Props.statMultiplierDefaultValue
                     );

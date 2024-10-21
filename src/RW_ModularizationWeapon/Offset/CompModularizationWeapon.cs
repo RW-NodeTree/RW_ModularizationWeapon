@@ -154,9 +154,10 @@ namespace RW_ModularizationWeapon
             {
                 NodeContainer container = ChildNodes;
                 float result = 0;
+                if (container.IsChild(part) || part == parent) return 0;
                 if (!statOffsetCache.TryGetValue((statDef, part), out result))
                 {
-                    result = (container.IsChild(part) || part == parent) ? 0 : Props.statOffset.GetStatValueFromList(
+                    result = Props.statOffset.GetStatValueFromList(
                         statDef,
                         Props.statOffsetDefaultValue
                     );
