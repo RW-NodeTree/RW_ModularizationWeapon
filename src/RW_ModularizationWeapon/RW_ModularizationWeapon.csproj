@@ -37,7 +37,7 @@
 		<PackageReference Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'" Include="Krafs.Rimworld.Ref" Version="1.4.*" GeneratePathProperty="true" />
 		<PackageReference Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'" Include="Krafs.Rimworld.Ref" Version="1.5.*" GeneratePathProperty="true" />
 		<PackageReference Include="Lib.Harmony" Version="2.*" ExcludeAssets="runtime" />
-		<Reference Include="RW_NodeTree">
+		<Reference Include="RW_NodeTree" Private="false">
 			<HintPath Condition=" '$(Configuration)' == 'DebugV13' or '$(Configuration)' == 'ReleaseV13'">../../lib/RW_NodeTree/1.3/Assemblies/RW_NodeTree.dll</HintPath>
 			<HintPath Condition=" '$(Configuration)' == 'DebugV14' or '$(Configuration)' == 'ReleaseV14'">../../lib/RW_NodeTree/1.4/Assemblies/RW_NodeTree.dll</HintPath>
 			<HintPath Condition=" '$(Configuration)' == 'DebugV15' or '$(Configuration)' == 'ReleaseV15'">../../lib/RW_NodeTree/1.5/Assemblies/RW_NodeTree.dll</HintPath>
@@ -52,24 +52,4 @@
 		<None Remove="./**/obj/**" />
 		<None Remove="./**/.manifest" />
 	</ItemGroup>
-	<Target AfterTargets="PostBuildEvent" Name="PostBuild">
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="powershell -c Remove-Item -Force ../../1.3/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="powershell -c Remove-Item -Force ../../1.4/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="powershell -c Remove-Item -Force ../../1.5/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="powershell -c Remove-Item -Force ../../1.3/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="powershell -c Remove-Item -Force ../../1.4/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="powershell -c Remove-Item -Force ../../1.5/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="bash -c rm -f ../../1.3/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="bash -c rm -f ../../1.4/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="bash -c rm -f ../../1.5/Assemblies/RW_NodeTree.dll" />
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="bash -c rm -f ../../1.3/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="bash -c rm -f ../../1.4/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="bash -c rm -f ../../1.5/Assemblies/RW_NodeTree.pdb" />
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.dll')" Command="del ../../1.3/Assemblies/RW_NodeTree.dll -f" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.dll')" Command="del ../../1.4/Assemblies/RW_NodeTree.dll -f" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.dll')" Command="del ../../1.5/Assemblies/RW_NodeTree.dll -f" />
-		<Exec Condition="Exists('../../1.3/Assemblies/RW_NodeTree.pdb')" Command="del ../../1.3/Assemblies/RW_NodeTree.pdb -f" />
-		<Exec Condition="Exists('../../1.4/Assemblies/RW_NodeTree.pdb')" Command="del ../../1.4/Assemblies/RW_NodeTree.pdb -f" />
-		<Exec Condition="Exists('../../1.5/Assemblies/RW_NodeTree.pdb')" Command="del ../../1.5/Assemblies/RW_NodeTree.pdb -f" />
-	</Target>
 </Project>
