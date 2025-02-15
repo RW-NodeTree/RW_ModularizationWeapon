@@ -359,8 +359,8 @@ namespace RW_ModularizationWeapon
                             }
                         }
 
-                        renderInfos.Capacity += Props.subRenderinfInfos.Count;
-                        foreach (PartSubDrawingInfo drawingInfo in Props.subRenderinfInfos)
+                        renderInfos.Capacity += Props.subRenderingInfos.Count;
+                        foreach (PartSubDrawingInfo drawingInfo in Props.subRenderingInfos)
                         {
                             req.mainTex = (drawingInfo.PartTexture == BaseContent.BadTex) ? material.mainTexture : drawingInfo.PartTexture;
                             renderInfos.Add(new RenderInfo(MeshPool.plane10, 0, scale * drawingInfo.Transfrom, MaterialPool.MatFrom(req), 0));
@@ -2337,7 +2337,7 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// extra drawing info when it attach on a part
         /// </summary>
-        public List<PartSubDrawingInfo> subRenderinfInfos = new List<PartSubDrawingInfo>();
+        public List<PartSubDrawingInfo> subRenderingInfos = new List<PartSubDrawingInfo>();
 
         /// <summary>
         /// extra comp that will add to parent comps
