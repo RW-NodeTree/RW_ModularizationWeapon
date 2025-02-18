@@ -461,12 +461,12 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetOrGenTargetPartAttachmentProperties
   nameWithType: CompModularizationWeapon.GetOrGenTargetPartAttachmentProperties
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier(RimWorld.StatDef,Verse.Thing)
-  name: GetStatMultiplier(StatDef, Thing)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetStatMultiplier_RimWorld_StatDef_Verse_Thing_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier(RimWorld.StatDef,Verse.Thing)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier(RimWorld.StatDef, Verse.Thing)
-  nameWithType: CompModularizationWeapon.GetStatMultiplier(StatDef, Thing)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier(RimWorld.StatDef,System.String)
+  name: GetStatMultiplier(StatDef, String)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetStatMultiplier_RimWorld_StatDef_System_String_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier(RimWorld.StatDef,System.String)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier(RimWorld.StatDef, System.String)
+  nameWithType: CompModularizationWeapon.GetStatMultiplier(StatDef, String)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier*
   name: GetStatMultiplier
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetStatMultiplier_
@@ -474,12 +474,12 @@ references:
   isSpec: "True"
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetStatMultiplier
   nameWithType: CompModularizationWeapon.GetStatMultiplier
-- uid: RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset(RimWorld.StatDef,Verse.Thing)
-  name: GetStatOffset(StatDef, Thing)
-  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetStatOffset_RimWorld_StatDef_Verse_Thing_
-  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset(RimWorld.StatDef,Verse.Thing)
-  fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset(RimWorld.StatDef, Verse.Thing)
-  nameWithType: CompModularizationWeapon.GetStatOffset(StatDef, Thing)
+- uid: RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset(RimWorld.StatDef,System.String)
+  name: GetStatOffset(StatDef, String)
+  href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetStatOffset_RimWorld_StatDef_System_String_
+  commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset(RimWorld.StatDef,System.String)
+  fullName: RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset(RimWorld.StatDef, System.String)
+  nameWithType: CompModularizationWeapon.GetStatOffset(StatDef, String)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.GetStatOffset*
   name: GetStatOffset
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_GetStatOffset_

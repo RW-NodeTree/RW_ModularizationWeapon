@@ -1837,7 +1837,9 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{(comp?.GetStatOffset(stat.stat, null) ?? 0) + stat.value}");
+                float value = (comp?.GetStatOffset(stat.stat, null) ?? 0) + stat.value;
+                string text = value < 0 ? "" : "+";
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : {text}{value}");
             }
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon,
@@ -1862,7 +1864,9 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{(comp?.GetStatMultiplier(stat.stat, null) ?? 1) * stat.value}");
+                float value = (comp?.GetStatMultiplier(stat.stat, null) ?? 1) * stat.value;
+                string text = value < 0 ? "" : " ";
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{text}{value}");
             }
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon, 
@@ -1964,7 +1968,9 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, null)}");
+                        float value = properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, null) + stat.value);
+                        string text = value < 0 ? "" : "+";
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{text}{value}");
                     }
 
 
@@ -1986,7 +1992,9 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, null) - 1f) + 1f}");
+                        float value = properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, null) * stat.value - 1f) + 1f;
+                        string text = value < 0 ? "" : " ";
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{text}{value}");
                     }
 
                     stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
