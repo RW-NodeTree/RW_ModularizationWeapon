@@ -8,7 +8,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        public FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter(string childNodeIdForVerbProperties)
+        public FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter(string childNodeIdForVerbProperties) //null -> self
         {
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
             WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
@@ -38,8 +38,8 @@ namespace RW_ModularizationWeapon
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = defaultValue * current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
-                        defaultValue = cache.DefaultValue;
+                        defaultValue *= current.verbPropertiesOtherPartOffseterAffectHorizonDefaultValue;
+                        cache.DefaultValue = defaultValue;
                         if (currentComp != null && comp != currentComp)
                         {
                             cache *= currentComp.Props.verbPropertiesOtherPartOffseterAffectHorizon;
@@ -95,8 +95,8 @@ namespace RW_ModularizationWeapon
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = defaultValue * current.toolsOtherPartOffseterAffectHorizonDefaultValue;
-                        defaultValue = cache.DefaultValue;
+                        defaultValue *= current.toolsOtherPartOffseterAffectHorizonDefaultValue;
+                        cache.DefaultValue = defaultValue;
                         if (currentComp != null && comp != currentComp)
                         {
                             cache *= currentComp.Props.toolsOtherPartOffseterAffectHorizon;
@@ -148,60 +148,42 @@ namespace RW_ModularizationWeapon
             return results;
         }
 
-        public float GetStatOffset(StatDef statDef, Thing part)
+        public float GetStatOffset(StatDef statDef, string childNodeIdForState)
         {
             lock (statOffsetCache)
             {
+                WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForState);
+                CompModularizationWeapon currentComp = ChildNodes[childNodeIdForState];
                 NodeContainer container = ChildNodes;
-                float result = 0;
-                if (container.IsChild(part) || part == parent) return 0;
-                if (!statOffsetCache.TryGetValue((statDef, part), out result))
+                if (!statOffsetCache.TryGetValue((statDef, childNodeIdForState), out float result))
                 {
-                    result = Props.statOffset.GetStatValueFromList(
-                        statDef,
-                        Props.statOffsetDefaultValue
-                    );
-                    WeaponAttachmentProperties current = null;
-                    CompModularizationWeapon currentComp = null;
-                    for (int i = 0; i < container.Count; i++)
-                    {
-                        string id = container[(uint)i];
-                        CompModularizationWeapon comp = container[i];
-                        if (comp != null && comp.Validity && (comp.ChildNodes.IsChild(part) || part == comp.parent))
-                        {
-                            current = CurrentPartWeaponAttachmentPropertiesById(id);
-                            currentComp = comp;
-                            break;
-                        }
-                    }
-
+                    result = 0;
                     for (int i = 0; i < container.Count; i++)
                     {
                         string id = container[(uint)i];
                         CompModularizationWeapon comp = container[i];
                         WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                        if (comp != null && comp.Validity)
+                        if (comp != null && comp.Validity && id != childNodeIdForState)
                         {
-                            result += comp.GetStatOffset(statDef, part)
-                                * (comp.ChildNodes.IsChild(part) ? 1f : (properties.statOffsetAffectHorizon.GetStatValueFromList(
-                                        statDef,
-                                        properties.statOffsetAffectHorizonDefaultValue
-                                    )
-                                    * (current?.statOtherPartOffseterAffectHorizon
-                                    .GetOrNewWhenNull(id, () => new List<StatModifier>())
-                                    .GetStatValueFromList(
-                                        statDef,
-                                        current.statOtherPartOffseterAffectHorizonDefaultValue
-                                    ) ?? 1)
-                                    * (currentComp != comp ? (currentComp?.Props.statOtherPartOffseterAffectHorizon.GetStatValueFromList(
-                                            statDef,
-                                            currentComp.Props.statOtherPartOffseterAffectHorizonDefaultValue
-                                        ) ?? 1
-                                    ) : 1))
-                                );
+                            float cache = properties.statOffsetAffectHorizon.GetStatValueFromList(statDef, properties.statOffsetAffectHorizonDefaultValue);
+
+                            if (current != null)
+                            {
+                                cache *= current.statOtherPartOffseterAffectHorizon
+                                .GetOrNewWhenNull(
+                                    id,
+                                    () => new List<StatModifier>()
+                                ).GetStatValueFromList(statDef,current.statOtherPartOffseterAffectHorizonDefaultValue);
+                                if (currentComp != null && comp != currentComp)
+                                {
+                                    cache *= currentComp.Props.statOtherPartOffseterAffectHorizon.GetStatValueFromList(statDef, currentComp.Props.statOtherPartOffseterAffectHorizonDefaultValue);
+                                }
+                            }
+                            result += comp.Props.statOffset.GetStatValueFromList(statDef, comp.Props.statOffsetDefaultValue) * cache;
+                            result += comp.GetStatOffset(statDef, null) * cache;
                         }
                     }
-                    statOffsetCache.Add((statDef, part), result);
+                    statOffsetCache.Add((statDef, childNodeIdForState), result);
                     //Log.Message($"{this}.GetStatOffset({statDef},{part})=>{result}\ncurrent.statOtherPartOffseterAffectHorizonDefaultValue : {current?.statOtherPartOffseterAffectHorizonDefaultValue}");
                 }
                 return result;

@@ -217,8 +217,8 @@ namespace RW_ModularizationWeapon
                     }
                     else
                     {
-                        result *= GetStatMultiplier(statDef, req.Thing);
-                        result += GetStatOffset(statDef, req.Thing);
+                        result *= GetStatMultiplier(statDef, null);
+                        result += GetStatOffset(statDef, null);
                     }
                 }
             }
@@ -460,7 +460,7 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(exception.ToString());
             }
-            return result * GetStatMultiplier(stat, gear) + GetStatOffset(stat, gear);
+            return result * GetStatMultiplier(stat, null) + GetStatOffset(stat, null);
         }
 
         protected override bool FinalStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object> stats, Exception exception)

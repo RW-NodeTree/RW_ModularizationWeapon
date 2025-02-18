@@ -870,12 +870,12 @@ namespace RW_ModularizationWeapon
                     comp?.SwapStateCacheAndCompCache();
                 }
 
-                Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>(this.statOffsetCache);
+                Dictionary<(StatDef, string), float> statOffsetCache = new Dictionary<(StatDef, string), float>(this.statOffsetCache);
                 this.statOffsetCache.Clear();
                 this.statOffsetCache.AddRange(this.statOffsetCache_TargetPart);
                 this.statOffsetCache_TargetPart.Clear();
                 this.statOffsetCache_TargetPart.AddRange(statOffsetCache);
-                Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>(this.statMultiplierCache);
+                Dictionary<(StatDef, string), float> statMultiplierCache = new Dictionary<(StatDef, string), float>(this.statMultiplierCache);
                 this.statMultiplierCache.Clear();
                 this.statMultiplierCache.AddRange(this.statMultiplierCache_TargetPart);
                 this.statMultiplierCache_TargetPart.Clear();
@@ -1418,10 +1418,10 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private readonly Dictionary<string, WeaponAttachmentProperties> currentPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
         private readonly Dictionary<string, WeaponAttachmentProperties> targetPartAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>();
-        private readonly Dictionary<(StatDef, Thing), float> statOffsetCache = new Dictionary<(StatDef, Thing), float>();
-        private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache = new Dictionary<(StatDef, Thing), float>();
-        private readonly Dictionary<(StatDef, Thing), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
-        private readonly Dictionary<(StatDef, Thing), float> statMultiplierCache_TargetPart = new Dictionary<(StatDef, Thing), float>();
+        private readonly Dictionary<(StatDef, string), float> statOffsetCache = new Dictionary<(StatDef, string), float>();
+        private readonly Dictionary<(StatDef, string), float> statMultiplierCache = new Dictionary<(StatDef, string), float>();
+        private readonly Dictionary<(StatDef, string), float> statOffsetCache_TargetPart = new Dictionary<(StatDef, string), float>();
+        private readonly Dictionary<(StatDef, string), float> statMultiplierCache_TargetPart = new Dictionary<(StatDef, string), float>();
         private readonly Dictionary<Type, List<Tool>> toolsCache = new Dictionary<Type, List<Tool>>();
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache = new Dictionary<Type, List<VerbProperties>>();
         private readonly Dictionary<Type, List<Tool>> toolsCache_TargetPart = new Dictionary<Type, List<Tool>>();
@@ -1837,7 +1837,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{comp?.GetStatOffset(stat.stat, null) ?? stat.value}");
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : +{(comp?.GetStatOffset(stat.stat, null) ?? 0) + stat.value}");
             }
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon,
@@ -1862,7 +1862,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
             {
-                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{comp?.GetStatMultiplier(stat.stat, null) ?? stat.value}");
+                stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{(comp?.GetStatMultiplier(stat.stat, null) ?? 1) * stat.value}");
             }
             yield return new StatDrawEntry(
                 StatCategoryDefOf.Weapon, 
@@ -1964,7 +1964,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, req.Thing)}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * childComp.GetStatOffset(stat.stat, null)}");
                     }
 
 
@@ -1986,7 +1986,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, req.Thing) - 1f) + 1f}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, null) - 1f) + 1f}");
                     }
 
                     stringBuilder.AppendLine("verbPropertiesPatch".Translate().RawText + " :");
