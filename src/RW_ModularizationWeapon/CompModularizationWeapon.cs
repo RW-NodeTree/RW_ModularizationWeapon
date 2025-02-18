@@ -1970,7 +1970,7 @@ namespace RW_ModularizationWeapon
                     {
                         float value = properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, null) + stat.value);
                         string text = value < 0 ? "" : "+";
-                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : +{text}{value}");
+                        stringBuilder.AppendLine($"    {stat.stat.LabelCap} : {text}{value}");
                     }
 
 
