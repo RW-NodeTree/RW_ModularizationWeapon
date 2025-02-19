@@ -133,7 +133,8 @@ namespace RW_ModularizationWeapon.AI
                     comp.SetChildPostion();
                     comp.SwapTargetPart();
                     comp.ClearTargetPart();
-                    comp.SwapTargetPart();
+                    comp.SwapTargetPart(); //make sure the cache clean
+                    comp.ClearTargetPart();
                 };
                 yield return toil
                     .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell)
