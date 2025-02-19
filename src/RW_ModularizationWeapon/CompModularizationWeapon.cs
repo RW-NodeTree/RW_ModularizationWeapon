@@ -2088,18 +2088,18 @@ namespace RW_ModularizationWeapon
                         stringBuilder.AppendLine(verb.ToString());
                         if(verb.verbProps != null)
                         {
-                            stringBuilder.AppendLine("\tverbProps:");
+                            stringBuilder.AppendLine(" +verbProps:");
                             foreach(FieldInfo field in verb.verbProps.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                             {
-                                stringBuilder.AppendLine($"\t\t{field.Name} : {field.GetValue(verb.verbProps)}");
+                                stringBuilder.AppendLine($" | +{field.Name} : {field.GetValue(verb.verbProps)}");
                             }
                         }
                         if(verb.tool != null)
                         {
-                            stringBuilder.AppendLine("\ttool:");
+                            stringBuilder.AppendLine(" +tool:");
                             foreach(FieldInfo field in verb.tool.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                             {
-                                stringBuilder.AppendLine($"\t\t{field.Name} : {field.GetValue(verb.tool)}");
+                                stringBuilder.AppendLine($" | +{field.Name} : {field.GetValue(verb.tool)}");
                             }
                         }
                     }
