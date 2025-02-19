@@ -260,6 +260,8 @@ namespace RW_ModularizationWeapon
         {
             for (int i = 0; i < ChildNodes.Count; i++)
             {
+                string name = ChildNodes[(uint)i];
+                name = CurrentPartWeaponAttachmentPropertiesById(name).name;
                 ThingWithComps part = ChildNodes[i] as ThingWithComps;
                 if(part != null)
                 {
@@ -273,7 +275,7 @@ namespace RW_ModularizationWeapon
                                 Command command = gizmo as Command;
                                 if(command != null && type != typeof(CompModularizationWeapon))
                                 {
-                                    command.defaultLabel = part.LabelShort + " : " + command.defaultLabel;
+                                    command.defaultLabel = name + "/" + command.defaultLabel;
                                     command.shrinkable = true;
                                 }
                                 yield return gizmo;
@@ -2074,6 +2076,40 @@ namespace RW_ModularizationWeapon
                     );
             }
             #endregion
+            
+            if (Prefs.DevMode)
+            {
+                CompEquippable equippable = req.Thing?.TryGetComp<CompEquippable>();
+                if(equippable != null)
+                {
+                    stringBuilder.Clear();
+                    foreach (Verb verb in equippable.AllVerbs)
+                    {
+                        stringBuilder.AppendLine(verb.ToString());
+                        if(verb.verbProps != null)
+                        {
+                            foreach(FieldInfo field in verb.verbProps.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+                            {
+                                stringBuilder.AppendLine($"{field.Name} : {field.GetValue(verb.verbProps)}");
+                            }
+                        }
+                        if(verb.tool != null)
+                        {
+                            foreach(FieldInfo field in verb.tool.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+                            {
+                                stringBuilder.AppendLine($"{field.Name} : {field.GetValue(verb.tool)}");
+                            }
+                        }
+                    }
+                    yield return new StatDrawEntry(
+                        category: StatCategoryDefOf.Weapon,
+                        "DEV: Verb Info",
+                        "",
+                        stringBuilder.ToString(),
+                        1000
+                    );
+                }
+            }
         }
 
         /// <summary>
