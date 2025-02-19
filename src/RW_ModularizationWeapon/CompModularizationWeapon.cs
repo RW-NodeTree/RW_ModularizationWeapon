@@ -2090,14 +2090,14 @@ namespace RW_ModularizationWeapon
                         {
                             foreach(FieldInfo field in verb.verbProps.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                             {
-                                stringBuilder.AppendLine($"{field.Name} : {field.GetValue(verb.verbProps)}");
+                                stringBuilder.AppendLine($"\t{field.Name} : {field.GetValue(verb.verbProps)}");
                             }
                         }
                         if(verb.tool != null)
                         {
                             foreach(FieldInfo field in verb.tool.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                             {
-                                stringBuilder.AppendLine($"{field.Name} : {field.GetValue(verb.tool)}");
+                                stringBuilder.AppendLine($"\t{field.Name} : {field.GetValue(verb.tool)}");
                             }
                         }
                     }
