@@ -2102,6 +2102,7 @@ namespace RW_ModularizationWeapon
                                 stringBuilder.AppendLine($" | +{field.Name} : {field.GetValue(verb.tool)}");
                             }
                         }
+                        stringBuilder.AppendLine("--------------------------------");
                     }
                     yield return new StatDrawEntry(
                         category: StatCategoryDefOf.Weapon,
