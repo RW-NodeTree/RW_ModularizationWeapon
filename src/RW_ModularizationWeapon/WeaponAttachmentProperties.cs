@@ -199,7 +199,7 @@ namespace RW_ModularizationWeapon
                     FieldInfo fieldInfo = allFields[i];
                     if (fieldInfo.Name == node.Name)
                     {
-                        #if DEBUGV13 || RELEASEV13
+                        #if V13
                         if (typeof(Def).IsAssignableFrom(fieldInfo.FieldType))
                         #else
                         if (GenTypes.IsDef(fieldInfo.FieldType))
@@ -207,7 +207,7 @@ namespace RW_ModularizationWeapon
                         {
                             if (node.InnerText.NullOrEmpty()) continue;
                             XmlAttribute MayRequire = node.Attributes["MayRequire"];
-                            #if DEBUGV13 || RELEASEV13
+                            #if V13
                             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, fieldInfo, node.InnerText, MayRequire?.Value.ToLower());
                             #else
                             XmlAttribute MayRequireAnyOf = node.Attributes["MayRequireAnyOf"];
