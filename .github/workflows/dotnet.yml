@@ -3,11 +3,7 @@
 
 name: Build
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -17,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        submodules: true  # This option initializes and updates submodules
+        submodules: recursive
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
