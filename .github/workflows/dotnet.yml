@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Build 1.3
 
 on:
   push:
@@ -24,7 +24,4 @@ jobs:
       run: dotnet restore
     - name: Build 1.3
       run: dotnet build -c ReleaseV13 --no-restore
-    - name: Build 1.4
-      run: dotnet build -c ReleaseV14 --no-restore
-    - name: Build 1.5
-      run: dotnet build -c ReleaseV15 --no-restore
+      
