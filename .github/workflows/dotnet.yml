@@ -16,6 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
       with:
         submodules: true  # This option initializes and updates submodules
 
