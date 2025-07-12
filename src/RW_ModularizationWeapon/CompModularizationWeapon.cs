@@ -639,7 +639,11 @@ namespace RW_ModularizationWeapon
         }
 
 
+#if V13 || V14 || V15
         protected override bool PostThingWithComps_PreApplyDamage(ref DamageInfo dinfo, bool absorbed)
+#else
+        public override void PostPreApplyDamage(ref DamageInfo dinfo, out bool absorbed)
+#endif
         {
             int count = ChildNodes.Count + 1;
             dinfo.SetAmount(dinfo.Amount / count);
@@ -647,7 +651,11 @@ namespace RW_ModularizationWeapon
             {
                 thing.TakeDamage(dinfo);
             }
+#if V13 || V14 || V15
             return absorbed;
+#else
+            absorbed = false;
+#endif
         }
 
 

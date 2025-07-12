@@ -28,3 +28,6 @@ jobs:
       
     - name: Build 1.5
       run: dotnet build -c ReleaseV15
+
+    - name: Build 1.6
+      run: dotnet build -c ReleaseV16
