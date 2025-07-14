@@ -364,7 +364,7 @@ namespace RW_ModularizationWeapon
                         renderInfos.Capacity += Props.subRenderingInfos.Count;
                         foreach (PartSubDrawingInfo drawingInfo in Props.subRenderingInfos)
                         {
-                            req.mainTex = (drawingInfo.PartTexture == BaseContent.BadTex) ? material.mainTexture : drawingInfo.PartTexture;
+                            req.mainTex = drawingInfo.PartTexture;
                             renderInfos.Add(new RenderInfo(MeshPool.plane10, 0, scale * drawingInfo.Transfrom, MaterialPool.MatFrom(req), 0));
                         }
                     }
