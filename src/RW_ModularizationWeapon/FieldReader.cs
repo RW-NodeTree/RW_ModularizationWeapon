@@ -9,6 +9,7 @@ using Verse;
 using HarmonyLib;
 using RW_ModularizationWeapon.Tools;
 using System.Collections.Concurrent;
+using System.Linq.Expressions;
 
 namespace RW_ModularizationWeapon
 {
@@ -146,8 +147,8 @@ namespace RW_ModularizationWeapon
                         {
                             RuntimeFieldHandle handle = field.FieldHandle;
                             if (!TryGetValue(handle, out TV value)) value = DefaultValue;
-                            ref TV valRef = ref GetCachedFieldRef(handle)(result);
-                            valRef = calc(valRef, value, handle);
+                            (Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
+                            setter(result, calc(getter(result), value, handle));
                         }
                     }
                 }
@@ -215,9 +216,33 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        private static readonly ConcurrentDictionary<RuntimeFieldHandle, AccessTools.FieldRef<T, TV>> cachedFieldRef = new ConcurrentDictionary<RuntimeFieldHandle, AccessTools.FieldRef<T, TV>>();
-        public static AccessTools.FieldRef<T, TV> GetCachedFieldRef(RuntimeFieldHandle runtimeField)
-            => cachedFieldRef.GetOrAdd(runtimeField, (x) => AccessTools.FieldRefAccess<T, TV>(FieldInfo.GetFieldFromHandle(x)));
+        private static readonly ConcurrentDictionary<RuntimeFieldHandle, (Func<T, TV> getter, Action<T,TV> setter)> cachedFieldRef = new ConcurrentDictionary<RuntimeFieldHandle, (Func<T, TV> getter, Action<T, TV> setter)>();
+        public static (Func<T, TV> getter, Action<T, TV> setter) GetCachedFieldRef(RuntimeFieldHandle runtimeField)
+            => cachedFieldRef.GetOrAdd(runtimeField, f =>
+            {
+                FieldInfo fieldInfo = FieldInfo.GetFieldFromHandle(f);
+                var inInstance = Expression.Parameter(typeof(T), "instance");
+                var inValue = Expression.Parameter(typeof(TV), "value");
+                var targetMember = Expression.Field(inInstance, fieldInfo);
+                Action<T, TV> setter;
+                Func<T, TV> getter;
+                if (fieldInfo.FieldType != typeof(TV))
+                {
+                    var inValueAfterConvert = Expression.Convert(inValue, fieldInfo.FieldType);
+                    var assing = Expression.Assign(targetMember, inValueAfterConvert);
+                    setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
+                    var outValueAfterConvert = Expression.Convert(targetMember, typeof(TV));
+                    getter = Expression.Lambda<Func<T, TV>>(outValueAfterConvert, inInstance).Compile();
+                }
+                else
+                {
+                    var assing = Expression.Assign(targetMember, inValue);
+                    setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
+                    getter = Expression.Lambda<Func<T, TV>>(targetMember, inInstance).Compile();
+                }
+                return (getter, setter);
+            });
+
     }
     /// <summary>
     /// digit only calculater
