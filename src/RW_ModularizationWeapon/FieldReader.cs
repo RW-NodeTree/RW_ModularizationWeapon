@@ -119,7 +119,7 @@ namespace RW_ModularizationWeapon
             FieldReader<T, TV> result = this.Clone();
             if(calc != null && value != null)
             {
-                foreach (RuntimeFieldHandle field in result.Keys)
+                foreach (RuntimeFieldHandle field in this.Keys)
                 {
                     TV origin = result[field];
                     result[field] = calc(origin, value, field);
