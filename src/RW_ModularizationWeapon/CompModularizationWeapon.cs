@@ -1223,7 +1223,8 @@ namespace RW_ModularizationWeapon
                     //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
                     CompChildNodeProccesser? proccesser;
                     CompModularizationWeapon? weaponComp;
-                    Thing prev = nextChild[id];
+                    bool hasKey = nextChild.ContainsKey(id);
+                    Thing? prev = hasKey ? nextChild[id] : null;
                     if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                     {
 
@@ -1241,7 +1242,8 @@ namespace RW_ModularizationWeapon
                     }
 
                     SetTargetPart(id, prev);
-                    nextChild[id] = target.Thing;
+                    if(target.HasThing) nextChild[id] = target.Thing;
+                    else if(hasKey) nextChild.Remove(id);
 
                     //Sync child swap state
 
