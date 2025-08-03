@@ -6,6 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using Verse;
+using HarmonyLib;
+using RW_ModularizationWeapon.Tools;
+using System.Collections.Concurrent;
 
 namespace RW_ModularizationWeapon
 {
@@ -82,7 +85,7 @@ namespace RW_ModularizationWeapon
 
         public void Add(KeyValuePair<RuntimeFieldHandle, TV> item) => Add(item.Key, item.Value);
 
-        public bool Contains(KeyValuePair<RuntimeFieldHandle, TV> item) => TryGetValue(item.Key, out TV value) && (object)value == (object)item.Value;
+        public bool Contains(KeyValuePair<RuntimeFieldHandle, TV> item) => TryGetValue(item.Key, out TV? value) && (object?)value == (object?)item.Value;
 
         public void CopyTo(KeyValuePair<RuntimeFieldHandle, TV>[] array, int arrayIndex)
         {
@@ -111,15 +114,15 @@ namespace RW_ModularizationWeapon
         /// <param name="calc">calculation function</param>
         /// <param name="value">single value for calculate</param>
         /// <returns>after calculation `FieldReader`</returns>
-        public FieldReader<T, TV> CalcValue(Func<TV, TV, FieldInfo, TV> calc, TV value)
+        public FieldReader<T, TV> CalcValue(Func<TV, TV, RuntimeFieldHandle, TV> calc, TV value)
         {
             FieldReader<T, TV> result = this.Clone();
             if(calc != null && value != null)
             {
-                List<RuntimeFieldHandle> fieldInfos = new List<RuntimeFieldHandle>(result.Keys);
-                foreach (RuntimeFieldHandle field in fieldInfos)
+                foreach (RuntimeFieldHandle field in result.Keys)
                 {
-                    result[field] = calc(result[field], value, FieldInfo.GetFieldFromHandle(field));
+                    TV origin = result[field];
+                    result[field] = calc(origin, value, field);
                 }
             }
             return result;
@@ -130,19 +133,21 @@ namespace RW_ModularizationWeapon
         /// <param name="calc">calculation function</param>
         /// <param name="orginal">instance for calculate</param>
         /// <returns>instance after calculation</returns>
-        public T CalcValue(Func<TV, TV, FieldInfo, TV> calc, T orginal)
+        public T? CalcValue(Func<TV, TV, RuntimeFieldHandle, TV> calc, T? orginal)
         {
             if (orginal != null)
             {
                 T result = Gen.MemberwiseClone(orginal);
                 if (calc != null)
                 {
-                    foreach (FieldInfo field in result.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    foreach (FieldInfo field in orginal.GetType().GetCachedInstanceFields())
                     {
                         if (UsedType.IsAssignableFrom(field.DeclaringType) && typeof(TV).IsAssignableFrom(field.FieldType))
                         {
-                            if (!TryGetValue(field.FieldHandle, out TV value)) value = DefaultValue;
-                            field.SetValue(result, calc((TV)field.GetValue(result), value, field));
+                            RuntimeFieldHandle handle = field.FieldHandle;
+                            if (!TryGetValue(handle, out TV value)) value = DefaultValue;
+                            ref TV valRef = ref GetCachedFieldRef(handle)(result);
+                            valRef = calc(valRef, value, handle);
                         }
                     }
                 }
@@ -158,7 +163,7 @@ namespace RW_ModularizationWeapon
         /// <param name="a">`FieldReader` value a</param>
         /// <param name="b">`FieldReader` value b</param>
         /// <returns>after calculate `FieldReader`</returns>
-        public static TFR CalcValue<TFR>(Func<TV, TV, FieldInfo, TV> calc, TFR a, TFR b) where TFR : FieldReader<T, TV>, new()
+        public static TFR? CalcValue<TFR>(Func<TV, TV, RuntimeFieldHandle, TV> calc, TFR? a, TFR? b) where TFR : FieldReader<T, TV>, new()
         {
 
             TFR result = new TFR();
@@ -176,8 +181,8 @@ namespace RW_ModularizationWeapon
                 FieldInfo info = FieldInfo.GetFieldFromHandle(field);
                 if (result.UsedType.IsAssignableFrom(info.DeclaringType))
                 {
-                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], info));
-                    else result.Add(field, calc(a[field], b.DefaultValue, info));
+                    if (b.ContainsKey(field)) result.Add(field, calc(a[field], b[field], field));
+                    else result.Add(field, calc(a[field], b.DefaultValue, field));
                 }
             }
 
@@ -186,8 +191,8 @@ namespace RW_ModularizationWeapon
                 FieldInfo info = FieldInfo.GetFieldFromHandle(field);
                 if (result.UsedType.IsAssignableFrom(info.DeclaringType) && !result.ContainsKey(field))
                 {
-                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], info));
-                    else result.Add(field, calc(a.DefaultValue, b[field], info));
+                    if (a.ContainsKey(field)) result.Add(field, calc(a[field], b[field], field));
+                    else result.Add(field, calc(a.DefaultValue, b[field], field));
                 }
             }
             return result;
@@ -196,7 +201,7 @@ namespace RW_ModularizationWeapon
 
         public virtual void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            string typename = xmlRoot.Attributes["Reader-Class"]?.Value;
+            string? typename = xmlRoot.Attributes["Reader-Class"]?.Value;
             try
             {
                 if (typename != null)
@@ -209,6 +214,10 @@ namespace RW_ModularizationWeapon
                 Log.Error(ex.ToString());
             }
         }
+
+        private static readonly ConcurrentDictionary<RuntimeFieldHandle, AccessTools.FieldRef<T, TV>> cachedFieldRef = new ConcurrentDictionary<RuntimeFieldHandle, AccessTools.FieldRef<T, TV>>();
+        public static AccessTools.FieldRef<T, TV> GetCachedFieldRef(RuntimeFieldHandle runtimeField)
+            => cachedFieldRef.GetOrAdd(runtimeField, (x) => AccessTools.FieldRefAccess<T, TV>(FieldInfo.GetFieldFromHandle(x)));
     }
     /// <summary>
     /// digit only calculater
@@ -267,7 +276,7 @@ namespace RW_ModularizationWeapon
             base.LoadDataFromXmlCustom(xmlRoot);
             try
             {
-                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                string? defaultValue = xmlRoot.Attributes["Default"]?.Value;
                 if (defaultValue != null) this.defaultValue = ParseHelper.FromString<double>(defaultValue);
             }
             catch (Exception ex)
@@ -332,23 +341,23 @@ namespace RW_ModularizationWeapon
 
         public override void UsedTypeUpdate() { }
 
-        public static FieldReaderDigit<T> operator +(FieldReaderDigit<T> a, double b)
+        public static FieldReaderDigit<T>? operator +(FieldReaderDigit<T>? a, double b)
             => (a?.CalcValue((av, bv, field) => av.ToDouble(null) + bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
 
-        public static FieldReaderDigit<T> operator -(FieldReaderDigit<T> a, double b)
+        public static FieldReaderDigit<T>? operator -(FieldReaderDigit<T>? a, double b)
             => (a?.CalcValue((av, bv, field) => av.ToDouble(null) - bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
 
-        public static FieldReaderDigit<T> operator *(FieldReaderDigit<T> a, double b)
+        public static FieldReaderDigit<T>? operator *(FieldReaderDigit<T>? a, double b)
             => (a?.CalcValue((av, bv, field) => av.ToDouble(null) * bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
 
-        public static FieldReaderDigit<T> operator /(FieldReaderDigit<T> a, double b)
+        public static FieldReaderDigit<T>? operator /(FieldReaderDigit<T>? a, double b)
             => (a?.CalcValue((av, bv, field) => av.ToDouble(null) / bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
 
-        public static FieldReaderDigit<T> operator %(FieldReaderDigit<T> a, double b)
+        public static FieldReaderDigit<T>? operator %(FieldReaderDigit<T>? a, double b)
             => (a?.CalcValue((av, bv, field) => av.ToDouble(null) % bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
 
 
-        public static T operator +(T a, FieldReaderDigit<T> b)
+        public static T? operator +(T? a, FieldReaderDigit<T>? b)
         {
             if (b != null)
             {
@@ -362,13 +371,13 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) + vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) + vb.ToDouble(null);
                     }
-                    return va;
+                    return va ?? 0;
                 }, a);
             }
             return a;
         }
 
-        public static T operator -(T a, FieldReaderDigit<T> b)
+        public static T? operator -(T? a, FieldReaderDigit<T>? b)
         {
             if (b != null)
             {
@@ -382,13 +391,13 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) - vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) - vb.ToDouble(null);
                     }
-                    return va;
+                    return va ?? 0;
                 }, a);
             }
             return a;
         }
 
-        public static T operator *(T a, FieldReaderDigit<T> b)
+        public static T? operator *(T? a, FieldReaderDigit<T>? b)
         {
             if (b != null)
             {
@@ -402,13 +411,13 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) * vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) * vb.ToDouble(null);
                     }
-                    return va;
+                    return va ?? 0;
                 }, a);
             }
             return a;
         }
 
-        public static T operator /(T a, FieldReaderDigit<T> b)
+        public static T? operator /(T? a, FieldReaderDigit<T>? b)
         {
             if (b != null)
             {
@@ -422,13 +431,13 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) / vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) / vb.ToDouble(null);
                     }
-                    return va;
+                    return va ?? 0;
                 }, a);
             }
             return a;
         }
 
-        public static T operator %(T a, FieldReaderDigit<T> b)
+        public static T? operator %(T? a, FieldReaderDigit<T>? b)
         {
             if (b != null)
             {
@@ -442,25 +451,25 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) % vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) % vb.ToDouble(null);
                     }
-                    return va;
+                    return va ?? 0;
                 }, a);
             }
             return a;
         }
 
-        public static FieldReaderDigit<T> operator +(FieldReaderDigit<T> a, FieldReaderDigit<T> b)
+        public static FieldReaderDigit<T>? operator +(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
             => CalcValue((va, vb, field) => va.ToDouble(null) + vb.ToDouble(null), a, b);
 
-        public static FieldReaderDigit<T> operator -(FieldReaderDigit<T> a, FieldReaderDigit<T> b)
+        public static FieldReaderDigit<T>? operator -(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
             => CalcValue((va, vb, field) => va.ToDouble(null) - vb.ToDouble(null), a, b);
 
-        public static FieldReaderDigit<T> operator *(FieldReaderDigit<T> a, FieldReaderDigit<T> b)
+        public static FieldReaderDigit<T>? operator *(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
             => CalcValue((va, vb, field) => va.ToDouble(null) * vb.ToDouble(null), a, b);
 
-        public static FieldReaderDigit<T> operator /(FieldReaderDigit<T> a, FieldReaderDigit<T> b)
+        public static FieldReaderDigit<T>? operator /(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
             => CalcValue((va, vb, field) => va.ToDouble(null) / vb.ToDouble(null), a, b);
 
-        public static FieldReaderDigit<T> operator %(FieldReaderDigit<T> a, FieldReaderDigit<T> b)
+        public static FieldReaderDigit<T>? operator %(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
             => CalcValue((va, vb, field) => va.ToDouble(null) % vb.ToDouble(null), a, b);
     }
     /// <summary>
@@ -519,7 +528,7 @@ namespace RW_ModularizationWeapon
             base.LoadDataFromXmlCustom(xmlRoot);
             try
             {
-                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                string? defaultValue = xmlRoot.Attributes["Default"]?.Value;
                 if (defaultValue != null) this.defaultValue = ParseHelper.FromString<bool>(defaultValue);
             }
             catch (Exception ex)
@@ -577,17 +586,17 @@ namespace RW_ModularizationWeapon
 
         public override void UsedTypeUpdate() { }
 
-        public static FieldReaderBoolean<T> operator &(FieldReaderBoolean<T> a, bool b)
+        public static FieldReaderBoolean<T>? operator &(FieldReaderBoolean<T>? a, bool b)
             => (a?.CalcValue((av, bv, field) => av && bv, b) as FieldReaderBoolean<T>) ?? a;
 
-        public static FieldReaderBoolean<T> operator |(FieldReaderBoolean<T> a, bool b)
+        public static FieldReaderBoolean<T>? operator |(FieldReaderBoolean<T>? a, bool b)
             => (a?.CalcValue((av, bv, field) => av || bv, b) as FieldReaderBoolean<T>) ?? a;
 
-        public static FieldReaderBoolean<T> operator !(FieldReaderBoolean<T> a)
+        public static FieldReaderBoolean<T>? operator !(FieldReaderBoolean<T>? a)
             => (a?.CalcValue((av, bv, field) => !av, false) as FieldReaderBoolean<T>) ?? a;
 
 
-        public static T operator &(T a, FieldReaderBoolean<T> b)
+        public static T? operator &(T? a, FieldReaderBoolean<T>? b)
         {
             if (b != null)
             {
@@ -596,7 +605,7 @@ namespace RW_ModularizationWeapon
             return a;
         }
 
-        public static T operator |(T a, FieldReaderBoolean<T> b)
+        public static T? operator |(T? a, FieldReaderBoolean<T>? b)
         {
             if (b != null)
             {
@@ -605,17 +614,17 @@ namespace RW_ModularizationWeapon
             return a;
         }
 
-        public static FieldReaderBoolean<T> operator &(FieldReaderBoolean<T> a, FieldReaderBoolean<T> b)
+        public static FieldReaderBoolean<T>? operator &(FieldReaderBoolean<T>? a, FieldReaderBoolean<T>? b)
             => CalcValue((va, vb, field) => va && vb, a, b);
 
-        public static FieldReaderBoolean<T> operator |(FieldReaderBoolean<T> a, FieldReaderBoolean<T> b)
+        public static FieldReaderBoolean<T>? operator |(FieldReaderBoolean<T>? a, FieldReaderBoolean<T>? b)
             => CalcValue((va, vb, field) => va || vb, a, b);
     }
     /// <summary>
     /// instance only calculater
     /// </summary>
     /// <typeparam name="T">instance base type for calculation</typeparam>
-    public class FieldReaderInstance<T> : FieldReader<T, object>
+    public class FieldReaderInstance<T> : FieldReader<T, object?>
     {
         private bool loading = false;
         private T datas = (T)Activator.CreateInstance(typeof(T));
@@ -637,13 +646,13 @@ namespace RW_ModularizationWeapon
 
         public override ICollection<RuntimeFieldHandle> Keys => new HashSet<RuntimeFieldHandle>(fields);
 
-        public override ICollection<object> Values => (from x in fields select FieldInfo.GetFieldFromHandle(x).GetValue(datas)).ToList();
+        public override ICollection<object?> Values => (from x in fields select FieldInfo.GetFieldFromHandle(x).GetValue(datas)).ToList();
 
-        public override object DefaultValue { get => null; set => throw new NotImplementedException(); }
+        public override object? DefaultValue { get => null; set => throw new NotImplementedException(); }
 
         public override bool HasDefaultValue => false;
 
-        public override object this[RuntimeFieldHandle key]
+        public override object? this[RuntimeFieldHandle key]
         {
             get => (key != null && fields.Contains(key)) ? FieldInfo.GetFieldFromHandle(key).GetValue(datas) : null;
             set => Add(key, value);
@@ -698,12 +707,12 @@ namespace RW_ModularizationWeapon
 
         public override bool ContainsKey(RuntimeFieldHandle key) => fields.Contains(key);
 
-        public override void Add(RuntimeFieldHandle key, object value)
+        public override void Add(RuntimeFieldHandle key, object? value)
         {
             FieldInfo field = FieldInfo.GetFieldFromHandle(key);
             if (field != null && field.DeclaringType.IsAssignableFrom(UsedType))
             {
-                if (value == null || (field.FieldType.IsAssignableFrom(value.GetType()) && field.DeclaringType.IsAssignableFrom(datas.GetType())))
+                if (value == null || (field.FieldType.IsAssignableFrom(value.GetType()) && field.DeclaringType.IsAssignableFrom(datas?.GetType() ?? UsedType)))
                 {
                     field.SetValue(datas, value);
                     fields.Add(key);
@@ -713,7 +722,7 @@ namespace RW_ModularizationWeapon
 
         public override bool Remove(RuntimeFieldHandle key) => fields.Remove(key);
 
-        public override bool TryGetValue(RuntimeFieldHandle key, out object value)
+        public override bool TryGetValue(RuntimeFieldHandle key, out object? value)
         {
             value = default(object);
             FieldInfo field = FieldInfo.GetFieldFromHandle(key);
@@ -727,7 +736,7 @@ namespace RW_ModularizationWeapon
 
         public override void Clear() => fields.Clear();
 
-        public override FieldReader<T, object> Clone() => new FieldReaderInstance<T>(this);
+        public override FieldReader<T, object?> Clone() => new FieldReaderInstance<T>(this);
 
         public override void UsedTypeUpdate()
         {
@@ -743,16 +752,16 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public static T operator &(T a, FieldReaderInstance<T> b)
+        public static T? operator &(T? a, FieldReaderInstance<T>? b)
         {
             if (b != null)
             {
-                return b.CalcValue((va, vb, field) => (va != null && b.ContainsKey(field.FieldHandle)) ? vb : va, a);
+                return b.CalcValue((va, vb, field) => (va != null && b.ContainsKey(field)) ? vb : va, a);
             }
             return a;
         }
 
-        public static T operator |(T a, FieldReaderInstance<T> b)
+        public static T? operator |(T? a, FieldReaderInstance<T>? b)
         {
             if (b != null)
             {
@@ -761,10 +770,10 @@ namespace RW_ModularizationWeapon
             return a;
         }
 
-        public static FieldReaderInstance<T> operator &(FieldReaderInstance<T> a, FieldReaderInstance<T> b)
-            => CalcValue((va, vb, field) => (va != null && b.ContainsKey(field.FieldHandle)) ? vb : va, a, b);
+        public static FieldReaderInstance<T>? operator &(FieldReaderInstance<T>? a, FieldReaderInstance<T>? b)
+            => CalcValue((va, vb, field) => (va != null && (b?.ContainsKey(field) ?? false)) ? vb : va, a, b);
 
-        public static FieldReaderInstance<T> operator |(FieldReaderInstance<T> a, FieldReaderInstance<T> b)
+        public static FieldReaderInstance<T>? operator |(FieldReaderInstance<T>? a, FieldReaderInstance<T>? b)
             => CalcValue((va, vb, field) => va ?? vb, a, b);
     }
     /// <summary>
@@ -824,7 +833,7 @@ namespace RW_ModularizationWeapon
             base.LoadDataFromXmlCustom(xmlRoot);
             try
             {
-                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                string? defaultValue = xmlRoot.Attributes["Default"]?.Value;
                 if (defaultValue != null) this.defaultValue = ParseHelper.FromString<bool>(defaultValue);
             }
             catch (Exception ex)
@@ -879,22 +888,22 @@ namespace RW_ModularizationWeapon
 
         public override void UsedTypeUpdate() { }
 
-        public static FieldReaderFilt<T> operator &(FieldReaderFilt<T> a, bool b)
+        public static FieldReaderFilt<T>? operator &(FieldReaderFilt<T>? a, bool b)
             => (a?.CalcValue((av, bv, field) => av && bv, b) as FieldReaderFilt<T>) ?? a;
 
-        public static FieldReaderFilt<T> operator |(FieldReaderFilt<T> a, bool b)
+        public static FieldReaderFilt<T>? operator |(FieldReaderFilt<T>? a, bool b)
             => (a?.CalcValue((av, bv, field) => av || bv, b) as FieldReaderFilt<T>) ?? a;
 
-        public static FieldReaderFilt<T> operator !(FieldReaderFilt<T> a)
+        public static FieldReaderFilt<T>? operator !(FieldReaderFilt<T>? a)
             => (a?.CalcValue((av, bv, field) => !av, false) as FieldReaderFilt<T>) ?? a;
 
-        public static FieldReaderFilt<T> operator &(FieldReaderFilt<T> a, FieldReaderFilt<T> b)
+        public static FieldReaderFilt<T>? operator &(FieldReaderFilt<T>? a, FieldReaderFilt<T>? b)
             => CalcValue((va, vb, field) => va && vb, a, b);
 
-        public static FieldReaderFilt<T> operator |(FieldReaderFilt<T> a, FieldReaderFilt<T> b)
+        public static FieldReaderFilt<T>? operator |(FieldReaderFilt<T>? a, FieldReaderFilt<T>? b)
             => CalcValue((va, vb, field) => va || vb, a, b);
 
-        public static FieldReaderDigit<T> operator &(FieldReaderDigit<T> a, FieldReaderFilt<T> b)
+        public static FieldReaderDigit<T>? operator &(FieldReaderDigit<T>? a, FieldReaderFilt<T>? b)
         {
             if(a != null && b != null)
             {
@@ -912,7 +921,7 @@ namespace RW_ModularizationWeapon
             return a;
         }
 
-        public static FieldReaderBoolean<T> operator &(FieldReaderBoolean<T> a, FieldReaderFilt<T> b)
+        public static FieldReaderBoolean<T>? operator &(FieldReaderBoolean<T>? a, FieldReaderFilt<T>? b)
         {
             if (a != null && b != null)
             {
@@ -930,7 +939,7 @@ namespace RW_ModularizationWeapon
             return a;
         }
 
-        public static FieldReaderInstance<T> operator &(FieldReaderInstance<T> a, FieldReaderFilt<T> b)
+        public static FieldReaderInstance<T>? operator &(FieldReaderInstance<T>? a, FieldReaderFilt<T>? b)
         {
             if (a != null && b != null)
             {

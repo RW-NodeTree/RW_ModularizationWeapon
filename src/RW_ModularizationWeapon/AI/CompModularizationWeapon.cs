@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RW_ModularizationWeapon.AI;
+using RW_NodeTree;
 using Verse;
 using Verse.AI;
 
@@ -11,10 +13,12 @@ namespace RW_ModularizationWeapon
         {
             lock (this)
             {
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 if (jobDriver == null) yield break;
                 foreach (string id in PartIDs)
                 {
-                    CompModularizationWeapon comp = ChildNodes[id];
+                    CompModularizationWeapon? comp = container[id];
                     if (comp != null)
                     {
                         foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
@@ -95,15 +99,17 @@ namespace RW_ModularizationWeapon
         {
             lock (this)
             {
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 foreach (string id in PartIDs)
                 {
-                    LocalTargetInfo target = ChildNodes[id];
+                    LocalTargetInfo target = container[id];
                     if (targetPartsWithId.ContainsKey(id))
                     {
                         target = targetPartsWithId[id];
                         yield return target;
                     }
-                    CompModularizationWeapon comp = target.Thing;
+                    CompModularizationWeapon? comp = target.Thing;
                     if (comp != null)
                     {
                         foreach (LocalTargetInfo childTarget in comp.AllTargetPart())

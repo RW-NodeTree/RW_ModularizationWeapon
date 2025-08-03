@@ -12,9 +12,9 @@ namespace RW_ModularizationWeapon
 
         public FieldReaderDgitList() : base() { }
 
-        public FieldReaderDgitList(FieldReaderDgitList<T> other) : base(other)
+        public FieldReaderDgitList(FieldReaderDgitList<T>? other) : base(other)
         {
-            defaultValue = other.defaultValue;
+            defaultValue = other?.defaultValue;
         }
 
         public double DefaultValue
@@ -44,7 +44,7 @@ namespace RW_ModularizationWeapon
 
             try
             {
-                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                string? defaultValue = xmlRoot.Attributes["Default"]?.Value;
                 if (defaultValue != null) this.defaultValue = ParseHelper.FromString<double>(defaultValue);
             }
             catch (Exception ex)
@@ -76,13 +76,13 @@ namespace RW_ModularizationWeapon
 
 
         #region FieldReaderDgitList_double
-        public static FieldReaderDgitList<T> operator +(FieldReaderDgitList<T> a, double b)
+        public static FieldReaderDgitList<T>? operator +(FieldReaderDgitList<T>? a, double b)
         {
             FieldReaderDgitList<T> list = new FieldReaderDgitList<T>(a);
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] += b;
+                list[i] = (list[i] + b) ?? list[i];
             }
             return list;
         }
@@ -93,7 +93,7 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] -= b;
+                list[i] = (list[i] - b) ?? list[i];
             }
             return list;
         }
@@ -104,7 +104,7 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] *= b;
+                list[i] = (list[i] * b) ?? list[i];
             }
             return list;
         }
@@ -115,7 +115,7 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] /= b;
+                list[i] = (list[i] / b) ?? list[i];
             }
             return list;
         }
@@ -126,14 +126,14 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] %= b;
+                list[i] = (list[i] % b) ?? list[i];
             }
             return list;
         }
         #endregion
 
         #region T_FieldReaderDgitList
-        public static T operator +(T a, FieldReaderDgitList<T> b)
+        public static T? operator +(T? a, FieldReaderDgitList<T>? b)
         {
             if(a != null)
             {
@@ -150,7 +150,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderDigit<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result += v;
+                            result = (result + v) ?? result;
                         }
                     }
                 }
@@ -159,7 +159,7 @@ namespace RW_ModularizationWeapon
             return default(T);
         }
 
-        public static T operator -(T a, FieldReaderDgitList<T> b)
+        public static T? operator -(T? a, FieldReaderDgitList<T>? b)
         {
             if (a != null)
             {
@@ -176,7 +176,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderDigit<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result -= v;
+                            result = (result - v) ?? result;
                         }
                     }
                 }
@@ -185,7 +185,7 @@ namespace RW_ModularizationWeapon
             return default(T);
         }
 
-        public static T operator *(T a, FieldReaderDgitList<T> b)
+        public static T? operator *(T? a, FieldReaderDgitList<T>? b)
         {
             if (a != null)
             {
@@ -202,7 +202,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderDigit<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result *= v;
+                            result = (result * v) ?? result;
                         }
                     }
                 }
@@ -211,7 +211,7 @@ namespace RW_ModularizationWeapon
             return default(T);
         }
 
-        public static T operator /(T a, FieldReaderDgitList<T> b)
+        public static T? operator /(T? a, FieldReaderDgitList<T>? b)
         {
             if (a != null)
             {
@@ -228,7 +228,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderDigit<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result /= v;
+                            result = (result / v) ?? result;
                         }
                     }
                 }
@@ -237,7 +237,7 @@ namespace RW_ModularizationWeapon
             return default(T);
         }
 
-        public static T operator %(T a, FieldReaderDgitList<T> b)
+        public static T? operator %(T? a, FieldReaderDgitList<T>? b)
         {
             if (a != null)
             {
@@ -254,7 +254,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderDigit<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result %= v;
+                            result = (result % v) ?? result;
                         }
                     }
                 }
@@ -265,7 +265,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
         #region FieldReaderDgitList_FieldReaderDgitList
-        public static FieldReaderDgitList<T> operator +(FieldReaderDgitList<T> a, FieldReaderDgitList<T> b)
+        public static FieldReaderDgitList<T> operator +(FieldReaderDgitList<T>? a, FieldReaderDgitList<T>? b)
         {
             FieldReaderDgitList<T> result = new FieldReaderDgitList<T>();
 
@@ -287,7 +287,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] += child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value + child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -305,7 +309,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] += child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value + child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -318,12 +326,13 @@ namespace RW_ModularizationWeapon
                 FieldReaderDigit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDigit<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va + vb);
+                FieldReaderDigit<T>? vc = va + vb;
+                if(vc != null) result.Add(vc);
             }
             return result;
         }
 
-        public static FieldReaderDgitList<T> operator -(FieldReaderDgitList<T> a, FieldReaderDgitList<T> b)
+        public static FieldReaderDgitList<T> operator -(FieldReaderDgitList<T>? a, FieldReaderDgitList<T>? b)
         {
             FieldReaderDgitList<T> result = new FieldReaderDgitList<T>();
 
@@ -345,7 +354,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] -= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value - child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -363,7 +376,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] -= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value - child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -376,7 +393,8 @@ namespace RW_ModularizationWeapon
                 FieldReaderDigit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDigit<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va - vb);
+                FieldReaderDigit<T>? vc = va - vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
@@ -404,7 +422,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] *= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value * child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -422,7 +444,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] *= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value * child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -435,7 +461,8 @@ namespace RW_ModularizationWeapon
                 FieldReaderDigit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDigit<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va * vb);
+                FieldReaderDigit<T>? vc = va * vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
@@ -463,7 +490,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] /= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value / child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -481,7 +512,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] /= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value / child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -494,7 +529,8 @@ namespace RW_ModularizationWeapon
                 FieldReaderDigit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDigit<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va / vb);
+                FieldReaderDigit<T>? vc = va / vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
@@ -521,7 +557,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] %= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value % child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -539,7 +579,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] %= child;
+                else
+                {
+                    FieldReaderDigit<T> value = result[index];
+                    result[index] = (value % child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -552,7 +596,8 @@ namespace RW_ModularizationWeapon
                 FieldReaderDigit<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderDigit<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va % vb);
+                FieldReaderDigit<T>? vc = va % vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
@@ -597,7 +642,7 @@ namespace RW_ModularizationWeapon
 
             try
             {
-                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                string? defaultValue = xmlRoot.Attributes["Default"]?.Value;
                 if (defaultValue != null) this.defaultValue = ParseHelper.FromString<bool>(defaultValue);
             }
             catch (Exception ex)
@@ -629,42 +674,48 @@ namespace RW_ModularizationWeapon
 
 
         #region FieldReaderBoolList_bool
-        public static FieldReaderBoolList<T> operator !(FieldReaderBoolList<T> a)
+        public static FieldReaderBoolList<T>? operator !(FieldReaderBoolList<T>? a)
         {
+            if(a == null) return null;
             FieldReaderBoolList<T> list = new FieldReaderBoolList<T>(a);
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] = !list[i];
+                FieldReaderBoolean<T> value = list[i];
+                list[i] = !value ?? value;
             }
             return list;
         }
 
-        public static FieldReaderBoolList<T> operator &(FieldReaderBoolList<T> a, bool b)
+        public static FieldReaderBoolList<T>? operator &(FieldReaderBoolList<T>? a, bool b)
         {
+            if (a == null) return null;
             FieldReaderBoolList<T> list = new FieldReaderBoolList<T>(a);
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] &= b;
+                FieldReaderBoolean<T> value = list[i];
+                list[i] = (value & b) ?? value;
             }
             return list;
         }
 
-        public static FieldReaderBoolList<T> operator |(FieldReaderBoolList<T> a, bool b)
+        public static FieldReaderBoolList<T>? operator |(FieldReaderBoolList<T>? a, bool b)
         {
+            if (a == null) return null;
             FieldReaderBoolList<T> list = new FieldReaderBoolList<T>(a);
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] |= b;
+                FieldReaderBoolean<T> value = list[i];
+                list[i] = (value | b) ?? value;
             }
             return list;
         }
         #endregion
 
         #region T_FieldReaderBoolListList
-        public static T operator &(T a, FieldReaderBoolList<T> b)
+        public static T? operator &(T? a, FieldReaderBoolList<T>? b)
         {
             if (a != null)
             {
@@ -681,7 +732,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderBoolean<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result &= v;
+                            result = (result & v) ?? result;
                         }
                     }
                 }
@@ -690,7 +741,7 @@ namespace RW_ModularizationWeapon
             return default(T);
         }
 
-        public static T operator |(T a, FieldReaderBoolList<T> b)
+        public static T? operator |(T? a, FieldReaderBoolList<T>? b)
         {
             if (a != null)
             {
@@ -707,7 +758,7 @@ namespace RW_ModularizationWeapon
                                 v = new FieldReaderBoolean<T>(v);
                                 v.DefaultValue = b.DefaultValue;
                             }
-                            result |= v;
+                            result = (result | v) ?? result;
                         }
                     }
                 }
@@ -718,7 +769,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
         #region FieldReaderBoolList_FieldReaderBoolList
-        public static FieldReaderBoolList<T> operator &(FieldReaderBoolList<T> a, FieldReaderBoolList<T> b)
+        public static FieldReaderBoolList<T> operator &(FieldReaderBoolList<T>? a, FieldReaderBoolList<T>? b)
         {
             FieldReaderBoolList<T> result = new FieldReaderBoolList<T>();
 
@@ -740,7 +791,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] &= child;
+                else
+                {
+                    FieldReaderBoolean<T> value = result[index];
+                    result[index] = (value & child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -758,7 +813,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] &= child;
+                else
+                {
+                    FieldReaderBoolean<T> value = result[index];
+                    result[index] = (value & child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -771,7 +830,8 @@ namespace RW_ModularizationWeapon
                 FieldReaderBoolean<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderBoolean<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va & vb);
+                FieldReaderBoolean<T>? vc = va & vb;
+                if(vc != null) result.Add(vc);
             }
             return result;
         }
@@ -798,7 +858,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] |= child;
+                else
+                {
+                    FieldReaderBoolean<T> value = result[index];
+                    result[index] = (value | child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -816,7 +880,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] |= child;
+                else
+                {
+                    FieldReaderBoolean<T> value = result[index];
+                    result[index] = (value | child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -829,7 +897,8 @@ namespace RW_ModularizationWeapon
                 FieldReaderBoolean<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderBoolean<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va | vb);
+                FieldReaderBoolean<T>? vc = va | vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
@@ -882,7 +951,7 @@ namespace RW_ModularizationWeapon
         }
 
         #region T_FieldReaderInstListList
-        public static T operator &(T a, FieldReaderInstList<T> b)
+        public static T? operator &(T? a, FieldReaderInstList<T>? b)
         {
             if (a != null)
             {
@@ -894,7 +963,7 @@ namespace RW_ModularizationWeapon
                         FieldReaderInstance<T> v = b[i];
                         if (v != null)
                         {
-                            result &= v;
+                            result = (result & v) ?? result;
                         }
                     }
                 }
@@ -903,7 +972,7 @@ namespace RW_ModularizationWeapon
             return default(T);
         }
 
-        public static T operator |(T a, FieldReaderInstList<T> b)
+        public static T? operator |(T? a, FieldReaderInstList<T>? b)
         {
             if (a != null)
             {
@@ -915,7 +984,7 @@ namespace RW_ModularizationWeapon
                         FieldReaderInstance<T> v = b[i];
                         if (v != null)
                         {
-                            result |= v;
+                            result = (result | v) ?? result;
                         }
                     }
                 }
@@ -926,7 +995,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
         #region FieldReaderInstList_FieldReaderInstList
-        public static FieldReaderInstList<T> operator &(FieldReaderInstList<T> a, FieldReaderInstList<T> b)
+        public static FieldReaderInstList<T> operator &(FieldReaderInstList<T>? a, FieldReaderInstList<T>? b)
         {
             FieldReaderInstList<T> result = new FieldReaderInstList<T>();
 
@@ -946,7 +1015,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] &= child;
+                else
+                {
+                    FieldReaderInstance<T> value = result[index];
+                    result[index] = (value & child) ?? value;
+                }
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -961,7 +1034,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] &= child;
+                else
+                {
+                    FieldReaderInstance<T> value = result[index];
+                    result[index] = (value & child) ?? value;
+                }
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -971,12 +1048,13 @@ namespace RW_ModularizationWeapon
             {
                 FieldReaderInstance<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderInstance<T>();
                 FieldReaderInstance<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderInstance<T>();
-                result.Add(va & vb);
+                FieldReaderInstance<T>? vc = va & vb;
+                if(vc != null) result.Add(vc);
             }
             return result;
         }
 
-        public static FieldReaderInstList<T> operator |(FieldReaderInstList<T> a, FieldReaderInstList<T> b)
+        public static FieldReaderInstList<T> operator |(FieldReaderInstList<T>? a, FieldReaderInstList<T>? b)
         {
             FieldReaderInstList<T> result = new FieldReaderInstList<T>();
 
@@ -996,7 +1074,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] |= child;
+                else
+                {
+                    FieldReaderInstance<T> value = result[index];
+                    result[index] = (value | child) ?? value;
+                }
                 UsedTypes.Add(child.UsedType);
             }
             a = result;
@@ -1011,7 +1093,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] |= child;
+                else
+                {
+                    FieldReaderInstance<T> value = result[index];
+                    result[index] = (value | child) ?? value;
+                }
                 UsedTypes.Add(child.UsedType);
             }
             b = result;
@@ -1021,7 +1107,8 @@ namespace RW_ModularizationWeapon
             {
                 FieldReaderInstance<T> va = a.Find(x => x.UsedType == type) ?? new FieldReaderInstance<T>();
                 FieldReaderInstance<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderInstance<T>();
-                result.Add(va | vb);
+                FieldReaderInstance<T>? vc = va | vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
@@ -1066,7 +1153,7 @@ namespace RW_ModularizationWeapon
 
             try
             {
-                string defaultValue = xmlRoot.Attributes["Default"]?.Value;
+                string? defaultValue = xmlRoot.Attributes["Default"]?.Value;
                 if (defaultValue != null) this.defaultValue = ParseHelper.FromString<bool>(defaultValue);
             }
             catch (Exception ex)
@@ -1104,7 +1191,8 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] = !list[i];
+                FieldReaderFilt<T> value = list[i];
+                list[i] = !value ?? value;
             }
             return list;
         }
@@ -1115,7 +1203,8 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] &= b;
+                FieldReaderFilt<T> value = list[i];
+                list[i] = (value & b) ?? value;
             }
             return list;
         }
@@ -1126,14 +1215,15 @@ namespace RW_ModularizationWeapon
             list.RemoveAll(x => x == null);
             for (int i = 0; i < list.Count; i++)
             {
-                list[i] |= b;
+                FieldReaderFilt<T> value = list[i];
+                list[i] = (value | b) ?? value;
             }
             return list;
         }
         #endregion
 
         #region FieldReaderFiltList_FieldReaderFiltList
-        public static FieldReaderFiltList<T> operator &(FieldReaderFiltList<T> a, FieldReaderFiltList<T> b)
+        public static FieldReaderFiltList<T> operator &(FieldReaderFiltList<T>? a, FieldReaderFiltList<T>? b)
         {
             FieldReaderFiltList<T> result = new FieldReaderFiltList<T>();
 
@@ -1155,7 +1245,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] &= child;
+                else
+                {
+                    FieldReaderFilt<T> value = result[index];
+                    result[index] = (value & child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -1173,7 +1267,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] &= child;
+                else
+                {
+                    FieldReaderFilt<T> value = result[index];
+                    result[index] = (value & child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -1186,12 +1284,13 @@ namespace RW_ModularizationWeapon
                 FieldReaderFilt<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderFilt<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va & vb);
+                FieldReaderFilt<T>? vc = va & vb;
+                if(vc != null) result.Add(vc);
             }
             return result;
         }
 
-        public static FieldReaderFiltList<T> operator |(FieldReaderFiltList<T> a, FieldReaderFiltList<T> b)
+        public static FieldReaderFiltList<T> operator |(FieldReaderFiltList<T>? a, FieldReaderFiltList<T>? b)
         {
             FieldReaderFiltList<T> result = new FieldReaderFiltList<T>();
 
@@ -1213,7 +1312,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] |= child;
+                else
+                {
+                    FieldReaderFilt<T> value = result[index];
+                    result[index] = (value | child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -1231,7 +1334,11 @@ namespace RW_ModularizationWeapon
                     index = result.Count;
                     result.Add(child);
                 }
-                else result[index] |= child;
+                else
+                {
+                    FieldReaderFilt<T> value = result[index];
+                    result[index] = (value | child) ?? value;
+                }
                 if (result.HasDefaultValue && !result[index].HasDefaultValue) result[index].DefaultValue = result.DefaultValue;
                 UsedTypes.Add(child.UsedType);
             }
@@ -1244,12 +1351,13 @@ namespace RW_ModularizationWeapon
                 FieldReaderFilt<T> vb = b.Find(x => x.UsedType == type) ?? new FieldReaderFilt<T>();
                 if (a.HasDefaultValue && !va.HasDefaultValue) va.DefaultValue = a.DefaultValue;
                 if (b.HasDefaultValue && !vb.HasDefaultValue) vb.DefaultValue = b.DefaultValue;
-                result.Add(va | vb);
+                FieldReaderFilt<T>? vc = va | vb;
+                if (vc != null) result.Add(vc);
             }
             return result;
         }
 
-        public static FieldReaderDgitList<T> operator &(FieldReaderDgitList<T> a, FieldReaderFiltList<T> b)
+        public static FieldReaderDgitList<T> operator &(FieldReaderDgitList<T>? a, FieldReaderFiltList<T>? b)
         {
             FieldReaderDgitList<T> result = new FieldReaderDgitList<T>();
 
@@ -1266,7 +1374,8 @@ namespace RW_ModularizationWeapon
                         if (!copy.HasDefaultValue && b.HasDefaultValue) copy.DefaultValue = b.DefaultValue;
                         for (int i = 0; i < result.Count; i++)
                         {
-                            result[i] &= copy;
+                            FieldReaderDigit<T> value = result[i];
+                            result[i] = (value & copy) ?? value;
                         }
                     }
                 }
@@ -1295,7 +1404,8 @@ namespace RW_ModularizationWeapon
                         if (!copy.HasDefaultValue && b.HasDefaultValue) copy.DefaultValue = b.DefaultValue;
                         for (int i = 0; i < result.Count; i++)
                         {
-                            result[i] &= copy;
+                            FieldReaderBoolean<T> value = result[i];
+                            result[i] = (value & copy) ?? value;
                         }
                     }
                 }
@@ -1324,7 +1434,8 @@ namespace RW_ModularizationWeapon
                         if (!copy.HasDefaultValue && b.HasDefaultValue) copy.DefaultValue = b.DefaultValue;
                         for (int i = 0; i < result.Count; i++)
                         {
-                            result[i] &= copy;
+                            FieldReaderInstance<T> value = result[i];
+                            result[i] = (value & copy) ?? value;
                         }
                     }
                 }

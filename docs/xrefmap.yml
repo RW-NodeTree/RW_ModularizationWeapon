@@ -314,13 +314,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.DrawChildTreeView
   nameWithType: CompModularizationWeapon.DrawChildTreeView
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary<String, Object>, Exception)
+  name: FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary<string, object?>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_FinalizeValue_RimWorld_StatWorker_RimWorld_StatRequest_System_Boolean_System_Single_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name.vb: FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary(Of String, Object), Exception)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, System.Single, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, System.Single, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary<String, Object>, Exception)
+  nameWithType: CompModularizationWeapon.FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary<string, object?>, Exception)
   nameWithType.vb: CompModularizationWeapon.FinalStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, Single, Dictionary(Of String, Object), Exception)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue*
   name: FinalStatWorker_FinalizeValue
@@ -330,13 +330,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_FinalizeValue
   nameWithType: CompModularizationWeapon.FinalStatWorker_FinalizeValue
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Verse.Thing,RimWorld.StatDef,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalStatWorker_GearHasCompsThatAffectStat(Thing, StatDef, Boolean, Dictionary<String, Object>, Exception)
+  name: FinalStatWorker_GearHasCompsThatAffectStat(Thing, StatDef, Boolean, Dictionary<string, object?>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_GearHasCompsThatAffectStat_Verse_Thing_RimWorld_StatDef_System_Boolean_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Verse.Thing,RimWorld.StatDef,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name.vb: FinalStatWorker_GearHasCompsThatAffectStat(Thing, StatDef, Boolean, Dictionary(Of String, Object), Exception)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Verse.Thing, RimWorld.StatDef, System.Boolean, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Verse.Thing, RimWorld.StatDef, System.Boolean, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Thing, StatDef, Boolean, Dictionary<String, Object>, Exception)
+  nameWithType: CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Thing, StatDef, Boolean, Dictionary<string, object?>, Exception)
   nameWithType.vb: CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat(Thing, StatDef, Boolean, Dictionary(Of String, Object), Exception)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat*
   name: FinalStatWorker_GearHasCompsThatAffectStat
@@ -346,13 +346,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat
   nameWithType: CompModularizationWeapon.FinalStatWorker_GearHasCompsThatAffectStat
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,Verse.ToStringNumberSense,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, String, Dictionary<String, Object>, Exception)
+  name: FinalStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, String, Dictionary<string, object?>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_GetExplanationUnfinalized_RimWorld_StatWorker_RimWorld_StatRequest_Verse_ToStringNumberSense_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,Verse.ToStringNumberSense,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name.vb: FinalStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, String, Dictionary(Of String, Object), Exception)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, Verse.ToStringNumberSense, System.String, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, Verse.ToStringNumberSense, System.String, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, String, Dictionary<String, Object>, Exception)
+  nameWithType: CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, String, Dictionary<string, object?>, Exception)
   nameWithType.vb: CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, String, Dictionary(Of String, Object), Exception)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized*
   name: FinalStatWorker_GetExplanationUnfinalized
@@ -362,13 +362,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized
   nameWithType: CompModularizationWeapon.FinalStatWorker_GetExplanationUnfinalized
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker,RimWorld.StatDef,System.Single,Verse.ToStringNumberSense,RimWorld.StatRequest,System.Boolean,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, String, Dictionary<String, Object>, Exception)
+  name: FinalStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, String, Dictionary<string, object?>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_GetStatDrawEntryLabel_RimWorld_StatWorker_RimWorld_StatDef_System_Single_Verse_ToStringNumberSense_RimWorld_StatRequest_System_Boolean_System_String_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker,RimWorld.StatDef,System.Single,Verse.ToStringNumberSense,RimWorld.StatRequest,System.Boolean,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name.vb: FinalStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, String, Dictionary(Of String, Object), Exception)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker, RimWorld.StatDef, System.Single, Verse.ToStringNumberSense, RimWorld.StatRequest, System.Boolean, System.String, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker, RimWorld.StatDef, System.Single, Verse.ToStringNumberSense, RimWorld.StatRequest, System.Boolean, System.String, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, String, Dictionary<String, Object>, Exception)
+  nameWithType: CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, String, Dictionary<string, object?>, Exception)
   nameWithType.vb: CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, String, Dictionary(Of String, Object), Exception)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel*
   name: FinalStatWorker_GetStatDrawEntryLabel
@@ -378,13 +378,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel
   nameWithType: CompModularizationWeapon.FinalStatWorker_GetStatDrawEntryLabel
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Single, Dictionary<String, Object>, Exception)
+  name: FinalStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Single, Dictionary<string, object?>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_GetValueUnfinalized_RimWorld_StatWorker_RimWorld_StatRequest_System_Boolean_System_Single_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name.vb: FinalStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Single, Dictionary(Of String, Object), Exception)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, System.Single, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, System.Single, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Single, Dictionary<String, Object>, Exception)
+  nameWithType: CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Single, Dictionary<string, object?>, Exception)
   nameWithType.vb: CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Single, Dictionary(Of String, Object), Exception)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized*
   name: FinalStatWorker_GetValueUnfinalized
@@ -394,13 +394,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized
   nameWithType: CompModularizationWeapon.FinalStatWorker_GetValueUnfinalized
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Verse.Thing,RimWorld.StatDef,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
-  name: FinalStatWorker_StatOffsetFromGear(Thing, StatDef, Single, Dictionary<String, Object>, Exception)
+  name: FinalStatWorker_StatOffsetFromGear(Thing, StatDef, Single, Dictionary<string, object?>, Exception)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_FinalStatWorker_StatOffsetFromGear_Verse_Thing_RimWorld_StatDef_System_Single_System_Collections_Generic_Dictionary_System_String_System_Object__System_Exception_
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Verse.Thing,RimWorld.StatDef,System.Single,System.Collections.Generic.Dictionary{System.String,System.Object},System.Exception)
   name.vb: FinalStatWorker_StatOffsetFromGear(Thing, StatDef, Single, Dictionary(Of String, Object), Exception)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Verse.Thing, RimWorld.StatDef, System.Single, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Exception)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Verse.Thing, RimWorld.StatDef, System.Single, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Exception)
-  nameWithType: CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Thing, StatDef, Single, Dictionary<String, Object>, Exception)
+  nameWithType: CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Thing, StatDef, Single, Dictionary<string, object?>, Exception)
   nameWithType.vb: CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear(Thing, StatDef, Single, Dictionary(Of String, Object), Exception)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.FinalStatWorker_StatOffsetFromGear*
   name: FinalStatWorker_StatOffsetFromGear
@@ -620,13 +620,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PartIDs
   nameWithType: CompModularizationWeapon.PartIDs
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name: PostDrawStep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
+  name: PostDrawStep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<string, object?>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostDrawStep_System_Collections_Generic_List_System_ValueTuple_System_String_Verse_Thing_System_Collections_Generic_List_RenderInfo____Verse_Rot4_Verse_Graphic_System_Collections_Generic_Dictionary_System_String_System_Object__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List{System.ValueTuple{System.String,Verse.Thing,System.Collections.Generic.List{RenderInfo}}},Verse.Rot4,Verse.Graphic,System.Collections.Generic.Dictionary{System.String,System.Object})
   name.vb: PostDrawStep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List<System.ValueTuple<System.String, Verse.Thing, System.Collections.Generic.List<RenderInfo>>>, Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary<System.String, System.Object>)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep(System.Collections.Generic.List(Of System.ValueTuple(Of System.String, Verse.Thing, System.Collections.Generic.List(Of RenderInfo))), Verse.Rot4, Verse.Graphic, System.Collections.Generic.Dictionary(Of System.String, System.Object))
-  nameWithType: CompModularizationWeapon.PostDrawStep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<String, Object>)
+  nameWithType: CompModularizationWeapon.PostDrawStep(List<(String, Thing, List<RenderInfo>)>, Rot4, Graphic, Dictionary<string, object?>)
   nameWithType.vb: CompModularizationWeapon.PostDrawStep(List(Of (String, Thing, List(Of RenderInfo))(Of String, Thing, List(Of RenderInfo))), Rot4, Graphic, Dictionary(Of String, Object))
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostDrawStep*
   name: PostDrawStep
@@ -755,13 +755,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostThingWithComps_PreApplyDamage
   nameWithType: CompModularizationWeapon.PostThingWithComps_PreApplyDamage
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
-  name: PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  name: PostUpdateNode(CompChildNodeProccesser, Dictionary<string, object?>, Dictionary<String, Thing>, out Boolean, out Boolean)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PostUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__System_Boolean__System_Boolean__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
   name.vb: PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>, out System.Boolean, out System.Boolean)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing), ByRef System.Boolean, ByRef System.Boolean)
-  nameWithType: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  nameWithType: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary<string, object?>, Dictionary<String, Thing>, out Boolean, out Boolean)
   nameWithType.vb: CompModularizationWeapon.PostUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode*
   name: PostUpdateNode
@@ -771,13 +771,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PostUpdateNode
   nameWithType: CompModularizationWeapon.PostUpdateNode
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single@,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name: PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ref Single, Dictionary<String, Object>)
+  name: PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ref Single, Dictionary<string, object?>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreStatWorker_FinalizeValue_RimWorld_StatWorker_RimWorld_StatRequest_System_Boolean_System_Single__System_Collections_Generic_Dictionary_System_String_System_Object__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Single@,System.Collections.Generic.Dictionary{System.String,System.Object})
   name.vb: PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ByRef Single, Dictionary(Of String, Object))
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, ref System.Single, System.Collections.Generic.Dictionary<System.String, System.Object>)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, ByRef System.Single, System.Collections.Generic.Dictionary(Of System.String, System.Object))
-  nameWithType: CompModularizationWeapon.PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ref Single, Dictionary<String, Object>)
+  nameWithType: CompModularizationWeapon.PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ref Single, Dictionary<string, object?>)
   nameWithType.vb: CompModularizationWeapon.PreStatWorker_FinalizeValue(StatWorker, StatRequest, Boolean, ByRef Single, Dictionary(Of String, Object))
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue*
   name: PreStatWorker_FinalizeValue
@@ -787,13 +787,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_FinalizeValue
   nameWithType: CompModularizationWeapon.PreStatWorker_FinalizeValue
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,Verse.ToStringNumberSense,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name: PreStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, Dictionary<String, Object>)
+  name: PreStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, Dictionary<string, object?>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreStatWorker_GetExplanationUnfinalized_RimWorld_StatWorker_RimWorld_StatRequest_Verse_ToStringNumberSense_System_Collections_Generic_Dictionary_System_String_System_Object__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,Verse.ToStringNumberSense,System.Collections.Generic.Dictionary{System.String,System.Object})
   name.vb: PreStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, Dictionary(Of String, Object))
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, Verse.ToStringNumberSense, System.Collections.Generic.Dictionary<System.String, System.Object>)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, Verse.ToStringNumberSense, System.Collections.Generic.Dictionary(Of System.String, System.Object))
-  nameWithType: CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, Dictionary<String, Object>)
+  nameWithType: CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, Dictionary<string, object?>)
   nameWithType.vb: CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized(StatWorker, StatRequest, ToStringNumberSense, Dictionary(Of String, Object))
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized*
   name: PreStatWorker_GetExplanationUnfinalized
@@ -803,13 +803,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized
   nameWithType: CompModularizationWeapon.PreStatWorker_GetExplanationUnfinalized
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker,RimWorld.StatDef,System.Single,Verse.ToStringNumberSense,RimWorld.StatRequest,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name: PreStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, Dictionary<String, Object>)
+  name: PreStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, Dictionary<string, object?>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreStatWorker_GetStatDrawEntryLabel_RimWorld_StatWorker_RimWorld_StatDef_System_Single_Verse_ToStringNumberSense_RimWorld_StatRequest_System_Boolean_System_Collections_Generic_Dictionary_System_String_System_Object__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker,RimWorld.StatDef,System.Single,Verse.ToStringNumberSense,RimWorld.StatRequest,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Object})
   name.vb: PreStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, Dictionary(Of String, Object))
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker, RimWorld.StatDef, System.Single, Verse.ToStringNumberSense, RimWorld.StatRequest, System.Boolean, System.Collections.Generic.Dictionary<System.String, System.Object>)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(RimWorld.StatWorker, RimWorld.StatDef, System.Single, Verse.ToStringNumberSense, RimWorld.StatRequest, System.Boolean, System.Collections.Generic.Dictionary(Of System.String, System.Object))
-  nameWithType: CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, Dictionary<String, Object>)
+  nameWithType: CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, Dictionary<string, object?>)
   nameWithType.vb: CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel(StatWorker, StatDef, Single, ToStringNumberSense, StatRequest, Boolean, Dictionary(Of String, Object))
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel*
   name: PreStatWorker_GetStatDrawEntryLabel
@@ -819,13 +819,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel
   nameWithType: CompModularizationWeapon.PreStatWorker_GetStatDrawEntryLabel
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Object})
-  name: PreStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Dictionary<String, Object>)
+  name: PreStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Dictionary<string, object?>)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreStatWorker_GetValueUnfinalized_RimWorld_StatWorker_RimWorld_StatRequest_System_Boolean_System_Collections_Generic_Dictionary_System_String_System_Object__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(RimWorld.StatWorker,RimWorld.StatRequest,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Object})
   name.vb: PreStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Dictionary(Of String, Object))
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, System.Collections.Generic.Dictionary<System.String, System.Object>)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(RimWorld.StatWorker, RimWorld.StatRequest, System.Boolean, System.Collections.Generic.Dictionary(Of System.String, System.Object))
-  nameWithType: CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Dictionary<String, Object>)
+  nameWithType: CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Dictionary<string, object?>)
   nameWithType.vb: CompModularizationWeapon.PreStatWorker_GetValueUnfinalized(StatWorker, StatRequest, Boolean, Dictionary(Of String, Object))
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized*
   name: PreStatWorker_GetValueUnfinalized
@@ -835,13 +835,13 @@ references:
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreStatWorker_GetValueUnfinalized
   nameWithType: CompModularizationWeapon.PreStatWorker_GetValueUnfinalized
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
-  name: PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  name: PreUpdateNode(CompChildNodeProccesser, Dictionary<string, object?>, Dictionary<String, Thing>, out Boolean, out Boolean)
   href: api/RW_ModularizationWeapon.CompModularizationWeapon.html#RW_ModularizationWeapon_CompModularizationWeapon_PreUpdateNode_CompChildNodeProccesser_System_Collections_Generic_Dictionary_System_String_System_Object__System_Collections_Generic_Dictionary_System_String_Verse_Thing__System_Boolean__System_Boolean__
   commentId: M:RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,Verse.Thing},System.Boolean@,System.Boolean@)
   name.vb: PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
   fullName: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary<System.String, System.Object>, System.Collections.Generic.Dictionary<System.String, Verse.Thing>, out System.Boolean, out System.Boolean)
   fullName.vb: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, System.Collections.Generic.Dictionary(Of System.String, System.Object), System.Collections.Generic.Dictionary(Of System.String, Verse.Thing), ByRef System.Boolean, ByRef System.Boolean)
-  nameWithType: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary<String, Object>, Dictionary<String, Thing>, out Boolean, out Boolean)
+  nameWithType: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary<string, object?>, Dictionary<String, Thing>, out Boolean, out Boolean)
   nameWithType.vb: CompModularizationWeapon.PreUpdateNode(CompChildNodeProccesser, Dictionary(Of String, Object), Dictionary(Of String, Thing), ByRef Boolean, ByRef Boolean)
 - uid: RW_ModularizationWeapon.CompModularizationWeapon.PreUpdateNode*
   name: PreUpdateNode

@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using RW_ModularizationWeapon.Tools;
 using RW_NodeTree;
+using System;
 using System.Collections.Generic;
 using Verse;
 
@@ -11,18 +12,19 @@ namespace RW_ModularizationWeapon
 
 
         #region Multiplier
-        public FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string childNodeIdForVerbProperties)
+        public FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string? childNodeIdForVerbProperties)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
-            WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
-            CompModularizationWeapon currentComp = ChildNodes[childNodeIdForVerbProperties];
-            NodeContainer container = ChildNodes;
+            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            CompModularizationWeapon? currentComp = childNodeIdForVerbProperties != null ? container[childNodeIdForVerbProperties] : null;
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                CompModularizationWeapon? comp = container[i];
+                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && properties != null && comp.Validity && id != childNodeIdForVerbProperties)
                 {
                     FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
@@ -52,14 +54,14 @@ namespace RW_ModularizationWeapon
 
                     FieldReaderDgitList<VerbProperties> mul = comp.Props.verbPropertiesMultiplier - 1f;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
-                    mul = mul * cache + 1;
+                    mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
                     results *= mul;
                     results.DefaultValue = 1;
 
                     mul = comp.VerbPropertiesMultiplier(null) - 1;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
-                    mul = mul * cache + 1;
+                    mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
                     results *= mul;
                     results.DefaultValue = 1;
@@ -72,19 +74,20 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public FieldReaderDgitList<Tool> ToolsMultiplier(string childNodeIdForTool)
+        public FieldReaderDgitList<Tool> ToolsMultiplier(string? childNodeIdForTool)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
-            WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
-            CompModularizationWeapon currentComp = ChildNodes[childNodeIdForTool];
-            NodeContainer container = ChildNodes;
+            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
+            CompModularizationWeapon? currentComp = childNodeIdForTool != null ? container[childNodeIdForTool] : null;
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                if (comp != null && comp.Validity && id != childNodeIdForTool)
+                CompModularizationWeapon? comp = container[i];
+                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                if (comp != null && properties != null && comp.Validity && id != childNodeIdForTool)
                 {
                     FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
 
@@ -113,14 +116,14 @@ namespace RW_ModularizationWeapon
 
                     FieldReaderDgitList<Tool> mul = comp.Props.toolsMultiplier - 1f;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
-                    mul = mul * cache + 1;
+                    mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
                     results *= mul;
                     results.DefaultValue = 1;
 
                     mul = comp.ToolsMultiplier(null) - 1;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
-                    mul = mul * cache + 1;
+                    mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
                     results *= mul;
                     results.DefaultValue = 1;
@@ -133,26 +136,27 @@ namespace RW_ModularizationWeapon
 
         public FieldReaderDgitList<CompProperties> CompPropertiesMultiplier()
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             FieldReaderDgitList<CompProperties> results = new FieldReaderDgitList<CompProperties>();
-            NodeContainer container = ChildNodes;
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
                 string id = container[(uint)i];
-                CompModularizationWeapon comp = container[i];
-                WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                if (comp != null && comp.Validity)
+                CompModularizationWeapon? comp = container[i];
+                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                if (comp != null && properties != null && comp.Validity)
                 {
                     FieldReaderDgitList<CompProperties> cache = comp.Props.compPropertiesMultiplier - 1;
                     if (cache.HasDefaultValue) cache.DefaultValue--;
-                    cache = cache * properties.compPropertiesMultiplierAffectHorizon + 1;
+                    cache = (cache * properties.compPropertiesMultiplierAffectHorizon + 1) ?? cache;
                     cache.DefaultValue = 1;
                     results *= cache;
                     results.DefaultValue = 1;
 
                     cache = comp.CompPropertiesMultiplier() - 1;
                     if (cache.HasDefaultValue) cache.DefaultValue--;
-                    cache = cache * properties.compPropertiesMultiplierAffectHorizon + 1;
+                    cache = (cache * properties.compPropertiesMultiplierAffectHorizon + 1) ?? cache;
                     cache.DefaultValue = 1;
                     results *= cache;
                     results.DefaultValue = 1;
@@ -162,22 +166,23 @@ namespace RW_ModularizationWeapon
             return results;
         }
 
-        public float GetStatMultiplier(StatDef statDef, string childNodeIdForState)
+        public float GetStatMultiplier(StatDef statDef, string? childNodeIdForState)
         {
             lock (statMultiplierCache)
             {
-                WeaponAttachmentProperties current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForState);
-                CompModularizationWeapon currentComp = ChildNodes[childNodeIdForState];
-                NodeContainer container = ChildNodes;
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForState);
+                CompModularizationWeapon? currentComp = childNodeIdForState != null ? container[childNodeIdForState] : null;
                 if (!statMultiplierCache.TryGetValue((statDef, childNodeIdForState), out float result))
                 {
                     result = 1;
                     for (int i = 0; i < container.Count; i++)
                     {
                         string id = container[(uint)i];
-                        CompModularizationWeapon comp = container[i];
-                        WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                        if (comp != null && comp.Validity && id != childNodeIdForState)
+                        CompModularizationWeapon? comp = container[i];
+                        WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                        if (comp != null && properties != null && comp.Validity && id != childNodeIdForState)
                         {
                             float cache = properties.statMultiplierAffectHorizon.GetStatValueFromList(statDef, properties.statMultiplierAffectHorizonDefaultValue);
 

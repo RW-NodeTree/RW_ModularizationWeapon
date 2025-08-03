@@ -11,7 +11,7 @@ namespace RW_ModularizationWeapon.UI
 {
     public class StateInfoTags
     {
-        public StateInfoTags(float InitDrawSize, Thing thing, Precept_ThingStyle precept = null)
+        public StateInfoTags(float InitDrawSize, Thing thing, Precept_ThingStyle? precept = null)
         {
             this.thing = thing;
             Dialog_InfoCard infoCard = new Dialog_InfoCard(thing, precept);
@@ -20,7 +20,7 @@ namespace RW_ModularizationWeapon.UI
         }
 
 
-        public StateInfoTags(float InitDrawSize, Def onlyDef, Precept_ThingStyle precept = null)
+        public StateInfoTags(float InitDrawSize, Def onlyDef, Precept_ThingStyle? precept = null)
         {
             Dialog_InfoCard infoCard = new Dialog_InfoCard(onlyDef, precept);
             Dialog_InfoCard_FillCard.Invoke(infoCard, new object[] { new Rect(0, 0, (InitDrawSize + 24) * 2, 0) });
@@ -28,7 +28,7 @@ namespace RW_ModularizationWeapon.UI
         }
 
 
-        public StateInfoTags(float InitDrawSize, ThingDef thingDef, ThingDef stuff, Precept_ThingStyle precept = null)
+        public StateInfoTags(float InitDrawSize, ThingDef thingDef, ThingDef stuff, Precept_ThingStyle? precept = null)
         {
             Dialog_InfoCard infoCard = new Dialog_InfoCard(thingDef, stuff, precept);
             Dialog_InfoCard_FillCard.Invoke(infoCard, new object[] { new Rect(0, 0, (InitDrawSize + 24) * 2, 0) });
@@ -36,7 +36,7 @@ namespace RW_ModularizationWeapon.UI
         }
 
 
-        public StateInfoTags(float InitDrawSize, RoyalTitleDef titleDef, Faction faction, Pawn pawn = null)
+        public StateInfoTags(float InitDrawSize, RoyalTitleDef titleDef, Faction faction, Pawn? pawn = null)
         {
             Dialog_InfoCard infoCard = new Dialog_InfoCard(titleDef, faction, pawn);
             Dialog_InfoCard_FillCard.Invoke(infoCard, new object[] { new Rect(0, 0, (InitDrawSize + 24) * 2, 0) });
@@ -76,7 +76,7 @@ namespace RW_ModularizationWeapon.UI
             }
         }
 
-        public void Draw(Rect rect, Action<int, StatRequest> clickedCallback = null, Action<int, StatRequest> mousedOverCallback = null)
+        public void Draw(Rect rect, Action<int, StatRequest>? clickedCallback = null, Action<int, StatRequest>? mousedOverCallback = null)
         {
             if(statInfos != null)
             {
@@ -167,7 +167,7 @@ namespace RW_ModularizationWeapon.UI
         private static readonly FieldInfo StatsReportUtility_cachedDrawEntries = typeof(StatsReportUtility).GetField("cachedDrawEntries", BindingFlags.Static | BindingFlags.NonPublic);
         private static readonly MethodInfo Dialog_InfoCard_FillCard = typeof(Dialog_InfoCard).GetMethod("FillCard", BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(Rect) }, null);
         private readonly List<(bool, StatDrawEntry)> statInfos = new List<(bool, StatDrawEntry)>();
-        private Thing thing;
+        private Thing? thing;
         private Vector2 scrollView;
         private float infoCardMaxHeight = 0;
     }

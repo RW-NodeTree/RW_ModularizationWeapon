@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon.AI
                 {
                     job.targetB = port.GetTarget();
                     LocalTargetInfo targetB = TargetB;
-                    return pawn.Reserve(targetA, job, 1, -1, null, errorOnFailed) && pawn.Reserve(targetB, job, 1, -1, null, errorOnFailed) && ((CompModularizationWeapon)targetB.Thing) != null;
+                    return pawn.Reserve(targetA, job, 1, -1, null, errorOnFailed) && pawn.Reserve(targetB, job, 1, -1, null, errorOnFailed) && ((CompModularizationWeapon?)targetB.Thing) != null;
                 }
             }
             return false;
@@ -43,7 +43,7 @@ namespace RW_ModularizationWeapon.AI
 
             this.FailOnDestroyedNullOrForbidden(TargetIndex.B);
             this.FailOnBurningImmobile(TargetIndex.B);
-            CompModularizationWeapon comp = TargetB.Thing;
+            CompModularizationWeapon? comp = TargetB.Thing;
             if (comp != null)
             {
                 if (!comp.IsSwapRoot) this.EndJobWith(JobCondition.Incompletable);

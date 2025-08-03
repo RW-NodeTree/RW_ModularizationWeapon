@@ -30,7 +30,7 @@ namespace RW_ModularizationWeapon
                 }
                 case LoadSaveMode.LoadingVars:
                 {
-                    XmlNode xmlNode = Scribe.loader?.curXmlParent?["selestedWeapon"];
+                    XmlNode? xmlNode = Scribe.loader?.curXmlParent?["selestedWeapon"];
                     if (xmlNode == null) return;
                     if (xmlNode.ChildNodes.Count == 1 && xmlNode.FirstChild.NodeType == XmlNodeType.Text) Scribe_References.Look(ref selestedWeapon, "selestedWeapon");
                     else Scribe_Deep.Look(ref selestedWeapon, "selestedWeapon");
@@ -53,7 +53,7 @@ namespace RW_ModularizationWeapon
             {
                 yield return c;
             }
-            string disable = null;
+            string? disable = null;
             if (selPawn.WorkTagIsDisabled(WorkTags.ManualDumb)) disable = "CanNotDoingManualDumbWork".Translate("StartModifyWeapon".Translate());
             if (!(parent.TryGetComp<CompPowerTrader>()?.PowerOn ?? true)) disable = "NoPower".Translate("StartModifyWeapon".Translate());
             if (!(parent.TryGetComp<CompRefuelable>()?.HasFuel ?? true)) disable = "NoFuel".Translate("StartModifyWeapon".Translate());
@@ -71,7 +71,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void SetTarget(ThingDef selectedDef, CustomWeapon customWeapon=null)
+        public void SetTarget(ThingDef? selectedDef, CustomWeapon? customWeapon = null)
         {
             if (selectedDef == null)
             {
@@ -82,7 +82,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public void SetTarget(CompModularizationWeapon selectedWeapon, CustomWeapon customWeapon=null)
+        public void SetTarget(CompModularizationWeapon? selectedWeapon, CustomWeapon? customWeapon = null)
         {
             if (selectedWeapon == null)
             {
@@ -99,9 +99,9 @@ namespace RW_ModularizationWeapon
         public LocalTargetInfo GetTarget() => selestedWeapon;
 
 
-        public CompModularizationWeapon GetTargetCompModularizationWeapon() => selestedWeapon;
+        public CompModularizationWeapon? GetTargetCompModularizationWeapon() => selestedWeapon;
 
-        private Thing selestedWeapon = null;
+        private Thing? selestedWeapon = null;
     }
 
     /// <summary>

@@ -7,6 +7,8 @@
 		<AssemblyName>RW_ModularizationWeapon</AssemblyName>
 		<TargetFramework>net48</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
 		<Configurations>DebugV13;ReleaseV13;ReleaseV13WithDoc;DebugV14;ReleaseV14;ReleaseV14WithDoc;DebugV15;ReleaseV15;ReleaseV15WithDoc;DebugV16;ReleaseV16;ReleaseV16WithDoc</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">

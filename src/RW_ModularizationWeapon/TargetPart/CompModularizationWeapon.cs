@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using RW_ModularizationWeapon.Tools;
+using RW_NodeTree;
 using Verse;
 
 namespace RW_ModularizationWeapon
@@ -21,6 +23,8 @@ namespace RW_ModularizationWeapon
 
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
                 //only allow thing not have parent or spawned?
@@ -33,13 +37,13 @@ namespace RW_ModularizationWeapon
                     //targetOwner?.Remove(targetInfo.Thing);
                     //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
                     targetPartsWithId.TryGetValue(id, out currentTargetInfo);
-                    CompModularizationWeapon part = currentTargetInfo.Thing;
+                    CompModularizationWeapon? part = currentTargetInfo.Thing;
                     if (part != null)
                     {
                         part.occupiers = null;
                         if (!swap) part.UpdateTargetPartVNode();
                     }
-                    Thing prevPart = ChildNodes[id];
+                    Thing? prevPart = container[id];
                     if (targetInfo.Thing == prevPart && !swap) targetPartsWithId.Remove(id);
                     else
                     {
@@ -58,9 +62,11 @@ namespace RW_ModularizationWeapon
 
         public LocalTargetInfo GetTargetPart(string id)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
-                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = ChildNodes[id];
+                if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = container[id];
                 return result;
             }
         }
@@ -79,16 +85,18 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForCurrentPart(VNode node)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (currentPartAttachmentPropertiesCache)
             {
                 currentPartVNode = node;
                 foreach(string id in PartIDs)
                 {
-                    Thing target = ChildNodes[id];
+                    Thing? target = container[id];
                     if(target != null)
                     {
                         VNode child = new VNode(id, target.def.defName, node);
-                        CompModularizationWeapon comp = target;
+                        CompModularizationWeapon? comp = target;
                         comp?.AppendVNodeForCurrentPart(child);
                     }
                 }
@@ -115,11 +123,11 @@ namespace RW_ModularizationWeapon
                 targetPartVNode = node;
                 foreach(string id in PartIDs)
                 {
-                    Thing target = GetTargetPart(id).Thing;
+                    Thing? target = GetTargetPart(id).Thing;
                     if(target != null)
                     {
                         VNode child = new VNode(id, target.def.defName, node);
-                        CompModularizationWeapon comp = target;
+                        CompModularizationWeapon? comp = target;
                         comp?.AppendVNodeForTargetPart(child);
                     }
                 }
@@ -129,48 +137,54 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
                 if(IsSwapRoot)
                 {
                     swap = true;
                     NeedUpdate = true;
-                    NodeProccesser.UpdateNode();
+                    container.Comp.UpdateNode();
                 }
             }
         }
 
         private void Private_ClearTargetPart()
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
-                foreach (CompModularizationWeapon comp in ChildNodes.Values)
+                foreach (CompModularizationWeapon? comp in container.Values)
                 {
                     comp?.Private_ClearTargetPart();
                 }
                 foreach (LocalTargetInfo info in targetPartsWithId.Values)
                 {
-                    ((CompModularizationWeapon)info.Thing)?.Private_ClearTargetPart();
+                    ((CompModularizationWeapon?)info.Thing)?.Private_ClearTargetPart();
                 }
                 if (targetPartsWithId.Count > 0)
                 {
                     List<string> ids = new List<string>(targetPartsWithId.Keys);
-                    foreach(string id in ids) SetTargetPart(id, ChildNodes[id]);
+                    foreach(string id in ids) SetTargetPart(id, container[id]);
                 }
             }
         }
         public void ClearTargetPart() => RootPart.Private_ClearTargetPart();
 
 
-        public IEnumerator<(string, Thing, WeaponAttachmentProperties)> GetEnumerator()
+        public IEnumerator<(string, Thing?, WeaponAttachmentProperties)> GetEnumerator()
         {
-            List<(string, Thing, WeaponAttachmentProperties)> result = new List<(string, Thing, WeaponAttachmentProperties)>(PartIDs.Count);
-            lock (ChildNodes)
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            List<(string, Thing?, WeaponAttachmentProperties)> result = new List<(string, Thing?, WeaponAttachmentProperties)>(PartIDs.Count);
+            lock (container)
             {
                 foreach (string id in PartIDs)
                 {
-                    WeaponAttachmentProperties properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                    if (properties != null) result.Add((id, ChildNodes[id], properties));
+                    WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                    if (properties != null) result.Add((id, container[id], properties));
                 }
             }
             return result.GetEnumerator();

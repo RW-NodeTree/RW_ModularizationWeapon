@@ -9,37 +9,37 @@ namespace RW_ModularizationWeapon
 {
     public partial class CompModularizationWeapon
     {
-        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string childNodeIdForVerbProperties)
+        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
-            properties *= VerbPropertiesMultiplier(childNodeIdForVerbProperties);
-            properties += VerbPropertiesOffseter(childNodeIdForVerbProperties);
-            properties &= VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties);
-            properties |= VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties);
+            properties = (properties * VerbPropertiesMultiplier(childNodeIdForVerbProperties)) ?? properties;
+            properties = (properties + VerbPropertiesOffseter(childNodeIdForVerbProperties)) ?? properties;
+            properties = (properties & VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties)) ?? properties;
+            properties = (properties | VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties)) ?? properties;
             VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
             .ForEach(x =>
             {
                 //Log.Message(x.ToString());
-                properties &= x;
-                properties |= x;
+                properties = (properties & x) ?? properties;
+                properties = (properties | x) ?? properties;
             });
             return properties;
         }
 
 
-        internal Tool ToolAfterAffect(Tool tool, string childNodeIdForTool)
+        internal Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool)
         {
             //tool = (Tool)tool.SimpleCopy();
-            tool *= ToolsMultiplier(childNodeIdForTool);
-            tool += ToolsOffseter(childNodeIdForTool);
-            tool &= ToolsBoolAndPatch(childNodeIdForTool);
-            tool |= ToolsBoolOrPatch(childNodeIdForTool);
+            tool = (tool * ToolsMultiplier(childNodeIdForTool)) ?? tool;
+            tool = (tool + ToolsOffseter(childNodeIdForTool)) ?? tool;
+            tool = (tool & ToolsBoolAndPatch(childNodeIdForTool)) ?? tool;
+            tool = (tool | ToolsBoolOrPatch(childNodeIdForTool)) ?? tool;
             ToolsObjectPatch(childNodeIdForTool)
             .ForEach(x =>
             {
                 //Log.Message(x.ToString());
-                tool &= x;
-                tool |= x;
+                tool = (tool & x) ?? tool;
+                tool = (tool | x) ?? tool;
             });
             return tool;
         }
@@ -52,7 +52,8 @@ namespace RW_ModularizationWeapon
                 GetOrGenCurrentPartAttachmentProperties();
                 GetOrGenTargetPartAttachmentProperties();
                 int index = 0;
-                NodeContainer container = ChildNodes;
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 List<Task<VerbPropertiesRegiestInfo>> tasks = new List<Task<VerbPropertiesRegiestInfo>>();
                 List<VerbProperties> verbPropertiesCache = this.verbPropertiesCache.GetOrNewWhenNull(ownerType, () => new List<VerbProperties>());
                 if (!parent.def.Verbs.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, parent) == null)
@@ -105,11 +106,11 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing child = container[i];
-                    WeaponAttachmentProperties attachmentProperties = CurrentPartWeaponAttachmentPropertiesById(id);
+                    WeaponAttachmentProperties? attachmentProperties = CurrentPartWeaponAttachmentPropertiesById(id);
                     if (!internal_NotUseVerbProperties(child, attachmentProperties))
                     {
-                        CompModularizationWeapon comp = child;
-                        List<VerbPropertiesRegiestInfo> childInfos = comp?.NodeProccesser.GetRegiestedNodeVerbPropertiesInfos(ownerType);
+                        CompModularizationWeapon? comp = child;
+                        List<VerbPropertiesRegiestInfo>? childInfos = comp?.NodeProccesser?.GetRegiestedNodeVerbPropertiesInfos(ownerType);
                         List<VerbProperties> verbProperties;
                         if (childInfos != null)
                         {
@@ -169,7 +170,8 @@ namespace RW_ModularizationWeapon
                 GetOrGenCurrentPartAttachmentProperties();
                 GetOrGenTargetPartAttachmentProperties();
                 int index = 0;
-                NodeContainer container = ChildNodes;
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 List<Task<VerbToolRegiestInfo>> tasks = new List<Task<VerbToolRegiestInfo>>();
                 List<Tool> toolsCache = this.toolsCache.GetOrNewWhenNull(ownerType, () => new List<Tool>());
                 if (!parent.def.tools.NullOrEmpty() && CompChildNodeProccesser.GetSameTypeVerbOwner(ownerType, parent) == null)
@@ -201,7 +203,7 @@ namespace RW_ModularizationWeapon
                         VerbToolRegiestInfo prop = result[i];
                         tasks.Add(Task.Run(() =>
                         {
-                            prop.afterCobvertTool = (j < toolsCache.Count) ? toolsCache[j] : ToolAfterAffect(
+                            prop.afterConvertTool = (j < toolsCache.Count) ? toolsCache[j] : ToolAfterAffect(
                                 prop.berforConvertTool,
                                 null
                                 );
@@ -217,16 +219,16 @@ namespace RW_ModularizationWeapon
                 {
                     string id = container[(uint)i];
                     Thing child = container[i];
-                    WeaponAttachmentProperties attachmentProperties = CurrentPartWeaponAttachmentPropertiesById(id);
+                    WeaponAttachmentProperties? attachmentProperties = CurrentPartWeaponAttachmentPropertiesById(id);
                     if (!internal_NotUseTools(child, attachmentProperties))
                     {
-                        CompModularizationWeapon comp = child;
-                        List<VerbToolRegiestInfo> childInfos = comp?.NodeProccesser.GetRegiestedNodeVerbToolInfos(ownerType);
+                        CompModularizationWeapon? comp = child;
+                        List<VerbToolRegiestInfo>? childInfos = comp?.NodeProccesser?.GetRegiestedNodeVerbToolInfos(ownerType);
                         List<Tool> tools;
                         if (childInfos != null)
                         {
                             tools = new List<Tool>(childInfos.Count);
-                            foreach (VerbToolRegiestInfo info in childInfos) tools.Add(info.afterCobvertTool);
+                            foreach (VerbToolRegiestInfo info in childInfos) tools.Add(info.afterConvertTool);
                         }
                         else
                         {
@@ -271,7 +273,7 @@ namespace RW_ModularizationWeapon
                 foreach (Task<VerbToolRegiestInfo> info in tasks) result.Add(info.Result);
                 toolsCache.Clear();
                 toolsCache.Capacity = result.Capacity;
-                foreach (VerbToolRegiestInfo info in result) toolsCache.Add(info.afterCobvertTool);
+                foreach (VerbToolRegiestInfo info in result) toolsCache.Add(info.afterConvertTool);
                 return result;
             }
         }

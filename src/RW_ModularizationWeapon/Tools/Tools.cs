@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -8,18 +10,19 @@ namespace RW_ModularizationWeapon.Tools
 {
     public static class ToolsFunction
     {
+        private static readonly ConcurrentDictionary<Type, FieldInfo[]> cachedFields = new ConcurrentDictionary<Type, FieldInfo[]>();
         public static TV GetOrNewWhenNull<TK,TV>(this Dictionary<TK,TV> dictonary,TK key, Func<TV> funcCreate)
         {
-            TV result = default(TV);
             lock (dictonary)
             {
-                if (dictonary != null && !dictonary.TryGetValue(key, out result))
+                if (!dictonary.TryGetValue(key, out TV? result))
                 {
                     result = funcCreate();
                     dictonary.Add(key, result);
+                    return result;
                 }
+                return result;
             }
-            return result;
         }
         public static void LogAllField(this object obj)
         {
@@ -33,5 +36,8 @@ namespace RW_ModularizationWeapon.Tools
             }
             Log.Message(result.ToString());
         }
+
+        public static FieldInfo[] GetCachedInstanceFields(this Type type)
+            => cachedFields.GetOrAdd(type, (x) => x.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public));
     }
 }

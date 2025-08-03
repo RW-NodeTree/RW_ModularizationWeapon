@@ -10,7 +10,7 @@ namespace RW_ModularizationWeapon.Tools
 {
     public class VNode : IEnumerable<VNode>
     {
-        public VNode(string id, string defName, VNode parent = null)
+        public VNode(string? id, string? defName, VNode? parent = null)
         {
             this.id = id;
             this.defName = defName;
@@ -18,15 +18,15 @@ namespace RW_ModularizationWeapon.Tools
             if (parent != null) parent[id] = this;
         }
 
-        public VNode this[string id]
+        public VNode? this[string? id]
         {
-            get => child.TryGetValue(id);
-            private set => child.SetOrAdd(id, value);
+            get => child!.TryGetValue(id);
+            private set => child!.SetOrAdd(id, value);
         }
 
-        public readonly string id = null;
-        public readonly string defName = null;
-        public readonly VNode parent = null;
+        public readonly string? id = null;
+        public readonly string? defName = null;
+        public readonly VNode? parent = null;
         private readonly Dictionary<string, VNode> child = new Dictionary<string, VNode>();
 
         public IEnumerator<VNode> GetEnumerator()
@@ -57,7 +57,7 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public IEnumerable<string> AllAnnouncedTargetId
+        public IEnumerable<string?> AllAnnouncedTargetId
         {
             get
             {
@@ -144,7 +144,7 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public string TargetId => selecters.NullOrEmpty() ? null : selecters[selecters.Count - 1].TargetId;
+        public string? TargetId => selecters.NullOrEmpty() ? null : selecters[selecters.Count - 1].TargetId;
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
@@ -185,7 +185,7 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public uint Match(VNode node)
+        public uint Match(VNode? node)
         {
             uint result = 0;
             for(int i = selecters.Count - 1; i >= 0; i--)
@@ -229,7 +229,7 @@ namespace RW_ModularizationWeapon.Tools
             }
         }
 
-        public string TargetId => id;
+        public string? TargetId => id;
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
@@ -355,8 +355,8 @@ namespace RW_ModularizationWeapon.Tools
         } 
 
         private bool notFlag = false;
-        private string id = null;
-        private string defName = null;
+        private string? id = null;
+        private string? defName = null;
         private List<QueryGroup> childenGroups = new List<QueryGroup>();
 
     }

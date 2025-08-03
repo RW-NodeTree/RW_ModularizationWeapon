@@ -18,11 +18,12 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if(cachedUITex == null && !UITexPath.NullOrEmpty()) cachedUITex = ContentFinder<Texture2D>.Get(UITexPath) ?? BaseContent.BadTex;
+                if (cachedUITex == null && !UITexPath.NullOrEmpty()) cachedUITex = ContentFinder<Texture2D>.Get(UITexPath);
+                cachedUITex ??= BaseContent.BadTex;
                 return cachedUITex;
             }
         }
-        public string Name => name ?? id;
+        public string? Name => name ?? id;
 
 
         public Matrix4x4 Transfrom(uint TextureSizeFactor)
@@ -182,7 +183,7 @@ namespace RW_ModularizationWeapon
 
         public virtual void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            HashSet<string> hashSet = null;
+            HashSet<string>? hashSet = null;
             if (xmlRoot.ChildNodes.Count > 1)
             {
                 hashSet = new HashSet<string>();
@@ -240,11 +241,11 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// attach point unique id
         /// </summary>
-        public string id;
+        public string? id;
         /// <summary>
         /// attach point name
         /// </summary>
-        public string name;
+        public string? name;
         /// <summary>
         /// what thing can attach on this attach point
         /// </summary>
@@ -252,7 +253,7 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// defultThing when create part instance, if `CompProperties_ModularizationWeapon.setRandomPartWhenCreate` is `false` or create by crafting
         /// </summary>
-        public ThingDef defultThing = null;
+        public ThingDef? defultThing = null;
         /// <summary>
         /// random part weight of this attach point
         /// </summary>
@@ -276,7 +277,7 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// attach point ICON textrue path
         /// </summary>
-        public string UITexPath;
+        public string? UITexPath;
         /// <summary>
         /// if it's **`true`**, it's able to set empty part on this attach point
         /// </summary>
@@ -438,7 +439,7 @@ namespace RW_ModularizationWeapon
         #endregion
 
 
-        private Texture2D cachedUITex = null;
+        private Texture2D? cachedUITex = null;
         protected static FieldInfo[] allFields = typeof(WeaponAttachmentProperties).GetFields(BindingFlags.Public | BindingFlags.Instance);
     }
 

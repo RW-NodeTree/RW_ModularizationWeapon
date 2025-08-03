@@ -17,13 +17,13 @@ namespace RW_ModularizationWeapon
             StatDef statDef = StatWorker_stat(statWorker);
             if ((statDef.category == StatCategoryDefOf.Weapon || statDef.category == StatCategoryDefOf.Weapon_Ranged) && statWorker.GetType() != CombatExtended_StatWorker_Magazine)
             {
-                CompEquippable eq = req.Thing.TryGetComp<CompEquippable>();
-                CompChildNodeProccesser proccesser = req.Thing;
+                CompEquippable? eq = req.Thing?.TryGetComp<CompEquippable>();
+                CompChildNodeProccesser? proccesser = req.Thing;
                 if (eq != null && proccesser != null)
                 {
                     StatRequest cache = req;
                     Verb verb = eq.VerbTracker.PrimaryVerb;
-                    Thing thing = proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1;
+                    Thing thing = proccesser.GetBeforeConvertThingWithVerb(typeof(CompEquippable), verb).Item1;
                     //Log.Message($"{req.Thing} -> {verb} -> {thing}");
                     if (thing != null)
                     {
@@ -39,59 +39,66 @@ namespace RW_ModularizationWeapon
         }
 
 
-        private void StatWorkerPerfix(Dictionary<string, object> stats)
+        private void StatWorkerPerfix(Dictionary<string, object?> stats)
         {
             CompEquippable eq = parent.GetComp<CompEquippable>();
             if (eq != null)
             {
                 //if (Prefs.DevMode) Log.Message(" prefix before clear: parent.def.Verbs0=" + parent.def.Verbs.Count + "; parent.def.tools0=" + parent.def.tools.Count + ";\n");
                 List<Verb> verbs = eq.AllVerbs;
-                List<VerbProperties> cachedVerbs = (from x in verbs where x.tool == null && x.verbProps != null select x.verbProps).ToList();
-                List<Tool> cachedTools = (from x in verbs where x.tool != null select x.tool).ToList();
 
                 ThingDef_verbs(parent.def) = ThingDef_verbs(parent.def) ?? new List<VerbProperties>();
-                Stack<List<VerbProperties>> stackVerb = (Stack<List<VerbProperties>>)stats.GetOrNewWhenNull("CompModularizationWeapon_verbs", () => new Stack<List<VerbProperties>>());
-                stackVerb.Push(ThingDef_verbs(parent.def));
-                ThingDef_verbs(parent.def) = cachedVerbs;
+                Stack<List<VerbProperties>>? stackVerb = stats.GetOrNewWhenNull("CompModularizationWeapon_verbs", () => new Stack<List<VerbProperties>>()) as Stack<List<VerbProperties>>;
+                if(stackVerb != null)
+                {
+                    stackVerb.Push(ThingDef_verbs(parent.def)!);
+                    ThingDef_verbs(parent.def) = (from x in verbs where x.tool == null && x.verbProps != null select x.verbProps).ToList();
+                }
 
-                Stack<List<Tool>> stackTool = (Stack<List<Tool>>)stats.GetOrNewWhenNull("CompModularizationWeapon_tools", () => new Stack<List<Tool>>());
-                stackTool.Push(parent.def.tools);
-                parent.def.tools = cachedTools;
+                Stack<List<Tool>>? stackTool = stats.GetOrNewWhenNull("CompModularizationWeapon_tools", () => new Stack<List<Tool>>()) as Stack<List<Tool>>;
+                if(stackTool != null)
+                {
+                    stackTool.Push(parent.def.tools);
+                    parent.def.tools = (from x in verbs where x.tool != null select x.tool).ToList();
+                }
                 //if (Prefs.DevMode) Log.Message(" prefix after change: parent.def.Verbs.Count=" + parent.def.Verbs.Count + "; parent.def.tools.Count=" + parent.def.tools.Count + ";\n");
             }
-            Stack<List<CompProperties>> stackComp = (Stack<List<CompProperties>>)stats.GetOrNewWhenNull("CompModularizationWeapon_comps", () => new Stack<List<CompProperties>>());
-            stackComp.Push(parent.def.comps);
-            List<ThingComp> allComps = parent.AllComps;
-            parent.def.comps = (from x in allComps where x.props != null select x.props).ToList();
+            Stack<List<CompProperties>>? stackComp = stats.GetOrNewWhenNull("CompModularizationWeapon_comps", () => new Stack<List<CompProperties>>()) as Stack<List<CompProperties>>;
+            if(stackComp != null)
+            {
+                stackComp.Push(parent.def.comps);
+                List<ThingComp> allComps = parent.AllComps;
+                parent.def.comps = (from x in allComps where x.props != null select x.props).ToList();
+            }
         }
 
 
-        private void StatWorkerFinalfix(Dictionary<string, object> stats)
+        private void StatWorkerFinalfix(Dictionary<string, object?> stats)
         {
-            object obj;
+            object? obj;
             CompEquippable eq = parent.GetComp<CompEquippable>();
             if (eq != null)
             {
                 obj = stats.TryGetValue("CompModularizationWeapon_verbs");
                 if (obj != null)
                 {
-                    ThingDef_verbs(parent.def) = ((Stack<List<VerbProperties>>)obj).Pop();
+                    ThingDef_verbs(parent.def) = (obj as Stack<List<VerbProperties>>)?.Pop();
                 }
                 obj = stats.TryGetValue("CompModularizationWeapon_tools");
                 if (obj != null)
                 {
-                    parent.def.tools = ((Stack<List<Tool>>)obj).Pop();
+                    parent.def.tools = (obj as Stack<List<Tool>>)?.Pop();
                 }
             }
             obj = stats.TryGetValue("CompModularizationWeapon_comps");
             if (obj != null)
             {
-                parent.def.comps = ((Stack<List<CompProperties>>)obj).Pop();
+                parent.def.comps = (obj as Stack<List<CompProperties>>)?.Pop();
             }
         }
 
 
-        protected override bool PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyFinalProcess, Dictionary<string, object> stats)
+        protected override bool PreStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyFinalProcess, Dictionary<string, object?> stats)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_GetValueUnfinalized");
             StatWorkerPerfix(stats);
@@ -99,13 +106,13 @@ namespace RW_ModularizationWeapon
             req = RedirectoryReq(statWorker, req);
             if (before.Thing == req.Thing && req.Thing != parent)
             {
-                ((CompModularizationWeapon)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker,req,applyFinalProcess,stats);
+                ((CompModularizationWeapon?)req.Thing)?.PreStatWorker_GetValueUnfinalized(statWorker,req,applyFinalProcess,stats);
             }
             return true;
         }
 
 
-        protected override float FinalStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyFinalProcess, float result, Dictionary<string, object> stats, Exception exception)
+        protected override float FinalStatWorker_GetValueUnfinalized(StatWorker statWorker, StatRequest req, bool applyFinalProcess, float result, Dictionary<string, object?> stats, Exception exception)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : FinalStatWorker_GetValueUnfinalized -> {result}");
             StatRequest before = req;
@@ -114,7 +121,7 @@ namespace RW_ModularizationWeapon
             {
                 if (before.Thing == req.Thing)
                 {
-                    result = ((CompModularizationWeapon)req.Thing)?.FinalStatWorker_GetValueUnfinalized(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
+                    result = ((CompModularizationWeapon?)req.Thing)?.FinalStatWorker_GetValueUnfinalized(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
                 }
                 else
                 {
@@ -137,7 +144,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyFinalProcess, ref float result, Dictionary<string, object> stats)
+        protected override bool PreStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyFinalProcess, ref float result, Dictionary<string, object?> stats)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PreStatWorker_FinalizeValue -> {result}");
             StatWorkerPerfix(stats);
@@ -148,7 +155,7 @@ namespace RW_ModularizationWeapon
                 if (before.Thing == req.Thing)
                 {
                     //Log.Message($"{req.Thing} -> {req.Thing?.Spawned} -> {req.Thing?.Map} -> {req.Thing?.MapHeld} -> {req.Thing?.ParentHolder}");
-                    ((CompModularizationWeapon)req.Thing)?.PreStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, ref result, stats);
+                    ((CompModularizationWeapon?)req.Thing)?.PreStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, ref result, stats);
                     return true;
                     //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
                 }
@@ -170,9 +177,11 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override float FinalStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyFinalProcess, float result, Dictionary<string, object> stats, Exception exception)
+        protected override float FinalStatWorker_FinalizeValue(StatWorker statWorker, StatRequest req, bool applyFinalProcess, float result, Dictionary<string, object?> stats, Exception exception)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : FinalStatWorker_FinalizeValue -> {result}");
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
@@ -184,7 +193,7 @@ namespace RW_ModularizationWeapon
                 StatDef statDef = StatWorker_stat(statWorker);
                 if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
                 {
-                    foreach (Thing thing in ChildNodes.Values)
+                    foreach (Thing? thing in container.Values)
                     {
                         try
                         {
@@ -200,14 +209,14 @@ namespace RW_ModularizationWeapon
                 {
                     if (statDef.defName == "BurstShotCount")
                     {
-                        VerbTracker verbTracker = parent.TryGetComp<CompEquippable>()?.VerbTracker;
+                        VerbTracker? verbTracker = parent.TryGetComp<CompEquippable>()?.VerbTracker;
                         if(verbTracker != null)
                         {
                             List<Verb> verbList = verbTracker.AllVerbs;
-                            CompChildNodeProccesser proccesser = NodeProccesser;
+                            CompChildNodeProccesser proccesser = container.Comp;
                             foreach(Verb verb in verbList)
                             {
-                                if(verb.verbProps.isPrimary && proccesser.GetBeforeConvertVerbCorrespondingThing(typeof(CompEquippable), verb).Item1 == parent)
+                                if(verb.verbProps.isPrimary && proccesser.GetBeforeConvertThingWithVerb(typeof(CompEquippable), verb).Item1 == parent)
                                 {
                                     result = verb.verbProps.burstShotCount;
                                     break;
@@ -224,19 +233,19 @@ namespace RW_ModularizationWeapon
             }
             else if (before.Thing == req.Thing)
             {
-                result = ((CompModularizationWeapon)req.Thing)?.FinalStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
+                result = ((CompModularizationWeapon?)req.Thing)?.FinalStatWorker_FinalizeValue(statWorker, req, applyFinalProcess, result, stats, exception) ?? result;
             }
-            if (stats.TryGetValue("afterRedirectoryReq", out object cache))
+            if (stats.TryGetValue("afterRedirectoryReq", out object? cache))
             {
                 //Log.Message($"{StatWorker_stat(statWorker)}.FinalizeValue({req})  afterRedirectoryReq : {result}");
-                result = (float)cache;
+                result = (float)cache!;
             }
             StatWorkerFinalfix(stats);
             return result;
         }
 
 
-        protected override bool PreStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, Dictionary<string, object> stats)
+        protected override bool PreStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, Dictionary<string, object?> stats)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : PerStatWorker_GetStatDrawEntryLabel({optionalReq})");
             StatRequest before = optionalReq;
@@ -249,13 +258,13 @@ namespace RW_ModularizationWeapon
                 StatWorkerPerfix(stats);
             if (before.Thing == optionalReq.Thing && optionalReq.Thing != parent)
             {
-                ((CompModularizationWeapon)optionalReq.Thing)?.PreStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, stats);
+                ((CompModularizationWeapon?)optionalReq.Thing)?.PreStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, stats);
             }
             return true;
         }
 
 
-        protected override string FinalStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, string result, Dictionary<string, object> stats, Exception exception)
+        protected override string FinalStatWorker_GetStatDrawEntryLabel(StatWorker statWorker, StatDef stat, float value, ToStringNumberSense numberSense, StatRequest optionalReq, bool finalized, string result, Dictionary<string, object?> stats, Exception exception)
         {
             //Log.Message($"{StatWorker_stat(statWorker)} : FinalStatWorker_GetStatDrawEntryLabel({optionalReq})");
             StatRequest before = optionalReq;
@@ -264,7 +273,7 @@ namespace RW_ModularizationWeapon
             {
                 if (before.Thing == optionalReq.Thing)
                 {
-                    result = ((CompModularizationWeapon)optionalReq.Thing)?.FinalStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, stats, exception) ?? result;
+                    result = ((CompModularizationWeapon?)optionalReq.Thing)?.FinalStatWorker_GetStatDrawEntryLabel(statWorker, stat, value, numberSense, optionalReq, finalized, result, stats, exception) ?? result;
                 }
                 else
                 {
@@ -292,7 +301,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override bool PreStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, Dictionary<string, object> stats)
+        protected override bool PreStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, Dictionary<string, object?> stats)
         {
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
@@ -305,14 +314,16 @@ namespace RW_ModularizationWeapon
                 StatWorkerPerfix(stats);
             if (before.Thing == req.Thing && req.Thing != parent)
             {
-                ((CompModularizationWeapon)req.Thing)?.PreStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, stats);
+                ((CompModularizationWeapon?)req.Thing)?.PreStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, stats);
             }
             return true;
         }
 
 
-        protected override string FinalStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object> stats, Exception exception)
+        protected override string FinalStatWorker_GetExplanationUnfinalized(StatWorker statWorker, StatRequest req, ToStringNumberSense numberSense, string result, Dictionary<string, object?> stats, Exception exception)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             StatRequest before = req;
             req = RedirectoryReq(statWorker, req);
             if (req.Thing == parent)
@@ -328,11 +339,11 @@ namespace RW_ModularizationWeapon
                 )
                 {
                     StringBuilder stringBuilder = new StringBuilder();
-                    foreach (KeyValuePair<string,Thing> data in ChildNodes)
+                    foreach (KeyValuePair<string,Thing?> data in container)
                     {
                         if (!NotUseTools(data.Key))
                         {
-                            stringBuilder.AppendLine("  " + data.Value.Label + ":");
+                            stringBuilder.AppendLine("  " + data.Value?.Label + ":");
                             string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(data.Value), numberSense);
                             exp = Regex.Replace(exp, "\n", "\n  ");
                             stringBuilder.AppendLine(exp);
@@ -343,7 +354,7 @@ namespace RW_ModularizationWeapon
             }
             else if (before.Thing == req.Thing)
             {
-                result = ((CompModularizationWeapon)req.Thing)?.FinalStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, stats, exception) ?? result;
+                result = ((CompModularizationWeapon?)req.Thing)?.FinalStatWorker_GetExplanationUnfinalized(statWorker, req, numberSense, result, stats, exception) ?? result;
             }
             else
             {
@@ -369,6 +380,8 @@ namespace RW_ModularizationWeapon
 
         protected override IEnumerable<Dialog_InfoCard.Hyperlink> PostStatWorker_GetInfoCardHyperlinks(StatWorker statWorker, StatRequest statRequest, IEnumerable<Dialog_InfoCard.Hyperlink> result)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             foreach (Dialog_InfoCard.Hyperlink link in result)
             {
                 yield return link;
@@ -379,8 +392,9 @@ namespace RW_ModularizationWeapon
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                foreach (Thing thing in ChildNodes.Values)
+                foreach (Thing? thing in container.Values)
                 {
+                    if(thing == null) continue;
                     yield return new Dialog_InfoCard.Hyperlink(thing);
                 }
             }
@@ -392,7 +406,7 @@ namespace RW_ModularizationWeapon
             //Log.Message($"FinalThingDef_SpecialDisplayStats({def},{req},{result})");
             if (req.Thing == parent)
             {
-                Dictionary<string, object> stats = new Dictionary<string, object>();
+                Dictionary<string, object?> stats = new Dictionary<string, object?>();
                 StatWorkerPerfix(stats);
 
                 List<StatDrawEntry> cache = new List<StatDrawEntry>();
@@ -412,7 +426,7 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                result = ((CompModularizationWeapon)req.Thing)?.PostThingDef_SpecialDisplayStats(def, req, result) ?? result;
+                result = ((CompModularizationWeapon?)req.Thing)?.PostThingDef_SpecialDisplayStats(def, req, result) ?? result;
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
@@ -426,7 +440,7 @@ namespace RW_ModularizationWeapon
             //Log.Message($"FinalStatsReportUtility_StatsToDraw({thing},{result})");
             if (thing == parent)
             {
-                Dictionary<string, object> stats = new Dictionary<string, object>();
+                Dictionary<string, object?> stats = new Dictionary<string, object?>();
                 StatWorkerPerfix(stats);
 
                 List<StatDrawEntry> cache = new List<StatDrawEntry>();
@@ -446,7 +460,7 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                result = ((CompModularizationWeapon)thing)?.PostStatsReportUtility_StatsToDraw(thing, result) ?? result;
+                result = ((CompModularizationWeapon?)thing)?.PostStatsReportUtility_StatsToDraw(thing, result) ?? result;
                 foreach (StatDrawEntry entry in result)
                 {
                     yield return entry;
@@ -454,7 +468,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        protected override float FinalStatWorker_StatOffsetFromGear(Thing gear, StatDef stat, float result, Dictionary<string, object> stats, Exception exception)
+        protected override float FinalStatWorker_StatOffsetFromGear(Thing gear, StatDef stat, float result, Dictionary<string, object?> stats, Exception exception)
         {
             if (exception != null)
             {
@@ -463,7 +477,7 @@ namespace RW_ModularizationWeapon
             return result * GetStatMultiplier(stat, null) + GetStatOffset(stat, null);
         }
 
-        protected override bool FinalStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object> stats, Exception exception)
+        protected override bool FinalStatWorker_GearHasCompsThatAffectStat(Thing gear, StatDef stat, bool result, Dictionary<string, object?> stats, Exception exception)
         {
             if (exception != null)
             {

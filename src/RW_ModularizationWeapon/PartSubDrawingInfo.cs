@@ -13,7 +13,14 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                if (partTexCache == null && !PartTexPath.NullOrEmpty()) partTexCache = ContentFinder<Texture2D>.Get(PartTexPath) ?? BaseContent.BadTex;
+                if (partTexCache == null)
+                {
+                    if (!PartTexPath.NullOrEmpty())
+                    {
+                        partTexCache = ContentFinder<Texture2D>.Get(PartTexPath);
+                    }
+                    partTexCache ??= BaseContent.BadTex;
+                }
                 return partTexCache;
             }
         }
@@ -34,10 +41,10 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// special drawing texture when it attach on a part
         /// </summary>
-        public string PartTexPath = null;
+        public string? PartTexPath = null;
         /// <summary>
         /// material cache of `PartTexPath`
         /// </summary>
-        private Texture2D partTexCache;
+        private Texture2D? partTexCache;
     }
 }

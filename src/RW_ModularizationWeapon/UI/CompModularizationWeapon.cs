@@ -26,15 +26,15 @@ namespace RW_ModularizationWeapon
         public Vector2 TreeViewDrawSize(Vector2 BlockSize)
         {
             Vector2 result = new Vector2(BlockSize.x, 0);
-            foreach ((string id, Thing thing, WeaponAttachmentProperties properties) in this)
+            foreach ((string id, Thing? thing, WeaponAttachmentProperties properties) in this)
             {
                 result.y += BlockSize.y;
                 if (id != null && GetChildTreeViewOpend(id))
                 {
-                    CompModularizationWeapon comp = thing;
+                    CompModularizationWeapon? comp = thing;
                     if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
-                        Vector2 childSize = comp.TreeViewDrawSize(BlockSize);
+                        Vector2 childSize = comp!.TreeViewDrawSize(BlockSize);
                         result.y += childSize.y;
                         result.x = Math.Max(childSize.x + BlockSize.y, result.x);
                     }
@@ -50,10 +50,10 @@ namespace RW_ModularizationWeapon
             float BlockHeight,
             float ContainerWidth,
             float ContainerHeight,
-            Action<string, Thing, CompModularizationWeapon> openEvent,
-            Action<string, Thing, CompModularizationWeapon> closeEvent,
-            Action<string, Thing, CompModularizationWeapon> iconEvent,
-            HashSet<(string, CompModularizationWeapon)> Selected
+            Action<string, Thing?, CompModularizationWeapon>? openEvent,
+            Action<string, Thing?, CompModularizationWeapon>? closeEvent,
+            Action<string, Thing?, CompModularizationWeapon>? iconEvent,
+            HashSet<(string, CompModularizationWeapon)>? Selected
         )
         {
             Vector2 currentPos = DrawPos;
@@ -67,20 +67,20 @@ namespace RW_ModularizationWeapon
             bool colorSelecter = false;
             float halfBlockHeight = BlockHeight / 2;
             float lastY = currentPos.y;
-            foreach ((string id, Thing thing, WeaponAttachmentProperties properties) in this)
+            foreach ((string id, Thing? thing, WeaponAttachmentProperties properties) in this)
             {
                 if (id != null)
                 {
                     bool opend = GetChildTreeViewOpend(id);
                     bool inRenderingRange = currentPos.y + BlockHeight > ScrollPos && currentPos.y < ScrollPos + ContainerHeight;
                     float next = currentPos.y;
-                    CompModularizationWeapon comp = thing;
-                    CompChildNodeProccesser proccesser = thing;
+                    CompModularizationWeapon? comp = thing;
+                    CompChildNodeProccesser? proccesser = thing;
                     if (!(comp?.Props.attachmentProperties).NullOrEmpty())
                     {
                         if (opend)
                         {
-                            next += comp.DrawChildTreeView(
+                            next += comp!.DrawChildTreeView(
                                 currentPos + Vector2.one * BlockHeight,
                                 ScrollPos,
                                 BlockHeight,
@@ -124,11 +124,11 @@ namespace RW_ModularizationWeapon
                         if (thing != null)
                         {
                             ThingStyleDef styleDef = thing.StyleDef;
-                            CompChildNodeProccesser comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.ParentProccesser : null;
+                            CompChildNodeProccesser? comp_targetModeParent = (thing.def.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && thing.def.uiIconPath.NullOrEmpty() && !(thing is Pawn || thing is Corpse)) ? comp?.ParentProccesser : null;
                             if (comp_targetModeParent != null)
                             {
                                 thing.holdingOwner = null;
-                                proccesser.ResetRenderedTexture();
+                                proccesser?.ResetRenderedTexture();
                             }
                             try
                             {
@@ -142,7 +142,7 @@ namespace RW_ModularizationWeapon
                             if (comp_targetModeParent != null)
                             {
                                 thing.holdingOwner = comp_targetModeParent.ChildNodes;
-                                proccesser.ResetRenderedTexture();
+                                proccesser?.ResetRenderedTexture();
                             }
                         }
                         else
