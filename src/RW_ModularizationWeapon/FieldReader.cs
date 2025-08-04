@@ -229,7 +229,8 @@ namespace RW_ModularizationWeapon
                 Func<T, TV> getter;
                 if (fieldInfo.FieldType != typeof(TV))
                 {
-                    var inValueAfterConvert = Expression.Convert(inValue, fieldInfo.FieldType);
+                    var inValueAfterConvert = Expression.Convert(inValue, typeof(TV));
+                    inValueAfterConvert = Expression.Convert(inValueAfterConvert, fieldInfo.FieldType);
                     var assing = Expression.Assign(targetMember, inValueAfterConvert);
                     setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
                     var outValueAfterConvert = Expression.Convert(targetMember, typeof(TV));
