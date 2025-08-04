@@ -266,7 +266,7 @@ namespace RW_ModularizationWeapon
     /// digit only calculater
     /// </summary>
     /// <typeparam name="T">instance base type for calculation</typeparam>
-    public class FieldReaderDigit<T> : FieldReader<T, IConvertible>
+    public class FieldReaderDigit<T> : FieldReader<T, IConvertible?>
     {
         private double? defaultValue;
         private readonly Dictionary<RuntimeFieldHandle, double> datas = new Dictionary<RuntimeFieldHandle, double>();
@@ -284,10 +284,10 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public override IConvertible DefaultValue
+        public override IConvertible? DefaultValue
         {
             get => defaultValue.GetValueOrDefault();
-            set => defaultValue = value.ToDouble(null);
+            set => defaultValue = value?.ToDouble(null);
         }
 
         public override bool HasDefaultValue => defaultValue.HasValue;
@@ -297,9 +297,9 @@ namespace RW_ModularizationWeapon
 
         public override ICollection<RuntimeFieldHandle> Keys => datas.Keys;
 
-        public override ICollection<IConvertible> Values => (from x in datas.Values select (IConvertible)x).ToArray();
+        public override ICollection<IConvertible?> Values => (from x in datas.Values select (IConvertible)x).ToArray();
 
-        public override IConvertible this[RuntimeFieldHandle key] 
+        public override IConvertible? this[RuntimeFieldHandle key] 
         {
             get => datas.TryGetValue(key);
             set => Add(key, value);
@@ -355,8 +355,9 @@ namespace RW_ModularizationWeapon
 
         public override bool ContainsKey(RuntimeFieldHandle key) => datas.ContainsKey(key);
 
-        public override void Add(RuntimeFieldHandle key, IConvertible value)
+        public override void Add(RuntimeFieldHandle key, IConvertible? value)
         {
+            if (value == null) return;
             FieldInfo field = FieldInfo.GetFieldFromHandle(key);
             if (field != null && field.DeclaringType.IsAssignableFrom(UsedType))
             {
@@ -371,7 +372,7 @@ namespace RW_ModularizationWeapon
 
         public override bool Remove(RuntimeFieldHandle key) => datas.Remove(key);
 
-        public override bool TryGetValue(RuntimeFieldHandle key, out IConvertible value)
+        public override bool TryGetValue(RuntimeFieldHandle key, out IConvertible? value)
         {
             bool result = datas.TryGetValue(key, out double outer);
             value = outer;
@@ -380,24 +381,24 @@ namespace RW_ModularizationWeapon
 
         public override void Clear() => datas.Clear();
 
-        public override FieldReader<T, IConvertible> Clone() => new FieldReaderDigit<T>(this);
+        public override FieldReader<T, IConvertible?> Clone() => new FieldReaderDigit<T>(this);
 
         public override void UsedTypeUpdate() { }
 
         public static FieldReaderDigit<T>? operator +(FieldReaderDigit<T>? a, double b)
-            => (a?.CalcValue((av, bv, field) => av.ToDouble(null) + bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
+            => (a?.CalcValue((av, bv, field) => (av?.ToDouble(null) ?? 0) + (bv?.ToDouble(null) ?? 0), b) as FieldReaderDigit<T>) ?? a;
 
         public static FieldReaderDigit<T>? operator -(FieldReaderDigit<T>? a, double b)
-            => (a?.CalcValue((av, bv, field) => av.ToDouble(null) - bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
+            => (a?.CalcValue((av, bv, field) => (av?.ToDouble(null) ?? 0) - (bv?.ToDouble(null) ?? 0), b) as FieldReaderDigit<T>) ?? a;
 
         public static FieldReaderDigit<T>? operator *(FieldReaderDigit<T>? a, double b)
-            => (a?.CalcValue((av, bv, field) => av.ToDouble(null) * bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
+            => (a?.CalcValue((av, bv, field) => (av?.ToDouble(null) ?? 0) * (bv?.ToDouble(null) ?? 0), b) as FieldReaderDigit<T>) ?? a;
 
         public static FieldReaderDigit<T>? operator /(FieldReaderDigit<T>? a, double b)
-            => (a?.CalcValue((av, bv, field) => av.ToDouble(null) / bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
+            => (a?.CalcValue((av, bv, field) => (av?.ToDouble(null) ?? 0) / (bv?.ToDouble(null) ?? 0), b) as FieldReaderDigit<T>) ?? a;
 
         public static FieldReaderDigit<T>? operator %(FieldReaderDigit<T>? a, double b)
-            => (a?.CalcValue((av, bv, field) => av.ToDouble(null) % bv.ToDouble(null), b) as FieldReaderDigit<T>) ?? a;
+            => (a?.CalcValue((av, bv, field) => (av?.ToDouble(null) ?? 0) % (bv?.ToDouble(null) ?? 0), b) as FieldReaderDigit<T>) ?? a;
 
 
         public static T? operator +(T? a, FieldReaderDigit<T>? b)
@@ -406,7 +407,7 @@ namespace RW_ModularizationWeapon
             {
                 a = b.CalcValue((va, vb, field) =>
                 {
-                    if (va != null)
+                    if (va != null && vb != null)
                     {
                         if (va is int) return (int)(va.ToDouble(null) + vb.ToDouble(null));
                         else if (va is float) return (float)(va.ToDouble(null) + vb.ToDouble(null));
@@ -414,7 +415,7 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) + vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) + vb.ToDouble(null);
                     }
-                    return va ?? 0;
+                    return va;
                 }, a);
             }
             return a;
@@ -426,7 +427,7 @@ namespace RW_ModularizationWeapon
             {
                 a = b.CalcValue((va, vb, field) =>
                 {
-                    if (va != null)
+                    if (va != null && vb != null)
                     {
                         if (va is int) return (int)(va.ToDouble(null) - vb.ToDouble(null));
                         else if (va is float) return (float)(va.ToDouble(null) - vb.ToDouble(null));
@@ -434,7 +435,7 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) - vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) - vb.ToDouble(null);
                     }
-                    return va ?? 0;
+                    return va;
                 }, a);
             }
             return a;
@@ -446,7 +447,7 @@ namespace RW_ModularizationWeapon
             {
                 a = b.CalcValue((va, vb, field) =>
                 {
-                    if (va != null)
+                    if (va != null && vb != null)
                     {
                         if (va is int) return (int)(va.ToDouble(null) * vb.ToDouble(null));
                         else if (va is float) return (float)(va.ToDouble(null) * vb.ToDouble(null));
@@ -454,7 +455,7 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) * vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) * vb.ToDouble(null);
                     }
-                    return va ?? 0;
+                    return va;
                 }, a);
             }
             return a;
@@ -466,7 +467,7 @@ namespace RW_ModularizationWeapon
             {
                 a = b.CalcValue((va, vb, field) =>
                 {
-                    if (va != null)
+                    if (va != null && vb != null)
                     {
                         if (va is int) return (int)(va.ToDouble(null) / vb.ToDouble(null));
                         else if (va is float) return (float)(va.ToDouble(null) / vb.ToDouble(null));
@@ -474,7 +475,7 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) / vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) / vb.ToDouble(null);
                     }
-                    return va ?? 0;
+                    return va;
                 }, a);
             }
             return a;
@@ -486,7 +487,7 @@ namespace RW_ModularizationWeapon
             {
                 a = b.CalcValue((va, vb, field) =>
                 {
-                    if (va != null)
+                    if (va != null && vb != null)
                     {
                         if (va is int) return (int)(va.ToDouble(null) % vb.ToDouble(null));
                         else if (va is float) return (float)(va.ToDouble(null) % vb.ToDouble(null));
@@ -494,26 +495,26 @@ namespace RW_ModularizationWeapon
                         else if (va is sbyte) return (sbyte)(va.ToDouble(null) % vb.ToDouble(null));
                         else if (va is double) return va.ToDouble(null) % vb.ToDouble(null);
                     }
-                    return va ?? 0;
+                    return va;
                 }, a);
             }
             return a;
         }
 
         public static FieldReaderDigit<T>? operator +(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
-            => CalcValue((va, vb, field) => va.ToDouble(null) + vb.ToDouble(null), a, b);
+            => CalcValue((va, vb, field) => (va?.ToDouble(null) ?? 0) + (vb?.ToDouble(null) ?? 0), a, b);
 
         public static FieldReaderDigit<T>? operator -(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
-            => CalcValue((va, vb, field) => va.ToDouble(null) - vb.ToDouble(null), a, b);
+            => CalcValue((va, vb, field) => (va?.ToDouble(null) ?? 0) - (vb?.ToDouble(null) ?? 0), a, b);
 
         public static FieldReaderDigit<T>? operator *(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
-            => CalcValue((va, vb, field) => va.ToDouble(null) * vb.ToDouble(null), a, b);
+            => CalcValue((va, vb, field) => (va?.ToDouble(null) ?? 0) * (vb?.ToDouble(null) ?? 0), a, b);
 
         public static FieldReaderDigit<T>? operator /(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
-            => CalcValue((va, vb, field) => va.ToDouble(null) / vb.ToDouble(null), a, b);
+            => CalcValue((va, vb, field) => (va?.ToDouble(null) ?? 0) / (vb?.ToDouble(null) ?? 0), a, b);
 
         public static FieldReaderDigit<T>? operator %(FieldReaderDigit<T>? a, FieldReaderDigit<T>? b)
-            => CalcValue((va, vb, field) => va.ToDouble(null) % vb.ToDouble(null), a, b);
+            => CalcValue((va, vb, field) => (va?.ToDouble(null) ?? 0) % (vb?.ToDouble(null) ?? 0), a, b);
     }
     /// <summary>
     /// boolean only calculater

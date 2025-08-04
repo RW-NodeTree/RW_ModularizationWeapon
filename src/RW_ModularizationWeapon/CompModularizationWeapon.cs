@@ -123,8 +123,7 @@ namespace RW_ModularizationWeapon
                         for (int i = 0; i < matched.Count; i++)
                         {
                             WeaponAttachmentProperties attachmentProperties = matched[i].Item1;
-                            OptionalWeaponAttachmentProperties? optional = attachmentProperties as OptionalWeaponAttachmentProperties;
-                            if (optional != null)
+                            if (attachmentProperties is OptionalWeaponAttachmentProperties optional)
                             {
                                 foreach (FieldInfo fieldInfo in optional.UsedFields)
                                 {
@@ -191,8 +190,7 @@ namespace RW_ModularizationWeapon
                         for (int i = 0; i < matched.Count; i++)
                         {
                             WeaponAttachmentProperties attachmentProperties = matched[i].Item1;
-                            OptionalWeaponAttachmentProperties? optional = attachmentProperties as OptionalWeaponAttachmentProperties;
-                            if (optional != null)
+                            if (attachmentProperties is OptionalWeaponAttachmentProperties optional)
                             {
                                 foreach (FieldInfo fieldInfo in optional.UsedFields)
                                 {
@@ -267,18 +265,16 @@ namespace RW_ModularizationWeapon
             for (int i = 0; i < childs.Count; i++)
             {
                 WeaponAttachmentProperties? info = CurrentPartWeaponAttachmentPropertiesById(childs[(uint)i]);
-                ThingWithComps? part = childs[i] as ThingWithComps;
-                if(part != null && info != null)
+                if (childs[i] is ThingWithComps part && info != null)
                 {
                     foreach (ThingComp comp in part.AllComps)
                     {
                         Type type = comp.GetType();
-                        if(type == typeof(CompModularizationWeapon) || Props.compGetGizmosExtraAllowedCompType.Contains(type))
+                        if (type == typeof(CompModularizationWeapon) || Props.compGetGizmosExtraAllowedCompType.Contains(type))
                         {
-                            foreach(Gizmo gizmo in comp.CompGetGizmosExtra())
+                            foreach (Gizmo gizmo in comp.CompGetGizmosExtra())
                             {
-                                Command? command = gizmo as Command;
-                                if(command != null && type != typeof(CompModularizationWeapon))
+                                if (gizmo is Command command && type != typeof(CompModularizationWeapon))
                                 {
                                     command.defaultLabel = info.Name + "/" + command.defaultLabel;
                                     command.shrinkable = true;
@@ -302,11 +298,10 @@ namespace RW_ModularizationWeapon
         {
             CompChildNodeProccesser? proccesser = NodeProccesser;
             if (proccesser == null) return nodeRenderingInfos;
-            MaterialRequest req;
             Matrix4x4 scale = Matrix4x4.identity;
             uint texScale = proccesser.Props.TextureSizeFactor;
             Material material = graphic?.MatAt(rot, this.parent) ?? BaseContent.BadMat;
-            if (MaterialPool.TryGetRequestForMat(material, out req)) req.mainTex = (Props.PartTexture == BaseContent.BadTex) ? material.mainTexture : Props.PartTexture;
+            if (MaterialPool.TryGetRequestForMat(material, out MaterialRequest req)) req.mainTex = (Props.PartTexture == BaseContent.BadTex) ? material.mainTexture : Props.PartTexture;
             else req = new MaterialRequest()
             {
                 renderQueue = material.renderQueue,
@@ -422,7 +417,7 @@ namespace RW_ModularizationWeapon
             }
             nodeRenderingInfos.SortBy(x =>
             {
-                List<WeaponAttachmentProperties> props = GetOrGenCurrentPartAttachmentProperties().Values.ToList();
+                List<WeaponAttachmentProperties> props = [.. GetOrGenCurrentPartAttachmentProperties().Values];
                 for (int i = 0; i < props.Count; i++)
                 {
                     WeaponAttachmentProperties properties = props[i];
@@ -464,7 +459,7 @@ namespace RW_ModularizationWeapon
             }
             if(PostFXMat == null) return;
 
-            if(PostFXCommandBuffer == null) PostFXCommandBuffer = new CommandBuffer();
+            PostFXCommandBuffer ??= new CommandBuffer();
             PostFXCommandBuffer.Clear();
             RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
             PostFXCommandBuffer.Blit(tar, renderTexture);
@@ -704,7 +699,7 @@ namespace RW_ModularizationWeapon
 
         public List<CompProperties> AllExtraCompProperties()
         {
-            List<CompProperties> result = new List<CompProperties>();
+            List<CompProperties> result = [];
             NodeContainer? container = ChildNodes;
             if(container != null)
             {
@@ -760,7 +755,7 @@ namespace RW_ModularizationWeapon
                         {
                             Thing thing = ThingMaker.MakeThing(def, null);
                             thing.stackCount = count;
-                            CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(currentComp, new object[] { 0 });
+                            CombatExtended_CompAmmoUser_CurMagCount_set.Invoke(currentComp, [0]);
                             GenThing.TryDropAndSetForbidden(thing, parent.PositionHeld, map, ThingPlaceMode.Near, out _, false);
                         }
                     }
@@ -946,10 +941,10 @@ namespace RW_ModularizationWeapon
 
                 List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
 
-                List<CompProperties> cachedCompProperties = new List<CompProperties>(this.cachedCompProperties);
-                List<ThingComp> cachedThingComps = new List<ThingComp>(this.cachedThingComps);
+                List<CompProperties> cachedCompProperties = [.. this.cachedCompProperties];
+                List<ThingComp> cachedThingComps = [.. this.cachedThingComps];
                 List<ThingComp>? allComps = ThingWithComps_comps(parent);
-                List<ThingComp> allCompsCopy = new List<ThingComp>(allComps);
+                List<ThingComp> allCompsCopy = [.. allComps];
                 this.cachedThingComps.Clear();
                 this.cachedCompProperties.Clear();
                 Task allCompsTask = Task.Run(
@@ -1058,7 +1053,7 @@ namespace RW_ModularizationWeapon
                 if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
                 {
                     //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
-                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, [parent]);
                 }
 
                 // ct = stopWatch.ElapsedTicks;
@@ -1102,7 +1097,7 @@ namespace RW_ModularizationWeapon
 
                 List<(Task<CompProperties>, ThingComp, bool)> cachedTask = new List<(Task<CompProperties>, ThingComp, bool)>(parent.def.comps.Count);
                 List<ThingComp> allComps = ThingWithComps_comps(parent);
-                List<ThingComp> allCompsCopy = new List<ThingComp>(allComps);
+                List<ThingComp> allCompsCopy = [.. allComps];
                 allComps.RemoveAll(x => parent.def.comps.FirstOrDefault(c => c.compClass == x.GetType()) == null);
 
                 // ct = stopWatch.ElapsedTicks;
@@ -1172,7 +1167,7 @@ namespace RW_ModularizationWeapon
                 if (PerformanceOptimizer_ComponentCache != null && PerformanceOptimizer_ComponentCache_ResetCompCache != null)
                 {
                     //Log.Message($"PerformanceOptimizer_ComponentCache_ResetCompCache : {PerformanceOptimizer_ComponentCache_ResetCompCache}");
-                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, new object[] { parent });
+                    PerformanceOptimizer_ComponentCache_ResetCompCache.Invoke(null, [parent]);
                 }
 
                 // ct = stopWatch.ElapsedTicks;
@@ -1373,15 +1368,15 @@ namespace RW_ModularizationWeapon
                 Mesh mesh = new Mesh();
                 mesh.name = meshin.name + " Reindexed";
 
-                List<Vector3> vert = new List<Vector3>(meshin.vertices);
+                List<Vector3> vert = [.. meshin.vertices];
                 vert.AddRange(vert);
-                mesh.vertices = vert.ToArray();
+                mesh.vertices = [.. vert];
 
-                List<Vector2> uv = new List<Vector2>(meshin.uv);
+                List<Vector2> uv = [.. meshin.uv];
                 uv.AddRange(uv);
-                mesh.uv = uv.ToArray();
+                mesh.uv = [.. uv];
 
-                List<int> trangles = new List<int>(meshin.GetTriangles(0));
+                List<int> trangles = [.. meshin.GetTriangles(0)];
                 trangles.Capacity = 2 * trangles.Count;
                 for (int k = trangles.Count - 1; k >= 0; k--)
                 {
@@ -1392,16 +1387,6 @@ namespace RW_ModularizationWeapon
                 mesh.RecalculateBounds();
                 return mesh;
             });
-        }
-
-        public string UniqueVerbOwnerID()
-        {
-            return $"CompModularizationWeapon_VerbTracker_{parent}";
-        }
-
-        public bool VerbsStillUsableBy(Pawn p)
-        {
-            return true;
         }
         
         public WeaponAttachmentProperties? CurrentPartWeaponAttachmentPropertiesById(string? id)
@@ -1490,17 +1475,17 @@ namespace RW_ModularizationWeapon
         private readonly Dictionary<Type, List<Tool>> toolsCache_TargetPart = new Dictionary<Type, List<Tool>>();
         private readonly Dictionary<Type, List<VerbProperties>> verbPropertiesCache_TargetPart = new Dictionary<Type, List<VerbProperties>>();
 
-        private static Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
-        private static Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
-        private static Type PerformanceOptimizer_ComponentCache = GenTypes.GetTypeInAnyAssembly("PerformanceOptimizer.ComponentCache");
-        private static AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
-        private static AccessTools.FieldRef<ThingDef, List<VerbProperties>?> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>?>("verbs");
-        private static AccessTools.FieldRef<ThingWithComps, List<ThingComp>> ThingWithComps_comps = AccessTools.FieldRefAccess<ThingWithComps, List<ThingComp>>("comps");
-        private static AccessTools.FieldRef<object, ThingDef>? CombatExtended_CompAmmoUser_currentAmmoInt = null;
+        private static readonly Type CombatExtended_CompAmmoUser = GenTypes.GetTypeInAnyAssembly("CombatExtended.CompAmmoUser");
+        private static readonly Type CombatExtended_StatWorker_Magazine = GenTypes.GetTypeInAnyAssembly("CombatExtended.StatWorker_Magazine");
+        private static readonly Type PerformanceOptimizer_ComponentCache = GenTypes.GetTypeInAnyAssembly("PerformanceOptimizer.ComponentCache");
+        private static readonly AccessTools.FieldRef<StatWorker, StatDef> StatWorker_stat = AccessTools.FieldRefAccess<StatWorker, StatDef>("stat");
+        private static readonly AccessTools.FieldRef<ThingDef, List<VerbProperties>?> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>?>("verbs");
+        private static readonly AccessTools.FieldRef<ThingWithComps, List<ThingComp>> ThingWithComps_comps = AccessTools.FieldRefAccess<ThingWithComps, List<ThingComp>>("comps");
+        private static readonly AccessTools.FieldRef<object, ThingDef>? CombatExtended_CompAmmoUser_currentAmmoInt = null;
         //private static AccessTools.FieldRef<object, IList> CombatExtended_CompFireModes_availableAimModes = null;
-        private static MethodInfo? CombatExtended_CompAmmoUser_CurMagCount_get = null;
-        private static MethodInfo? CombatExtended_CompAmmoUser_CurMagCount_set = null;
-        private static MethodInfo? PerformanceOptimizer_ComponentCache_ResetCompCache = null;
+        private static readonly MethodInfo? CombatExtended_CompAmmoUser_CurMagCount_get = null;
+        private static readonly MethodInfo? CombatExtended_CompAmmoUser_CurMagCount_set = null;
+        private static readonly MethodInfo? PerformanceOptimizer_ComponentCache_ResetCompCache = null;
         private static Material? PostFXMat = null;
         private static CommandBuffer? PostFXCommandBuffer = null;
 
@@ -1756,34 +1741,34 @@ namespace RW_ModularizationWeapon
             #region innerMethod
             void CheckAndSetDgitList<T>(ref FieldReaderDgitList<T> list, float defaultValue)
             {
-                list = list ?? new FieldReaderDgitList<T>();
+                list ??= new FieldReaderDgitList<T>();
                 list.RemoveAll(f => f == null);
                 if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
             void CheckAndSetBoolList<T>(ref FieldReaderBoolList<T> list, bool defaultValue)
             {
-                list = list ?? new FieldReaderBoolList<T>();
+                list ??= new FieldReaderBoolList<T>();
                 list.RemoveAll(f => f == null);
                 if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
             void CheckAndSetFiltList<T>(ref FieldReaderFiltList<T> list, bool defaultValue)
             {
-                list = list ?? new FieldReaderFiltList<T>();
+                list ??= [];
                 list.RemoveAll(f => f == null);
                 if (!list.HasDefaultValue) list.DefaultValue = defaultValue;
             }
 
             void CheckAndSetInstList<T>(ref FieldReaderInstList<T> list)
             {
-                list = list ?? new FieldReaderInstList<T>();
+                list ??= [];
                 list.RemoveAll(f => f == null);
             }
 
             void CheckAndSetStatList(ref List<StatModifier> list)
             {
-                list = list ?? new List<StatModifier>();
+                list ??= [];
                 list.RemoveAll(f => f == null);
             }
             #endregion
@@ -1823,18 +1808,18 @@ namespace RW_ModularizationWeapon
             CheckAndSetStatList(ref statOtherPartOffseterAffectHorizon);
             CheckAndSetStatList(ref statOtherPartMultiplierAffectHorizon);
 
-            parentDef.weaponTags = parentDef.weaponTags ?? new List<string>();
+            parentDef.weaponTags ??= [];
 
-            compPropertiesResoveCrosseReferenceType = compPropertiesResoveCrosseReferenceType ?? new List<Type>();
+            compPropertiesResoveCrosseReferenceType ??= [];
             compPropertiesResoveCrosseReferenceType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
 
-            compPropertiesCreateInstanceCompType = compPropertiesCreateInstanceCompType ?? new List<Type>();
+            compPropertiesCreateInstanceCompType ??= [];
             compPropertiesCreateInstanceCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
 
-            compPropertiesInitializeCompType = compPropertiesInitializeCompType ?? new List<Type>();
+            compPropertiesInitializeCompType ??= [];
             compPropertiesInitializeCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
 
-            compGetGizmosExtraAllowedCompType = compGetGizmosExtraAllowedCompType ?? new List<Type>();
+            compGetGizmosExtraAllowedCompType ??= [];
             compGetGizmosExtraAllowedCompType.RemoveAll(f => f == null || !typeof(ThingComp).IsAssignableFrom(f));
         }
 
@@ -1860,8 +1845,9 @@ namespace RW_ModularizationWeapon
                 {
                     if (snap) stringBuilder.Append("  ");
                     stringBuilder.AppendLine($"  NO.{i+1} :");
-                    foreach (KeyValuePair<RuntimeFieldHandle, IConvertible> data in list[i])
+                    foreach (KeyValuePair<RuntimeFieldHandle, IConvertible?> data in list[i])
                     {
+                        if (data.Value != null) continue;
                         FieldInfo field = FieldInfo.GetFieldFromHandle(data.Key);
                         if (snap) stringBuilder.Append("  ");
                         stringBuilder.AppendLine($"    {field.Name.Translate()} : {perfix}{data.Value}{postfix}");
