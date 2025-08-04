@@ -147,9 +147,11 @@ namespace RW_ModularizationWeapon
                         {
                             RuntimeFieldHandle handle = field.FieldHandle;
                             if (!TryGetValue(handle, out TV value)) value = DefaultValue;
-                            (Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
-                            TV targetValue = getter(result);
-                            setter(result, calc(targetValue, value, handle));
+                            //(Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
+                            //TV targetValue = getter(result);
+                            //setter(result, calc(targetValue, value, handle));
+                            value = calc((TV)field.GetValue(result), value, handle);
+                            field.SetValue(result, value);
                         }
                     }
                 }
@@ -217,33 +219,40 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        private static readonly ConcurrentDictionary<RuntimeFieldHandle, (Func<T, TV> getter, Action<T,TV> setter)> cachedFieldRef = new ConcurrentDictionary<RuntimeFieldHandle, (Func<T, TV> getter, Action<T, TV> setter)>();
-        public static (Func<T, TV> getter, Action<T, TV> setter) GetCachedFieldRef(RuntimeFieldHandle runtimeField)
-            => cachedFieldRef.GetOrAdd(runtimeField, f =>
-            {
-                FieldInfo fieldInfo = FieldInfo.GetFieldFromHandle(f);
-                var inInstance = Expression.Parameter(typeof(T), "instance");
-                var inValue = Expression.Parameter(typeof(TV), "value");
-                var targetMember = Expression.Field(inInstance, fieldInfo);
-                Action<T, TV> setter;
-                Func<T, TV> getter;
-                if (fieldInfo.FieldType != typeof(TV))
-                {
-                    var inValueAfterConvert = Expression.Convert(inValue, typeof(TV));
-                    inValueAfterConvert = Expression.Convert(inValueAfterConvert, fieldInfo.FieldType);
-                    var assing = Expression.Assign(targetMember, inValueAfterConvert);
-                    setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
-                    var outValueAfterConvert = Expression.Convert(targetMember, typeof(TV));
-                    getter = Expression.Lambda<Func<T, TV>>(outValueAfterConvert, inInstance).Compile();
-                }
-                else
-                {
-                    var assing = Expression.Assign(targetMember, inValue);
-                    setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
-                    getter = Expression.Lambda<Func<T, TV>>(targetMember, inInstance).Compile();
-                }
-                return (getter, setter);
-            });
+        //private static readonly ConcurrentDictionary<RuntimeFieldHandle, (Func<T, TV> getter, Action<T,TV> setter)> cachedFieldRef = new ConcurrentDictionary<RuntimeFieldHandle, (Func<T, TV> getter, Action<T, TV> setter)>();
+        //public static (Func<T, TV> getter, Action<T, TV> setter) GetCachedFieldRef(RuntimeFieldHandle runtimeField)
+        //    => cachedFieldRef.GetOrAdd(runtimeField, f =>
+        //    {
+        //        FieldInfo fieldInfo = FieldInfo.GetFieldFromHandle(f);
+        //        var inInstance = Expression.Parameter(typeof(T), "instance");
+        //        var inValue = Expression.Parameter(typeof(TV), "value");
+        //        var targetMember = Expression.Field(inInstance, fieldInfo);
+        //        Action<T, TV> setter;
+        //        Func<T, TV> getter;
+        //        if (fieldInfo.FieldType != typeof(TV))
+        //        {
+        //            UnaryExpression inValueAfterConvert;
+        //            if (fieldInfo.FieldType.IsValueType)
+        //            {
+        //                inValueAfterConvert = Expression.Convert(inValue, fieldInfo.FieldType);
+        //            }
+        //            else
+        //            {
+        //                inValueAfterConvert = Expression.Unbox(inValue, fieldInfo.FieldType);
+        //            }
+        //            var assing = Expression.Assign(targetMember, inValueAfterConvert);
+        //            setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
+        //            var outValueAfterConvert = Expression.Convert(targetMember, typeof(TV));
+        //            getter = Expression.Lambda<Func<T, TV>>(outValueAfterConvert, inInstance).Compile();
+        //        }
+        //        else
+        //        {
+        //            var assing = Expression.Assign(targetMember, inValue);
+        //            setter = Expression.Lambda<Action<T, TV>>(assing, inInstance, inValue).Compile();
+        //            getter = Expression.Lambda<Func<T, TV>>(targetMember, inInstance).Compile();
+        //        }
+        //        return (getter, setter);
+        //    });
 
     }
     /// <summary>
