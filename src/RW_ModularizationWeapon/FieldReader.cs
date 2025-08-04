@@ -147,11 +147,18 @@ namespace RW_ModularizationWeapon
                         {
                             RuntimeFieldHandle handle = field.FieldHandle;
                             if (!TryGetValue(handle, out TV value)) value = DefaultValue;
-                            //(Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
-                            //TV targetValue = getter(result);
-                            //setter(result, calc(targetValue, value, handle));
-                            value = calc((TV)field.GetValue(result), value, handle);
-                            field.SetValue(result, value);
+                            try
+                            {
+                                //(Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
+                                //TV targetValue = getter(result);
+                                //setter(result, calc(targetValue, value, handle));
+                                value = calc((TV)field.GetValue(result), value, handle);
+                                field.SetValue(result, value);
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Warning(e.ToString());
+                            }
                         }
                     }
                 }
