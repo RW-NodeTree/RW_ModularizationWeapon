@@ -264,7 +264,7 @@ namespace RW_ModularizationWeapon
             if (childs == null) yield break;
             for (int i = 0; i < childs.Count; i++)
             {
-                WeaponAttachmentProperties? info = CurrentPartWeaponAttachmentPropertiesById(childs[(uint)i]);
+                WeaponAttachmentProperties? info = CurrentPartWeaponAttachmentPropertiesById(((IList<string?>)childs)[i]);
                 if (childs[i] is ThingWithComps part && info != null)
                 {
                     foreach (ThingComp comp in part.AllComps)
@@ -640,8 +640,8 @@ namespace RW_ModularizationWeapon
                     {
                         foreach (var par in childs)
                         {
-                            SetTargetPart(par.Key, null);
-                            if (par.Value != null) yield return par.Value;
+                            SetTargetPart(par.Item1, null);
+                            if (par.Item2 != null) yield return par.Item2;
                         }
                         SwapTargetPart();
                         ClearTargetPart();
@@ -706,7 +706,7 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < container.Count; i++)
                 {
                     CompModularizationWeapon? comp = container[i];
-                    WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(container[(uint)i]);
+                    WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(((IList<string?>)container)[i]);
                     if (comp != null && properties != null)
                     {
                         result.AddRange(
@@ -1197,11 +1197,11 @@ namespace RW_ModularizationWeapon
             lock (this)
             {
                 Dictionary<string, Thing> nextChild = new Dictionary<string, Thing>(childs.Count);
-                foreach (KeyValuePair<string, Thing?> keyValue in childs)
+                foreach (var keyValue in childs)
                 {
-                    if (keyValue.Value != null)
+                    if (keyValue.Item1 != null)
                     {
-                        nextChild[keyValue.Key] = keyValue.Value;
+                        nextChild[keyValue.Item1] = keyValue.Item2;
                     }
                 }
                 if (Props.attachmentProperties.Count <= 0) return nextChild;

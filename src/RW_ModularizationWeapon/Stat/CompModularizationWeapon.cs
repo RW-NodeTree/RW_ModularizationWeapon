@@ -339,12 +339,12 @@ namespace RW_ModularizationWeapon
                 )
                 {
                     StringBuilder stringBuilder = new StringBuilder();
-                    foreach (KeyValuePair<string,Thing?> data in container)
+                    foreach (var data in container)
                     {
-                        if (!NotUseTools(data.Key))
+                        if (!NotUseTools(data.Item1))
                         {
-                            stringBuilder.AppendLine("  " + data.Value?.Label + ":");
-                            string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(data.Value), numberSense);
+                            stringBuilder.AppendLine("  " + data.Item2.Label + ":");
+                            string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(data.Item2), numberSense);
                             exp = Regex.Replace(exp, "\n", "\n  ");
                             stringBuilder.AppendLine(exp);
                         }

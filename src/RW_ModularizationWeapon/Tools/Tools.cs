@@ -15,10 +15,10 @@ namespace RW_ModularizationWeapon.Tools
         {
             lock (dictonary)
             {
-                if (!dictonary.TryGetValue(key, out TV? result))
+                if (!dictonary.TryGetValue(key, out TV? result) || result == null)
                 {
                     result = funcCreate();
-                    dictonary.Add(key, result);
+                    dictonary[key] = result;
                     return result;
                 }
                 return result;

@@ -2,6 +2,7 @@
 using RW_NodeTree;
 using Verse;
 using System;
+using System.Collections.Generic;
 
 namespace RW_ModularizationWeapon
 {
@@ -16,7 +17,7 @@ namespace RW_ModularizationWeapon
             CompModularizationWeapon? currentComp = childNodeIdForVerbProperties != null ? container[childNodeIdForVerbProperties] : null;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && properties != null)
@@ -64,7 +65,7 @@ namespace RW_ModularizationWeapon
             CompModularizationWeapon? currentComp = childNodeIdForTool != null ? container[childNodeIdForTool] : null;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForTool && properties != null)
@@ -111,7 +112,7 @@ namespace RW_ModularizationWeapon
             FieldReaderInstList<CompProperties> results = new FieldReaderInstList<CompProperties>();
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && properties != null)
@@ -133,7 +134,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && properties != null)
@@ -184,7 +185,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForTool && properties != null)
@@ -232,7 +233,7 @@ namespace RW_ModularizationWeapon
             FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && properties != null)
@@ -255,7 +256,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForVerbProperties && properties != null)
@@ -306,7 +307,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = true;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && id != childNodeIdForTool && properties != null)
@@ -354,7 +355,7 @@ namespace RW_ModularizationWeapon
             FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && comp.Validity && properties != null)

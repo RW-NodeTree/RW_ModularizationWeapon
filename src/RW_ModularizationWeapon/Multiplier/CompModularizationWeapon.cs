@@ -22,7 +22,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && properties != null && comp.Validity && id != childNodeIdForVerbProperties)
@@ -84,7 +84,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && properties != null && comp.Validity && id != childNodeIdForTool)
@@ -142,7 +142,7 @@ namespace RW_ModularizationWeapon
             results.DefaultValue = 1;
             for (int i = 0; i < container.Count; i++)
             {
-                string id = container[(uint)i];
+                string id = ((IList<string?>)container)[i]!;
                 CompModularizationWeapon? comp = container[i];
                 WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                 if (comp != null && properties != null && comp.Validity)
@@ -179,7 +179,7 @@ namespace RW_ModularizationWeapon
                     result = 1;
                     for (int i = 0; i < container.Count; i++)
                     {
-                        string id = container[(uint)i];
+                        string id = ((IList<string?>)container)[i]!;
                         CompModularizationWeapon? comp = container[i];
                         WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
                         if (comp != null && properties != null && comp.Validity && id != childNodeIdForState)
