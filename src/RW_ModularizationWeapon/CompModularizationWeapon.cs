@@ -264,7 +264,7 @@ namespace RW_ModularizationWeapon
             if (childs == null) yield break;
             for (int i = 0; i < childs.Count; i++)
             {
-                WeaponAttachmentProperties? info = CurrentPartWeaponAttachmentPropertiesById(((IList<string?>)childs)[i]);
+                WeaponAttachmentProperties? info = CurrentPartWeaponAttachmentPropertiesById(((IList<string>)childs)[i]);
                 if (childs[i] is ThingWithComps part && info != null)
                 {
                     foreach (ThingComp comp in part.AllComps)
@@ -706,7 +706,7 @@ namespace RW_ModularizationWeapon
                 for (int i = 0; i < container.Count; i++)
                 {
                     CompModularizationWeapon? comp = container[i];
-                    WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(((IList<string?>)container)[i]);
+                    WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(((IList<string>)container)[i]);
                     if (comp != null && properties != null)
                     {
                         result.AddRange(
