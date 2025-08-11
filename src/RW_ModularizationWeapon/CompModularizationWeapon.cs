@@ -1310,7 +1310,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        private void Private_SetChildPostion(IntVec3? pos = null)
+        public void SetChildPostion(IntVec3? pos = null)
         {
             lock (this)
             {
@@ -1322,52 +1322,11 @@ namespace RW_ModularizationWeapon
                     if(thing != null)
                     {
                         thing.Position = pos.Value;
-                        ((CompModularizationWeapon?)thing)?.Private_SetChildPostion(pos);
-                    }
-                }
-                foreach (Thing? thing in targetPartsWithId.Values)
-                {
-                    if(thing != null)
-                    {
-                        thing.Position = pos.Value;
-                        ((CompModularizationWeapon?)thing)?.Private_SetChildPostion(pos);
+                        ((CompModularizationWeapon?)thing)?.SetChildPostion(pos);
                     }
                 }
             }
         }
-
-
-        public void SetChildPostion() => RootPart.Private_SetChildPostion();
-
-
-        private void Private_SetChildPostionInvalid(IntVec3? pos = null)
-        {
-            lock (this)
-            {
-                NodeContainer? childs = ChildNodes;
-                if (childs == null) return;
-                if (pos == null) pos = parent.PositionHeld;
-                foreach (Thing? thing in childs.Values)
-                {
-                    if(thing != null)
-                    {
-                        thing.Position = pos.Value;
-                        ((CompModularizationWeapon?)thing)?.Private_SetChildPostionInvalid(pos);
-                    }
-                }
-                foreach (Thing? thing in targetPartsWithId.Values)
-                {
-                    if(thing != null)
-                    {
-                        thing.Position = pos.Value;
-                        ((CompModularizationWeapon?)thing)?.Private_SetChildPostionInvalid(pos);
-                    }
-                }
-            }
-        }
-
-
-        public void SetChildPostionInvalid() => RootPart.Private_SetChildPostionInvalid();
 
 
         internal static Mesh ReindexedMesh(Mesh meshin)

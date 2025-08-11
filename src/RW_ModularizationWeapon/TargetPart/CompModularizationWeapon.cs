@@ -16,7 +16,7 @@ namespace RW_ModularizationWeapon
             {
                 lock (this)
                 {
-                    return this.RootPart == this && this.occupiers == null;
+                    return this.occupiers == null && this.ParentPart == null;
                 }
             }
         }
@@ -66,14 +66,14 @@ namespace RW_ModularizationWeapon
         //invoked when setting by player or none-system opt
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
                 //only allow thing not have parent or spawned?
                 //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
                 if (id != null && AllowPart(targetInfo.Thing, id))
                 {
-                    NodeContainer? container = ChildNodes;
-                    if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                     //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
                     //targetOwner?.Remove(targetInfo.Thing);
                     //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
@@ -181,7 +181,7 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            if (!IsSwapRoot)
+            if (IsSwapRoot)
                 throw new InvalidOperationException("SwapTargetPart can only called at root");
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
@@ -193,7 +193,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        private void Private_ClearTargetPart()
+        public void ClearTargetPart()
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
@@ -201,24 +201,20 @@ namespace RW_ModularizationWeapon
             {
                 foreach (CompModularizationWeapon? comp in container.Values)
                 {
-                    comp?.Private_ClearTargetPart();
+                    comp?.ClearTargetPart();
                 }
                 foreach (LocalTargetInfo info in targetPartsWithId.Values)
                 {
-                    ((CompModularizationWeapon?)info.Thing)?.Private_ClearTargetPart();
+                    ((CompModularizationWeapon?)info.Thing)?.ClearTargetPart();
                 }
                 if (targetPartsWithId.Count > 0)
                 {
                     List<string> ids = new List<string>(targetPartsWithId.Keys);
-                    foreach(string id in ids) SetTargetPart(id, container[id]);
+                    foreach (string id in ids) RemoveTargetPartInternal(id, out _);
+                    targetPartChanged = true;
+                    UpdateTargetPartVNode();
                 }
             }
-        }
-        public void ClearTargetPart()
-        {
-            if (!IsSwapRoot)
-                throw new InvalidOperationException("ClearTargetPart can only called at root");
-            Private_ClearTargetPart();
         }
 
 
