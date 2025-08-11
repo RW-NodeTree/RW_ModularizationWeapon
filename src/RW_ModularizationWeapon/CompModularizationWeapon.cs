@@ -807,28 +807,36 @@ namespace RW_ModularizationWeapon
                     {
                         if (targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                         {
-                            Map? mapOfTargetPart = target.Thing?.Map;
-                            if (target.HasThing && (mapOfTargetPart != null ? mapOfTargetPart != parent.MapHeld : target.Thing!.holdingOwner != null))
+                            Thing? targetThing = target.Thing;
+                            Map? mapOfTargetPart = targetThing?.Map;
+                            if (targetThing != null)
                             {
-                                // Log.Message($"{id} : {target} invaildity target part because spawned, mapOfTargetPart = {mapOfTargetPart}, mapHeld = {parent.MapHeld}, holdingOwner = {target.Thing.holdingOwner}");
-                                SetTargetPart(id, proccesser.ChildNodes[id]);
-                                ((CompModularizationWeapon?)target.Thing)?.UpdateTargetPartVNode();
-                                result = false;
-                                continue;
+                                if (mapOfTargetPart != null ? mapOfTargetPart != parent.MapHeld : targetThing.holdingOwner != null)
+                                {
+                                    // Log.Message($"{id} : {target} invaildity target part because spawned, mapOfTargetPart = {mapOfTargetPart}, mapHeld = {parent.MapHeld}, holdingOwner = {target.Thing.holdingOwner}");
+                                    RemoveTargetPartInternal(id, out LocalTargetInfo prve);
+                                    CompModularizationWeapon? part = prve.Thing;
+                                    part?.UpdateTargetPartVNode();
+                                    targetPartChanged = true;
+                                    result = false;
+                                    continue;
+                                }
+                                if (mapOfTargetPart != null) targetThing.DeSpawn();
                             }
-                            if (target.HasThing && mapOfTargetPart != null) target.Thing!.DeSpawn();
-                            if (proccesser.AllowNode(target.Thing, id))
+                            if (proccesser.AllowNode(targetThing, id))
                             {
-                                if (target.HasThing && mapOfTargetPart != null && !target.Thing!.Spawned) target.Thing.SpawnSetup(mapOfTargetPart, false);
-                                result = (((CompModularizationWeapon?)target.Thing)?.CheckTargetVaild() ?? true) && result;
+                                if (targetThing != null && mapOfTargetPart != null && !targetThing.Spawned) targetThing.SpawnSetup(mapOfTargetPart, false);
+                                result = (((CompModularizationWeapon?)targetThing)?.CheckTargetVaild() ?? true) && result;
                             }
                             else
                             {
                                 // Log.Message($"{id} : {target} invaildity target part because not allowed");
-                                SetTargetPart(id, proccesser.ChildNodes[id]);
-                                ((CompModularizationWeapon?)target.Thing)?.UpdateTargetPartVNode();
+                                RemoveTargetPartInternal(id, out LocalTargetInfo prve);
+                                CompModularizationWeapon? part = prve.Thing;
+                                part?.UpdateTargetPartVNode();
+                                targetPartChanged = true;
                                 result = false;
-                                if (target.HasThing && mapOfTargetPart != null && !target.Thing!.Spawned) target.Thing.SpawnSetup(mapOfTargetPart, false);
+                                if (targetThing != null && mapOfTargetPart != null && !targetThing.Spawned) targetThing.SpawnSetup(mapOfTargetPart, false);
                             }
                         }
                     }
@@ -1217,49 +1225,54 @@ namespace RW_ModularizationWeapon
                 {
                     //Console.WriteLine($"{parent}[{id}]:{ChildNodes[id]},{GetTargetPart(id)}");
                     CompChildNodeProccesser? proccesser;
-                    CompModularizationWeapon? weaponComp;
+                    CompModularizationWeapon? weapon;
+
                     bool hasKey = nextChild.ContainsKey(id);
-                    Thing? prev = hasKey ? nextChild[id] : null;
+                    Thing? prve = hasKey ? nextChild[id] : null;
+
                     if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo target))
                     {
-
-                        proccesser = prev;
+                        proccesser = prve;
                         if (proccesser != null) proccesser.NeedUpdate = true;
 
-                        weaponComp = prev;
-                        if (weaponComp != null) weaponComp.swap = true;
+                        weapon = prve;
+                        if (weapon != null) weapon.swap = true;
                         continue;
                     }
 
-                    if(target.HasThing && target.Thing.Spawned)
+                    Thing? next = target.Thing;
+
+                    if (next != null && next.Spawned)
                     {
-                        target.Thing.DeSpawn();
+                        next.DeSpawn();
                     }
 
-                    SetTargetPart(id, prev);
-                    if(target.HasThing) nextChild[id] = target.Thing;
+                    if (prve != null) SetTargetPartInternal(id, prve, out _);
+                    else RemoveTargetPartInternal(id, out _);
+
+                    if (next != null) nextChild[id] = next;
                     else if(hasKey) nextChild.Remove(id);
 
                     //Sync child swap state
 
-                    proccesser = prev;
+                    proccesser = prve;
                     if (proccesser != null) proccesser.NeedUpdate = true;
 
-                    weaponComp = prev;
-                    if (weaponComp != null) weaponComp.swap = true;
+                    weapon = prve;
+                    if (weapon != null) weapon.swap = true;
 
-                    proccesser = target.Thing;
+                    proccesser = next;
                     if (proccesser != null) proccesser.NeedUpdate = true;
 
-                    weaponComp = target.Thing;
-                    if (weaponComp != null) weaponComp.swap = true;
+                    weapon = next;
+                    if (weapon != null) weapon.swap = true;
 
-                    if(map != null && prev != null)
+                    if (map != null && prve != null)
                     {
-                        int index = map.cellIndices.CellToIndex(prev.Position);
+                        int index = map.cellIndices.CellToIndex(prve.Position);
                         if (index < map.cellIndices.NumGridCells && index >= 0)
                         {
-                            prev.SpawnSetup(map, false);
+                            prve.SpawnSetup(map, false);
                         }
                     }
                 }

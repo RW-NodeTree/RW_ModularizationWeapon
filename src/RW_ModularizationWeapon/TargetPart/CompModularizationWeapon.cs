@@ -21,39 +21,83 @@ namespace RW_ModularizationWeapon
             }
         }
 
+        private bool RemoveTargetPartInternal(string id, out LocalTargetInfo prve)
+        {
+            lock (this)
+            {
+                if (targetPartsWithId.TryGetValue(id, out prve))
+                {
+                    targetPartsWithId.Remove(id);
+                    CompModularizationWeapon? part = prve.Thing;
+                    if (part != null)
+                    {
+                        part.occupiers = null;
+                    }
+                    return true;
+                }
+                //targetOwner?.TryAdd(targetInfo.Thing, false);
+            }
+            return false;
+        }
+
+        private bool SetTargetPartInternal(string id, LocalTargetInfo targetInfo, out LocalTargetInfo prve)
+        {
+            lock (this)
+            {
+                CompModularizationWeapon? part;
+                if (targetPartsWithId.TryGetValue(id, out prve))
+                {
+                    part = prve.Thing;
+                    if (targetInfo == prve) return false;
+                    else if (part != null)
+                    {
+                        part.occupiers = null;
+                    }
+                    targetPartsWithId.Remove(id);
+                }
+                targetPartsWithId[id] = targetInfo;
+                part = targetInfo.Thing;
+                if (part != null) part.occupiers = this;
+                //targetOwner?.TryAdd(targetInfo.Thing, false);
+            }
+            return true;
+        }
+
+        //invoked when setting by player or none-system opt
         public bool SetTargetPart(string id, LocalTargetInfo targetInfo)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
                 //only allow thing not have parent or spawned?
                 //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
-                LocalTargetInfo currentTargetInfo = GetTargetPart(id);
-                if (id != null && currentTargetInfo != targetInfo && AllowPart(targetInfo.Thing, id))
+                if (id != null && AllowPart(targetInfo.Thing, id))
                 {
-
+                    NodeContainer? container = ChildNodes;
+                    if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                     //ThingOwner prevOwner = targetPartsHoldingOwnerWithId.TryGetValue(id);
                     //targetOwner?.Remove(targetInfo.Thing);
                     //Log.Message($"{parent}->SetTargetPart {id} : {targetInfo}; {UsingTargetPart}");
-                    targetPartsWithId.TryGetValue(id, out currentTargetInfo);
-                    CompModularizationWeapon? part = currentTargetInfo.Thing;
-                    if (part != null)
-                    {
-                        part.occupiers = null;
-                        if (!swap) part.UpdateTargetPartVNode();
-                    }
                     Thing? prevPart = container[id];
-                    if (targetInfo.Thing == prevPart && !swap) targetPartsWithId.Remove(id);
+                    if(prevPart == targetInfo)
+                    {
+                        if (RemoveTargetPartInternal(id, out LocalTargetInfo prve))
+                        {
+                            CompModularizationWeapon? part = prve.Thing;
+                            part?.UpdateTargetPartVNode();
+                            targetPartChanged = true;
+                            UpdateTargetPartVNode();
+                        }
+                    }
                     else
                     {
-                        targetPartsWithId.SetOrAdd(id, targetInfo);
-                        part = targetInfo.Thing;
-                        if (part != null) part.occupiers = this;
+                        if (SetTargetPartInternal(id, targetInfo, out LocalTargetInfo prve))
+                        {
+                            CompModularizationWeapon? part = prve.Thing;
+                            part?.UpdateTargetPartVNode();
+                            targetPartChanged = true;
+                            UpdateTargetPartVNode();
+                        }
                     }
-                    //targetOwner?.TryAdd(targetInfo.Thing, false);
-                    targetPartChanged = true;
-                    if (!swap) UpdateTargetPartVNode();
                     return true;
                 }
                 return false;
@@ -137,16 +181,14 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
+            if (!IsSwapRoot) throw new InvalidOperationException("SwapTargetPart can only called at root");
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
             {
-                if(IsSwapRoot)
-                {
-                    swap = true;
-                    NeedUpdate = true;
-                    container.Comp.UpdateNode();
-                }
+                swap = true;
+                container.NeedUpdate = true;
+                container.Comp.UpdateNode();
             }
         }
 
@@ -171,7 +213,11 @@ namespace RW_ModularizationWeapon
                 }
             }
         }
-        public void ClearTargetPart() => RootPart.Private_ClearTargetPart();
+        public void ClearTargetPart()
+        {
+            if (!IsSwapRoot) throw new InvalidOperationException("ClearTargetPart can only called at root");
+            Private_ClearTargetPart();
+        }
 
 
         public IEnumerator<(string, Thing?, WeaponAttachmentProperties)> GetEnumerator()
