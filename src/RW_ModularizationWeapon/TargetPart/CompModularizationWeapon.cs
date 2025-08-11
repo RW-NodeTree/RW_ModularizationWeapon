@@ -181,8 +181,10 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            if (IsSwapRoot)
+            if (!IsSwapRoot)
+            {
                 throw new InvalidOperationException("SwapTargetPart can only called at root");
+            }
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
