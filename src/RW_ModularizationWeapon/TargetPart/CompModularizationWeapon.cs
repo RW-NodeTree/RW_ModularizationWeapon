@@ -181,7 +181,8 @@ namespace RW_ModularizationWeapon
 
         public void SwapTargetPart()
         {
-            if (!IsSwapRoot) throw new InvalidOperationException("SwapTargetPart can only called at root");
+            if (!IsSwapRoot)
+                throw new InvalidOperationException("SwapTargetPart can only called at root");
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             lock (this)
@@ -215,7 +216,8 @@ namespace RW_ModularizationWeapon
         }
         public void ClearTargetPart()
         {
-            if (!IsSwapRoot) throw new InvalidOperationException("ClearTargetPart can only called at root");
+            if (!IsSwapRoot)
+                throw new InvalidOperationException("ClearTargetPart can only called at root");
             Private_ClearTargetPart();
         }
 
