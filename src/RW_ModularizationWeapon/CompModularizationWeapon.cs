@@ -1192,13 +1192,12 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override Dictionary<string, Thing>? PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object?> cachedDataToPostUpatde, out bool blockEvent, out bool notUpdateTexture)
+        protected override Dictionary<string, Thing>? PreUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object?> cachedDataToPostUpatde, out bool notUpdateTexture)
         {
             // if(stopWatch.IsRunning) stopWatch.Restart();
             // else stopWatch.Start();
             // long ct = 0;
             // long lt = 0;
-            blockEvent = false;
             notUpdateTexture = false;
             NodeContainer? childs = ChildNodes;
             if (childs == null) return null;
@@ -1284,7 +1283,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        protected override void PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object?> cachedDataFromPerUpdate, ReadOnlyDictionary<string, Thing> prveChilds, out bool blockEvent, out bool notUpdateTexture)
+        protected override void PostUpdateNode(CompChildNodeProccesser actionNode, Dictionary<string, object?> cachedDataFromPerUpdate, ReadOnlyDictionary<string, Thing> prveChilds, out bool notUpdateTexture)
         {
             // if(stopWatch.IsRunning) stopWatch.Restart();
             // else stopWatch.Start();
@@ -1293,7 +1292,6 @@ namespace RW_ModularizationWeapon
 
             lock (this)
             {
-                blockEvent = false;
                 notUpdateTexture = false;
                 if (Props.attachmentProperties.Count > 0 && IsSwapRoot)
                 {

@@ -49,6 +49,12 @@
             "name": "SwitchPlayer",
             "type": "unity",
             "request": "launch"
+        },
+        {
+            "name": "Attach to Player",
+            "type": "vstuc",
+            "request": "attach",
+            "endPoint": "127.0.0.1:56124"
         }
     ]
 }
