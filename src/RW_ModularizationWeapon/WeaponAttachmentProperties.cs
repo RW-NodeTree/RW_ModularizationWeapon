@@ -116,6 +116,7 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionaryDgit(ref verbPropertiesOtherPartOffseterAffectHorizon, verbPropertiesOtherPartOffseterAffectHorizonDefaultValue);
             CheckAndSetDictionaryDgit(ref toolsOtherPartOffseterAffectHorizon, toolsOtherPartOffseterAffectHorizonDefaultValue);
+            CheckAndSetDictionaryDgit(ref compPropertiesOtherPartOffseterAffectHorizon, compPropertiesOtherPartOffseterAffectHorizonDefaultValue);
             statOtherPartOffseterAffectHorizon = statOtherPartOffseterAffectHorizon ?? new Dictionary<string, List<StatModifier>>();
             statOtherPartOffseterAffectHorizon.RemoveAll(x => x.Key == null || x.Value == null);
             #endregion
@@ -132,6 +133,7 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionaryDgit(ref verbPropertiesOtherPartMultiplierAffectHorizon, verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue);
             CheckAndSetDictionaryDgit(ref toolsOtherPartMultiplierAffectHorizon, toolsOtherPartMultiplierAffectHorizonDefaultValue);
+            CheckAndSetDictionaryDgit(ref compPropertiesOtherPartMultiplierAffectHorizon, compPropertiesOtherPartMultiplierAffectHorizonDefaultValue);
             statOtherPartMultiplierAffectHorizon = statOtherPartMultiplierAffectHorizon ?? new Dictionary<string, List<StatModifier>>();
             statOtherPartMultiplierAffectHorizon.RemoveAll(x => x.Key == null || x.Value == null);
             #endregion
@@ -148,6 +150,7 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionaryBool(ref verbPropertiesBoolAndPatchByOtherPart, verbPropertiesBoolAndPatchByOtherPartDefaultValue);
             CheckAndSetDictionaryBool(ref toolsBoolAndPatchByOtherPart, toolsBoolAndPatchByOtherPartDefaultValue);
+            CheckAndSetDictionaryBool(ref compPropertiesBoolAndPatchByOtherPart, compPropertiesBoolAndPatchByOtherPartDefaultValue);
             #endregion
             #endregion
 
@@ -162,6 +165,7 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionaryBool(ref verbPropertiesBoolOrPatchByOtherPart, verbPropertiesBoolOrPatchByOtherPartDefaultValue);
             CheckAndSetDictionaryBool(ref toolsBoolOrPatchByOtherPart, toolsBoolOrPatchByOtherPartDefaultValue);
+            CheckAndSetDictionaryBool(ref compPropertiesBoolOrPatchByOtherPart, compPropertiesBoolOrPatchByOtherPartDefaultValue);
             #endregion
             #endregion
 
@@ -176,6 +180,7 @@ namespace RW_ModularizationWeapon
             #region OtherPart
             CheckAndSetDictionaryFilt(ref verbPropertiesObjectPatchByOtherPart, verbPropertiesObjectPatchByOtherPartDefaultValue);
             CheckAndSetDictionaryFilt(ref toolsObjectPatchByOtherPart, toolsObjectPatchByOtherPartDefaultValue);
+            CheckAndSetDictionaryFilt(ref compPropertiesObjectPatchByOtherPart, compPropertiesObjectPatchByOtherPartDefaultValue);
             #endregion
             #endregion
         }
@@ -299,6 +304,10 @@ namespace RW_ModularizationWeapon
         /// </summary>
         public bool notUseVerbProperties;
         /// <summary>
+        /// if it's **`true`**,the parent part will not able to read `CompProperties` from this attach point
+        /// </summary>
+        public bool notUseCompProperties;
+        /// <summary>
         /// if is's **`true`**,the randering postion of this part will offset by the pixel scale
         /// </summary>
         public bool postionInPixelSize;
@@ -334,11 +343,15 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, FieldReaderDgitList<Tool>> toolsOtherPartOffseterAffectHorizon = new Dictionary<string, FieldReaderDgitList<Tool>>();
 
+        public Dictionary<string, FieldReaderDgitList<CompProperties>> compPropertiesOtherPartOffseterAffectHorizon = new Dictionary<string, FieldReaderDgitList<CompProperties>>();
+
         public Dictionary<string, List<StatModifier>> statOtherPartOffseterAffectHorizon = new Dictionary<string, List<StatModifier>>();
 
         public float verbPropertiesOtherPartOffseterAffectHorizonDefaultValue = 1;
 
         public float toolsOtherPartOffseterAffectHorizonDefaultValue = 1;
+
+        public float compPropertiesOtherPartOffseterAffectHorizonDefaultValue = 1;
 
         public float statOtherPartOffseterAffectHorizonDefaultValue = 1;
         #endregion
@@ -363,11 +376,15 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, FieldReaderDgitList<Tool>> toolsOtherPartMultiplierAffectHorizon = new Dictionary<string, FieldReaderDgitList<Tool>>();
 
+        public Dictionary<string, FieldReaderDgitList<CompProperties>> compPropertiesOtherPartMultiplierAffectHorizon = new Dictionary<string, FieldReaderDgitList<CompProperties>>();
+
         public Dictionary<string, List<StatModifier>> statOtherPartMultiplierAffectHorizon = new Dictionary<string, List<StatModifier>>();
 
         public float verbPropertiesOtherPartMultiplierAffectHorizonDefaultValue = 1;
 
         public float toolsOtherPartMultiplierAffectHorizonDefaultValue = 1;
+        
+        public float compPropertiesOtherPartMultiplierAffectHorizonDefaultValue = 1;
 
         public float statOtherPartMultiplierAffectHorizonDefaultValue = 1;
         #endregion
@@ -389,9 +406,13 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, FieldReaderBoolList<Tool>> toolsBoolAndPatchByOtherPart = new Dictionary<string, FieldReaderBoolList<Tool>>();
 
+        public Dictionary<string, FieldReaderBoolList<CompProperties>> compPropertiesBoolAndPatchByOtherPart = new Dictionary<string, FieldReaderBoolList<CompProperties>>();
+
         public bool verbPropertiesBoolAndPatchByOtherPartDefaultValue = true;
 
         public bool toolsBoolAndPatchByOtherPartDefaultValue = true;
+
+        public bool compPropertiesBoolAndPatchByOtherPartDefaultValue = true;
         #endregion
         #endregion
 
@@ -410,10 +431,13 @@ namespace RW_ModularizationWeapon
         public Dictionary<string, FieldReaderBoolList<VerbProperties>> verbPropertiesBoolOrPatchByOtherPart = new Dictionary<string, FieldReaderBoolList<VerbProperties>>();
 
         public Dictionary<string, FieldReaderBoolList<Tool>> toolsBoolOrPatchByOtherPart = new Dictionary<string, FieldReaderBoolList<Tool>>();
+        public Dictionary<string, FieldReaderBoolList<CompProperties>> compPropertiesBoolOrPatchByOtherPart = new Dictionary<string, FieldReaderBoolList<CompProperties>>();
 
         public bool verbPropertiesBoolOrPatchByOtherPartDefaultValue = false;
 
         public bool toolsBoolOrPatchByOtherPartDefaultValue = false;
+
+        public bool compPropertiesBoolOrPatchByOtherPartDefaultValue = false;
         #endregion
         #endregion
 
@@ -432,9 +456,13 @@ namespace RW_ModularizationWeapon
 
         public Dictionary<string, FieldReaderFiltList<Tool>> toolsObjectPatchByOtherPart = new Dictionary<string, FieldReaderFiltList<Tool>>();
 
+        public Dictionary<string, FieldReaderFiltList<CompProperties>> compPropertiesObjectPatchByOtherPart = new Dictionary<string, FieldReaderFiltList<CompProperties>>();
+
         public bool verbPropertiesObjectPatchByOtherPartDefaultValue = true;
 
         public bool toolsObjectPatchByOtherPartDefaultValue = true;
+
+        public bool compPropertiesObjectPatchByOtherPartDefaultValue = true;
         #endregion
         #endregion
 

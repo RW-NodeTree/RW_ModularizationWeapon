@@ -39,7 +39,7 @@ namespace RW_ModularizationWeapon.UI
         }
 
 
-        public (string?, CompModularizationWeapon?) SelectedPartForChange
+        public (string?, ModularizationWeapon?) SelectedPartForChange
         {
             get
             {
@@ -62,7 +62,7 @@ namespace RW_ModularizationWeapon.UI
         {
             get
             {
-                (string? id, CompModularizationWeapon? comp) = SelectedPartForChange;
+                (string? id, ModularizationWeapon? comp) = SelectedPartForChange;
                 NodeContainer? container = comp?.ChildNodes;
                 if (id != null && comp != null)
                 {
@@ -94,14 +94,14 @@ namespace RW_ModularizationWeapon.UI
         internal void ResetSelections()
         {
             selections.Clear();
-            (string? id, CompModularizationWeapon? parent) = SelectedPartForChange;
+            (string? id, ModularizationWeapon? parent) = SelectedPartForChange;
             if (parent != null && id != null)
             {
                 NodeContainer? container = parent.ChildNodes;
                 if (container == null) throw new NullReferenceException(nameof(parent.ChildNodes));
                 Thing? OrginalPart = targetMode ? parent.GetTargetPart(id).Thing : container[id];
                 selections.Add((OrginalPart, OrginalPart?.def));
-                if (parent.AllowPart(null, id))
+                if (parent.AllowNode(null, id))
                 {
                     if(OrginalPart != null) selections.Add((default(Thing), default(ThingDef)));
                 }
@@ -111,7 +111,7 @@ namespace RW_ModularizationWeapon.UI
                     in pawn.Map.listerThings.AllThings
                     where
                         (x?.Spawned ?? false) &&
-                        parent.AllowPart(x, id) &&
+                        parent.AllowNode(x, id) &&
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
                 );
@@ -123,7 +123,7 @@ namespace RW_ModularizationWeapon.UI
                     in pawn.Map.listerThings.AllThings
                     where
                         (x?.Spawned ?? false) &&
-                        (((CompModularizationWeapon?)x)?.IsSwapRoot ?? false) &&
+                        (((ModularizationWeapon?)x)?.IsSwapRoot ?? false) &&
                         creaftingTable.Props.filter.Allows(x.def) &&
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)
@@ -132,8 +132,8 @@ namespace RW_ModularizationWeapon.UI
                     from x
                     in creaftingTable.Props.AllowsMakedDefs
                     where
-                        x?.GetCompProperties<CompProperties_ModularizationWeapon>() != null &&
-                        x.GetCompProperties<CompProperties_ModularizationWeapon>().allowCreateOnCraftingPort
+                        x?.GetModExtension<ModularizationWeaponExtension>() != null &&
+                        x.GetModExtension<ModularizationWeaponExtension>().allowCreateOnCraftingPort
                     select (default(Thing), x)
                 );
             }
@@ -171,7 +171,7 @@ namespace RW_ModularizationWeapon.UI
             //stopwatch.Restart();
             //long[] spans = new long[5];
             // Widgets.Label(new Rect(0, 0, inRect.width, 36), "AssembleWeapon".Translate());
-            CompModularizationWeapon? weapon = creaftingTable.GetTargetCompModularizationWeapon();
+            ModularizationWeapon? weapon = creaftingTable.GetTargetCompModularizationWeapon();
             weapon?.SwapTargetPart();
             targetMode = !targetMode;
             //if (weapon != null)
@@ -244,21 +244,21 @@ namespace RW_ModularizationWeapon.UI
                 48,
                 ScrollViewSize.x,
                 ScrollViewSize.y,
-                (string id,Thing? part, CompModularizationWeapon Parent)=>
+                (string id,Thing? part, ModularizationWeapon Parent)=>
                 {
                     if (SelectedPartForChange == (id, Parent))
                         SelectedPartForChange = (null, null);
                     else
                         SelectedPartForChange = (id, Parent);
                 },
-                (string id,Thing? part, CompModularizationWeapon Parent)=>
+                (string id,Thing? part, ModularizationWeapon Parent)=>
                 {
                     if (SelectedPartForChange == (id, Parent))
                         SelectedPartForChange = (null, null);
                     else
                         SelectedPartForChange = (id, Parent);
                 },
-                (string id, Thing? part, CompModularizationWeapon Parent) =>
+                (string id, Thing? part, ModularizationWeapon Parent) =>
                 {
                     if (SelectedPartForChange == (id, Parent))
                         SelectedPartForChange = (null, null);
@@ -283,7 +283,7 @@ namespace RW_ModularizationWeapon.UI
                 new Rect(Vector2.zero, ScrollViewSize)
             );
 
-            (string? idForChange, CompModularizationWeapon? partForChange) = SelectedPartForChange;
+            (string? idForChange, ModularizationWeapon? partForChange) = SelectedPartForChange;
             NodeContainer? container = partForChange?.ChildNodes;
             for (int i = 0; i < selections.Count; i++)
             {
@@ -292,8 +292,7 @@ namespace RW_ModularizationWeapon.UI
                 {
                     (Thing? selThing, ThingDef? selDef) = selections[i];
 
-                    CompModularizationWeapon? comp = selThing;
-                    CompChildNodeProccesser? proccesser = selThing;
+                    ModularizationWeapon? comp = selThing as ModularizationWeapon;
                     if (partForChange != null && idForChange != null)
                     {
                         if (container == null) throw new NullReferenceException(nameof(partForChange.ChildNodes));
@@ -301,13 +300,6 @@ namespace RW_ModularizationWeapon.UI
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
-                            ThingStyleDef styleDef = selThing.StyleDef;
-                            CompChildNodeProccesser? comp_targetModeParent = (selDef!.graphicData != null && (styleDef == null || styleDef.UIIcon == null) && selDef.uiIconPath.NullOrEmpty() && !(selThing is Pawn || selThing is Corpse)) ? comp?.ParentProccesser : null;
-                            if (comp_targetModeParent != null)
-                            {
-                                selThing.holdingOwner = null;
-                                proccesser?.ResetRenderedTexture();
-                            }
                             try
                             {
                                 Widgets.ThingIcon(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), selThing);
@@ -315,11 +307,6 @@ namespace RW_ModularizationWeapon.UI
                             catch(Exception ex)
                             {
                                 Log.Error(ex.ToString());
-                            }
-                            if (comp_targetModeParent != null)
-                            {
-                                selThing.holdingOwner = comp_targetModeParent.ChildNodes;
-                                proccesser?.ResetRenderedTexture();
                             }
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if(Widgets.ButtonInvisible(rect))
@@ -351,7 +338,7 @@ namespace RW_ModularizationWeapon.UI
                     }
                     else
                     {
-                        if (weapon?.parent == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
+                        if (weapon == selThing) Widgets.DrawBoxSolidWithOutline(rect, new Color32(51, 153, 255, 64), new Color32(51, 153, 255, 96));
                         Widgets.DrawHighlightIfMouseover(rect);//hover
                         if (selThing != null)
                         {
@@ -359,7 +346,7 @@ namespace RW_ModularizationWeapon.UI
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), selThing.Label);
                             if (Widgets.ButtonInvisible(rect))
                             {
-                                creaftingTable.SetTarget(selThing, this);
+                                creaftingTable.SetTarget(selThing as ModularizationWeapon, this);
                                 ResetInfoTags();
                             }
                         }
@@ -422,7 +409,7 @@ namespace RW_ModularizationWeapon.UI
         private static readonly Color32 _Border = new Color32(97, 108, 122, 255);
         private readonly Pawn pawn;
         private readonly CompCustomWeaponPort creaftingTable;
-        private readonly HashSet<(string, CompModularizationWeapon)> selected = new HashSet<(string, CompModularizationWeapon)>();
+        private readonly HashSet<(string, ModularizationWeapon)> selected = new HashSet<(string, ModularizationWeapon)>();
         private readonly List<(Thing?, ThingDef?)> selections = new List<(Thing?, ThingDef?)>();
         private Vector2[] ScrollViews = new Vector2[2];
         private StateInfoTags? stateInfoTags = null;

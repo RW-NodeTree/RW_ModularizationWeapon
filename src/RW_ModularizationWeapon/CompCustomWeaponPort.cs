@@ -78,20 +78,20 @@ namespace RW_ModularizationWeapon
                 selestedWeapon = null;
                 customWeapon?.ResetInfoTags();
             }
-            else SetTarget(ThingMaker.MakeThing(selectedDef), customWeapon);
+            else SetTarget(ThingMaker.MakeThing(selectedDef) as ModularizationWeapon, customWeapon);
         }
 
 
-        public void SetTarget(CompModularizationWeapon? selectedWeapon, CustomWeapon? customWeapon = null)
+        public void SetTarget(ModularizationWeapon? selectedWeapon, CustomWeapon? customWeapon = null)
         {
             if (selectedWeapon == null)
             {
                 selestedWeapon = null;
                 customWeapon?.ResetInfoTags();
             }
-            else if (Props.filter.Allows(selectedWeapon.parent.def))
+            else if (Props.filter.Allows(selectedWeapon.def))
             {
-                this.selestedWeapon = selectedWeapon.parent;
+                this.selestedWeapon = selectedWeapon;
                 customWeapon?.ResetInfoTags();
             }
         }
@@ -99,9 +99,9 @@ namespace RW_ModularizationWeapon
         public LocalTargetInfo GetTarget() => selestedWeapon;
 
 
-        public CompModularizationWeapon? GetTargetCompModularizationWeapon() => selestedWeapon;
+        public ModularizationWeapon? GetTargetCompModularizationWeapon() => selestedWeapon;
 
-        private Thing? selestedWeapon = null;
+        private ModularizationWeapon? selestedWeapon = null;
     }
 
     /// <summary>

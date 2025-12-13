@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon.AI
                 {
                     job.targetB = port.GetTarget();
                     LocalTargetInfo targetB = TargetB;
-                    return pawn.Reserve(targetA, job, 1, -1, null, errorOnFailed) && pawn.Reserve(targetB, job, 1, -1, null, errorOnFailed) && ((CompModularizationWeapon?)targetB.Thing) != null;
+                    return pawn.Reserve(targetA, job, 1, -1, null, errorOnFailed) && pawn.Reserve(targetB, job, 1, -1, null, errorOnFailed) && ((ModularizationWeapon?)targetB.Thing) != null;
                 }
             }
             return false;
@@ -43,7 +43,7 @@ namespace RW_ModularizationWeapon.AI
 
             this.FailOnDestroyedNullOrForbidden(TargetIndex.B);
             this.FailOnBurningImmobile(TargetIndex.B);
-            CompModularizationWeapon? comp = TargetB.Thing;
+            ModularizationWeapon? comp = TargetB.Thing as ModularizationWeapon;
             if (comp != null)
             {
                 if (!comp.IsSwapRoot) this.EndJobWith(JobCondition.Incompletable);
@@ -72,12 +72,12 @@ namespace RW_ModularizationWeapon.AI
                     Pawn actor = toil.actor;
                     Job job = actor.CurJob;
                     job.count = 1;
-                    if (!comp.parent.Spawned)
+                    if (!comp.Spawned)
                     {
                         JumpToToil(toil_JumpPoint);
                         return;
                     }
-                    if (!actor.Reserve(comp.parent, job, 1, 1))
+                    if (!actor.Reserve(comp, job, 1, 1))
                     {
                         this.EndJobWith(JobCondition.Incompletable);
                         return;
@@ -125,16 +125,15 @@ namespace RW_ModularizationWeapon.AI
                 {
                     Pawn actor = toil.actor;
                     Job job = actor.CurJob;
-                    if (!comp.parent.Spawned)
+                    if (!comp.Spawned)
                     {
-                        GenPlace.TryPlaceThing(comp.parent, TargetA.Cell, actor.Map, ThingPlaceMode.Near);
+                        GenPlace.TryPlaceThing(comp, TargetA.Cell, actor.Map, ThingPlaceMode.Near);
                     }
-                    comp.parent.Position = TargetA.Cell;
+                    comp.Position = TargetA.Cell;
                     comp.SetChildPostion();
                     comp.SwapTargetPart();
                     comp.ClearTargetPart();
-                    comp.SwapTargetPart(); //make sure the cache clean
-                    comp.ClearTargetPart();
+                    comp.ChildNodes.UpdateNode();
                 };
                 yield return toil
                     .FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell)
