@@ -23,6 +23,13 @@ namespace RW_ModularizationWeapon
     public partial class ModularizationWeapon : ThingWithComps, INodeProcesser, IRecipePatcher, IEnumerable<(string,Thing?,WeaponAttachmentProperties)>
     {
 
+        private NodeContainer childNodes;
+        
+        public ModularizationWeapon()
+        {
+            childNodes = new NodeContainer(this);
+        }
+
         public ModularizationWeaponExtension Props
         {
             get
@@ -100,20 +107,7 @@ namespace RW_ModularizationWeapon
 
         public FilterMode TextureFilterMode => Props.TextureFilterMode;
 
-        public NodeContainer ChildNodes
-        {
-            get
-            {
-                lock (this)
-                {
-                    if (childNodes == null)
-                    {
-                        childNodes = new NodeContainer(this);
-                    }
-                    return childNodes;
-                }
-            }
-        }
+        public NodeContainer ChildNodes => childNodes;
 
         public GraphicsFormat TextureFormat => GraphicsFormat.R8G8B8A8_SRGB;
 
@@ -301,6 +295,10 @@ namespace RW_ModularizationWeapon
             lock (this)
             {
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
+                if (childNodes == null)
+                {
+                    childNodes = new NodeContainer(this);
+                }
                 Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
                 if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
                 {
@@ -1084,11 +1082,11 @@ namespace RW_ModularizationWeapon
 
         public ThingOwner GetDirectlyHeldThings() => ChildNodes;
 
+
         private bool swap = false;
         private bool targetPartChanged = false;
         private VNode? targetPartVNode = null;
         private VNode? currentPartVNode = null;
-        private NodeContainer? childNodes = null;
         private ModularizationWeaponExtension? cachedProps = null;
         private ModularizationWeapon? occupiers = null;
         private Graphic_ChildNode? cachedGraphic = null;
@@ -1110,7 +1108,6 @@ namespace RW_ModularizationWeapon
 
 
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
-        private static readonly Dictionary<ThingDef,int> compLoadingCache = new Dictionary<ThingDef,int>();
         
         internal static readonly Stopwatch stopWatch = new Stopwatch();
     }
