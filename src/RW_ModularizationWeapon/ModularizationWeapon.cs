@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using HarmonyLib;
 using RimWorld;
@@ -93,7 +94,7 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                lock (partIDs)
+                lock (this)
                 {
                     if (partIDs.Count == 0)
                     {
@@ -140,7 +141,9 @@ namespace RW_ModularizationWeapon
 
         public ReadOnlyDictionary<string, WeaponAttachmentProperties> GetOrGenCurrentPartAttachmentProperties()
         {
-            lock (this)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 if (currentPartVNode == null) UpdateCurrentPartVNode();
                 if (this.partAttachmentPropertiesCache == null)
@@ -203,15 +206,31 @@ namespace RW_ModularizationWeapon
                     }
                     foreach(Task<WeaponAttachmentProperties> task in genTasks)
                         partAttachmentPropertiesCache.Add(task.Result.id!, task.Result);
-                    this.partAttachmentPropertiesCache = new ReadOnlyDictionary<string, WeaponAttachmentProperties>(partAttachmentPropertiesCache);
+                        
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        this.partAttachmentPropertiesCache = new ReadOnlyDictionary<string, WeaponAttachmentProperties>(partAttachmentPropertiesCache);
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
                 }
                 return this.partAttachmentPropertiesCache;
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
 
         public ReadOnlyDictionary<string, WeaponAttachmentProperties> GetOrGenTargetPartAttachmentProperties()
         {
-            lock (this)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 if (targetPartVNode == null) UpdateTargetPartVNode();
                 if (this.partAttachmentPropertiesCache_TargetPart == null)
@@ -275,9 +294,23 @@ namespace RW_ModularizationWeapon
                     }
                     foreach (Task<WeaponAttachmentProperties> task in genTasks)
                         partAttachmentPropertiesCache_TargetPart.Add(task.Result.id!, task.Result);
-                    this.partAttachmentPropertiesCache_TargetPart = new ReadOnlyDictionary<string, WeaponAttachmentProperties>(partAttachmentPropertiesCache_TargetPart);
+                        
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        this.partAttachmentPropertiesCache_TargetPart = new ReadOnlyDictionary<string, WeaponAttachmentProperties>(partAttachmentPropertiesCache_TargetPart);
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
                 }
                 return this.partAttachmentPropertiesCache_TargetPart;
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
 
@@ -291,7 +324,9 @@ namespace RW_ModularizationWeapon
 
         public override void ExposeData()
         {
-            lock (this)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
@@ -312,6 +347,10 @@ namespace RW_ModularizationWeapon
                 }
                 base.ExposeData();
             }
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+            }
             //if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs) NodeProccesser.UpdateNode();
         }
 
@@ -329,7 +368,7 @@ namespace RW_ModularizationWeapon
             {
                 WeaponAttachmentProperties properties = props[i];
                 Thing? part = ChildNodes[properties.id!];
-                if (!internal_NotDraw(part, properties))
+                if (!NotDraw(part, properties))
                 {
                     renderInfos.Add(properties.id!, rot);
                 }
@@ -371,6 +410,7 @@ namespace RW_ModularizationWeapon
             }
             
             List<RenderInfo> result = new List<RenderInfo>();
+            ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = GetOrGenCurrentPartAttachmentProperties();
             foreach (var kv in nodeRenderingInfos)
             {
                 string id = kv.Key;
@@ -410,7 +450,7 @@ namespace RW_ModularizationWeapon
                 else
                 {
                     bool needTransToIdentity = ChildNodes[id] is ModularizationWeapon;
-                    WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                    attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                     if (properties != null)
                     {
                         Matrix4x4 transfrom = properties.Transfrom(texScale);
@@ -496,12 +536,16 @@ namespace RW_ModularizationWeapon
             if (childs == null) return false;
             if (!PartIDs.Contains(id)) return false;
             if (node == childs[id]) return true;
-            lock (this)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 ModularizationWeapon? comp = node as ModularizationWeapon;
                 if (comp != null && (comp.ParentPart != null || (comp.occupiers != null && comp.occupiers != this))) return false;
-                WeaponAttachmentProperties? currentPartProperties = CurrentPartWeaponAttachmentPropertiesById(id!);
-                WeaponAttachmentProperties? targetPartProperties = TargetPartWeaponAttachmentPropertiesById(id!);
+                ReadOnlyDictionary<string, WeaponAttachmentProperties> currentAttachmentProperties = GetOrGenCurrentPartAttachmentProperties();
+                ReadOnlyDictionary<string, WeaponAttachmentProperties> targetAttachmentProperties = GetOrGenTargetPartAttachmentProperties();
+                currentAttachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? currentPartProperties);
+                targetAttachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? targetPartProperties);
                 //if (Prefs.DevMode) Log.Message($"properties : {properties}");
                 if (currentPartProperties != null && targetPartProperties != null)
                 {
@@ -510,10 +554,14 @@ namespace RW_ModularizationWeapon
                     return
                         currentPartProperties.filterWithWeights.Any(x => x.thingDef == node.def) &&
                         targetPartProperties.filterWithWeights.Any(x => x.thingDef == node.def) &&
-                        !internal_Unchangeable(childs[id!], currentPartProperties) &&
-                        !internal_Unchangeable(childs[id!], targetPartProperties);
+                        !Unchangeable(childs[id!], currentPartProperties) &&
+                        !Unchangeable(childs[id!], targetPartProperties);
                 }
                 return false;
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
 
@@ -663,28 +711,25 @@ namespace RW_ModularizationWeapon
 
         private void MarkTargetPartChanged()
         {
-            lock (this)
-            {
-                cachedGraphic_TargetPart?.ForceUpdateAll();
-                statOffsetCache_TargetPart = null;
-                statMultiplierCache_TargetPart = null;
-                toolsCache_TargetPart = null;
-                verbPropertiesCache_TargetPart = null;
-                childVariantVerbsOfVerbProp_TargetPart = null;
-                childVariantVerbsOfTool_TargetPart = null;
-                compPropertiesCache_TargetPart = null;
+            cachedGraphic_TargetPart?.ForceUpdateAll();
+            statOffsetCache_TargetPart = null;
+            statMultiplierCache_TargetPart = null;
+            toolsCache_TargetPart = null;
+            verbPropertiesCache_TargetPart = null;
+            childVariantVerbsOfVerbProp_TargetPart = null;
+            childVariantVerbsOfTool_TargetPart = null;
+            compPropertiesCache_TargetPart = null;
 
-                if(comps_TargetPart != null)
+            if(comps_TargetPart != null)
+            {
+                foreach (var destructor in Props.thingCompDestructors)
                 {
-                    foreach (var destructor in Props.thingCompDestructors)
+                    foreach (var comp in comps_TargetPart)
                     {
-                        foreach (var comp in comps_TargetPart)
-                        {
-                            destructor.DestroyComp(this, comp);
-                        }
+                        destructor.DestroyComp(this, comp);
                     }
-                    comps_TargetPart = null;
                 }
+                comps_TargetPart = null;
             }
         }
 
@@ -693,24 +738,21 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? childs = ChildNodes;
             if (childs == null) return;
-            lock (this)
+            ReadOnlyDictionary<string, WeaponAttachmentProperties>? attachmentPropertiesCache = this.partAttachmentPropertiesCache;
+            this.partAttachmentPropertiesCache = this.partAttachmentPropertiesCache_TargetPart;
+            this.partAttachmentPropertiesCache_TargetPart = attachmentPropertiesCache;
+            VNode? targetPartXmlNode = this.targetPartVNode;
+            this.targetPartVNode = this.currentPartVNode;
+            this.currentPartVNode = targetPartXmlNode;
+            foreach (Thing? thing in childs.Values)
             {
-                ReadOnlyDictionary<string, WeaponAttachmentProperties>? attachmentPropertiesCache = this.partAttachmentPropertiesCache;
-                this.partAttachmentPropertiesCache = this.partAttachmentPropertiesCache_TargetPart;
-                this.partAttachmentPropertiesCache_TargetPart = attachmentPropertiesCache;
-                VNode? targetPartXmlNode = this.targetPartVNode;
-                this.targetPartVNode = this.currentPartVNode;
-                this.currentPartVNode = targetPartXmlNode;
-                foreach (Thing? thing in childs.Values)
-                {
-                    ModularizationWeapon? weapon = thing as ModularizationWeapon;
-                    weapon?.SwapAttachmentPropertiesCacheAndVNode();
-                }
-                foreach (Thing? thing in targetPartsWithId.Values)
-                {
-                    ModularizationWeapon? weapon = thing as ModularizationWeapon;
-                    weapon?.SwapAttachmentPropertiesCacheAndVNode();
-                }
+                ModularizationWeapon? weapon = thing as ModularizationWeapon;
+                weapon?.SwapAttachmentPropertiesCacheAndVNode();
+            }
+            foreach (Thing? thing in targetPartsWithId.Values)
+            {
+                ModularizationWeapon? weapon = thing as ModularizationWeapon;
+                weapon?.SwapAttachmentPropertiesCacheAndVNode();
             }
         }
 
@@ -719,22 +761,19 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? childs = ChildNodes;
             if (childs == null) return;
-            lock (this)
+            if (Props.attachmentProperties.Count <= 0) return;
+            foreach (Thing? thing in childs.Values)
             {
-                if (Props.attachmentProperties.Count <= 0) return;
-                foreach (Thing? thing in childs.Values)
-                {
-                    ModularizationWeapon? comp = thing as ModularizationWeapon;
-                    comp?.InitAttachmentProperties();
-                }
-                foreach (Thing? thing in targetPartsWithId.Values)
-                {
-                    ModularizationWeapon? comp = thing as ModularizationWeapon;
-                    comp?.InitAttachmentProperties();
-                }
-                GetOrGenCurrentPartAttachmentProperties();
-                GetOrGenTargetPartAttachmentProperties();
+                ModularizationWeapon? comp = thing as ModularizationWeapon;
+                comp?.InitAttachmentProperties();
             }
+            foreach (Thing? thing in targetPartsWithId.Values)
+            {
+                ModularizationWeapon? comp = thing as ModularizationWeapon;
+                comp?.InitAttachmentProperties();
+            }
+            GetOrGenCurrentPartAttachmentProperties();
+            GetOrGenTargetPartAttachmentProperties();
         }
 
 
@@ -742,47 +781,43 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? childs = ChildNodes;
             if (childs == null) return;
-            lock (this)
+            if (Props.attachmentProperties.Count <= 0) return;
+            foreach (Thing? thing in childs.Values)
             {
-                if (Props.attachmentProperties.Count <= 0) return;
-                foreach (Thing? thing in childs.Values)
-                {
-                    ModularizationWeapon? comp = thing as ModularizationWeapon;
-                    comp?.SwapCache();
-                }
-                foreach (Thing? thing in targetPartsWithId.Values)
-                {
-                    ModularizationWeapon? comp = thing as ModularizationWeapon;
-                    comp?.SwapCache();
-                }
-
-                Graphic_ChildNode? cachedGraphic = this.cachedGraphic;
-                this.cachedGraphic = this.cachedGraphic_TargetPart;
-                this.cachedGraphic_TargetPart = cachedGraphic;
-                Dictionary<(StatDef, string?), float>? statOffsetCache = this.statOffsetCache;
-                this.statOffsetCache = this.statOffsetCache_TargetPart;
-                this.statOffsetCache_TargetPart = statOffsetCache;
-                Dictionary<(StatDef, string?), float>? statMultiplierCache = this.statMultiplierCache;
-                this.statMultiplierCache = this.statMultiplierCache_TargetPart;
-                this.statMultiplierCache_TargetPart = statMultiplierCache;
-                ReadOnlyCollection<(string? id, int index, Tool afterConvert)>? toolsCache = this.toolsCache;
-                this.toolsCache = this.toolsCache_TargetPart;
-                this.toolsCache_TargetPart = toolsCache;
-                ReadOnlyCollection<(string? id, int index, VerbProperties afterConvert)>? verbPropertiesCache = this.verbPropertiesCache;
-                this.verbPropertiesCache = this.verbPropertiesCache_TargetPart;
-                this.verbPropertiesCache_TargetPart = verbPropertiesCache;
-                Dictionary<int, ReadOnlyCollection<(CompEquippable, Verb)>>? childVariantVerbsOfVerbProp = this.childVariantVerbsOfVerbProp;
-                this.childVariantVerbsOfVerbProp = this.childVariantVerbsOfVerbProp_TargetPart;
-                this.childVariantVerbsOfVerbProp_TargetPart = childVariantVerbsOfVerbProp;
-                Dictionary<(int, VerbProperties?), ReadOnlyCollection<(CompEquippable, Verb)>>? childVariantVerbsOfTool = this.childVariantVerbsOfTool;
-                this.childVariantVerbsOfTool_TargetPart = childVariantVerbsOfTool;
-                this.childVariantVerbsOfTool = this.childVariantVerbsOfTool_TargetPart;
-                ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache = this.compPropertiesCache;
-                this.compPropertiesCache = this.compPropertiesCache_TargetPart;
-                this.compPropertiesCache_TargetPart = compPropertiesCache;
-                InitializeComps();
+                ModularizationWeapon? comp = thing as ModularizationWeapon;
+                comp?.SwapCache();
             }
-            
+            foreach (Thing? thing in targetPartsWithId.Values)
+            {
+                ModularizationWeapon? comp = thing as ModularizationWeapon;
+                comp?.SwapCache();
+            }
+
+            Graphic_ChildNode? cachedGraphic = this.cachedGraphic;
+            this.cachedGraphic = this.cachedGraphic_TargetPart;
+            this.cachedGraphic_TargetPart = cachedGraphic;
+            Dictionary<(StatDef, string?), float>? statOffsetCache = this.statOffsetCache;
+            this.statOffsetCache = this.statOffsetCache_TargetPart;
+            this.statOffsetCache_TargetPart = statOffsetCache;
+            Dictionary<(StatDef, string?), float>? statMultiplierCache = this.statMultiplierCache;
+            this.statMultiplierCache = this.statMultiplierCache_TargetPart;
+            this.statMultiplierCache_TargetPart = statMultiplierCache;
+            ReadOnlyCollection<(string? id, int index, Tool afterConvert)>? toolsCache = this.toolsCache;
+            this.toolsCache = this.toolsCache_TargetPart;
+            this.toolsCache_TargetPart = toolsCache;
+            ReadOnlyCollection<(string? id, int index, VerbProperties afterConvert)>? verbPropertiesCache = this.verbPropertiesCache;
+            this.verbPropertiesCache = this.verbPropertiesCache_TargetPart;
+            this.verbPropertiesCache_TargetPart = verbPropertiesCache;
+            Dictionary<int, ReadOnlyCollection<(CompEquippable, Verb)>>? childVariantVerbsOfVerbProp = this.childVariantVerbsOfVerbProp;
+            this.childVariantVerbsOfVerbProp = this.childVariantVerbsOfVerbProp_TargetPart;
+            this.childVariantVerbsOfVerbProp_TargetPart = childVariantVerbsOfVerbProp;
+            Dictionary<(int, VerbProperties?), ReadOnlyCollection<(CompEquippable, Verb)>>? childVariantVerbsOfTool = this.childVariantVerbsOfTool;
+            this.childVariantVerbsOfTool_TargetPart = childVariantVerbsOfTool;
+            this.childVariantVerbsOfTool = this.childVariantVerbsOfTool_TargetPart;
+            ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache = this.compPropertiesCache;
+            this.compPropertiesCache = this.compPropertiesCache_TargetPart;
+            this.compPropertiesCache_TargetPart = compPropertiesCache;
+            InitializeComps();
         }
 
 
@@ -790,40 +825,37 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? childs = ChildNodes;
             if (childs == null) return;
-            lock (this)
+            if (Props.attachmentProperties.Count <= 0) return;
+            foreach (Thing? thing in childs.Values)
             {
-                if (Props.attachmentProperties.Count <= 0) return;
-                foreach (Thing? thing in childs.Values)
-                {
-                    ModularizationWeapon? comp = thing as ModularizationWeapon;
-                    comp?.UpdateCache();
-                }
-                foreach (Thing? thing in targetPartsWithId.Values)
-                {
-                    ModularizationWeapon? comp = thing as ModularizationWeapon;
-                    comp?.UpdateCache();
-                }
-
-                this.cachedGraphic?.ForceUpdateAll();
-
-                this.statOffsetCache = null;
-                this.statMultiplierCache = null;
-                this.childVariantVerbsOfVerbProp = null;
-                this.childVariantVerbsOfTool = null;
-                this.toolsCache = null;
-                this.verbPropertiesCache = null;
-                this.compPropertiesCache = null;
-
-
-                foreach (var destructor in Props.thingCompDestructors)
-                {
-                    foreach (var comp in AllComps)
-                    {
-                        destructor.DestroyComp(this, comp);
-                    }
-                }
-                InitializeComps();
+                ModularizationWeapon? comp = thing as ModularizationWeapon;
+                comp?.UpdateCache();
             }
+            foreach (Thing? thing in targetPartsWithId.Values)
+            {
+                ModularizationWeapon? comp = thing as ModularizationWeapon;
+                comp?.UpdateCache();
+            }
+
+            this.cachedGraphic?.ForceUpdateAll();
+
+            this.statOffsetCache = null;
+            this.statMultiplierCache = null;
+            this.childVariantVerbsOfVerbProp = null;
+            this.childVariantVerbsOfTool = null;
+            this.toolsCache = null;
+            this.verbPropertiesCache = null;
+            this.compPropertiesCache = null;
+
+
+            foreach (var destructor in Props.thingCompDestructors)
+            {
+                foreach (var comp in AllComps)
+                {
+                    destructor.DestroyComp(this, comp);
+                }
+            }
+            InitializeComps();
         }
 
 
@@ -833,119 +865,114 @@ namespace RW_ModularizationWeapon
             // else stopWatch.Start();
             // long ct = 0;
             // long lt = 0;
+            readerWriterLockSlim.EnterWriteLock();
             NodeContainer? childs = ChildNodes;
             if (childs == null) return null;
-            lock (this)
+            Dictionary<string, Thing> nextChild = new Dictionary<string, Thing>(childs.Count);
+            if (Props.attachmentProperties.Count <= 0)
             {
-                Dictionary<string, Thing> nextChild = new Dictionary<string, Thing>(childs.Count);
-                if (Props.attachmentProperties.Count <= 0)
-                {
-                    return nextChild;
-                }
-                foreach (var keyValue in childs)
-                {
-                    nextChild[keyValue.Item1] = keyValue.Item2;
-                }
-                if (!swap)
-                {
-                    return nextChild;
-                }
-                Map? swapMap = MapHeld;
-                foreach (var kv in targetPartsWithId)
-                {
-                    string id = kv.Key;
-                    LocalTargetInfo target = kv.Value;
-                    if(target.Thing != null)
-                    {
-                        nextChild[id] = target.Thing;
-                        if(swapMap != null && target.Thing.Map == swapMap)
-                            target.Thing.DeSpawn();
-                    }
-                    else
-                    {
-                        nextChild.Remove(id);
-                    }
-                }
                 return nextChild;
             }
+            foreach (var keyValue in childs)
+            {
+                nextChild[keyValue.Item1] = keyValue.Item2;
+            }
+            if (!swap)
+            {
+                return nextChild;
+            }
+            Map? swapMap = MapHeld;
+            foreach (var kv in targetPartsWithId)
+            {
+                string id = kv.Key;
+                LocalTargetInfo target = kv.Value;
+                if(target.Thing != null)
+                {
+                    nextChild[id] = target.Thing;
+                    if(swapMap != null && target.Thing.Map == swapMap)
+                        target.Thing.DeSpawn();
+                }
+                else
+                {
+                    nextChild.Remove(id);
+                }
+            }
+            return nextChild;
         }
 
         public void PreUpdateChilds(INodeProcesser actionNode, Dictionary<string, object?> cachedDataToPostUpatde, ReadOnlyDictionary<string, Thing> prveChilds)
         {
             Map? swapMap = MapHeld;
             NodeContainer? childs = ChildNodes;
-            lock (this)
+            if (swap)
             {
-                if (swap)
+                #region Remove not successed swap parts
+                bool needUpdateVNode = false;
+                Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(this.targetPartsWithId);
+                foreach (var kv in targetPartsWithId)
                 {
-                    #region Remove not successed swap parts
-                    bool needUpdateVNode = false;
-                    Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(this.targetPartsWithId);
-                    foreach (var kv in targetPartsWithId)
+                    if (childs[kv.Key] != kv.Value)
                     {
-                        if (childs[kv.Key] != kv.Value)
+                        RemoveTargetPartInternal(kv.Key, out _);
+                        ModularizationWeapon? part = kv.Value.Thing as ModularizationWeapon;
+                        part?.UpdateTargetPartVNode();
+                        targetPartChanged = true;
+                        needUpdateVNode = true;
+                        if(swapMap != null && kv.Value.Thing != null && !kv.Value.Thing.Spawned)
                         {
-                            RemoveTargetPartInternal(kv.Key, out _);
-                            ModularizationWeapon? part = kv.Value.Thing as ModularizationWeapon;
-                            part?.UpdateTargetPartVNode();
-                            targetPartChanged = true;
-                            needUpdateVNode = true;
-                            if(swapMap != null && kv.Value.Thing != null && !kv.Value.Thing.Spawned)
-                            {
-                                kv.Value.Thing.SpawnSetup(swapMap, false);
-                            }
+                            kv.Value.Thing.SpawnSetup(swapMap, false);
                         }
                     }
-                    if (needUpdateVNode)
-                    {
-                        UpdateTargetPartVNode();
-                    }
-                    #endregion
-
-                    #region Restore previous parts
-                    targetPartsWithId = new Dictionary<string, LocalTargetInfo>(this.targetPartsWithId);
-                    foreach (var kv in targetPartsWithId)
-                    {
-                        if (prveChilds.ContainsKey(kv.Key))
-                            SetTargetPartInternal(kv.Key, prveChilds[kv.Key], out _);
-                        else
-                            RemoveTargetPartInternal(kv.Key, out _);
-                    }
-                    
-                    #endregion
                 }
-
-                
-                #region Mark childs and targetPartsWithId to update
-                foreach (Thing? node in childs.Values)
+                if (needUpdateVNode)
                 {
-                    ModularizationWeapon? part = node as ModularizationWeapon;
-                    if(part != null)
-                    {
-                        part.ChildNodes.NeedUpdate = true;
-                        part.swap = swap;
-                    }
-                }
-
-                foreach (Thing? node in targetPartsWithId.Values)
-                {
-                    ModularizationWeapon? part = node as ModularizationWeapon;
-                    if(part != null)
-                    {
-                        part.ChildNodes.NeedUpdate = true;
-                        part.swap = swap;
-                    }
-                    if(swap && swapMap != null && node != null && !node.Spawned)
-                    {
-                        int index = swapMap.cellIndices.CellToIndex(node.Position);
-                        if (index < swapMap.cellIndices.NumGridCells && index >= 0)
-                        {
-                            node.SpawnSetup(swapMap, false);
-                        }
-                    }
+                    UpdateTargetPartVNode();
                 }
                 #endregion
+
+                #region Restore previous parts
+                targetPartsWithId = new Dictionary<string, LocalTargetInfo>(this.targetPartsWithId);
+                foreach (var kv in targetPartsWithId)
+                {
+                    if (prveChilds.ContainsKey(kv.Key))
+                        SetTargetPartInternal(kv.Key, prveChilds[kv.Key], out _);
+                    else
+                        RemoveTargetPartInternal(kv.Key, out _);
+                }
+                
+                #endregion
             }
+
+            
+            #region Mark childs and targetPartsWithId to update
+            foreach (Thing? node in childs.Values)
+            {
+                ModularizationWeapon? part = node as ModularizationWeapon;
+                if(part != null)
+                {
+                    part.ChildNodes.NeedUpdate = true;
+                    part.swap = swap;
+                }
+            }
+
+            foreach (Thing? node in targetPartsWithId.Values)
+            {
+                ModularizationWeapon? part = node as ModularizationWeapon;
+                if(part != null)
+                {
+                    part.ChildNodes.NeedUpdate = true;
+                    part.swap = swap;
+                }
+                if(swap && swapMap != null && node != null && !node.Spawned)
+                {
+                    int index = swapMap.cellIndices.CellToIndex(node.Position);
+                    if (index < swapMap.cellIndices.NumGridCells && index >= 0)
+                    {
+                        node.SpawnSetup(swapMap, false);
+                    }
+                }
+            }
+            #endregion
         }
 
 
@@ -955,8 +982,7 @@ namespace RW_ModularizationWeapon
             // else stopWatch.Start();
             // long ct = 0;
             // long lt = 0;
-
-            lock (this)
+            try
             {
                 if (targetPartChanged)
                 {
@@ -983,23 +1009,25 @@ namespace RW_ModularizationWeapon
                 ChildNodes.NeedUpdate = false;
                 targetPartChanged = false;
             }
+            finally
+            {
+                readerWriterLockSlim.ExitWriteLock();
+            }
+
         }
 
 
         public void SetChildPostion(IntVec3? pos = null)
         {
-            lock (this)
+            NodeContainer? childs = ChildNodes;
+            if (childs == null) return;
+            IntVec3 handlePos = pos ?? PositionHeld;
+            foreach (Thing? thing in childs.Values)
             {
-                NodeContainer? childs = ChildNodes;
-                if (childs == null) return;
-                IntVec3 handlePos = pos ?? PositionHeld;
-                foreach (Thing? thing in childs.Values)
+                if(thing != null)
                 {
-                    if(thing != null)
-                    {
-                        thing.Position = handlePos;
-                        (thing as ModularizationWeapon)?.SetChildPostion(handlePos);
-                    }
+                    thing.Position = handlePos;
+                    (thing as ModularizationWeapon)?.SetChildPostion(handlePos);
                 }
             }
         }
@@ -1036,18 +1064,6 @@ namespace RW_ModularizationWeapon
                 return mesh;
             });
         }
-        
-        public WeaponAttachmentProperties? CurrentPartWeaponAttachmentPropertiesById(string? id)
-        {
-            if(!id.NullOrEmpty()) return GetOrGenCurrentPartAttachmentProperties()!.TryGetValue(id!);
-            return null;
-        }
-        
-        public WeaponAttachmentProperties? TargetPartWeaponAttachmentPropertiesById(string? id)
-        {
-            if(!id.NullOrEmpty()) return GetOrGenTargetPartAttachmentProperties()!.TryGetValue(id!);
-            return null;
-        }
 
         public void GetChildHolders(List<IThingHolder> outChildren)
         {
@@ -1066,6 +1082,7 @@ namespace RW_ModularizationWeapon
         private ModularizationWeapon? occupiers = null;
         private Graphic_ChildNode? cachedGraphic = null;
         private Graphic_ChildNode? cachedGraphic_TargetPart = null;
+        private List<ThingComp>? comps_TargetPart = null;
         private List<string> targetPartsWithId_IdWorkingList = new List<string>();
         private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
@@ -1075,6 +1092,9 @@ namespace RW_ModularizationWeapon
         private Dictionary<(StatDef, string?), float>? statMultiplierCache_TargetPart = null;
         private ReadOnlyDictionary<string, WeaponAttachmentProperties>? partAttachmentPropertiesCache = null;
         private ReadOnlyDictionary<string, WeaponAttachmentProperties>? partAttachmentPropertiesCache_TargetPart = null;
+        private ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache = null;
+        private ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache_TargetPart = null;
+        private readonly ReaderWriterLockSlim readerWriterLockSlim = new ReaderWriterLockSlim();
         private readonly HashSet<string> partIDs = new HashSet<string>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private static Material? PostFXMat = null;

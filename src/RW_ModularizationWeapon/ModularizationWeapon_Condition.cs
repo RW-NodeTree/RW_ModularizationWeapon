@@ -1,4 +1,5 @@
-﻿using RW_NodeTree;
+﻿using System;
+using RW_NodeTree;
 using Verse;
 
 namespace RW_ModularizationWeapon
@@ -7,13 +8,12 @@ namespace RW_ModularizationWeapon
     {
         public bool Unchangeable(string id)
         {
-            NodeContainer? childs = ChildNodes;
-            if (childs != null)
-                return internal_Unchangeable(childs[id], CurrentPartWeaponAttachmentPropertiesById(id));
-            else
-                return false;
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            GetOrGenCurrentPartAttachmentProperties().TryGetValue(id, out WeaponAttachmentProperties? current);
+            return Unchangeable(container[id], current);
         }
-        internal static bool internal_Unchangeable(Thing? thing, WeaponAttachmentProperties? properties)
+        public static bool Unchangeable(Thing? thing, WeaponAttachmentProperties? properties)
         {
             if (thing != null && properties != null)
             {
@@ -34,14 +34,12 @@ namespace RW_ModularizationWeapon
 
         public bool NotDraw(string id)
         {
-
-            NodeContainer? childs = ChildNodes;
-            if (childs != null)
-                return internal_NotDraw(childs[id], CurrentPartWeaponAttachmentPropertiesById(id));
-            else
-                return false;
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            GetOrGenCurrentPartAttachmentProperties().TryGetValue(id, out WeaponAttachmentProperties? current);
+            return NotDraw(container[id], current);
         }
-        internal static bool internal_NotDraw(Thing? thing, WeaponAttachmentProperties? properties)
+        public static bool NotDraw(Thing? thing, WeaponAttachmentProperties? properties)
         {
             if (thing != null && properties != null)
             {
@@ -61,13 +59,12 @@ namespace RW_ModularizationWeapon
 
         public bool NotUseTools(string id)
         {
-            NodeContainer? childs = ChildNodes;
-            if (childs != null)
-                return internal_NotUseTools(childs[id], CurrentPartWeaponAttachmentPropertiesById(id));
-            else
-                return false;
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            GetOrGenCurrentPartAttachmentProperties().TryGetValue(id, out WeaponAttachmentProperties? current);
+            return NotUseTools(container[id], current);
         }
-        internal static bool internal_NotUseTools(Thing? thing, WeaponAttachmentProperties? properties)
+        public static bool NotUseTools(Thing? thing, WeaponAttachmentProperties? properties)
         {
             if (thing != null && properties != null)
             {
@@ -87,13 +84,12 @@ namespace RW_ModularizationWeapon
 
         public bool NotUseVerbProperties(string id)
         {
-            NodeContainer? childs = ChildNodes;
-            if (childs != null)
-                return internal_NotUseVerbProperties(childs[id], CurrentPartWeaponAttachmentPropertiesById(id));
-            else
-                return false;
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            GetOrGenCurrentPartAttachmentProperties().TryGetValue(id, out WeaponAttachmentProperties? current);
+            return NotUseVerbProperties(container[id], current);
         }
-        internal static bool internal_NotUseVerbProperties(Thing? thing, WeaponAttachmentProperties? properties)
+        public static bool NotUseVerbProperties(Thing? thing, WeaponAttachmentProperties? properties)
         {
             if (thing != null && properties != null)
             {
@@ -113,13 +109,12 @@ namespace RW_ModularizationWeapon
 
         public bool NotUseCompProperties(string id)
         {
-            NodeContainer? childs = ChildNodes;
-            if (childs != null)
-                return internal_NotUseCompProperties(childs[id], CurrentPartWeaponAttachmentPropertiesById(id));
-            else
-                return false;
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            GetOrGenCurrentPartAttachmentProperties().TryGetValue(id, out WeaponAttachmentProperties? current);
+            return NotUseCompProperties(container[id], current);
         }
-        internal static bool internal_NotUseCompProperties(Thing? thing, WeaponAttachmentProperties? properties)
+        public static bool NotUseCompProperties(Thing? thing, WeaponAttachmentProperties? properties)
         {
             if (thing != null && properties != null)
             {

@@ -3,6 +3,7 @@ using RW_ModularizationWeapon.Tools;
 using RW_NodeTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Verse;
 
 namespace RW_ModularizationWeapon
@@ -13,19 +14,19 @@ namespace RW_ModularizationWeapon
 
         #region Multiplier
 
-        public FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string? childNodeIdForVerbProperties)
+        public static FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderDgitList<VerbProperties> results = new FieldReaderDgitList<VerbProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            attachmentProperties.TryGetValue(childNodeIdForVerbProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForVerbProperties != null ? container[childNodeIdForVerbProperties] as ModularizationWeapon : null;
             results.DefaultValue = 1;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && properties != null && id != childNodeIdForVerbProperties)
                 {
                     FieldReaderDgitList<VerbProperties> cache = properties.verbPropertiesMultiplierAffectHorizon;
@@ -60,7 +61,7 @@ namespace RW_ModularizationWeapon
                     results *= mul;
                     results.DefaultValue = 1;
 
-                    mul = weapon.VerbPropertiesMultiplier(null) - 1;
+                    mul = VerbPropertiesMultiplier(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) - 1;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
                     mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
@@ -74,20 +75,34 @@ namespace RW_ModularizationWeapon
             return results;
         }
 
-
-        public FieldReaderDgitList<Tool> ToolsMultiplier(string? childNodeIdForTool)
+        public FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string? childNodeIdForVerbProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return VerbPropertiesMultiplier(childNodeIdForVerbProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderDgitList<Tool> ToolsMultiplier(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderDgitList<Tool> results = new FieldReaderDgitList<Tool>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
+            attachmentProperties.TryGetValue(childNodeIdForTool ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForTool != null ? container[childNodeIdForTool] as ModularizationWeapon : null;
             results.DefaultValue = 1;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && properties != null && id != childNodeIdForTool)
                 {
                     FieldReaderDgitList<Tool> cache = properties.toolsMultiplierAffectHorizon;
@@ -122,7 +137,7 @@ namespace RW_ModularizationWeapon
                     results *= mul;
                     results.DefaultValue = 1;
 
-                    mul = weapon.ToolsMultiplier(null) - 1;
+                    mul = ToolsMultiplier(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) - 1;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
                     mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
@@ -130,24 +145,38 @@ namespace RW_ModularizationWeapon
                     results.DefaultValue = 1;
                 }
             }
-            //Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
+            //Log.Message($"{container}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
             return results;
+        }
+        
+        public FieldReaderDgitList<Tool> ToolsMultiplier(string? childNodeIdForVerbProperties)
+        {
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return ToolsMultiplier(childNodeIdForVerbProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
         }
 
 
-        public FieldReaderDgitList<CompProperties> CompPropertiesMultiplier(string? childNodeIdForCompProperties)
+        public static FieldReaderDgitList<CompProperties> CompPropertiesMultiplier(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderDgitList<CompProperties> results = new FieldReaderDgitList<CompProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForCompProperties);
+            attachmentProperties.TryGetValue(childNodeIdForCompProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForCompProperties != null ? container[childNodeIdForCompProperties] as ModularizationWeapon : null;
             results.DefaultValue = 1;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && properties != null && id != childNodeIdForCompProperties)
                 {
                     FieldReaderDgitList<CompProperties> cache = properties.compPropertiesMultiplierAffectHorizon;
@@ -182,7 +211,7 @@ namespace RW_ModularizationWeapon
                     results *= mul;
                     results.DefaultValue = 1;
 
-                    mul = weapon.CompPropertiesMultiplier(null) - 1;
+                    mul = CompPropertiesMultiplier(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) - 1;
                     if (mul.HasDefaultValue) mul.DefaultValue--;
                     mul = (mul * cache + 1) ?? mul;
                     mul.DefaultValue = 1;
@@ -190,18 +219,35 @@ namespace RW_ModularizationWeapon
                     results.DefaultValue = 1;
                 }
             }
-            //Log.Message($"{this}.ToolsMultiplier({childNodeIdForTool}) :\nresults : {results}");
+            //Log.Message($"{container}.CompPropertiesMultiplier({childNodeIdForCompProperties}) :\nresults : {results}");
             return results;
+        }
+
+        public FieldReaderDgitList<CompProperties> CompPropertiesMultiplier(string? childNodeIdForVerbProperties)
+        {
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return CompPropertiesMultiplier(childNodeIdForVerbProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
         }
 
 
         public float GetStatMultiplier(StatDef statDef, string? childNodeIdForState)
         {
-            lock (this)
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-                WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForState);
+                ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = GetOrGenCurrentPartAttachmentProperties();
+                attachmentProperties.TryGetValue(childNodeIdForState ?? "", out WeaponAttachmentProperties? current);
                 ModularizationWeapon? currentWeapon = childNodeIdForState != null ? container[childNodeIdForState] as ModularizationWeapon : null;
                 statMultiplierCache ??= new Dictionary<(StatDef, string?), float>();
                 if (!statMultiplierCache.TryGetValue((statDef, childNodeIdForState), out float result))
@@ -211,7 +257,7 @@ namespace RW_ModularizationWeapon
                     {
                         string id = ((IList<string>)container)[i];
                         ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                        WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                        attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                         if (weapon != null && properties != null && id != childNodeIdForState)
                         {
                             float cache = properties.statMultiplierAffectHorizon.GetStatValueFromList(statDef, properties.statMultiplierAffectHorizonDefaultValue);
@@ -232,10 +278,23 @@ namespace RW_ModularizationWeapon
                             result *= (weapon.GetStatMultiplier(statDef, null) - 1) * cache + 1;
                         }
                     }
-                    statMultiplierCache.Add((statDef, childNodeIdForState), result);
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        statMultiplierCache.Add((statDef, childNodeIdForState), result);
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
                     //Log.Message($"{this}.GetStatMultiplier({statDef},{part})=>{result}\ncurrent.statOtherPartMultiplierAffectHorizonDefaultValue : {current?.statOtherPartMultiplierAffectHorizonDefaultValue}");
                 }
                 return result;
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
         #endregion

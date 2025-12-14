@@ -3,23 +3,24 @@ using RW_NodeTree;
 using Verse;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace RW_ModularizationWeapon
 {
     public partial class ModularizationWeapon
     {
-        public FieldReaderInstList<VerbProperties> VerbPropertiesObjectPatch(string? childNodeIdForVerbProperties)
+        public static FieldReaderInstList<VerbProperties> VerbPropertiesObjectPatch(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if(container == null) throw new NullReferenceException(nameof(ChildNodes));
+            if(container == null) throw new NullReferenceException(nameof(container));
+            if(attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderInstList<VerbProperties> results = new FieldReaderInstList<VerbProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            attachmentProperties.TryGetValue(childNodeIdForVerbProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForVerbProperties != null ? container[childNodeIdForVerbProperties] as ModularizationWeapon : null;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForVerbProperties && properties != null)
                 {
                     FieldReaderFiltList<VerbProperties> cache = properties.verbPropertiesObjectPatchByChildPart;
@@ -49,25 +50,39 @@ namespace RW_ModularizationWeapon
 
                     results |= weapon.Props.verbPropertiesObjectPatch & cache;
 
-                    results |= weapon.VerbPropertiesObjectPatch(null) & cache;
+                    results |= VerbPropertiesObjectPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                 }
             }
             return results;
         }
-
-
-        public FieldReaderInstList<Tool> ToolsObjectPatch(string? childNodeIdForTool)
+        
+        public FieldReaderInstList<VerbProperties> VerbPropertiesObjectPatch(string? childNodeIdForVerbProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            FieldReaderInstList<Tool> results = new FieldReaderInstList<Tool>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
-            ModularizationWeapon? currentWeapon = childNodeIdForTool != null ? container[childNodeIdForTool] as ModularizationWeapon : null;
-            for (int i = 0; i < container.Count; i++)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                return VerbPropertiesObjectPatch(childNodeIdForVerbProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderInstList<Tool> ToolsObjectPatch(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
+            FieldReaderInstList<Tool> results = new FieldReaderInstList<Tool>();
+            attachmentProperties.TryGetValue(childNodeIdForTool ?? "", out WeaponAttachmentProperties? current);
+            ModularizationWeapon? currentWeapon = childNodeIdForTool != null ? container[childNodeIdForTool] as ModularizationWeapon : null;
+            foreach (var kvp in container)
+            {
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForTool && properties != null)
                 {
                     FieldReaderFiltList<Tool> cache = properties.toolsObjectPatchByChildPart;
@@ -97,25 +112,38 @@ namespace RW_ModularizationWeapon
 
                     results |= weapon.Props.toolsObjectPatch & cache;
 
-                    results |= weapon.ToolsObjectPatch(null) & cache;
+                    results |= ToolsObjectPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderInstList<CompProperties> CompPropertiesObjectPatch(string? childNodeIdForCompProperties)
+        public FieldReaderInstList<Tool> ToolsObjectPatch(string? childNodeIdForTool)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            FieldReaderInstList<CompProperties> results = new FieldReaderInstList<CompProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForCompProperties);
-            ModularizationWeapon? currentWeapon = childNodeIdForCompProperties != null ? container[childNodeIdForCompProperties] as ModularizationWeapon : null;
-            for (int i = 0; i < container.Count; i++)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                return ToolsObjectPatch(childNodeIdForTool, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+        public static FieldReaderInstList<CompProperties> CompPropertiesObjectPatch(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
+            FieldReaderInstList<CompProperties> results = new FieldReaderInstList<CompProperties>();
+            attachmentProperties.TryGetValue(childNodeIdForCompProperties ?? "", out WeaponAttachmentProperties? current);
+            ModularizationWeapon? currentWeapon = childNodeIdForCompProperties != null ? container[childNodeIdForCompProperties] as ModularizationWeapon : null;
+            foreach (var kvp in container)
+            {
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForCompProperties && properties != null)
                 {
                     FieldReaderFiltList<CompProperties> cache = properties.compPropertiesObjectPatchByChildPart;
@@ -145,26 +173,39 @@ namespace RW_ModularizationWeapon
 
                     results |= weapon.Props.compPropertiesObjectPatch & cache;
 
-                    results |= weapon.CompPropertiesObjectPatch(null) & cache;
+                    results |= CompPropertiesObjectPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string? childNodeIdForVerbProperties)
+        public FieldReaderInstList<CompProperties> CompPropertiesObjectPatch(string? childNodeIdForCompProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return CompPropertiesObjectPatch(childNodeIdForCompProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+        public static FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderBoolList<VerbProperties> results = new FieldReaderBoolList<VerbProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            attachmentProperties.TryGetValue(childNodeIdForVerbProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForVerbProperties != null ? container[childNodeIdForVerbProperties] as ModularizationWeapon : null;
             results.DefaultValue = true;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForVerbProperties && properties != null)
                 {
                     FieldReaderBoolList<VerbProperties> cache = properties.verbPropertiesBoolAndPatchByChildPart;
@@ -195,27 +236,41 @@ namespace RW_ModularizationWeapon
                     results &= weapon.Props.verbPropertiesBoolAndPatch & cache;
                     results.DefaultValue = true;
 
-                    results &= weapon.VerbPropertiesBoolAndPatch(null) & cache;
+                    results &= VerbPropertiesBoolAndPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                     results.DefaultValue = true;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderBoolList<Tool> ToolsBoolAndPatch(string? childNodeIdForTool)
+        public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string? childNodeIdForVerbProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderBoolList<Tool> ToolsBoolAndPatch(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderBoolList<Tool> results = new FieldReaderBoolList<Tool>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
+            attachmentProperties.TryGetValue(childNodeIdForTool ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForTool != null ? container[childNodeIdForTool] as ModularizationWeapon : null;
             results.DefaultValue = true;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForTool && properties != null)
                 {
                     FieldReaderBoolList<Tool> cache = properties.toolsBoolAndPatchByChildPart;
@@ -246,27 +301,41 @@ namespace RW_ModularizationWeapon
                     results &= weapon.Props.toolsBoolAndPatch & cache;
                     results.DefaultValue = true;
 
-                    results &= weapon.ToolsBoolAndPatch(null) & cache;
+                    results &= ToolsBoolAndPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                     results.DefaultValue = true;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderBoolList<CompProperties> CompPropertiesBoolAndPatch(string? childNodeIdForCompProperties)
+        public FieldReaderBoolList<Tool> ToolsBoolAndPatch(string? childNodeIdForTool)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return ToolsBoolAndPatch(childNodeIdForTool, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderBoolList<CompProperties> CompPropertiesBoolAndPatch(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForCompProperties);
+            attachmentProperties.TryGetValue(childNodeIdForCompProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForCompProperties != null ? container[childNodeIdForCompProperties] as ModularizationWeapon : null;
             results.DefaultValue = true;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForCompProperties && properties != null)
                 {
                     FieldReaderBoolList<CompProperties> cache = properties.compPropertiesBoolAndPatchByChildPart;
@@ -297,27 +366,41 @@ namespace RW_ModularizationWeapon
                     results &= weapon.Props.compPropertiesBoolAndPatch & cache;
                     results.DefaultValue = true;
 
-                    results &= weapon.CompPropertiesBoolAndPatch(null) & cache;
+                    results &= CompPropertiesBoolAndPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                     results.DefaultValue = true;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolOrPatch(string? childNodeIdForVerbProperties)
+        public FieldReaderBoolList<CompProperties> CompPropertiesBoolAndPatch(string? childNodeIdForCompProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return CompPropertiesBoolAndPatch(childNodeIdForCompProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderBoolList<VerbProperties> VerbPropertiesBoolOrPatch(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderBoolList<VerbProperties> results = new FieldReaderBoolList<VerbProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForVerbProperties);
+            attachmentProperties.TryGetValue(childNodeIdForVerbProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForVerbProperties != null ? container[childNodeIdForVerbProperties] as ModularizationWeapon : null;
             results.DefaultValue = true;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForVerbProperties && properties != null)
                 {
                     FieldReaderBoolList<VerbProperties> cache = properties.verbPropertiesBoolOrPatchByChildPart;
@@ -348,27 +431,41 @@ namespace RW_ModularizationWeapon
                     results |= weapon.Props.verbPropertiesBoolOrPatch & cache;
                     results.DefaultValue = false;
 
-                    results |= weapon.VerbPropertiesBoolOrPatch(null) & cache;
+                    results |= VerbPropertiesBoolOrPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                     results.DefaultValue = false;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderBoolList<Tool> ToolsBoolOrPatch(string? childNodeIdForTool)
+        public FieldReaderBoolList<VerbProperties> VerbPropertiesBoolOrPatch(string? childNodeIdForVerbProperties)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderBoolList<Tool> ToolsBoolOrPatch(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderBoolList<Tool> results = new FieldReaderBoolList<Tool>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForTool);
+            attachmentProperties.TryGetValue(childNodeIdForTool ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForTool != null ? container[childNodeIdForTool] as ModularizationWeapon : null;
             results.DefaultValue = true;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForTool && properties != null)
                 {
                     FieldReaderBoolList<Tool> cache = properties.toolsBoolOrPatchByChildPart;
@@ -399,62 +496,90 @@ namespace RW_ModularizationWeapon
                     results |= weapon.Props.toolsBoolOrPatch & cache;
                     results.DefaultValue = false;
 
-                    results |= weapon.ToolsBoolOrPatch(null) & cache;
+                    results |= ToolsBoolOrPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                     results.DefaultValue = false;
                 }
             }
             return results;
         }
 
-
-        public FieldReaderBoolList<CompProperties> CompPropertiesBoolOrPatch(string? childNodeIdForCompProperties)
+        public FieldReaderBoolList<Tool> ToolsBoolOrPatch(string? childNodeIdForTool)
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return ToolsBoolOrPatch(childNodeIdForTool, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+
+        public static FieldReaderBoolList<CompProperties> CompPropertiesBoolOrPatch(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        {
+            if (container == null) throw new NullReferenceException(nameof(container));
+            if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
             FieldReaderBoolList<CompProperties> results = new FieldReaderBoolList<CompProperties>();
-            WeaponAttachmentProperties? current = CurrentPartWeaponAttachmentPropertiesById(childNodeIdForCompProperties);
+            attachmentProperties.TryGetValue(childNodeIdForCompProperties ?? "", out WeaponAttachmentProperties? current);
             ModularizationWeapon? currentWeapon = childNodeIdForCompProperties != null ? container[childNodeIdForCompProperties] as ModularizationWeapon : null;
             results.DefaultValue = true;
-            for (int i = 0; i < container.Count; i++)
+            foreach (var kvp in container)
             {
-                string id = ((IList<string>)container)[i];
-                ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
+                string id = kvp.Key;
+                ModularizationWeapon? weapon = kvp.Value as ModularizationWeapon;
+                attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                 if (weapon != null && id != childNodeIdForCompProperties && properties != null)
                 {
-                    FieldReaderBoolList<CompProperties> cache = properties.compPropertiesBoolOrPatchByChildPart;
+                    FieldReaderBoolList<CompProperties> cache = properties.compPropertiesBoolAndPatchByChildPart;
                     if (current != null)
                     {
                         bool defaultValue = cache.DefaultValue;
                         cache &=
-                            current.compPropertiesBoolOrPatchByOtherPart
+                            current.compPropertiesBoolAndPatchByOtherPart
                             .GetOrNewWhenNull(
                                 id,
                                 delegate ()
                                 {
                                     FieldReaderBoolList<CompProperties> result = new FieldReaderBoolList<CompProperties>();
-                                    result.DefaultValue = current.compPropertiesBoolOrPatchByOtherPartDefaultValue;
+                                    result.DefaultValue = current.compPropertiesBoolAndPatchByOtherPartDefaultValue;
                                     return result;
                                 }
                             );
-                        cache.DefaultValue = defaultValue && current.compPropertiesBoolOrPatchByOtherPartDefaultValue;
+                        cache.DefaultValue = defaultValue && current.compPropertiesBoolAndPatchByOtherPartDefaultValue;
                         defaultValue = cache.DefaultValue;
                         if (currentWeapon != null && weapon != currentWeapon)
                         {
-                            cache &= currentWeapon.Props.compPropertiesBoolOrPatchByOtherPart;
-                            cache.DefaultValue = defaultValue && currentWeapon.Props.compPropertiesBoolOrPatchByOtherPart.DefaultValue;
+                            cache &= currentWeapon.Props.compPropertiesBoolAndPatchByOtherPart;
+                            cache.DefaultValue = defaultValue && currentWeapon.Props.compPropertiesBoolAndPatchByOtherPart.DefaultValue;
                         }
                     }
 
 
-                    results |= weapon.Props.compPropertiesBoolOrPatch & cache;
+                    results |= weapon.Props.compPropertiesBoolAndPatch & cache;
                     results.DefaultValue = false;
 
-                    results |= weapon.CompPropertiesBoolOrPatch(null) & cache;
+                    results |= CompPropertiesBoolOrPatch(null, weapon.ChildNodes, weapon.GetOrGenCurrentPartAttachmentProperties()) & cache;
                     results.DefaultValue = false;
                 }
             }
             return results;
+        }
+
+        public FieldReaderBoolList<CompProperties> CompPropertiesBoolOrPatch(string? childNodeIdForCompProperties)
+        {
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                return CompPropertiesBoolOrPatch(childNodeIdForCompProperties, ChildNodes, GetOrGenCurrentPartAttachmentProperties());
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
         }
     }
 }

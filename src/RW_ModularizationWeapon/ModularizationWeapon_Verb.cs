@@ -11,14 +11,14 @@ namespace RW_ModularizationWeapon
 {
     public partial class ModularizationWeapon
     {
-        internal VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties)
+        public static VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
-            properties = (properties * VerbPropertiesMultiplier(childNodeIdForVerbProperties)) ?? properties;
-            properties = (properties + VerbPropertiesOffseter(childNodeIdForVerbProperties)) ?? properties;
-            properties = (properties & VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties)) ?? properties;
-            properties = (properties | VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties)) ?? properties;
-            VerbPropertiesObjectPatch(childNodeIdForVerbProperties)
+            properties = (properties * VerbPropertiesMultiplier(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
+            properties = (properties + VerbPropertiesOffseter(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
+            properties = (properties & VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
+            properties = (properties | VerbPropertiesBoolOrPatch(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
+            VerbPropertiesObjectPatch(childNodeIdForVerbProperties, container, attachmentProperties)
             .ForEach(x =>
             {
                 //Log.Message(x.ToString());
@@ -29,14 +29,14 @@ namespace RW_ModularizationWeapon
         }
 
 
-        internal Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool)
+        public static Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //tool = (Tool)tool.SimpleCopy();
-            tool = (tool * ToolsMultiplier(childNodeIdForTool)) ?? tool;
-            tool = (tool + ToolsOffseter(childNodeIdForTool)) ?? tool;
-            tool = (tool & ToolsBoolAndPatch(childNodeIdForTool)) ?? tool;
-            tool = (tool | ToolsBoolOrPatch(childNodeIdForTool)) ?? tool;
-            ToolsObjectPatch(childNodeIdForTool)
+            tool = (tool * ToolsMultiplier(childNodeIdForTool, container, attachmentProperties)) ?? tool;
+            tool = (tool + ToolsOffseter(childNodeIdForTool, container, attachmentProperties)) ?? tool;
+            tool = (tool & ToolsBoolAndPatch(childNodeIdForTool, container, attachmentProperties)) ?? tool;
+            tool = (tool | ToolsBoolOrPatch(childNodeIdForTool, container, attachmentProperties)) ?? tool;
+            ToolsObjectPatch(childNodeIdForTool, container, attachmentProperties)
             .ForEach(x =>
             {
                 //Log.Message(x.ToString());
@@ -88,15 +88,16 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                lock (this)
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+                try
                 {
                     if (toolsCache == null)
                     {
 
-                        GetOrGenCurrentPartAttachmentProperties();
-                        GetOrGenTargetPartAttachmentProperties();
-                        NodeContainer? container = ChildNodes;
-                        if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = GetOrGenCurrentPartAttachmentProperties();
                         List<(string? id, int index, Task<Tool> afterConvert)> tasks = new List<(string? id, int index, Task<Tool> afterConvert)>();
                         if (!def.tools.NullOrEmpty())
                         {
@@ -104,7 +105,7 @@ namespace RW_ModularizationWeapon
                             for (int i = 0; i < def.tools.Count; i++)
                             {
                                 Tool tool = def.tools[i];
-                                tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null))));
+                                tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties))));
                                 //VerbToolRegiestInfo prop = ;
                                 //result.Add(prop);
                             }
@@ -113,15 +114,15 @@ namespace RW_ModularizationWeapon
                         {
                             string id = ((IList<string>)container)[i];
                             Thing child = container[i];
-                            WeaponAttachmentProperties? attachmentProperties = CurrentPartWeaponAttachmentPropertiesById(id);
-                            if (!internal_NotUseTools(child, attachmentProperties))
+                            attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
+                            if (!NotUseTools(child, properties))
                             {
                                 List<Tool> tools = ToolsFromThing(child);
                                 tasks.Capacity += tools.Count;
                                 for (int j = 0; j < tools.Count; j++)
                                 {
                                     Tool tool = tools[j];
-                                    tasks.Add((id, j, Task.Run(() => ToolAfterAffect(tool, id))));
+                                    tasks.Add((id, j, Task.Run(() => ToolAfterAffect(tool, id, container, attachmentProperties))));
                                     //Tool newProp
                                     //    = ;
                                     //result.Add();
@@ -136,9 +137,22 @@ namespace RW_ModularizationWeapon
                         //Log.Message(stringBuilder.ToString());
                         List<(string? id, int index, Tool afterConvert)> result = new List<(string? id, int index, Tool afterConvert)>(tasks.Count);
                         foreach (var info in tasks) result.Add((info.id, info.index, info.afterConvert.Result));
-                        toolsCache = new ReadOnlyCollection<(string? id, int index, Tool afterConvert)>(result);
+                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                        try
+                        {
+                            toolsCache = new ReadOnlyCollection<(string? id, int index, Tool afterConvert)>(result);
+                        }
+                        finally
+                        {
+                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                        }
                     }
                     return toolsCache;
+                }
+                finally
+                {
+                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
                 }
             }
         }
@@ -147,15 +161,16 @@ namespace RW_ModularizationWeapon
         {
             get
             {
-                lock (this)
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+                try
                 {
                     if (verbPropertiesCache == null)
                     {
 
-                        GetOrGenCurrentPartAttachmentProperties();
-                        GetOrGenTargetPartAttachmentProperties();
-                        NodeContainer? container = ChildNodes;
-                        if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = GetOrGenCurrentPartAttachmentProperties();
                         List<(string? id, int index, Task<VerbProperties> afterConvert)> tasks = new List<(string? id, int index, Task<VerbProperties> afterConvert)>();
                         if (!def.Verbs.NullOrEmpty())
                         {
@@ -165,7 +180,7 @@ namespace RW_ModularizationWeapon
                             for (int i = 0; i < def.Verbs.Count; i++)
                             {
                                 VerbProperties properties = def.Verbs[i];
-                                tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null))));
+                                tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties))));
                                 //VerbPropertiesRegiestInfo prop = ;
                                 //result.Add(prop);
                             }
@@ -175,15 +190,15 @@ namespace RW_ModularizationWeapon
                         {
                             string id = ((IList<string>)container)[i];
                             Thing child = container[i];
-                            WeaponAttachmentProperties? attachmentProperties = CurrentPartWeaponAttachmentPropertiesById(id);
-                            if (!internal_NotUseVerbProperties(child, attachmentProperties))
+                            attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
+                            if (!NotUseVerbProperties(child, properties))
                             {
                                 List<VerbProperties> verbProperties = VerbPropertiesFromThing(child);
                                 tasks.Capacity += verbProperties.Count;
                                 for (int j = 0; j < verbProperties.Count; j++)
                                 {
                                     VerbProperties cache = verbProperties[j];
-                                    tasks.Add((id, j, Task.Run(() => VerbPropertiesAfterAffect(cache, id))));
+                                    tasks.Add((id, j, Task.Run(() => VerbPropertiesAfterAffect(cache, id, container, attachmentProperties))));
                                     //result.Add();
                                 }
                             }
@@ -196,16 +211,31 @@ namespace RW_ModularizationWeapon
                         //Log.Message(stringBuilder.ToString());
                         List<(string? id, int index, VerbProperties afterConvert)> result = new List<(string? id, int index, VerbProperties afterConvert)>(tasks.Count);
                         foreach (var info in tasks) result.Add((info.id, info.index, info.afterConvert.Result));
-                        verbPropertiesCache = new ReadOnlyCollection<(string? id, int index, VerbProperties afterConvert)>(result);
+                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                        try
+                        {
+                            verbPropertiesCache = new ReadOnlyCollection<(string? id, int index, VerbProperties afterConvert)>(result);
+                        }
+                        finally
+                        {
+                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                        }
                     }
                     return verbPropertiesCache;
+                }
+                finally
+                {
+                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
                 }
             }
         }
 
         public ReadOnlyCollection<(CompEquippable, Verb)> ChildVariantVerbsOfTool(int toolIndex, VerbProperties? verbProperties = null)
         {
-            lock (this)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 childVariantVerbsOfTool ??= new Dictionary<(int, VerbProperties?), ReadOnlyCollection<(CompEquippable, Verb)>>(VerbToolRegiestInfo.Count);
                 if (!childVariantVerbsOfTool.TryGetValue((toolIndex, verbProperties), out var cached))
@@ -229,17 +259,32 @@ namespace RW_ModularizationWeapon
                         }
                     }
                     cached = new ReadOnlyCollection<(CompEquippable, Verb)>(variants);
-                    childVariantVerbsOfTool[(toolIndex, verbProperties)] = cached;
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        childVariantVerbsOfTool[(toolIndex, verbProperties)] = cached;
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
                 }
 
                 return cached;
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
 
         }
 
         public ReadOnlyCollection<(CompEquippable, Verb)> ChildVariantVerbsOfVerbProp(int propIndex)
         {
-            lock (this)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 childVariantVerbsOfVerbProp ??= new Dictionary<int, ReadOnlyCollection<(CompEquippable, Verb)>>(VerbPropertiesRegiestInfo.Count);
                 if (!childVariantVerbsOfVerbProp.TryGetValue(propIndex, out var cached))
@@ -263,10 +308,23 @@ namespace RW_ModularizationWeapon
                         }
                     }
                     cached = new ReadOnlyCollection<(CompEquippable, Verb)>(variants);
-                    childVariantVerbsOfVerbProp[propIndex] = cached;
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        childVariantVerbsOfVerbProp[propIndex] = cached;
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
                 }
 
                 return cached;
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
 
         }

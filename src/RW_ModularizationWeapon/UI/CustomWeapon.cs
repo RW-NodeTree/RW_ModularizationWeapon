@@ -2,6 +2,7 @@
 using RW_NodeTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
@@ -322,7 +323,9 @@ namespace RW_ModularizationWeapon.UI
                         }
                         else if(selDef == null)
                         {
-                            Widgets.DrawTextureFitted(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), partForChange.CurrentPartWeaponAttachmentPropertiesById(idForChange)?.UITexture ?? BaseContent.BadTex, 1);
+                            ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = partForChange.GetOrGenCurrentPartAttachmentProperties();
+                            attachmentProperties.TryGetValue(idForChange, out WeaponAttachmentProperties? properties);
+                            Widgets.DrawTextureFitted(new Rect(rect.x + 1, rect.y + 1, rect.height - 2, rect.height - 2), properties?.UITexture ?? BaseContent.BadTex, 1);
                             Widgets.Label(new Rect(rect.x + 48, rect.y + 1, rect.width - 49, rect.height - 2), "setEmpty".Translate());
                             if (Widgets.ButtonInvisible(rect))
                             {

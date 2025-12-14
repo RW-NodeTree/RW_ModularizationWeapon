@@ -10,20 +10,13 @@ namespace RW_ModularizationWeapon
 {
     public partial class ModularizationWeapon
     {
-        public bool IsSwapRoot
-        {
-            get
-            {
-                lock (this)
-                {
-                    return this.occupiers == null && this.ParentPart == null;
-                }
-            }
-        }
+        public bool IsSwapRoot => this.occupiers == null && this.ParentPart == null;
 
         private bool RemoveTargetPartInternal(string id, out LocalTargetInfo prve)
         {
-            lock (this)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
                 if (targetPartsWithId.TryGetValue(id, out prve))
                 {
@@ -36,13 +29,19 @@ namespace RW_ModularizationWeapon
                     return true;
                 }
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
+                return false;
             }
-            return false;
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+            }
         }
 
         private bool SetTargetPartInternal(string id, LocalTargetInfo targetInfo, out LocalTargetInfo prve)
         {
-            lock (this)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
                 ModularizationWeapon? part;
                 if (targetPartsWithId.TryGetValue(id, out prve))
@@ -59,8 +58,12 @@ namespace RW_ModularizationWeapon
                 part = targetInfo.Thing as ModularizationWeapon;
                 if (part != null) part.occupiers = this;
                 //targetOwner?.TryAdd(targetInfo.Thing, false);
+                return true;
             }
-            return true;
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+            }
         }
 
         //invoked when setting by player or none-system opt
@@ -68,7 +71,9 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            lock (this)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 //only allow thing not have parent or spawned?
                 //if (id != null && NodeProccesser.AllowNode(targetInfo.Thing, id))
@@ -102,16 +107,25 @@ namespace RW_ModularizationWeapon
                 }
                 return false;
             }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
         }
 
         public LocalTargetInfo GetTargetPart(string id)
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            lock (this)
+            readerWriterLockSlim.EnterReadLock();
+            try
             {
                 if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = container[id];
                 return result;
+            }
+            finally
+            {
+                readerWriterLockSlim.ExitReadLock();
             }
         }
 
@@ -131,7 +145,9 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            lock (this)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
                 currentPartVNode = node;
                 foreach(string id in PartIDs)
@@ -145,6 +161,10 @@ namespace RW_ModularizationWeapon
                     }
                 }
                 partAttachmentPropertiesCache = null;
+            }
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
             }
         }
 
@@ -162,7 +182,9 @@ namespace RW_ModularizationWeapon
 
         private void AppendVNodeForTargetPart(VNode node)
         {
-            lock (this)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
                 targetPartVNode = node;
                 foreach(string id in PartIDs)
@@ -177,30 +199,40 @@ namespace RW_ModularizationWeapon
                 }
                 partAttachmentPropertiesCache_TargetPart = null;
             }
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+            }
         }
 
         public void SwapTargetPart()
         {
-            if (!IsSwapRoot)
-            {
-                throw new InvalidOperationException("SwapTargetPart can only called at root");
-            }
+            if (!IsSwapRoot) throw new InvalidOperationException("SwapTargetPart can only called at root");
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            lock (this)
+            
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
                 swap = true;
                 container.NeedUpdate = true;
                 container.UpdateNode();
             }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
         }
 
         public void ClearTargetPart()
         {
-            NodeContainer? container = ChildNodes;
-            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            lock (this)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 foreach (ModularizationWeapon? comp in container.Values)
                 {
                     comp?.ClearTargetPart();
@@ -217,6 +249,10 @@ namespace RW_ModularizationWeapon
                     UpdateTargetPartVNode();
                 }
             }
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+            }
         }
 
 
@@ -225,10 +261,9 @@ namespace RW_ModularizationWeapon
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
             List<(string, Thing?, WeaponAttachmentProperties)> result = new List<(string, Thing?, WeaponAttachmentProperties)>(PartIDs.Count);
-            foreach (string id in PartIDs)
+            foreach (var prop in GetOrGenCurrentPartAttachmentProperties())
             {
-                WeaponAttachmentProperties? properties = CurrentPartWeaponAttachmentPropertiesById(id);
-                if (properties != null) result.Add((id, container[id], properties));
+                result.Add((prop.Key, container[prop.Key], prop.Value));
             }
             return result.GetEnumerator();
         }

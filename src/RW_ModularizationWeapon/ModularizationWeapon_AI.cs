@@ -11,10 +11,11 @@ namespace RW_ModularizationWeapon
     {
         internal IEnumerable<Toil> CarryTarget(JobDriver_ModifyWeapon jobDriver, TargetIndex craftingTable, TargetIndex hauledThingIndex)
         {
-            lock (this)
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            readerWriterLockSlim.EnterReadLock();
+            try
             {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 if (jobDriver == null) yield break;
                 foreach (string id in PartIDs)
                 {
@@ -93,14 +94,19 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
+            finally
+            {
+                readerWriterLockSlim.ExitReadLock();
+            }
         }
 
         internal IEnumerable<LocalTargetInfo> AllTargetPart()
         {
-            lock (this)
+            NodeContainer? container = ChildNodes;
+            if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+            readerWriterLockSlim.EnterReadLock();
+            try
             {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
                 foreach (string id in PartIDs)
                 {
                     LocalTargetInfo target = container[id];
@@ -119,6 +125,10 @@ namespace RW_ModularizationWeapon
                     }
                 }
                 yield break;
+            }
+            finally
+            {
+                readerWriterLockSlim.ExitReadLock();
             }
         }
     }

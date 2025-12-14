@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Threading;
 using UnityEngine;
 using Verse;
 
@@ -17,10 +18,19 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void PreThing_InitializeComps(ThingWithComps __instance, ref List<CompProperties>? __state)
+        private static void PreThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, ReaderWriterLockSlim?) __state)
         {
-            __state = __instance.def.comps;
-            __instance.def.comps = ModularizationWeapon.CompPropertiesFromThing(__instance);
+            __state = (__instance.def.comps, null);
+            __instance.def.comps = ModularizationWeapon.CompPropertiesFromThing(__instance, out ReaderWriterLockSlim? readerWriterLockSlim);
+            if (readerWriterLockSlim != null)
+            {
+                bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                if (!isWriteLockHeld)
+                {
+                    readerWriterLockSlim.EnterWriteLock();
+                    __state.Item2 = readerWriterLockSlim;
+                }
+            }
         }
 
         [HarmonyTranspiler]
@@ -48,9 +58,10 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void FinalThing_InitializeComps(ThingWithComps __instance, ref List<CompProperties>? __state)
+        private static void FinalThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, ReaderWriterLockSlim?) __state)
         {
-            __instance.def.comps = __state;
+            __instance.def.comps = __state.Item1;
+            __state.Item2?.ExitWriteLock();
         }
     }
 }
