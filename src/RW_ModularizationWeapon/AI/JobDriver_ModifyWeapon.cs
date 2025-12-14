@@ -19,7 +19,7 @@ namespace RW_ModularizationWeapon.AI
                 {
                     job.targetB = port.GetTarget();
                     LocalTargetInfo targetB = TargetB;
-                    return pawn.Reserve(targetA, job, 1, -1, null, errorOnFailed) && pawn.Reserve(targetB, job, 1, -1, null, errorOnFailed) && ((ModularizationWeapon?)targetB.Thing) != null;
+                    return pawn.Reserve(targetA, job, 1, -1, null, errorOnFailed) && pawn.Reserve(targetB, job, 1, -1, null, errorOnFailed) && (targetB.Thing as ModularizationWeapon) != null;
                 }
             }
             return false;

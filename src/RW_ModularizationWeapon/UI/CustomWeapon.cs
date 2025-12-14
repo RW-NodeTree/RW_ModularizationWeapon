@@ -123,7 +123,7 @@ namespace RW_ModularizationWeapon.UI
                     in pawn.Map.listerThings.AllThings
                     where
                         (x?.Spawned ?? false) &&
-                        (((ModularizationWeapon?)x)?.IsSwapRoot ?? false) &&
+                        ((x as ModularizationWeapon)?.IsSwapRoot ?? false) &&
                         creaftingTable.Props.filter.Allows(x.def) &&
                         pawn.CanReserveAndReach(x, PathEndMode.Touch, Danger.Deadly, 1, -1, null, false)
                     select (x, x.def)

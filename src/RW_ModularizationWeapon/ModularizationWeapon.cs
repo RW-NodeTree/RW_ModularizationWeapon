@@ -534,7 +534,7 @@ namespace RW_ModularizationWeapon
                         thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Colony);
                         if (SetTargetPart(properties.Key, thing))
                         {
-                            ((ModularizationWeapon?)childs[properties.Key])?.SetPartToRandom();
+                            (childs[properties.Key] as ModularizationWeapon)?.SetPartToRandom();
                         }
                         else
                         {
@@ -543,7 +543,7 @@ namespace RW_ModularizationWeapon
                     }
                     else if(SetTargetPart(properties.Key, null))
                     {
-                        ((ModularizationWeapon?)childs[properties.Key])?.SetPartToRandom();
+                        (childs[properties.Key] as ModularizationWeapon)?.SetPartToRandom();
                     }
                 }
                 SwapTargetPart();
@@ -627,7 +627,7 @@ namespace RW_ModularizationWeapon
                     }
                     if(!insertFlag)
                     {
-                        ((ModularizationWeapon?)childs[properties.Key])?.SetPartToRandom();
+                        (childs[properties.Key] as ModularizationWeapon)?.SetPartToRandom();
                     }
                     // Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
@@ -1023,7 +1023,7 @@ namespace RW_ModularizationWeapon
                     if(thing != null)
                     {
                         thing.Position = handlePos;
-                        ((ModularizationWeapon?)thing)?.SetChildPostion(handlePos);
+                        (thing as ModularizationWeapon)?.SetChildPostion(handlePos);
                     }
                 }
             }

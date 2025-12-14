@@ -207,7 +207,7 @@ namespace RW_ModularizationWeapon
                 }
                 foreach (LocalTargetInfo info in targetPartsWithId.Values)
                 {
-                    ((ModularizationWeapon?)info.Thing)?.ClearTargetPart();
+                    (info.Thing as ModularizationWeapon)?.ClearTargetPart();
                 }
                 if (targetPartsWithId.Count > 0)
                 {
