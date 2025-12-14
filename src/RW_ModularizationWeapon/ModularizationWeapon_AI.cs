@@ -13,7 +13,8 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            readerWriterLockSlim.EnterReadLock();
+            bool isReadLockHeld = readerWriterLockSlim.IsReadLockHeld || readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isReadLockHeld) readerWriterLockSlim.EnterReadLock();
             try
             {
                 if (jobDriver == null) yield break;
@@ -96,7 +97,7 @@ namespace RW_ModularizationWeapon
             }
             finally
             {
-                readerWriterLockSlim.ExitReadLock();
+                if (!isReadLockHeld) readerWriterLockSlim.ExitReadLock();
             }
         }
 
@@ -104,7 +105,8 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            readerWriterLockSlim.EnterReadLock();
+            bool isReadLockHeld = readerWriterLockSlim.IsReadLockHeld || readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isReadLockHeld) readerWriterLockSlim.EnterReadLock();
             try
             {
                 foreach (string id in PartIDs)
@@ -128,7 +130,7 @@ namespace RW_ModularizationWeapon
             }
             finally
             {
-                readerWriterLockSlim.ExitReadLock();
+                if (!isReadLockHeld) readerWriterLockSlim.ExitReadLock();
             }
         }
     }

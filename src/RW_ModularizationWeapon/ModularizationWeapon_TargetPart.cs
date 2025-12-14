@@ -117,7 +117,8 @@ namespace RW_ModularizationWeapon
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-            readerWriterLockSlim.EnterReadLock();
+            bool isReadLockHeld = readerWriterLockSlim.IsReadLockHeld || readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isReadLockHeld) readerWriterLockSlim.EnterReadLock();
             try
             {
                 if (!targetPartsWithId.TryGetValue(id, out LocalTargetInfo result)) result = container[id];
@@ -125,7 +126,7 @@ namespace RW_ModularizationWeapon
             }
             finally
             {
-                readerWriterLockSlim.ExitReadLock();
+                if (!isReadLockHeld) readerWriterLockSlim.ExitReadLock();
             }
         }
 
