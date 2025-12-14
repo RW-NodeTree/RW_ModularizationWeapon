@@ -99,17 +99,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public uint TextureSizeFactor => Props.TextureSizeFactor;
-
-        public float ExceedanceFactor => Props.ExceedanceFactor;
-
-        public float ExceedanceOffset => Props.ExceedanceOffset;
-
-        public FilterMode TextureFilterMode => Props.TextureFilterMode;
-
         public NodeContainer ChildNodes => childNodes;
-
-        public GraphicsFormat TextureFormat => GraphicsFormat.R8G8B8A8_SRGB;
 
         public override Graphic Graphic
         {
@@ -483,7 +473,7 @@ namespace RW_ModularizationWeapon
             PostFXCommandBuffer.Clear();
             RenderTexture renderTexture = RenderTexture.GetTemporary(tar.width, tar.height, 0, tar.format);
             PostFXCommandBuffer.Blit(tar, renderTexture);
-            PostFXMat.SetFloat("_EdgeSize", Props.outlineWidthInPixelSize ? Props.outlineWidth : TextureSizeFactor * Props.outlineWidth);
+            PostFXMat.SetFloat("_EdgeSize", Props.outlineWidthInPixelSize ? Props.outlineWidth : Props.TextureSizeFactor * Props.outlineWidth);
             PostFXCommandBuffer.Blit(renderTexture, tar, PostFXMat);
             Graphics.ExecuteCommandBuffer(PostFXCommandBuffer);
             RenderTexture.ReleaseTemporary(renderTexture);
