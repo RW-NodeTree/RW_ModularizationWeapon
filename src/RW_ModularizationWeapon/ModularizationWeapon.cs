@@ -33,6 +33,7 @@ namespace RW_ModularizationWeapon
                 {
                     cachedProps = new ModularizationWeaponExtension();
                     def.modExtensions.Add(cachedProps);
+                    cachedProps.drawChildPartWhenOnGround = false;
                     cachedProps.ResolveReferences(def);
                 }
                 return cachedProps;
