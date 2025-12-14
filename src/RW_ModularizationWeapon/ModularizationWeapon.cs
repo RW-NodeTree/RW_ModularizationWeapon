@@ -20,10 +20,19 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
+    [StaticConstructorOnStartup]
     public partial class ModularizationWeapon : ThingWithComps, INodeProcesser, IRecipePatcher, IEnumerable<(string,Thing?,WeaponAttachmentProperties)>
     {
 
         private NodeContainer childNodes;
+
+        static ModularizationWeapon()
+        {
+            foreach(ThingDef def in DefDatabase<ThingDef>.AllDefs)
+            {
+                def.GetModExtension<ModularizationWeaponExtension>()?.ResolveReferences(def);
+            }
+        }
         
         public ModularizationWeapon()
         {
@@ -1081,7 +1090,6 @@ namespace RW_ModularizationWeapon
     /// <summary>
     /// this type is parmerters holder of the type `CompModularizationWeapon`, it define all parmerters that can write in XML.
     /// </summary>
-    [StaticConstructorOnStartup]
     public class ModularizationWeaponExtension : DefModExtension
     {
 
@@ -1101,14 +1109,6 @@ namespace RW_ModularizationWeapon
                     partTexCache ??= BaseContent.BadTex;
                 }
                 return partTexCache;
-            }
-        }
-
-        static ModularizationWeaponExtension()
-        {
-            foreach(ThingDef def in DefDatabase<ThingDef>.AllDefs)
-            {
-                def.GetModExtension<ModularizationWeaponExtension>()?.ResolveReferences(def);
             }
         }
 
