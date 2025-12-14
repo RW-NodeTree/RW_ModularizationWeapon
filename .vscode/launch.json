@@ -54,7 +54,7 @@
             "name": "Attach to Player",
             "type": "vstuc",
             "request": "attach",
-            "endPoint": "127.0.0.1:56124"
+            "endPoint": "127.0.0.1:56741"
         }
     ]
 }
