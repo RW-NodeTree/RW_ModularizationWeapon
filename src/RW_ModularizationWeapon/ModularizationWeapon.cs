@@ -499,8 +499,8 @@ namespace RW_ModularizationWeapon
                     if (node == null) return currentPartProperties.allowEmpty && targetPartProperties.allowEmpty;
 
                     return
-                        currentPartProperties.filter.Allows(node.def) &&
-                        targetPartProperties.filter.Allows(node.def) &&
+                        currentPartProperties.filterWithWeights.Any(x => x.thingDef == node.def) &&
+                        targetPartProperties.filterWithWeights.Any(x => x.thingDef == node.def) &&
                         !internal_Unchangeable(childs[id!], currentPartProperties) &&
                         !internal_Unchangeable(childs[id!], targetPartProperties);
                 }
@@ -558,40 +558,16 @@ namespace RW_ModularizationWeapon
                 foreach (var properties in props)
                 {
                     bool insertFlag = false;
-                    if (properties.Value.randomThingDefWeights.NullOrEmpty())
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            int k = Rand.Range(0, properties.Value.allowEmpty ? (properties.Value.filter.AllowedDefCount + properties.Value.randomToEmptyWeight) : properties.Value.filter.AllowedDefCount);
-                            ThingDef? def = k < properties.Value.filter.AllowedDefCount ? properties.Value.filter.AllowedThingDefs.ToList()[k] : null;
-                            if (def != null)
-                            {
-                                Thing thing = ThingMaker.MakeThing(def, GenStuff.RandomStuffFor(def));
-                                thing.TryGetComp<CompQuality>()?.SetQuality(QualityUtility.GenerateQualityRandomEqualChance(), ArtGenerationContext.Outsider);
-                                if (SetTargetPart(properties.Key, thing))
-                                {
-                                    insertFlag = true;
-                                    break;
-                                }
-                                thing.Destroy();
-                            }
-                            else if(SetTargetPart(properties.Key, null))
-                            {
-                                insertFlag = true;
-                                break;
-                            }
-                        }
-                    }
-                    else
+                    if (!properties.Value.filterWithWeights.NullOrEmpty())
                     {
                         float count = properties.Value.allowEmpty ? properties.Value.randomToEmptyWeight : 0;
-                        properties.Value.randomThingDefWeights.ForEach(x => count += x.count);
+                        properties.Value.filterWithWeights.ForEach(x => count += x.count);
                         for (int j = 0; j < 3; j++)
                         {
                             float k = Rand.Range(0, count);
                             float l = 0;
                             ThingDef? def = null;
-                            foreach (ThingDefCountClass weight in properties.Value.randomThingDefWeights)
+                            foreach (ThingDefCountClass weight in properties.Value.filterWithWeights)
                             {
                                 float next = l + weight.count;
                                 if (l <= k && next >= k) def = weight.thingDef;
@@ -1217,6 +1193,9 @@ namespace RW_ModularizationWeapon
         /// <param name="parentDef">parent Def</param>
         public void ResolveReferences(ThingDef parentDef)
         {
+            #if DEBUG
+            Log.Message($"ModularizationWeaponExtension.ResolveReferences : {parentDef}");
+            #endif
 
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
             {
@@ -1646,8 +1625,8 @@ namespace RW_ModularizationWeapon
                     //stringBuilder.AppendLine(CheckAndMark(toolsObjectPatchByChildPart && properties.toolsObjectPatchByChildPart, "toolsObjectPatchByChildPart".Translate()));
                 }
 
-                List<Dialog_InfoCard.Hyperlink> hyperlinks = new List<Dialog_InfoCard.Hyperlink>(properties.filter.AllowedDefCount);
-                hyperlinks.AddRange(from x in properties.filter.AllowedThingDefs select new Dialog_InfoCard.Hyperlink(x));
+                List<Dialog_InfoCard.Hyperlink> hyperlinks = new List<Dialog_InfoCard.Hyperlink>(properties.filterWithWeights.Count);
+                hyperlinks.AddRange(from x in properties.filterWithWeights select new Dialog_InfoCard.Hyperlink(x.thingDef));
                 if (child != null) hyperlinks.Insert(0, new Dialog_InfoCard.Hyperlink(child));
                 yield return new StatDrawEntry(
                     StatCategoryDefOf.Weapon,

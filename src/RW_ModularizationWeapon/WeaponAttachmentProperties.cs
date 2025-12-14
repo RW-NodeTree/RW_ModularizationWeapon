@@ -36,11 +36,23 @@ namespace RW_ModularizationWeapon
 
         public void ResolveReferences()
         {
-            filter = filter ?? new ThingFilter();
-            filter.ResolveReferences();
 
-            randomThingDefWeights = randomThingDefWeights ?? new List<ThingDefCountClass>();
-            randomThingDefWeights.RemoveAll(x => x == null || x.thingDef == null || x.count < 0 || !filter.Allows(x.thingDef));
+            filterWithWeights = filterWithWeights ?? new List<ThingDefCountClass>();
+            for (int i = filterWithWeights.Count - 1; i >= 0; i--)
+            {
+                if (filterWithWeights[i] == null)
+                {
+                    filterWithWeights.RemoveAt(i);
+                }
+                for (int j = 0; j < i; j++)
+                {
+                    if (filterWithWeights[i].thingDef == filterWithWeights[j].thingDef)
+                    {
+                        filterWithWeights[j].count += filterWithWeights[i].count;
+                        filterWithWeights.RemoveAt(i);
+                    }
+                }
+            }
 
             allowedExtraCompType = allowedExtraCompType ?? new List<Type>();
             allowedExtraCompType.RemoveAll(x => x == null);
@@ -240,7 +252,7 @@ namespace RW_ModularizationWeapon
 
         public override string ToString()
         {
-            return $"{Name} : AllowedDefCount = {filter.AllowedDefCount}";
+            return $"{Name} : AllowedDefCount = {filterWithWeights.Count}";
         }
 
         /// <summary>
@@ -252,17 +264,13 @@ namespace RW_ModularizationWeapon
         /// </summary>
         public string? name;
         /// <summary>
-        /// what thing can attach on this attach point
-        /// </summary>
-        public ThingFilter filter = new ThingFilter();
-        /// <summary>
         /// defultThing when create part instance, if `CompProperties_ModularizationWeapon.setRandomPartWhenCreate` is `false` or create by crafting
         /// </summary>
         public ThingDef? defultThing = null;
         /// <summary>
         /// random part weight of this attach point
         /// </summary>
-        public List<ThingDefCountClass> randomThingDefWeights = new List<ThingDefCountClass>();
+        public List<ThingDefCountClass> filterWithWeights = new List<ThingDefCountClass>();
         /// <summary>
         /// random to empty weight of this attach point
         /// </summary>
