@@ -846,7 +846,7 @@ namespace RW_ModularizationWeapon
                 {
                     nextChild[keyValue.Item1] = keyValue.Item2;
                 }
-                if (swap)
+                if (!swap)
                 {
                     return nextChild;
                 }
