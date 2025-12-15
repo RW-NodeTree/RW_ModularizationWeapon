@@ -125,7 +125,7 @@ namespace RW_ModularizationWeapon
                             props.TextureSizeFactor,
                             props.ExceedanceFactor,
                             props.ExceedanceOffset,
-                            GraphicsFormat.B8G8R8A8_UInt,
+                            GraphicsFormat.R8G8B8A8_UInt,
                             props.TextureFilterMode,
                             props.outlineWidth > 0 ? PostFX : null
                         );
