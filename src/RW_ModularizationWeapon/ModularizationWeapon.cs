@@ -417,34 +417,31 @@ namespace RW_ModularizationWeapon
                 renderInfos = kv.Value;
                 if (id.NullOrEmpty())
                 {
-                    if (invokeSource != cachedGraphic)
+                    for (int i = 0; i < renderInfos.Count; i++)
                     {
-                        for (int i = 0; i < renderInfos.Count; i++)
+                        RenderInfo info = renderInfos[i];
+                        Matrix4x4[] matrix = info.matrices;
+
+                        for (int j = 0; j < matrix.Length; j++)
                         {
-                            RenderInfo info = renderInfos[i];
-                            Matrix4x4[] matrix = info.matrices;
+                            Vector4 cache = matrix[j].GetRow(0);
+                            matrix[j].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
 
-                            for (int j = 0; j < matrix.Length; j++)
-                            {
-                                Vector4 cache = matrix[j].GetRow(0);
-                                matrix[j].SetRow(0, new Vector4(new Vector3(cache.x, cache.y, cache.z).magnitude, 0, 0, cache.w));
+                            cache = matrix[j].GetRow(1);
+                            matrix[j].SetRow(1, new Vector4(0, new Vector3(cache.x, cache.y, cache.z).magnitude, 0, cache.w));
 
-                                cache = matrix[j].GetRow(1);
-                                matrix[j].SetRow(1, new Vector4(0, new Vector3(cache.x, cache.y, cache.z).magnitude, 0, cache.w));
+                            cache = matrix[j].GetRow(2);
+                            matrix[j].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
 
-                                cache = matrix[j].GetRow(2);
-                                matrix[j].SetRow(2, new Vector4(0, 0, new Vector3(cache.x, cache.y, cache.z).magnitude, cache.w));
-
-                                matrix[j] = scale * matrix[j];
-                            }
+                            matrix[j] = scale * matrix[j];
                         }
+                    }
 
-                        renderInfos.Capacity += Props.subRenderingInfos.Count;
-                        foreach (PartSubDrawingInfo drawingInfo in Props.subRenderingInfos)
-                        {
-                            req.mainTex = drawingInfo.PartTexture;
-                            renderInfos.Add(new RenderInfo(MeshPool.plane10, 0, scale * drawingInfo.Transfrom, MaterialPool.MatFrom(req), 0));
-                        }
+                    renderInfos.Capacity += Props.subRenderingInfos.Count;
+                    foreach (PartSubDrawingInfo drawingInfo in Props.subRenderingInfos)
+                    {
+                        req.mainTex = drawingInfo.PartTexture;
+                        renderInfos.Add(new RenderInfo(MeshPool.plane10, 0, scale * drawingInfo.Transfrom, MaterialPool.MatFrom(req), 0));
                     }
                 }
                 else
@@ -657,9 +654,9 @@ namespace RW_ModularizationWeapon
                     // Console.WriteLine($"{parent}[{properties.id}]:{ChildNodes[properties.id]},{GetTargetPart(properties.id)}");
                 }
                 SwapTargetPart();
-                foreach (var properties in props)
+                foreach (Thing? thing in targetPartsWithId.Values)
                 {
-                    GetTargetPart(properties.Key).Thing?.Destroy();
+                    thing?.Destroy();
                 }
                 ClearTargetPart();
             }
