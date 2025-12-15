@@ -241,7 +241,7 @@ namespace RW_ModularizationWeapon
                     result = 0;
                     for (int i = 0; i < container.Count; i++)
                     {
-                        string id = ((IList<string>)container)[i];
+                        string id = ((IReadOnlyList<string>)container)[i];
                         ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
                         attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                         if (weapon != null && properties != null && id != childNodeIdForState)

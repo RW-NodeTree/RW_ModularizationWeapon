@@ -112,7 +112,7 @@ namespace RW_ModularizationWeapon
                         }
                         for (int i = 0; i < container.Count; i++)
                         {
-                            string id = ((IList<string>)container)[i];
+                            string id = ((IReadOnlyList<string>)container)[i];
                             Thing child = container[i];
                             attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                             if (!NotUseTools(child, properties))
@@ -188,7 +188,7 @@ namespace RW_ModularizationWeapon
 
                         for (int i = 0; i < container.Count; i++)
                         {
-                            string id = ((IList<string>)container)[i];
+                            string id = ((IReadOnlyList<string>)container)[i];
                             Thing child = container[i];
                             attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
                             if (!NotUseVerbProperties(child, properties))
