@@ -593,10 +593,12 @@ namespace RW_ModularizationWeapon
                         (childs[properties.Key] as ModularizationWeapon)?.SetPartToRandom();
                     }
                 }
+                List<Thing> prve = new List<Thing>(childs);
                 SwapTargetPart();
-                foreach (var properties in props)
+
+                foreach (Thing? thing in targetPartsWithId.Values)
                 {
-                    GetTargetPart(properties.Key).Thing?.Destroy();
+                    thing?.Destroy();
                 }
                 ClearTargetPart();
             }

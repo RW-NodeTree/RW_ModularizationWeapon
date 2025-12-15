@@ -14,7 +14,7 @@ namespace RW_ModularizationWeapon
 
         #region Multiplier
 
-        public static FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderDgitList<VerbProperties> VerbPropertiesMultiplier(string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -90,7 +90,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderDgitList<Tool> ToolsMultiplier(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderDgitList<Tool> ToolsMultiplier(string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -164,7 +164,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderDgitList<CompProperties> CompPropertiesMultiplier(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderDgitList<CompProperties> CompPropertiesMultiplier(string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));

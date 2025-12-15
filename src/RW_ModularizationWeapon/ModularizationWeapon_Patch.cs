@@ -9,7 +9,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class ModularizationWeapon
     {
-        public static FieldReaderInstList<VerbProperties> VerbPropertiesObjectPatch(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderInstList<VerbProperties> VerbPropertiesObjectPatch(string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if(container == null) throw new NullReferenceException(nameof(container));
             if(attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -71,7 +71,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderInstList<Tool> ToolsObjectPatch(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderInstList<Tool> ToolsObjectPatch(string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -132,7 +132,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public static FieldReaderInstList<CompProperties> CompPropertiesObjectPatch(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderInstList<CompProperties> CompPropertiesObjectPatch(string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -193,7 +193,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public static FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderBoolList<VerbProperties> VerbPropertiesBoolAndPatch(string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -258,7 +258,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderBoolList<Tool> ToolsBoolAndPatch(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderBoolList<Tool> ToolsBoolAndPatch(string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -323,7 +323,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderBoolList<CompProperties> CompPropertiesBoolAndPatch(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderBoolList<CompProperties> CompPropertiesBoolAndPatch(string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -388,7 +388,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderBoolList<VerbProperties> VerbPropertiesBoolOrPatch(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderBoolList<VerbProperties> VerbPropertiesBoolOrPatch(string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -453,7 +453,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderBoolList<Tool> ToolsBoolOrPatch(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderBoolList<Tool> ToolsBoolOrPatch(string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -518,7 +518,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public static FieldReaderBoolList<CompProperties> CompPropertiesBoolOrPatch(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderBoolList<CompProperties> CompPropertiesBoolOrPatch(string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if (container == null) throw new NullReferenceException(nameof(container));
             if (attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));

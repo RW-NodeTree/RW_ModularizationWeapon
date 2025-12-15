@@ -10,7 +10,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class ModularizationWeapon
     {
-        public static FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter(string? childNodeIdForVerbProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties) //null -> self
+        public static FieldReaderDgitList<VerbProperties> VerbPropertiesOffseter(string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties) //null -> self
         {
             if(container == null) throw new NullReferenceException(nameof(container));
             if(attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -82,7 +82,7 @@ namespace RW_ModularizationWeapon
         }
 
         // 将 internal 实例方法改为 public static，并去掉 Internal_ 前缀。
-        public static FieldReaderDgitList<Tool> ToolsOffseter(string? childNodeIdForTool, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderDgitList<Tool> ToolsOffseter(string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if(container == null) throw new NullReferenceException(nameof(container));
             if(attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
@@ -153,7 +153,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public static FieldReaderDgitList<CompProperties> CompPropertiesOffseter(string? childNodeIdForCompProperties, IDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static FieldReaderDgitList<CompProperties> CompPropertiesOffseter(string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             if(container == null) throw new NullReferenceException(nameof(container));
             if(attachmentProperties == null) throw new NullReferenceException(nameof(attachmentProperties));
