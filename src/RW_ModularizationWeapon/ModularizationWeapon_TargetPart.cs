@@ -150,7 +150,7 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                currentPartVNode = node;
+                VNodeCache = node;
                 foreach(string id in PartIDs)
                 {
                     Thing? target = container[id];
@@ -187,7 +187,7 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                targetPartVNode = node;
+                VNodeCache_TargetPart = node;
                 foreach(string id in PartIDs)
                 {
                     Thing? target = GetTargetPart(id).Thing;

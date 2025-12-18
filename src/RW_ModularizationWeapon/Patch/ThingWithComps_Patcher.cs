@@ -18,19 +18,10 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void PreThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, ReaderWriterLockSlim?) __state)
+        private static void PreThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, bool, bool, bool) __state)
         {
-            __state = (__instance.def.comps, null);
-            __instance.def.comps = ModularizationWeapon.CompPropertiesFromThing(__instance, out ReaderWriterLockSlim? readerWriterLockSlim);
-            if (readerWriterLockSlim != null)
-            {
-                bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                if (!isWriteLockHeld)
-                {
-                    readerWriterLockSlim.EnterWriteLock();
-                    __state.Item2 = readerWriterLockSlim;
-                }
-            }
+            __state.Item1 = __instance.def.comps;
+            __instance.def.comps = ModularizationWeapon.PreInitComps(__instance, ref __state.Item2, ref __state.Item3, ref __state.Item4);
         }
 
         [HarmonyTranspiler]
@@ -46,8 +37,6 @@ namespace RW_ModularizationWeapon.Patch
                 if(instruction.StoresField(comps))
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_0);
-                    yield return new CodeInstruction(OpCodes.Ldfld, comps);
-                    yield return new CodeInstruction(OpCodes.Ldarg_0);
                     yield return new CodeInstruction(OpCodes.Call, RestoreComps);
                 }
                 yield return instruction;
@@ -58,10 +47,10 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void FinalThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, ReaderWriterLockSlim?) __state)
+        private static void FinalThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, bool, bool, bool) __state)
         {
+            ModularizationWeapon.FinalInitComps(__instance, __state.Item2, __state.Item3, __state.Item4);
             __instance.def.comps = __state.Item1;
-            __state.Item2?.ExitWriteLock();
         }
     }
 }

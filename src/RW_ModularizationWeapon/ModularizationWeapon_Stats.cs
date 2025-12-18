@@ -18,24 +18,31 @@ namespace RW_ModularizationWeapon
         private void StatWorkerPerfix(Dictionary<string, object?> stats)
         {
 
-            stats["CompModularizationWeapon_verbs"] = ThingDef_verbs(def);
-            ThingDef_verbs(def) = (from x in VerbPropertiesRegiestInfo select x.afterConvert).ToList();
-            stats["CompModularizationWeapon_tools"] = def.tools;
-            def.tools = (from x in VerbToolRegiestInfo select x.afterConvert).ToList();
+            stats["verbs"] = ThingDef_verbs(def);
+            ThingDef_verbs(def) = VerbPropertiesFromThing(this);
+            stats["tools"] = def.tools;
+            def.tools = ToolsFromThing(this);
+            stats["comps"] = def.comps;
+            def.comps = CompPropertiesFromThing(this);
         }
 
 
         private void StatWorkerFinalfix(Dictionary<string, object?> stats)
         {
-            List<VerbProperties>? verbProperties = stats.TryGetValue("CompModularizationWeapon_verbs") as List<VerbProperties>;
+            List<VerbProperties>? verbProperties = stats.TryGetValue("verbs") as List<VerbProperties>;
             if (verbProperties != null)
             {
                 ThingDef_verbs(def) = verbProperties;
             }
-            List<Tool>? tools = stats.TryGetValue("CompModularizationWeapon_tools") as List<Tool>;
+            List<Tool>? tools = stats.TryGetValue("tools") as List<Tool>;
             if (tools != null)
             {
                 def.tools = tools;
+            }
+            List<CompProperties>? compProperties = stats.TryGetValue("comps") as List<CompProperties>;
+            if (compProperties != null)
+            {
+                def.comps = compProperties;
             }
         }
 
@@ -95,19 +102,7 @@ namespace RW_ModularizationWeapon
                 if (statDef.defName == "BurstShotCount")
                 {
                     CompEquippable? equippable = GetComp<CompEquippable>();
-                    if (equippable != null)
-                    {
-                        List<Verb> verbList = equippable.AllVerbs;
-                        for (int i = 0; i < verbList.Count; i++)
-                        {
-                            Verb verb = verbList[i];
-                            if (verb.verbProps.isPrimary && ChildVariantVerbsOfVerb(i)[0].Item1 == equippable)
-                            {
-                                result = verb.verbProps.burstShotCount;
-                                break;
-                            }
-                        }
-                    }
+                    result = equippable?.PrimaryVerb?.verbProps.burstShotCount ?? result;
                 }
                 else
                 {

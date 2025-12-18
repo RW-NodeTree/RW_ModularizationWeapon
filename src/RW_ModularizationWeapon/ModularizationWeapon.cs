@@ -117,10 +117,10 @@ namespace RW_ModularizationWeapon
             {
                 if (Props.drawChildPartWhenOnGround)
                 {
-                    if (cachedGraphic == null)
+                    if (graphicCache == null)
                     {
                         ModularizationWeaponExtension props = Props;
-                        cachedGraphic = new Graphic_ChildNode(
+                        graphicCache = new Graphic_ChildNode(
                             this,
                             props.TextureSizeFactor,
                             props.ExceedanceFactor,
@@ -130,7 +130,7 @@ namespace RW_ModularizationWeapon
                             props.outlineWidth > 0 ? PostFX : null
                         );
                     }
-                    return cachedGraphic;
+                    return graphicCache;
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace RW_ModularizationWeapon
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
             try
             {
-                if (currentPartVNode == null) UpdateCurrentPartVNode();
+                if (VNodeCache == null) UpdateCurrentPartVNode();
                 if (this.partAttachmentPropertiesCache == null)
                 {
                     Dictionary<string, WeaponAttachmentProperties> partAttachmentPropertiesCache = new Dictionary<string, WeaponAttachmentProperties>(Props.attachmentProperties.Count);
@@ -163,7 +163,7 @@ namespace RW_ModularizationWeapon
                             {
                                 if (record.Item1 != null && record.Item2 != null)
                                 {
-                                    uint currentMatch = record.Item1.Match(currentPartVNode![properties.id!]!);
+                                    uint currentMatch = record.Item1.Match(VNodeCache![properties.id!]!);
                                     if (currentMatch > 0)
                                     {
                                         matched.Add((record.Item2, currentMatch));
@@ -232,7 +232,7 @@ namespace RW_ModularizationWeapon
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
             try
             {
-                if (targetPartVNode == null) UpdateTargetPartVNode();
+                if (VNodeCache_TargetPart == null) UpdateTargetPartVNode();
                 if (this.partAttachmentPropertiesCache_TargetPart == null)
                 {
                     Dictionary<string, WeaponAttachmentProperties> partAttachmentPropertiesCache_TargetPart = new Dictionary<string, WeaponAttachmentProperties>(Props.attachmentProperties.Count);
@@ -251,7 +251,7 @@ namespace RW_ModularizationWeapon
                             {
                                 if (record.Item1 != null && record.Item2 != null)
                                 {
-                                    uint currentMatch = record.Item1.Match(targetPartVNode![properties.id!]!);
+                                    uint currentMatch = record.Item1.Match(VNodeCache_TargetPart![properties.id!]!);
                                     if (currentMatch > 0)
                                     {
                                         matched.Add((record.Item2, currentMatch));
@@ -345,6 +345,31 @@ namespace RW_ModularizationWeapon
                         if (part != null) part.occupiers = this;
                     }
                 }
+                if (Scribe.EnterNode("SandboxDatas"))
+                {
+                    ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
+                    for(uint i = 0; i < protectedProperties.Count; i++)
+                    {
+                        if (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode(i.ToString()))
+                        {
+                            try
+                            {
+                                currentWeaponMode = i;
+                                if (Scribe.mode == LoadSaveMode.LoadingVars)
+                                {
+                                    this.InitializeComps();
+                                }
+                                protectedProperties[(int)i].ExposeData();
+                            }
+                            catch(Exception ex)
+                            {
+                                const int key = ('M' << 24) | ('W' << 16) | ('S' << 8) | 'D';
+                                Log.ErrorOnce(ex.ToString(), key);
+                            }
+                        }
+                    }
+                }
+                Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
             }
             finally
@@ -393,7 +418,7 @@ namespace RW_ModularizationWeapon
                 mainTex = (Props.PartTexture == BaseContent.BadTex) ? material.mainTexture : Props.PartTexture,
                 maskTex = material.GetTexture(ShaderPropertyIDs.MaskTex) as Texture2D,
             };
-            if (invokeSource != cachedGraphic && nodeRenderingInfos.TryGetValue("", out List<RenderInfo> renderInfos))
+            if (invokeSource != graphicCache && nodeRenderingInfos.TryGetValue("", out List<RenderInfo> renderInfos))
             {
                 for (int i = 0; i < renderInfos.Count; i++)
                 {
@@ -710,25 +735,21 @@ namespace RW_ModularizationWeapon
 
         private void MarkTargetPartChanged()
         {
-            cachedGraphic_TargetPart?.ForceUpdateAll();
+            graphicCache_TargetPart?.ForceUpdateAll();
             statOffsetCache_TargetPart = null;
             statMultiplierCache_TargetPart = null;
-            toolsCache_TargetPart = null;
-            verbPropertiesCache_TargetPart = null;
-            childVariantVerbsOfVerbProp_TargetPart = null;
-            childVariantVerbsOfTool_TargetPart = null;
-            compPropertiesCache_TargetPart = null;
+            publicPropertiesCache_TargetPart = null;
 
-            if(comps_TargetPart != null)
+            publicPropertiesCache_TargetPart?.DestroyComps();
+            publicPropertiesCache_TargetPart = null;
+
+            if(protectedPropertiesCache_TargetPart != null)
             {
-                foreach (var destructor in Props.thingCompDestructors)
+                foreach(var prop in protectedPropertiesCache_TargetPart)
                 {
-                    foreach (var comp in comps_TargetPart)
-                    {
-                        destructor.DestroyComp(this, comp);
-                    }
+                    prop.DestroyComps();
                 }
-                comps_TargetPart = null;
+                protectedPropertiesCache_TargetPart = null;
             }
         }
 
@@ -740,9 +761,9 @@ namespace RW_ModularizationWeapon
             ReadOnlyDictionary<string, WeaponAttachmentProperties>? attachmentPropertiesCache = this.partAttachmentPropertiesCache;
             this.partAttachmentPropertiesCache = this.partAttachmentPropertiesCache_TargetPart;
             this.partAttachmentPropertiesCache_TargetPart = attachmentPropertiesCache;
-            VNode? targetPartXmlNode = this.targetPartVNode;
-            this.targetPartVNode = this.currentPartVNode;
-            this.currentPartVNode = targetPartXmlNode;
+            VNode? targetPartXmlNode = this.VNodeCache_TargetPart;
+            this.VNodeCache_TargetPart = this.VNodeCache;
+            this.VNodeCache = targetPartXmlNode;
             foreach (Thing? thing in childs.Values)
             {
                 ModularizationWeapon? weapon = thing as ModularizationWeapon;
@@ -792,30 +813,23 @@ namespace RW_ModularizationWeapon
                 comp?.SwapCache();
             }
 
-            Graphic_ChildNode? cachedGraphic = this.cachedGraphic;
-            this.cachedGraphic = this.cachedGraphic_TargetPart;
-            this.cachedGraphic_TargetPart = cachedGraphic;
+            Graphic_ChildNode? graphicCache = this.graphicCache;
+            this.graphicCache = this.graphicCache_TargetPart;
+            this.graphicCache_TargetPart = graphicCache;
+            WeaponProperties? publicPropertiesCache = this.publicPropertiesCache;
+            this.publicPropertiesCache = this.publicPropertiesCache_TargetPart;
+            this.publicPropertiesCache_TargetPart = publicPropertiesCache;
+            ReadOnlyCollection<WeaponProperties>? protectedPropertiesCache = this.protectedPropertiesCache;
+            this.protectedPropertiesCache = this.protectedPropertiesCache_TargetPart;
+            this.protectedPropertiesCache_TargetPart = protectedPropertiesCache;
             Dictionary<(StatDef, string?), float>? statOffsetCache = this.statOffsetCache;
             this.statOffsetCache = this.statOffsetCache_TargetPart;
             this.statOffsetCache_TargetPart = statOffsetCache;
             Dictionary<(StatDef, string?), float>? statMultiplierCache = this.statMultiplierCache;
             this.statMultiplierCache = this.statMultiplierCache_TargetPart;
             this.statMultiplierCache_TargetPart = statMultiplierCache;
-            ReadOnlyCollection<(string? id, int index, Tool afterConvert)>? toolsCache = this.toolsCache;
-            this.toolsCache = this.toolsCache_TargetPart;
-            this.toolsCache_TargetPart = toolsCache;
-            ReadOnlyCollection<(string? id, int index, VerbProperties afterConvert)>? verbPropertiesCache = this.verbPropertiesCache;
-            this.verbPropertiesCache = this.verbPropertiesCache_TargetPart;
-            this.verbPropertiesCache_TargetPart = verbPropertiesCache;
-            Dictionary<int, ReadOnlyCollection<(CompEquippable, Verb)>>? childVariantVerbsOfVerbProp = this.childVariantVerbsOfVerbProp;
-            this.childVariantVerbsOfVerbProp = this.childVariantVerbsOfVerbProp_TargetPart;
-            this.childVariantVerbsOfVerbProp_TargetPart = childVariantVerbsOfVerbProp;
-            Dictionary<(int, VerbProperties?), ReadOnlyCollection<(CompEquippable, Verb)>>? childVariantVerbsOfTool = this.childVariantVerbsOfTool;
-            this.childVariantVerbsOfTool_TargetPart = childVariantVerbsOfTool;
-            this.childVariantVerbsOfTool = this.childVariantVerbsOfTool_TargetPart;
-            ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache = this.compPropertiesCache;
-            this.compPropertiesCache = this.compPropertiesCache_TargetPart;
-            this.compPropertiesCache_TargetPart = compPropertiesCache;
+
+            currentWeaponMode = 0;
             InitializeComps();
         }
 
@@ -836,16 +850,23 @@ namespace RW_ModularizationWeapon
                 comp?.UpdateCache();
             }
 
-            this.cachedGraphic?.ForceUpdateAll();
+            this.graphicCache?.ForceUpdateAll();
 
             this.statOffsetCache = null;
             this.statMultiplierCache = null;
-            this.childVariantVerbsOfVerbProp = null;
-            this.childVariantVerbsOfTool = null;
-            this.toolsCache = null;
-            this.verbPropertiesCache = null;
-            this.compPropertiesCache = null;
 
+
+            publicPropertiesCache?.DestroyComps();
+            publicPropertiesCache = null;
+
+            if(protectedPropertiesCache != null)
+            {
+                foreach(var prop in protectedPropertiesCache)
+                {
+                    prop.DestroyComps();
+                }
+                protectedPropertiesCache = null;
+            }
 
             foreach (var destructor in Props.thingCompDestructors)
             {
@@ -854,6 +875,8 @@ namespace RW_ModularizationWeapon
                     destructor.DestroyComp(this, comp);
                 }
             }
+
+            currentWeaponMode = 0;
             InitializeComps();
         }
 
@@ -1075,35 +1098,38 @@ namespace RW_ModularizationWeapon
 
         private bool swap = false;
         private bool targetPartChanged = false;
-        private VNode? targetPartVNode = null;
-        private VNode? currentPartVNode = null;
+        private uint currentWeaponMode = 0;
         private ModularizationWeaponExtension? cachedProps = null;
         private ModularizationWeapon? occupiers = null;
-        private Graphic_ChildNode? cachedGraphic = null;
-        private Graphic_ChildNode? cachedGraphic_TargetPart = null;
-        private List<ThingComp>? comps_TargetPart = null;
         private List<string> targetPartsWithId_IdWorkingList = new List<string>();
         private List<LocalTargetInfo> targetPartsWithId_TargetWorkingList = new List<LocalTargetInfo>();
         private Dictionary<string, LocalTargetInfo> targetPartsWithId = new Dictionary<string, LocalTargetInfo>(); //part difference table
+
+#region Swapedable cache
+        private VNode? VNodeCache = null;
+        private VNode? VNodeCache_TargetPart = null;
+        private WeaponProperties? publicPropertiesCache = null;
+        private WeaponProperties? publicPropertiesCache_TargetPart = null;
+        private Graphic_ChildNode? graphicCache = null;
+        private Graphic_ChildNode? graphicCache_TargetPart = null;
+        private ReadOnlyCollection<WeaponProperties>? protectedPropertiesCache = null;
+        private ReadOnlyCollection<WeaponProperties>? protectedPropertiesCache_TargetPart = null;
         private Dictionary<(StatDef, string?), float>? statOffsetCache = null;
-        private Dictionary<(StatDef, string?), float>? statMultiplierCache = null;
         private Dictionary<(StatDef, string?), float>? statOffsetCache_TargetPart = null;
+        private Dictionary<(StatDef, string?), float>? statMultiplierCache = null;
         private Dictionary<(StatDef, string?), float>? statMultiplierCache_TargetPart = null;
         private ReadOnlyDictionary<string, WeaponAttachmentProperties>? partAttachmentPropertiesCache = null;
         private ReadOnlyDictionary<string, WeaponAttachmentProperties>? partAttachmentPropertiesCache_TargetPart = null;
-        private ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache = null;
-        private ReadOnlyCollection<(string? id, int index, CompProperties afterConvert)>? compPropertiesCache_TargetPart = null;
+#endregion
+
         private readonly ReaderWriterLockSlim readerWriterLockSlim = new ReaderWriterLockSlim();
         private readonly HashSet<string> partIDs = new HashSet<string>();
         private readonly Dictionary<string, bool> childTreeViewOpend = new Dictionary<string, bool>();
         private static Material? PostFXMat = null;
         private static CommandBuffer? PostFXCommandBuffer = null;
-        private static readonly AccessTools.FieldRef<ThingDef, List<VerbProperties>?> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>?>("verbs");
-
-
         private static readonly Dictionary<Mesh, Mesh> MeshReindexed = new Dictionary<Mesh, Mesh>();
+        internal static readonly AccessTools.FieldRef<ThingDef, List<VerbProperties>?> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>?>("verbs");
         
-        internal static readonly Stopwatch stopWatch = new Stopwatch();
     }
 
     /// <summary>
@@ -1138,8 +1164,8 @@ namespace RW_ModularizationWeapon
         /// <returns></returns>
         public override IEnumerable<string> ConfigErrors()
         {
-            bool needGennerateAttachmentPropertiesWithQuery = this.attachmentPropertiesWithQuery.NullOrEmpty();
-            if(needGennerateAttachmentPropertiesWithQuery) attachmentPropertiesWithQuery = new List<(QueryGroup,WeaponAttachmentProperties)>();
+            attachmentPropertiesWithQuery ??= new List<(QueryGroup,WeaponAttachmentProperties)>();
+            attachmentPropertiesWithQuery.Clear();
             foreach(string error in base.ConfigErrors())
             {
                 yield return error;
@@ -1158,13 +1184,9 @@ namespace RW_ModularizationWeapon
                     bool faild = false;
                     try
                     {
-                        if(needGennerateAttachmentPropertiesWithQuery)
-                        {
-                            attachmentProperties.RemoveAt(i);
-                            QueryGroup query = new QueryGroup(properties.id!);
-                            attachmentPropertiesWithQuery!.Add((query,properties));
-                        }
-                        else faild = true;
+                        attachmentProperties.RemoveAt(i);
+                        QueryGroup query = new QueryGroup(properties.id!);
+                        attachmentPropertiesWithQuery!.Add((query,properties));
                     }
                     catch
                     {
@@ -1233,45 +1255,23 @@ namespace RW_ModularizationWeapon
                 properties.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
                 properties.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
             }
-            
-            if (attachmentPropertiesWithQuery.NullOrEmpty())
+
+            foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery!)
             {
-                attachmentPropertiesWithQuery = new List<(QueryGroup, WeaponAttachmentProperties)>();
-                for (int i = attachmentProperties.Count - 1; i >= 0; i--)
-                {
-                    WeaponAttachmentProperties properties = attachmentProperties[i];
-                    if (!properties.id.IsVaildityKeyFormat())
-                    {
-                        try{
-                            attachmentProperties.RemoveAt(i);
-                            QueryGroup query = new QueryGroup(properties.id!);
-                            attachmentPropertiesWithQuery.Add((query,properties));
-                        }
-                        catch{
-                            Log.Error($"attachmentProperties[{i}].id is invaild key format : Not XML allowed node name");
-                        }
-                    }
-                }
+                properties.Item2.ResolveReferences();
             }
-            else
+            foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
             {
-                foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery!)
-                {
-                    properties.Item2.ResolveReferences();
-                }
-                foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
-                {
-                    properties.Item2.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.verbPropertiesBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.toolsBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.verbPropertiesBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.toolsBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                    properties.Item2.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
-                }
+                properties.Item2.verbPropertiesOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.toolsOtherPartOffseterAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.verbPropertiesOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.toolsOtherPartMultiplierAffectHorizon.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.verbPropertiesBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.toolsBoolAndPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.verbPropertiesBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.toolsBoolOrPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.verbPropertiesObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
+                properties.Item2.toolsObjectPatchByOtherPart.RemoveAll(x => WeaponAttachmentPropertiesById(x.Key) == null);
             }
             // foreach ((QueryGroup, WeaponAttachmentProperties) properties in attachmentPropertiesWithQuery)
             // {
@@ -1320,30 +1320,35 @@ namespace RW_ModularizationWeapon
             CheckAndSetDgitList(ref compPropertiesOffseter, 0);
             CheckAndSetDgitList(ref verbPropertiesOtherPartOffseterAffectHorizon, 1);
             CheckAndSetDgitList(ref toolsOtherPartOffseterAffectHorizon, 1);
+            CheckAndSetDgitList(ref compPropertiesOtherPartOffseterAffectHorizon, 1);
 
             CheckAndSetDgitList(ref verbPropertiesMultiplier, 1);
             CheckAndSetDgitList(ref toolsMultiplier, 1);
             CheckAndSetDgitList(ref compPropertiesMultiplier, 1);
             CheckAndSetDgitList(ref verbPropertiesOtherPartMultiplierAffectHorizon, 1);
             CheckAndSetDgitList(ref toolsOtherPartMultiplierAffectHorizon, 1);
+            CheckAndSetDgitList(ref compPropertiesOtherPartMultiplierAffectHorizon, 1);
 
             CheckAndSetBoolList(ref verbPropertiesBoolAndPatch, true);
             CheckAndSetBoolList(ref toolsBoolAndPatch, true);
             CheckAndSetBoolList(ref compPropertiesBoolAndPatch, true);
             CheckAndSetBoolList(ref verbPropertiesBoolAndPatchByOtherPart, true);
             CheckAndSetBoolList(ref toolsBoolAndPatchByOtherPart, true);
+            CheckAndSetBoolList(ref compPropertiesBoolAndPatchByOtherPart, true);
 
             CheckAndSetBoolList(ref verbPropertiesBoolOrPatch, false);
             CheckAndSetBoolList(ref toolsBoolOrPatch, false);
             CheckAndSetBoolList(ref compPropertiesBoolOrPatch, false);
             CheckAndSetBoolList(ref verbPropertiesBoolOrPatchByOtherPart, true);
             CheckAndSetBoolList(ref toolsBoolOrPatchByOtherPart, true);
+            CheckAndSetBoolList(ref compPropertiesBoolOrPatchByOtherPart, true);
 
             CheckAndSetInstList(ref verbPropertiesObjectPatch);
             CheckAndSetInstList(ref toolsObjectPatch);
             CheckAndSetInstList(ref compPropertiesObjectPatch);
             CheckAndSetFiltList(ref verbPropertiesObjectPatchByOtherPart, true);
             CheckAndSetFiltList(ref toolsObjectPatchByOtherPart, true);
+            CheckAndSetFiltList(ref compPropertiesObjectPatchByOtherPart, true);
 
             CheckAndSetStatList(ref statOffset);
             CheckAndSetStatList(ref statMultiplier);
@@ -1351,6 +1356,43 @@ namespace RW_ModularizationWeapon
             CheckAndSetStatList(ref statOtherPartMultiplierAffectHorizon);
 
             parentDef.weaponTags ??= [];
+            ModularizationWeapon.ThingDef_verbs(parentDef) ??= [];
+            parentDef.tools ??= [];
+            parentDef.comps ??= [];
+            protectedVerbProperties ??= [];
+            protectedTools ??= [];
+            protectedCompProperties ??= [];
+            allPrimaryVerbProperties ??= [];
+            allPrimaryVerbProperties.Clear();
+            
+            List<VerbProperties> verbs = parentDef.Verbs;
+            for(int i = verbs.Count - 1; i >= 0; i--)
+            {
+                VerbProperties verbProperties = verbs[i];
+                if(verbProperties.isPrimary)
+                {
+                    verbs.RemoveAt(i);
+                    allPrimaryVerbProperties.Add(verbProperties);
+                }
+            }
+            
+            for(int i = protectedVerbProperties.Count - 1; i >= 0; i--)
+            {
+                VerbProperties verbProperties = protectedVerbProperties[i];
+                if(verbProperties.isPrimary)
+                {
+                    protectedVerbProperties.RemoveAt(i);
+                    allPrimaryVerbProperties.Add(verbProperties);
+                }
+            }
+
+            List<CompProperties> comps = parentDef.comps;
+            if(protectedCompProperties.Find(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)) == null)
+            {
+                protectedCompProperties.Add(comps.First(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)));
+            }
+            comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+            
         }
 
         /// <summary>
@@ -1420,6 +1462,11 @@ namespace RW_ModularizationWeapon
             if (comp != null) ToolsOffseter += comp.ToolsOffseter(null);
             count += listAllDgit(ToolsOffseter, "+", "");
 
+            stringBuilder.AppendLine("compPropertiesOffseter".Translate().RawText + " :");
+            FieldReaderDgitList<CompProperties> CompPropertiesOffseter = compPropertiesOffseter;
+            if (comp != null) CompPropertiesOffseter += comp.CompPropertiesOffseter(null);
+            count += listAllDgit(CompPropertiesOffseter, "+", "");
+
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
             {
@@ -1446,6 +1493,11 @@ namespace RW_ModularizationWeapon
             ToolsOffseter = toolsMultiplier;
             if (comp != null) ToolsOffseter *= comp.ToolsMultiplier(null);
             count += listAllDgit(ToolsOffseter, "x", "");
+
+            stringBuilder.AppendLine("compPropertiesMultiplier".Translate().RawText + " :");
+            CompPropertiesOffseter = compPropertiesMultiplier;
+            if (comp != null) CompPropertiesOffseter *= comp.CompPropertiesMultiplier(null);
+            count += listAllDgit(CompPropertiesOffseter, "x", "");
 
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
@@ -1488,6 +1540,19 @@ namespace RW_ModularizationWeapon
                     else ToolsObjectPatch[index] = (ToolsObjectPatch[index] | fieldReader) ?? ToolsObjectPatch[index];
                 }
                 count += listAllInst(ToolsObjectPatch, "", "");
+            }
+
+            stringBuilder.AppendLine("compPropertiesPatch".Translate().RawText + " :");
+            List<FieldReaderInstance<CompProperties>>? CompPropertiesObjectPatch = comp?.CompPropertiesObjectPatch(null);
+            if(CompPropertiesObjectPatch != null)
+            {
+                foreach(FieldReaderInstance<CompProperties> fieldReader in compPropertiesObjectPatch)
+                {
+                    int index = CompPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                    if (index < 0) CompPropertiesObjectPatch.Add(fieldReader);
+                    else CompPropertiesObjectPatch[index] = (CompPropertiesObjectPatch[index] | fieldReader) ?? CompPropertiesObjectPatch[index];
+                }
+                count += listAllInst(CompPropertiesObjectPatch, "", "");
             }
 
             yield return new StatDrawEntry(
@@ -1551,6 +1616,9 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
                     listAllDgit((childComp.ToolsOffseter(null) + childComp.Props.toolsOffseter) * properties.toolsOffseterAffectHorizon, "+", "", true);
 
+                    stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
+                    listAllDgit((childComp.CompPropertiesOffseter(null) + childComp.Props.compPropertiesOffseter) * properties.compPropertiesOffseterAffectHorizon, "+", "", true);
+
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
                     {
@@ -1574,6 +1642,13 @@ namespace RW_ModularizationWeapon
                     cacheTools -= 1;
                     cacheTools.DefaultValue = 0;
                     listAllDgit((cacheTools * properties.toolsMultiplierAffectHorizon + 1) ?? cacheTools, "x", "", true);
+
+                    stringBuilder.AppendLine("  " + "compPropertiesMultiplier".Translate() + " :");
+                    FieldReaderDgitList<CompProperties> cacheCompProperties = childComp.CompPropertiesMultiplier(null);
+                    cacheCompProperties *= childComp.Props.compPropertiesMultiplier;
+                    cacheCompProperties -= 1;
+                    cacheCompProperties.DefaultValue = 0;
+                    listAllDgit((cacheCompProperties * properties.compPropertiesMultiplierAffectHorizon + 1) ?? cacheCompProperties, "x", "", true);
 
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
@@ -1608,6 +1683,19 @@ namespace RW_ModularizationWeapon
                         }
                     }
                     listAllInst(ToolsObjectPatch, "", "", true);
+
+                    stringBuilder.AppendLine("compPropertiesPatch".Translate().RawText + " :");
+                    CompPropertiesObjectPatch = childComp.CompPropertiesObjectPatch(null);
+                    if (comp != null)
+                    {
+                        foreach (FieldReaderInstance<CompProperties> fieldReader in childComp.Props.compPropertiesObjectPatch)
+                        {
+                            int index = CompPropertiesObjectPatch.FindIndex(x => x.UsedType == fieldReader.UsedType);
+                            if (index < 0) CompPropertiesObjectPatch.Add(fieldReader);
+                            else CompPropertiesObjectPatch[index] = (CompPropertiesObjectPatch[index] | fieldReader) ?? CompPropertiesObjectPatch[index];
+                        }
+                    }
+                    listAllInst(CompPropertiesObjectPatch, "", "", true);
                 }
                 else
                 {
@@ -2005,6 +2093,21 @@ namespace RW_ModularizationWeapon
         public List<IThingCompDestructor> thingCompDestructors = new List<IThingCompDestructor>();
 
         /// <summary>
+        /// VerbProperties for protected weapon properties
+        /// </summary>
+        public List<VerbProperties> protectedVerbProperties = new List<VerbProperties>();
+
+        /// <summary>
+        /// Tools for protected weapon properties
+        /// </summary>
+        public List<Tool> protectedTools = new List<Tool>();
+
+        /// <summary>
+        /// CompProperties for protected weapon properties
+        /// </summary>
+        public List<CompProperties> protectedCompProperties = new List<CompProperties>();
+
+        /// <summary>
         /// special drawing texture when it attach on a part
         /// </summary>
         public string? PartTexPath = null;
@@ -2013,6 +2116,7 @@ namespace RW_ModularizationWeapon
         /// material cache of `PartTexPath`
         /// </summary>
         private Texture2D? partTexCache;
+        internal List<VerbProperties> allPrimaryVerbProperties = new List<VerbProperties>();
         internal List<(QueryGroup,WeaponAttachmentProperties)> attachmentPropertiesWithQuery = new List<(QueryGroup, WeaponAttachmentProperties)>();
     }
 }
