@@ -58,7 +58,7 @@ namespace RW_ModularizationWeapon
                 int errorCount = 0;
                 try
                 {
-                    if (needExitLock) weapon.readerWriterLockSlim.EnterWriteLock();
+                    if (needExitLock) weapon.readerWriterLockSlim.ExitWriteLock();
                 }
                 catch(Exception ex)
                 {
