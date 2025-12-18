@@ -398,7 +398,7 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                CompProperties? compProperties = thing.def.comps?.First(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+                CompProperties? compProperties = thing.def.comps?.Find(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
                 List<CompProperties> result = compProperties == null ? [] : [compProperties];
                 return result;
             }

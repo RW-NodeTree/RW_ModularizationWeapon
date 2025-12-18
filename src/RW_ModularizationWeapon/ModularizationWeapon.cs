@@ -1387,7 +1387,7 @@ namespace RW_ModularizationWeapon
             }
 
             List<CompProperties> comps = parentDef.comps;
-            CompProperties? comp = comps.First(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+            CompProperties? comp = comps.Find(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
             if(comp != null && protectedCompProperties.Find(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)) == null)
             {
                 protectedCompProperties.Add(comp);
