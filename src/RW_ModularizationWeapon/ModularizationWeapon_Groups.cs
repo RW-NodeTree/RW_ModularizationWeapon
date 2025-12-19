@@ -237,7 +237,7 @@ namespace RW_ModularizationWeapon
                     ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
                     for(uint i = 0; i < protectedProperties.Count; i++)
                     {
-                        if (i != original && (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode((i > original ? (i - 1) : i).ToString())))
+                        if (i != original && Scribe.EnterNode("item_" + (i > original ? (i - 1) : i)))
                         {
                             try
                             {
