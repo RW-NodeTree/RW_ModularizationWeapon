@@ -1409,8 +1409,7 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < weapon.def.comps.Count; i++)
                                 {
                                     CompProperties comp = weapon.def.comps[(int)i];
-                                    if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
-                                        tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
                                     //VerbToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1445,8 +1444,7 @@ namespace RW_ModularizationWeapon
                                 for (; i < comps.Count; i++)
                                 {
                                     comp = comps[(int)i];
-                                    if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
-                                        tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
                                     //ToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
