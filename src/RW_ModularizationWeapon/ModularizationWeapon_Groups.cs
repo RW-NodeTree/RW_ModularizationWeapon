@@ -114,7 +114,9 @@ namespace RW_ModularizationWeapon
                                 weaponProperties.Capacity += child.ProtectedProperties.Count;
                                 for(int i = 0; i < child.ProtectedProperties.Count; i++)
                                 {
-                                    weaponProperties.Add(new WeaponProperties(this, kv.Item1, i));
+                                    WeaponProperties properties = new WeaponProperties(this, kv.Item1, i);
+                                    if(properties.IsVaildity)
+                                        weaponProperties.Add(properties);
                                 }
                             }
                             else
@@ -123,7 +125,9 @@ namespace RW_ModularizationWeapon
                                 weaponProperties.Capacity += count;
                                 for(int i = 0; i < count; i++)
                                 {
-                                    weaponProperties.Add(new WeaponProperties(this, kv.Item1, i));
+                                    WeaponProperties properties = new WeaponProperties(this, kv.Item1, i);
+                                    if(properties.IsVaildity)
+                                        weaponProperties.Add(properties);
                                 }
                                 
                             }

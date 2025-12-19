@@ -34,6 +34,48 @@ namespace RW_ModularizationWeapon
 				}
 			}
         }
+
+        public bool IsVaildity
+        {
+            get
+            {
+                NodeContainer? container = ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+                try
+                {
+                    if(vaildityCache == null)
+                    {
+                        bool finalVaildity = index < 0;
+                        if (!finalVaildity && childId != null)
+                        {
+                            Thing? thing = container[childId];
+                            WeaponAttachmentProperties attachmentProperties = weapon.GetOrGenCurrentPartAttachmentProperties()[childId];
+                            finalVaildity =
+                                !ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties) ||
+                                !ModularizationWeapon.NotUseTools(thing, attachmentProperties) ||
+                                !ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties);
+                        }
+                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                        try
+                        {
+                            vaildityCache = finalVaildity;
+                        }
+                        finally
+                        {
+                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                        }
+                    }
+                    return vaildityCache.Value;
+                }
+                finally
+                {
+                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+                }
+            }
+        }
         
 
         public string Name
@@ -104,7 +146,7 @@ namespace RW_ModularizationWeapon
                 {
                     if (colorCache == null)
                     {
-                        Color? finalColor = null;
+                        Color finalColor = Color.white;
                         if(childId == null)
                         {
                             finalColor = weapon.DrawColor;
@@ -126,7 +168,7 @@ namespace RW_ModularizationWeapon
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                         try
                         {
-                            colorCache = finalColor ?? Color.white;
+                            colorCache = finalColor;
                         }
                         finally
                         {
@@ -1450,6 +1492,7 @@ namespace RW_ModularizationWeapon
         public readonly string? childId;
         public readonly ModularizationWeapon weapon;
         
+        private bool? vaildityCache = null;
         private string? nameCache = null;
         private Color? colorCache = null;
         private Texture2D? iconCache = null;

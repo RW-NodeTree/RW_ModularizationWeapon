@@ -28,9 +28,14 @@ namespace RW_ModularizationWeapon.Patch
                 Vector2 scale = ownerThing?.Graphic?.drawSize / ownerThing?.def?.size.ToVector2() ?? Vector2.one;
                 __result.iconDrawScale = Math.Max(scale.x, scale.y);
                 __result.shrinkable = verb != __instance.PrimaryVerb;
-                if(__result.verb?.verbProps?.isPrimary ?? false)
+                Tool? tool = __result.verb?.tool;
+                if(tool == null)
                 {
-                    __result = new Command_ModeTarget(__result, weapon);
+                    VerbProperties? verbProperties = __result.verb?.verbProps;
+                    if(verbProperties != null && verbProperties.isPrimary)
+                    {
+                        __result = new Command_ModeTarget(__result, weapon);
+                    }
                 }
             }
         }

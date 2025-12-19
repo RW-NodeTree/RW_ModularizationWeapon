@@ -40,7 +40,7 @@ namespace RW_ModularizationWeapon.UI
         }
         public ModularizationWeapon Weapon { get; }
 
-        public override float GetWidth(float maxWidth) => base.GetWidth(maxWidth) * (groupedVerbs(this).NullOrEmpty() ? 4 : 1);
+        public override float GetWidth(float maxWidth) => groupedVerbs(this).NullOrEmpty() ? 250 : base.GetWidth(maxWidth);
 
         public override bool GroupsWith(Gizmo other)
         {
@@ -78,7 +78,7 @@ namespace RW_ModularizationWeapon.UI
                 childButton = butRect;
                 childButton.xMax = xMin;
                 GUI.color = Color.white;
-                Text.Font = GameFont.Medium;
+                Text.Font = GameFont.Small;
                 Widgets.Label(childButton, Weapon.CurrentModeName);
 
                 if(Widgets.ButtonInvisible(butRect))
