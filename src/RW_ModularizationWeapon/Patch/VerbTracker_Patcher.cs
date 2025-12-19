@@ -23,11 +23,13 @@ namespace RW_ModularizationWeapon.Patch
             ModularizationWeapon? weapon = ownerThing as ModularizationWeapon;
             if (__result != null && weapon != null)
             {
+                #if V13 || V14 || V15
                 __result.icon = (ownerThing?.Graphic?.MatSingleFor(ownerThing)?.mainTexture as Texture2D) ?? __result.icon;
                 __result.iconProportions = ownerThing?.Graphic?.drawSize ?? __result.iconProportions;
                 Vector2 scale = ownerThing?.Graphic?.drawSize / ownerThing?.def?.size.ToVector2() ?? Vector2.one;
                 __result.iconDrawScale = Math.Max(scale.x, scale.y);
                 __result.shrinkable = verb != __instance.PrimaryVerb;
+                #endif
                 Tool? tool = __result.verb?.tool;
                 if(tool == null)
                 {
