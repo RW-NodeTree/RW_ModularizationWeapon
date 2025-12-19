@@ -336,6 +336,7 @@ namespace RW_ModularizationWeapon
                 {
                     childNodes = new NodeContainer(this);
                 }
+                base.ExposeData();
                 Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
                 if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
                 {
@@ -349,7 +350,6 @@ namespace RW_ModularizationWeapon
                     }
                 }
                 WeaponPropertiesExposeData();
-                base.ExposeData();
             }
             finally
             {
