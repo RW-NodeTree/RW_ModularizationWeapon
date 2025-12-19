@@ -47,6 +47,10 @@ namespace RW_ModularizationWeapon
                         if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
                     }
                 }
+                else if (Scribe.mode == LoadSaveMode.Saving)
+                {
+                    Scribe.saver.WriteAttribute("IsNull", "true");
+                }
             }
             finally
             {
