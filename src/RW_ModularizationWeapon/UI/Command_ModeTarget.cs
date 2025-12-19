@@ -65,20 +65,21 @@ namespace RW_ModularizationWeapon.UI
             if (rightPanel)
             {
                 // childButton = butRect;
-                butRect.x += 2;
-                butRect.y += 2;
-                butRect.width -= 4;
-                butRect.height -= 4;
+                butRect.x += 8;
+                butRect.y += 8;
+                butRect.width -= 16;
+                butRect.height -= 16;
                 float xMin = butRect.xMax - butRect.height;
                 childButton = butRect;
-                childButton.xMin = xMin;
+                childButton.xMin = xMin + 4;
                 GUI.color = Weapon.CurrentModeColor;
                 Widgets.DrawTextureFitted(childButton, Weapon.CurrentModeIcon, 1);
 
                 childButton = butRect;
-                childButton.xMax = xMin;
+                childButton.xMax = xMin - 4;
                 GUI.color = Color.white;
-                Text.Font = GameFont.Small;
+                Text.Font = GameFont.Tiny;
+                Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(childButton, Weapon.CurrentModeName);
 
                 if(Widgets.ButtonInvisible(butRect))

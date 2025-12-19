@@ -319,6 +319,7 @@ namespace RW_ModularizationWeapon
             if (Props.setRandomPartWhenCreate) SetPartToRandom();
             else SetPartToDefault();
             base.PostMake();
+            making = false;
         }
 
 
@@ -328,6 +329,7 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
+                making = false;
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
                 {
@@ -345,30 +347,7 @@ namespace RW_ModularizationWeapon
                         if (part != null) part.occupiers = this;
                     }
                 }
-                if (Scribe.EnterNode("SandboxDatas"))
-                {
-                    ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
-                    for(uint i = 0; i < protectedProperties.Count; i++)
-                    {
-                        if (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode(i.ToString()))
-                        {
-                            try
-                            {
-                                currentWeaponMode = i;
-                                if (Scribe.mode == LoadSaveMode.LoadingVars)
-                                {
-                                    this.InitializeComps();
-                                }
-                                protectedProperties[(int)i].ExposeData();
-                            }
-                            catch(Exception ex)
-                            {
-                                const int key = ('M' << 24) | ('W' << 16) | ('S' << 8) | 'D';
-                                Log.ErrorOnce(ex.ToString(), key);
-                            }
-                        }
-                    }
-                }
+                WeaponPropertiesExposeData();
                 Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
             }
@@ -831,6 +810,7 @@ namespace RW_ModularizationWeapon
 
             currentWeaponMode = 0;
             InitializeComps();
+            WeaponPropertiesPostMake();
         }
 
 
@@ -878,6 +858,7 @@ namespace RW_ModularizationWeapon
 
             currentWeaponMode = 0;
             InitializeComps();
+            WeaponPropertiesPostMake();
         }
 
 
@@ -1094,6 +1075,9 @@ namespace RW_ModularizationWeapon
 
 
         public ThingOwner GetDirectlyHeldThings() => ChildNodes;
+
+
+        internal bool making = true;
 
 
         private bool swap = false;

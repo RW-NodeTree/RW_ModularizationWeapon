@@ -13,7 +13,7 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
-    public partial class WeaponProperties
+    public class WeaponProperties
     {
 
         public WeaponProperties(ModularizationWeapon weapon, string? childId, int index) //index == -1 -> public; id == null -> self
@@ -26,13 +26,62 @@ namespace RW_ModularizationWeapon
 
         public void ExposeData()
         {
-			if (this.comps != null)
-			{
-				for (int i = 0; i < this.comps.Count; i++)
-				{
-					this.comps[i].PostExposeData();
-				}
-			}
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                if (this.comps != null)
+                {
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        for (int i = 0; i < this.comps.Count; i++)
+                        {
+                            this.comps[i].PostExposeData();
+                        }
+                        compMaked = true;
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
+                }
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
+        }
+
+        public void PostMake()
+        {
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
+            {
+                if (this.comps != null && !compMaked)
+                {
+                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                    try
+                    {
+                        for (int i = 0; i < this.comps.Count; i++)
+                        {
+                            this.comps[i].PostPostMake();
+                        }
+                        compMaked = true;
+                    }
+                    finally
+                    {
+                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                    }
+                }
+            }
+            finally
+            {
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+            }
         }
 
         public bool IsVaildity
@@ -1486,6 +1535,10 @@ namespace RW_ModularizationWeapon
                         {
                             this.comps.RemoveAll(x => x is not CompEquippable && comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
                         }
+                        if (weapon.making)
+                        {
+                            compMaked = true;
+                        }
                     }
                     finally
                     {
@@ -1503,6 +1556,7 @@ namespace RW_ModularizationWeapon
         public readonly string? childId;
         public readonly ModularizationWeapon weapon;
         
+        private bool compMaked = false;
         private bool? vaildityCache = null;
         private string? nameCache = null;
         private Color? colorCache = null;

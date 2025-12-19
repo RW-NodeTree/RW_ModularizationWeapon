@@ -41,6 +41,7 @@ namespace RW_ModularizationWeapon
                         equipmentTracker?.Remove(this);
                         currentWeaponMode = value;
                         InitializeComps();
+                        WeaponPropertiesPostMake();
                         equipmentTracker?.AddEquipment(this);
                     }
                 }
@@ -221,6 +222,57 @@ namespace RW_ModularizationWeapon
                 finally
                 {
                     if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+                }
+            }
+        }
+
+
+        private void WeaponPropertiesExposeData()
+        {
+            if (Scribe.EnterNode("SandboxDatas"))
+            {
+                ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
+                for(uint i = 0; i < protectedProperties.Count; i++)
+                {
+                    if (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode(i.ToString()))
+                    {
+                        try
+                        {
+                            currentWeaponMode = i;
+                            if (Scribe.mode == LoadSaveMode.LoadingVars)
+                            {
+                                this.InitializeComps();
+                            }
+                            protectedProperties[(int)i].ExposeData();
+                        }
+                        catch(Exception ex)
+                        {
+                            const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
+                            Log.ErrorOnce(ex.ToString(), key);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void WeaponPropertiesPostMake()
+        {
+            ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
+            for(uint i = 0; i < protectedProperties.Count; i++)
+            {
+                if (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode(i.ToString()))
+                {
+                    try
+                    {
+                        currentWeaponMode = i;
+                        protectedProperties[(int)i].PostMake();
+                    }
+                    catch(Exception ex)
+                    {
+                        const int key = ('M' << 24) | ('W' << 16) | ('P' << 8) | 'M';
+                        Log.ErrorOnce(ex.ToString(), key);
+                    }
                 }
             }
         }
