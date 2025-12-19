@@ -480,11 +480,7 @@ namespace RW_ModularizationWeapon
             if(weapon != null)
             {
                 WeaponProperties publicProperties = weapon.PublicProperties;
-                List<CompProperties> result = new List<CompProperties>(publicProperties.CompPropertiesRegiestInfo.Count + 1);
-                if (weapon.Props.hasCompEquippable)
-                {
-                    result.Add(new CompProperties_Equippable(weapon.currentWeaponMode));
-                }
+                List<CompProperties> result = new List<CompProperties>(publicProperties.CompPropertiesRegiestInfo.Count);
                 foreach (var regiestInfo in publicProperties.CompPropertiesRegiestInfo)
                 {
                     result.Add(regiestInfo.afterConvert);

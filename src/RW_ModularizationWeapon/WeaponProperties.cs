@@ -1472,8 +1472,12 @@ namespace RW_ModularizationWeapon
                         //    stringBuilder.AppendLine($"{i} : {result[i]}");
                         //}
                         //Log.Message(stringBuilder.ToString());
-                        List<(string? id, uint index, CompProperties afterConvert)> result = new List<(string? id, uint index, CompProperties afterConvert)>(tasks.Count);
+                        List<(string? id, uint index, CompProperties afterConvert)> result = new List<(string? id, uint index, CompProperties afterConvert)>(tasks.Count + 1);
                         foreach (var info in tasks) result.Add((info.id, info.index, info.afterConvert.Result));
+                        if (weapon.Props.hasCompEquippable && (index >= 0 || weapon.ProtectedProperties.Count == 0))
+                        {
+                            result.Add((null, index < 0 ? (uint)weapon.def.comps.Count : (uint)weapon.Props.protectedCompProperties.Count, new ModularizationWeapon.CompProperties_Equippable(weapon.CurrentMode)));
+                        }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                         try
@@ -1520,14 +1524,7 @@ namespace RW_ModularizationWeapon
         {
             if(comps != null)
             {
-                if (index < 0 && weapon.ProtectedProperties.Count != 0)
-                {
-                    weapon.def.comps.RemoveAll(x => comps.FirstIndexOf(y => x == y.props) >= 0);
-                }
-                else
-                {
-                    weapon.def.comps.RemoveAll(x => x is ModularizationWeapon.CompProperties_Equippable || comps.FirstIndexOf(y => x == y.props) >= 0);
-                }
+                weapon.def.comps.RemoveAll(x => comps.FirstIndexOf(y => x == y.props) >= 0);
                 target.AddRange(comps);
             }
         }
@@ -1544,14 +1541,7 @@ namespace RW_ModularizationWeapon
                     {
                         ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)> comps = CompPropertiesRegiestInfo;
                         this.comps = [.. weapon.AllComps];
-                        if (index < 0 && weapon.ProtectedProperties.Count != 0)
-                        {
-                            this.comps.RemoveAll(x => comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
-                        }
-                        else
-                        {
-                            this.comps.RemoveAll(x => x is not CompEquippable && comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
-                        }
+                        this.comps.RemoveAll(x => comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
                         if (weapon.making)
                         {
                             compMaked = true;
