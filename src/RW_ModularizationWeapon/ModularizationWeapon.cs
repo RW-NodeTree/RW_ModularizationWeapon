@@ -1346,6 +1346,7 @@ namespace RW_ModularizationWeapon
             protectedVerbProperties ??= [];
             protectedTools ??= [];
             protectedCompProperties ??= [];
+            notAllowedCompTypes ??= [];
             allPrimaryVerbProperties ??= [];
             allPrimaryVerbProperties.Clear();
             
@@ -1372,6 +1373,15 @@ namespace RW_ModularizationWeapon
 
             parentDef.comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
             protectedCompProperties.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+            notAllowedCompTypes.Capacity += parentDef.comps.Count + protectedCompProperties.Count;
+            foreach (var comp in parentDef.comps)
+            {
+                notAllowedCompTypes.Add(comp.compClass);
+            }
+            foreach (var comp in protectedCompProperties)
+            {
+                notAllowedCompTypes.Add(comp.compClass);
+            }
         }
 
         /// <summary>
@@ -2085,6 +2095,11 @@ namespace RW_ModularizationWeapon
         /// CompProperties for protected weapon properties
         /// </summary>
         public List<CompProperties> protectedCompProperties = new List<CompProperties>();
+
+        /// <summary>
+        /// the ThingComp type that will invoke `ResoveCrosseReference` method from `extraComp`
+        /// </summary>
+        public List<Type> notAllowedCompTypes = new List<Type>();
 
         /// <summary>
         /// special drawing texture when it attach on a part

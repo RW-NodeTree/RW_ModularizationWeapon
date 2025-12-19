@@ -49,7 +49,7 @@ namespace RW_ModularizationWeapon
                 }
                 else if (Scribe.mode == LoadSaveMode.Saving)
                 {
-                    Scribe.saver.WriteAttribute("IsNull", "true");
+                    Scribe.saver.WriteAttribute("IsNull", "True");
                 }
             }
             finally
@@ -1110,6 +1110,7 @@ namespace RW_ModularizationWeapon
         public static VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
+            bool isPrimary = properties.isPrimary;
             properties = (properties * VerbPropertiesMultiplier(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
             properties = (properties + VerbPropertiesOffseter(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
             properties = (properties & VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
@@ -1121,6 +1122,7 @@ namespace RW_ModularizationWeapon
                 properties = (properties & x) ?? properties;
                 properties = (properties | x) ?? properties;
             });
+            properties.isPrimary = isPrimary;
             return properties;
         }
 
@@ -1146,6 +1148,7 @@ namespace RW_ModularizationWeapon
         public static CompProperties CompPropertiesAfterAffect(CompProperties compProperties, string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //tool = (Tool)tool.SimpleCopy();
+            Type type = compProperties.compClass;
             compProperties = (compProperties * CompPropertiesMultiplier(childNodeIdForCompProperties, container, attachmentProperties)) ?? compProperties;
             compProperties = (compProperties + CompPropertiesOffseter(childNodeIdForCompProperties, container, attachmentProperties)) ?? compProperties;
             compProperties = (compProperties & CompPropertiesBoolAndPatch(childNodeIdForCompProperties, container, attachmentProperties)) ?? compProperties;
@@ -1157,6 +1160,7 @@ namespace RW_ModularizationWeapon
                 compProperties = (compProperties & x) ?? compProperties;
                 compProperties = (compProperties | x) ?? compProperties;
             });
+            compProperties.compClass = type;
             return compProperties;
         }
 
@@ -1405,7 +1409,8 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < weapon.def.comps.Count; i++)
                                 {
                                     CompProperties comp = weapon.def.comps[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
+                                    if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
+                                        tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
                                     //VerbToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1419,7 +1424,8 @@ namespace RW_ModularizationWeapon
                                     for (uint i = 0; i < comps.Count; i++)
                                     {
                                         CompProperties comp = comps[(int)i];
-                                        tasks.Add((kv.Item1, i, Task.Run(() => CompPropertiesAfterAffect(comp, kv.Item1, container, attachmentProperties))));
+                                        if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
+                                            tasks.Add((kv.Item1, i, Task.Run(() => CompPropertiesAfterAffect(comp, kv.Item1, container, attachmentProperties))));
                                         //Tool newProp
                                         //    = ;
                                         //result.Add();
@@ -1439,7 +1445,8 @@ namespace RW_ModularizationWeapon
                                 for (; i < comps.Count; i++)
                                 {
                                     comp = comps[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
+                                    if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
+                                        tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
                                     //ToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1455,7 +1462,8 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < comps.Count; i++)
                                 {
                                     CompProperties comp = comps[(int)i];
-                                    tasks.Add((childId, i, Task.Run(() => CompPropertiesAfterAffect(comp, childId, container, attachmentProperties))));
+                                    if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
+                                        tasks.Add((childId, i, Task.Run(() => CompPropertiesAfterAffect(comp, childId, container, attachmentProperties))));
                                     //result.Add();
                                 }
                             }
