@@ -44,7 +44,7 @@ namespace RW_ModularizationWeapon.Patch
 
         [HarmonyPostfix]
         [HarmonyPatch(
-            nameof(IVerbOwner.UniqueVerbOwnerID)
+            "IVerbOwner.UniqueVerbOwnerID"
         )]
         private static void PostCompEquippable_UniqueVerbOwnerID(CompEquippable __instance, ref string __result)
         {
