@@ -1520,7 +1520,14 @@ namespace RW_ModularizationWeapon
         {
             if(comps != null)
             {
-                weapon.def.comps.RemoveAll(x => comps.Find(y => y.props == x) != null);
+                if (index < 0 && weapon.ProtectedProperties.Count != 0)
+                {
+                    weapon.def.comps.RemoveAll(x => comps.FirstIndexOf(y => x == y.props) >= 0);
+                }
+                else
+                {
+                    weapon.def.comps.RemoveAll(x => x is ModularizationWeapon.CompProperties_Equippable || comps.FirstIndexOf(y => x == y.props) >= 0);
+                }
                 target.AddRange(comps);
             }
         }

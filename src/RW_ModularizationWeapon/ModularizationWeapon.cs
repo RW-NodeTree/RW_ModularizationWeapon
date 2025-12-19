@@ -1371,8 +1371,8 @@ namespace RW_ModularizationWeapon
                 }
             }
 
-            parentDef.comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
-            protectedCompProperties.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+            hasCompEquippable |= parentDef.comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)) > 0;
+            hasCompEquippable |= protectedCompProperties.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)) > 0;
             notAllowedCompTypes.Capacity += parentDef.comps.Count + protectedCompProperties.Count;
             foreach (var comp in parentDef.comps)
             {
@@ -2097,9 +2097,14 @@ namespace RW_ModularizationWeapon
         public List<CompProperties> protectedCompProperties = new List<CompProperties>();
 
         /// <summary>
-        /// the ThingComp type that will invoke `ResoveCrosseReference` method from `extraComp`
+        /// the ThingComp type that not allow create from child comps
         /// </summary>
         public List<Type> notAllowedCompTypes = new List<Type>();
+
+        /// <summary>
+        /// used to create managed CompEquippable
+        /// </summary>
+        public bool hasCompEquippable = false;
 
         /// <summary>
         /// special drawing texture when it attach on a part
