@@ -231,30 +231,39 @@ namespace RW_ModularizationWeapon
         {
             if (Scribe.EnterNode("SandboxDatas"))
             {
-                uint original = currentWeaponMode;
-                ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
-                for(uint i = 0; i < protectedProperties.Count; i++)
+                try
                 {
-                    if (i != original && Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode((i > original ? (i - 1) : i).ToString()))
+                    uint original = currentWeaponMode;
+                    ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
+                    for(uint i = 0; i < protectedProperties.Count; i++)
                     {
-                        try
+                        if (i != original && Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode((i > original ? (i - 1) : i).ToString()))
                         {
-                            currentWeaponMode = i;
-                            if (Scribe.mode == LoadSaveMode.LoadingVars)
+                            try
                             {
-                                this.InitializeComps();
+                                currentWeaponMode = i;
+                                if (Scribe.mode == LoadSaveMode.LoadingVars)
+                                {
+                                    this.InitializeComps();
+                                }
+                                protectedProperties[(int)i].ExposeData();
                             }
-                            protectedProperties[(int)i].ExposeData();
+                            catch(Exception ex)
+                            {
+                                const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
+                                Log.ErrorOnce(ex.ToString(), key);
+                            }
+                            Scribe.ExitNode();
                         }
-                        catch(Exception ex)
-                        {
-                            const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
-                            Log.ErrorOnce(ex.ToString(), key);
-                        }
-                        Scribe.ExitNode();
                     }
+                    currentWeaponMode = original;
                 }
-                currentWeaponMode = original;
+                catch(Exception ex)
+                {
+                    const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
+                    Log.ErrorOnce(ex.ToString(), key);
+                }
+                Scribe.ExitNode();
             }
         }
 
