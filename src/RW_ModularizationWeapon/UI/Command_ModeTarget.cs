@@ -12,31 +12,34 @@ namespace RW_ModularizationWeapon.UI
     {
         public Command_ModeTarget(Command_VerbTarget original, ModularizationWeapon weapon)
         {
-            Weapon              =  weapon;
+            Weapon              =   weapon;
             //base
-            verb                =  original.verb;
-            drawRadius          =  original.drawRadius;
-            defaultDesc         =  original.defaultDesc;
-            tutorTag            =  original.defaultDesc;
+            verb                =   original.verb;
+            drawRadius          =   original.drawRadius;
+            defaultDesc         =   original.defaultDesc;
+            tutorTag            =   original.defaultDesc;
 #if V13 || V14
-            disabled            =  original.disabled;
+            disabled            =   original.disabled;
 #else
-            disabled            =  original.Disabled;
+            disabled            =   original.Disabled;
+#if !V15
+            ownerThing          =   original.ownerThing;
 #endif
-            disabledReason      =  original.disabledReason;
-            defaultDescPostfix  =  original.defaultDescPostfix;
-            shrinkable          =  original.shrinkable;
-            groupKey            =  original.groupKey;
-            activateSound       =  original.activateSound;
-            defaultLabel        =  original.defaultLabel;
-            defaultIconColor    =  original.defaultIconColor;
-            iconOffset          =  original.iconOffset;
-            iconDrawScale       =  original.iconDrawScale;
-            iconTexCoords       =  original.iconTexCoords;
-            iconProportions     =  original.iconProportions;
-            iconAngle           =  original.iconAngle;
-            icon                =  original.icon;
-            hotKey              =  original.hotKey;
+#endif
+            disabledReason      =   original.disabledReason;
+            defaultDescPostfix  =   original.defaultDescPostfix;
+            shrinkable          =   original.shrinkable;
+            groupKey            =   original.groupKey;
+            activateSound       =   original.activateSound;
+            defaultLabel        =   original.defaultLabel;
+            defaultIconColor    =   original.defaultIconColor;
+            iconOffset          =   original.iconOffset;
+            iconDrawScale       =   original.iconDrawScale;
+            iconTexCoords       =   original.iconTexCoords;
+            iconProportions     =   original.iconProportions;
+            iconAngle           =   original.iconAngle;
+            icon                =   original.icon;
+            hotKey              =   original.hotKey;
         }
         public ModularizationWeapon Weapon { get; }
 
