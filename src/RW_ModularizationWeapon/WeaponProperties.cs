@@ -16,7 +16,7 @@ namespace RW_ModularizationWeapon
     public partial class WeaponProperties
     {
 
-        public WeaponProperties(ModularizationWeapon weapon, string? childId, int index ) //index == -1 -> public; id == null -> self
+        public WeaponProperties(ModularizationWeapon weapon, string? childId, int index) //index == -1 -> public; id == null -> self
         {
             this.weapon = weapon;
             this.childId = childId;
@@ -52,10 +52,14 @@ namespace RW_ModularizationWeapon
                         {
                             Thing? thing = container[childId];
                             WeaponAttachmentProperties attachmentProperties = weapon.GetOrGenCurrentPartAttachmentProperties()[childId];
-                            finalVaildity =
-                                !ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties) ||
-                                !ModularizationWeapon.NotUseTools(thing, attachmentProperties) ||
-                                !ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties);
+                            if (thing != null)
+                            {
+                                finalVaildity =
+                                    (!ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties) && ModularizationWeapon.ProtectedVerbPropertiesFromThing(thing, index).Count > 0) ||
+                                    (!ModularizationWeapon.NotUseTools(thing, attachmentProperties) && ModularizationWeapon.ProtectedToolsFromThing(thing, index).Count > 0) ||
+                                    (!ModularizationWeapon.NotUseCompProperties(thing, attachmentProperties) && ModularizationWeapon.ProtectedCompPropertiesFromThing(thing, index).Count > 0);
+                                
+                            }
                         }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
@@ -1474,7 +1478,14 @@ namespace RW_ModularizationWeapon
                     {
                         ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)> comps = CompPropertiesRegiestInfo;
                         this.comps = [.. weapon.AllComps];
-                        this.comps.RemoveAll(x => comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
+                        if (index < 0 && weapon.ProtectedProperties.Count != 0)
+                        {
+                            this.comps.RemoveAll(x => comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
+                        }
+                        else
+                        {
+                            this.comps.RemoveAll(x => x is not CompEquippable && comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
+                        }
                     }
                     finally
                     {

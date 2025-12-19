@@ -402,8 +402,8 @@ namespace RW_ModularizationWeapon
             }
             else
             {
-                CompProperties? compProperties = thing.def.comps?.Find(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
-                List<CompProperties> result = compProperties == null ? [] : [compProperties];
+                List<CompProperties> result = thing.def.comps == null ? [] : [.. thing.def.comps];
+                result.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
                 return result;
             }
         }
@@ -415,7 +415,10 @@ namespace RW_ModularizationWeapon
             if(weapon != null)
             {
                 WeaponProperties publicProperties = weapon.PublicProperties;
-                List<CompProperties> result = new List<CompProperties>(publicProperties.CompPropertiesRegiestInfo.Count);
+                List<CompProperties> result = new List<CompProperties>(publicProperties.CompPropertiesRegiestInfo.Count + 1)
+                {
+                    new CompProperties(typeof(CompEquippable))
+                };
                 foreach (var regiestInfo in publicProperties.CompPropertiesRegiestInfo)
                 {
                     result.Add(regiestInfo.afterConvert);
