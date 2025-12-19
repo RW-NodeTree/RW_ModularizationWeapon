@@ -94,6 +94,13 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        
+        internal class CompProperties_Equippable : CompProperties
+        {
+            public readonly uint mode;
+            public CompProperties_Equippable(uint mode) : base(typeof(CompEquippable))
+            {
+                this.mode = mode;
+            }
+        }
     }
 }

@@ -40,5 +40,18 @@ namespace RW_ModularizationWeapon.Patch
             __result = ModularizationWeapon.ToolsFromThing(__instance.parent);
             return false;
         }
+
+
+        [HarmonyPostfix]
+        [HarmonyPatch(
+            nameof(IVerbOwner.UniqueVerbOwnerID)
+        )]
+        private static void PostCompEquippable_UniqueVerbOwnerID(CompEquippable __instance, ref string __result)
+        {
+            if (__instance.props is ModularizationWeapon.CompProperties_Equippable props)
+            {
+                __result += "_" + props.mode;
+            }
+        }
     }
 }
