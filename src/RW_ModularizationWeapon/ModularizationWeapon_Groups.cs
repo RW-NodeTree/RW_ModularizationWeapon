@@ -242,7 +242,7 @@ namespace RW_ModularizationWeapon
                             try
                             {
                                 currentWeaponMode = i;
-                                if (Scribe.mode == LoadSaveMode.LoadingVars && Scribe.loader.curXmlParent.Attributes["IsNull"] != null)
+                                if (Scribe.loader?.curXmlParent?.Attributes["IsNull"] != null)
                                 {
                                     this.InitializeComps();
                                 }

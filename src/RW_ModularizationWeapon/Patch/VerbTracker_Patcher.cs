@@ -30,16 +30,47 @@ namespace RW_ModularizationWeapon.Patch
                 __result.iconDrawScale = Math.Max(scale.x, scale.y);
                 __result.shrinkable = verb != __instance.PrimaryVerb;
                 #endif
-                Tool? tool = __result.verb?.tool;
-                if(tool == null)
+                if(verb != null && verb.tool == null && verb.verbProps != null && verb.verbProps.isPrimary)
                 {
-                    VerbProperties? verbProperties = __result.verb?.verbProps;
-                    if(verbProperties != null && verbProperties.isPrimary)
-                    {
-                        __result = new Command_ModeTarget(__result, weapon);
-                    }
+                    __result = new Command_ModeTarget(__result, weapon);
                 }
             }
         }
+
+        #if DEBUG
+        [HarmonyPostfix]
+        [HarmonyPatch(
+            nameof(VerbTracker.GetVerbsCommands)
+        )]
+        private static void DEBUG_PostVerbTracker_GetVerbsCommands(VerbTracker __instance, ref IEnumerable<Command> __result)
+        {
+            __result = DEBUG_GetVerbsCommandsExceptionCatcher(__instance, __result);
+        }
+
+        private static IEnumerable<Command> DEBUG_GetVerbsCommandsExceptionCatcher(VerbTracker instance, IEnumerable<Command> commands)
+        {
+            int pos = 0;
+            try
+            {
+                List<Command> result = new List<Command>();
+                foreach(var command in commands)
+                {
+                    result.Add(command);
+                    pos++;
+                }
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(
+                    $"VerbTracker.GetVerbsCommands throw Exception:\n" +
+                    $"pos : {pos}.\n" +
+                    $"instance : {instance.directOwner}\n"+
+                    $"    As CompEquippable : {instance.directOwner as CompEquippable}\n"+
+                    $"        Parent : {(instance.directOwner as CompEquippable)?.parent}\n"
+                , ex);
+            }
+        }
+        #endif
     }
 }
