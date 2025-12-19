@@ -330,6 +330,7 @@ namespace RW_ModularizationWeapon
             try
             {
                 making = false;
+                Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
                 {
@@ -348,7 +349,6 @@ namespace RW_ModularizationWeapon
                     }
                 }
                 WeaponPropertiesExposeData();
-                Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
             }
             finally

@@ -231,10 +231,11 @@ namespace RW_ModularizationWeapon
         {
             if (Scribe.EnterNode("SandboxDatas"))
             {
+                uint original = currentWeaponMode;
                 ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
                 for(uint i = 0; i < protectedProperties.Count; i++)
                 {
-                    if (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode(i.ToString()))
+                    if (i != original && Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode((i > original ? (i - 1) : i).ToString()))
                     {
                         try
                         {
@@ -250,8 +251,10 @@ namespace RW_ModularizationWeapon
                             const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
                             Log.ErrorOnce(ex.ToString(), key);
                         }
+                        Scribe.ExitNode();
                     }
                 }
+                currentWeaponMode = original;
             }
         }
 
