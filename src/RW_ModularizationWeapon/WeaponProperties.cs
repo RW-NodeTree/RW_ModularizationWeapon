@@ -30,7 +30,7 @@ namespace RW_ModularizationWeapon
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
             try
             {
-                if (this.comps != null && !compMaked)
+                if (this.comps != null)
                 {
                     bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                     if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
@@ -40,16 +40,15 @@ namespace RW_ModularizationWeapon
                         {
                             this.comps[i].PostExposeData();
                         }
-                        compMaked = true;
                     }
                     finally
                     {
                         if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
                     }
                 }
-                else if (Scribe.mode == LoadSaveMode.Saving)
+                else
                 {
-                    Scribe.saver.WriteAttribute("IsNull", "True");
+                    Scribe.saver?.WriteAttribute("IsNull", "True");
                 }
             }
             finally

@@ -329,7 +329,7 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                making = false;
+                making = Scribe.mode == LoadSaveMode.LoadingVars;
                 Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
@@ -344,12 +344,13 @@ namespace RW_ModularizationWeapon
                     {
                         string id = targetPartsWithId_IdWorkingList[i];
                         LocalTargetInfo targetInfo = targetPartsWithId_TargetWorkingList[i];
-                        targetPartsWithId.SetOrAdd(id, targetInfo);
+                        targetPartsWithId[id] = targetInfo;
                         ModularizationWeapon? part = targetInfo.Thing as ModularizationWeapon;
                         if (part != null) part.occupiers = this;
                     }
                 }
                 WeaponPropertiesExposeData();
+                making = false;
             }
             finally
             {

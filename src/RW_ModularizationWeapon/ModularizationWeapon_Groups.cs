@@ -242,7 +242,7 @@ namespace RW_ModularizationWeapon
                             try
                             {
                                 currentWeaponMode = i;
-                                if (Scribe.loader?.curXmlParent?.Attributes["IsNull"] != null)
+                                if (Scribe.mode == LoadSaveMode.LoadingVars && Scribe.loader?.curXmlParent?.Attributes["IsNull"] == null)
                                 {
                                     this.InitializeComps();
                                 }
@@ -257,7 +257,10 @@ namespace RW_ModularizationWeapon
                         }
                     }
                     currentWeaponMode = original;
-                    this.InitializeComps();
+                    if (Scribe.mode == LoadSaveMode.LoadingVars)
+                    {
+                        this.InitializeComps();
+                    }
                 }
                 catch(Exception ex)
                 {
@@ -274,18 +277,15 @@ namespace RW_ModularizationWeapon
             ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
             for(uint i = 0; i < protectedProperties.Count; i++)
             {
-                if (Scribe.mode == LoadSaveMode.Saving ? Scribe.EnterNode("li") : Scribe.EnterNode(i.ToString()))
+                try
                 {
-                    try
-                    {
-                        currentWeaponMode = i;
-                        protectedProperties[(int)i].PostMake();
-                    }
-                    catch(Exception ex)
-                    {
-                        const int key = ('M' << 24) | ('W' << 16) | ('P' << 8) | 'M';
-                        Log.ErrorOnce(ex.ToString(), key);
-                    }
+                    currentWeaponMode = i;
+                    protectedProperties[(int)i].PostMake();
+                }
+                catch(Exception ex)
+                {
+                    const int key = ('M' << 24) | ('W' << 16) | ('P' << 8) | 'M';
+                    Log.ErrorOnce(ex.ToString(), key);
                 }
             }
         }
