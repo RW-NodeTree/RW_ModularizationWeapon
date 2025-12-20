@@ -329,11 +329,15 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                making = false;
+                making = Scribe.mode == LoadSaveMode.LoadingVars;
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
                 {
                     childNodes = new NodeContainer(this);
+                }
+                if (making)
+                {
+                    ChildNodes.NeedUpdate = false;
                 }
                 Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
                 if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
@@ -346,11 +350,6 @@ namespace RW_ModularizationWeapon
                         ModularizationWeapon? part = targetInfo.Thing as ModularizationWeapon;
                         if (part != null) part.occupiers = this;
                     }
-                }
-                if (Scribe.mode == LoadSaveMode.LoadingVars)
-                {
-                    ChildNodes.UpdateNode();
-                    making = true;
                 }
                 Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
