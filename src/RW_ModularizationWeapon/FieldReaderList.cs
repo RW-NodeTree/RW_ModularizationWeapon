@@ -135,132 +135,107 @@ namespace RW_ModularizationWeapon
         #region T_FieldReaderDgitList
         public static T? operator +(T? a, FieldReaderDgitList<T>? b)
         {
-            if(a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if(b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderDigit<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderDigit<T> v = b[i];
-                        if (v != null)
+                        if(!v.HasDefaultValue)
                         {
-                            if(!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderDigit<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result + v) ?? result;
+                            v = new FieldReaderDigit<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a + v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
 
         public static T? operator -(T? a, FieldReaderDgitList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderDigit<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderDigit<T> v = b[i];
-                        if (v != null)
+                        if (!v.HasDefaultValue)
                         {
-                            if (!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderDigit<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result - v) ?? result;
+                            v = new FieldReaderDigit<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a - v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
 
         public static T? operator *(T? a, FieldReaderDgitList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderDigit<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderDigit<T> v = b[i];
-                        if (v != null)
+                        if (!v.HasDefaultValue)
                         {
-                            if (!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderDigit<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result * v) ?? result;
+                            v = new FieldReaderDigit<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a * v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
 
         public static T? operator /(T? a, FieldReaderDgitList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderDigit<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderDigit<T> v = b[i];
-                        if (v != null)
+                        if (!v.HasDefaultValue)
                         {
-                            if (!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderDigit<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result / v) ?? result;
+                            v = new FieldReaderDigit<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a / v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
 
         public static T? operator %(T? a, FieldReaderDgitList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderDigit<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderDigit<T> v = b[i];
-                        if (v != null)
+                        if (!v.HasDefaultValue)
                         {
-                            if (!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderDigit<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result % v) ?? result;
+                            v = new FieldReaderDigit<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a % v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
         #endregion
 
@@ -717,54 +692,44 @@ namespace RW_ModularizationWeapon
         #region T_FieldReaderBoolListList
         public static T? operator &(T? a, FieldReaderBoolList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderBoolean<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderBoolean<T> v = b[i];
-                        if (v != null)
+                        if (!v.HasDefaultValue)
                         {
-                            if (!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderBoolean<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result & v) ?? result;
+                            v = new FieldReaderBoolean<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a & v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
 
         public static T? operator |(T? a, FieldReaderBoolList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderBoolean<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderBoolean<T> v = b[i];
-                        if (v != null)
+                        if (!v.HasDefaultValue)
                         {
-                            if (!v.HasDefaultValue)
-                            {
-                                v = new FieldReaderBoolean<T>(v);
-                                v.DefaultValue = b.DefaultValue;
-                            }
-                            result = (result | v) ?? result;
+                            v = new FieldReaderBoolean<T>(v);
+                            v.DefaultValue = b.DefaultValue;
                         }
+                        a = (a | v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
         #endregion
 
@@ -953,44 +918,34 @@ namespace RW_ModularizationWeapon
         #region T_FieldReaderInstListList
         public static T? operator &(T? a, FieldReaderInstList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderInstance<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderInstance<T> v = b[i];
-                        if (v != null)
-                        {
-                            result = (result & v) ?? result;
-                        }
+                        a = (a & v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
 
         public static T? operator |(T? a, FieldReaderInstList<T>? b)
         {
-            if (a != null)
+            if (a != null && b != null)
             {
-                T result = Gen.MemberwiseClone(a);
-                if (b != null)
+                for (int i = 0; i < b.Count; i++)
                 {
-                    for (int i = 0; i < b.Count; i++)
+                    FieldReaderInstance<T> v = b[i];
+                    if (v != null)
                     {
-                        FieldReaderInstance<T> v = b[i];
-                        if (v != null)
-                        {
-                            result = (result | v) ?? result;
-                        }
+                        a = (a | v) ?? a;
                     }
                 }
-                return result;
             }
-            return default(T);
+            return a;
         }
         #endregion
 

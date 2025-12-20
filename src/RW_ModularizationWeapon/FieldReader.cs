@@ -136,33 +136,35 @@ namespace RW_ModularizationWeapon
         /// <returns>instance after calculation</returns>
         public T? CalcValue(Func<TV, TV, RuntimeFieldHandle, TV> calc, T? orginal)
         {
-            if (orginal != null)
+            if (orginal != null && calc != null)
             {
-                T result = Gen.MemberwiseClone(orginal);
-                if (calc != null)
+                bool copied = false;
+                
+                foreach (FieldInfo field in orginal.GetType().GetCachedInstanceFields())
                 {
-                    foreach (FieldInfo field in orginal.GetType().GetCachedInstanceFields())
+                    if (UsedType.IsAssignableFrom(field.DeclaringType) && typeof(TV).IsAssignableFrom(field.FieldType))
                     {
-                        if (UsedType.IsAssignableFrom(field.DeclaringType) && typeof(TV).IsAssignableFrom(field.FieldType))
+                        if (!copied)
                         {
-                            RuntimeFieldHandle handle = field.FieldHandle;
-                            if (!TryGetValue(handle, out TV value)) value = DefaultValue;
-                            try
-                            {
-                                //(Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
-                                //TV targetValue = getter(result);
-                                //setter(result, calc(targetValue, value, handle));
-                                value = calc((TV)field.GetValue(result), value, handle);
-                                field.SetValue(result, value);
-                            }
-                            catch (Exception e)
-                            {
-                                Log.Warning(e.ToString());
-                            }
+                            orginal = Gen.MemberwiseClone(orginal) ?? orginal;
+                            copied = true;
+                        }
+                        RuntimeFieldHandle handle = field.FieldHandle;
+                        if (!TryGetValue(handle, out TV value)) value = DefaultValue;
+                        try
+                        {
+                            //(Func<T, TV> getter, Action<T, TV> setter) = GetCachedFieldRef(handle);
+                            //TV targetValue = getter(result);
+                            //setter(result, calc(targetValue, value, handle));
+                            value = calc((TV)field.GetValue(orginal), value, handle);
+                            field.SetValue(orginal, value);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Warning(e.ToString());
                         }
                     }
                 }
-                return result;
             }
             return orginal;
         }
