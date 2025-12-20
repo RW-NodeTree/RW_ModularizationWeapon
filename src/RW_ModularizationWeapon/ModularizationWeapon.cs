@@ -329,7 +329,7 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                making = Scribe.mode == LoadSaveMode.LoadingVars;
+                making = false;
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
                 {
@@ -347,7 +347,11 @@ namespace RW_ModularizationWeapon
                         if (part != null) part.occupiers = this;
                     }
                 }
-                if (making) ChildNodes.UpdateNode();
+                if (Scribe.mode == LoadSaveMode.LoadingVars)
+                {
+                    ChildNodes.UpdateNode();
+                    making = true;
+                }
                 Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
                 WeaponPropertiesExposeData();

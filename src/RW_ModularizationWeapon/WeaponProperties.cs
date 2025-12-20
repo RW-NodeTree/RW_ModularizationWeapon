@@ -30,7 +30,7 @@ namespace RW_ModularizationWeapon
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
             try
             {
-                if (this.comps != null)
+                if (this.comps != null && compMaked)
                 {
                     bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                     if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
