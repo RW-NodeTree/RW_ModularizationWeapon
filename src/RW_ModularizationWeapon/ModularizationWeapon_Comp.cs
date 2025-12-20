@@ -32,11 +32,17 @@ namespace RW_ModularizationWeapon
             return CompPropertiesFromThing(thing);
         }
 
-        internal static List<ThingComp> RestoreComps(List<ThingComp> next, ThingWithComps thing)
+        internal static List<ThingComp> RestoreComps(List<ThingComp> next, List<ThingComp>? prve, ThingWithComps thing)
         {
             ModularizationWeapon? weapon = thing as ModularizationWeapon;
-            if (weapon != null && weapon.swap)
+            if (weapon != null)
             {
+                if (prve != null)
+                {
+                    next = prve;
+                    next.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) < 0);
+                    weapon.def.comps.RemoveAll(x => next.FirstIndexOf(y => x == y.props) >= 0);
+                }
                 WeaponProperties publicProperties = weapon.PublicProperties;
                 publicProperties.RestoreComps(next);
                 var props = weapon.ProtectedProperties;

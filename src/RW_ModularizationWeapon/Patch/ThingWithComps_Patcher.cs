@@ -37,6 +37,8 @@ namespace RW_ModularizationWeapon.Patch
                 if(instruction.StoresField(comps))
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Ldfld, comps);
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
                     yield return new CodeInstruction(OpCodes.Call, RestoreComps);
                 }
                 yield return instruction;

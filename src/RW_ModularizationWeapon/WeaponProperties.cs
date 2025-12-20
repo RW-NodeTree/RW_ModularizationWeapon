@@ -1540,12 +1540,12 @@ namespace RW_ModularizationWeapon
             return result;
         }
 
-        internal void RestoreComps(List<ThingComp> target)
+        internal void RestoreComps(List<ThingComp> next)
         {
-            if(comps != null)
+            if (comps != null)
             {
                 weapon.def.comps.RemoveAll(x => comps.FirstIndexOf(y => x == y.props) >= 0);
-                target.AddRange(comps);
+                next.AddRange(comps);
             }
         }
 
