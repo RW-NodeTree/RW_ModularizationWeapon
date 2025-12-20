@@ -330,7 +330,6 @@ namespace RW_ModularizationWeapon
             try
             {
                 making = Scribe.mode == LoadSaveMode.LoadingVars;
-                Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
                 {
@@ -348,6 +347,8 @@ namespace RW_ModularizationWeapon
                         if (part != null) part.occupiers = this;
                     }
                 }
+                if (making) ChildNodes.UpdateNode();
+                Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
                 WeaponPropertiesExposeData();
                 making = false;
