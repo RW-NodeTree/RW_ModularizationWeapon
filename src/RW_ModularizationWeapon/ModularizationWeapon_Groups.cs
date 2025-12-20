@@ -274,6 +274,7 @@ namespace RW_ModularizationWeapon
 
         private void WeaponPropertiesPostMake()
         {
+            uint original = currentWeaponMode;
             ReadOnlyCollection<WeaponProperties> protectedProperties = ProtectedProperties;
             for(uint i = 0; i < protectedProperties.Count; i++)
             {
@@ -288,6 +289,7 @@ namespace RW_ModularizationWeapon
                     Log.ErrorOnce(ex.ToString(), key);
                 }
             }
+            currentWeaponMode = original;
         }
 
         internal static List<VerbProperties> PublicVerbPropertiesFromThing(Thing thing)
