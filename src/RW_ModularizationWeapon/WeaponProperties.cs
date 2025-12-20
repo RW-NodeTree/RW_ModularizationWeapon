@@ -16,7 +16,7 @@ namespace RW_ModularizationWeapon
     public class WeaponProperties
     {
 
-        public WeaponProperties(ModularizationWeapon weapon, string? childId, int index) //index == -1 -> public; id == null -> self
+        internal WeaponProperties(ModularizationWeapon weapon, string? childId, int index) //index == -1 -> public; id == null -> self
         {
             this.weapon = weapon;
             this.childId = childId;
@@ -1256,7 +1256,10 @@ namespace RW_ModularizationWeapon
                         //}
                         //Log.Message(stringBuilder.ToString());
                         List<(string? id, uint index, VerbProperties afterConvert)> result = new List<(string? id, uint index, VerbProperties afterConvert)>(tasks.Count);
-                        foreach (var info in tasks) result.Add((info.id, info.index, info.afterConvert.Result));
+                        foreach (var info in tasks)
+                        {
+                            result.Add((info.id, info.index, info.afterConvert.Result));
+                        }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                         try
@@ -1363,7 +1366,10 @@ namespace RW_ModularizationWeapon
                         //}
                         //Log.Message(stringBuilder.ToString());
                         List<(string? id, uint index, Tool afterConvert)> result = new List<(string? id, uint index, Tool afterConvert)>(tasks.Count);
-                        foreach (var info in tasks) result.Add((info.id, info.index, info.afterConvert.Result));
+                        foreach (var info in tasks)
+                        {
+                            result.Add((info.id, info.index, info.afterConvert.Result));
+                        }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                         try
@@ -1472,10 +1478,25 @@ namespace RW_ModularizationWeapon
                         //}
                         //Log.Message(stringBuilder.ToString());
                         List<(string? id, uint index, CompProperties afterConvert)> result = new List<(string? id, uint index, CompProperties afterConvert)>(tasks.Count + 1);
-                        foreach (var info in tasks) result.Add((info.id, info.index, info.afterConvert.Result));
                         if (weapon.Props.hasCompEquippable && (index >= 0 || weapon.ProtectedProperties.Count == 0))
                         {
-                            result.Add((null, index < 0 ? (uint)weapon.def.comps.Count : (uint)weapon.Props.protectedCompProperties.Count, new ModularizationWeapon.CompProperties_Equippable(weapon.CurrentMode)));
+                            uint index;
+                            uint childIndex;
+                            if(this.index >= 0)
+                            {
+                                index = (uint)weapon.ProtectedProperties.IndexOf(this);
+                                childIndex = (uint)weapon.Props.protectedCompProperties.Count;
+                            }
+                            else
+                            {
+                                index = 0;
+                                childIndex = (uint)weapon.def.comps.Count;
+                            }
+                            result.Add((null, childIndex, new ModularizationWeapon.CompProperties_Equippable(index)));
+                        }
+                        foreach (var info in tasks)
+                        {
+                            result.Add((info.id, info.index, info.afterConvert.Result));
                         }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
