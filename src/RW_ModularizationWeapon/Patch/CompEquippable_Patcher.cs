@@ -50,7 +50,7 @@ namespace RW_ModularizationWeapon.Patch
         {
             if (__instance.props is ModularizationWeapon.CompProperties_Equippable props)
             {
-                __result += "_" + props.mode;
+                __result += "_Mode" + props.mode;
             }
         }
     }

@@ -30,15 +30,15 @@ namespace RW_ModularizationWeapon
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
             try
             {
-                if (this.comps != null && compMaked)
+                if (this.comps_maked != null)
                 {
                     bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                     if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                     try
                     {
-                        for (int i = 0; i < this.comps.Count; i++)
+                        for (int i = 0; i < this.comps_maked.Count; i++)
                         {
-                            this.comps[i].PostExposeData();
+                            this.comps_maked[i].PostExposeData();
                         }
                     }
                     finally
@@ -63,17 +63,19 @@ namespace RW_ModularizationWeapon
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
             try
             {
-                if (this.comps != null && !compMaked)
+                if (this.comps != null)
                 {
                     bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                     if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                     try
                     {
+                        comps_maked ??= new List<ThingComp>(comps.Count);
                         for (int i = 0; i < this.comps.Count; i++)
                         {
                             this.comps[i].PostPostMake();
                         }
-                        compMaked = true;
+                        comps_maked.AddRange(comps);
+                        comps = null;
                     }
                     finally
                     {
@@ -153,7 +155,7 @@ namespace RW_ModularizationWeapon
                         }
                         else if(childId == null)
                         {
-                            finalName = weapon.Label + " : NO." + (index + 1);
+                            finalName = weapon.Label + " : Mode" + index;
                         }
                         else
                         {
@@ -165,7 +167,7 @@ namespace RW_ModularizationWeapon
                             }
                             else if(child != null)
                             {
-                                finalName = child.Label + " : NO." + (index + 1);
+                                finalName = child.Label + " : Mode" + index;
                             }
                         }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
@@ -1106,10 +1108,10 @@ namespace RW_ModularizationWeapon
         }
         #endregion
         
-        public static VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties, bool forceCopy)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
-            bool isPrimary = properties.isPrimary;
+            VerbProperties original = properties;
             properties = (properties * VerbPropertiesMultiplier(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
             properties = (properties + VerbPropertiesOffseter(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
             properties = (properties & VerbPropertiesBoolAndPatch(childNodeIdForVerbProperties, container, attachmentProperties)) ?? properties;
@@ -1121,14 +1123,19 @@ namespace RW_ModularizationWeapon
                 properties = (properties & x) ?? properties;
                 properties = (properties | x) ?? properties;
             });
-            properties.isPrimary = isPrimary;
+            if (forceCopy && properties == original)
+            {
+                properties = Gen.MemberwiseClone(properties);
+            }
+            properties.isPrimary = original.isPrimary;
             return properties;
         }
 
 
-        public static Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties, bool forceCopy)
         {
             //tool = (Tool)tool.SimpleCopy();
+            Tool original = tool;
             tool = (tool * ToolsMultiplier(childNodeIdForTool, container, attachmentProperties)) ?? tool;
             tool = (tool + ToolsOffseter(childNodeIdForTool, container, attachmentProperties)) ?? tool;
             tool = (tool & ToolsBoolAndPatch(childNodeIdForTool, container, attachmentProperties)) ?? tool;
@@ -1140,14 +1147,18 @@ namespace RW_ModularizationWeapon
                 tool = (tool & x) ?? tool;
                 tool = (tool | x) ?? tool;
             });
+            if (forceCopy && tool == original)
+            {
+                tool = Gen.MemberwiseClone(tool);
+            }
             return tool;
         }
 
 
-        public static CompProperties CompPropertiesAfterAffect(CompProperties compProperties, string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
+        public static CompProperties CompPropertiesAfterAffect(CompProperties compProperties, string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties, bool forceCopy)
         {
             //tool = (Tool)tool.SimpleCopy();
-            Type type = compProperties.compClass;
+            CompProperties original = compProperties;
             compProperties = (compProperties * CompPropertiesMultiplier(childNodeIdForCompProperties, container, attachmentProperties)) ?? compProperties;
             compProperties = (compProperties + CompPropertiesOffseter(childNodeIdForCompProperties, container, attachmentProperties)) ?? compProperties;
             compProperties = (compProperties & CompPropertiesBoolAndPatch(childNodeIdForCompProperties, container, attachmentProperties)) ?? compProperties;
@@ -1159,7 +1170,11 @@ namespace RW_ModularizationWeapon
                 compProperties = (compProperties & x) ?? compProperties;
                 compProperties = (compProperties | x) ?? compProperties;
             });
-            compProperties.compClass = type;
+            if (forceCopy && compProperties == original)
+            {
+                compProperties = Gen.MemberwiseClone(compProperties);
+            }
+            compProperties.compClass = original.compClass;
             return compProperties;
         }
 
@@ -1189,7 +1204,7 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < weapon.def.Verbs.Count; i++)
                                 {
                                     VerbProperties properties = weapon.def.Verbs[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties, false))));
                                     //VerbPropertiesRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1204,7 +1219,7 @@ namespace RW_ModularizationWeapon
                                     for (uint i = 0; i < verbProperties.Count; i++)
                                     {
                                         VerbProperties properties = verbProperties[(int)i];
-                                        tasks.Add((kv.Item1, i, Task.Run(() => VerbPropertiesAfterAffect(properties, kv.Item1, container, attachmentProperties))));
+                                        tasks.Add((kv.Item1, i, Task.Run(() => VerbPropertiesAfterAffect(properties, kv.Item1, container, attachmentProperties, false))));
                                         //result.Add();
                                     }
                                 }
@@ -1222,7 +1237,7 @@ namespace RW_ModularizationWeapon
                                 for (; i < verbProperties.Count; i++)
                                 {
                                     properties = verbProperties[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties, true))));
                                     //VerbPropertiesRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1231,7 +1246,7 @@ namespace RW_ModularizationWeapon
                             if (weapon.Props.allPrimaryVerbProperties.Count > index)
                             {
                                 properties = weapon.Props.allPrimaryVerbProperties[index];
-                                tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties))));
+                                tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties, true))));
                             }
                         }
                         else 
@@ -1244,7 +1259,7 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < verbProperties.Count; i++)
                                 {
                                     VerbProperties properties = verbProperties[(int)i];
-                                    tasks.Add((childId, i, Task.Run(() => VerbPropertiesAfterAffect(properties, childId, container, attachmentProperties))));
+                                    tasks.Add((childId, i, Task.Run(() => VerbPropertiesAfterAffect(properties, childId, container, attachmentProperties, true))));
                                     //result.Add();
                                 }
                             }
@@ -1304,7 +1319,7 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < weapon.def.tools.Count; i++)
                                 {
                                     Tool tool = weapon.def.tools[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties, false))));
                                     //VerbToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1318,7 +1333,7 @@ namespace RW_ModularizationWeapon
                                     for (uint i = 0; i < tools.Count; i++)
                                     {
                                         Tool tool = tools[(int)i];
-                                        tasks.Add((kv.Item1, i, Task.Run(() => ToolAfterAffect(tool, kv.Item1, container, attachmentProperties))));
+                                        tasks.Add((kv.Item1, i, Task.Run(() => ToolAfterAffect(tool, kv.Item1, container, attachmentProperties, false))));
                                         //Tool newProp
                                         //    = ;
                                         //result.Add();
@@ -1338,7 +1353,7 @@ namespace RW_ModularizationWeapon
                                 for (; i < tools.Count; i++)
                                 {
                                     tool = tools[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties, true))));
                                     //ToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1354,7 +1369,7 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < tools.Count; i++)
                                 {
                                     Tool tool = tools[(int)i];
-                                    tasks.Add((childId, i, Task.Run(() => ToolAfterAffect(tool, childId, container, attachmentProperties))));
+                                    tasks.Add((childId, i, Task.Run(() => ToolAfterAffect(tool, childId, container, attachmentProperties, true))));
                                     //result.Add();
                                 }
                             }
@@ -1414,7 +1429,7 @@ namespace RW_ModularizationWeapon
                                 for (uint i = 0; i < weapon.def.comps.Count; i++)
                                 {
                                     CompProperties comp = weapon.def.comps[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties, false))));
                                     //VerbToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1429,7 +1444,7 @@ namespace RW_ModularizationWeapon
                                     {
                                         CompProperties comp = comps[(int)i];
                                         if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
-                                            tasks.Add((kv.Item1, i, Task.Run(() => CompPropertiesAfterAffect(comp, kv.Item1, container, attachmentProperties))));
+                                            tasks.Add((kv.Item1, i, Task.Run(() => CompPropertiesAfterAffect(comp, kv.Item1, container, attachmentProperties, false))));
                                         //Tool newProp
                                         //    = ;
                                         //result.Add();
@@ -1449,7 +1464,7 @@ namespace RW_ModularizationWeapon
                                 for (; i < comps.Count; i++)
                                 {
                                     comp = comps[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties))));
+                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties, true))));
                                     //ToolRegiestInfo prop = ;
                                     //result.Add(prop);
                                 }
@@ -1466,7 +1481,7 @@ namespace RW_ModularizationWeapon
                                 {
                                     CompProperties comp = comps[(int)i];
                                     if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
-                                        tasks.Add((childId, i, Task.Run(() => CompPropertiesAfterAffect(comp, childId, container, attachmentProperties))));
+                                        tasks.Add((childId, i, Task.Run(() => CompPropertiesAfterAffect(comp, childId, container, attachmentProperties, true))));
                                     //result.Add();
                                 }
                             }
@@ -1542,35 +1557,41 @@ namespace RW_ModularizationWeapon
 
         internal void RestoreComps(List<ThingComp> next)
         {
-            if (comps != null)
+            if (comps_maked != null)
             {
-                weapon.def.comps.RemoveAll(x => comps.FirstIndexOf(y => x == y.props) >= 0);
-                next.AddRange(comps);
+                //every props in def.comps will be need create and need invoke PostMake
+                comps_maked.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) <  0);
+                weapon.def.comps.RemoveAll(x => comps_maked.FirstIndexOf(y => x == y.props) >= 0);
+                next.AddRange(comps_maked);
             }
         }
 
-        internal void FinalInitComps(bool needExitLock)
+        internal void FinalInitComps(List<ThingComp> comps, bool needExitLock)
         {
             try
             {
-                if(comps == null)
+                bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                try
                 {
-                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                    try
+                    ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)> compProperties = CompPropertiesRegiestInfo;
+                    this.comps = [.. comps];
+                    this.comps.RemoveAll(x => compProperties.FirstIndexOf(y => x.props == y.afterConvert) < 0);
+                    if (weapon.making)
                     {
-                        ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)> comps = CompPropertiesRegiestInfo;
-                        this.comps = [.. weapon.AllComps];
-                        this.comps.RemoveAll(x => comps.FirstIndexOf(y => x.props == y.afterConvert) < 0);
-                        if (weapon.making)
-                        {
-                            compMaked = true;
-                        }
+                        this.comps_maked = this.comps;
+                        this.comps = null;
                     }
-                    finally
+                    else
                     {
-                        if(!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                        this.comps_maked = [.. this.comps];
+                        this.comps.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => x.props == y) < 0);
+                        this.comps_maked.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => x.props == y) >= 0);
                     }
+                }
+                finally
+                {
+                    if(!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
                 }
             }
             finally
@@ -1583,12 +1604,13 @@ namespace RW_ModularizationWeapon
         public readonly string? childId;
         public readonly ModularizationWeapon weapon;
         
-        private bool compMaked = false;
+        
         private bool? vaildityCache = null;
         private string? nameCache = null;
         private Color? colorCache = null;
         private Texture2D? iconCache = null;
         private List<ThingComp>? comps = null;
+        private List<ThingComp>? comps_maked = null;
         private ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)>? compPropertiesCache = null;
         private ReadOnlyCollection<(string? id, uint index, Tool afterConvert)>? toolsCache = null;
         private ReadOnlyCollection<(string? id, uint index, VerbProperties afterConvert)>? verbPropertiesCache = null;

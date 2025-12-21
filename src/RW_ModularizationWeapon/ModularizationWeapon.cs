@@ -329,15 +329,10 @@ namespace RW_ModularizationWeapon
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                making = Scribe.mode == LoadSaveMode.LoadingVars;
                 Scribe_Deep.Look(ref this.childNodes, "innerContainer", this);
                 if (childNodes == null)
                 {
                     childNodes = new NodeContainer(this);
-                }
-                if (making)
-                {
-                    ChildNodes.NeedUpdate = false;
                 }
                 Scribe_Collections.Look(ref targetPartsWithId, "targetPartsWithId", LookMode.Value, LookMode.LocalTargetInfo, ref targetPartsWithId_IdWorkingList, ref targetPartsWithId_TargetWorkingList);
                 if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
@@ -883,7 +878,19 @@ namespace RW_ModularizationWeapon
             }
             foreach (var keyValue in childs)
             {
-                nextChild[keyValue.Item1] = keyValue.Item2;
+                #if V13 || V14 || V15
+                if (keyValue.Item2.Destroyed)
+                #else
+                if (keyValue.Item2.Destroyed && childs.removeContentsIfDestroyed)
+                #endif
+                {
+                    cachedDataToPostUpatde.Add("cachedSwap", swap ? new object() : null);
+                    swap = false;
+                }
+                else
+                {
+                    nextChild[keyValue.Item1] = keyValue.Item2;
+                }
             }
             if (!swap)
             {
@@ -1004,6 +1011,7 @@ namespace RW_ModularizationWeapon
                         ParentPart.targetPartChanged = true;
                     }
                     MarkTargetPartChanged();
+                    targetPartChanged = false;
                 }
                 if (Props.attachmentProperties.Count > 0 && actionNode == this)
                 {
@@ -1013,9 +1021,16 @@ namespace RW_ModularizationWeapon
                     if (swap) SwapCache();
                     else UpdateCache();
                 }
-                swap = false;
-                ChildNodes.NeedUpdate = false;
-                targetPartChanged = false;
+                if (cachedDataFromPerUpdate.TryGetValue("cachedSwap", out object? cachedSwap))
+                {
+                    swap = cachedSwap != null;
+                    ChildNodes.NeedUpdate = swap;
+                }
+                else
+                {
+                    swap = false;
+                    ChildNodes.NeedUpdate = false;
+                }
             }
             finally
             {
@@ -1378,7 +1393,7 @@ namespace RW_ModularizationWeapon
 
             hasCompEquippable |= parentDef.comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)) > 0;
             hasCompEquippable |= protectedCompProperties.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass)) > 0;
-            notAllowedCompTypes.Capacity += parentDef.comps.Count + protectedCompProperties.Count;
+            notAllowedCompTypes.Capacity += parentDef.comps.Count + protectedCompProperties.Count + 1;
             foreach (var comp in parentDef.comps)
             {
                 notAllowedCompTypes.Add(comp.compClass);
@@ -1387,6 +1402,7 @@ namespace RW_ModularizationWeapon
             {
                 notAllowedCompTypes.Add(comp.compClass);
             }
+            notAllowedCompTypes.Add(typeof(CompEquippable));
         }
 
         /// <summary>

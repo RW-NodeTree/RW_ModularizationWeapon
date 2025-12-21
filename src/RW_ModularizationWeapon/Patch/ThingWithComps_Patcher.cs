@@ -49,9 +49,9 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void FinalThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, bool, bool, bool) __state)
+        private static void FinalThing_InitializeComps(ThingWithComps __instance, List<ThingComp> ___comps, ref (List<CompProperties>?, bool, bool, bool) __state)
         {
-            ModularizationWeapon.FinalInitComps(__instance, __state.Item2, __state.Item3, __state.Item4);
+            ModularizationWeapon.FinalInitComps(__instance, ___comps, __state.Item2, __state.Item3, __state.Item4);
             __instance.def.comps = __state.Item1;
         }
     }

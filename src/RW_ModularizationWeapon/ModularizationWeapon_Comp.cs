@@ -39,9 +39,9 @@ namespace RW_ModularizationWeapon
             {
                 if (prve != null)
                 {
+                    prve.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) < 0);
+                    weapon.def.comps.RemoveAll(x => prve.FirstIndexOf(y => x == y.props) >= 0);
                     next = prve;
-                    next.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) < 0);
-                    weapon.def.comps.RemoveAll(x => next.FirstIndexOf(y => x == y.props) >= 0);
                 }
                 WeaponProperties publicProperties = weapon.PublicProperties;
                 publicProperties.RestoreComps(next);
@@ -56,7 +56,7 @@ namespace RW_ModularizationWeapon
         }
 
         
-        internal static void FinalInitComps(Thing thing, bool needExitLock, bool publicPropertiesNeedExitLock, bool protectedPropertiesNeedExitLock)
+        internal static void FinalInitComps(Thing thing, List<ThingComp> comps, bool needExitLock, bool publicPropertiesNeedExitLock, bool protectedPropertiesNeedExitLock)
         {
             ModularizationWeapon? weapon = thing as ModularizationWeapon;
             if(weapon != null)
@@ -64,29 +64,29 @@ namespace RW_ModularizationWeapon
                 int errorCount = 0;
                 try
                 {
-                    if (needExitLock) weapon.readerWriterLockSlim.ExitWriteLock();
-                }
-                catch(Exception ex)
-                {
-                    errorCount++;
-                    Log.Error(ex.ToString());
-                }
-                try
-                {
-                    weapon.PublicProperties.FinalInitComps(publicPropertiesNeedExitLock);
-                }
-                catch(Exception ex)
-                {
-                    errorCount++;
-                    Log.Error(ex.ToString());
-                }
-                try
-                {
                     var props = weapon.ProtectedProperties;
                     if (props.Count > weapon.currentWeaponMode)
                     {
-                        props[(int)weapon.currentWeaponMode].FinalInitComps(protectedPropertiesNeedExitLock);
+                        props[(int)weapon.currentWeaponMode].FinalInitComps(comps, protectedPropertiesNeedExitLock);
                     }
+                }
+                catch(Exception ex)
+                {
+                    errorCount++;
+                    Log.Error(ex.ToString());
+                }
+                try
+                {
+                    weapon.PublicProperties.FinalInitComps(comps, publicPropertiesNeedExitLock);
+                }
+                catch(Exception ex)
+                {
+                    errorCount++;
+                    Log.Error(ex.ToString());
+                }
+                try
+                {
+                    if (needExitLock) weapon.readerWriterLockSlim.ExitWriteLock();
                 }
                 catch(Exception ex)
                 {
