@@ -20,7 +20,7 @@ namespace RW_ModularizationWeapon.Patch
             if (__instance.props is ModularizationWeapon.CompProperties_Equippable props && __instance.parent is ModularizationWeapon weapon)
             {
                 __result = weapon.VerbPropertiesFromThing(props.mode);
-            return false;
+                return false;
             }
             return true;
         }
