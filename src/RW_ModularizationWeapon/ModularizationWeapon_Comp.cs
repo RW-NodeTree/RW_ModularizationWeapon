@@ -13,23 +13,19 @@ namespace RW_ModularizationWeapon
     public partial class ModularizationWeapon
     {
 
-        internal static List<CompProperties> PreInitComps(Thing thing, ref bool needExitLock, ref bool publicPropertiesNeedExitLock, ref bool protectedPropertiesNeedExitLock)
+        internal List<CompProperties> PreInitComps(ref bool needExitLock, ref bool publicPropertiesNeedExitLock, ref bool protectedPropertiesNeedExitLock)
         {
-            ModularizationWeapon? weapon = thing as ModularizationWeapon;
-            if (weapon != null)
+            needExitLock = !readerWriterLockSlim.IsWriteLockHeld;
+            if(needExitLock) readerWriterLockSlim.EnterWriteLock();
+            WeaponProperties publicProperties = PublicProperties;
+            publicPropertiesNeedExitLock = publicProperties.PreInitComps();
+            var props = ProtectedProperties;
+            if (props.Count > CurrentMode)
             {
-                needExitLock = !weapon.readerWriterLockSlim.IsWriteLockHeld;
-                if(needExitLock) weapon.readerWriterLockSlim.EnterWriteLock();
-                WeaponProperties publicProperties = weapon.PublicProperties;
-                publicPropertiesNeedExitLock = publicProperties.PreInitComps();
-                var props = weapon.ProtectedProperties;
-                if (props.Count > weapon.CurrentMode)
-                {
-                    WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
-                    protectedPropertiesNeedExitLock = protectedProperties.PreInitComps();
-                }
+                WeaponProperties protectedProperties = props[(int)CurrentMode];
+                protectedPropertiesNeedExitLock = protectedProperties.PreInitComps();
             }
-            return CompPropertiesFromThing(thing);
+            return CompPropertiesFromThing(CurrentMode);
         }
 
         internal static List<ThingComp> RestoreComps(List<ThingComp> next, List<ThingComp>? prve, ThingWithComps thing)
@@ -56,47 +52,43 @@ namespace RW_ModularizationWeapon
         }
 
         
-        internal static void FinalInitComps(Thing thing, List<ThingComp> comps, bool needExitLock, bool publicPropertiesNeedExitLock, bool protectedPropertiesNeedExitLock)
+        internal void FinalInitComps(List<ThingComp> comps, bool needExitLock, bool publicPropertiesNeedExitLock, bool protectedPropertiesNeedExitLock)
         {
-            ModularizationWeapon? weapon = thing as ModularizationWeapon;
-            if(weapon != null)
+            int errorCount = 0;
+            try
             {
-                int errorCount = 0;
-                try
+                var props = ProtectedProperties;
+                if (props.Count > CurrentMode)
                 {
-                    var props = weapon.ProtectedProperties;
-                    if (props.Count > weapon.CurrentMode)
-                    {
-                        props[(int)weapon.CurrentMode].FinalInitComps(comps, protectedPropertiesNeedExitLock);
-                    }
+                    props[(int)CurrentMode].FinalInitComps(comps, protectedPropertiesNeedExitLock);
                 }
-                catch(Exception ex)
-                {
-                    errorCount++;
-                    Log.Error(ex.ToString());
-                }
-                try
-                {
-                    weapon.PublicProperties.FinalInitComps(comps, publicPropertiesNeedExitLock);
-                }
-                catch(Exception ex)
-                {
-                    errorCount++;
-                    Log.Error(ex.ToString());
-                }
-                try
-                {
-                    if (needExitLock) weapon.readerWriterLockSlim.ExitWriteLock();
-                }
-                catch(Exception ex)
-                {
-                    errorCount++;
-                    Log.Error(ex.ToString());
-                }
-                if (errorCount > 0)
-                {
-                    throw new Exception($"catch {errorCount} errors at FinalInitComps");
-                }
+            }
+            catch(Exception ex)
+            {
+                errorCount++;
+                Log.Error(ex.ToString());
+            }
+            try
+            {
+                PublicProperties.FinalInitComps(comps, publicPropertiesNeedExitLock);
+            }
+            catch(Exception ex)
+            {
+                errorCount++;
+                Log.Error(ex.ToString());
+            }
+            try
+            {
+                if (needExitLock) readerWriterLockSlim.ExitWriteLock();
+            }
+            catch(Exception ex)
+            {
+                errorCount++;
+                Log.Error(ex.ToString());
+            }
+            if (errorCount > 0)
+            {
+                throw new Exception($"catch {errorCount} errors at FinalInitComps");
             }
         }
 

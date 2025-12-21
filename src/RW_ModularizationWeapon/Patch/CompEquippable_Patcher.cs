@@ -17,12 +17,12 @@ namespace RW_ModularizationWeapon.Patch
         )]
         private static bool PreCompEquippable_GetVerbProperties(CompEquippable __instance, ref List<VerbProperties> __result)
         {
-            if (__instance.parent.GetComp<CompEquippable>() != __instance)
+            if (__instance.props is ModularizationWeapon.CompProperties_Equippable props && __instance.parent is ModularizationWeapon weapon)
             {
-                return true;
-            }
-            __result = ModularizationWeapon.VerbPropertiesFromThing(__instance.parent);
+                __result = weapon.VerbPropertiesFromThing(props.mode);
             return false;
+            }
+            return true;
         }
 
 
@@ -33,12 +33,12 @@ namespace RW_ModularizationWeapon.Patch
         )]
         private static bool PreCompEquippable_GetTools(CompEquippable __instance, ref List<Tool> __result)
         {
-            if (__instance.parent.GetComp<CompEquippable>() != __instance)
+            if (__instance.props is ModularizationWeapon.CompProperties_Equippable props && __instance.parent is ModularizationWeapon weapon)
             {
-                return true;
+                __result = weapon.ToolsFromThing(props.mode);
+                return false;
             }
-            __result = ModularizationWeapon.ToolsFromThing(__instance.parent);
-            return false;
+            return true;
         }
 
 

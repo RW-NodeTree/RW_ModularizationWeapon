@@ -19,11 +19,11 @@ namespace RW_ModularizationWeapon
         {
 
             stats["verbs"] = ThingDef_verbs(def);
-            ThingDef_verbs(def) = VerbPropertiesFromThing(this);
+            ThingDef_verbs(def) = VerbPropertiesFromThing(CurrentMode);
             stats["tools"] = def.tools;
-            def.tools = ToolsFromThing(this);
+            def.tools = ToolsFromThing(CurrentMode);
             stats["comps"] = def.comps;
-            def.comps = CompPropertiesFromThing(this);
+            def.comps = CompPropertiesFromThing(CurrentMode);
         }
 
 

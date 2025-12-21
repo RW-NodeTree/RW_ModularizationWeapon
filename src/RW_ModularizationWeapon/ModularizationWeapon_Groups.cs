@@ -335,41 +335,33 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        internal static List<VerbProperties> VerbPropertiesFromThing(Thing thing)
+        public List<VerbProperties> VerbPropertiesFromThing(uint index)
         {
-            ModularizationWeapon? weapon = thing as ModularizationWeapon;
-            if(weapon != null)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
-                bool isUpgradeableReadLockHeld = weapon.readerWriterLockSlim.IsUpgradeableReadLockHeld || weapon.readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) weapon.readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
+                WeaponProperties publicProperties = PublicProperties;
+                List<VerbProperties> result = new List<VerbProperties>(publicProperties.VerbPropertiesRegiestInfo.Count);
+                foreach (var regiestInfo in publicProperties.VerbPropertiesRegiestInfo)
                 {
-                    WeaponProperties publicProperties = weapon.PublicProperties;
-                    List<VerbProperties> result = new List<VerbProperties>(publicProperties.VerbPropertiesRegiestInfo.Count);
-                    foreach (var regiestInfo in publicProperties.VerbPropertiesRegiestInfo)
+                    result.Add(regiestInfo.afterConvert);
+                }
+                var props = ProtectedProperties;
+                if (props.Count > index)
+                {
+                    WeaponProperties protectedProperties = props[(int)index];
+                    result.Capacity += protectedProperties.VerbPropertiesRegiestInfo.Count;
+                    foreach (var regiestInfo in protectedProperties.VerbPropertiesRegiestInfo)
                     {
                         result.Add(regiestInfo.afterConvert);
                     }
-                    var props = weapon.ProtectedProperties;
-                    if (props.Count > weapon.CurrentMode)
-                    {
-                        WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
-                        result.Capacity += protectedProperties.VerbPropertiesRegiestInfo.Count;
-                        foreach (var regiestInfo in protectedProperties.VerbPropertiesRegiestInfo)
-                        {
-                            result.Add(regiestInfo.afterConvert);
-                        }
-                    }
-                    return result;
                 }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) weapon.readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
+                return result;
             }
-            else
+            finally
             {
-                return thing.def.Verbs ?? [];
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
         
@@ -411,41 +403,33 @@ namespace RW_ModularizationWeapon
         }
 
 
-        internal static List<Tool> ToolsFromThing(Thing thing)
+        public List<Tool> ToolsFromThing(uint index)
         {
-            ModularizationWeapon? weapon = thing as ModularizationWeapon;
-            if(weapon != null)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
-                bool isUpgradeableReadLockHeld = weapon.readerWriterLockSlim.IsUpgradeableReadLockHeld || weapon.readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) weapon.readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
+                WeaponProperties publicProperties = PublicProperties;
+                List<Tool> result = new List<Tool>(publicProperties.VerbToolRegiestInfo.Count);
+                foreach (var regiestInfo in publicProperties.VerbToolRegiestInfo)
                 {
-                    WeaponProperties publicProperties = weapon.PublicProperties;
-                    List<Tool> result = new List<Tool>(publicProperties.VerbToolRegiestInfo.Count);
-                    foreach (var regiestInfo in publicProperties.VerbToolRegiestInfo)
+                    result.Add(regiestInfo.afterConvert);
+                }
+                var props = ProtectedProperties;
+                if (props.Count > index)
+                {
+                    WeaponProperties protectedProperties = props[(int)index];
+                    result.Capacity += protectedProperties.VerbToolRegiestInfo.Count;
+                    foreach (var regiestInfo in protectedProperties.VerbToolRegiestInfo)
                     {
                         result.Add(regiestInfo.afterConvert);
                     }
-                    var props = weapon.ProtectedProperties;
-                    if (props.Count > weapon.CurrentMode)
-                    {
-                        WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
-                        result.Capacity += protectedProperties.VerbToolRegiestInfo.Count;
-                        foreach (var regiestInfo in protectedProperties.VerbToolRegiestInfo)
-                        {
-                            result.Add(regiestInfo.afterConvert);
-                        }
-                    }
-                    return result;
                 }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) weapon.readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
+                return result;
             }
-            else
+            finally
             {
-                return thing.def.tools ?? [];
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
 
@@ -494,44 +478,34 @@ namespace RW_ModularizationWeapon
         }
         
 
-        internal static List<CompProperties> CompPropertiesFromThing(Thing thing)
+        public List<CompProperties> CompPropertiesFromThing(uint index)
         {
-            ModularizationWeapon? weapon = thing as ModularizationWeapon;
-            if(weapon != null)
+            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            try
             {
-                bool isUpgradeableReadLockHeld = weapon.readerWriterLockSlim.IsUpgradeableReadLockHeld || weapon.readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) weapon.readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
+                WeaponProperties publicProperties = PublicProperties;
+                List<CompProperties> result = new List<CompProperties>(publicProperties.CompPropertiesRegiestInfo.Count);
+                foreach (var regiestInfo in publicProperties.CompPropertiesRegiestInfo)
                 {
-                    WeaponProperties publicProperties = weapon.PublicProperties;
-                    List<CompProperties> result = new List<CompProperties>(publicProperties.CompPropertiesRegiestInfo.Count);
-                    foreach (var regiestInfo in publicProperties.CompPropertiesRegiestInfo)
+                    result.Add(regiestInfo.afterConvert);
+                }
+                var props = ProtectedProperties;
+                if (props.Count > index)
+                {
+                    WeaponProperties protectedProperties = props[(int)index];
+                    result.Capacity += protectedProperties.CompPropertiesRegiestInfo.Count;
+                    foreach (var regiestInfo in protectedProperties.CompPropertiesRegiestInfo)
                     {
                         result.Add(regiestInfo.afterConvert);
                     }
-                    var props = weapon.ProtectedProperties;
-                    if (props.Count > weapon.CurrentMode)
-                    {
-                        WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
-                        result.Capacity += protectedProperties.CompPropertiesRegiestInfo.Count;
-                        foreach (var regiestInfo in protectedProperties.CompPropertiesRegiestInfo)
-                        {
-                            result.Add(regiestInfo.afterConvert);
-                        }
-                    }
-                    return result;
                 }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) weapon.readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
+                return result;
             }
-            else
+            finally
             {
-                return thing.def.comps ?? [];
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
-
-        
     }
 }
