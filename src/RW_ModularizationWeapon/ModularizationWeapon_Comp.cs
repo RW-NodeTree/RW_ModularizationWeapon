@@ -23,9 +23,9 @@ namespace RW_ModularizationWeapon
                 WeaponProperties publicProperties = weapon.PublicProperties;
                 publicPropertiesNeedExitLock = publicProperties.PreInitComps();
                 var props = weapon.ProtectedProperties;
-                if (props.Count > weapon.currentWeaponMode)
+                if (props.Count > weapon.CurrentMode)
                 {
-                    WeaponProperties protectedProperties = props[(int)weapon.currentWeaponMode];
+                    WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
                     protectedPropertiesNeedExitLock = protectedProperties.PreInitComps();
                 }
             }
@@ -46,9 +46,9 @@ namespace RW_ModularizationWeapon
                 WeaponProperties publicProperties = weapon.PublicProperties;
                 publicProperties.RestoreComps(next);
                 var props = weapon.ProtectedProperties;
-                if (props.Count > weapon.currentWeaponMode)
+                if (props.Count > weapon.CurrentMode)
                 {
-                    WeaponProperties protectedProperties = props[(int)weapon.currentWeaponMode];
+                    WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
                     protectedProperties.RestoreComps(next);
                 }
             }
@@ -65,9 +65,9 @@ namespace RW_ModularizationWeapon
                 try
                 {
                     var props = weapon.ProtectedProperties;
-                    if (props.Count > weapon.currentWeaponMode)
+                    if (props.Count > weapon.CurrentMode)
                     {
-                        props[(int)weapon.currentWeaponMode].FinalInitComps(comps, protectedPropertiesNeedExitLock);
+                        props[(int)weapon.CurrentMode].FinalInitComps(comps, protectedPropertiesNeedExitLock);
                     }
                 }
                 catch(Exception ex)
