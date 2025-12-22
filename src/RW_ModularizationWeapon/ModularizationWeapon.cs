@@ -717,18 +717,18 @@ namespace RW_ModularizationWeapon
             graphicCache_TargetPart?.ForceUpdateAll();
             statOffsetCache_TargetPart = null;
             statMultiplierCache_TargetPart = null;
-            publicPropertiesCache_TargetPart = null;
-
+            WeaponProperties? publicPropertiesCache_TargetPart = this.publicPropertiesCache_TargetPart;
+            this.publicPropertiesCache_TargetPart = null;
+            ReadOnlyCollection<WeaponProperties>? protectedPropertiesCache_TargetPart = this.protectedPropertiesCache_TargetPart;
+            this.protectedPropertiesCache_TargetPart = null;
+            
             publicPropertiesCache_TargetPart?.DestroyComps();
-            publicPropertiesCache_TargetPart = null;
-
             if(protectedPropertiesCache_TargetPart != null)
             {
-                foreach(var prop in protectedPropertiesCache_TargetPart)
+                foreach (var item in protectedPropertiesCache_TargetPart)
                 {
-                    prop.DestroyComps();
+                    item.DestroyComps();
                 }
-                protectedPropertiesCache_TargetPart = null;
             }
         }
 
@@ -835,30 +835,22 @@ namespace RW_ModularizationWeapon
             this.statOffsetCache = null;
             this.statMultiplierCache = null;
 
-
-            publicPropertiesCache?.DestroyComps();
-            publicPropertiesCache = null;
-
-            if(protectedPropertiesCache != null)
-            {
-                foreach(var prop in protectedPropertiesCache)
-                {
-                    prop.DestroyComps();
-                }
-                protectedPropertiesCache = null;
-            }
-
-            foreach (var destructor in Props.thingCompDestructors)
-            {
-                foreach (var comp in AllComps)
-                {
-                    destructor.DestroyComp(this, comp);
-                }
-            }
-
+            WeaponProperties? publicPropertiesCache = this.publicPropertiesCache;
+            this.publicPropertiesCache = null;
+            ReadOnlyCollection<WeaponProperties>? protectedPropertiesCache = this.protectedPropertiesCache;
+            this.protectedPropertiesCache = null;
+            
             currentWeaponMode = 0;
             InitializeComps();
             WeaponPropertiesPostMake();
+            publicPropertiesCache?.DestroyComps();
+            if(protectedPropertiesCache != null)
+            {
+                foreach (var item in protectedPropertiesCache)
+                {
+                    item.DestroyComps();
+                }
+            }
         }
 
 
@@ -884,8 +876,11 @@ namespace RW_ModularizationWeapon
                 if (keyValue.Item2.Destroyed && childs.removeContentsIfDestroyed)
                 #endif
                 {
-                    cachedDataToPostUpatde.Add("cachedSwap", swap ? new object() : null);
-                    swap = false;
+                    if (swap)
+                    {
+                        cachedDataToPostUpatde["cachedSwap"] = null;
+                        swap = false;
+                    }
                 }
                 else
                 {
@@ -1021,10 +1016,10 @@ namespace RW_ModularizationWeapon
                     if (swap) SwapCache();
                     else UpdateCache();
                 }
-                if (cachedDataFromPerUpdate.TryGetValue("cachedSwap", out object? cachedSwap))
+                if (cachedDataFromPerUpdate.ContainsKey("cachedSwap"))
                 {
-                    swap = cachedSwap != null;
-                    ChildNodes.NeedUpdate = swap;
+                    swap = true;
+                    ChildNodes.NeedUpdate = true;
                 }
                 else
                 {

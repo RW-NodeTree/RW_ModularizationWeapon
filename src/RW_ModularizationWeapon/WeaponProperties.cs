@@ -1536,13 +1536,16 @@ namespace RW_ModularizationWeapon
 
         internal void DestroyComps()
         {
-            if(comps != null)
+            if(comps_maked != null)
             {
                 foreach(var destructor in weapon.Props.thingCompDestructors)
                 {
-                    foreach(var comp in comps)
+                    foreach(var comp in comps_maked)
                     {
-                        destructor.DestroyComp(weapon, comp);
+                        if(index >= 0 || !weapon.AllComps.Contains(comp))
+                        {
+                            destructor.DestroyComp(weapon, comp);
+                        }
                     }
                 }
             }
