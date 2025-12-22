@@ -945,7 +945,14 @@ namespace RW_ModularizationWeapon
                 targetPartsWithId = new Dictionary<string, LocalTargetInfo>(this.targetPartsWithId);
                 foreach (var kv in targetPartsWithId)
                 {
-                    SetTargetPartInternal(kv.Key, prveChilds[kv.Key], out _);
+                    if(prveChilds.TryGetValue(kv.Key, out Thing? thing))
+                    {
+                        SetTargetPartInternal(kv.Key, thing, out _);
+                    }
+                    else
+                    {
+                        SetTargetPartInternal(kv.Key, null, out _);
+                    }
                 }
                 
                 #endregion
