@@ -3,11 +3,13 @@
 	<StartModifyWeapon>Start Modify Weapon</StartModifyWeapon>
 	<verbPropertiesOffseter>Range Weapon Offseter</verbPropertiesOffseter>
 	<toolsOffseter>Melee Weapon Offseter</toolsOffseter>
+	<compPropertiesOffseter>Weapon Features Offseter</compPropertiesOffseter>
 	<statOffseter>Stat Value Offseter</statOffseter>
 	<Offset>Offset</Offset>
 	<Offseter>Offseter</Offseter>
 	<verbPropertiesMultiplier>Range Weapon Multiplier</verbPropertiesMultiplier>
 	<toolsMultiplier>Melee Weapon Multiplier</toolsMultiplier>
+	<compPropertiesMultiplier>Weapon Features Multiplier</compPropertiesMultiplier>
 	<statMultiplier>Stat Value Multiplier</statMultiplier>
 	<Multiplier>Multiplier</Multiplier>
 	<Patcher>Replacer</Patcher>
@@ -16,19 +18,24 @@
 	<notAllowParentUseVerbProperties>Not Allow Parent Part Use Range Weapon</notAllowParentUseVerbProperties>
 	<verbPropertiesAffectByOtherPart>Range Weapon Affect By Other Part</verbPropertiesAffectByOtherPart>
 	<toolsAffectByOtherPart>Melee Weapon Affect By Other Part</toolsAffectByOtherPart>
+	<compPropertiesAffectByOtherPart>Weapon Features Affect By Other Part</compPropertiesAffectByOtherPart>
 	<verbPropertiesPatch>Range Weapon Replacer</verbPropertiesPatch>
 	<toolsPatch>Melee Weapon Replacer</toolsPatch>
+	<compPropertiesPatch>Weapon Features Replacer</compPropertiesPatch>
 	<verbPropertiesObjectPatchByChildPart>Range Weapon Replacer From Child Part</verbPropertiesObjectPatchByChildPart>
 	<toolsObjectPatchByChildPart>Melee Weapon Replacer From Child Part</toolsObjectPatchByChildPart>
+	<compPropertiesObjectPatchByChildPart>Weapon Features Replacer From Child Part</compPropertiesObjectPatchByChildPart>
 	<Condation>Special Condation</Condation>
 	<OffseterAffectHorizon>Offseter Affect Horizon</OffseterAffectHorizon>
 	<allowCreateOnCraftingPort>Allow Create On Crafting Port</allowCreateOnCraftingPort>
 	<verbPropertiesOffseterAffectHorizon>Range Weapon Offseter Affect Horizon</verbPropertiesOffseterAffectHorizon>
 	<toolsOffseterAffectHorizon>Melee Weapon Offseter Affect Horizon</toolsOffseterAffectHorizon>
+	<compPropertiesOffseterAffectHorizon>Weapon Features Offseter Affect Horizon</compPropertiesOffseterAffectHorizon>
 	<statOffsetAffectHorizon>Stat Value Offset Affect Horizon</statOffsetAffectHorizon>
 	<MultiplierAffectHorizon>Multiplier Affect Horizon</MultiplierAffectHorizon>
 	<verbPropertiesMultiplierAffectHorizon>Range Weapon Multiplier Affect Horizon</verbPropertiesMultiplierAffectHorizon>
 	<toolsMultiplierAffectHorizon>Melee Weapon Multiplier Affect Horizon</toolsMultiplierAffectHorizon>
+	<compPropertiesMultiplierAffectHorizon>Weapon Features Multiplier Affect Horizon</compPropertiesMultiplierAffectHorizon>
 	<statMultiplierAffectHorizon>Stat Value Multiplier Affect Horizon</statMultiplierAffectHorizon>
 	<AttachmentPoint>Attachment Point</AttachmentPoint>
 	<setEmpty>Set Empty</setEmpty>

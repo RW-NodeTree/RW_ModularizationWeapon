@@ -1620,7 +1620,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
                     listAllDgit((childComp.ToolsOffseter(null) + childComp.Props.toolsOffseter) * properties.toolsOffseterAffectHorizon, "+", "", true);
 
-                    stringBuilder.AppendLine("  " + "toolsOffseter".Translate() + " :");
+                    stringBuilder.AppendLine("  " + "compPropertiesOffseter".Translate() + " :");
                     listAllDgit((childComp.CompPropertiesOffseter(null) + childComp.Props.compPropertiesOffseter) * properties.compPropertiesOffseterAffectHorizon, "+", "", true);
 
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
@@ -1713,6 +1713,9 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "toolsOffseterAffectHorizon".Translate() + " :");
                     Offseter += listAllDgit(properties.toolsOffseterAffectHorizon, "x", "", true);
 
+                    stringBuilder.AppendLine("  " + "compPropertiesOffseterAffectHorizon".Translate() + " :");
+                    Offseter += listAllDgit(properties.compPropertiesOffseterAffectHorizon, "x", "", true);
+
                     stringBuilder.AppendLine("  " + "statOffsetAffectHorizon".Translate() + " :");
                     foreach (StatModifier stat in properties.statOffsetAffectHorizon)
                     {
@@ -1725,6 +1728,9 @@ namespace RW_ModularizationWeapon
 
                     stringBuilder.AppendLine("  " + "toolsMultiplierAffectHorizon".Translate() + " :");
                     Multiplier += listAllDgit(properties.toolsMultiplierAffectHorizon, "(k-1)x", "+1", true);
+
+                    stringBuilder.AppendLine("  " + "compPropertiesMultiplierAffectHorizon".Translate() + " :");
+                    Multiplier += listAllDgit(properties.compPropertiesMultiplierAffectHorizon, "(k-1)x", "+1", true);
 
                     stringBuilder.AppendLine("  " + "statMultiplierAffectHorizon".Translate() + " :");
                     foreach (StatModifier stat in properties.statMultiplierAffectHorizon)
