@@ -9,7 +9,7 @@ namespace RW_ModularizationWeapon
 {
     public partial class ModularizationWeapon
     {
-        internal IEnumerable<Toil> CarryTarget(JobDriver_ModifyWeapon jobDriver, TargetIndex craftingTable, TargetIndex hauledThingIndex)
+        internal List<Toil> GenCarryTargetToils(JobDriver_ModifyWeapon jobDriver, TargetIndex craftingTable, TargetIndex hauledThingIndex)
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
@@ -17,19 +17,18 @@ namespace RW_ModularizationWeapon
             if (!isReadLockHeld) readerWriterLockSlim.EnterReadLock();
             try
             {
-                if (jobDriver == null) yield break;
+                List<Toil> result = new List<Toil>();
+                if (jobDriver == null) return result;
                 foreach (string id in PartIDs)
                 {
                     ModularizationWeapon? comp = container[id] as ModularizationWeapon;
                     if (comp != null)
                     {
-                        foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
-                        {
-                            yield return child;
-                        }
+                        result.AddRange(comp.GenCarryTargetToils(jobDriver, craftingTable, hauledThingIndex));
                     }
                     if (targetPartsWithId.ContainsKey(id))
                     {
+                        result.Capacity += 6;
                         LocalTargetInfo target = targetPartsWithId[id];
                         if (target.HasThing)
                         {
@@ -54,22 +53,26 @@ namespace RW_ModularizationWeapon
                                     return;
                                 }
                             };
-                            yield return toil;
+                            result.Add(toil);
 
-                            yield return
+                            result.Add(
                                 Toils_Goto.GotoThing(hauledThingIndex, PathEndMode.ClosestTouch)
                                 .FailOnDestroyedNullOrForbidden(hauledThingIndex)
-                                .FailOnBurningImmobile(hauledThingIndex);
-                            yield return
+                                .FailOnBurningImmobile(hauledThingIndex)
+                            );
+                            result.Add(
                                 Toils_Haul.StartCarryThing(hauledThingIndex)
-                                .FailOnCannotTouch(hauledThingIndex, PathEndMode.ClosestTouch);
-                            yield return
+                                .FailOnCannotTouch(hauledThingIndex, PathEndMode.ClosestTouch)
+                            );
+                            result.Add(
                                 Toils_Haul.CarryHauledThingToCell(craftingTable, PathEndMode.ClosestTouch)
                                 .FailOnDestroyedNullOrForbidden(craftingTable)
-                                .FailOnBurningImmobile(craftingTable);
-                            yield return
+                                .FailOnBurningImmobile(craftingTable)
+                            );
+                            result.Add(
                                 Toils_Haul.PlaceCarriedThingInCellFacing(craftingTable)
-                                .FailOnCannotTouch(craftingTable, PathEndMode.ClosestTouch);
+                                .FailOnCannotTouch(craftingTable, PathEndMode.ClosestTouch)
+                            );
 
                             toil_JumpPoint.initAction = delegate ()
                             {
@@ -80,20 +83,18 @@ namespace RW_ModularizationWeapon
                                 target.Thing.Position = job.GetTarget(craftingTable).Cell;
                                 actor.Reserve(targetPartsWithId[id], job, 1, 1);
                             };
-                            yield return toil_JumpPoint;
+                            result.Add(toil_JumpPoint);
                         }
 
 
                         comp = target.Thing as ModularizationWeapon;
                         if (comp != null)
                         {
-                            foreach (Toil child in comp.CarryTarget(jobDriver, craftingTable, hauledThingIndex))
-                            {
-                                yield return child;
-                            }
+                            result.AddRange(comp.GenCarryTargetToils(jobDriver, craftingTable, hauledThingIndex));
                         }
                     }
                 }
+                return result;
             }
             finally
             {

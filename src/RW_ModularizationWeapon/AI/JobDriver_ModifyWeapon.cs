@@ -105,7 +105,7 @@ namespace RW_ModularizationWeapon.AI
                 };
                 yield return toil_JumpPoint;
 
-                foreach (Toil forCarry in comp.CarryTarget(this, TargetIndex.A, TargetIndex.C))
+                foreach (Toil forCarry in comp.GenCarryTargetToils(this, TargetIndex.A, TargetIndex.C))
                 {
                     yield return forCarry;
                 }

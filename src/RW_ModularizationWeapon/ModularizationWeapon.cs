@@ -876,6 +876,7 @@ namespace RW_ModularizationWeapon
                 if (keyValue.Item2.Destroyed && childs.removeContentsIfDestroyed)
                 #endif
                 {
+                    targetPartChanged = true;
                     if (swap)
                     {
                         cachedDataToPostUpatde["cachedSwap"] = null;
@@ -926,7 +927,6 @@ namespace RW_ModularizationWeapon
                         RemoveTargetPartInternal(kv.Key, out _);
                         ModularizationWeapon? part = kv.Value.Thing as ModularizationWeapon;
                         part?.UpdateTargetPartVNode();
-                        targetPartChanged = true;
                         needUpdateVNode = true;
                         if(swapMap != null && kv.Value.Thing != null && !kv.Value.Thing.Spawned)
                         {
@@ -936,6 +936,7 @@ namespace RW_ModularizationWeapon
                 }
                 if (needUpdateVNode)
                 {
+                    targetPartChanged = true;
                     UpdateTargetPartVNode();
                 }
                 #endregion
@@ -944,10 +945,7 @@ namespace RW_ModularizationWeapon
                 targetPartsWithId = new Dictionary<string, LocalTargetInfo>(this.targetPartsWithId);
                 foreach (var kv in targetPartsWithId)
                 {
-                    if (prveChilds.ContainsKey(kv.Key))
-                        SetTargetPartInternal(kv.Key, prveChilds[kv.Key], out _);
-                    else
-                        RemoveTargetPartInternal(kv.Key, out _);
+                    SetTargetPartInternal(kv.Key, prveChilds[kv.Key], out _);
                 }
                 
                 #endregion
