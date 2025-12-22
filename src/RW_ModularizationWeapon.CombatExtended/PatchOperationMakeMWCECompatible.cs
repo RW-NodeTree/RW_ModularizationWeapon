@@ -28,14 +28,11 @@ namespace RW_ModularizationWeapon.CombatExtended
 
         private void AppendAllChild(XmlNode target, XmlNode xmlNode, string name, string className)
         {
-            GetOrCreateNode(target, name, out var element);
-            if(element != null)
+            XmlElement element = target.OwnerDocument.CreateElement(name);
+            element.SetAttribute("Class", className);
+            foreach (XmlNode current in xmlNode.ChildNodes)
             {
-                element.SetAttribute("Class", className);
-                foreach (XmlNode current in xmlNode.ChildNodes)
-                {
-                    element.AppendChild(element.OwnerDocument.ImportNode(current, true));
-                }
+                element.AppendChild(element.OwnerDocument.ImportNode(current, true));
             }
         }
         
