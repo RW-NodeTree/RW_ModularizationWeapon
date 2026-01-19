@@ -18,12 +18,12 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void PreThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, bool, bool, bool) __state)
+        private static void PreThing_InitializeComps(ThingWithComps __instance, ref (List<CompProperties>?, bool, bool, bool, bool) __state)
         {
             if(__instance is ModularizationWeapon weapon)
             {
                 __state.Item1 = __instance.def.comps;
-                __instance.def.comps = weapon.PreInitComps(ref __state.Item2, ref __state.Item3, ref __state.Item4);
+                __instance.def.comps = weapon.PreInitComps(ref __state.Item2, ref __state.Item3, ref __state.Item4, ref __state.Item5);
             }
         }
 
@@ -52,11 +52,11 @@ namespace RW_ModularizationWeapon.Patch
         [HarmonyPatch(
             nameof(ThingWithComps.InitializeComps)
         )]
-        private static void FinalThing_InitializeComps(ThingWithComps __instance, List<ThingComp> ___comps, ref (List<CompProperties>?, bool, bool, bool) __state)
+        private static void FinalThing_InitializeComps(ThingWithComps __instance, List<ThingComp> ___comps, ref (List<CompProperties>?, bool, bool, bool, bool) __state)
         {
             if(__instance is ModularizationWeapon weapon)
             {
-                weapon.FinalInitComps(___comps, __state.Item2, __state.Item3, __state.Item4);
+                weapon.FinalInitComps(___comps, __state.Item2, __state.Item3, __state.Item4, __state.Item5);
                 __instance.def.comps = __state.Item1;
             }
         }

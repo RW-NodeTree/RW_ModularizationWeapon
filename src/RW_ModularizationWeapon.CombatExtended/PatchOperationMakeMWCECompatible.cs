@@ -38,6 +38,7 @@ namespace RW_ModularizationWeapon.CombatExtended
         
         public override bool ApplyWorker(XmlDocument xml)
         {
+            XmlContainer? properties = Properties;
             XmlContainer? ammoUser = AmmoUser;
             XmlContainer? fireModes = FireModes;
             AmmoUser = null;

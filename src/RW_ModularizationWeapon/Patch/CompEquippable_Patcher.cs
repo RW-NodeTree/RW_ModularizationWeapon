@@ -17,9 +17,9 @@ namespace RW_ModularizationWeapon.Patch
         )]
         private static bool PreCompEquippable_GetVerbProperties(CompEquippable __instance, ref List<VerbProperties> __result)
         {
-            if (__instance.props is ModularizationWeapon.CompProperties_Equippable props && __instance.parent is ModularizationWeapon weapon)
+            if (__instance.props is CompProperties_ModularizationWeaponEquippable props)
             {
-                __result = weapon.VerbPropertiesFromThing(props.mode);
+                __result = props.Weapon.VerbPropertiesFromThing((uint)props.Weapon.InheritableProperties.IndexOf(props));
                 return false;
             }
             return true;
@@ -33,9 +33,9 @@ namespace RW_ModularizationWeapon.Patch
         )]
         private static bool PreCompEquippable_GetTools(CompEquippable __instance, ref List<Tool> __result)
         {
-            if (__instance.props is ModularizationWeapon.CompProperties_Equippable props && __instance.parent is ModularizationWeapon weapon)
+            if (__instance.props is CompProperties_ModularizationWeaponEquippable props)
             {
-                __result = weapon.ToolsFromThing(props.mode);
+                __result = props.Weapon.ToolsFromThing((uint)props.Weapon.InheritableProperties.IndexOf(props));
                 return false;
             }
             return true;
@@ -48,9 +48,9 @@ namespace RW_ModularizationWeapon.Patch
         )]
         private static void PostCompEquippable_UniqueVerbOwnerID(CompEquippable __instance, ref string __result)
         {
-            if (__instance.props is ModularizationWeapon.CompProperties_Equippable props)
+            if (__instance.props is CompProperties_ModularizationWeaponEquippable props)
             {
-                __result += "_Mode" + props.mode;
+                __result += "_Mode" + props.Weapon.InheritableProperties.IndexOf(props);
             }
         }
     }

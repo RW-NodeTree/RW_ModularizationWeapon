@@ -13,17 +13,16 @@ namespace RW_ModularizationWeapon
     public partial class ModularizationWeapon
     {
 
-        internal List<CompProperties> PreInitComps(ref bool needExitLock, ref bool publicPropertiesNeedExitLock, ref bool protectedPropertiesNeedExitLock)
+        internal List<CompProperties> PreInitComps(ref bool needExitLock, ref bool publicPropertiesNeedExitLock, ref bool equippablePropertiesNeedExitLock, ref bool inheritablePropertiesNeedExitLock)
         {
             needExitLock = !readerWriterLockSlim.IsWriteLockHeld;
             if(needExitLock) readerWriterLockSlim.EnterWriteLock();
-            WeaponProperties publicProperties = PublicProperties;
-            publicPropertiesNeedExitLock = publicProperties.PreInitComps();
-            var props = ProtectedProperties;
+            WeaponProperties privateProperties = PrivateProperties;
+            publicPropertiesNeedExitLock = privateProperties.PreInitComps();
+            var props = InheritableProperties;
             if (props.Count > CurrentMode)
             {
-                WeaponProperties protectedProperties = props[(int)CurrentMode];
-                protectedPropertiesNeedExitLock = protectedProperties.PreInitComps();
+                props[(int)CurrentMode].PreInitComps(ref equippablePropertiesNeedExitLock, ref inheritablePropertiesNeedExitLock);
             }
             return CompPropertiesFromThing(CurrentMode);
         }
@@ -35,42 +34,41 @@ namespace RW_ModularizationWeapon
             {
                 if (prve != null)
                 {
-                    prve.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) < 0);
+                    prve.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) <  0);
                     weapon.def.comps.RemoveAll(x => prve.FirstIndexOf(y => x == y.props) >= 0);
                     next = prve;
                 }
-                WeaponProperties publicProperties = weapon.PublicProperties;
-                publicProperties.RestoreComps(next);
-                var props = weapon.ProtectedProperties;
+                WeaponProperties privateProperties = weapon.PrivateProperties;
+                privateProperties.RestoreComps(next);
+                var props = weapon.InheritableProperties;
                 if (props.Count > weapon.CurrentMode)
                 {
-                    WeaponProperties protectedProperties = props[(int)weapon.CurrentMode];
-                    protectedProperties.RestoreComps(next);
+                    props[(int)weapon.CurrentMode].RestoreComps(next);
                 }
             }
             return next;
         }
 
         
-        internal void FinalInitComps(List<ThingComp> comps, bool needExitLock, bool publicPropertiesNeedExitLock, bool protectedPropertiesNeedExitLock)
+        internal void FinalInitComps(List<ThingComp> comps, bool needExitLock, bool publicPropertiesNeedExitLock, bool equippablePropertiesNeedExitLock, bool inheritablePropertiesNeedExitLock)
         {
             int errorCount = 0;
-            try
+            var props = InheritableProperties;
+            if (props.Count > CurrentMode)
             {
-                var props = ProtectedProperties;
-                if (props.Count > CurrentMode)
+                try
                 {
-                    props[(int)CurrentMode].FinalInitComps(comps, protectedPropertiesNeedExitLock);
+                    props[(int)CurrentMode].FinalInitComps(comps, equippablePropertiesNeedExitLock, inheritablePropertiesNeedExitLock);
+                }
+                catch(Exception ex)
+                {
+                    errorCount++;
+                    Log.Error(ex.ToString());
                 }
             }
-            catch(Exception ex)
-            {
-                errorCount++;
-                Log.Error(ex.ToString());
-            }
             try
             {
-                PublicProperties.FinalInitComps(comps, publicPropertiesNeedExitLock);
+                PrivateProperties.FinalInitComps(comps, publicPropertiesNeedExitLock);
             }
             catch(Exception ex)
             {
@@ -89,15 +87,6 @@ namespace RW_ModularizationWeapon
             if (errorCount > 0)
             {
                 throw new Exception($"catch {errorCount} errors at FinalInitComps");
-            }
-        }
-
-        internal class CompProperties_Equippable : CompProperties
-        {
-            public readonly uint mode;
-            public CompProperties_Equippable(uint mode) : base(typeof(CompEquippable))
-            {
-                this.mode = mode;
             }
         }
     }

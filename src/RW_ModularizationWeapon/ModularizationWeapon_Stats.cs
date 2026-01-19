@@ -97,19 +97,6 @@ namespace RW_ModularizationWeapon
                     }
                 }
             }
-            else if (!(statWorker is StatWorker_MeleeAverageArmorPenetration || statWorker is StatWorker_MeleeAverageDPS))
-            {
-                if (statDef.defName == "BurstShotCount")
-                {
-                    CompEquippable? equippable = GetComp<CompEquippable>();
-                    result = equippable?.PrimaryVerb?.verbProps.burstShotCount ?? result;
-                }
-                else
-                {
-                    result *= GetStatMultiplier(statDef, null);
-                    result += GetStatOffset(statDef, null);
-                }
-            }
             StatWorkerFinalfix(stats);
             return result;
         }
@@ -127,24 +114,7 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(exception.ToString());
             }
-            if (statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration
-            )
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (var data in container)
-                {
-                    if (!NotUseTools(data.Item1))
-                    {
-                        stringBuilder.AppendLine("  " + data.Item2.Label + ":");
-                        string exp = "\n" + statWorker.GetExplanationUnfinalized(StatRequest.For(data.Item2), numberSense);
-                        exp = Regex.Replace(exp, "\n", "\n  ");
-                        stringBuilder.AppendLine(exp);
-                    }
-                }
-                result += "\n" + stringBuilder.ToString();
-            }
-            else if (
+            if (
                 statWorker is StatWorker_MarketValue ||
                 statWorker == StatDefOf.Mass.Worker
             )
@@ -173,8 +143,7 @@ namespace RW_ModularizationWeapon
             {
                 yield return link;
             }
-            if (statWorker is StatWorker_MeleeAverageDPS ||
-                statWorker is StatWorker_MeleeAverageArmorPenetration ||
+            if (
                 statWorker is StatWorker_MarketValue ||
                 statWorker == StatDefOf.Mass.Worker
             )

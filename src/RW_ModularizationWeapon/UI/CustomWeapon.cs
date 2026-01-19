@@ -131,8 +131,8 @@ namespace RW_ModularizationWeapon.UI
                     from x
                     in creaftingTable.Props.AllowsMakedDefs
                     where
-                        x?.GetModExtension<ModularizationWeaponExtension>() != null &&
-                        x.GetModExtension<ModularizationWeaponExtension>().allowCreateOnCraftingPort
+                        x?.GetModExtension<ModularizationWeaponDefExtension>() != null &&
+                        x.GetModExtension<ModularizationWeaponDefExtension>().allowCreateOnCraftingPort
                     select (default(Thing), x)
                 );
             }

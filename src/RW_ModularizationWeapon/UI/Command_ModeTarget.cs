@@ -87,12 +87,12 @@ namespace RW_ModularizationWeapon.UI
 
                 if(Widgets.ButtonInvisible(butRect))
                 {
-                    ReadOnlyCollection<WeaponProperties> weaponProperties = Weapon.ProtectedProperties;
-                    List<FloatMenuOption> options = new List<FloatMenuOption>(Math.Max(1, weaponProperties.Count));
+                    ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable> weaponProperties = Weapon.InheritableProperties;
+                    List<FloatMenuOption> options = new List<FloatMenuOption>(weaponProperties.Count);
                     for (int i = 0; i < options.Capacity; i++)
                     {
                         uint finalIndex = (uint)i;
-                        WeaponProperties properties = weaponProperties[i];
+                        CompProperties_ModularizationWeaponEquippable properties = weaponProperties[i];
                         options.Add(new FloatMenuOption(properties.Name,() => Weapon.CurrentMode = finalIndex));
                     }
                     if (options.Count > 1)

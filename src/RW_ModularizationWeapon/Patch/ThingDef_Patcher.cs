@@ -27,7 +27,7 @@ namespace RW_ModularizationWeapon.Patch
             {
                 yield return entry;
             }
-            ModularizationWeaponExtension? weaponExtension = def.GetModExtension<ModularizationWeaponExtension>();
+            ModularizationWeaponDefExtension? weaponExtension = def.GetModExtension<ModularizationWeaponDefExtension>();
             if (weaponExtension != null)
             {
                 foreach (StatDrawEntry entry in weaponExtension.SpecialDisplayStats(req))

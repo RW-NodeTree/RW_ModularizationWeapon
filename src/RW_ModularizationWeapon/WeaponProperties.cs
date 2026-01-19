@@ -13,289 +13,58 @@ using Verse;
 
 namespace RW_ModularizationWeapon
 {
+    public interface IWeaponPropertiesHolder
+    {
+        string? SourceChildID { get; }
+        ModularizationWeapon Weapon { get; }
+        ReadOnlyCollection<Tool> Tools { get; }
+        ReadOnlyCollection<VerbProperties> VerbProperties { get; }
+        ReadOnlyCollection<CompProperties> CompProperties { get; }
+
+    }
     public class WeaponProperties
     {
 
-        internal WeaponProperties(ModularizationWeapon weapon, string? childId, int index) //index == -1 -> public; id == null -> self
+        internal WeaponProperties(IWeaponPropertiesHolder holder)
         {
-            this.weapon = weapon;
-            this.childId = childId;
-            this.index = index;
+            this.holder = holder;
         }
 
 
         public void ExposeData()
         {
-            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                if (this.comps_maked != null)
+                for (int i = 0; i < this.comps_maked.Count; i++)
                 {
-                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                    try
-                    {
-                        for (int i = 0; i < this.comps_maked.Count; i++)
-                        {
-                            this.comps_maked[i].PostExposeData();
-                        }
-                    }
-                    finally
-                    {
-                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                    }
-                }
-                else if (Scribe.mode == LoadSaveMode.Saving)
-                {
-                    Scribe.saver.WriteAttribute("IsNull", "True");
+                    this.comps_maked[i].PostExposeData();
                 }
             }
             finally
             {
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
             }
         }
 
         public void PostMake()
         {
-            bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-            if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
             try
             {
-                if (this.comps != null)
+                for (int i = 0; i < this.comps.Count; i++)
                 {
-                    bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                    if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                    try
-                    {
-                        comps_maked ??= new List<ThingComp>(comps.Count);
-                        for (int i = 0; i < this.comps.Count; i++)
-                        {
-                            this.comps[i].PostPostMake();
-                        }
-                        comps_maked.AddRange(comps);
-                        comps = null;
-                    }
-                    finally
-                    {
-                        if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                    }
+                    this.comps[i].PostPostMake();
                 }
+                MarkAllMaked();
             }
             finally
             {
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
             }
         }
-
-        public bool IsVaildity
-        {
-            get
-            {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
-                {
-                    if(vaildityCache == null)
-                    {
-                        bool finalVaildity = index < 0;
-                        if (!finalVaildity && childId != null)
-                        {
-                            Thing? thing = container[childId];
-                            WeaponAttachmentProperties attachmentProperties = weapon.GetOrGenCurrentPartAttachmentProperties()[childId];
-                            if (thing != null)
-                            {
-                                finalVaildity =
-                                    (!ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties) && ModularizationWeapon.ProtectedVerbPropertiesFromThing(thing, index).Count > 0) ||
-                                    (!ModularizationWeapon.NotUseTools(thing, attachmentProperties) && ModularizationWeapon.ProtectedToolsFromThing(thing, index).Count > 0) ||
-                                    (!ModularizationWeapon.NotUseCompProperties(thing, attachmentProperties) && ModularizationWeapon.ProtectedCompPropertiesFromThing(thing, index).Count > 0);
-                                
-                            }
-                        }
-                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                        try
-                        {
-                            vaildityCache = finalVaildity;
-                        }
-                        finally
-                        {
-                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                        }
-                    }
-                    return vaildityCache.Value;
-                }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
-            }
-        }
-        
-
-        public string Name
-        {
-            get
-            {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
-                {
-                    if (nameCache == null)
-                    {
-                        string? finalName = null;
-                        if (index < 0)
-                        {
-                            finalName = weapon.Label;
-                        }
-                        else if(childId == null)
-                        {
-                            finalName = weapon.Label + " : Mode" + index;
-                        }
-                        else
-                        {
-                            Thing? child = container[childId];
-                            ModularizationWeapon? weapon = child as ModularizationWeapon;
-                            if (weapon != null)
-                            {
-                                finalName = weapon.ProtectedProperties[index].Name;
-                            }
-                            else if(child != null)
-                            {
-                                finalName = child.Label + " : Mode" + index;
-                            }
-                        }
-                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                        try
-                        {
-                            nameCache = finalName ?? "NULL";
-                        }
-                        finally
-                        {
-                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                        }
-                    }
-                    return nameCache;
-                }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
-            }
-        }
-        
-        
-
-        public Color Color
-        {
-            get
-            {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
-                {
-                    if (colorCache == null)
-                    {
-                        Color finalColor = Color.white;
-                        if(childId == null)
-                        {
-                            finalColor = weapon.DrawColor;
-                        }
-                        else
-                        {
-                            Thing? child = container[childId];
-                            ModularizationWeapon? weapon = child as ModularizationWeapon;
-                            if (weapon != null)
-                            {
-                                finalColor = weapon.ProtectedProperties[index].Color;
-                            }
-                            else if(child != null)
-                            {
-                                finalColor = child.DrawColor;
-                            }
-                        }
-                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                        try
-                        {
-                            colorCache = finalColor;
-                        }
-                        finally
-                        {
-                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                        }
-                    }
-                    return colorCache.Value;
-                }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
-            }
-        }
-
-        public Texture2D Icon
-        {
-            get
-            {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
-                {
-                    if (iconCache == null)
-                    {
-                        Texture2D? finalIcon = null;
-                        if(childId == null)
-                        {
-                            finalIcon = (weapon.Graphic?.MatSingle?.mainTexture as Texture2D) ?? weapon.def.uiIcon;
-                        }
-                        else
-                        {
-                            Thing? child = container[childId];
-                            ModularizationWeapon? weapon = child as ModularizationWeapon;
-                            if (weapon != null)
-                            {
-                                finalIcon = weapon.ProtectedProperties[index].Icon;
-                            }
-                            else if(child != null)
-                            {
-                                finalIcon = (child.Graphic?.MatSingle?.mainTexture as Texture2D) ?? child.def.uiIcon;
-                            }
-                        }
-                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                        try
-                        {
-                            iconCache = finalIcon ?? BaseContent.BadTex;
-                        }
-                        finally
-                        {
-                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                        }
-                    }
-                    return iconCache;
-                }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
-            }
-        }
-
-
-        public NodeContainer ChildNodes => weapon.ChildNodes;
-        
-        
 
 
         #region Multiplier
@@ -1108,7 +877,7 @@ namespace RW_ModularizationWeapon
         }
         #endregion
         
-        public static VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties, bool forceCopy)
+        public static VerbProperties VerbPropertiesAfterAffect(VerbProperties properties, string? childNodeIdForVerbProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //properties = (VerbProperties)properties.SimpleCopy();
             VerbProperties original = properties;
@@ -1123,16 +892,12 @@ namespace RW_ModularizationWeapon
                 properties = (properties & x) ?? properties;
                 properties = (properties | x) ?? properties;
             });
-            if (forceCopy && properties == original)
-            {
-                properties = Gen.MemberwiseClone(properties);
-            }
             properties.isPrimary = original.isPrimary;
             return properties;
         }
 
 
-        public static Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties, bool forceCopy)
+        public static Tool ToolAfterAffect(Tool tool, string? childNodeIdForTool, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //tool = (Tool)tool.SimpleCopy();
             Tool original = tool;
@@ -1147,15 +912,11 @@ namespace RW_ModularizationWeapon
                 tool = (tool & x) ?? tool;
                 tool = (tool | x) ?? tool;
             });
-            if (forceCopy && tool == original)
-            {
-                tool = Gen.MemberwiseClone(tool);
-            }
             return tool;
         }
 
 
-        public static CompProperties CompPropertiesAfterAffect(CompProperties compProperties, string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties, bool forceCopy)
+        public static CompProperties CompPropertiesAfterAffect(CompProperties compProperties, string? childNodeIdForCompProperties, IReadOnlyDictionary<string, Thing?> container, ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties)
         {
             //tool = (Tool)tool.SimpleCopy();
             CompProperties original = compProperties;
@@ -1170,226 +931,40 @@ namespace RW_ModularizationWeapon
                 compProperties = (compProperties & x) ?? compProperties;
                 compProperties = (compProperties | x) ?? compProperties;
             });
-            if (forceCopy && compProperties == original)
-            {
-                compProperties = Gen.MemberwiseClone(compProperties);
-            }
             compProperties.compClass = original.compClass;
             return compProperties;
         }
-
-
-        public ReadOnlyCollection<(string? id, uint index, VerbProperties afterConvert)> VerbPropertiesRegiestInfo
-        {
-            get
-            {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
-                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
-                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
-                try
-                {
-                    if (verbPropertiesCache == null)
-                    {
-
-                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = weapon.GetOrGenCurrentPartAttachmentProperties();
-                        List<(string? id, uint index, Task<VerbProperties> afterConvert)> tasks = new List<(string? id, uint index, Task<VerbProperties> afterConvert)>();
-                        if (index < 0)
-                        {
-                            if (!weapon.def.Verbs.NullOrEmpty())
-                            {
-
-                                //result.Capacity += parent.def.Verbs.Count;
-                                tasks.Capacity += weapon.def.Verbs.Count;
-                                for (uint i = 0; i < weapon.def.Verbs.Count; i++)
-                                {
-                                    VerbProperties properties = weapon.def.Verbs[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties, false))));
-                                    //VerbPropertiesRegiestInfo prop = ;
-                                    //result.Add(prop);
-                                }
-                            }
-
-                            foreach (var kv in container)
-                            {
-                                if (!ModularizationWeapon.NotUseVerbProperties(kv.Item2, attachmentProperties[kv.Item1]))
-                                {
-                                    List<VerbProperties> verbProperties = ModularizationWeapon.PublicVerbPropertiesFromThing(kv.Item2);
-                                    tasks.Capacity += verbProperties.Count;
-                                    for (uint i = 0; i < verbProperties.Count; i++)
-                                    {
-                                        VerbProperties properties = verbProperties[(int)i];
-                                        tasks.Add((kv.Item1, i, Task.Run(() => VerbPropertiesAfterAffect(properties, kv.Item1, container, attachmentProperties, false))));
-                                        //result.Add();
-                                    }
-                                }
-                            }
-                        }
-                        else if(childId == null)
-                        {
-                            uint i = 0;
-                            VerbProperties properties;
-                            List<VerbProperties> verbProperties = weapon.Props.protectedVerbProperties;
-                            if (!verbProperties.NullOrEmpty())
-                            {
-                                //result.Capacity += parent.def.Verbs.Count;
-                                tasks.Capacity += verbProperties.Count;
-                                for (; i < verbProperties.Count; i++)
-                                {
-                                    properties = verbProperties[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties, true))));
-                                    //VerbPropertiesRegiestInfo prop = ;
-                                    //result.Add(prop);
-                                }
-                            }
-                            
-                            if (weapon.Props.allPrimaryVerbProperties.Count > index)
-                            {
-                                properties = weapon.Props.allPrimaryVerbProperties[index];
-                                tasks.Add((null, i, Task.Run(() => VerbPropertiesAfterAffect(properties, null, container, attachmentProperties, true))));
-                            }
-                        }
-                        else 
-                        {
-                            Thing? thing = container[childId];
-                            if (thing != null && !ModularizationWeapon.NotUseVerbProperties(thing, attachmentProperties[childId]))
-                            {
-                                List<VerbProperties> verbProperties = ModularizationWeapon.ProtectedVerbPropertiesFromThing(thing, index);
-                                tasks.Capacity += verbProperties.Count;
-                                for (uint i = 0; i < verbProperties.Count; i++)
-                                {
-                                    VerbProperties properties = verbProperties[(int)i];
-                                    tasks.Add((childId, i, Task.Run(() => VerbPropertiesAfterAffect(properties, childId, container, attachmentProperties, true))));
-                                    //result.Add();
-                                }
-                            }
-                        }
-                        //StringBuilder stringBuildchildNodeIdForVerbProperties: er = new StringBuilder();
-                        //for (int i = 0; i < result.Count; i++)
-                        //{
-                        //    stringBuilder.AppendLine($"{i} : {result[i]}");
-                        //}
-                        //Log.Message(stringBuilder.ToString());
-                        List<(string? id, uint index, VerbProperties afterConvert)> result = new List<(string? id, uint index, VerbProperties afterConvert)>(tasks.Count);
-                        foreach (var info in tasks)
-                        {
-                            result.Add((info.id, info.index, info.afterConvert.Result));
-                        }
-                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
-                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
-                        try
-                        {
-                            verbPropertiesCache = new ReadOnlyCollection<(string? id, uint index, VerbProperties afterConvert)>(result);
-                        }
-                        finally
-                        {
-                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
-                        }
-                    }
-                    return verbPropertiesCache;
-                }
-                finally
-                {
-                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
-                }
-            }
-        }
         
-        public ReadOnlyCollection<(string? id, uint index, Tool afterConvert)> VerbToolRegiestInfo
+        public ReadOnlyCollection<Tool> VerbToolRegiestInfo
         {
             get
             {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                NodeContainer? container = holder.Weapon.ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(holder.Weapon.ChildNodes));
                 bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
                 if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
                 try
                 {
                     if (toolsCache == null)
                     {
-
-                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = weapon.GetOrGenCurrentPartAttachmentProperties();
-                        List<(string? id, uint index, Task<Tool> afterConvert)> tasks = new List<(string? id, uint index, Task<Tool> afterConvert)>();
-                        
-                        if (index < 0)
+                        string? id = holder.SourceChildID;
+                        ReadOnlyCollection<Tool> tools = holder.Tools;
+                        List<Task<Tool>> tasks = new List<Task<Tool>>(tools.Count);
+                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = holder.Weapon.GetOrGenCurrentPartAttachmentProperties();
+                        foreach (Tool tool in tools)
                         {
-                            if (!weapon.def.tools.NullOrEmpty())
-                            {
-                                tasks.Capacity += weapon.def.tools.Count;
-                                for (uint i = 0; i < weapon.def.tools.Count; i++)
-                                {
-                                    Tool tool = weapon.def.tools[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties, false))));
-                                    //VerbToolRegiestInfo prop = ;
-                                    //result.Add(prop);
-                                }
-                            }
-                            foreach (var kv in container)
-                            {
-                                if (!ModularizationWeapon.NotUseTools(kv.Item2, attachmentProperties[kv.Item1]))
-                                {
-                                    List<Tool> tools = ModularizationWeapon.PublicToolsFromThing(kv.Item2);
-                                    tasks.Capacity += tools.Count;
-                                    for (uint i = 0; i < tools.Count; i++)
-                                    {
-                                        Tool tool = tools[(int)i];
-                                        tasks.Add((kv.Item1, i, Task.Run(() => ToolAfterAffect(tool, kv.Item1, container, attachmentProperties, false))));
-                                        //Tool newProp
-                                        //    = ;
-                                        //result.Add();
-                                    }
-                                }
-                            }
+                            tasks.Add(Task.Run(() => ToolAfterAffect(tool, id, container, attachmentProperties)));
                         }
-                        else if(childId == null)
+                        List<Tool> result = new List<Tool>(tasks.Count);
+                        foreach (Task<Tool> task in tasks)
                         {
-                            uint i = 0;
-                            Tool tool;
-                            List<Tool> tools = weapon.Props.protectedTools;
-                            if (!tools.NullOrEmpty())
-                            {
-                                //result.Capacity += parent.def.Verbs.Count;
-                                tasks.Capacity += tools.Count;
-                                for (; i < tools.Count; i++)
-                                {
-                                    tool = tools[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => ToolAfterAffect(tool, null, container, attachmentProperties, true))));
-                                    //ToolRegiestInfo prop = ;
-                                    //result.Add(prop);
-                                }
-                            }
-                        }
-                        else 
-                        {
-                            Thing? thing = container[childId];
-                            if (thing != null && !ModularizationWeapon.NotUseTools(thing, attachmentProperties[childId]))
-                            {
-                                List<Tool> tools = ModularizationWeapon.ProtectedToolsFromThing(thing, index);
-                                tasks.Capacity += tools.Count;
-                                for (uint i = 0; i < tools.Count; i++)
-                                {
-                                    Tool tool = tools[(int)i];
-                                    tasks.Add((childId, i, Task.Run(() => ToolAfterAffect(tool, childId, container, attachmentProperties, true))));
-                                    //result.Add();
-                                }
-                            }
-                        }
-                        //StringBuilder stringBuilder = new StringBuilder();
-                        //for (int i = 0; i < result.Count; i++)
-                        //{
-                        //    stringBuilder.AppendLine($"{i} : {result[i]}");
-                        //}
-                        //Log.Message(stringBuilder.ToString());
-                        List<(string? id, uint index, Tool afterConvert)> result = new List<(string? id, uint index, Tool afterConvert)>(tasks.Count);
-                        foreach (var info in tasks)
-                        {
-                            result.Add((info.id, info.index, info.afterConvert.Result));
+                            result.Add(task.Result);
                         }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                         try
                         {
-                            toolsCache = new ReadOnlyCollection<(string? id, uint index, Tool afterConvert)>(result);
+                            toolsCache = new ReadOnlyCollection<Tool>(result);
                         }
                         finally
                         {
@@ -1405,119 +980,84 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        
-        public ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)> CompPropertiesRegiestInfo
+
+        public ReadOnlyCollection<VerbProperties> VerbPropertiesRegiestInfo
         {
             get
             {
-                NodeContainer? container = ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(ChildNodes));
+                NodeContainer? container = holder.Weapon.ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(holder.Weapon.ChildNodes));
+                bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
+                if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
+                try
+                {
+                    if (verbPropertiesCache == null)
+                    {
+                        string? id = holder.SourceChildID;
+                        ReadOnlyCollection<VerbProperties> verbProperties = holder.VerbProperties;
+                        List<Task<VerbProperties>> tasks = new List<Task<VerbProperties>>(verbProperties.Count);
+                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = holder.Weapon.GetOrGenCurrentPartAttachmentProperties();
+                        foreach (VerbProperties verb in verbProperties)
+                        {
+                            tasks.Add(Task.Run(() => VerbPropertiesAfterAffect(verb, id, container, attachmentProperties)));
+                        }
+                        List<VerbProperties> result = new List<VerbProperties>(tasks.Count);
+                        foreach (Task<VerbProperties> task in tasks)
+                        {
+                            result.Add(task.Result);
+                        }
+                        bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+                        if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+                        try
+                        {
+                            verbPropertiesCache = new ReadOnlyCollection<VerbProperties>(result);
+                        }
+                        finally
+                        {
+                            if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+                        }
+                    }
+                    return verbPropertiesCache;
+                }
+                finally
+                {
+                    if (!isUpgradeableReadLockHeld) readerWriterLockSlim.ExitUpgradeableReadLock();
+                }
+            }
+        }
+
+        
+        public ReadOnlyCollection<CompProperties> CompPropertiesRegiestInfo
+        {
+            get
+            {
+                NodeContainer? container = holder.Weapon.ChildNodes;
+                if (container == null) throw new NullReferenceException(nameof(holder.Weapon.ChildNodes));
                 bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
                 if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
                 try
                 {
                     if (compPropertiesCache == null)
                     {
-
-                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = weapon.GetOrGenCurrentPartAttachmentProperties();
-                        List<(string? id, uint index, Task<CompProperties> afterConvert)> tasks = new List<(string? id, uint index, Task<CompProperties> afterConvert)>();
-                        if(index < 0)
+                        string? id = holder.SourceChildID;
+                        ReadOnlyCollection<CompProperties> compProperties = holder.CompProperties;
+                        List<Task<CompProperties>> tasks = new List<Task<CompProperties>>(compProperties.Count);
+                        ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = holder.Weapon.GetOrGenCurrentPartAttachmentProperties();
+                        foreach (CompProperties comp in compProperties)
                         {
-                            if (!weapon.def.comps.NullOrEmpty())
-                            {
-                                tasks.Capacity += weapon.def.comps.Count;
-                                for (uint i = 0; i < weapon.def.comps.Count; i++)
-                                {
-                                    CompProperties comp = weapon.def.comps[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties, false))));
-                                    //VerbToolRegiestInfo prop = ;
-                                    //result.Add(prop);
-                                }
-                            }
-                            foreach (var kv in container)
-                            {
-                                if (!ModularizationWeapon.NotUseCompProperties(kv.Item2, attachmentProperties[kv.Item1]))
-                                {
-                                    List<CompProperties> comps = ModularizationWeapon.PublicCompPropertiesFromThing(kv.Item2);
-                                    tasks.Capacity += comps.Count;
-                                    for (uint i = 0; i < comps.Count; i++)
-                                    {
-                                        CompProperties comp = comps[(int)i];
-                                        if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
-                                            tasks.Add((kv.Item1, i, Task.Run(() => CompPropertiesAfterAffect(comp, kv.Item1, container, attachmentProperties, false))));
-                                        //Tool newProp
-                                        //    = ;
-                                        //result.Add();
-                                    }
-                                }
-                            }
+                            if (typeof(CompEquippable).IsAssignableFrom(comp.compClass)) continue;
+                            tasks.Add(Task.Run(() => CompPropertiesAfterAffect(comp, id, container, attachmentProperties)));
                         }
-                        else if(childId == null)
+                        List<CompProperties> result = new List<CompProperties>(tasks.Count);
+                        foreach (Task<CompProperties> task in tasks)
                         {
-                            uint i = 0;
-                            CompProperties comp;
-                            List<CompProperties> comps = weapon.Props.protectedCompProperties;
-                            if (!comps.NullOrEmpty())
-                            {
-                                //result.Capacity += parent.def.Verbs.Count;
-                                tasks.Capacity += comps.Count;
-                                for (; i < comps.Count; i++)
-                                {
-                                    comp = comps[(int)i];
-                                    tasks.Add((null, i, Task.Run(() => CompPropertiesAfterAffect(comp, null, container, attachmentProperties, true))));
-                                    //ToolRegiestInfo prop = ;
-                                    //result.Add(prop);
-                                }
-                            }
-                        }
-                        else 
-                        {
-                            Thing? thing = container[childId];
-                            if (thing != null && !ModularizationWeapon.NotUseCompProperties(thing, attachmentProperties[childId]))
-                            {
-                                List<CompProperties> comps = ModularizationWeapon.ProtectedCompPropertiesFromThing(thing, index);
-                                tasks.Capacity += comps.Count;
-                                for (uint i = 0; i < comps.Count; i++)
-                                {
-                                    CompProperties comp = comps[(int)i];
-                                    if (!weapon.Props.notAllowedCompTypes.Contains(comp.compClass))
-                                        tasks.Add((childId, i, Task.Run(() => CompPropertiesAfterAffect(comp, childId, container, attachmentProperties, true))));
-                                    //result.Add();
-                                }
-                            }
-                        }
-                        //StringBuilder stringBuilder = new StringBuilder();
-                        //for (int i = 0; i < result.Count; i++)
-                        //{
-                        //    stringBuilder.AppendLine($"{i} : {result[i]}");
-                        //}
-                        //Log.Message(stringBuilder.ToString());
-                        List<(string? id, uint index, CompProperties afterConvert)> result = new List<(string? id, uint index, CompProperties afterConvert)>(tasks.Count + 1);
-                        if (weapon.Props.hasCompEquippable && (index >= 0 || weapon.ProtectedProperties.Count == 0))
-                        {
-                            uint index;
-                            uint childIndex;
-                            if(this.index >= 0)
-                            {
-                                index = (uint)weapon.ProtectedProperties.IndexOf(this);
-                                childIndex = (uint)weapon.Props.protectedCompProperties.Count;
-                            }
-                            else
-                            {
-                                index = 0;
-                                childIndex = (uint)weapon.def.comps.Count;
-                            }
-                            result.Add((null, childIndex, new ModularizationWeapon.CompProperties_Equippable(index)));
-                        }
-                        foreach (var info in tasks)
-                        {
-                            result.Add((info.id, info.index, info.afterConvert.Result));
+                            result.Add(task.Result);
                         }
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                         if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                         try
                         {
-                            compPropertiesCache = new ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)>(result);
+                            compPropertiesCache = new ReadOnlyCollection<CompProperties>(result);
                         }
                         finally
                         {
@@ -1536,18 +1076,25 @@ namespace RW_ModularizationWeapon
 
         internal void DestroyComps()
         {
-            if(comps_maked != null)
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
             {
-                foreach(var destructor in weapon.Props.thingCompDestructors)
+                foreach(var comp in comps_maked)
                 {
-                    foreach(var comp in comps_maked)
+                    if(!holder.Weapon.AllComps.Contains(comp))
                     {
-                        if(index >= 0 || !weapon.AllComps.Contains(comp))
+                        foreach(var destructor in holder.Weapon.Props.thingCompDestructors)
                         {
-                            destructor.DestroyComp(weapon, comp);
+                            destructor.DestroyComp(holder.Weapon, comp);
                         }
                     }
                 }
+                comps_maked.Clear();
+            }
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
             }
         }
 
@@ -1560,13 +1107,10 @@ namespace RW_ModularizationWeapon
 
         internal void RestoreComps(List<ThingComp> next)
         {
-            if (comps_maked != null)
-            {
-                //every props in def.comps will be need create and need invoke PostMake
-                comps_maked.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => y == x.props) <  0);
-                weapon.def.comps.RemoveAll(x => comps_maked.FirstIndexOf(y => x == y.props) >= 0);
-                next.AddRange(comps_maked);
-            }
+            List<ThingComp> comps_maked = [.. this.comps_maked];
+            comps_maked.RemoveAll(x => holder.Weapon.def.comps.FirstIndexOf(y => y == x.props) <  0); //comps_maked = def.comps & comps_maked
+            holder.Weapon.def.comps.RemoveAll(x => comps_maked.FirstIndexOf(y => x == y.props) >= 0); //def.comps = def.comps & !comps_maked
+            next.AddRange(comps_maked);
         }
 
         internal void FinalInitComps(List<ThingComp> comps, bool needExitLock)
@@ -1577,20 +1121,11 @@ namespace RW_ModularizationWeapon
                 if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                 try
                 {
-                    ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)> compProperties = CompPropertiesRegiestInfo;
-                    this.comps = [.. comps];
-                    this.comps.RemoveAll(x => compProperties.FirstIndexOf(y => x.props == y.afterConvert) < 0);
-                    if (weapon.making)
-                    {
-                        this.comps_maked = this.comps;
-                        this.comps = null;
-                    }
-                    else
-                    {
-                        this.comps_maked = [.. this.comps];
-                        this.comps.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => x.props == y) < 0);
-                        this.comps_maked.RemoveAll(x => weapon.def.comps.FirstIndexOf(y => x.props == y) >= 0);
-                    }
+                    ReadOnlyCollection<CompProperties> compProperties = CompPropertiesRegiestInfo;
+                    this.comps.Clear();
+                    this.comps.AddRange(comps);
+                    this.comps.RemoveAll(x => compProperties.FirstIndexOf(y => x.props == y) < 0);
+                    this.comps.RemoveAll(x => holder.Weapon.def.comps.FirstIndexOf(y => x.props == y) < 0); //this.comps = def.comps & compProperties
                 }
                 finally
                 {
@@ -1602,21 +1137,30 @@ namespace RW_ModularizationWeapon
                 if (needExitLock) readerWriterLockSlim.ExitUpgradeableReadLock();
             }
         }
+
+        internal void MarkAllMaked()
+        {
+            bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
+            if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
+            try
+            {
+                comps_maked.AddRange(comps);
+                comps.Clear();
+            }
+            finally
+            {
+                if (!isWriteLockHeld) readerWriterLockSlim.ExitWriteLock();
+            }
+        }
+
+        public readonly IWeaponPropertiesHolder holder;
         
-        public readonly int index;
-        public readonly string? childId;
-        public readonly ModularizationWeapon weapon;
         
-        
-        private bool? vaildityCache = null;
-        private string? nameCache = null;
-        private Color? colorCache = null;
-        private Texture2D? iconCache = null;
-        private List<ThingComp>? comps = null;
-        private List<ThingComp>? comps_maked = null;
-        private ReadOnlyCollection<(string? id, uint index, CompProperties afterConvert)>? compPropertiesCache = null;
-        private ReadOnlyCollection<(string? id, uint index, Tool afterConvert)>? toolsCache = null;
-        private ReadOnlyCollection<(string? id, uint index, VerbProperties afterConvert)>? verbPropertiesCache = null;
+        private readonly List<ThingComp> comps = new List<ThingComp>();
+        private readonly List<ThingComp> comps_maked = new List<ThingComp>();
+        private ReadOnlyCollection<Tool>? toolsCache = null;
+        private ReadOnlyCollection<VerbProperties>? verbPropertiesCache = null;
+        private ReadOnlyCollection<CompProperties>? compPropertiesCache = null;
         private readonly ReaderWriterLockSlim readerWriterLockSlim = new ReaderWriterLockSlim();
 
     }
