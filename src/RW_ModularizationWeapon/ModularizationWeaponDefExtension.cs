@@ -242,7 +242,13 @@ namespace RW_ModularizationWeapon
             parentDef.tools ??= [];
             parentDef.comps ??= [];
             notAllowedCompTypes ??= [];
-            
+            equippableModeInfos ??= [];
+
+            parentDef.comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+            foreach(var prop in equippableModeInfos)
+            {
+                prop.ResolveReferences(parentDef);
+            }
         }
 
         /// <summary>
@@ -655,6 +661,11 @@ namespace RW_ModularizationWeapon
 
         #region Condation
         /// <summary>
+        /// if is true, it will manage CompEquippable selector
+        /// </summary>
+        public bool equippable = false;
+
+        /// <summary>
         /// if parent part install this part it will checking this value when switch to other part
         /// </summary>
         public bool unchangeable = false;
@@ -951,7 +962,7 @@ namespace RW_ModularizationWeapon
         /// <summary>
         /// List of weaponPropertiesInfos
         /// </summary>
-        public List<WeaponPropertiesInfo> weaponPropertiesInfos = new List<WeaponPropertiesInfo>();
+        public List<EquippableModeInfo> equippableModeInfos = new List<EquippableModeInfo>();
 
         /// <summary>
         /// the ThingComp type that not allow create from child comps

@@ -95,7 +95,7 @@ namespace RW_ModularizationWeapon
                 {
                     if (inheritablePropertiesCache == null)
                     {
-                        List<CompProperties_ModularizationWeaponEquippable> equippableProperties = new List<CompProperties_ModularizationWeaponEquippable>(Math.Max(Props.weaponPropertiesInfos.Count, 1));
+                        List<CompProperties_ModularizationWeaponEquippable> equippableProperties = new List<CompProperties_ModularizationWeaponEquippable>(Math.Max(Props.equippableModeInfos.Count, 1));
                         for(uint i = 0; i < equippableProperties.Capacity; i++)
                         {
                             equippableProperties.Add(new CompProperties_ModularizationWeaponEquippable(this, null, i));
@@ -151,7 +151,7 @@ namespace RW_ModularizationWeapon
             {
                 int mode = (int)CurrentMode;
                 var props = InheritableProperties;
-                if(mode < props.Count)
+                if(Props.equippable && mode < props.Count)
                 {
                     return props[mode].Name;
                 }
@@ -165,7 +165,7 @@ namespace RW_ModularizationWeapon
             {
                 int mode = (int)CurrentMode;
                 var props = InheritableProperties;
-                if(mode < props.Count)
+                if(Props.equippable && mode < props.Count)
                 {
                     return props[mode].Color;
                 }
@@ -179,7 +179,7 @@ namespace RW_ModularizationWeapon
             {
                 int mode = (int)CurrentMode;
                 var props = InheritableProperties;
-                if(mode < props.Count)
+                if(Props.equippable && mode < props.Count)
                 {
                     return props[mode].Icon;
                 }
@@ -213,7 +213,7 @@ namespace RW_ModularizationWeapon
             var props = InheritableProperties;
             try
             {
-                if(currentWeaponMode < props.Count)
+                if(Props.equippable && currentWeaponMode < props.Count)
                 {
                     props[(int)currentWeaponMode].PostMake();
                 }
@@ -234,7 +234,7 @@ namespace RW_ModularizationWeapon
             {
                 List<Tool> result = [.. PrivateProperties.VerbToolRegiestInfo];
                 var props = InheritableProperties;
-                if (props.Count > index)
+                if (Props.equippable && props.Count > index)
                 {
                     WeaponProperties inheritableProperties = props[(int)index].weaponProperties;
                     result.Capacity += inheritableProperties.VerbToolRegiestInfo.Count;
@@ -257,7 +257,7 @@ namespace RW_ModularizationWeapon
             {
                 List<VerbProperties> result = [.. PrivateProperties.VerbPropertiesRegiestInfo];
                 var props = InheritableProperties;
-                if (props.Count > index)
+                if (Props.equippable && props.Count > index)
                 {
                     WeaponProperties inheritableProperties = props[(int)index].weaponProperties;
                     result.Capacity += inheritableProperties.VerbPropertiesRegiestInfo.Count;
@@ -280,12 +280,16 @@ namespace RW_ModularizationWeapon
             {
                 List<CompProperties> result = [.. PrivateProperties.CompPropertiesRegiestInfo];
                 var props = InheritableProperties;
-                if (props.Count > index)
+                if (Props.equippable && props.Count > index)
                 {
                     CompProperties_ModularizationWeaponEquippable inheritableProperties = props[(int)index];
                     result.Add(inheritableProperties);
                     result.Capacity += inheritableProperties.weaponProperties.CompPropertiesRegiestInfo.Count;
-                    result.AddRange(inheritableProperties.weaponProperties.CompPropertiesRegiestInfo);
+                    result.AddRange(
+                        from x in inheritableProperties.weaponProperties.CompPropertiesRegiestInfo
+                        where Props.notAllowedCompTypes.Find(y => y.IsAssignableFrom(x.compClass)) == null
+                        select x
+                    );
                 }
                 return result;
             }

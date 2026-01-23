@@ -321,7 +321,7 @@ namespace RW_ModularizationWeapon
             base.PostMake();
             PrivateProperties.MarkAllMaked();
             var props = InheritableProperties;
-            if(currentWeaponMode < props.Count)
+            if(Props.equippable && currentWeaponMode < props.Count)
             {
                 props[(int)currentWeaponMode].MarkAllMaked();
             }
@@ -354,54 +354,57 @@ namespace RW_ModularizationWeapon
                 Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
                 PrivateProperties.MarkAllMaked();
-                ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable> inheritableProperties = InheritableProperties;
-                if(currentWeaponMode < inheritableProperties.Count)
+                if(Props.equippable)
                 {
-                    inheritableProperties[(int)currentWeaponMode].MarkAllMaked();
-                }
-                if (Scribe.EnterNode("SandboxDatas"))
-                {
-                    try
+                    ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable> inheritableProperties = InheritableProperties;
+                    if(currentWeaponMode < inheritableProperties.Count)
                     {
-                        uint original = currentWeaponMode;
-                        for(uint i = 0; i < inheritableProperties.Count; i++)
+                        inheritableProperties[(int)currentWeaponMode].MarkAllMaked();
+                    }
+                    if (Scribe.EnterNode("SandboxDatas"))
+                    {
+                        try
                         {
-                            if (i != original && Scribe.EnterNode("item_" + (i > original ? (i - 1) : i)))
+                            uint original = currentWeaponMode;
+                            for(uint i = 0; i < inheritableProperties.Count; i++)
                             {
-                                try
+                                if (i != original && Scribe.EnterNode("item_" + (i > original ? (i - 1) : i)))
                                 {
-                                    currentWeaponMode = i;
-                                    if (Scribe.loader?.curXmlParent?.Attributes["IsNull"] == null) //Also pass on write mode
+                                    try
                                     {
-                                        this.InitializeComps(); // Only create comps, not invoke PostMake
-                                        CompProperties_ModularizationWeaponEquippable comps = inheritableProperties[(int)i];
-                                        comps.ExposeData(); // 
-                                        if(Scribe.mode != LoadSaveMode.Saving)
+                                        currentWeaponMode = i;
+                                        if (Scribe.loader?.curXmlParent?.Attributes["IsNull"] == null) //Also pass on write mode
                                         {
-                                            comps.MarkAllMaked();
+                                            this.InitializeComps(); // Only create comps, not invoke PostMake
+                                            CompProperties_ModularizationWeaponEquippable comps = inheritableProperties[(int)i];
+                                            comps.ExposeData(); // 
+                                            if(Scribe.mode != LoadSaveMode.Saving)
+                                            {
+                                                comps.MarkAllMaked();
+                                            }
                                         }
                                     }
+                                    catch(Exception ex)
+                                    {
+                                        const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
+                                        Log.ErrorOnce(ex.ToString(), key);
+                                    }
+                                    Scribe.ExitNode();
                                 }
-                                catch(Exception ex)
-                                {
-                                    const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
-                                    Log.ErrorOnce(ex.ToString(), key);
-                                }
-                                Scribe.ExitNode();
+                            }
+                            currentWeaponMode = original;
+                            if (Scribe.mode == LoadSaveMode.LoadingVars)
+                            {
+                                this.InitializeComps();
                             }
                         }
-                        currentWeaponMode = original;
-                        if (Scribe.mode == LoadSaveMode.LoadingVars)
+                        catch(Exception ex)
                         {
-                            this.InitializeComps();
+                            const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
+                            Log.ErrorOnce(ex.ToString(), key);
                         }
+                        Scribe.ExitNode();
                     }
-                    catch(Exception ex)
-                    {
-                        const int key = ('M' << 24) | ('W' << 16) | ('E' << 8) | 'D';
-                        Log.ErrorOnce(ex.ToString(), key);
-                    }
-                    Scribe.ExitNode();
                 }
             }
             finally

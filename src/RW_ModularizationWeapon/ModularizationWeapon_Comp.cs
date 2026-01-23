@@ -20,7 +20,7 @@ namespace RW_ModularizationWeapon
             WeaponProperties privateProperties = PrivateProperties;
             publicPropertiesNeedExitLock = privateProperties.PreInitComps();
             var props = InheritableProperties;
-            if (props.Count > CurrentMode)
+            if (Props.equippable && props.Count > CurrentMode)
             {
                 props[(int)CurrentMode].PreInitComps(ref equippablePropertiesNeedExitLock, ref inheritablePropertiesNeedExitLock);
             }
@@ -41,7 +41,7 @@ namespace RW_ModularizationWeapon
                 WeaponProperties privateProperties = weapon.PrivateProperties;
                 privateProperties.RestoreComps(next);
                 var props = weapon.InheritableProperties;
-                if (props.Count > weapon.CurrentMode)
+                if (weapon.Props.equippable && props.Count > weapon.CurrentMode)
                 {
                     props[(int)weapon.CurrentMode].RestoreComps(next);
                 }
@@ -54,7 +54,7 @@ namespace RW_ModularizationWeapon
         {
             int errorCount = 0;
             var props = InheritableProperties;
-            if (props.Count > CurrentMode)
+            if (Props.equippable && props.Count > CurrentMode)
             {
                 try
                 {

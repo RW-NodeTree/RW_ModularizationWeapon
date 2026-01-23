@@ -190,9 +190,9 @@ namespace RW_ModularizationWeapon
                 if (container == null) throw new NullReferenceException(nameof(Weapon.ChildNodes));
                 if (SourceChildID == null)
                 {
-                    if (index < Weapon.Props.weaponPropertiesInfos.Count)
+                    if (index < Weapon.Props.equippableModeInfos.Count)
                     {
-                        return new ReadOnlyCollection<Tool>(Weapon.Props.weaponPropertiesInfos[(int)index].inheritableTools);
+                        return new ReadOnlyCollection<Tool>(Weapon.Props.equippableModeInfos[(int)index].inheritableTools);
                     }
                 }
                 else if(container[SourceChildID] is ModularizationWeapon weapon)
@@ -214,9 +214,9 @@ namespace RW_ModularizationWeapon
                 if (container == null) throw new NullReferenceException(nameof(Weapon.ChildNodes));
                 if (SourceChildID == null)
                 {
-                    if (index < Weapon.Props.weaponPropertiesInfos.Count)
+                    if (index < Weapon.Props.equippableModeInfos.Count)
                     {
-                        return new ReadOnlyCollection<VerbProperties>(Weapon.Props.weaponPropertiesInfos[(int)index].inheritableVerbProperties);
+                        return new ReadOnlyCollection<VerbProperties>(Weapon.Props.equippableModeInfos[(int)index].inheritableVerbProperties);
                     }
                 }
                 else if(container[SourceChildID] is ModularizationWeapon weapon)
@@ -238,9 +238,9 @@ namespace RW_ModularizationWeapon
                 if (container == null) throw new NullReferenceException(nameof(Weapon.ChildNodes));
                 if (SourceChildID == null)
                 {
-                    if (index < Weapon.Props.weaponPropertiesInfos.Count)
+                    if (index < Weapon.Props.equippableModeInfos.Count)
                     {
-                        return new ReadOnlyCollection<CompProperties>(Weapon.Props.weaponPropertiesInfos[(int)index].inheritableCompProperties);
+                        return new ReadOnlyCollection<CompProperties>(Weapon.Props.equippableModeInfos[(int)index].inheritableCompProperties);
                     }
                 }
                 else if(container[SourceChildID] is ModularizationWeapon weapon)
@@ -415,12 +415,16 @@ namespace RW_ModularizationWeapon
     }
 
 
-    public class WeaponPropertiesInfo
+    public class EquippableModeInfo
     {
 
         public void ResolveReferences(ThingDef def)
         {
-            
+            inheritableTools ??= [];
+            inheritableVerbProperties ??= [];
+            inheritableCompProperties ??= [];
+
+            inheritableCompProperties.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
         }
 
         /// <summary>
@@ -437,11 +441,6 @@ namespace RW_ModularizationWeapon
         /// CompProperties for protected weapon properties
         /// </summary>
         public List<CompProperties> inheritableCompProperties = new List<CompProperties>();
-
-        /// <summary>
-        /// the ThingComp type that not allow create from child comps
-        /// </summary>
-        public List<Type> notAllowedCompTypes = new List<Type>();
 
     }
 }

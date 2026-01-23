@@ -1045,7 +1045,6 @@ namespace RW_ModularizationWeapon
                         ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = holder.Weapon.GetOrGenCurrentPartAttachmentProperties();
                         foreach (CompProperties comp in compProperties)
                         {
-                            if (typeof(CompEquippable).IsAssignableFrom(comp.compClass)) continue;
                             tasks.Add(Task.Run(() => CompPropertiesAfterAffect(comp, id, container, attachmentProperties)));
                         }
                         List<CompProperties> result = new List<CompProperties>(tasks.Count);
