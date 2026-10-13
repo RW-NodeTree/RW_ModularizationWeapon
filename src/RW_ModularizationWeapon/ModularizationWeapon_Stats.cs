@@ -83,6 +83,7 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(exception.ToString());
             }
+            result = result * GetStatMultiplier(statDef) + GetStatOffset(statDef);
             if (statWorker is StatWorker_MarketValue || statWorker == StatDefOf.Mass.Worker)
             {
                 foreach (Thing? thing in container.Values)
@@ -114,12 +115,17 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(exception.ToString());
             }
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("AttachmentPoint".Translate() + " : ");
+            string value = GetStatOffset(statDef).ToString();
+            stringBuilder.AppendLine("  " + "statOffseter".Translate() + (value[0] == '-' ? (" : " + value) : (" : +" + value)));
+            value = GetStatMultiplier(statDef).ToString();
+            stringBuilder.AppendLine("  " + "statMultiplier".Translate() +(value[0] == '-' ? (" : x" + value) : (" : x " + value)));
             if (
                 statWorker is StatWorker_MarketValue ||
                 statWorker == StatDefOf.Mass.Worker
             )
             {
-                StringBuilder stringBuilder = new StringBuilder();
                 foreach (var data in container)
                 {
                     stringBuilder.AppendLine("  " + data.Item2.Label + ":");
@@ -127,8 +133,8 @@ namespace RW_ModularizationWeapon
                     exp = Regex.Replace(exp, "\n", "\n  ");
                     stringBuilder.AppendLine(exp);
                 }
-                result += "\n" + stringBuilder.ToString();
             }
+            result += "\n" + stringBuilder.ToString();
             //Log.Message($"{StatWorker_stat(statWorker)} : FinalStatWorker_GetExplanationUnfinalized; req : {req}; reqBefore : {before};parent : {parent}");
             return result;
         }
@@ -208,7 +214,7 @@ namespace RW_ModularizationWeapon
             {
                 Log.Error(exception.ToString());
             }
-            return result * GetStatMultiplier(stat, null) + GetStatOffset(stat, null);
+            return result * GetStatMultiplier(stat) + GetStatOffset(stat);
         }
 
         public bool FinalStatWorker_GearHasCompsThatAffectStat(StatDef stat, bool result, Dictionary<string, object?> stats, Exception exception)

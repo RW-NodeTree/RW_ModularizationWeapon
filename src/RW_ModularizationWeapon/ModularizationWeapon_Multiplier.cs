@@ -54,7 +54,7 @@ namespace RW_ModularizationWeapon
         }
 
 
-        public float GetStatMultiplier(StatDef statDef, string? childNodeIdForState)
+        public float GetStatMultiplier(StatDef statDef)
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
@@ -63,10 +63,7 @@ namespace RW_ModularizationWeapon
             try
             {
                 ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = GetOrGenCurrentPartAttachmentProperties();
-                attachmentProperties.TryGetValue(childNodeIdForState ?? "", out WeaponAttachmentProperties? current);
-                ModularizationWeapon? currentWeapon = childNodeIdForState != null ? container[childNodeIdForState] as ModularizationWeapon : null;
-                statMultiplierCache ??= new Dictionary<(StatDef, string?), float>();
-                if (!statMultiplierCache.TryGetValue((statDef, childNodeIdForState), out float result))
+                if (statMultiplierCache == null || !statMultiplierCache.TryGetValue(statDef, out float result))
                 {
                     result = 1;
                     for (int i = 0; i < container.Count; i++)
@@ -74,31 +71,19 @@ namespace RW_ModularizationWeapon
                         string id = ((IReadOnlyList<string>)container)[i];
                         ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
                         attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
-                        if (weapon != null && properties != null && id != childNodeIdForState)
+                        if (weapon != null && properties != null)
                         {
                             float cache = properties.statMultiplierAffectHorizon.GetStatValueFromList(statDef, properties.statMultiplierAffectHorizonDefaultValue);
-
-                            if (current != null)
-                            {
-                                cache *= current.statOtherPartMultiplierAffectHorizon
-                                .GetOrNewWhenNull(
-                                    id,
-                                    () => new List<StatModifier>()
-                                ).GetStatValueFromList(statDef, current.statOtherPartMultiplierAffectHorizonDefaultValue);
-                                if (currentWeapon != null && weapon != currentWeapon)
-                                {
-                                    cache *= currentWeapon.Props.statOtherPartMultiplierAffectHorizon.GetStatValueFromList(statDef, currentWeapon.Props.statOtherPartMultiplierAffectHorizonDefaultValue);
-                                }
-                            }
                             result *= (weapon.Props.statMultiplier.GetStatValueFromList(statDef, weapon.Props.statMultiplierDefaultValue) - 1) * cache + 1;
-                            result *= (weapon.GetStatMultiplier(statDef, null) - 1) * cache + 1;
+                            result *= (weapon.GetStatMultiplier(statDef) - 1) * cache + 1;
                         }
                     }
                     bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                     if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                     try
                     {
-                        statMultiplierCache.Add((statDef, childNodeIdForState), result);
+                        statMultiplierCache ??= new Dictionary<StatDef, float>();
+                        statMultiplierCache.Add(statDef, result);
                     }
                     finally
                     {

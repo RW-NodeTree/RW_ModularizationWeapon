@@ -54,7 +54,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public float GetStatOffset(StatDef statDef, string? childNodeIdForState)
+        public float GetStatOffset(StatDef statDef)
         {
             NodeContainer? container = ChildNodes;
             if (container == null) throw new NullReferenceException(nameof(ChildNodes));
@@ -63,10 +63,7 @@ namespace RW_ModularizationWeapon
             try
             {
                 ReadOnlyDictionary<string, WeaponAttachmentProperties> attachmentProperties = GetOrGenCurrentPartAttachmentProperties();
-                attachmentProperties.TryGetValue(childNodeIdForState ?? "", out WeaponAttachmentProperties? current);
-                ModularizationWeapon? currentWeapon = childNodeIdForState != null ? container[childNodeIdForState] as ModularizationWeapon : null;
-                statOffsetCache ??= new Dictionary<(StatDef, string?), float>();
-                if (!statOffsetCache.TryGetValue((statDef, childNodeIdForState), out float result))
+                if (statOffsetCache == null || !statOffsetCache.TryGetValue(statDef, out float result))
                 {
                     result = 0;
                     for (int i = 0; i < container.Count; i++)
@@ -74,31 +71,19 @@ namespace RW_ModularizationWeapon
                         string id = ((IReadOnlyList<string>)container)[i];
                         ModularizationWeapon? weapon = container[i] as ModularizationWeapon;
                         attachmentProperties.TryGetValue(id, out WeaponAttachmentProperties? properties);
-                        if (weapon != null && properties != null && id != childNodeIdForState)
+                        if (weapon != null && properties != null)
                         {
                             float cache = properties.statOffsetAffectHorizon.GetStatValueFromList(statDef, properties.statOffsetAffectHorizonDefaultValue);
-
-                            if (current != null)
-                            {
-                                cache *= current.statOtherPartOffseterAffectHorizon
-                                .GetOrNewWhenNull(
-                                    id,
-                                    () => new List<StatModifier>()
-                                ).GetStatValueFromList(statDef, current.statOtherPartOffseterAffectHorizonDefaultValue);
-                                if (currentWeapon != null && weapon != currentWeapon)
-                                {
-                                    cache *= currentWeapon.Props.statOtherPartOffseterAffectHorizon.GetStatValueFromList(statDef, currentWeapon.Props.statOtherPartOffseterAffectHorizonDefaultValue);
-                                }
-                            }
                             result += weapon.Props.statOffset.GetStatValueFromList(statDef, weapon.Props.statOffsetDefaultValue) * cache;
-                            result += weapon.GetStatOffset(statDef, null) * cache;
+                            result += weapon.GetStatOffset(statDef) * cache;
                         }
                     }
                     bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
                     if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
                     try
                     {
-                        statOffsetCache.Add((statDef, childNodeIdForState), result);
+                        statOffsetCache ??= new Dictionary<StatDef, float>();
+                        statOffsetCache.Add(statDef, result);
                     }
                     finally
                     {

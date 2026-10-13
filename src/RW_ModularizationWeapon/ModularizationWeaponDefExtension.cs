@@ -116,7 +116,7 @@ namespace RW_ModularizationWeapon
         public void ResolveReferences(ThingDef parentDef)
         {
             #if DEBUG
-            Log.Message($"ModularizationWeaponExtension.ResolveReferences : {parentDef}");
+            Log.Message($"ModularizationWeaponDefExtension.ResolveReferences : {parentDef}");
             #endif
 
             foreach (WeaponAttachmentProperties properties in attachmentProperties)
@@ -244,10 +244,65 @@ namespace RW_ModularizationWeapon
             notAllowedCompTypes ??= [];
             equippableModeInfos ??= [];
 
+            equippable = parentDef.comps.Find(x => typeof(CompEquippable).IsAssignableFrom(x.compClass))?.compClass;
             parentDef.comps.RemoveAll(x => typeof(CompEquippable).IsAssignableFrom(x.compClass));
+            
             foreach(var prop in equippableModeInfos)
             {
                 prop.ResolveReferences(parentDef);
+            }
+
+            toolsCount = (uint)parentDef.tools.Count;
+            verbPropertiesCount = (uint)parentDef.Verbs.Count;
+            compPropertiesCount = (uint)parentDef.comps.Count;
+            FetchAllInheritable(parentDef, new HashSet<ModularizationWeaponDefExtension>());
+        }
+
+
+        private void FetchAllInheritable(ThingDef parentDef, HashSet<ModularizationWeaponDefExtension> checkedExtensions)
+        {
+            if (equippable != null && !equippableModeInfos.NullOrEmpty() && !checkedExtensions.Contains(this))
+            {
+                foreach (var modeInfo in equippableModeInfos)
+                {
+                    parentDef.tools.AddRange(modeInfo.inheritableTools);
+                    parentDef.Verbs.AddRange(modeInfo.inheritableVerbProperties);
+                    if(!parentDef.comps.Any(x => equippable.IsAssignableFrom(x.compClass)))
+                    {
+                        parentDef.comps.Add(new CompProperties(equippable));
+                    }
+                    foreach(var compProperty in modeInfo.inheritableCompProperties)
+                    {
+                        if(parentDef.comps.Find(x => compProperty.compClass.IsAssignableFrom(x.compClass) || x.compClass.IsAssignableFrom(compProperty.compClass)) == null)
+                        {
+                            parentDef.comps.Add(compProperty);
+                        }
+                    }
+                }
+                checkedExtensions.Add(this);
+                foreach(var info in attachmentProperties)
+                {
+                    foreach(var def in info.filterWithWeights)
+                    {
+                        if (!typeof(ModularizationWeapon).IsAssignableFrom(def.thingDef.thingClass))
+                        {
+                            continue;
+                        }
+                        def.thingDef.GetModExtension<ModularizationWeaponDefExtension>()?.FetchAllInheritable(parentDef, checkedExtensions);
+                    }
+                }
+                // attachmentProperties and attachmentPropertiesWithQuery are two complementary partitions of the same set, so both must be iterated
+                foreach(var info in attachmentPropertiesWithQuery)
+                {
+                    foreach(var def in info.Item2.filterWithWeights)
+                    {
+                        if (!typeof(ModularizationWeapon).IsAssignableFrom(def.thingDef.thingClass))
+                        {
+                            continue;
+                        }
+                        def.thingDef.GetModExtension<ModularizationWeaponDefExtension>()?.FetchAllInheritable(parentDef, checkedExtensions);
+                    }
+                }
             }
         }
 
@@ -326,7 +381,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statOffseter".Translate().RawText + " :");
             foreach (StatModifier stat in statOffset)
             {
-                float value = (comp?.GetStatOffset(stat.stat, null) ?? 0) + stat.value;
+                float value = (comp?.GetStatOffset(stat.stat) ?? 0) + stat.value;
                 string text = value < 0 ? "" : "+";
                 stringBuilder.AppendLine($"  {stat.stat.LabelCap} : {text}{value}");
             }
@@ -358,7 +413,7 @@ namespace RW_ModularizationWeapon
             stringBuilder.AppendLine("statMultiplier".Translate().RawText + " :");
             foreach (StatModifier stat in statMultiplier)
             {
-                float value = (comp?.GetStatMultiplier(stat.stat, null) ?? 1) * stat.value;
+                float value = (comp?.GetStatMultiplier(stat.stat) ?? 1) * stat.value;
                 string text = value < 0 ? "" : " ";
                 stringBuilder.AppendLine($"  {stat.stat.LabelCap} : x{text}{value}");
             }
@@ -478,7 +533,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statOffseter".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statOffset)
                     {
-                        float value = properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat, null) + stat.value);
+                        float value = properties.statOffsetAffectHorizon.GetStatValueFromList(stat.stat, properties.statOffsetAffectHorizonDefaultValue) * (childComp.GetStatOffset(stat.stat) + stat.value);
                         string text = value < 0 ? "" : "+";
                         stringBuilder.AppendLine($"    {stat.stat.LabelCap} : {text}{value}");
                     }
@@ -509,7 +564,7 @@ namespace RW_ModularizationWeapon
                     stringBuilder.AppendLine("  " + "statMultiplier".Translate() + " :");
                     foreach (StatModifier stat in childComp.Props.statMultiplier)
                     {
-                        float value = properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat, null) * stat.value - 1f) + 1f;
+                        float value = properties.statMultiplierAffectHorizon.GetStatValueFromList(stat.stat, properties.statMultiplierAffectHorizonDefaultValue) * (childComp.GetStatMultiplier(stat.stat) * stat.value - 1f) + 1f;
                         string text = value < 0 ? "" : " ";
                         stringBuilder.AppendLine($"    {stat.stat.LabelCap} : x{text}{value}");
                     }
@@ -659,11 +714,13 @@ namespace RW_ModularizationWeapon
         public Vector2 DrawSizeWhenAttach = Vector2.one;
 
 
+        public uint toolsCount = 0;
+        public uint verbPropertiesCount = 0;
+        public uint compPropertiesCount = 0;
+        public Type? equippable = null;
+
+
         #region Condation
-        /// <summary>
-        /// if is true, it will manage CompEquippable selector
-        /// </summary>
-        public bool equippable = false;
 
         /// <summary>
         /// if parent part install this part it will checking this value when switch to other part

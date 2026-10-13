@@ -321,7 +321,7 @@ namespace RW_ModularizationWeapon
             base.PostMake();
             PrivateProperties.MarkAllMaked();
             var props = InheritableProperties;
-            if(Props.equippable && currentWeaponMode < props.Count)
+            if(Props.equippable != null && currentWeaponMode < props.Count)
             {
                 props[(int)currentWeaponMode].MarkAllMaked();
             }
@@ -354,7 +354,7 @@ namespace RW_ModularizationWeapon
                 Scribe_Values.Look(ref this.currentWeaponMode, "currentWeaponMode");
                 base.ExposeData();
                 PrivateProperties.MarkAllMaked();
-                if(Props.equippable)
+                if(Props.equippable != null)
                 {
                     ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable> inheritableProperties = InheritableProperties;
                     if(currentWeaponMode < inheritableProperties.Count)
@@ -363,18 +363,18 @@ namespace RW_ModularizationWeapon
                     }
                     if (Scribe.EnterNode("SandboxDatas"))
                     {
+                        uint original = currentWeaponMode;
                         try
                         {
-                            uint original = currentWeaponMode;
                             for(uint i = 0; i < inheritableProperties.Count; i++)
                             {
                                 if (i != original && Scribe.EnterNode("item_" + (i > original ? (i - 1) : i)))
                                 {
                                     try
                                     {
-                                        currentWeaponMode = i;
                                         if (Scribe.loader?.curXmlParent?.Attributes["IsNull"] == null) //Also pass on write mode
                                         {
+                                            currentWeaponMode = i;
                                             this.InitializeComps(); // Only create comps, not invoke PostMake
                                             CompProperties_ModularizationWeaponEquippable comps = inheritableProperties[(int)i];
                                             comps.ExposeData(); // 
@@ -392,11 +392,6 @@ namespace RW_ModularizationWeapon
                                     Scribe.ExitNode();
                                 }
                             }
-                            currentWeaponMode = original;
-                            if (Scribe.mode == LoadSaveMode.LoadingVars)
-                            {
-                                this.InitializeComps();
-                            }
                         }
                         catch(Exception ex)
                         {
@@ -404,6 +399,16 @@ namespace RW_ModularizationWeapon
                             Log.ErrorOnce(ex.ToString(), key);
                         }
                         Scribe.ExitNode();
+                        if(currentWeaponMode != original)
+                        {
+                            currentWeaponMode = original;
+                            //The loop above rebuilt the comps for every other mode on this same thing, so the comps currently
+                            //belong to the last iterated mode. Restore the active mode's comps in every Scribe mode, not only
+                            //LoadingVars: this block also runs during ResolvingCrossRefs (where curXmlParent is null so
+                            //Scribe.EnterNode always succeeds) and during Saving, and those passes would otherwise leave the
+                            //thing with another mode's CompEquippable (wrong verbs) while currentWeaponMode points at the active one.
+                            this.InitializeComps();
+                        }
                     }
                 }
             }
@@ -857,10 +862,10 @@ namespace RW_ModularizationWeapon
             ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable>? inheritablePropertiesCache = this.inheritablePropertiesCache;
             this.inheritablePropertiesCache = this.inheritablePropertiesCache_TargetPart;
             this.inheritablePropertiesCache_TargetPart = inheritablePropertiesCache;
-            Dictionary<(StatDef, string?), float>? statOffsetCache = this.statOffsetCache;
+            Dictionary<StatDef, float>? statOffsetCache = this.statOffsetCache;
             this.statOffsetCache = this.statOffsetCache_TargetPart;
             this.statOffsetCache_TargetPart = statOffsetCache;
-            Dictionary<(StatDef, string?), float>? statMultiplierCache = this.statMultiplierCache;
+            Dictionary<StatDef, float>? statMultiplierCache = this.statMultiplierCache;
             this.statMultiplierCache = this.statMultiplierCache_TargetPart;
             this.statMultiplierCache_TargetPart = statMultiplierCache;
 
@@ -1163,10 +1168,10 @@ namespace RW_ModularizationWeapon
         private Graphic_ChildNode? graphicCache_TargetPart = null;
         private ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable>? inheritablePropertiesCache = null;
         private ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable>? inheritablePropertiesCache_TargetPart = null;
-        private Dictionary<(StatDef, string?), float>? statOffsetCache = null;
-        private Dictionary<(StatDef, string?), float>? statOffsetCache_TargetPart = null;
-        private Dictionary<(StatDef, string?), float>? statMultiplierCache = null;
-        private Dictionary<(StatDef, string?), float>? statMultiplierCache_TargetPart = null;
+        private Dictionary<StatDef, float>? statOffsetCache = null;
+        private Dictionary<StatDef, float>? statOffsetCache_TargetPart = null;
+        private Dictionary<StatDef, float>? statMultiplierCache = null;
+        private Dictionary<StatDef, float>? statMultiplierCache_TargetPart = null;
         private ReadOnlyDictionary<string, WeaponAttachmentProperties>? partAttachmentPropertiesCache = null;
         private ReadOnlyDictionary<string, WeaponAttachmentProperties>? partAttachmentPropertiesCache_TargetPart = null;
 #endregion

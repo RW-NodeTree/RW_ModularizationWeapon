@@ -30,47 +30,40 @@ namespace RW_ModularizationWeapon.Patch
                 __result.iconDrawScale = Math.Max(scale.x, scale.y);
                 __result.shrinkable = verb != __instance.PrimaryVerb;
                 #endif
-                if(verb != null && verb.tool == null && verb.verbProps != null && verb.verbProps.isPrimary)
-                {
-                    __result = new Command_ModeTarget(__result, weapon);
-                }
+                __result = new Command_ModeTarget(__result);
             }
         }
 
-        #if DEBUG
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         [HarmonyPatch(
             nameof(VerbTracker.GetVerbsCommands)
         )]
-        private static void DEBUG_PostVerbTracker_GetVerbsCommands(VerbTracker __instance, ref IEnumerable<Command> __result)
+        private static void PreVerbTracker_GetVerbsCommands(VerbTracker __instance, ref (ModularizationWeapon?, List<Tool>?, List<VerbProperties>?) __state)
         {
-            __result = DEBUG_GetVerbsCommandsExceptionCatcher(__instance, __result);
+            __state.Item1 = (__instance.directOwner as CompEquippable)?.parent as ModularizationWeapon;
+            if (__state.Item1 != null)
+            {
+                __state.Item2 = __state.Item1.def.tools;
+                __state.Item1.def.tools = __instance.directOwner.Tools;
+                __state.Item3 = ThingDef_verbs(__state.Item1.def);
+                ThingDef_verbs(__state.Item1.def) = __instance.directOwner.VerbProperties;
+            }
         }
 
-        private static IEnumerable<Command> DEBUG_GetVerbsCommandsExceptionCatcher(VerbTracker instance, IEnumerable<Command> commands)
+        [HarmonyFinalizer]
+        [HarmonyPatch(
+            nameof(VerbTracker.GetVerbsCommands)
+        )]
+        private static void FinalVerbTracker_GetVerbsCommands(ref (ModularizationWeapon?, List<Tool>?, List<VerbProperties>?) __state, ref IEnumerable<Command> __result)
         {
-            int pos = 0;
-            try
+            if (__state.Item1 != null)
             {
-                List<Command> result = new List<Command>();
-                foreach(var command in commands)
-                {
-                    result.Add(command);
-                    pos++;
-                }
-                return result;
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(
-                    $"VerbTracker.GetVerbsCommands throw Exception:\n" +
-                    $"pos : {pos}.\n" +
-                    $"instance : {instance.directOwner}\n"+
-                    $"    As CompEquippable : {instance.directOwner as CompEquippable}\n"+
-                    $"        Parent : {(instance.directOwner as CompEquippable)?.parent}\n"
-                , ex);
+                __result = new List<Command>(__result);
+                __state.Item1.def.tools = __state.Item2;
+                ThingDef_verbs(__state.Item1.def) = __state.Item3;
             }
         }
-        #endif
+
+        internal static readonly AccessTools.FieldRef<ThingDef, List<VerbProperties>?> ThingDef_verbs = AccessTools.FieldRefAccess<ThingDef, List<VerbProperties>?>("verbs");
     }
 }

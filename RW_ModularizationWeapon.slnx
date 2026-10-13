@@ -1,0 +1,23 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="DebugV13" />
+    <BuildType Name="DebugV14" />
+    <BuildType Name="DebugV15" />
+    <BuildType Name="DebugV16" />
+    <BuildType Name="ReleaseV13" />
+    <BuildType Name="ReleaseV13WithDoc" />
+    <BuildType Name="ReleaseV14" />
+    <BuildType Name="ReleaseV14WithDoc" />
+    <BuildType Name="ReleaseV15" />
+    <BuildType Name="ReleaseV15WithDoc" />
+    <BuildType Name="ReleaseV16" />
+    <BuildType Name="ReleaseV16WithDoc" />
+  </Configurations>
+  <Project Path="src/RW_ModularizationWeapon.CombatExtended/RW_ModularizationWeapon.CombatExtended.csproj">
+    <BuildType Solution="ReleaseV13WithDoc|*" Project="ReleaseV13" />
+    <BuildType Solution="ReleaseV14WithDoc|*" Project="ReleaseV14" />
+    <BuildType Solution="ReleaseV15WithDoc|*" Project="ReleaseV15" />
+    <BuildType Solution="ReleaseV16WithDoc|*" Project="ReleaseV16" />
+  </Project>
+  <Project Path="src/RW_ModularizationWeapon/RW_ModularizationWeapon.csproj" />
+</Solution>

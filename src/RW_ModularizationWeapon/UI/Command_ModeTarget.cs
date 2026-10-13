@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -10,48 +12,41 @@ namespace RW_ModularizationWeapon.UI
 {
     public class Command_ModeTarget : Command_VerbTarget
     {
-        public Command_ModeTarget(Command_VerbTarget original, ModularizationWeapon weapon)
+        static Command_ModeTarget()
         {
-            Weapon              =   weapon;
-            //base
-            verb                =   original.verb;
-            drawRadius          =   original.drawRadius;
-            defaultDesc         =   original.defaultDesc;
-            tutorTag            =   original.defaultDesc;
-#if V13 || V14
-            disabled            =   original.disabled;
-#else
-            disabled            =   original.Disabled;
-#if !V15
-            ownerThing          =   original.ownerThing;
-#endif
-#endif
-            disabledReason      =   original.disabledReason;
-            defaultDescPostfix  =   original.defaultDescPostfix;
-            shrinkable          =   original.shrinkable;
-            groupKey            =   original.groupKey;
-            activateSound       =   original.activateSound;
-            defaultLabel        =   original.defaultLabel;
-            defaultIconColor    =   original.defaultIconColor;
-            iconOffset          =   original.iconOffset;
-            iconDrawScale       =   original.iconDrawScale;
-            iconTexCoords       =   original.iconTexCoords;
-            iconProportions     =   original.iconProportions;
-            iconAngle           =   original.iconAngle;
-            icon                =   original.icon;
-            hotKey              =   original.hotKey;
+            ParameterExpression a = Expression.Parameter(typeof(Command_VerbTarget));
+            ParameterExpression b = Expression.Parameter(typeof(Command_VerbTarget));
+            FieldInfo[] fieldInfos = typeof(Command_VerbTarget).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            BinaryExpression[] binaryExpressions = new BinaryExpression[fieldInfos.Length];
+            for (int i = 0; i < fieldInfos.Length; i++)
+            {
+                FieldInfo fieldInfo = fieldInfos[i];
+                MemberExpression a_value = Expression.Field(a, fieldInfo);
+                MemberExpression b_value = Expression.Field(b, fieldInfo);
+                binaryExpressions[i] = Expression.Assign(a_value, b_value);
+            }
+            CopyData = Expression.Lambda<Action<Command_VerbTarget, Command_VerbTarget>>(Expression.Block(binaryExpressions), a, b).Compile();
         }
-        public ModularizationWeapon Weapon { get; }
 
-        public override float GetWidth(float maxWidth) => groupedVerbs(this).NullOrEmpty() ? 250 : base.GetWidth(maxWidth);
+        public Command_ModeTarget(Command_VerbTarget original) : base()
+        {
+            CopyData(this, original);
+        }
+
+        public ModularizationWeapon Weapon => (ModularizationWeapon)verb.EquipmentCompSource.parent;
+
+        public override float GetWidth(float maxWidth) => 250;
 
         public override bool GroupsWith(Gizmo other)
         {
-            if (other is not Command_ModeTarget)
+            if (
+                other is Command_ModeTarget target &&
+                target.Weapon == Weapon
+            )
             {
-                return false;
+                return base.GroupsWith(other);
             }
-            return base.GroupsWith(other);
+            return false;
         }
 
         protected override GizmoResult GizmoOnGUIInt(Rect butRect, GizmoRenderParms parms)
@@ -68,6 +63,8 @@ namespace RW_ModularizationWeapon.UI
             if (rightPanel)
             {
                 // childButton = butRect;
+                ModularizationWeapon weapon = Weapon;
+
                 butRect.x += 8;
                 butRect.y += 8;
                 butRect.width -= 16;
@@ -75,25 +72,25 @@ namespace RW_ModularizationWeapon.UI
                 float xMin = butRect.xMax - butRect.height;
                 childButton = butRect;
                 childButton.xMin = xMin + 4;
-                GUI.color = Weapon.CurrentModeColor;
-                Widgets.DrawTextureFitted(childButton, Weapon.CurrentModeIcon, 1);
+                GUI.color = weapon.CurrentModeColor;
+                Widgets.DrawTextureFitted(childButton, weapon.CurrentModeIcon, 1);
 
                 childButton = butRect;
                 childButton.xMax = xMin - 4;
                 GUI.color = Color.white;
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(childButton, Weapon.CurrentModeName);
+                Widgets.Label(childButton, weapon.CurrentModeName);
 
                 if(Widgets.ButtonInvisible(butRect))
                 {
-                    ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable> weaponProperties = Weapon.InheritableProperties;
+                    ReadOnlyCollection<CompProperties_ModularizationWeaponEquippable> weaponProperties = weapon.InheritableProperties;
                     List<FloatMenuOption> options = new List<FloatMenuOption>(weaponProperties.Count);
                     for (int i = 0; i < options.Capacity; i++)
                     {
                         uint finalIndex = (uint)i;
                         CompProperties_ModularizationWeaponEquippable properties = weaponProperties[i];
-                        options.Add(new FloatMenuOption(properties.Name,() => Weapon.CurrentMode = finalIndex));
+                        options.Add(new FloatMenuOption(properties.Name,() => weapon.CurrentMode = finalIndex));
                     }
                     if (options.Count > 1)
                     {
@@ -108,7 +105,7 @@ namespace RW_ModularizationWeapon.UI
             return result;
         }
 
-        private static readonly AccessTools.FieldRef<Command_VerbTarget, List<Verb>> groupedVerbs = AccessTools.FieldRefAccess<Command_VerbTarget, List<Verb>>("groupedVerbs");
+        private static readonly Action<Command_VerbTarget, Command_VerbTarget> CopyData;
 
     }
 }

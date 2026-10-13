@@ -16,9 +16,8 @@ namespace RW_ModularizationWeapon
     public class CompProperties_ModularizationWeaponEquippable : CompProperties, IWeaponPropertiesHolder
     {
         //index == -1 -> public; id == null -> self
-        internal CompProperties_ModularizationWeaponEquippable(ModularizationWeapon weapon, string? childId, uint index) : base(typeof(CompEquippable))
+        internal CompProperties_ModularizationWeaponEquippable(ModularizationWeapon weapon, string? childId, uint index) : base(weapon.Props.equippable)
         {
-            if (weapon == null) throw new NullReferenceException(nameof(weapon));
             this.Weapon = weapon;
             this.SourceChildID = childId;
             this.index = index;
@@ -31,7 +30,7 @@ namespace RW_ModularizationWeapon
             get
             {
                 NodeContainer? container = Weapon.ChildNodes;
-                if (container == null) throw new NullReferenceException(nameof(Weapon.ChildNodes));
+                if (container is null) throw new NullReferenceException(nameof(Weapon.ChildNodes));
                 bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
                 if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
                 try
@@ -197,12 +196,16 @@ namespace RW_ModularizationWeapon
                 }
                 else if(container[SourceChildID] is ModularizationWeapon weapon)
                 {
-                    if (index < weapon.InheritableProperties.Count)
+                    if (
+                        !weapon.Props.notAllowParentUseTools &&
+                        !Weapon.GetOrGenCurrentPartAttachmentProperties()[SourceChildID].notUseTools &&
+                        index < weapon.InheritableProperties.Count
+                    )
                     {
                         return weapon.InheritableProperties[(int)index].weaponProperties.VerbToolRegiestInfo;
                     }
                 }
-                return new ReadOnlyCollection<Tool>(new List<Tool>());
+                return new ReadOnlyCollection<Tool>([]);
             }
         }
 
@@ -221,12 +224,16 @@ namespace RW_ModularizationWeapon
                 }
                 else if(container[SourceChildID] is ModularizationWeapon weapon)
                 {
-                    if (index < weapon.InheritableProperties.Count)
+                    if (
+                        !weapon.Props.notAllowParentUseVerbProperties &&
+                        !Weapon.GetOrGenCurrentPartAttachmentProperties()[SourceChildID].notUseVerbProperties &&
+                        index < weapon.InheritableProperties.Count
+                    )
                     {
                         return weapon.InheritableProperties[(int)index].weaponProperties.VerbPropertiesRegiestInfo;
                     }
                 }
-                return new ReadOnlyCollection<VerbProperties>(new List<VerbProperties>());
+                return new ReadOnlyCollection<VerbProperties>([]);
             }
         }
 
@@ -245,12 +252,16 @@ namespace RW_ModularizationWeapon
                 }
                 else if(container[SourceChildID] is ModularizationWeapon weapon)
                 {
-                    if (index < weapon.InheritableProperties.Count)
+                    if (
+                        !weapon.Props.notAllowParentUseCompProperties &&
+                        !Weapon.GetOrGenCurrentPartAttachmentProperties()[SourceChildID].notUseCompProperties &&
+                        index < weapon.InheritableProperties.Count
+                    )
                     {
                         return weapon.InheritableProperties[(int)index].weaponProperties.CompPropertiesRegiestInfo;
                     }
                 }
-                return new ReadOnlyCollection<CompProperties>(new List<CompProperties>());
+                return new ReadOnlyCollection<CompProperties>([]);
             }
         }
         
@@ -278,7 +289,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public void MarkAllMaked()
+        internal void MarkAllMaked()
         {
             bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
             if (!isWriteLockHeld) readerWriterLockSlim.EnterWriteLock();
@@ -296,7 +307,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public void ExposeData()
+        internal void ExposeData()
         {
             bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();
@@ -327,7 +338,7 @@ namespace RW_ModularizationWeapon
             }
         }
 
-        public void PostMake()
+        internal void PostMake()
         {
             bool isUpgradeableReadLockHeld = readerWriterLockSlim.IsUpgradeableReadLockHeld || readerWriterLockSlim.IsWriteLockHeld;
             if (!isUpgradeableReadLockHeld) readerWriterLockSlim.EnterUpgradeableReadLock();

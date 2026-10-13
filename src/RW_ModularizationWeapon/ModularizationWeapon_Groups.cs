@@ -95,7 +95,7 @@ namespace RW_ModularizationWeapon
                 {
                     if (inheritablePropertiesCache == null)
                     {
-                        List<CompProperties_ModularizationWeaponEquippable> equippableProperties = new List<CompProperties_ModularizationWeaponEquippable>(Math.Max(Props.equippableModeInfos.Count, 1));
+                        List<CompProperties_ModularizationWeaponEquippable> equippableProperties = new List<CompProperties_ModularizationWeaponEquippable>(Props.equippableModeInfos.Count);
                         for(uint i = 0; i < equippableProperties.Capacity; i++)
                         {
                             equippableProperties.Add(new CompProperties_ModularizationWeaponEquippable(this, null, i));
@@ -109,20 +109,27 @@ namespace RW_ModularizationWeapon
                                 bool uasTools = !child.Props.notAllowParentUseTools && !attachment.notUseTools;
                                 bool uasVerbProps = !child.Props.notAllowParentUseVerbProperties && !attachment.notUseVerbProperties;
                                 bool uasCompProps = !child.Props.notAllowParentUseCompProperties && !attachment.notUseCompProperties;
-                                equippableProperties.Capacity += child.InheritableProperties.Count;
-                                for(uint i = 0; i < child.InheritableProperties.Count; i++)
+                                if(uasTools || uasVerbProps || uasCompProps)
                                 {
-                                    CompProperties_ModularizationWeaponEquippable childMode = child.InheritableProperties[(int)i];
-                                    if (
-                                        uasTools && childMode.Tools.Count > 0 ||
-                                        uasVerbProps && childMode.VerbProperties.Count > 0 ||
-                                        uasCompProps && childMode.CompProperties.Count > 0
-                                    )
+                                    equippableProperties.Capacity += child.InheritableProperties.Count;
+                                    for(uint i = 0; i < child.InheritableProperties.Count; i++)
                                     {
-                                        equippableProperties.Add(new CompProperties_ModularizationWeaponEquippable(this, kv.Item1, i));
+                                        CompProperties_ModularizationWeaponEquippable childMode = child.InheritableProperties[(int)i];
+                                        if (
+                                            childMode.Tools.Count > 0 ||
+                                            childMode.VerbProperties.Count > 0 ||
+                                            childMode.CompProperties.Count > 0
+                                        )
+                                        {
+                                            equippableProperties.Add(new CompProperties_ModularizationWeaponEquippable(this, kv.Item1, i));
+                                        }
                                     }
                                 }
                             }
+                        }
+                        if(equippableProperties.Count <= 0)
+                        {
+                            equippableProperties.Add(new CompProperties_ModularizationWeaponEquippable(this, null, 0));
                         }
 
                         bool isWriteLockHeld = readerWriterLockSlim.IsWriteLockHeld;
@@ -151,7 +158,7 @@ namespace RW_ModularizationWeapon
             {
                 int mode = (int)CurrentMode;
                 var props = InheritableProperties;
-                if(Props.equippable && mode < props.Count)
+                if(Props.equippable != null && mode < props.Count)
                 {
                     return props[mode].Name;
                 }
@@ -165,7 +172,7 @@ namespace RW_ModularizationWeapon
             {
                 int mode = (int)CurrentMode;
                 var props = InheritableProperties;
-                if(Props.equippable && mode < props.Count)
+                if(Props.equippable != null && mode < props.Count)
                 {
                     return props[mode].Color;
                 }
@@ -179,7 +186,7 @@ namespace RW_ModularizationWeapon
             {
                 int mode = (int)CurrentMode;
                 var props = InheritableProperties;
-                if(Props.equippable && mode < props.Count)
+                if(Props.equippable != null && mode < props.Count)
                 {
                     return props[mode].Icon;
                 }
@@ -191,11 +198,44 @@ namespace RW_ModularizationWeapon
 
         public ModularizationWeapon Weapon => this;
 
-        public ReadOnlyCollection<Tool> Tools => new ReadOnlyCollection<Tool>(def.tools ?? new List<Tool>());
+        public ReadOnlyCollection<Tool> Tools
+        {
+            get
+            {
+                Tool[] tools = new Tool[(int)Props.toolsCount];
+                for (int i = 0; i < tools.Length; i++)
+                {
+                    tools[i] = def.tools[i];
+                }
+                return new ReadOnlyCollection<Tool>(tools);
+            }
+        }
 
-        public ReadOnlyCollection<VerbProperties> VerbProperties => new ReadOnlyCollection<VerbProperties>(def.Verbs ?? new List<VerbProperties>());
+        public ReadOnlyCollection<VerbProperties> VerbProperties
+        {
+            get
+            {
+                VerbProperties[] verbProperties = new VerbProperties[(int)Props.verbPropertiesCount];
+                for (int i = 0; i < verbProperties.Length; i++)
+                {
+                    verbProperties[i] = def.Verbs[i];
+                }
+                return new ReadOnlyCollection<VerbProperties>(verbProperties);
+            }
+        }
 
-        public ReadOnlyCollection<CompProperties> CompProperties => new ReadOnlyCollection<CompProperties>(def.comps ?? new List<CompProperties>());
+        public ReadOnlyCollection<CompProperties> CompProperties
+        {
+            get
+            {
+                CompProperties[] compProperties = new CompProperties[(int)Props.compPropertiesCount];
+                for (int i = 0; i < compProperties.Length; i++)
+                {
+                    compProperties[i] = def.comps[i];
+                }
+                return new ReadOnlyCollection<CompProperties>(compProperties);
+            }
+        }
 
 
 
@@ -213,7 +253,7 @@ namespace RW_ModularizationWeapon
             var props = InheritableProperties;
             try
             {
-                if(Props.equippable && currentWeaponMode < props.Count)
+                if(Props.equippable != null && currentWeaponMode < props.Count)
                 {
                     props[(int)currentWeaponMode].PostMake();
                 }
@@ -234,7 +274,7 @@ namespace RW_ModularizationWeapon
             {
                 List<Tool> result = [.. PrivateProperties.VerbToolRegiestInfo];
                 var props = InheritableProperties;
-                if (Props.equippable && props.Count > index)
+                if (Props.equippable != null && props.Count > index)
                 {
                     WeaponProperties inheritableProperties = props[(int)index].weaponProperties;
                     result.Capacity += inheritableProperties.VerbToolRegiestInfo.Count;
@@ -257,7 +297,7 @@ namespace RW_ModularizationWeapon
             {
                 List<VerbProperties> result = [.. PrivateProperties.VerbPropertiesRegiestInfo];
                 var props = InheritableProperties;
-                if (Props.equippable && props.Count > index)
+                if (Props.equippable != null && props.Count > index)
                 {
                     WeaponProperties inheritableProperties = props[(int)index].weaponProperties;
                     result.Capacity += inheritableProperties.VerbPropertiesRegiestInfo.Count;
@@ -280,7 +320,7 @@ namespace RW_ModularizationWeapon
             {
                 List<CompProperties> result = [.. PrivateProperties.CompPropertiesRegiestInfo];
                 var props = InheritableProperties;
-                if (Props.equippable && props.Count > index)
+                if (Props.equippable != null && props.Count > index)
                 {
                     CompProperties_ModularizationWeaponEquippable inheritableProperties = props[(int)index];
                     result.Add(inheritableProperties);
